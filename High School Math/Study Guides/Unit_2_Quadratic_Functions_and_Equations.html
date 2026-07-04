@@ -354,7 +354,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar open" id="sidebar">
   <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
   <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
   <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
@@ -1383,8 +1383,8 @@ function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcar
 function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
 function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.textContent = checked + ' / ' + total + ' mastered'; }
 function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
-document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
 updateScoreBadge();
 </script>
 <script>
