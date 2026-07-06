@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Computer Science — Data Structures — Solutions | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_5_Data_Structures_Solutions.html">
+<meta name="description" content="Worked solutions for Data Structures in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Data Structures — Solutions | Dingrui Scholars">
+<meta property="og:description" content="Worked solutions for Data Structures in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_5_Data_Structures_Solutions.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Data Structures — Solutions | Dingrui Scholars">
+<meta name="twitter:description" content="Worked solutions for Data Structures in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-5  dingrui:doc-type solutions -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style>
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --easy-bg:#E7F2E3; --easy-ink:#2F6B2F; --easy-rule:#79A977;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --region-bg:#F5F2EE; --region-ink:#3A322B; --region-rule:#B5A68F;
+    --paper-bg:#FBE9E9;  --paper-ink:#7A2E2E;  --paper-rule:#C97A7A;
+    --honors-bg:#FDF5EC; --honors-ink:#7A5618; --honors-rule:#C4956A;
+    --sol-bg:#F1F7EE;  --sol-rule:#5E8E47;  --sol-ink:#2F4E1E;
+    --sol-accent:#3E7228;
+    --insight-bg:#FBF6EC; --insight-rule:#C49350; --insight-ink:#5E4014;
+    --font-body:'Times New Roman', Times, Georgia, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-sans:'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--font-body);font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:var(--font-sans);font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.easy{background:var(--easy-bg);color:var(--easy-ink);border-color:var(--easy-rule);}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .pill.region{background:var(--region-bg);color:var(--region-ink);border-color:var(--region-rule);letter-spacing:.08em;}
+  .pill.paper {background:var(--paper-bg); color:var(--paper-ink); border-color:var(--paper-rule);}
+  .pill.honors{background:var(--honors-bg);color:var(--honors-ink);border-color:var(--honors-rule);text-transform:uppercase;}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .draft-banner{font-family:var(--font-sans);font-size:9.5pt;color:#7A2E2E;font-style:italic;text-align:center;margin:0 0 8px;border:1px dashed #c9a4a4;border-radius:4px;padding:4px 8px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .instructions{font-family:var(--font-sans);font-size:10pt;color:#444;font-style:italic;margin-bottom:12px;line-height:1.45;}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:14px 20px 6px;margin-bottom:22px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q.app{border-left-color:#C4956A;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:12px;font-family:var(--font-sans);}
+  .q-body{font-size:11pt;line-height:1.55;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;font-style:italic;color:#444;border-left:2px solid #d8cdb8;padding-left:10px;}
+  .q-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .q-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .solution{margin:14px 0 8px;background:var(--sol-bg);border-left:3px solid var(--sol-rule);border-radius:0 4px 4px 0;padding:12px 18px 14px;font-size:11pt;line-height:1.6;}
+  .solution .answer-line{font-family:var(--font-sans);font-weight:700;color:var(--sol-ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #d4e4cb;letter-spacing:.04em;font-size:11pt;}
+  .solution .answer-line .ans{color:var(--sol-accent);font-size:1.08em;letter-spacing:.08em;}
+  .solution .rationale{color:#2a2a2a;}
+  .solution .rationale p{margin:5px 0;}
+  .solution h4{font-family:var(--font-sans);font-weight:700;font-size:10.5pt;color:var(--sol-ink);margin:10px 0 4px;letter-spacing:.05em;text-transform:uppercase;}
+  .solution ul,.solution ol{margin:6px 0 6px 22px;line-height:1.7;}
+  .solution pre{font-family:var(--font-mono);font-size:10pt;background:#e8f2e3;border:1px solid #b5d4a0;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
+  .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  .solution .insight strong{color:#7A4810;}
+  .solution .distractor{font-family:var(--font-sans);font-size:10pt;color:#3a3a3a;background:#fff;border:1px solid #d4e4cb;border-radius:4px;padding:8px 12px;margin-top:8px;}
+  .solution .distractor .lab{color:var(--maroon);font-weight:700;margin-right:6px;}
+  .trace-table{font-family:'JetBrains Mono',monospace;font-size:10pt;border-collapse:collapse;margin:8px 0;width:auto;}
+  .trace-table th{background:#d4e4cb;border:1px solid #9BBD7A;padding:5px 14px;color:#2F4E1E;font-weight:700;}
+  .trace-table td{border:1px solid #9BBD7A;padding:5px 14px;text-align:center;background:#f1f7ee;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:var(--font-sans);font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  .lang-bar{display:flex;justify-content:center;margin:6px 0 10px;}
+  .lang-btn{font-family:var(--font-sans);font-weight:700;font-size:9pt;letter-spacing:.1em;padding:4px 14px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;cursor:pointer;transition:all 0.2s;}
+  .lang-btn:hover{background:var(--maroon);color:#fff;}
+  body:not(.lang-zh) [data-lang="zh"] { display: none; }
+  body.lang-zh       [data-lang="en"] { display: none; }
+  body.lang-zh{font-family:var(--font-sans);}
+  @media (max-width: 600px){body{font-size:10.5pt;}}
+  .consult-cta{border:1.5px solid var(--maroon);border-radius:8px;padding:12px 16px;margin:22px 0 6px;text-align:center;background:var(--paper-bg);break-inside:avoid;}
+  .consult-cta__lead{display:block;font-family:var(--font-sans);font-weight:700;font-size:11pt;color:var(--maroon);}
+  .consult-cta__body{display:block;font-family:var(--font-sans);font-size:9.5pt;color:var(--muted);margin:3px 0 6px;}
+  .consult-cta__btn{display:inline-block;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-decoration:underline;}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.solution{background:#f0f6ec;}.draft-banner{display:none;}.lang-bar{display:none;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Data Structures — Solutions",
+  "description": "Worked solutions for Data Structures in High School Computer Science. Step by step answers from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_5_Data_Structures_Solutions.html",
+  "inLanguage": ["en", "zh"],
+  "learningResourceType": "Solutions",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+</div>
+
+<div class="brand">H&nbsp;I&nbsp;G&nbsp;H&nbsp;&nbsp;S&nbsp;C&nbsp;H&nbsp;O&nbsp;O&nbsp;L&nbsp;&nbsp;C&nbsp;O&nbsp;M&nbsp;P&nbsp;U&nbsp;T&nbsp;E&nbsp;R&nbsp;&nbsp;S&nbsp;C&nbsp;I&nbsp;E&nbsp;N&nbsp;C&nbsp;E</div>
+<div class="chapter-tag"><span data-lang="en">Solutions</span><span data-lang="zh">详解</span></div>
+<h1 class="chapter-title"><span data-lang="en">Data Structures &middot; Solutions</span><span data-lang="zh">数据结构 &middot; 详解</span></h1>
+<p class="chapter-sub"><span data-lang="en">Companion to the Practice Set &middot; Mark-by-mark walkthroughs &middot; AP CSP-Feeder / US / ON / BC / AB styles</span><span data-lang="zh">练习题配套详解 &middot; 逐分讲解 &middot; AP CSP 衔接 / 美 / 安 / 卑 / 阿省考风格</span></p>
+
+<div class="legend">
+  <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+  <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+  <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+  <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+  <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+  <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+</div>
+
+<hr class="thick"><hr class="thin">
+
+<!-- PART I SHORT RESPONSE SOLUTIONS 5 Qs 25 marks -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;&middot;&nbsp; SHORT RESPONSE &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第一部分 &nbsp;&middot;&nbsp; 短答题 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">25 marks</span><span data-lang="zh">共 25 分</span></span></div>
+
+<!-- Q1 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q1</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">Arrays and Lists</span><span data-lang="zh">数组与列表</span> &middot; AP CSP AAP-2.K</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Given <code>temps = [15, 22, 18, 30, 27]</code>, which statement is correct?</span><span data-lang="zh">给定 <code>temps = [15, 22, 18, 30, 27]</code>，以下哪个说法正确？</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(B)</span> - <code>temps[2]</code> has value <code>18</code></span><span data-lang="zh">答案：<span class="ans">(B)</span> - <code>temps[2]</code> 的值为 <code>18</code></span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Zero-based indexing: index 0 = 15, index 1 = 22, index 2 = 18, index 3 = 30, index 4 = 27. <span class="marks-call">[1]</span></span><span data-lang="zh">从零开始索引：索引 0 = 15，索引 1 = 22，索引 2 = 18，索引 3 = 30，索引 4 = 27。<span class="marks-call">[1]</span></span></p>
+        <div class="distractor"><span class="lab">(A)</span> <span data-lang="en"><code>temps[2]</code> = 18, not 22. Index 1 holds 22. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>temps[2]</code> = 18，不是 22。索引 1 存储 22。<span class="marks-call">[1]</span></span></div>
+        <div class="distractor"><span class="lab">(C)</span> <span data-lang="en"><code>len(temps)</code> = 5 (five elements). Incorrect.</span><span data-lang="zh"><code>len(temps)</code> = 5（共五个元素）。不正确。</span></div>
+        <div class="distractor"><span class="lab">(D)</span> <span data-lang="en">Last valid index = 5 - 1 = 4, not 5. Accessing index 5 raises IndexError. <span class="marks-call">[1]</span></span><span data-lang="zh">最后有效索引 = 5 - 1 = 4，不是 5。访问索引 5 会引发 IndexError。<span class="marks-call">[1]</span></span></div>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Zero-based indexing is the single most tested concept in data-structure questions. The third element is at index 2 (not 3), and the last valid index is always <code>len - 1</code>. Memorise: length 5, last index 4. Option (A) traps students who count from 1; option (D) traps students who confuse the length with the last valid index.</span><span data-lang="zh">从零开始的索引是数据结构题目中考查最多的概念。第三个元素在索引 2（不是 3），最后一个有效索引始终是 <code>len - 1</code>。记住：长度 5，最后索引 4。选项 (A) 陷阱针对从 1 开始计数的学生；选项 (D) 陷阱针对把长度与最后有效索引混淆的学生。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q2</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">Indexing and Traversal</span><span data-lang="zh">索引与遍历</span> &middot; AP CSP 3.10</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">What does the program with <code>range(0, 3)</code> and <code>data = [10, 20, 30, 40, 50]</code> output?</span><span data-lang="zh">带 <code>range(0, 3)</code> 和 <code>data = [10, 20, 30, 40, 50]</code> 的程序输出什么？</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(C)</span> - <code>60</code></span><span data-lang="zh">答案：<span class="ans">(C)</span> - <code>60</code></span></div>
+      <div class="rationale">
+        <p><span data-lang="en"><code>range(0, 3)</code> produces indices 0, 1, 2 only (upper bound is exclusive). <span class="marks-call">[1]</span></span><span data-lang="zh"><code>range(0, 3)</code> 仅产生索引 0、1、2（上界为排他）。<span class="marks-call">[1]</span></span></p>
+        <table class="trace-table">
+          <tr><th><code>i</code></th><th><code>data[i]</code></th><th><span data-lang="en">total after</span><span data-lang="zh">total 更新后</span></th></tr>
+          <tr><td>0</td><td>10</td><td>10</td></tr>
+          <tr><td>1</td><td>20</td><td>30</td></tr>
+          <tr><td>2</td><td>30</td><td>60</td></tr>
+        </table>
+        <p><span data-lang="en">10 + 20 + 30 = 60. <span class="marks-call">[1]</span> Options (A) 150 sums all five; (B) 90 sums indices 0-2 of the wrong list; (D) 100 is incorrect. <span class="marks-call">[1]</span></span><span data-lang="zh">10 + 20 + 30 = 60。<span class="marks-call">[1]</span> 选项 (A) 150 是全部五个之和；(B) 90 错误；(D) 100 不正确。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en"><code>range(start, stop)</code> excludes the stop value. <code>range(0, 3)</code> gives 0, 1, 2 -- three iterations. The most common error is to include index 3 (giving 10+20+30+40=100), forgetting Python's exclusive upper bound rule.</span><span data-lang="zh"><code>range(start, stop)</code> 不包含终止值。<code>range(0, 3)</code> 给出 0、1、2 共三次迭代。最常见错误是包含索引 3（得 10+20+30+40=100），忘记 Python 上界排他规则。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q3</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;3 <span data-lang="en">List Operations</span><span data-lang="zh">列表操作</span> &middot; ICS3U A1.6 / AB CSE2120 1.3.2</span>
+    <span class="pill marks"><span data-lang="en">[5 marks]</span><span data-lang="zh">[5 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">List operations on <code>cart</code>.</span><span data-lang="zh">对 <code>cart</code> 执行列表操作。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) Final <code>cart</code>: <span class="ans">["apples", "milk", "eggs"]</span> &nbsp; (b) "bread" shifts right to index 2 &nbsp; (c) remove by value vs pop by index</span><span data-lang="zh">(a) <code>cart</code> 最终内容：<span class="ans">["apples", "milk", "eggs"]</span> &nbsp; (b) "bread" 右移到索引 2 &nbsp; (c) 按值删除 vs 按索引删除</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Step-by-step trace</span><span data-lang="zh">(a) 逐步追踪</span></h4>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Operation</span><span data-lang="zh">操作</span></th><th><span data-lang="en">cart after</span><span data-lang="zh">操作后 cart</span></th></tr>
+          <tr><td>append("apples")</td><td>["apples"]</td></tr>
+          <tr><td>append("bread")</td><td>["apples", "bread"]</td></tr>
+          <tr><td>insert(1, "milk")</td><td>["apples", "milk", "bread"]</td></tr>
+          <tr><td>remove("bread")</td><td>["apples", "milk"]</td></tr>
+          <tr><td>append("eggs")</td><td>["apples", "milk", "eggs"]</td></tr>
+        </table>
+        <p><span data-lang="en">Final: <code>["apples", "milk", "eggs"]</code>. <span class="marks-call">[2]</span></span><span data-lang="zh">最终：<code>["apples", "milk", "eggs"]</code>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) What insert(1, "milk") does</span><span data-lang="zh">(b) insert(1, "milk") 的作用</span></h4>
+        <p><span data-lang="en"><code>insert(1, "milk")</code> places "milk" at index 1. The element previously at index 1 ("bread") shifts right to index 2. All elements at and after the insertion point move one position to the right. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>insert(1, "milk")</code> 将 "milk" 放置在索引 1 处。原来在索引 1 的元素（"bread"）向右移动到索引 2。插入点及之后的所有元素均向右移动一位。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(c) remove vs pop</span><span data-lang="zh">(c) remove 与 pop 的区别</span></h4>
+        <p><span data-lang="en"><code>remove("bread")</code> finds and deletes the first element equal to the given value, while <code>pop(1)</code> removes the element at index 1 by position and returns it. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>remove("bread")</code> 按值查找并删除第一个等于该值的元素，而 <code>pop(1)</code> 按位置删除索引 1 处的元素并返回它。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">AP CSP AAP-2.K names APPEND, INSERT, REMOVE, and LENGTH as the four required list operations. On an exam, if asked to "remove the element at position 2," use <code>pop(2)</code>; if asked to "remove the element with value X," use <code>remove(X)</code>. Confusing these is a mark-losing error in Ontario ICS3U A1.6 questions.</span><span data-lang="zh">AP CSP AAP-2.K 将 APPEND、INSERT、REMOVE 和 LENGTH 列为四种必考列表操作。考试中，若被要求"删除位置 2 的元素"，用 <code>pop(2)</code>；若被要求"删除值为 X 的元素"，用 <code>remove(X)</code>。混淆两者是安大略 ICS3U A1.6 题目中常见的失分错误。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q4</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+    <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+    <span class="pill topic">&sect;7 <span data-lang="en">Choosing the Right Data Structure</span><span data-lang="zh">选择合适的数据结构</span> &middot; CSTA 3B-AP-12</span>
+    <span class="pill marks"><span data-lang="en">[6 marks]</span><span data-lang="zh">[6 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Choose the most appropriate data structure for each scenario.</span><span data-lang="zh">为每个场景选择最合适的数据结构。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) Tuple &nbsp; (b) 2D array &nbsp; (c) Set</span><span data-lang="zh">(a) 元组 &nbsp; (b) 二维数组 &nbsp; (c) 集合</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) GPS coordinate pair</span><span data-lang="zh">(a) GPS 坐标对</span></h4>
+        <p><span data-lang="en">Use a <strong>tuple</strong>: <code>(latitude, longitude)</code>. A tuple is immutable, so the coordinate cannot be accidentally changed once set. It is also ordered and indexed, giving O(1) access to either component. <span class="marks-call">[2]</span></span><span data-lang="zh">使用<strong>元组</strong>：<code>(纬度, 经度)</code>。元组是不可变的，因此坐标设定后不会被意外更改。它也是有序且可索引的，对任一分量提供 O(1) 访问。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) 8x8 greyscale image</span><span data-lang="zh">(b) 8x8 灰度图像</span></h4>
+        <p><span data-lang="en">Use a <strong>2D array</strong>: <code>image[row][col]</code>. Grid-shaped data with natural row/column coordinates maps directly to a 2D array, giving O(1) access to any pixel. Ontario ICS4U A3.5 and AB CSE2120 1.2.1 both cite image processing as a canonical 2D array application. <span class="marks-call">[2]</span></span><span data-lang="zh">使用<strong>二维数组</strong>：<code>image[行][列]</code>。具有自然行列坐标的网格形状数据直接映射到二维数组，提供对任意像素的 O(1) 访问。安大略 ICS4U A3.5 和 AB CSE2120 1.2.1 均将图像处理列为典型二维数组应用。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(c) Students who submitted</span><span data-lang="zh">(c) 已提交作业的学生</span></h4>
+        <p><span data-lang="en">Use a <strong>set</strong>: <code>submitted = {"Alice", "Bob", ...}</code>. Set membership testing (<code>name in submitted</code>) is O(1) on average, far faster than searching a list (O(n)). Sets also automatically prevent duplicate entries. <span class="marks-call">[2]</span></span><span data-lang="zh">使用<strong>集合</strong>：<code>submitted = {"Alice", "Bob", ...}</code>。集合成员测试（<code>name in submitted</code>）平均 O(1)，远快于列表搜索（O(n)）。集合还自动防止重复条目。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">CSTA 3B-AP-12 tests exactly this: "Compare and contrast fundamental data structures and their uses." The exam expects you to name the structure AND justify it using ordered/mutable/duplicate properties. A one-word answer ("set") without justification earns only partial credit.</span><span data-lang="zh">CSTA 3B-AP-12 考查的正是这一点："比较和对比基本数据结构及其用途。"考试要求你说明结构名称，并用有序性/可变性/重复性属性加以说明。仅回答"集合"而不说明理由只能得部分分。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q5</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+    <span class="pill topic">&sect;5 <span data-lang="en">Dictionaries and Maps</span><span data-lang="zh">字典与映射</span> &middot; ICS4U C1.1</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Student grades dictionary program.</span><span data-lang="zh">学生成绩字典程序。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) 82 &nbsp; (b) Alice, Carol &nbsp; (c) O(1) hash lookup &nbsp; (d) grades["Dave"] = 70 &nbsp; (e) list</span><span data-lang="zh">(a) 82 &nbsp; (b) Alice、Carol &nbsp; (c) O(1) 哈希查找 &nbsp; (d) grades["Dave"] = 70 &nbsp; (e) 列表</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Final value of grades["Bob"]</span><span data-lang="zh">(a) grades["Bob"] 的最终值</span></h4>
+        <p><span data-lang="en">The second assignment <code>grades["Bob"] = 82</code> overwrites the first (<code>= 78</code>). Dictionary keys are unique; assigning to an existing key updates the value. Final: <code>grades["Bob"] = 82</code>. <span class="marks-call">[2]</span></span><span data-lang="zh">第二次赋值 <code>grades["Bob"] = 82</code> 覆盖了第一次（<code>= 78</code>）。字典键是唯一的；对已有键赋值会更新其值。最终：<code>grades["Bob"] = 82</code>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Complete output</span><span data-lang="zh">(b) 完整输出</span></h4>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">name</span><span data-lang="zh">姓名</span></th><th><span data-lang="en">score</span><span data-lang="zh">成绩</span></th><th><span data-lang="en">score &ge; 85?</span><span data-lang="zh">成绩 &ge; 85？</span></th><th><span data-lang="en">printed?</span><span data-lang="zh">是否打印？</span></th></tr>
+          <tr><td>Alice</td><td>91</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Bob</td><td>82</td><td>No</td><td>No</td></tr>
+          <tr><td>Carol</td><td>85</td><td>Yes</td><td>Yes</td></tr>
+        </table>
+        <p><span data-lang="en">Output (one per line): <code>Alice</code> then <code>Carol</code>. <span class="marks-call">[3]</span></span><span data-lang="zh">输出（每行一个）：<code>Alice</code> 然后 <code>Carol</code>。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) Why dict lookup is faster than list search</span><span data-lang="zh">(c) 字典查找为何比列表搜索快</span></h4>
+        <p><span data-lang="en">A dictionary uses a hash table internally, so lookup by key is O(1) on average, whereas searching a list for a specific value requires checking each element sequentially, which is O(n). <span class="marks-call">[1]</span></span><span data-lang="zh">字典内部使用哈希表，因此按键查找平均为 O(1)，而在列表中搜索特定值需要逐个检查每个元素，时间复杂度为 O(n)。<span class="marks-call">[1]</span></span></p>
+        <h4><span data-lang="en">(d) Add Dave</span><span data-lang="zh">(d) 添加 Dave</span></h4>
+        <pre>grades["Dave"] = 70</pre>
+        <p><span class="marks-call">[1]</span></p>
+        <h4><span data-lang="en">(e) Less suitable structure</span><span data-lang="zh">(e) 较不适合的结构</span></h4>
+        <p><span data-lang="en">A <strong>list</strong> would be less suitable: to find Bob's grade you must scan every element (O(n) linear search), and there is no natural way to label entries by name without maintaining a parallel name-list. <span class="marks-call">[1]</span></span><span data-lang="zh"><strong>列表</strong>较不适合：要找到 Bob 的成绩需要扫描每个元素（O(n) 线性搜索），且在不维护并行姓名列表的情况下无法自然地按姓名标记条目。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Overwriting a key is the most common dictionary misunderstanding. A dictionary with duplicate keys is impossible in Python: the second assignment silently wins. This is intentional behavior, used in patterns like <code>counts[word] += 1</code> where we want to update, not duplicate.</span><span data-lang="zh">覆盖键是最常见的字典误解。Python 中字典不可能有重复键：第二次赋值会悄悄覆盖第一次。这是有意设计的行为，用于 <code>counts[word] += 1</code> 等更新而非重复添加的模式。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- PART II EXTENDED RESPONSE SOLUTIONS 4 Qs 30 marks -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;&middot;&nbsp; EXTENDED RESPONSE &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第二部分 &nbsp;&middot;&nbsp; 简答题 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">30 marks</span><span data-lang="zh">共 30 分</span></span></div>
+
+<!-- Q6 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q6</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;6 <span data-lang="en">Tuples and Sets</span><span data-lang="zh">元组与集合</span> &middot; CSTA 3B-AP-12 / BC CP12</span>
+    <span class="pill marks"><span data-lang="en">[6 marks]</span><span data-lang="zh">[6 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Tuples and sets programs.</span><span data-lang="zh">元组与集合程序。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) Output: 3; error because tuples are immutable &nbsp; (b) Output: 4, True; duplicates 85 and 90 removed &nbsp; (c) fixed coordinates e.g. (lat, lon)</span><span data-lang="zh">(a) 输出：3；报错因为元组不可变 &nbsp; (b) 输出：4、True；重复的 85 和 90 被删除 &nbsp; (c) 固定坐标如 (纬度, 经度)</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Program A</span><span data-lang="zh">(a) 程序 A</span></h4>
+        <p><span data-lang="en"><code>point = (3, 7)</code>. <code>print(point[0])</code> outputs <strong>3</strong>. The commented-out line <code>point[0] = 5</code> would raise a <code>TypeError: 'tuple' object does not support item assignment</code> because tuples are immutable -- once created, elements cannot be reassigned. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>point = (3, 7)</code>。<code>print(point[0])</code> 输出 <strong>3</strong>。被注释掉的行 <code>point[0] = 5</code> 若取消注释会引发 <code>TypeError: 'tuple' object does not support item assignment</code>，因为元组是不可变的——创建后元素不能被重新赋值。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Program B</span><span data-lang="zh">(b) 程序 B</span></h4>
+        <p><span data-lang="en">Input list: <code>[85, 90, 85, 74, 90, 65]</code>. Converting to set removes duplicates: <code>{65, 74, 85, 90}</code> (4 unique values). Duplicates removed: 85 (appeared at positions 0 and 2) and 90 (appeared at positions 1 and 4). <span class="marks-call">[1]</span></span><span data-lang="zh">输入列表：<code>[85, 90, 85, 74, 90, 65]</code>。转换为集合去除重复：<code>{65, 74, 85, 90}</code>（4 个唯一值）。被删除的重复项：85（出现在位置 0 和 2）和 90（出现在位置 1 和 4）。<span class="marks-call">[1]</span></span></p>
+        <p><span data-lang="en"><code>print(len(unique))</code> outputs <strong>4</strong>. <code>print(85 in unique)</code> outputs <strong>True</strong>. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>print(len(unique))</code> 输出 <strong>4</strong>。<code>print(85 in unique)</code> 输出 <strong>True</strong>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(c) Prefer tuple over list</span><span data-lang="zh">(c) 优先选择元组而非列表的场景</span></h4>
+        <p><span data-lang="en">Use a tuple when the data is a fixed, related group that must not change -- for example, storing a GPS location <code>(53.546, -113.485)</code> for Edmonton: the coordinates are fixed, and using a tuple prevents accidental modification. <span class="marks-call">[1]</span></span><span data-lang="zh">当数据是不应改变的固定相关组时使用元组——例如，存储埃德蒙顿的 GPS 位置 <code>(53.546, -113.485)</code>：坐标固定，使用元组可防止意外修改。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The key distinguishing property of tuples is immutability. Because they cannot change, they can be used as dictionary keys (lists cannot). The pattern <code>a, b = b, a</code> in Program A uses tuple unpacking for a swap -- a common Python idiom the SG Worked Example 6 covers. Set creation from a list is the fastest way to count distinct values: <code>len(set(lst))</code>.</span><span data-lang="zh">元组的关键区别属性是不可变性。因为不能改变，它们可以用作字典键（列表不能）。程序 A 中的 <code>a, b = b, a</code> 使用元组解包进行交换——学习指南例题 6 涵盖的常见 Python 惯用法。从列表创建集合是计算不同值数量最快的方式：<code>len(set(lst))</code>。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q7</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;2 + &sect;3 <span data-lang="en">Traversal + List Operations</span><span data-lang="zh">遍历 + 列表操作</span> &middot; ICS3U A2.3 / AP CSP AAP-2.K</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Maximum-finding and filter operations on <code>scores = [72, 45, 88, 61, 95, 38, 77]</code>.</span><span data-lang="zh">对 <code>scores = [72, 45, 88, 61, 95, 38, 77]</code> 进行求最大值和过滤操作。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) max_val = 95 &nbsp; (b) passing = [72, 88, 61, 95, 77] &nbsp; (c) scores[0] already in max_val &nbsp; (d) len(passing)=5, len(scores)=7</span><span data-lang="zh">(a) max_val = 95 &nbsp; (b) passing = [72, 88, 61, 95, 77] &nbsp; (c) scores[0] 已存入 max_val &nbsp; (d) len(passing)=5，len(scores)=7</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Trace table for maximum-finding loop</span><span data-lang="zh">(a) 求最大值循环的追踪表</span></h4>
+        <p><span data-lang="en">Initial: <code>max_val = scores[0] = 72</code>. Loop starts at i=1.</span><span data-lang="zh">初始：<code>max_val = scores[0] = 72</code>。循环从 i=1 开始。</span></p>
+        <table class="trace-table">
+          <tr><th><code>i</code></th><th><code>scores[i]</code></th><th><span data-lang="en">scores[i] &gt; max_val?</span><span data-lang="zh">scores[i] &gt; max_val？</span></th><th><code>max_val</code></th></tr>
+          <tr><td>1</td><td>45</td><td>No</td><td>72</td></tr>
+          <tr><td>2</td><td>88</td><td>Yes</td><td>88</td></tr>
+          <tr><td>3</td><td>61</td><td>No</td><td>88</td></tr>
+          <tr><td>4</td><td>95</td><td>Yes</td><td>95</td></tr>
+          <tr><td>5</td><td>38</td><td>No</td><td>95</td></tr>
+          <tr><td>6</td><td>77</td><td>No</td><td>95</td></tr>
+        </table>
+        <p><span data-lang="en">Final <code>max_val = 95</code>. <span class="marks-call">[3]</span></span><span data-lang="zh">最终 <code>max_val = 95</code>。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(b) Final contents of passing</span><span data-lang="zh">(b) passing 的最终内容</span></h4>
+        <p><span data-lang="en">Elements >= 60: 72 (yes), 45 (no), 88 (yes), 61 (yes), 95 (yes), 38 (no), 77 (yes). <code>passing = [72, 88, 61, 95, 77]</code>. <span class="marks-call">[2]</span></span><span data-lang="zh">大于等于 60 的元素：72（是）、45（否）、88（是）、61（是）、95（是）、38（否）、77（是）。<code>passing = [72, 88, 61, 95, 77]</code>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(c) Why loop starts at index 1</span><span data-lang="zh">(c) 循环从索引 1 开始的原因</span></h4>
+        <p><span data-lang="en">The loop starts at index 1 because <code>max_val</code> is initialised to <code>scores[0]</code> (the first element) before the loop begins. Starting at 0 would compare the first element against itself, which is redundant. Beginning at 1 means every element is compared against the current maximum exactly once. <span class="marks-call">[2]</span></span><span data-lang="zh">循环从索引 1 开始，因为 <code>max_val</code> 在循环开始前已被初始化为 <code>scores[0]</code>（第一个元素）。从 0 开始会将第一个元素与自身比较，这是多余的。从 1 开始意味着每个元素恰好与当前最大值比较一次。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(d) Lengths</span><span data-lang="zh">(d) 长度</span></h4>
+        <p><span data-lang="en"><code>len(passing) = 5</code>; <code>len(scores) = 7</code>. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>len(passing) = 5</code>；<code>len(scores) = 7</code>。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The maximum-finding pattern (initialise to first element, then iterate from index 1) is one of three traversal patterns AP CSP AAP-2.K requires. The other two are: sum all elements (accumulate into total starting at 0), and linear search (return index or -1). These three patterns recur on nearly every Canadian provincial CS exam (ON ICS3U A2.3).</span><span data-lang="zh">求最大值模式（初始化为第一个元素，然后从索引 1 迭代）是 AP CSP AAP-2.K 要求的三种遍历模式之一。另外两种是：求所有元素之和（从 0 开始累加到 total）和线性搜索（返回索引或 -1）。这三种模式几乎出现在所有加拿大省级 CS 考试（ON ICS3U A2.3）中。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q8</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;4 <span data-lang="en">2D Arrays and Nested Lists</span><span data-lang="zh">二维数组与嵌套列表</span> &middot; ICS4U A3.5 / AB CSE2120 1.2.1</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">2D grades array and nested loop traversal.</span><span data-lang="zh">二维成绩数组和嵌套循环遍历。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) grades[1][2] = 94, student 1 test 2 &nbsp; (b) total = 748 &nbsp; (c) inner loop cols 0+1 &nbsp; (d) 9 times</span><span data-lang="zh">(a) grades[1][2] = 94，学生 1 测试 2 &nbsp; (b) total = 748 &nbsp; (c) 内层循环第 0+1 列 &nbsp; (d) 9 次</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) grades[1][2]</span><span data-lang="zh">(a) grades[1][2]</span></h4>
+        <p><span data-lang="en"><code>grades[1]</code> selects row 1 (0-indexed): <code>[72, 88, 94]</code>. <code>grades[1][2]</code> selects element at column 2: <strong>94</strong>. This refers to student 1 (the second student, 0-indexed) and test 2 (the third test, 0-indexed). <span class="marks-call">[2]</span></span><span data-lang="zh"><code>grades[1]</code> 选择第 1 行（从零开始）：<code>[72, 88, 94]</code>。<code>grades[1][2]</code> 选择第 2 列的元素：<strong>94</strong>。这对应学生 1（第二位学生，从零开始）和测试 2（第三次测试，从零开始）。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Nested loop trace and total</span><span data-lang="zh">(b) 嵌套循环追踪和 total</span></h4>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Row</span><span data-lang="zh">行</span></th><th><span data-lang="en">Row contents</span><span data-lang="zh">行内容</span></th><th><span data-lang="en">Row sum</span><span data-lang="zh">行和</span></th><th><span data-lang="en">Running total</span><span data-lang="zh">累计 total</span></th></tr>
+          <tr><td>0</td><td>[85, 90, 78]</td><td>253</td><td>253</td></tr>
+          <tr><td>1</td><td>[72, 88, 94]</td><td>254</td><td>507</td></tr>
+          <tr><td>2</td><td>[91, 67, 83]</td><td>241</td><td>748</td></tr>
+        </table>
+        <p><span data-lang="en">Final <code>total = 748</code>. <code>print(grades[1][2])</code> outputs <code>94</code>. <span class="marks-call">[3]</span></span><span data-lang="zh">最终 <code>total = 748</code>。<code>print(grades[1][2])</code> 输出 <code>94</code>。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) Sum first two columns only</span><span data-lang="zh">(c) 仅计算前两列之和</span></h4>
+        <pre>total2 = 0
+for row in grades:
+    total2 += row[0] + row[1]</pre>
+        <p><span data-lang="en">This replaces the inner <code>for score in row</code> loop with direct index access to columns 0 and 1, skipping column 2. <span class="marks-call">[2]</span></span><span data-lang="zh">这将内层 <code>for score in row</code> 循环替换为直接索引访问第 0 和第 1 列，跳过第 2 列。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(d) Total inner loop executions</span><span data-lang="zh">(d) 内层循环总执行次数</span></h4>
+        <p><span data-lang="en">3 rows x 3 columns = <strong>9</strong> times. <span class="marks-call">[1]</span></span><span data-lang="zh">3 行 x 3 列 = <strong>9</strong> 次。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">2D array access is always <code>grid[row][col]</code> -- row first. The total number of inner-loop executions for an m x n grid is m x n. Ontario ICS4U A3.5 lists pixel processing as the canonical use case: a greyscale image is a 2D array of integers 0-255, and every filter traverses it with nested loops.</span><span data-lang="zh">二维数组访问始终是 <code>grid[行][列]</code>——先行后列。m x n 网格内层循环的总执行次数为 m x n。安大略 ICS4U A3.5 将像素处理列为典型用例：灰度图像是 0-255 整数的二维数组，每个滤镜都通过嵌套循环遍历它。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q9</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;5 + &sect;6 <span data-lang="en">Dictionary + Set analysis</span><span data-lang="zh">字典 + 集合分析</span> &middot; CSTA 3B-AP-12 / ICS4U C1.1</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Word frequency dictionary and set intersection on two sentences.</span><span data-lang="zh">两个句子的词频字典和集合交集。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) counts = {"the":2,"cat":1,"sat":1,"on":1,"mat":1} &nbsp; (b) common = {"the","sat"} &nbsp; (c) "the" duplicated &nbsp; (d) intersection</span><span data-lang="zh">(a) counts = {"the":2,"cat":1,"sat":1,"on":1,"mat":1} &nbsp; (b) common = {"the","sat"} &nbsp; (c) "the" 重复 &nbsp; (d) 交集</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Final contents of counts</span><span data-lang="zh">(a) counts 的最终内容</span></h4>
+        <p><span data-lang="en"><code>sentence1.split()</code> produces: <code>["the", "cat", "sat", "on", "the", "mat"]</code> (6 words).</span><span data-lang="zh"><code>sentence1.split()</code> 产生：<code>["the", "cat", "sat", "on", "the", "mat"]</code>（6 个单词）。</span></p>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">word</span><span data-lang="zh">单词</span></th><th><span data-lang="en">action</span><span data-lang="zh">操作</span></th><th><span data-lang="en">counts after</span><span data-lang="zh">操作后 counts</span></th></tr>
+          <tr><td>"the"</td><td>not in counts -> set 1</td><td>{"the":1}</td></tr>
+          <tr><td>"cat"</td><td>not in counts -> set 1</td><td>{"the":1,"cat":1}</td></tr>
+          <tr><td>"sat"</td><td>not in counts -> set 1</td><td>{"the":1,"cat":1,"sat":1}</td></tr>
+          <tr><td>"on"</td><td>not in counts -> set 1</td><td>{"the":1,"cat":1,"sat":1,"on":1}</td></tr>
+          <tr><td>"the"</td><td>in counts -> += 1</td><td>{"the":2,"cat":1,"sat":1,"on":1}</td></tr>
+          <tr><td>"mat"</td><td>not in counts -> set 1</td><td>{"the":2,"cat":1,"sat":1,"on":1,"mat":1}</td></tr>
+        </table>
+        <p><span data-lang="en">Final <code>counts = {"the": 2, "cat": 1, "sat": 1, "on": 1, "mat": 1}</code>. <span class="marks-call">[3]</span></span><span data-lang="zh">最终 <code>counts = {"the": 2, "cat": 1, "sat": 1, "on": 1, "mat": 1}</code>。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(b) set1, set2, and common</span><span data-lang="zh">(b) set1、set2 和 common</span></h4>
+        <p><span data-lang="en"><code>set1 = {"the", "cat", "sat", "on", "mat"}</code> (5 unique words from sentence1).</span><span data-lang="zh"><code>set1 = {"the", "cat", "sat", "on", "mat"}</code>（sentence1 中 5 个唯一单词）。</span></p>
+        <p><span data-lang="en"><code>set2 = {"the", "dog", "sat", "by", "tree"}</code> (5 unique words from sentence2).</span><span data-lang="zh"><code>set2 = {"the", "dog", "sat", "by", "tree"}</code>（sentence2 中 5 个唯一单词）。</span></p>
+        <p><span data-lang="en"><code>common = set1 &amp; set2 = {"the", "sat"}</code>. These are the only words appearing in both sentences. <span class="marks-call">[3]</span></span><span data-lang="zh"><code>common = set1 &amp; set2 = {"the", "sat"}</code>。这两个单词是两个句子中共同出现的。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) Why set1 has fewer elements than len(words1)</span><span data-lang="zh">(c) set1 元素少于 len(words1) 的原因</span></h4>
+        <p><span data-lang="en"><code>len(words1) = 6</code> but <code>len(set1) = 5</code> because the word "the" appears twice in sentence1, and sets automatically eliminate duplicates, keeping only one copy of each unique value. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>len(words1) = 6</code> 但 <code>len(set1) = 5</code>，因为单词 "the" 在 sentence1 中出现两次，而集合自动消除重复，每个唯一值只保留一份。<span class="marks-call">[1]</span></span></p>
+        <h4><span data-lang="en">(d) What &amp; does on two sets</span><span data-lang="zh">(d) &amp; 对两个集合的操作</span></h4>
+        <p><span data-lang="en">The <code>&amp;</code> operator computes the <strong>intersection</strong> of two sets -- it returns a new set containing only elements that appear in both sets. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>&amp;</code> 运算符计算两个集合的<strong>交集</strong>——返回一个新集合，仅包含两个集合中都出现的元素。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The word-frequency dictionary pattern (<code>if word in counts: counts[word] += 1 else: counts[word] = 1</code>) is the canonical dictionary-building algorithm. In Python 3.x you can shorten it using <code>collections.Counter</code>, but the manual version is what exams test. The three set operators to memorise: <code>&amp;</code> intersection, <code>|</code> union, <code>-</code> difference (A minus B = elements in A not in B).</span><span data-lang="zh">词频字典模式（<code>if word in counts: counts[word] += 1 else: counts[word] = 1</code>）是典型的字典构建算法。在 Python 3.x 中可用 <code>collections.Counter</code> 简化，但考试测查的是手动版本。需记住的三个集合运算符：<code>&amp;</code> 交集，<code>|</code> 并集，<code>-</code> 差集（A 减 B = A 中不在 B 里的元素）。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- PART III MODELING / APPLIED SOLUTIONS 3 Qs 25 marks -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;&middot;&nbsp; MODELING / APPLIED &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第三部分 &nbsp;&middot;&nbsp; 建模与应用 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">25 marks</span><span data-lang="zh">共 25 分</span></span></div>
+
+<!-- Q10 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q10</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;1 + &sect;2 <span data-lang="en">Array indexing + traversal patterns</span><span data-lang="zh">数组索引 + 遍历模式</span> &middot; ICS3U A1.5 / CSTA 3A-AP-14</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Weather station temperatures <code>[14, 19, 22, 18, 25, 21, 17]</code>, threshold 20.</span><span data-lang="zh">气象站气温 <code>[14, 19, 22, 18, 25, 21, 17]</code>，阈值 20。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) average = 136/7 ~19.43 &nbsp; (b) found_index=2, day=22 &nbsp; (c) found_index=-1 if threshold=30 &nbsp; (d) last index=6, value=17</span><span data-lang="zh">(a) average = 136/7 约 19.43 &nbsp; (b) found_index=2，当天气温=22 &nbsp; (c) 阈值=30 时 found_index=-1 &nbsp; (d) 最后索引=6，值=17</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Average</span><span data-lang="zh">(a) 平均值</span></h4>
+        <p><span data-lang="en">total = 14 + 19 + 22 + 18 + 25 + 21 + 17 = 136. average = 136 / 7 = 19.428... (approximately 19.43). <span class="marks-call">[2]</span></span><span data-lang="zh">total = 14 + 19 + 22 + 18 + 25 + 21 + 17 = 136。average = 136 / 7 = 19.428...（约 19.43）。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Trace of second loop</span><span data-lang="zh">(b) 第二个循环的追踪</span></h4>
+        <table class="trace-table">
+          <tr><th><code>i</code></th><th><code>temps[i]</code></th><th><span data-lang="en">temps[i] &gt; 20?</span><span data-lang="zh">temps[i] &gt; 20？</span></th></tr>
+          <tr><td>0</td><td>14</td><td>No</td></tr>
+          <tr><td>1</td><td>19</td><td>No</td></tr>
+          <tr><td>2</td><td>22</td><td>Yes -- break</td></tr>
+        </table>
+        <p><span data-lang="en"><code>found_index = 2</code>. The temperature that triggered the break is <strong>22</strong> (day at index 2). <span class="marks-call">[3]</span></span><span data-lang="zh"><code>found_index = 2</code>。触发 break 的气温是 <strong>22</strong>（索引 2 处的那天）。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) If threshold = 30</span><span data-lang="zh">(c) 若阈值 = 30</span></h4>
+        <p><span data-lang="en">No temperature in <code>temps</code> exceeds 30 (the maximum is 25). The loop runs all 7 iterations without executing the <code>if</code> body, so <code>found_index</code> remains <strong>-1</strong> (the sentinel value indicating "not found"). <span class="marks-call">[2]</span></span><span data-lang="zh"><code>temps</code> 中没有气温超过 30（最大值为 25）。循环运行所有 7 次迭代而不执行 <code>if</code> 体，因此 <code>found_index</code> 保持 <strong>-1</strong>（表示"未找到"的哨兵值）。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(d) Last valid index and value</span><span data-lang="zh">(d) 最后有效索引和值</span></h4>
+        <p><span data-lang="en">Last valid index = <code>len(temps) - 1 = 7 - 1 = 6</code>. Value at index 6: <strong>17</strong>. <span class="marks-call">[1]</span></span><span data-lang="zh">最后有效索引 = <code>len(temps) - 1 = 7 - 1 = 6</code>。索引 6 处的值：<strong>17</strong>。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Using -1 as a sentinel for "not found" is an industry convention (Python's <code>str.find()</code> returns -1 when the substring is absent). On an exam, always initialise the result variable to a sentinel before the loop so that the loop only updates it when the condition is met. If the loop ends without a match, the sentinel survives as the answer.</span><span data-lang="zh">用 -1 作为"未找到"的哨兵是行业惯例（Python 的 <code>str.find()</code> 在子字符串不存在时返回 -1）。考试中，始终在循环前将结果变量初始化为哨兵值，这样循环只在条件满足时才更新它。若循环结束时没有匹配，哨兵值就是答案。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q11</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;3 + &sect;5 <span data-lang="en">List operations + Dictionary design</span><span data-lang="zh">列表操作 + 字典设计</span> &middot; ICS3U A1.6 / ICS4U C1.1</span>
+    <span class="pill marks"><span data-lang="en">[9 marks]</span><span data-lang="zh">[9 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Library book tracking with list and dictionary.</span><span data-lang="zh">使用列表和字典的图书馆书籍跟踪。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a) ["Python Basics", "Algorithms"] &nbsp; (b) iterate borrowers.items() check value &nbsp; (c) borrowers["Maya"].remove("Algorithms") &nbsp; (d) dict O(1) vs O(n) parallel list scan</span><span data-lang="zh">(a) ["Python Basics", "Algorithms"] &nbsp; (b) 迭代 borrowers.items() 检查值 &nbsp; (c) borrowers["Maya"].remove("Algorithms") &nbsp; (d) 字典 O(1) vs O(n) 并行列表扫描</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Final contents of checked_out</span><span data-lang="zh">(a) checked_out 的最终内容</span></h4>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Operation</span><span data-lang="zh">操作</span></th><th><span data-lang="en">checked_out after</span><span data-lang="zh">操作后 checked_out</span></th></tr>
+          <tr><td>append("Python Basics")</td><td>["Python Basics"]</td></tr>
+          <tr><td>append("Data Science")</td><td>["Python Basics", "Data Science"]</td></tr>
+          <tr><td>insert(1, "Algorithms")</td><td>["Python Basics", "Algorithms", "Data Science"]</td></tr>
+          <tr><td>remove("Data Science")</td><td>["Python Basics", "Algorithms"]</td></tr>
+        </table>
+        <p><span data-lang="en">Final: <code>["Python Basics", "Algorithms"]</code>. <span class="marks-call">[2]</span></span><span data-lang="zh">最终：<code>["Python Basics", "Algorithms"]</code>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Print students who borrowed "Python Basics"</span><span data-lang="zh">(b) 打印借阅 "Python Basics" 的学生</span></h4>
+        <pre>for name, books in borrowers.items():
+    if "Python Basics" in books:
+        print(name)</pre>
+        <p><span data-lang="en">Output: <code>Maya</code> then <code>Leon</code> (both have "Python Basics" in their lists). <span class="marks-call">[3]</span></span><span data-lang="zh">输出：<code>Maya</code> 然后 <code>Leon</code>（两人的列表中都有 "Python Basics"）。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) Remove "Algorithms" from Maya's list</span><span data-lang="zh">(c) 从 Maya 的列表中删除 "Algorithms"</span></h4>
+        <pre>borrowers["Maya"].remove("Algorithms")</pre>
+        <p><span data-lang="en">This accesses Maya's list via the dictionary key and calls <code>remove()</code> on that list in place. <span class="marks-call">[2]</span></span><span data-lang="zh">这通过字典键访问 Maya 的列表，并就地对该列表调用 <code>remove()</code>。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(d) Why dictionary is more efficient</span><span data-lang="zh">(d) 字典更高效的原因</span></h4>
+        <p><span data-lang="en">A dictionary gives O(1) lookup by student name using a hash table, whereas two parallel lists require scanning the name list sequentially (O(n)) to find the matching index, then accessing the second list at that index. <span class="marks-call">[2]</span></span><span data-lang="zh">字典通过哈希表按学生姓名提供 O(1) 查找，而两个并行列表需要顺序扫描姓名列表（O(n)）来找到匹配索引，再从第二个列表访问该索引。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Nested data structures (a dictionary whose values are lists) are common in real programs and at the ICS4U / AP CSA level. The pattern <code>dict[key].method()</code> accesses the inner list directly. Ontario ICS4U C1.1 names this as an Abstract Data Type application; AB CSE2120 outcome 1.2.1 calls the simpler version "parallel arrays (associative tables)."</span><span data-lang="zh">嵌套数据结构（值为列表的字典）在实际程序和 ICS4U / AP CSA 级别中很常见。模式 <code>dict[key].method()</code> 直接访问内层列表。安大略 ICS4U C1.1 将此列为抽象数据类型应用；AB CSE2120 结果 1.2.1 将简化版本称为"并行数组（关联表）"。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q12</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;6 + &sect;7 <span data-lang="en">Sets + structure choice + analysis</span><span data-lang="zh">集合 + 结构选择 + 分析</span> &middot; CSTA 3B-AP-12</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Social media set operations and tag frequency dictionary.</span><span data-lang="zh">社交媒体集合运算和标签频率字典。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">(a)(i) {"bob","carol"} (ii) {"alice","dave"} &nbsp; (b) {"#python":3,"#cs":2,"#data":1} &nbsp; (c) set, intersection operator O(1)</span><span data-lang="zh">(a)(i) {"bob","carol"} (ii) {"alice","dave"} &nbsp; (b) {"#python":3,"#cs":2,"#data":1} &nbsp; (c) 集合，交集运算符 O(1)</span></div>
+      <div class="rationale">
+        <h4><span data-lang="en">(a) Set operations</span><span data-lang="zh">(a) 集合运算</span></h4>
+        <p><span data-lang="en">followsA = {"alice", "bob", "carol", "dave"}. followsB = {"bob", "eve", "carol", "frank"}.</span><span data-lang="zh">followsA = {"alice", "bob", "carol", "dave"}。followsB = {"bob", "eve", "carol", "frank"}。</span></p>
+        <p><span data-lang="en">(i) Users followed by both: <code>followsA &amp; followsB</code> = <strong>{"bob", "carol"}</strong>. These appear in both sets. <span class="marks-call">[1]</span></span><span data-lang="zh">(i) 两人都关注的用户：<code>followsA &amp; followsB</code> = <strong>{"bob", "carol"}</strong>。这两个出现在两个集合中。<span class="marks-call">[1]</span></span></p>
+        <p><span data-lang="en">(ii) Users followed only by A: <code>followsA - followsB</code> = <strong>{"alice", "dave"}</strong>. These appear in A but not in B. <span class="marks-call">[2]</span></span><span data-lang="zh">(ii) 只有 A 关注的用户：<code>followsA - followsB</code> = <strong>{"alice", "dave"}</strong>。这些出现在 A 中但不在 B 中。<span class="marks-call">[2]</span></span></p>
+        <h4><span data-lang="en">(b) Trace tag_counts loop</span><span data-lang="zh">(b) 追踪 tag_counts 循环</span></h4>
+        <p><span data-lang="en">tags = ["#python", "#cs", "#python", "#data", "#cs", "#python"].</span><span data-lang="zh">tags = ["#python", "#cs", "#python", "#data", "#cs", "#python"]。</span></p>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">tag</span><span data-lang="zh">标签</span></th><th><span data-lang="en">in tag_counts?</span><span data-lang="zh">在 tag_counts 中？</span></th><th><span data-lang="en">tag_counts after</span><span data-lang="zh">操作后 tag_counts</span></th></tr>
+          <tr><td>#python</td><td>No -> set 1</td><td>{"#python":1}</td></tr>
+          <tr><td>#cs</td><td>No -> set 1</td><td>{"#python":1,"#cs":1}</td></tr>
+          <tr><td>#python</td><td>Yes -> +=1</td><td>{"#python":2,"#cs":1}</td></tr>
+          <tr><td>#data</td><td>No -> set 1</td><td>{"#python":2,"#cs":1,"#data":1}</td></tr>
+          <tr><td>#cs</td><td>Yes -> +=1</td><td>{"#python":2,"#cs":2,"#data":1}</td></tr>
+          <tr><td>#python</td><td>Yes -> +=1</td><td>{"#python":3,"#cs":2,"#data":1}</td></tr>
+        </table>
+        <p><span data-lang="en">Final: <code>{"#python": 3, "#cs": 2, "#data": 1}</code>. <span class="marks-call">[3]</span></span><span data-lang="zh">最终：<code>{"#python": 3, "#cs": 2, "#data": 1}</code>。<span class="marks-call">[3]</span></span></p>
+        <h4><span data-lang="en">(c) Structure and ideal property</span><span data-lang="zh">(c) 数据结构和理想属性</span></h4>
+        <p><span data-lang="en"><code>followsA</code> and <code>followsB</code> are <strong>sets</strong>. The property that makes sets ideal for computing users-in-common is that the <code>&amp;</code> intersection operator is built in and runs in average O(min(|A|, |B|)) time, far faster than any list-based approach. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>followsA</code> 和 <code>followsB</code> 是<strong>集合</strong>。使集合特别适合计算共同用户的属性是：内置的 <code>&amp;</code> 交集运算符平均运行时间为 O(min(|A|, |B|))，远快于任何基于列表的方法。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The set difference operator <code>-</code> is the structure-selection differentiator on CSTA 3B-AP-12 exams: "elements in A that are not in B" is a one-liner with sets (<code>A - B</code>) but requires a nested loop with lists (O(n^2)). Whenever a question mentions "unique membership" or "elements in common," reach for a set. The tag-count pattern mirrors the word-frequency pattern from Q9, confirming that dictionaries are the canonical tool for any "count occurrences" problem.</span><span data-lang="zh">集合差集运算符 <code>-</code> 是 CSTA 3B-AP-12 考试中的结构选择区分点："A 中不在 B 里的元素"用集合是一行代码（<code>A - B</code>），而用列表需要嵌套循环（O(n^2)）。每当问题提到"唯一成员"或"共同元素"时，选择集合。标签计数模式与 Q9 的词频模式相同，证实字典是任何"统计出现次数"问题的典型工具。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- consult-cta -->
+<aside class="consult-cta">
+  <span class="consult-cta__lead"><span data-lang="en">Stuck, or want to go further?</span><span data-lang="zh">遇到困难，或想更进一步？</span></span>
+  <span class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor:</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估：</span></span>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_5_Data_Structures__solutions__en" target="_blank" rel="noopener">dingruischolars.com/signup</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_5_Data_Structures__solutions__zh" target="_blank" rel="noopener">dingruischolars.com/signup-ch</a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../../Study%20Guides/Unit_5_Data_Structures.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <a href="../Unit_5_Data_Structures_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></span>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">High School Computer Science &middot; Solutions</span><span data-lang="zh">高中计算机科学 &middot; 详解</span> &middot; <code style="color:#555;">v1</code></span>
+  <span><span data-lang="en">Data Structures Solutions v1 &middot; 12 solutions &middot; ~80 marks &middot; US / ON / BC / AB &middot; HS-CS-5</span><span data-lang="zh">数据结构 详解 v1 &middot; 共 12 题详解 &middot; 约 80 分 &middot; 美 / 安 / 卑 / 阿 &middot; HS-CS-5</span></span>
+</footer>
+
+<script>
+function toggleLang() { const isZh = document.body.classList.toggle('lang-zh'); try { localStorage.setItem('lang', isZh ? 'zh' : 'en'); } catch (e) {} }
+try { if (localStorage.getItem('lang') === 'zh') document.body.classList.add('lang-zh'); } catch (e) {}
+</script>
+
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

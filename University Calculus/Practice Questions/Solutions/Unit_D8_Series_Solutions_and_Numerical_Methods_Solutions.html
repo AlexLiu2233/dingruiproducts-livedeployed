@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Calculus | Unit D8: Series Solutions and Numerical Methods | Solutions | Dingrui Scholars</title>
+<!-- dingrui:version v1.0  dingrui:pair-key UC-D8  dingrui:doc-type solutions -->
+<link rel="canonical" href="https://notes.dingruischolars.com/University%20Calculus/Practice%20Questions/Solutions/Unit_D8_Series_Solutions_and_Numerical_Methods_Solutions.html">
+<meta name="description" content="Worked solutions for Unit D8: Series Solutions and Numerical Methods in University Calculus. Power-series recurrences, Frobenius method, Euler, Heun, and RK4 methods, with full mark callouts from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="University Calculus | Unit D8: Series Solutions and Numerical Methods | Solutions">
+<meta property="og:description" content="Worked solutions for Unit D8: Series Solutions and Numerical Methods in University Calculus, from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/University%20Calculus/Practice%20Questions/Solutions/Unit_D8_Series_Solutions_and_Numerical_Methods_Solutions.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="University Calculus | Unit D8: Series Solutions and Numerical Methods | Solutions">
+<meta name="twitter:description" content="Worked solutions for Unit D8: Series Solutions and Numerical Methods in University Calculus, from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style data-theme="light">
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --core-bg:#ECECEE;  --core-ink:#333;     --core-rule:#9A9A9A;
+    --proof-bg:#EDE4F5;  --proof-ink:#5E3D7A;  --proof-rule:#A888C8;
+    --applied-bg:#E4ECF7;   --applied-ink:#1E3F75;   --applied-rule:#7A9BCD;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --sol-bg:#F1F7EE;  --sol-rule:#5E8E47;  --sol-ink:#2F4E1E;
+    --sol-accent:#3E7228;
+    --insight-bg:#FBF6EC; --insight-rule:#C49350; --insight-ink:#5E4014;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:'Times New Roman',Times,Georgia,'PingFang SC','Microsoft YaHei',serif;font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:'Source Sans 3',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:'Source Sans 3',sans-serif;font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.core{background:var(--core-bg);color:var(--core-ink);border-color:var(--core-rule);}
+  .pill.proof{background:var(--proof-bg);color:var(--proof-ink);border-color:var(--proof-rule);}
+  .pill.applied {background:var(--applied-bg); color:var(--applied-ink); border-color:var(--applied-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .topics-line{font-family:'Source Sans 3',sans-serif;font-size:10pt;color:#444;text-align:center;margin-bottom:12px;}
+  .topics-line b{color:var(--ink);}
+  .topics-line .scope{display:inline-block;background:#EFE9E4;color:#4A3A2A;border:1px solid #B5A68F;border-radius:3px;padding:1px 8px;font-size:9pt;font-weight:700;letter-spacing:.1em;margin-left:6px;vertical-align:1px;}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:'Source Sans 3',sans-serif;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:14px 20px 6px;margin-bottom:22px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:12px;font-family:'Source Sans 3',sans-serif;}
+  .q-body{font-size:11pt;line-height:1.55;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;font-style:italic;color:#444;border-left:2px solid #d8cdb8;padding-left:10px;}
+  .solution{margin:14px 0 8px;background:var(--sol-bg);border-left:3px solid var(--sol-rule);border-radius:0 4px 4px 0;padding:12px 18px 14px;font-size:11pt;line-height:1.6;}
+  .solution .answer-line{font-family:'Source Sans 3',sans-serif;font-weight:700;color:var(--sol-ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #d4e4cb;letter-spacing:.04em;font-size:11pt;}
+  .solution .answer-line .ans{color:var(--sol-accent);font-size:1.08em;letter-spacing:.08em;}
+  .solution .rationale{color:#2a2a2a;}
+  .solution .rationale p{margin:5px 0;}
+  .solution h4{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:10.5pt;color:var(--sol-ink);margin:10px 0 4px;letter-spacing:.05em;text-transform:uppercase;}
+  .solution ul, .solution ol{margin:6px 0 6px 22px;line-height:1.7;}
+  .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
+  .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  .solution .insight strong{color:#7A4810;}
+  table.data{border-collapse:collapse;margin:8px auto;font-size:10.5pt;}
+  table.data th, table.data td{border:1px solid #444;padding:4px 14px;text-align:center;font-family:'Source Sans 3',sans-serif;}
+  table.data th{background:#f1ece4;font-weight:700;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:'Source Sans 3',sans-serif;font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  @media (max-width: 600px){body{font-size:10.5pt;}}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.solution{background:#f0f6ec;}}
+
+  /* consult-cta: lead-gen conversion surface (UC P+S, EN-first) */
+  .consult-cta{background:#FBF4F4;border:2px solid var(--maroon);border-radius:8px;padding:18px 22px;margin:26px 0 8px;text-align:center;font-family:'Source Sans 3',sans-serif;break-inside:avoid;page-break-inside:avoid;}
+  .consult-cta__lead{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--maroon);margin:0 0 6px;}
+  .consult-cta__body{color:#444;font-size:0.95rem;line-height:1.5;margin:0 auto 14px;max-width:50ch;}
+  .consult-cta__btn{display:inline-block;background:var(--ink);color:#fff;font-family:'Source Sans 3',sans-serif;font-weight:600;font-size:0.95rem;text-decoration:none;padding:10px 20px;border-radius:8px;transition:opacity 0.2s;}
+  .consult-cta__btn:hover{opacity:0.88;}
+  @media print{.consult-cta{border:1px solid #999;background:#fff;}.consult-cta__btn{background:#fff !important;color:#000 !important;border:1px solid #999;}.consult-cta__btn::after{content:" (dingruischolars.com/signup)";font-weight:400;}}
+
+  /* bilingual toggle */
+  body:not(.lang-zh) [data-lang="zh"]{display:none;}
+  body.lang-zh [data-lang="en"]{display:none;}
+  #langToggle{position:fixed;top:10px;right:10px;z-index:200;background:var(--maroon);color:#fff;border:none;padding:6px 14px;border-radius:999px;font-family:'Source Sans 3','PingFang SC','Microsoft YaHei',sans-serif;font-weight:700;font-size:9pt;letter-spacing:.1em;cursor:pointer;box-shadow:0 2px 6px rgba(122,46,46,0.25);}
+  #langToggle:hover{background:#5C1E1E;}
+  @media print{#langToggle{display:none !important;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "University Calculus | Unit D8: Series Solutions and Numerical Methods | Solutions",
+  "description": "Worked solutions for Unit D8: Series Solutions and Numerical Methods in University Calculus, from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/University%20Calculus/Practice%20Questions/Solutions/Unit_D8_Series_Solutions_and_Numerical_Methods_Solutions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Solutions",
+  "educationalLevel": "Undergraduate",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body data-theme="light">
+<button id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+
+<div class="brand">U&nbsp;N&nbsp;I&nbsp;V&nbsp;E&nbsp;R&nbsp;S&nbsp;I&nbsp;T&nbsp;Y&nbsp;&nbsp;C&nbsp;A&nbsp;L&nbsp;C&nbsp;U&nbsp;L&nbsp;U&nbsp;S</div>
+<div class="chapter-tag"><span data-lang="en">Unit D8 &middot; Solutions</span><span data-lang="zh">第D8单元 &middot; 解答</span></div>
+<h1 class="chapter-title"><span data-lang="en">Series Solutions and Numerical Methods &middot; Solutions</span><span data-lang="zh">级数解法与数值方法 &middot; 解答</span></h1>
+<p class="chapter-sub"><span data-lang="en">Companion to the University-Style Practice Set</span><span data-lang="zh">配套大学水平练习题集</span></p>
+<div class="legend">
+  <span class="pill med">MEDIUM</span>
+  <span class="pill hard">HARD</span>
+  <span class="pill core">CORE</span>
+  <span class="pill proof">PROOF</span>
+  <span class="pill applied">APPLIED</span>
+</div>
+<p class="topics-line"><span data-lang="en">Sections <b>1 to 7</b>: power-series manipulations, ordinary vs singular points, series solutions and recurrence relations, Frobenius method and indicial equations, Euler, improved Euler (Heun), RK4, and global error order</span><span data-lang="zh">第<b>1至7</b>节：幂级数运算、常点与奇点、级数解与递推关系、Frobenius方法与指标方程、欧拉法、改进欧拉法（Heun法）、RK4及全局误差阶</span><span class="scope">CALC IV</span></p>
+<hr class="thick"><hr class="thin">
+
+<!-- ============================== PART I ============================== -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;·&nbsp; CORE TECHNIQUES</span><span data-lang="zh">第一部分 &nbsp;·&nbsp; 核心技巧</span></span><span class="part-meta"><span data-lang="en">Computational fluency &middot; 28 marks</span><span data-lang="zh">计算熟练度 &middot; 28分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Worked Solutions</span><span data-lang="zh">详细解答</span></h2>
+
+<!-- Q1 -->
+<div class="q">
+  <div class="q-head"><span class="pill qnum">Q1</span><span class="pill med">MEDIUM</span><span class="pill core">CORE</span><span class="pill topic"><span data-lang="en">ordinary vs singular points; radius of convergence</span><span data-lang="zh">常点与奇点；收敛半径</span></span><span class="pill marks">[8 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$(x^2-9)\,y''+x\,y'+y=0$: (a) singular points and classification; (b) ordinary point $x_0=0$ and radius bound; (c) ordinary point $x_0=1$ and radius bound.</span><span data-lang="zh">$(x^2-9)\,y''+x\,y'+y=0$：(a) 奇点及其分类；(b) 常点 $x_0=0$ 及收敛半径下界；(c) 常点 $x_0=1$ 及收敛半径下界。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $x=\pm3$, <span data-lang="en">both regular singular</span><span data-lang="zh">均为正则奇点</span> &nbsp;·&nbsp; <span class="ans">(b)</span> <span data-lang="en">ordinary, $R\ge3$</span><span data-lang="zh">常点，$R\ge3$</span> &nbsp;·&nbsp; <span class="ans">(c)</span> <span data-lang="en">ordinary, $R\ge2$</span><span data-lang="zh">常点，$R\ge2$</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Standard form and singular points</span><span data-lang="zh">(a) 标准形式与奇点</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">Divide by $(x^2-9)$: (M1)</span><span data-lang="zh">两边除以 $(x^2-9)$：(M1)</span></p>
+      $$ y'' + \frac{x}{x^2-9}\,y' + \frac{1}{x^2-9}\,y = 0, $$
+      <p><span data-lang="en">so $p(x)=\dfrac{x}{x^2-9}$ and $q(x)=\dfrac{1}{x^2-9}$. Both functions fail to be analytic at $x^2-9=0$, i.e. at $x=3$ and $x=-3$. These are the only singular points. (A1)</span><span data-lang="zh">得 $p(x)=\dfrac{x}{x^2-9}$，$q(x)=\dfrac{1}{x^2-9}$。两个函数在 $x^2-9=0$ 处不解析，即在 $x=3$ 和 $x=-3$ 处。这两点是仅有的奇点。(A1)</span></p>
+      <p><span data-lang="en">To classify $x=3$: compute $(x-3)p(x)=\dfrac{x(x-3)}{(x-3)(x+3)}=\dfrac{x}{x+3}$, which is analytic at $x=3$, and $(x-3)^2 q(x)=\dfrac{(x-3)^2}{(x-3)(x+3)}=\dfrac{x-3}{x+3}$, analytic at $x=3$. Both limits exist and are analytic, so $x=3$ is a regular singular point. By the same test (replacing $(x-3)$ by $(x+3)$), $x=-3$ is also a regular singular point. (A1)</span><span data-lang="zh">对 $x=3$ 的分类：计算 $(x-3)p(x)=\dfrac{x(x-3)}{(x-3)(x+3)}=\dfrac{x}{x+3}$，在 $x=3$ 处解析；$(x-3)^2 q(x)=\dfrac{(x-3)^2}{(x-3)(x+3)}=\dfrac{x-3}{x+3}$，在 $x=3$ 处也解析。两者极限存在且解析，故 $x=3$ 是正则奇点。用同样方法（将 $(x-3)$ 换成 $(x+3)$），$x=-3$ 也是正则奇点。(A1)</span></p>
+      <h4><span data-lang="en">(b) Ordinary point at $x_0=0$; radius bound</span><span data-lang="zh">(b) $x_0=0$ 处为常点；收敛半径下界</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">At $x_0=0$, both $p(x)$ and $q(x)$ are analytic (the denominator $x^2-9=-9\ne0$ there), so $x_0=0$ is an ordinary point. (M1) The nearest singular points are $x=\pm3$, both at distance $3$ from $x_0=0$. By the existence theorem for series solutions near an ordinary point, the radius of convergence of any series solution centred at $0$ is at least the distance to the nearest singularity: (A1)</span><span data-lang="zh">在 $x_0=0$ 处，分母 $x^2-9=-9\ne0$，故 $p(x)$ 和 $q(x)$ 均解析，$x_0=0$ 是常点。(M1) 最近奇点为 $x=\pm3$，到 $x_0=0$ 的距离均为 $3$。由常点处级数解的存在性定理，以 $0$ 为中心的任意级数解收敛半径至少为到最近奇点的距离：(A1)</span></p>
+      $$ R \ge 3. $$
+      <p>(A1)</p>
+      <h4><span data-lang="en">(c) Ordinary point at $x_0=1$; radius bound</span><span data-lang="zh">(c) $x_0=1$ 处为常点；收敛半径下界</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">At $x_0=1$, $x^2-9=-8\ne0$, so both $p$ and $q$ are analytic there, making $x_0=1$ an ordinary point. (M1) The distance from $1$ to the nearest singular point (at $x=3$) is $2$, so (A1)</span><span data-lang="zh">在 $x_0=1$ 处，$x^2-9=-8\ne0$，故 $p$ 和 $q$ 在此处均解析，$x_0=1$ 是常点。(M1) 从 $1$ 到最近奇点（$x=3$）的距离为 $2$，故 (A1)</span></p>
+      $$ R \ge 2. $$
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">The radius-of-convergence bound comes from the complex plane: the singular points $x=\pm3$ are real, so they are at distances $3$ and $3$ from $x_0=0$, and distances $2$ and $4$ from $x_0=1$. The minimum is what counts. No coefficient computation is needed to get this guarantee; it follows purely from locating where $p$ and $q$ break down.</span><span data-lang="zh">收敛半径下界来自复平面：奇点 $x=\pm3$ 均为实数，到 $x_0=0$ 的距离均为 $3$，到 $x_0=1$ 的距离分别为 $2$ 和 $4$。取最小值即为保证的下界。无需计算系数即可得到这一保证，仅需定位 $p$ 和 $q$ 的奇点位置即可。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <div class="q-head"><span class="pill qnum">Q2</span><span class="pill med">MEDIUM</span><span class="pill core">CORE</span><span class="pill topic"><span data-lang="en">power-series solution about an ordinary point; recurrence relation</span><span data-lang="zh">常点处的幂级数解；递推关系</span></span><span class="pill marks">[10 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y''+y=0$, $y(0)=1$, $y'(0)=0$. Derive the recurrence, apply ICs, compute coefficients, identify the closed form.</span><span data-lang="zh">$y''+y=0$，$y(0)=1$，$y'(0)=0$。推导递推关系，应用初始条件，计算系数，识别闭合形式。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $a_{n+2}=-\dfrac{a_n}{(n+2)(n+1)}$ &nbsp;·&nbsp; <span class="ans">(b)</span> $y=1-\dfrac{x^2}{2}+\dfrac{x^4}{24}+\cdots$ &nbsp;·&nbsp; <span class="ans">(c)</span> $\cos x$</div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Substitution and recurrence</span><span data-lang="zh">(a) 代入与递推关系</span> <span class="marks-call">M1·M1·A1·A1</span></h4>
+      <p><span data-lang="en">Write $y=\displaystyle\sum_{n=0}^{\infty}a_n x^n$. Differentiating twice and shifting the index $k=n-2$ gives (M1)</span><span data-lang="zh">设 $y=\displaystyle\sum_{n=0}^{\infty}a_n x^n$，对其求两阶导数并令 $k=n-2$ 进行指标移位得 (M1)</span></p>
+      $$ y'' = \sum_{n=2}^{\infty} n(n-1)a_n x^{n-2} = \sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}\,x^n. $$
+      <p><span data-lang="en">Substitute into $y''+y=0$: (M1)</span><span data-lang="zh">代入 $y''+y=0$：(M1)</span></p>
+      $$ \sum_{n=0}^{\infty}\big[(n+2)(n+1)a_{n+2}+a_n\big]x^n = 0. $$
+      <p><span data-lang="en">For this to hold for all $x$, every bracket must vanish: (A1)</span><span data-lang="zh">对所有 $x$ 成立，每个括号必须为零：(A1)</span></p>
+      $$ (n+2)(n+1)a_{n+2}+a_n=0 \quad\Longrightarrow\quad a_{n+2}=-\frac{a_n}{(n+2)(n+1)}. \tag{A1} $$
+      <h4><span data-lang="en">(b) Initial conditions and coefficients</span><span data-lang="zh">(b) 初始条件与系数</span> <span class="marks-call">M1·A1·A1·A1</span></h4>
+      <p><span data-lang="en">From $y(0)=a_0=1$ and $y'(0)=a_1=0$. (M1) Apply the recurrence to the even chain (the odd chain is zero throughout since $a_1=0$): (A1 for each correct pair of coefficients)</span><span data-lang="zh">由 $y(0)=a_0=1$ 和 $y'(0)=a_1=0$。(M1) 将递推关系应用于偶数链（由于 $a_1=0$，奇数链全为零）：（每对正确系数得 A1）</span></p>
+      $$ a_2 = -\frac{a_0}{2\cdot1} = -\frac{1}{2}, \quad a_3 = -\frac{a_1}{3\cdot2} = 0, $$
+      $$ a_4 = -\frac{a_2}{4\cdot3} = \frac{1/2}{12} = \frac{1}{24}, \quad a_5 = -\frac{a_3}{5\cdot4} = 0. $$
+      <p><span data-lang="en">(A1 for $a_2$, A1 for $a_4$) Hence</span><span data-lang="zh">（$a_2$ 得 A1，$a_4$ 得 A1）因此</span></p>
+      $$ y = 1 - \frac{x^2}{2} + \frac{x^4}{24} + \cdots = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots $$
+      <h4><span data-lang="en">(c) Closed-form identification and verification</span><span data-lang="zh">(c) 闭合形式识别与验证</span> <span class="marks-call">A1·R1</span></h4>
+      <p><span data-lang="en">The series is the Maclaurin series of $\cos x$. (A1) Verification: $(\cos x)''=-\cos x$, so $y''+y=0$; and $\cos 0=1$, $-\sin 0=0$, confirming both initial conditions. (R1)</span><span data-lang="zh">该级数是 $\cos x$ 的Maclaurin展开式。(A1) 验证：$(\cos x)''=-\cos x$，故 $y''+y=0$；且 $\cos 0=1$，$-\sin 0=0$，两个初始条件均满足。(R1)</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">Re-index sums carefully so all powers of $x$ match before equating coefficients. The recurrence $a_{n+2}=-a_n/[(n+2)(n+1)]$ links only even-indexed coefficients to each other (and odd to each other), which is why the initial conditions $a_0=1,\,a_1=0$ produce the purely even series $\cos x$. Choosing $a_0=0,\,a_1=1$ instead would recover $\sin x$: together they form the two-parameter family.</span><span data-lang="zh">比较系数前，仔细重新对求和进行指标对齐，确保 $x$ 的各幂次对应。递推关系 $a_{n+2}=-a_n/[(n+2)(n+1)]$ 只将偶数下标系数相互关联（奇数下标同理），这就是初始条件 $a_0=1,\,a_1=0$ 产生纯偶次级数 $\cos x$ 的原因。若取 $a_0=0,\,a_1=1$，则得到 $\sin x$：两者共同构成双参数族。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <div class="q-head"><span class="pill qnum">Q3</span><span class="pill med">MEDIUM</span><span class="pill core">CORE</span><span class="pill topic"><span data-lang="en">Euler steps and Heun step; comparing one-step errors</span><span data-lang="zh">欧拉步骤与Heun步骤；比较单步误差</span></span><span class="pill marks">[10 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y'=y-x$, $y(0)=2$, exact solution $y=x+1+e^x$. (a) Two Euler steps, $h=0.2$; (b) one Heun step, $h=0.4$; (c) exact value and errors.</span><span data-lang="zh">$y'=y-x$，$y(0)=2$，精确解 $y=x+1+e^x$。(a) 两步欧拉法，$h=0.2$；(b) 一步Heun法，$h=0.4$；(c) 精确值与误差。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $y_2=2.84$ &nbsp;·&nbsp; <span class="ans">(b)</span> $y_1=2.88$ &nbsp;·&nbsp; <span class="ans">(c)</span> <span data-lang="en">exact $2.8918$; Euler err $0.0518$, Heun err $0.0118$; Heun more accurate</span><span data-lang="zh">精确值 $2.8918$；欧拉误差 $0.0518$，Heun误差 $0.0118$；Heun更精确</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Two Euler steps</span><span data-lang="zh">(a) 两步欧拉法</span> <span class="marks-call">M1·A1·M1·A1</span></h4>
+      <p><span data-lang="en">Here $f(x,y)=y-x$. Step 1 from $(0,2)$: slope $f(0,2)=2-0=2$, so (M1)</span><span data-lang="zh">这里 $f(x,y)=y-x$。从 $(0,2)$ 出发第1步：斜率 $f(0,2)=2-0=2$，故 (M1)</span></p>
+      $$ y_1 = 2 + 0.2(2) = 2.4, \quad x_1 = 0.2. $$
+      <p><span data-lang="en">(A1) Step 2 from $(0.2, 2.4)$: slope $f(0.2,2.4)=2.4-0.2=2.2$, so (M1)</span><span data-lang="zh">(A1) 从 $(0.2, 2.4)$ 出发第2步：斜率 $f(0.2,2.4)=2.4-0.2=2.2$，故 (M1)</span></p>
+      $$ y_2 = 2.4 + 0.2(2.2) = 2.4 + 0.44 = 2.84, \quad x_2 = 0.4. $$
+      <p>(A1)</p>
+      <h4><span data-lang="en">(b) Heun (improved Euler) step</span><span data-lang="zh">(b) Heun（改进欧拉）步骤</span> <span class="marks-call">M1·A1·M1·A1</span></h4>
+      <p><span data-lang="en">Left slope: $k_L = f(0,2)=2$. Euler predictor: (M1)</span><span data-lang="zh">左端斜率：$k_L = f(0,2)=2$。欧拉预测值：(M1)</span></p>
+      $$ \tilde{y}_1 = 2 + 0.4(2) = 2.8. $$
+      <p><span data-lang="en">Right slope at the predicted point: $k_R=f(0.4, 2.8)=2.8-0.4=2.4$. (A1) Corrector average: (M1)</span><span data-lang="zh">预测点处的右端斜率：$k_R=f(0.4, 2.8)=2.8-0.4=2.4$。(A1) 校正平均值：(M1)</span></p>
+      $$ y_1 = 2 + \frac{0.4}{2}(k_L+k_R) = 2 + 0.2(2+2.4) = 2 + 0.2(4.4) = 2.88. $$
+      <p>(A1)</p>
+      <h4><span data-lang="en">(c) Exact value and error comparison</span><span data-lang="zh">(c) 精确值与误差比较</span> <span class="marks-call">A1·A1</span></h4>
+      <p><span data-lang="en">$y(0.4)=0.4+1+e^{0.4}=1.4+1.4918=2.8918$ (using $e^{0.4}\approx1.4918$). (A1)</span><span data-lang="zh">$y(0.4)=0.4+1+e^{0.4}=1.4+1.4918=2.8918$（取 $e^{0.4}\approx1.4918$）。(A1)</span></p>
+      <p><span data-lang="en">Euler absolute error: $|2.84-2.8918|=0.0518$. Heun absolute error: $|2.88-2.8918|=0.0118$. Heun is more accurate, with error roughly $4\times$ smaller for the same total interval covered. (A1)</span><span data-lang="zh">欧拉绝对误差：$|2.84-2.8918|=0.0518$。Heun绝对误差：$|2.88-2.8918|=0.0118$。Heun更精确，在覆盖相同区间的情况下误差约小 $4$ 倍。(A1)</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">Heun (improved Euler) is a second-order Runge-Kutta method: its global error is $O(h^2)$, while plain Euler's is $O(h)$. When the step size is the same, Heun is roughly one order better. The predictor-corrector structure buys this without requiring any extra information beyond $f$: you evaluate $f$ twice per step instead of once, earning an extra order of accuracy in return.</span><span data-lang="zh">Heun法（改进欧拉法）是二阶龙格-库塔法：其全局误差为 $O(h^2)$，而普通欧拉法为 $O(h)$。在步长相同时，Heun法大约高一个精度阶。预测-校正结构在不需要 $f$ 以外任何额外信息的前提下实现这一提升：每步对 $f$ 求值两次，换来一个额外的精度阶。</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================== PART II ============================== -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;·&nbsp; DEFINITIONS AND PROOF</span><span data-lang="zh">第二部分 &nbsp;·&nbsp; 定义与证明</span></span><span class="part-meta"><span data-lang="en">Rigorous arguments &middot; 26 marks</span><span data-lang="zh">严格论证 &middot; 26分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Worked Solutions</span><span data-lang="zh">详细解答</span></h2>
+
+<!-- Q4 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q4</span><span class="pill hard">HARD</span><span class="pill proof">PROOF</span><span class="pill topic"><span data-lang="en">deriving the recurrence for $y'' - xy = 0$ (Airy's equation)</span><span data-lang="zh">推导 $y'' - xy = 0$（Airy方程）的递推关系</span></span><span class="pill marks">[10 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y''-xy=0$: (a) series for $y''$ and $xy$, handling the constant term; (b) recurrence and coefficients $a_3,a_4,a_5,a_6$; (c) general solution and infinite radius.</span><span data-lang="zh">$y''-xy=0$：(a) $y''$ 和 $xy$ 的级数表达式，处理常数项；(b) 递推关系及系数 $a_3,a_4,a_5,a_6$；(c) 通解与无穷收敛半径。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $a_2=0$; <span data-lang="en">(b)</span><span data-lang="zh">(b)</span> $a_{n+3}=\dfrac{a_n}{(n+3)(n+2)}$; <span data-lang="en">(c) two independent series, $R=\infty$</span><span data-lang="zh">(c) 两个线性无关级数，$R=\infty$</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Series for $y''$ and $xy$; handling the $n=0$ term</span><span data-lang="zh">(a) $y''$ 和 $xy$ 的级数；处理 $n=0$ 项</span> <span class="marks-call">M1·A1·M1·A1</span></h4>
+      <p><span data-lang="en">With $y=\sum_{n=0}^\infty a_n x^n$, differentiating twice and shifting: (M1)</span><span data-lang="zh">设 $y=\sum_{n=0}^\infty a_n x^n$，对其求两阶导数并移位：(M1)</span></p>
+      $$ y'' = \sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}\,x^n. $$
+      <p><span data-lang="en">For the right side, multiply $y$ by $x$: (M1)</span><span data-lang="zh">对右侧，将 $y$ 乘以 $x$：(M1)</span></p>
+      $$ xy = \sum_{n=0}^{\infty} a_n x^{n+1} = \sum_{n=1}^{\infty} a_{n-1}\,x^n. $$
+      <p><span data-lang="en">The $y''$ series starts at $n=0$, but the $xy$ series starts at $n=1$. The equation $y''-xy=0$ therefore reads, at $n=0$: $2\cdot1\cdot a_2 = 0$, so (A1)</span><span data-lang="zh">$y''$ 的级数从 $n=0$ 开始，而 $xy$ 的级数从 $n=1$ 开始。因此，方程 $y''-xy=0$ 在 $n=0$ 处给出：$2\cdot1\cdot a_2 = 0$，故 (A1)</span></p>
+      $$ a_2 = 0. $$
+      <p><span data-lang="en">For $n\ge 1$ both series contribute, giving (A1)</span><span data-lang="zh">对 $n\ge 1$，两个级数均有贡献，得 (A1)</span></p>
+      $$ (n+2)(n+1)a_{n+2} - a_{n-1} = 0. $$
+      <h4><span data-lang="en">(b) Recurrence and explicit coefficients</span><span data-lang="zh">(b) 递推关系与显式系数</span> <span class="marks-call">M1·A1·A1·A1</span></h4>
+      <p><span data-lang="en">Re-index by setting $m=n-1$: for $n\ge1$, $a_{n+2}=\dfrac{a_{n-1}}{(n+2)(n+1)}$. Equivalently, replacing $n$ by $n+1$, the recurrence linking coefficients three apart is (M1)</span><span data-lang="zh">令 $m=n-1$ 重新指标：对 $n\ge1$，$a_{n+2}=\dfrac{a_{n-1}}{(n+2)(n+1)}$。将 $n$ 换成 $n+1$，联系相差三位系数的递推关系为 (M1)</span></p>
+      $$ a_{n+3} = \frac{a_n}{(n+3)(n+2)}, \quad n\ge 0. \quad (A1) $$
+      <p><span data-lang="en">Starting from free values $a_0$, $a_1$ with $a_2=0$ fixed above:</span><span data-lang="zh">以自由参数 $a_0$、$a_1$ 和已固定的 $a_2=0$ 为起点：</span></p>
+      $$ a_3 = \frac{a_0}{3\cdot2} = \frac{a_0}{6}, \quad a_4 = \frac{a_1}{4\cdot3} = \frac{a_1}{12}. \quad (A1) $$
+      $$ a_5 = \frac{a_2}{5\cdot4} = 0, \quad a_6 = \frac{a_3}{6\cdot5} = \frac{a_0}{180}. \quad (A1) $$
+      <p><span data-lang="en">The entire chain $a_2, a_5, a_8, \ldots$ is zero because $a_2=0$ propagates through the three-step recurrence.</span><span data-lang="zh">整个链 $a_2, a_5, a_8, \ldots$ 均为零，因为 $a_2=0$ 通过三步递推关系传递。</span></p>
+      <h4><span data-lang="en">(c) General solution; radius of convergence</span><span data-lang="zh">(c) 通解；收敛半径</span> <span class="marks-call">A1·R1</span></h4>
+      <p><span data-lang="en">The general solution is</span><span data-lang="zh">通解为</span></p>
+      $$ y = a_0\!\left(1+\frac{x^3}{6}+\frac{x^6}{180}+\cdots\right)+a_1\!\left(x+\frac{x^4}{12}+\cdots\right). $$
+      <p><span data-lang="en">(A1) Because the coefficients $p(x)=0$ and $q(x)=-x$ are polynomials, they are entire (analytic on all of $\mathbb{C}$), so there are no singular points. The radius of convergence of every solution is therefore infinite. (R1)</span><span data-lang="zh">(A1) 由于系数 $p(x)=0$ 和 $q(x)=-x$ 均为多项式，它们在整个 $\mathbb{C}$ 上解析（整函数），没有奇点。因此每个解的收敛半径均为无穷大。(R1)</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">Re-index sums carefully so powers of $x$ match before equating coefficients: the constant term of $y''$ has no counterpart in $xy$, which is why $a_2$ must vanish separately. This three-step recurrence splits all coefficients into three independent chains by their index modulo 3. The two free parameters $a_0$ and $a_1$ seed two chains; the third chain (the $a_2$ chain) is zero. The resulting two independent series are the Airy functions $\mathrm{Ai}(x)$ and $\mathrm{Bi}(x)$.</span><span data-lang="zh">比较系数前，仔细重新对求和进行指标对齐，确保 $x$ 的各幂次对应：$y''$ 的常数项在 $xy$ 中没有对应项，这就是 $a_2$ 必须单独为零的原因。这个三步递推关系按下标模3将所有系数分为三条独立链。两个自由参数 $a_0$ 和 $a_1$ 各自启动一条链；第三条链（$a_2$ 链）全为零。由此得到的两个线性无关级数正是Airy函数 $\mathrm{Ai}(x)$ 和 $\mathrm{Bi}(x)$。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q5</span><span class="pill hard">HARD</span><span class="pill proof">PROOF</span><span class="pill topic"><span data-lang="en">Frobenius method; indicial equation; regular singular point</span><span data-lang="zh">Frobenius方法；指标方程；正则奇点</span></span><span class="pill marks">[8 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$2xy''+y'+y=0$: (a) show $x=0$ is regular singular; (b) Frobenius ansatz, indicial equation, both roots; (c) larger root, recurrence, $a_1$ and $a_2$.</span><span data-lang="zh">$2xy''+y'+y=0$：(a) 证明 $x=0$ 是正则奇点；(b) Frobenius试探解、指标方程及两个根；(c) 较大的根、递推关系、$a_1$ 和 $a_2$。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> <span data-lang="en">$xp=\tfrac{1}{2}$ and $x^2q=\tfrac{x}{2}$, both analytic at $0$</span><span data-lang="zh">$xp=\tfrac{1}{2}$ 且 $x^2q=\tfrac{x}{2}$，均在 $0$ 处解析</span> &nbsp;·&nbsp; <span class="ans">(b)</span> $r=0$ <span data-lang="en">or</span><span data-lang="zh">或</span> $r=\tfrac{1}{2}$ &nbsp;·&nbsp; <span class="ans">(c)</span> $a_n=-\dfrac{a_{n-1}}{n(2n+1)}$; $a_1=-\tfrac{a_0}{3}$, $a_2=\tfrac{a_0}{30}$</div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Regular singular point at $x=0$</span><span data-lang="zh">(a) $x=0$ 处的正则奇点</span> <span class="marks-call">M1·A1·R1</span></h4>
+      <p><span data-lang="en">Write the equation in standard form: (M1)</span><span data-lang="zh">将方程化为标准形式：(M1)</span></p>
+      $$ y'' + \frac{1}{2x}\,y' + \frac{1}{2x}\,y = 0, $$
+      <p><span data-lang="en">so $p(x)=\dfrac{1}{2x}$ and $q(x)=\dfrac{1}{2x}$. Neither is analytic at $x=0$, so $x=0$ is a singular point. (A1) Test for regularity: $xp(x)=\dfrac{1}{2}$ is analytic at $x=0$, and $x^2 q(x)=\dfrac{x}{2}$ is analytic at $x=0$. Because both limits are analytic, $x=0$ is a regular singular point. (R1)</span><span data-lang="zh">得 $p(x)=\dfrac{1}{2x}$，$q(x)=\dfrac{1}{2x}$。两者在 $x=0$ 处均不解析，故 $x=0$ 是奇点。(A1) 正则性检验：$xp(x)=\dfrac{1}{2}$ 在 $x=0$ 处解析，$x^2 q(x)=\dfrac{x}{2}$ 在 $x=0$ 处也解析。因为两个极限均解析，$x=0$ 是正则奇点。(R1)</span></p>
+      <h4><span data-lang="en">(b) Frobenius ansatz and indicial equation</span><span data-lang="zh">(b) Frobenius试探解与指标方程</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">Try $y=x^r\sum_{n=0}^\infty a_n x^n$ with $a_0\ne0$. Then $y'=\sum(n+r)a_n x^{n+r-1}$ and $y''=\sum(n+r)(n+r-1)a_n x^{n+r-2}$. Substituting: (M1)</span><span data-lang="zh">令 $y=x^r\sum_{n=0}^\infty a_n x^n$，其中 $a_0\ne0$。则 $y'=\sum(n+r)a_n x^{n+r-1}$，$y''=\sum(n+r)(n+r-1)a_n x^{n+r-2}$。代入方程：(M1)</span></p>
+      $$ 2x\sum(n+r)(n+r-1)a_n x^{n+r-2}+\sum(n+r)a_n x^{n+r-1}+\sum a_n x^{n+r}=0. $$
+      <p><span data-lang="en">The lowest power is $x^{r-1}$, contributed only by the first two terms at $n=0$:</span><span data-lang="zh">最低次幂为 $x^{r-1}$，仅由 $n=0$ 时前两项贡献：</span></p>
+      $$ \big[2r(r-1)+r\big]a_0\,x^{r-1} = r(2r-1)\,a_0\,x^{r-1} = 0. $$
+      <p><span data-lang="en">Since $a_0\ne0$, the indicial equation is (A1)</span><span data-lang="zh">由于 $a_0\ne0$，指标方程为 (A1)</span></p>
+      $$ r(2r-1)=0, $$
+      <p><span data-lang="en">with roots $r=0$ and $r=\dfrac{1}{2}$. (A1)</span><span data-lang="zh">根为 $r=0$ 和 $r=\dfrac{1}{2}$。(A1)</span></p>
+      <h4><span data-lang="en">(c) Larger root; recurrence and first two coefficients</span><span data-lang="zh">(c) 较大的根；递推关系及前两个系数</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">Use the larger root $r=\dfrac{1}{2}$. The coefficient of $x^{n+r-1}$ for $n\ge1$ gives: (M1)</span><span data-lang="zh">使用较大的根 $r=\dfrac{1}{2}$。对 $n\ge1$，$x^{n+r-1}$ 的系数给出：(M1)</span></p>
+      $$ \big[2(n+r)(n+r-1)+(n+r)\big]a_n + a_{n-1} = (n+r)(2n+2r-1)\,a_n + a_{n-1} = 0. $$
+      <p><span data-lang="en">With $r=\tfrac{1}{2}$: $(n+\tfrac{1}{2})(2n)=n(2n+1)$. So $a_n=-\dfrac{a_{n-1}}{n(2n+1)}$. Applying: $a_1=-\dfrac{a_0}{3}$ and $a_2=-\dfrac{a_1}{2\cdot5}=\dfrac{a_0}{30}$. (A1)</span><span data-lang="zh">取 $r=\tfrac{1}{2}$：$(n+\tfrac{1}{2})(2n)=n(2n+1)$。故 $a_n=-\dfrac{a_{n-1}}{n(2n+1)}$。代入：$a_1=-\dfrac{a_0}{3}$，$a_2=-\dfrac{a_1}{2\cdot5}=\dfrac{a_0}{30}$。(A1)</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">The Frobenius method works at a regular singular point precisely because the "worst singularity" allowed there is a pole, and the trial solution $x^r\sum a_n x^n$ absorbs that pole into the leading factor $x^r$. The indicial equation fixes $r$ before any $a_n$ (for $n\ge1$) is computed: you must solve it first. The two roots here do not differ by an integer, so both yield genuine independent Frobenius solutions without logarithmic terms.</span><span data-lang="zh">Frobenius方法在正则奇点处有效，正是因为该处允许的"最坏奇性"是极点，而试探解 $x^r\sum a_n x^n$ 将极点吸收到前导因子 $x^r$ 中。指标方程在计算任何 $a_n$（$n\ge1$）之前先确定 $r$：必须首先求解指标方程。这里两个根之差不为整数，因此两者均给出不含对数项的真正独立Frobenius解。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q6</span><span class="pill hard">HARD</span><span class="pill proof">PROOF</span><span class="pill topic"><span data-lang="en">deriving Euler's update from the tangent line; local truncation error</span><span data-lang="zh">从切线推导欧拉更新公式；局部截断误差</span></span><span class="pill marks">[8 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">(a) Taylor expansion, Euler update, local truncation error; (b) why global error is $O(h)$; (c) RK4 error estimate after halving $h$.</span><span data-lang="zh">(a) 泰勒展开、欧拉更新公式、局部截断误差；(b) 全局误差为何是 $O(h)$；(c) 步长减半后RK4的误差估计。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> <span data-lang="en">local truncation error</span><span data-lang="zh">局部截断误差</span> $=\tfrac{h^2}{2}y''(\xi)=O(h^2)$ &nbsp;·&nbsp; <span class="ans">(b)</span> $\approx 1/h$ <span data-lang="en">steps accumulate to $O(h)$</span><span data-lang="zh">步误差累积为 $O(h)$</span> &nbsp;·&nbsp; <span class="ans">(c)</span> $\approx 2.0\times10^{-7}$</div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Taylor expansion and local error</span><span data-lang="zh">(a) 泰勒展开与局部误差</span> <span class="marks-call">M1·A1·A1·A1</span></h4>
+      <p><span data-lang="en">Expand the exact solution $y(x_0+h)$ about $x_0$ via Taylor's theorem: (M1)</span><span data-lang="zh">由泰勒定理将精确解 $y(x_0+h)$ 在 $x_0$ 处展开：(M1)</span></p>
+      $$ y(x_0+h) = y(x_0) + h\,y'(x_0) + \frac{h^2}{2}\,y''(\xi) $$
+      <p><span data-lang="en">for some $\xi\in(x_0,x_0+h)$. (A1) Since $y'(x_0)=f(x_0,y_0)$ by the ODE, the first two terms are exactly the Euler update $y_1=y_0+h\,f(x_0,y_0)$. (A1) The discrepancy in one step is therefore</span><span data-lang="zh">其中 $\xi\in(x_0,x_0+h)$。(A1) 由常微分方程 $y'(x_0)=f(x_0,y_0)$，前两项恰好是欧拉更新公式 $y_1=y_0+h\,f(x_0,y_0)$。(A1) 因此一步中的误差为</span></p>
+      $$ y(x_0+h) - y_1 = \frac{h^2}{2}\,y''(\xi) = O(h^2). $$
+      <p><span data-lang="en">This is the local truncation error: $O(h^2)$ per step. (A1)</span><span data-lang="zh">这就是局部截断误差：每步 $O(h^2)$。(A1)</span></p>
+      <h4><span data-lang="en">(b) Global error is $O(h)$</span><span data-lang="zh">(b) 全局误差为 $O(h)$</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">To reach a fixed endpoint $X$ from $x_0$, the number of Euler steps is $N=X/h$, which is of order $1/h$. (M1) Each step introduces a local error of size $O(h^2)$, and these errors accumulate (via a Lipschitz-bounded propagation argument) to a total global error of order</span><span data-lang="zh">从 $x_0$ 到固定终点 $X$，欧拉步数为 $N=X/h$，量级为 $1/h$。(M1) 每步引入 $O(h^2)$ 的局部误差，这些误差通过Lipschitz有界传播论证累积，总全局误差量级为</span></p>
+      $$ \frac{1}{h}\cdot O(h^2) = O(h). $$
+      <p><span data-lang="en">This is why Euler is called a first-order method: even though the per-step error is second order, the sum over $1/h$ steps costs one power of $h$, leaving a first-order global rate. (A1)</span><span data-lang="zh">这就是为什么欧拉法被称为一阶方法：虽然每步误差是二阶的，但对 $1/h$ 步求和损失了一个 $h$ 的幂次，最终全局精度为一阶。(A1)</span></p>
+      <h4><span data-lang="en">(c) RK4 error estimate after halving $h$</span><span data-lang="zh">(c) 步长减半后RK4的误差估计</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">RK4 is fourth order: its global error scales like $h^4$. Halving $h$ multiplies the error by $(1/2)^4=1/16$. (M1)</span><span data-lang="zh">RK4是四阶方法：全局误差按 $h^4$ 缩放。步长减半，误差乘以 $(1/2)^4=1/16$。(M1)</span></p>
+      $$ \text{new error} \approx \frac{3.2\times10^{-6}}{16} = 2.0\times10^{-7}. $$
+      <p>(A1)</p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">Euler is first-order accurate globally, RK4 fourth-order. Halving the step cuts Euler's error roughly in half, but cuts RK4's error by a factor of $\approx16$. This exponential leverage of high-order methods is why RK4 reaches a target accuracy far more cheaply than Euler, even though it costs four slope evaluations per step. The crossover comes quickly: a single RK4 step with $h=0.4$ beats four Euler steps at $h=0.1$.</span><span data-lang="zh">欧拉法全局精度为一阶，RK4为四阶。步长减半，欧拉误差约减半，而RK4误差减少约 $16$ 倍。高阶方法的这种指数级优势，正是RK4以比欧拉法低得多的代价达到目标精度的原因，尽管每步需要四次导数求值。这一优势显现很快：步长 $h=0.4$ 的单步RK4胜过步长 $h=0.1$ 的四步欧拉法。</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================== PART III ============================== -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;·&nbsp; APPLICATIONS AND SYNTHESIS</span><span data-lang="zh">第三部分 &nbsp;·&nbsp; 应用与综合</span></span><span class="part-meta"><span data-lang="en">Extended problems &middot; 28 marks</span><span data-lang="zh">综合应用题 &middot; 28分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Worked Solutions</span><span data-lang="zh">详细解答</span></h2>
+
+<!-- Q7 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q7</span><span class="pill hard">HARD</span><span class="pill applied">APPLIED</span><span class="pill topic"><span data-lang="en">Euler equation; indicial equation; general solution by root type</span><span data-lang="zh">欧拉方程；指标方程；按根的类型求通解</span></span><span class="pill marks">[8 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$x^2\,y''-x\,y'-3\,y=0$, $x>0$: (a) indicial equation, both roots; (b) general solution, Wronskian; (c) IVP with $y(1)=2$, $y'(1)=10$.</span><span data-lang="zh">$x^2\,y''-x\,y'-3\,y=0$，$x>0$：(a) 指标方程及两个根；(b) 通解、朗斯基行列式；(c) 满足 $y(1)=2$，$y'(1)=10$ 的初值问题。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $r_1=3,\,r_2=-1$ &nbsp;·&nbsp; <span class="ans">(b)</span> $y=c_1x^3+c_2x^{-1}$ &nbsp;·&nbsp; <span class="ans">(c)</span> $y=3x^3-x^{-1}$</div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Indicial equation and roots</span><span data-lang="zh">(a) 指标方程与根</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">The equation is already in standard Euler form $x^2y''+\alpha x y'+\beta y=0$ with $\alpha=-1$, $\beta=-3$. Substitute $y=x^r$ to get $y'=rx^{r-1}$, $y''=r(r-1)x^{r-2}$: (M1)</span><span data-lang="zh">方程已为标准欧拉形式 $x^2y''+\alpha x y'+\beta y=0$，其中 $\alpha=-1$，$\beta=-3$。代入 $y=x^r$，得 $y'=rx^{r-1}$，$y''=r(r-1)x^{r-2}$：(M1)</span></p>
+      $$ x^2\cdot r(r-1)x^{r-2}-x\cdot rx^{r-1}-3x^r = \big[r(r-1)-r-3\big]x^r = 0. $$
+      <p><span data-lang="en">The indicial equation is $r^2-2r-3=0$, i.e. $(r-3)(r+1)=0$. (A1) The roots are</span><span data-lang="zh">指标方程为 $r^2-2r-3=0$，即 $(r-3)(r+1)=0$。(A1) 两根为</span></p>
+      $$ r_1 = 3, \quad r_2 = -1. $$
+      <p><span data-lang="en">(A1) Since the roots are distinct real numbers, we proceed directly to the general solution.</span><span data-lang="zh">(A1) 两根为互不相同的实数，直接写出通解。</span></p>
+      <h4><span data-lang="en">(b) General solution and Wronskian</span><span data-lang="zh">(b) 通解与朗斯基行列式</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">The two basis solutions are $y_1=x^3$ and $y_2=x^{-1}$, so (M1)</span><span data-lang="zh">两个基础解为 $y_1=x^3$ 和 $y_2=x^{-1}$，故 (M1)</span></p>
+      $$ y = c_1 x^3 + c_2 x^{-1}. $$
+      <p><span data-lang="en">(A1) The Wronskian confirms independence: (A1)</span><span data-lang="zh">(A1) 朗斯基行列式确认线性无关：(A1)</span></p>
+      $$ W = \begin{vmatrix} x^3 & x^{-1} \\ 3x^2 & -x^{-2} \end{vmatrix} = x^3(-x^{-2})-x^{-1}(3x^2) = -x - 3x = -4x \ne 0 \text{ for } x>0. $$
+      <h4><span data-lang="en">(c) Particular solution from IVP</span><span data-lang="zh">(c) 由初值问题求特解</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">Apply $y(1)=c_1+c_2=2$ and $y'=3c_1x^2-c_2x^{-2}$, giving $y'(1)=3c_1-c_2=10$. (M1) Adding the two equations: $4c_1=12$, so $c_1=3$ and $c_2=2-3=-1$. (A1)</span><span data-lang="zh">由 $y(1)=c_1+c_2=2$ 以及 $y'=3c_1x^2-c_2x^{-2}$ 得 $y'(1)=3c_1-c_2=10$。(M1) 两式相加：$4c_1=12$，故 $c_1=3$，$c_2=2-3=-1$。(A1)</span></p>
+      $$ y = 3x^3 - x^{-1}. $$
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">For an Euler equation, the indicial equation is $r(r-1)+\alpha r+\beta=0$, which is exactly the algebraic characteristic equation that would arise from $y''+(\alpha-1)y'+\beta y=0$ after the substitution $t=\ln x$. The solution forms ($x^{r_1}$ and $x^{r_2}$ for distinct roots; $(c_1+c_2\ln x)x^r$ for a repeated root) mirror the constant-coefficient $e^{rt}$ and $te^{rt}$ forms, with $t$ replaced by $\ln x$. The boundary behavior is controlled by the root with the more negative real part: $x^{-1}\to\infty$ as $x\to0^+$, so any bounded solution near the origin must have $c_2=0$.</span><span data-lang="zh">对于欧拉方程，指标方程为 $r(r-1)+\alpha r+\beta=0$，与令 $t=\ln x$ 后由 $y''+(\alpha-1)y'+\beta y=0$ 得到的代数特征方程完全相同。解的形式（不同根时为 $x^{r_1}$ 和 $x^{r_2}$；重根时为 $(c_1+c_2\ln x)x^r$）与常系数方程的 $e^{rt}$ 和 $te^{rt}$ 形式对应，只需将 $t$ 替换为 $\ln x$。实部较小的根控制边界行为：$x^{-1}\to\infty$（$x\to0^+$），故任意在原点附近有界的解必有 $c_2=0$。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q8</span><span class="pill hard">HARD</span><span class="pill applied">APPLIED</span><span class="pill topic"><span data-lang="en">one full RK4 step by hand; comparison with Euler and exact solution</span><span data-lang="zh">手算完整的RK4一步；与欧拉法及精确解比较</span></span><span class="pill marks">[10 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y'=x^2+y$, $y(0)=1$, exact $y=3e^x-x^2-2x-2$. (a) Euler, $h=0.4$; (b) full RK4 step, $h=0.4$; (c) exact value and errors.</span><span data-lang="zh">$y'=x^2+y$，$y(0)=1$，精确解 $y=3e^x-x^2-2x-2$。(a) 欧拉法，$h=0.4$；(b) 完整RK4一步，$h=0.4$；(c) 精确值与误差。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $y_1=1.4$ &nbsp;·&nbsp; <span class="ans">(b)</span> $y_1\approx1.5154$ &nbsp;·&nbsp; <span class="ans">(c)</span> <span data-lang="en">exact $1.5155$; Euler err $0.1155$, RK4 err $\approx0.00005$</span><span data-lang="zh">精确值 $1.5155$；欧拉误差 $0.1155$，RK4误差 $\approx0.00005$</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Euler step</span><span data-lang="zh">(a) 欧拉步</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">$f(x,y)=x^2+y$. At $(0,1)$: slope $f(0,1)=0+1=1$. (M1)</span><span data-lang="zh">$f(x,y)=x^2+y$。在 $(0,1)$ 处：斜率 $f(0,1)=0+1=1$。(M1)</span></p>
+      $$ y_1 = 1 + 0.4(1) = 1.4. \quad (A1) $$
+      <h4><span data-lang="en">(b) Full RK4 step</span><span data-lang="zh">(b) 完整RK4步</span> <span class="marks-call">M1·A1·A1·A1·A1·A1</span></h4>
+      <p><span data-lang="en">With $h=0.4$ and $f(x,y)=x^2+y$: (M1 for correct RK4 structure)</span><span data-lang="zh">取 $h=0.4$，$f(x,y)=x^2+y$：（RK4结构正确得 M1）</span></p>
+      $$ k_1 = f(0,\ 1) = 0^2+1 = 1. \quad (A1) $$
+      $$ k_2 = f\!\left(0+0.2,\ 1+0.2k_1\right) = f(0.2,\ 1.2) = (0.2)^2+1.2 = 0.04+1.2 = 1.24. \quad (A1) $$
+      $$ k_3 = f\!\left(0+0.2,\ 1+0.2k_2\right) = f(0.2,\ 1+0.248) = f(0.2,\ 1.248) = 0.04+1.248 = 1.288. \quad (A1) $$
+      $$ k_4 = f\!\left(0+0.4,\ 1+0.4k_3\right) = f(0.4,\ 1+0.5152) = f(0.4,\ 1.5152) = 0.16+1.5152 = 1.6752. \quad (A1) $$
+      $$ y_1 = 1 + \frac{0.4}{6}(k_1+2k_2+2k_3+k_4) = 1 + \frac{0.4}{6}(1+2.48+2.576+1.6752). $$
+      $$ y_1 = 1 + \frac{0.4}{6}(7.7312) = 1 + \frac{3.09248}{6} = 1 + 0.51541 = 1.51541. \quad (A1) $$
+      <h4><span data-lang="en">(c) Exact value and error comparison</span><span data-lang="zh">(c) 精确值与误差比较</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">Exact: $y(0.4)=3e^{0.4}-(0.4)^2-2(0.4)-2=3(1.49182)-0.16-0.80-2=4.47546-2.96=1.51546$. (M1)</span><span data-lang="zh">精确值：$y(0.4)=3e^{0.4}-(0.4)^2-2(0.4)-2=3(1.49182)-0.16-0.80-2=4.47546-2.96=1.51546$。(M1)</span></p>
+      <p><span data-lang="en">Euler absolute error: $|1.4-1.51546|=0.11546$. RK4 absolute error: $|1.51541-1.51546|=0.00005$. (A1) RK4 is over two thousand times more accurate in a single step of the same size.</span><span data-lang="zh">欧拉绝对误差：$|1.4-1.51546|=0.11546$。RK4绝对误差：$|1.51541-1.51546|=0.00005$。(A1) 在相同步长下，RK4一步的精度比欧拉法高两千倍以上。</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">The RK4 formula $y_{n+1}=y_n+\tfrac{h}{6}(k_1+2k_2+2k_3+k_4)$ resembles Simpson's rule applied to the integral $\int_{x_n}^{x_{n+1}}f\,dx$, with $k_1$ and $k_4$ as endpoint slopes and $k_2,k_3$ as two midpoint slopes. Each successive $k$ must be built on the previous stage's increment: $k_3$ uses $k_2$, not $k_1$. Using $k_1$ throughout collapses the method toward second order and silently destroys the fourth-order accuracy.</span><span data-lang="zh">RK4公式 $y_{n+1}=y_n+\tfrac{h}{6}(k_1+2k_2+2k_3+k_4)$ 类似于对积分 $\int_{x_n}^{x_{n+1}}f\,dx$ 应用辛普森法则，$k_1$ 和 $k_4$ 为端点斜率，$k_2,k_3$ 为两个中点斜率。每个后续 $k$ 必须基于前一阶段的增量构建：$k_3$ 使用 $k_2$ 而非 $k_1$。若全程使用 $k_1$，方法将退化为二阶，悄然破坏四阶精度。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q9</span><span class="pill hard">HARD</span><span class="pill applied">APPLIED</span><span class="pill topic"><span data-lang="en">power-series solution; terminating polynomial; infinite radius</span><span data-lang="zh">幂级数解；终止多项式；无穷收敛半径</span></span><span class="pill marks">[6 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y''-2xy'+4y=0$, $y(0)=1$, $y'(0)=0$. (a) recurrence; (b) even-solution coefficients; (c) polynomial identification.</span><span data-lang="zh">$y''-2xy'+4y=0$，$y(0)=1$，$y'(0)=0$。(a) 递推关系；(b) 偶次解系数；(c) 多项式识别。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> $a_{n+2}=\dfrac{2(n-2)}{(n+2)(n+1)}a_n$ &nbsp;·&nbsp; <span class="ans">(b)</span> $y=1-2x^2$ <span data-lang="en">(terminates at $x^2$)</span><span data-lang="zh">（在 $x^2$ 处终止）</span> &nbsp;·&nbsp; <span class="ans">(c)</span> <span data-lang="en">polynomial</span><span data-lang="zh">多项式</span> $1-2x^2$</div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Substitution and recurrence</span><span data-lang="zh">(a) 代入与递推关系</span> <span class="marks-call">M1·A1·A1</span></h4>
+      <p><span data-lang="en">With $y=\sum a_n x^n$: (M1)</span><span data-lang="zh">设 $y=\sum a_n x^n$：(M1)</span></p>
+      $$ y'' = \sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}\,x^n, \quad -2xy'=-2\sum_{n=0}^{\infty} n\,a_n x^n, \quad 4y=4\sum_{n=0}^{\infty}a_n x^n. $$
+      <p><span data-lang="en">Collecting the coefficient of $x^n$: (M1)</span><span data-lang="zh">收集 $x^n$ 的系数：(M1)</span></p>
+      $$ (n+2)(n+1)a_{n+2}+(-2n+4)a_n = 0. $$
+      <p><span data-lang="en">Solving for $a_{n+2}$: (A1)</span><span data-lang="zh">解出 $a_{n+2}$：(A1)</span></p>
+      $$ a_{n+2} = \frac{2n-4}{(n+2)(n+1)}\,a_n = \frac{2(n-2)}{(n+2)(n+1)}\,a_n. $$
+      <p><span data-lang="en">Initial conditions: $a_0=y(0)=1$, $a_1=y'(0)=0$. (A1)</span><span data-lang="zh">初始条件：$a_0=y(0)=1$，$a_1=y'(0)=0$。(A1)</span></p>
+      <h4><span data-lang="en">(b) Even solution; coefficients</span><span data-lang="zh">(b) 偶次解；系数</span> <span class="marks-call">M1·A1</span></h4>
+      <p><span data-lang="en">Since $a_1=0$, every odd coefficient $a_3=a_5=\cdots=0$ (the recurrence propagates zero through the odd chain). For the even chain: (M1)</span><span data-lang="zh">由于 $a_1=0$，每个奇数系数 $a_3=a_5=\cdots=0$（零通过奇数链传递）。对偶数链：(M1)</span></p>
+      $$ a_2 = \frac{2(0-2)}{2\cdot1}\,a_0 = \frac{-4}{2} = -2, \quad a_4 = \frac{2(2-2)}{4\cdot3}\,a_2 = 0, \quad a_6 = \frac{2(4-2)}{6\cdot5}\,a_4 = 0. $$
+      <p><span data-lang="en">(A1 for $a_2=-2$ and $a_4=0$) The even solution is</span><span data-lang="zh">（$a_2=-2$ 和 $a_4=0$ 各得 A1）偶次解为</span></p>
+      $$ y = 1 - 2x^2. $$
+      <h4><span data-lang="en">(c) Polynomial identification</span><span data-lang="zh">(c) 多项式识别</span> <span class="marks-call">A1</span></h4>
+      <p><span data-lang="en">Because $a_4=0$ and the recurrence gives $a_{n+2}\propto a_n$, all even coefficients from $a_4$ onward vanish. The series terminates: $y=1-2x^2$ is a polynomial. (A1) Verification: $y'=-4x$, $y''=-4$, so $y''-2xy'+4y=-4-2x(-4x)+4(1-2x^2)=-4+8x^2+4-8x^2=0$. The polynomial satisfies both the ODE and both initial conditions.</span><span data-lang="zh">因为 $a_4=0$ 且递推关系给出 $a_{n+2}\propto a_n$，从 $a_4$ 起所有偶数系数均为零。级数终止：$y=1-2x^2$ 是多项式。(A1) 验证：$y'=-4x$，$y''=-4$，故 $y''-2xy'+4y=-4-2x(-4x)+4(1-2x^2)=-4+8x^2+4-8x^2=0$。该多项式满足方程和两个初始条件。</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">In a Hermite-type equation $y''-2xy'+\lambda y=0$, the recurrence $a_{n+2}=\frac{2(n-\lambda/2)}{(n+2)(n+1)}a_n$ forces $a_{N+2}=0$ exactly when $N=\lambda/2$ is a non-negative integer: the series terminates and the solution is a Hermite polynomial. Here $\lambda=4$ so $N=2$, producing the polynomial $1-2x^2$ (proportional to $H_2(x)/2$). The infinite series solution for the other free parameter ($a_1=1$) does not terminate and converges for all $x$, but grows rapidly for large $x$.</span><span data-lang="zh">在Hermite型方程 $y''-2xy'+\lambda y=0$ 中，递推关系 $a_{n+2}=\frac{2(n-\lambda/2)}{(n+2)(n+1)}a_n$ 在 $N=\lambda/2$ 为非负整数时恰好使 $a_{N+2}=0$：级数终止，解为Hermite多项式。这里 $\lambda=4$，故 $N=2$，得到多项式 $1-2x^2$（与 $H_2(x)/2$ 成比例）。另一个自由参数（$a_1=1$）对应的无穷级数解不终止，在所有 $x$ 处收敛，但对大 $x$ 增长迅速。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="q frq">
+  <div class="q-head"><span class="pill qnum">Q10</span><span class="pill hard">HARD</span><span class="pill applied">APPLIED</span><span class="pill topic"><span data-lang="en">Euler vs RK4 table; step-size and global error scaling</span><span data-lang="zh">欧拉法与RK4比较表；步长与全局误差缩放</span></span><span class="pill marks">[4 marks]</span></div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">$y'=-2y$, $y(0)=1$, exact $y=e^{-2x}$, $h=0.2$. (a) Three-step table; (b) error scaling when $h$ is halved.</span><span data-lang="zh">$y'=-2y$，$y(0)=1$，精确解 $y=e^{-2x}$，$h=0.2$。(a) 三步数值表；(b) 步长减半时的误差缩放。</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers:</span><span data-lang="zh">答案：</span> &nbsp;<span class="ans">(a)</span> Euler: $0.6000, 0.3600, 0.2160$; RK4: $0.6704, 0.4494, 0.3013$ &nbsp;·&nbsp; <span class="ans">(b)</span> <span data-lang="en">Euler factor $\approx2$; RK4 factor $\approx16$</span><span data-lang="zh">欧拉法约缩小2倍；RK4约缩小16倍</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Numerical table</span><span data-lang="zh">(a) 数值表</span> <span class="marks-call">M1·B1·B1</span></h4>
+      <p><strong><span data-lang="en">Euler.</span><span data-lang="zh">欧拉法。</span></strong> <span data-lang="en">With $f(x,y)=-2y$ and $h=0.2$, each step multiplies by $(1+h\cdot(-2))=1-0.4=0.6$: (M1)</span><span data-lang="zh">取 $f(x,y)=-2y$，$h=0.2$，每步乘以 $(1+h\cdot(-2))=1-0.4=0.6$：(M1)</span></p>
+      $$ y_1^E = 0.6(1) = 0.6000, \quad y_2^E = 0.6(0.6000) = 0.3600, \quad y_3^E = 0.6(0.3600) = 0.2160. $$
+      <p><strong><span data-lang="en">RK4.</span><span data-lang="zh">RK4法。</span></strong> <span data-lang="en">For $f=-2y$ and $h=0.2$, one step starting from $y_n$:</span><span data-lang="zh">取 $f=-2y$，$h=0.2$，从 $y_n$ 出发一步：</span></p>
+      $$ k_1=-2y_n,\quad k_2=-2(y_n+0.1k_1)=-2(0.8y_n)=-1.6y_n, $$
+      $$ k_3=-2(y_n+0.1k_2)=-2(0.84y_n)=-1.68y_n,\quad k_4=-2(y_n+0.2k_3)=-2(0.664y_n)=-1.328y_n. $$
+      $$ y_{n+1}=y_n+\tfrac{0.2}{6}(-2y_n-3.2y_n-3.36y_n-1.328y_n)=y_n\!\left(1-\tfrac{0.2\cdot9.888}{6}\right)=0.6704\,y_n. $$
+      $$ y_1^{RK4}=0.6704,\quad y_2^{RK4}=0.4494,\quad y_3^{RK4}=0.3013. $$
+      <p><span data-lang="en">Exact values and completed table (B1 for Euler column; B1 for RK4 column):</span><span data-lang="zh">精确值及完整表格（欧拉列得 B1；RK4列得 B1）：</span></p>
+      <table class="data" style="margin-top:8px;font-size:10pt;">
+        <thead>
+          <tr>
+            <th>$n$</th><th>$x_n$</th>
+            <th>Euler $y_n$</th><th>Euler error</th>
+            <th>RK4 $y_n$</th><th>RK4 error</th>
+            <th>Exact $e^{-2x_n}$</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0.0</td><td>1.0000</td><td>0.0000</td><td>1.0000</td><td>0.0000</td><td>1.0000</td></tr>
+          <tr><td>1</td><td>0.2</td><td>0.6000</td><td>0.0703</td><td>0.6704</td><td>0.0001</td><td>0.6703</td></tr>
+          <tr><td>2</td><td>0.4</td><td>0.3600</td><td>0.0893</td><td>0.4494</td><td>0.0001</td><td>0.4493</td></tr>
+          <tr><td>3</td><td>0.6</td><td>0.2160</td><td>0.0852</td><td>0.3013</td><td>0.0001</td><td>0.3012</td></tr>
+        </tbody>
+      </table>
+      <h4><span data-lang="en">(b) Error scaling when $h$ is halved</span><span data-lang="zh">(b) 步长减半时的误差缩放</span> <span class="marks-call">A1</span></h4>
+      <p><span data-lang="en">Euler is first order ($\sim h^1$): halving $h$ multiplies the global error by $\tfrac{1}{2}$, so the Euler error decreases by a factor of approximately $2$. RK4 is fourth order ($\sim h^4$): halving $h$ multiplies the error by $(1/2)^4=\tfrac{1}{16}$, so the RK4 error decreases by a factor of approximately $16$. (A1)</span><span data-lang="zh">欧拉法为一阶（$\sim h^1$）：步长减半使全局误差乘以 $\tfrac{1}{2}$，欧拉误差约缩小2倍。RK4为四阶（$\sim h^4$）：步长减半使误差乘以 $(1/2)^4=\tfrac{1}{16}$，RK4误差约缩小16倍。(A1)</span></p>
+      <div class="insight"><strong><span data-lang="en">Insight.</span><span data-lang="zh">要点。</span></strong> <span data-lang="en">Euler is first-order accurate globally: halving $h$ roughly halves the error, but the error at $h=0.2$ is already 700 times larger than RK4's. RK4 is fourth-order: halving $h$ cuts error by $\approx16$, so each halving buys four bits of accuracy. The table makes the contrast vivid: after three Euler steps the error is about $8\%$ of the exact value, while after three RK4 steps the error is at the fourth decimal place. The RK4 amplification factor per step ($0.6704$) matches $e^{-0.4}=0.6703$ to four decimal places, confirming that a single step of RK4 at $h=0.2$ is extremely close to exact for this smooth problem.</span><span data-lang="zh">欧拉法全局精度为一阶：步长减半大约将误差减半，但在 $h=0.2$ 时的误差已比RK4大700倍。RK4为四阶：步长减半使误差减少约16倍，每次减半带来四个二进制位的精度提升。该表使对比一目了然：三步欧拉法后误差约为精确值的 $8\%$，而三步RK4后误差在小数点后第四位。RK4每步的放大因子（$0.6704$）与 $e^{-0.4}=0.6703$ 在四位小数上吻合，证明对这个光滑问题，步长 $h=0.2$ 的单步RK4极为接近精确解。</span></div>
+    </div>
+  </div>
+</div>
+
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Stuck on this unit in your first-year course?</span><span data-lang="zh">大学一年级这一单元卡住了？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor. We will get you unstuck before your next midterm or final.</span><span data-lang="zh">预约丁睿学者导师的免费15分钟评估。我们帮你在下次期中或期末考试前扫清障碍。</span></p>
+  <a class="consult-cta__btn" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=university_calculus&utm_content=unit_d8_series_solutions_and_numerical_methods__solutions__en" target="_blank" rel="noopener"><span data-lang="en">Book a free assessment &rarr;</span><span data-lang="zh">预约免费评估 &rarr;</span></a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../../Study%20Guides/Unit_D8_Series_Solutions_and_Numerical_Methods.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <a href="../Unit_D8_Series_Solutions_and_Numerical_Methods_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></span>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">University Calculus</span><span data-lang="zh">大学微积分</span> &middot; Unit D8 Solutions <code style="color:#555;">v1.0</code> &middot; <span data-lang="en">Companion to Practice v1.0</span><span data-lang="zh">配套练习题 v1.0</span></span>
+  <span><span data-lang="en">Sections 1 to 7 &middot; 82 marks total</span><span data-lang="zh">第1至7节 &middot; 共82分</span></span>
+</footer>
+
+<script>function toggleLang(){document.body.classList.toggle('lang-zh');}</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

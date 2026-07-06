@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Computer Science — Functions and Modular Design — Practice | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Unit_4_Functions_and_Modular_Design_Practice.html">
+<meta name="description" content="Practice questions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH exam-style problems with full worked solutions from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Functions and Modular Design — Practice | Dingrui Scholars">
+<meta property="og:description" content="Practice questions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH exam-style problems with full worked solutions from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Unit_4_Functions_and_Modular_Design_Practice.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Functions and Modular Design — Practice | Dingrui Scholars">
+<meta name="twitter:description" content="Practice questions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH exam-style problems with full worked solutions from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-4  dingrui:doc-type practice -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style data-theme="light">
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --easy-bg:#E7F2E3; --easy-ink:#2F6B2F; --easy-rule:#79A977;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --region-bg:#F5F2EE; --region-ink:#3A322B; --region-rule:#B5A68F;
+    --paper-bg:#FBE9E9;  --paper-ink:#7A2E2E;  --paper-rule:#C97A7A;
+    --honors-bg:#FDF5EC; --honors-ink:#7A5618; --honors-rule:#C4956A;
+    --font-body:'Times New Roman', Times, Georgia, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-sans:'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--font-body);font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:var(--font-sans);font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.easy{background:var(--easy-bg);color:var(--easy-ink);border-color:var(--easy-rule);}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .pill.region{background:var(--region-bg);color:var(--region-ink);border-color:var(--region-rule);letter-spacing:.08em;}
+  .pill.paper {background:var(--paper-bg); color:var(--paper-ink); border-color:var(--paper-rule);}
+  .pill.honors{background:var(--honors-bg);color:var(--honors-ink);border-color:var(--honors-rule);text-transform:uppercase;}
+  .syllabus-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 6px;font-family:var(--font-sans);font-size:9.5pt;}
+  .syllabus-strip .col{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:5px;padding:8px 12px;background:#fdfbf8;}
+  .syllabus-strip .col b{display:block;font-size:10pt;margin-bottom:3px;color:var(--maroon);letter-spacing:.05em;}
+  .syllabus-strip .col code{font-family:'JetBrains Mono',monospace;font-size:9pt;color:#4A3A2A;background:#EFE9E4;padding:1px 4px;border-radius:3px;}
+  .syllabus-strip-note{font-family:var(--font-sans);font-size:9pt;color:#555;font-style:italic;text-align:center;margin:4px 0 12px;}
+  @media (max-width: 600px){.syllabus-strip{grid-template-columns:1fr;}}
+  .topics-line{font-family:var(--font-sans);font-size:10pt;color:#444;text-align:center;margin-bottom:12px;}
+  .topics-line b{color:var(--ink);}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .nameline{display:flex;justify-content:space-between;font-family:var(--font-sans);font-size:10.5pt;margin:4px 0 22px;color:#222;}
+  .nameline .blank{display:inline-block;border-bottom:1px solid #555;min-width:240px;margin-left:6px;}
+  .nameline .blank.period{min-width:90px;}
+  .draft-banner{font-family:var(--font-sans);font-size:9.5pt;color:#7A2E2E;font-style:italic;text-align:center;margin:0 0 8px;border:1px dashed #c9a4a4;border-radius:4px;padding:4px 8px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .instructions{font-family:var(--font-sans);font-size:10pt;color:#444;font-style:italic;margin-bottom:12px;line-height:1.45;}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:12px 18px 14px;margin-bottom:16px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q.app{border-left-color:#C4956A;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:10px;font-family:var(--font-sans);}
+  .q-head .title{margin-left:auto;font-size:9.5pt;color:#666;font-style:italic;}
+  .q-body{font-size:11.5pt;line-height:1.5;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;}
+  .q-body ol.mcq{list-style:none;padding:0;margin:8px 0 4px;font-size:11pt;}
+  .q-body ol.mcq li{margin:3px 0 3px 6px;}
+  .q-body ol.mcq li .lab{font-family:var(--font-sans);font-weight:700;color:var(--maroon);margin-right:8px;}
+  .q-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .q-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .work{min-height:90px;border-top:1px dashed #c9c4bd;margin-top:8px;}
+  .work.s{min-height:50px;} .work.m{min-height:120px;} .work.l{min-height:170px;} .work.xl{min-height:240px;}
+  .frq-parts{margin-top:6px;}
+  .frq-parts .part-item{margin:6px 0 4px;}
+  .frq-parts .part-item > .tag{font-family:var(--font-sans);font-weight:700;margin-right:6px;}
+  .frq-parts .part-item .marks-inline{font-family:'JetBrains Mono',monospace;font-size:9pt;color:#666;font-weight:700;float:right;letter-spacing:.05em;}
+  .frq-parts .part-item .sub-part{margin:4px 0 4px 18px;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:var(--font-sans);font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  .lang-bar{display:flex;justify-content:center;margin:6px 0 10px;}
+  .lang-btn{font-family:var(--font-sans);font-weight:700;font-size:9pt;letter-spacing:.1em;padding:4px 14px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;cursor:pointer;transition:all 0.2s;}
+  .lang-btn:hover{background:var(--maroon);color:#fff;}
+  body:not(.lang-zh) [data-lang="zh"] { display: none; }
+  body.lang-zh       [data-lang="en"] { display: none; }
+  body.lang-zh{font-family:var(--font-sans);}
+  @media (max-width: 600px){body{font-size:10.5pt;}.nameline{flex-direction:column;align-items:flex-start;gap:6px;}.nameline .blank{min-width:200px;}}
+  .consult-cta{border:1.5px solid var(--maroon);border-radius:8px;padding:12px 16px;margin:22px 0 6px;text-align:center;background:var(--paper-bg);break-inside:avoid;}
+  .consult-cta__lead{display:block;font-family:var(--font-sans);font-weight:700;font-size:11pt;color:var(--maroon);}
+  .consult-cta__body{display:block;font-family:var(--font-sans);font-size:9.5pt;color:var(--muted);margin:3px 0 6px;}
+  .consult-cta__btn{display:inline-block;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-decoration:underline;}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.draft-banner{display:none;}.lang-bar{display:none;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Functions and Modular Design — Practice",
+  "description": "Practice questions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH exam-style problems with full worked solutions from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Unit_4_Functions_and_Modular_Design_Practice.html",
+  "inLanguage": ["en", "zh"],
+  "learningResourceType": "Practice problems",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+</div>
+
+<div class="brand">H&nbsp;I&nbsp;G&nbsp;H&nbsp;&nbsp;S&nbsp;C&nbsp;H&nbsp;O&nbsp;O&nbsp;L&nbsp;&nbsp;C&nbsp;O&nbsp;M&nbsp;P&nbsp;U&nbsp;T&nbsp;E&nbsp;R&nbsp;&nbsp;S&nbsp;C&nbsp;I&nbsp;E&nbsp;N&nbsp;C&nbsp;E</div>
+<div class="chapter-tag"><span data-lang="en">Practice</span><span data-lang="zh">练习题</span></div>
+<h1 class="chapter-title"><span data-lang="en">Functions and Modular Design</span><span data-lang="zh">函数与模块化设计</span></h1>
+<p class="chapter-sub"><span data-lang="en">Practice Questions &middot; AP CSP-Feeder &middot; US / ON / BC / AB Styles</span><span data-lang="zh">练习题集 &middot; AP CSP 衔接 &middot; 美 / 安 / 卑 / 阿省风格</span></p>
+
+<div class="legend">
+  <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+  <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+  <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+  <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+  <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+  <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+</div>
+
+<div class="syllabus-strip">
+  <div class="col"><b>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></b><code>3A-AP-17</code> &middot; <code>3A-AP-18</code> &middot; <code>AAP-3.B</code></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario</span><span data-lang="zh">安大略</span></b><code>ICS3U A3.1</code> &middot; <code>A3.2</code> &middot; <code>B2.3</code></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></b><span data-lang="en">CS 11 / CP11: functions, modularity, pre-built libraries</span><span data-lang="zh">CS 11 / CP11：函数、模块化、预建库</span></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta</span><span data-lang="zh">阿尔伯塔</span></b><span data-lang="en">CSE2110: outcomes 3.2, 3.3, 3.3.3, 3.4</span><span data-lang="zh">CSE2110：结果 3.2、3.3、3.3.3、3.4</span></div>
+</div>
+<p class="syllabus-strip-note"><span data-lang="en">Full Syllabus Map in Study Guide: <code>../Study Guides/Unit_4_Functions_and_Modular_Design.html</code>. CS has no AB standalone diploma exam; AB framing uses CSE2110 outcomes.</span><span data-lang="zh">完整大纲对照见学习指南：<code>../Study Guides/Unit_4_Functions_and_Modular_Design.html</code>。CS 无独立 AB 毕业考；AB 题使用 CSE2110 结果框架。</span></p>
+
+<hr class="thick"><hr class="thin">
+<div class="nameline"><span><span data-lang="en">Name:</span><span data-lang="zh">姓名：</span><span class="blank"></span></span><span><span data-lang="en">Date:</span><span data-lang="zh">日期：</span><span class="blank period"></span></span></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART I  SHORT RESPONSE   5 Qs  25 marks
+     AP CSP-style MCQ + ON/BC provincial short answer
+     EASY opener, MED middle
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;&middot;&nbsp; SHORT RESPONSE</span><span data-lang="zh">第一部分 &nbsp;&middot;&nbsp; 短答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-style MCQ + ON/BC short answer &middot; 25 marks</span><span data-lang="zh">AP CSP 风格选择题 + 安/卑省考短答 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section A &middot; Short Response</span><span data-lang="zh">A 部分 &middot; 短答题</span></h2>
+<p class="instructions"><span data-lang="en">Questions mix multiple-choice and short-answer items. For MCQs, circle the letter. For short-answer items, write functions in pseudocode or Python with correct indentation. Trace code by hand: write each variable's value at each step before answering.</span><span data-lang="zh">本部分包含选择题与短答题。选择题请圈出字母。短答题用伪代码或 Python 书写函数，缩进须正确。手工追踪代码：作答前写出每一步每个变量的值。</span></p>
+
+<!-- Q1 ── EASY, US, AP CSP MCQ, S1 Why Functions / Reuse -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q1</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">Why Functions?</span><span data-lang="zh">为什么要用函数？</span> &middot; AP CSP AAP-3.B</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A student copies the same 15-line calculation into four different places in their program. Later, they discover a bug in that calculation. What is the main disadvantage of this approach compared to using a function?</span><span data-lang="zh">一名学生将同一段 15 行计算复制到程序的四个不同地方。后来他们在该计算中发现了一个错误。与使用函数相比，这种做法的主要缺点是什么？</span></p>
+    <ol class="mcq">
+      <li><span class="lab">(A)</span> <span data-lang="en">The program will run more slowly because of the repeated code</span><span data-lang="zh">程序因重复代码而运行更慢</span></li>
+      <li><span class="lab">(B)</span> <span data-lang="en">The bug must be fixed in all four copies; missing even one creates inconsistency</span><span data-lang="zh">必须在全部四处修复该错误；漏掉任何一处都会导致不一致</span></li>
+      <li><span class="lab">(C)</span> <span data-lang="en">Python does not allow duplicate code in the same program</span><span data-lang="zh">Python 不允许同一程序中出现重复代码</span></li>
+      <li><span class="lab">(D)</span> <span data-lang="en">The program will use more memory than a single function would</span><span data-lang="zh">程序会比使用单一函数消耗更多内存</span></li>
+    </ol>
+    <div class="work s"></div>
+  </div>
+</div>
+
+<!-- Q2 ── EASY, US, AP CSP MCQ, S2 Defining and Calling -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q2</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">Defining and Calling Functions</span><span data-lang="zh">定义与调用函数</span> &middot; AP CSP AAP-3.B</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">What does the following program output?</span><span data-lang="zh">以下程序输出什么？</span></p>
+    <pre><code>def say_hello(name):
+    print("Hello, " + name + "!")
+
+say_hello("Sam")
+say_hello("Alex")</code></pre>
+    <ol class="mcq">
+      <li><span class="lab">(A)</span> <span data-lang="en">Nothing: the function is defined but never called</span><span data-lang="zh">什么都没有：函数定义了但从未被调用</span></li>
+      <li><span class="lab">(B)</span> <code>Hello, name!</code> <span data-lang="en">printed twice</span><span data-lang="zh">打印两次</span></li>
+      <li><span class="lab">(C)</span> <code>Hello, Sam!</code> <span data-lang="en">then</span><span data-lang="zh">然后</span> <code>Hello, Alex!</code></li>
+      <li><span class="lab">(D)</span> <code>Hello, Alex!</code> <span data-lang="en">then</span><span data-lang="zh">然后</span> <code>Hello, Sam!</code></li>
+    </ol>
+    <div class="work s"></div>
+  </div>
+</div>
+
+<!-- Q3 ── MED, ON, ON Provincial-style, S3 Parameters and Arguments -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q3</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;3 <span data-lang="en">Parameters and Arguments</span><span data-lang="zh">形参与实参</span> &middot; ICS3U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[5 marks]</span><span data-lang="zh">[5 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Consider the following function and calls.</span><span data-lang="zh">考察以下函数及调用。</span></p>
+    <pre><code>FUNCTION power(base, exponent):
+    SET result TO 1
+    FOR i FROM 1 TO exponent:
+        SET result TO result * base
+    RETURN result
+END FUNCTION
+
+OUTPUT power(3, 2)
+OUTPUT power(2, 4)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Identify the parameters of the function <code>power</code>.</span><span data-lang="zh">指出函数 <code>power</code> 的形参。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">For the call <code>power(3, 2)</code>, state the argument bound to each parameter and trace the loop to find the return value.</span><span data-lang="zh">对于调用 <code>power(3, 2)</code>，写出绑定到每个形参的实参，并追踪循环以求出返回值。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">State the output of <code>power(2, 4)</code> without full trace; justify in one sentence.</span><span data-lang="zh">无需完整追踪，写出 <code>power(2, 4)</code> 的输出；用一句话说明理由。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 ── MED, AB, AB/Universal, S4 Return Values -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q4</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+    <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+    <span class="pill topic">&sect;4 <span data-lang="en">Return Values</span><span data-lang="zh">返回值</span> &middot; CSE2110 3.2</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A programmer writes a function to classify a score and uses it in a program.</span><span data-lang="zh">程序员编写了一个分类成绩的函数，并在程序中使用它。</span></p>
+    <pre><code>FUNCTION grade(score):
+    IF score >= 90 THEN RETURN "A"
+    IF score >= 80 THEN RETURN "B"
+    IF score >= 70 THEN RETURN "C"
+    IF score >= 60 THEN RETURN "D"
+    RETURN "F"
+END FUNCTION
+
+SET result TO grade(82)
+OUTPUT result
+OUTPUT grade(55)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Trace the call <code>grade(82)</code> step by step. Identify which RETURN executes and state the value returned.</span><span data-lang="zh">逐步追踪调用 <code>grade(82)</code>。指出哪条 RETURN 语句执行，写出返回的值。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">State the two values output by the program.</span><span data-lang="zh">写出程序输出的两个值。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Explain why the remaining IF statements do NOT execute once the first matching RETURN is reached.</span><span data-lang="zh">解释为什么一旦第一个匹配的 RETURN 执行，其余 IF 语句不再执行。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">The function <code>grade</code> is a value-returning function. Describe one difference between a value-returning function and a procedure (void function).</span><span data-lang="zh"><code>grade</code> 是有返回值的函数。描述有返回值的函数与过程（无返回值函数）之间的一个区别。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 ── MED, BC, BC Provincial-style, S5 Variable Scope -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q5</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+    <span class="pill topic">&sect;5 <span data-lang="en">Variable Scope</span><span data-lang="zh">变量作用域</span> &middot; ICS3U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Study the following program carefully.</span><span data-lang="zh">仔细研究以下程序。</span></p>
+    <pre><code>SET score TO 50        # global variable
+
+FUNCTION update():
+    SET score TO score + 10
+    RETURN score
+END FUNCTION
+
+OUTPUT score            # Line A
+OUTPUT update()         # Line B  (Python: uses global keyword inside)
+OUTPUT score            # Line C</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">State the output at Line A. Explain why in one sentence.</span><span data-lang="zh">写出第 A 行的输出。用一句话解释原因。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">Assuming the function modifies the global <code>score</code> (using the <code>global</code> keyword in Python), state the output at Line B and Line C.</span><span data-lang="zh">假设函数使用 <code>global</code> 关键字修改了全局变量 <code>score</code>，写出第 B 行和第 C 行的输出。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Explain why it is better practice to pass <code>score</code> as a parameter and return the new value instead of modifying a global. Give one specific risk of relying on global state.</span><span data-lang="zh">解释为什么将 <code>score</code> 作为形参传入并返回新值比修改全局变量更好。给出依赖全局状态的一个具体风险。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">If two functions each have their own local variable named <code>count</code>, can they interfere with each other? Answer in one sentence.</span><span data-lang="zh">如果两个函数各自都有一个名为 <code>count</code> 的局部变量，它们会互相干扰吗？用一句话回答。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART II  EXTENDED RESPONSE   4 Qs  31 marks
+     AP CSP-feeder FRQ + Honors
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;&middot;&nbsp; EXTENDED RESPONSE</span><span data-lang="zh">第二部分 &nbsp;&middot;&nbsp; 简答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-feeder FRQ + Honors &middot; 30 marks</span><span data-lang="zh">AP CSP 衔接简答题 + 荣誉级 &middot; 共 30 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section B &middot; Extended Response</span><span data-lang="zh">B 部分 &middot; 简答题</span></h2>
+<p class="instructions"><span data-lang="en">Write pseudocode or Python clearly, with correct indentation. For each trace, show every variable value at each step. For written questions, two complete sentences earn full marks. Trace function calls by writing the parameter bindings before entering the function body.</span><span data-lang="zh">伪代码或 Python 须清晰书写，缩进正确。每次追踪须写出每一步每个变量的值。书面解答题用两句完整句子即可满分。追踪函数调用时，先写出形参绑定，再进入函数体。</span></p>
+
+<!-- Q6 ── EASY, US, AP CSP FRQ, S6 Modular Design intro -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q6</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;6 <span data-lang="en">Modular Design</span><span data-lang="zh">模块化设计</span> &middot; CSTA 3A-AP-17</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A programmer decomposes a grade-report program into four functions as shown below. The main program uses only four lines.</span><span data-lang="zh">程序员将成绩报告程序分解为如下四个函数。主程序只有四行。</span></p>
+    <pre><code>FUNCTION get_scores():
+    -- reads 5 scores and returns them as a list
+    ...
+END FUNCTION
+
+FUNCTION compute_average(scores):
+    SET total TO 0
+    FOR EACH s IN scores: SET total TO total + s
+    RETURN total / 5
+END FUNCTION
+
+FUNCTION letter_grade(average):
+    IF average >= 90 THEN RETURN "A"
+    IF average >= 80 THEN RETURN "B"
+    IF average >= 70 THEN RETURN "C"
+    IF average >= 60 THEN RETURN "D"
+    RETURN "F"
+END FUNCTION
+
+FUNCTION display_report(avg, grade):
+    OUTPUT "Average: " + avg
+    OUTPUT "Grade:   " + grade
+END FUNCTION
+
+-- Main program
+SET scores TO get_scores()
+SET avg TO compute_average(scores)
+SET grade TO letter_grade(avg)
+display_report(avg, grade)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Which two of the four functions are procedures (void functions, no return value)? Justify your answer.</span><span data-lang="zh">四个函数中哪两个是过程（无返回值函数）？说明理由。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">If the scores are <code>[85, 90, 78, 92, 80]</code>, trace the call <code>compute_average(scores)</code> and state the return value.</span><span data-lang="zh">如果成绩为 <code>[85, 90, 78, 92, 80]</code>，追踪调用 <code>compute_average(scores)</code> 并写出返回值。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Explain one benefit of decomposing the program into these four functions rather than writing all the code in one block.</span><span data-lang="zh">解释将程序分解为这四个函数（而非写在一整块代码中）的一个好处。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 ── MED, ON, ON Provincial-style, S2+S3 calling functions + tracing -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q7</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;2 + &sect;3 <span data-lang="en">Calling Functions + Parameter Passing</span><span data-lang="zh">调用函数 + 参数传递</span> &middot; ICS3U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Study the following two functions and the code that calls them.</span><span data-lang="zh">研究以下两个函数及调用它们的代码。</span></p>
+    <pre><code>def double(n):
+    return n * 2
+
+def add_and_double(a, b):
+    total = a + b
+    return double(total)
+
+x = add_and_double(3, 7)
+print(x)
+print(add_and_double(5, 5))</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">For the call <code>add_and_double(3, 7)</code>, state the argument bound to each parameter and trace the function to determine the return value.</span><span data-lang="zh">对于调用 <code>add_and_double(3, 7)</code>，写出绑定到每个形参的实参，并追踪函数以确定返回值。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">Write the two values printed by the program.</span><span data-lang="zh">写出程序打印的两个值。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">The function <code>add_and_double</code> calls <code>double</code> internally. Explain in one sentence what this demonstrates about function reuse.</span><span data-lang="zh"><code>add_and_double</code> 在内部调用 <code>double</code>。用一句话解释这说明了函数复用的什么特点。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">If the student modifies <code>double</code> to multiply by 3 instead of 2, state the new output of both print statements.</span><span data-lang="zh">如果学生将 <code>double</code> 修改为乘以 3 而非 2，写出两条 print 语句的新输出。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 ── HARD, BC/US, FRQ, S4+S5 return values + scope -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q8</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;4 + &sect;5 <span data-lang="en">Return Values + Scope</span><span data-lang="zh">返回值 + 作用域</span> &middot; CSE2110 3.3 / ICS3U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Study the following program carefully. Note the local variable named <code>result</code> inside each function.</span><span data-lang="zh">仔细研究以下程序。注意每个函数内部名为 <code>result</code> 的局部变量。</span></p>
+    <pre><code>def square(n):
+    result = n * n
+    return result
+
+def cube(n):
+    result = n * n * n
+    return result
+
+a = square(4)
+b = cube(3)
+print(a)
+print(b)
+print(a + b)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Trace the call <code>square(4)</code>: state the value bound to <code>n</code>, compute <code>result</code>, and state the return value.</span><span data-lang="zh">追踪调用 <code>square(4)</code>：写出绑定到 <code>n</code> 的值，计算 <code>result</code>，写出返回值。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">State the three values printed by the program.</span><span data-lang="zh">写出程序打印的三个值。</span> <span class="marks-inline">[3]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Both <code>square</code> and <code>cube</code> have a local variable called <code>result</code>. Explain in one sentence why these two variables do not interfere with each other.</span><span data-lang="zh"><code>square</code> 和 <code>cube</code> 都有名为 <code>result</code> 的局部变量。用一句话解释这两个变量为什么互不干扰。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">Rewrite <code>square</code> so that it uses a global variable <code>result</code> instead of a local one (add the <code>global</code> declaration). Then explain one reason why this version is worse than the original.</span><span data-lang="zh">重写 <code>square</code>，使其使用全局变量 <code>result</code> 而非局部变量（添加 <code>global</code> 声明）。然后解释该版本比原版差的一个原因。</span> <span class="marks-inline">[2]</span><div class="work m"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 ── HARD Honors, US, AP CSP-feeder, S5+S6 scope + coupling Honors -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q9</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;5 + &sect;6 <span data-lang="en">Scope + Coupling / Cohesion</span><span data-lang="zh">作用域 + 耦合与内聚</span> &middot; CSE2110 3.4 / ICS4U C1.3</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">The two programs below compute the same result but use different designs. Program A uses a shared global variable; Program B passes data only through parameters and return values.</span><span data-lang="zh">以下两个程序计算相同的结果，但使用了不同的设计。程序 A 使用共享的全局变量；程序 B 仅通过形参和返回值传递数据。</span></p>
+    <p><strong><span data-lang="en">Program A (global state):</span><span data-lang="zh">程序 A（全局状态）：</span></strong></p>
+    <pre><code>total = 0
+
+def add_item(price):
+    global total
+    total = total + price
+
+add_item(15)
+add_item(30)
+print(total)</code></pre>
+    <p><strong><span data-lang="en">Program B (parameter-based):</span><span data-lang="zh">程序 B（基于参数）：</span></strong></p>
+    <pre><code>def add_item(running_total, price):
+    return running_total + price
+
+t = 0
+t = add_item(t, 15)
+t = add_item(t, 30)
+print(t)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Trace both programs and confirm they output the same value. State that value.</span><span data-lang="zh">追踪两个程序，确认它们输出相同的值。写出该值。</span> <span class="marks-inline">[2]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">In Program A, what happens if you call <code>add_item(10)</code> a second time in a different part of the program? Explain why the result depends on hidden state.</span><span data-lang="zh">在程序 A 中，如果在程序的另一处再次调用 <code>add_item(10)</code>，会发生什么？解释为什么结果依赖于隐藏状态。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Explain why Program B's design is preferred in modular programs. Use the terms <em>coupling</em> and <em>cohesion</em> in your answer (AB CSE2110 outcome 3.4).</span><span data-lang="zh">解释为什么在模块化程序中首选程序 B 的设计。在回答中使用术语<em>耦合</em>（coupling）和<em>内聚</em>（cohesion）（AB CSE2110 结果 3.4）。</span> <span class="marks-inline">[2]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">Give one real-world scenario where using a global variable would be appropriate (e.g., a program-wide configuration setting). Justify your answer in one sentence.</span><span data-lang="zh">举一个使用全局变量合适的真实场景（如程序范围的配置设置）。用一句话说明理由。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART III  MODELING / APPLIED   3 Qs  25 marks
+     Universal / multi-region applied problems
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;&middot;&nbsp; MODELING / APPLIED</span><span data-lang="zh">第三部分 &nbsp;&middot;&nbsp; 建模与应用</span></span><span class="part-meta"><span data-lang="en">Universal / multi-region applied &middot; 25 marks</span><span data-lang="zh">通用/多地区应用题 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section C &middot; Modeling and Applications</span><span data-lang="zh">C 部分 &middot; 建模与应用</span></h2>
+<p class="instructions"><span data-lang="en">Read each scenario carefully before writing code. For pseudocode, use standard block format (FUNCTION/END FUNCTION, IF/THEN/END IF). For Python, show correct indentation. Each question asks you to design, trace, or extend functions; always state the return value or output explicitly.</span><span data-lang="zh">动笔前仔细阅读每个场景。伪代码使用标准块格式（FUNCTION/END FUNCTION、IF/THEN/END IF）。Python 须正确缩进。每题要求设计、追踪或扩展函数；务必明确写出返回值或输出。</span></p>
+
+<!-- Q10 ── MED, US/ON, S1+S2+S3, writing a function from scratch -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q10</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;1 + &sect;2 + &sect;3 <span data-lang="en">Writing Functions from Scratch</span><span data-lang="zh">从零编写函数</span> &middot; ICS3U A3.1 / CSTA 3A-AP-18</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A student needs a program that converts a temperature in Celsius to Fahrenheit using the formula F = C x 9/5 + 32. The same conversion is needed in three different places.</span><span data-lang="zh">一名学生需要一个程序，使用公式 F = C x 9/5 + 32 将摄氏温度转换为华氏温度。同一转换在三个不同地方都需要用到。</span></p>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Write the function <code>to_fahrenheit(celsius)</code> in pseudocode. It must accept one parameter and return the converted value.</span><span data-lang="zh">用伪代码编写函数 <code>to_fahrenheit(celsius)</code>。它必须接受一个形参并返回转换后的值。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">Verify your function by hand-tracing <code>to_fahrenheit(0)</code> and <code>to_fahrenheit(100)</code>. State the two return values.</span><span data-lang="zh">手工追踪 <code>to_fahrenheit(0)</code> 和 <code>to_fahrenheit(100)</code> 以验证你的函数。写出两个返回值。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Rewrite the same function in Python.</span><span data-lang="zh">用 Python 重写相同的函数。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">Explain in one sentence why placing this formula in a function (rather than copying it three times) follows the DRY (Don't Repeat Yourself) principle.</span><span data-lang="zh">用一句话解释为什么将该公式放入函数中（而非复制三次）遵循了 DRY（不要重复自己）原则。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 ── MED, ON/BC, S6+S7, modular design + built-in functions -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q11</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;6 + &sect;7 <span data-lang="en">Modular Design + Built-in Functions</span><span data-lang="zh">模块化设计 + 内置函数</span> &middot; ICS3U A3.1 / B2.3</span>
+    <span class="pill marks"><span data-lang="en">[9 marks]</span><span data-lang="zh">[9 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A student must write a program that computes statistics (minimum, maximum, average) for a list of quiz scores, then displays a summary. They choose a modular design with one function per task.</span><span data-lang="zh">一名学生需要编写一个程序，计算一组测验成绩的统计数据（最小值、最大值、平均值），然后显示摘要。他们选择每个任务一个函数的模块化设计。</span></p>
+    <pre><code>scores = [72, 88, 65, 91, 78]
+
+def find_min(data):
+    return min(data)        # uses built-in min()
+
+def find_max(data):
+    return max(data)        # uses built-in max()
+
+def find_average(data):
+    return sum(data) / len(data)   # uses built-in sum() and len()
+
+def display_summary(data):
+    print("Min:", find_min(data))
+    print("Max:", find_max(data))
+    print("Avg:", find_average(data))
+
+display_summary(scores)</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">State the three values printed by <code>display_summary(scores)</code>. Show your calculations for the average.</span><span data-lang="zh">写出 <code>display_summary(scores)</code> 打印的三个值。展示平均值的计算过程。</span> <span class="marks-inline">[4]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">The built-in functions <code>min()</code>, <code>max()</code>, <code>sum()</code>, and <code>len()</code> are used in this program. Explain why using them instead of writing custom loops illustrates the principle described in CSTA 3B-AP-16.</span><span data-lang="zh">该程序使用了内置函数 <code>min()</code>、<code>max()</code>、<code>sum()</code> 和 <code>len()</code>。解释为什么使用它们（而非编写自定义循环）体现了 CSTA 3B-AP-16 所描述的原则。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">The student wants to add a function <code>find_range(data)</code> that returns the difference between the maximum and minimum. Write this function in Python. It should call <code>find_max</code> and <code>find_min</code> instead of calling <code>max()</code> and <code>min()</code> directly, to demonstrate function reuse.</span><span data-lang="zh">学生想添加一个函数 <code>find_range(data)</code>，返回最大值与最小值之差。用 Python 编写此函数。它应调用 <code>find_max</code> 和 <code>find_min</code>（而非直接调用 <code>max()</code> 和 <code>min()</code>），以展示函数复用。</span> <span class="marks-inline">[2]</span><div class="work s"></div></div>
+      <div class="part-item"><span class="tag">(d)</span> <span data-lang="en">State the return value of <code>find_range(scores)</code> for the given list.</span><span data-lang="zh">对于给定列表，写出 <code>find_range(scores)</code> 的返回值。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 ── HARD, US/ON/BC, all sections, top-down design + extension -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q12</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic"><span data-lang="en">All sections &middot; Top-Down Design + Extension</span><span data-lang="zh">全节综合 &middot; 自顶向下设计与扩展</span> &middot; CSTA 3A-AP-17 / ICS3U B2.3</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">A student is building a tip calculator. They use top-down design: the main program reads three inputs (bill amount, tip percentage, number of people) and calls three helper functions to do the work.</span><span data-lang="zh">一名学生正在构建小费计算器。他们采用自顶向下设计：主程序读取三个输入（账单金额、小费百分比、人数），并调用三个辅助函数完成工作。</span></p>
+    <pre><code>FUNCTION compute_tip(bill, percent):
+    RETURN bill * percent / 100
+END FUNCTION
+
+FUNCTION compute_total(bill, tip):
+    RETURN bill + tip
+END FUNCTION
+
+FUNCTION per_person(total, people):
+    RETURN total / people
+END FUNCTION
+
+-- Main program
+SET bill    TO 120
+SET percent TO 15
+SET people  TO 4
+
+SET tip     TO compute_tip(bill, percent)
+SET total   TO compute_total(bill, tip)
+SET share   TO per_person(total, people)
+OUTPUT "Each person pays: " + share</code></pre>
+    <div class="frq-parts">
+      <div class="part-item"><span class="tag">(a)</span> <span data-lang="en">Trace the three function calls in order. Show the argument bindings and compute the return value of each call. State the final output.</span><span data-lang="zh">按顺序追踪三个函数调用。写出实参绑定并计算每次调用的返回值。写出最终输出。</span> <span class="marks-inline">[4]</span><div class="work l"></div></div>
+      <div class="part-item"><span class="tag">(b)</span> <span data-lang="en">The student wants to add a function <code>apply_discount(total, discount_pct)</code> that reduces the total by a given percentage before splitting. Write the function in pseudocode and state the new share if <code>discount_pct = 10</code> is applied to the total computed in part (a).</span><span data-lang="zh">学生想添加一个函数 <code>apply_discount(total, discount_pct)</code>，在拆分之前按给定百分比减少总额。用伪代码编写该函数，并写出对 (a) 中计算的总额应用 <code>discount_pct = 10</code> 后的新人均分摊额。</span> <span class="marks-inline">[3]</span><div class="work m"></div></div>
+      <div class="part-item"><span class="tag">(c)</span> <span data-lang="en">Identify one way the top-down structure of this program demonstrates the single-responsibility rule.</span><span data-lang="zh">指出该程序的自顶向下结构在哪个方面体现了单一职责规则。</span> <span class="marks-inline">[1]</span><div class="work s"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- consult-cta -->
+<aside class="consult-cta">
+  <span class="consult-cta__lead"><span data-lang="en">Stuck, or want to go further?</span><span data-lang="zh">遇到困难，或想更进一步？</span></span>
+  <span class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor:</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估：</span></span>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_4_Functions_and_Modular_Design__practice__en" target="_blank" rel="noopener">dingruischolars.com/signup</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_4_Functions_and_Modular_Design__practice__zh" target="_blank" rel="noopener">dingruischolars.com/signup-ch</a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../Study%20Guides/Unit_4_Functions_and_Modular_Design.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Practice</span><span data-lang="zh">练习</span></span>
+  <a href="Solutions/Unit_4_Functions_and_Modular_Design_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">High School Computer Science &middot; Practice</span><span data-lang="zh">高中计算机科学 &middot; 练习题</span> &middot; <code style="color:#555;">v1</code></span>
+  <span><span data-lang="en">Functions and Modular Design Practice v1 &middot; 12 Qs &middot; ~80 marks &middot; US / ON / BC / AB &middot; HS-CS-4</span><span data-lang="zh">函数与模块化设计 练习题 v1 &middot; 共 12 题 &middot; 约 80 分 &middot; 美 / 安 / 卑 / 阿 &middot; HS-CS-4</span></span>
+</footer>
+
+<script>
+function toggleLang() { const isZh = document.body.classList.toggle('lang-zh'); try { localStorage.setItem('lang', isZh ? 'zh' : 'en'); } catch (e) {} }
+try { if (localStorage.getItem('lang') === 'zh') document.body.classList.add('lang-zh'); } catch (e) {}
+</script>
+
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

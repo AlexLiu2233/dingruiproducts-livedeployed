@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on networks: LAN/WAN, packets, IP and DNS, TCP/IP, HTTP/HTTPS, the OSI model, and firewalls. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Networks and the Internet | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_11_Networks_and_the_Internet.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Networks and the Internet | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on networks: LAN/WAN, packets, IP and DNS, TCP/IP, HTTP/HTTPS, the OSI model, and firewalls. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_11_Networks_and_the_Internet.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Networks and the Internet | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on networks: LAN/WAN, packets, IP and DNS, TCP/IP, HTTP/HTTPS, the OSI model, and firewalls. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-11  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Networks and the Internet",
+  "description": "Free high school Computer Science notes on networks: LAN/WAN, packets, IP and DNS, TCP/IP, HTTP/HTTPS, the OSI model, and firewalls. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_11_Networks_and_the_Internet.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">NETWORKS</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-7-1"><span data-lang="en">What is a Network?</span><span data-lang="zh">什么是网络？</span></a>
+  <a href="#s-7-2"><span data-lang="en">The Internet and Packets</span><span data-lang="zh">互联网与数据包</span></a>
+  <a href="#s-7-3"><span data-lang="en">IP Addresses and DNS</span><span data-lang="zh">IP地址与DNS</span></a>
+  <a href="#s-7-4"><span data-lang="en">Protocols: TCP/IP, HTTP/HTTPS</span><span data-lang="zh">协议：TCP/IP、HTTP/HTTPS</span></a>
+  <a href="#s-7-5"><span data-lang="en">The OSI Layered Model</span><span data-lang="zh">OSI 分层模型</span></a>
+  <a href="#s-7-6"><span data-lang="en">Network Security Basics</span><span data-lang="zh">网络安全基础</span></a>
+  <a href="#s-7-7"><span data-lang="en">The Web vs. the Internet</span><span data-lang="zh">万维网与互联网</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Networks and the Internet</span><span data-lang="zh">网络与互联网</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Every time you load a webpage, stream a video, or send a message, data travels across a web of interconnected devices governed by precise rules called protocols. This guide explains how networks are built (LAN, WAN, topologies), how the Internet breaks data into packets and routes them across the globe, how IP addresses and DNS let you reach any machine by name, what TCP/IP and HTTP/HTTPS actually do, how the OSI seven-layer model organises those rules, and how firewalls and encryption keep traffic safe. It closes by untangling the Web from the Internet itself.</span><span data-lang="zh">每当你加载网页、播放视频或发送消息，数据都在由精确规则（协议，<code>protocol</code>）控制的互联设备网络中传输。本指南讲解网络（<code>network</code>，网络）的构建方式（局域网 LAN、广域网 WAN、拓扑结构），互联网（<code>Internet</code>，互联网）如何将数据拆成数据包（<code>packet</code>，数据包）并路由到全球各地，IP地址（<code>IP address</code>，IP地址）和域名系统（<code>DNS</code>，域名系统）如何让你用名字访问任何机器，TCP/IP 和 HTTP/HTTPS 实际上做什么，OSI 七层模型如何组织这些规则，以及防火墙（<code>firewall</code>，防火墙）和加密如何保护流量安全。最后辨析万维网（Web）与互联网本身的区别。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC CIS &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC CIS &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">ASCII diagrams &middot; no KaTeX</span><span data-lang="zh">ASCII 图示 &middot; 无 KaTeX</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-7-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; Networks</span><span data-lang="zh">第 1 节 &middot; 网络</span></div>
+  <h2><span data-lang="en">What is a Network?</span><span data-lang="zh">什么是网络？</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Key definitions &mdash; memorise these first.</span><span data-lang="zh">核心定义 &mdash; 先背这些。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Network</span><span data-lang="zh">网络</span></strong> <span data-lang="en">&mdash; two or more devices connected so they can share data and resources. BC Computer Studies 10 Content: "wired and wireless computer networking (network cards, routers, switches, cables, modems, network types)."</span><span data-lang="zh">&mdash; 两台或更多设备相互连接以共享数据和资源。BC Computer Studies 10 内容："有线和无线计算机网络（网卡、路由器、交换机、电缆、调制解调器、网络类型）。"</span></li>
+      <li><strong><span data-lang="en">LAN — Local Area Network</span><span data-lang="zh">局域网（LAN）</span></strong> <span data-lang="en">&mdash; a network confined to a small geographic area, e.g. one building or campus. Devices connect via Ethernet cable or Wi-Fi. High speed, privately owned.</span><span data-lang="zh">&mdash; 局限于较小地理区域（如一栋建筑或校园）的网络。设备通过以太网线缆或 Wi-Fi 连接。速度快，私有。</span></li>
+      <li><strong><span data-lang="en">WAN — Wide Area Network</span><span data-lang="zh">广域网（WAN）</span></strong> <span data-lang="en">&mdash; a network spanning a large geographic area, linking LANs together. The Internet is the world's largest WAN. BC CIS 11 Content (verbatim): "model-wide area networks (WANs) and local area networks (LANs)."</span><span data-lang="zh">&mdash; 跨越大地理区域、将多个局域网连接在一起的网络。互联网是世界上最大的广域网。BC CIS 11 内容（原文）："广域网（WAN）和局域网（LAN）模型。"</span></li>
+      <li><strong><span data-lang="en">Network topology</span><span data-lang="zh">拓扑结构</span></strong> <span data-lang="en">&mdash; the arrangement of how devices are connected. Common topologies: <strong>bus</strong> (all on one cable), <strong>star</strong> (all connect to a central switch — most common today), <strong>ring</strong> (each device connects to the next), <strong>mesh</strong> (every device connects to every other — fault tolerant, used in WANs). CSTA 3A-NI-04: "relationship between routers, switches, servers, topology, and addressing."</span><span data-lang="zh">&mdash; 设备连接方式的排布。常见拓扑：<strong>总线型</strong>（所有设备连一条电缆）、<strong>星型</strong>（所有设备连接到中央交换机——当今最常见）、<strong>环型</strong>（每台设备连接到下一台）、<strong>网状型</strong>（每台设备与其他所有设备连接——容错性强，用于广域网）。CSTA 3A-NI-04："路由器、交换机、服务器、拓扑结构和寻址之间的关系。"</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">N</div><div class="card-title"><span data-lang="en">Network topology diagram (ASCII)</span><span data-lang="zh">网络拓扑图（ASCII）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Star topology (most common in modern LANs): all devices connect to one central switch or router.</span><span data-lang="zh">星型拓扑（现代局域网最常见）：所有设备连接到一个中央交换机或路由器。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre>
+  PC1 ----+
+          |
+  PC2 ----+---- Switch/Router ---- Internet
+          |
+  PC3 ----+
+          |
+ Printer--+
+</pre>
+    <p><span data-lang="en">In a <strong>star topology</strong>, if the central switch fails, all devices lose connectivity — the switch is a single point of failure. In a <strong>mesh topology</strong>, data can reroute around failed nodes, making it fault-tolerant. CSTA 3A-NI-04 asks you to "evaluate the scalability and reliability of networks" — topology is a key factor.</span><span data-lang="zh">在<strong>星型拓扑</strong>中，若中央交换机故障，所有设备失去连接——交换机是单点故障。在<strong>网状拓扑</strong>中，数据可以绕过故障节点重新路由，因此具有容错性。CSTA 3A-NI-04 要求你"评估网络的可扩展性和可靠性"——拓扑结构是关键因素。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A school's computers are all connected to one central switch in the building. What type of network is this, and what topology does it use?</span><span data-lang="zh">学校的所有计算机都连接到大楼内一台中央交换机。这是什么类型的网络，使用什么拓扑结构？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">WAN / mesh topology</span><span data-lang="zh">广域网 / 网状拓扑</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">LAN / bus topology</span><span data-lang="zh">局域网 / 总线拓扑</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">LAN / star topology</span><span data-lang="zh">局域网 / 星型拓扑</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">WAN / star topology</span><span data-lang="zh">广域网 / 星型拓扑</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">One building = LAN (local area network). All devices connecting to a single central switch = star topology. WAN spans a large geographic area; bus topology uses one shared cable.</span><span data-lang="zh">一栋建筑 = 局域网（LAN）。所有设备连接到单一中央交换机 = 星型拓扑。广域网跨越大地理区域；总线拓扑使用一条共享电缆。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">One building = LAN. All devices to one central switch = star. Mesh = every device to every other; bus = one shared cable; WAN = large geographic area.</span><span data-lang="zh">一栋建筑 = 局域网。所有设备连一台中央交换机 = 星型。网状 = 每台设备与其他所有设备连接；总线 = 一条共享电缆；广域网 = 大地理区域。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which network topology is most fault-tolerant because data can reroute around failed nodes?</span><span data-lang="zh">哪种网络拓扑因数据可以绕过故障节点重新路由而最具容错性？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Bus</span><span data-lang="zh">总线型</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Star</span><span data-lang="zh">星型</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Ring</span><span data-lang="zh">环型</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Mesh</span><span data-lang="zh">网状型</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Mesh topology connects every device to every other, so if one link fails, data can be rerouted through other paths. This is why the Internet itself uses a mesh-like structure for resilience.</span><span data-lang="zh">网状拓扑将每台设备与其他所有设备连接，因此若某条链路故障，数据可通过其他路径重新路由。这就是互联网本身采用类似网状结构以保证弹性的原因。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Mesh = multiple paths between any two nodes = fault tolerant. Star has one central point of failure. Bus has one shared cable that fails all devices if broken. Ring fails if one device goes down.</span><span data-lang="zh">网状型 = 任意两节点间有多条路径 = 容错。星型有一个中央故障点。总线型有一条共享电缆，断裂则所有设备失连。环型一台设备故障则全线中断。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; The Internet and packets</span><span data-lang="zh">第 2 节 &middot; 互联网与数据包</span></div>
+  <h2><span data-lang="en">The Internet and How Data Travels</span><span data-lang="zh">互联网与数据的传输方式</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Why packets? Why not send the whole file at once?</span><span data-lang="zh">为什么用数据包？为什么不一次性发送整个文件？</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Packet</span><span data-lang="zh">数据包</span></strong> <span data-lang="en">&mdash; a small chunk of data, typically 1,500 bytes or less, with a header containing the sender's IP address, the destination IP address, the packet number, and total packet count. AP CSP CSN-1.A: "The Internet is a network of networks… data is broken into packets and transmitted."</span><span data-lang="zh">&mdash; 一小块数据，通常不超过 1,500 字节，头部包含发送方 IP 地址、目标 IP 地址、数据包编号和总包数。AP CSP CSN-1.A："互联网是网络的网络……数据被拆分为数据包并传输。"</span></li>
+      <li><strong><span data-lang="en">Packet switching</span><span data-lang="zh">分组交换</span></strong> <span data-lang="en">&mdash; each packet can take a different route to the destination. Routers forward each packet along whichever path is fastest at that moment. Packets are reassembled in order at the destination.</span><span data-lang="zh">&mdash; 每个数据包可以走不同路径到达目的地。路由器将每个数据包沿当时最快的路径转发。数据包在目的地按序重新组装。</span></li>
+      <li><strong><span data-lang="en">Fault tolerance</span><span data-lang="zh">容错性</span></strong> <span data-lang="en">&mdash; because packets can reroute around failed nodes, the Internet continues to work even when some routers go down. AP CSP topic 4.2 (Fault Tolerance) directly assesses this. CSTA 3A-NI-04: "evaluate the scalability and reliability of networks."</span><span data-lang="zh">&mdash; 因为数据包可以绕过故障节点重新路由，即使某些路由器宕机，互联网仍能继续工作。AP CSP 主题 4.2（容错）直接评估此内容。CSTA 3A-NI-04："评估网络的可扩展性和可靠性。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>Why packets beat one big stream:</strong> (1) multiple packets can travel simultaneously on different paths — parallel throughput; (2) if one packet is lost, only that packet is retransmitted, not the whole file; (3) bandwidth is shared fairly across many simultaneous users.</span><span data-lang="zh"><strong>为什么数据包优于单一大流：</strong>（1）多个数据包可同时在不同路径传输——并行吞吐；（2）若某个数据包丢失，只需重传该数据包而非整个文件；（3）带宽可在众多并发用户间公平共享。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">How a packet travels across the Internet (ASCII)</span><span data-lang="zh">数据包如何跨互联网传输（ASCII 图）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Sending a 3-packet message from your laptop to a web server.</span><span data-lang="zh">从你的笔记本电脑向 Web 服务器发送一条 3 包消息。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre>
+Your Laptop
+  |
+  | Packets 1, 2, 3 (may take different routes)
+  v
+Router A ---Pkt1---> Router C ---Pkt1---> Web Server
+  |                               ^
+  +---Pkt2---> Router B ---Pkt2---+
+  |                               |
+  +---Pkt3---> Router A ---Pkt3---+
+                (direct path)
+
+Web Server: receives Pkt3, Pkt1, Pkt2 (out of order)
+            reassembles in order using packet numbers
+            sends ACK (acknowledgement) for each packet
+</pre>
+    <p><span data-lang="en">Each router reads the destination IP address on the packet header and forwards the packet toward the destination via the best available route. The web server uses the packet-number field to reorder packets even if they arrive out of sequence. This is packet switching in action.</span><span data-lang="zh">每台路由器读取数据包头部的目标 IP 地址，并通过当前最佳可用路由将数据包转发至目的地。Web 服务器利用数据包编号字段对数据包重新排序，即使它们不按顺序到达也没关系。这就是分组交换的实际运作。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Why does the Internet break data into packets instead of sending one continuous stream?</span><span data-lang="zh">为什么互联网将数据拆分为数据包而不是发送一个连续流？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Because routers cannot handle large files</span><span data-lang="zh">因为路由器无法处理大文件</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Packets can take different routes simultaneously, can be individually retransmitted if lost, and bandwidth is shared fairly</span><span data-lang="zh">数据包可以同时走不同路由，丢失后可单独重传，带宽可公平共享</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Packets are encrypted automatically, which improves security</span><span data-lang="zh">数据包会自动加密，从而提高安全性</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Packets are cheaper to transmit than streams</span><span data-lang="zh">数据包比流传输更便宜</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Packet switching offers three key benefits: parallel routing (packets can travel different paths simultaneously), selective retransmission (only lost packets need to be resent), and fair bandwidth sharing. These make the Internet scalable and resilient.</span><span data-lang="zh">分组交换有三大优势：并行路由（数据包可同时走不同路径）、选择性重传（只需重传丢失的数据包）、带宽公平共享。这些特性使互联网具有可扩展性和弹性。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The reason for packets is parallel routing, selective retransmission, and fair sharing — not router limits, automatic encryption, or cost.</span><span data-lang="zh">使用数据包的原因是并行路由、选择性重传和公平共享——而非路由器限制、自动加密或成本。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Three packets from the same file arrive at a server in the order 3, 1, 2. How does the server reconstruct the original file?</span><span data-lang="zh">同一文件的三个数据包以 3、1、2 的顺序到达服务器。服务器如何重建原始文件？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Using the packet-number field in each packet's header to reorder them as 1, 2, 3</span><span data-lang="zh">使用每个数据包头部中的数据包编号字段将其重新排序为 1、2、3</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">It requests all three packets to be resent in the correct order</span><span data-lang="zh">它请求重新按正确顺序发送全部三个数据包</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">It uses the file size to guess the correct order</span><span data-lang="zh">它使用文件大小猜测正确顺序</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">It cannot reconstruct the file if packets arrive out of order</span><span data-lang="zh">如果数据包乱序到达，它无法重建文件</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Each packet's header contains a sequence number. The receiving server buffers packets and uses sequence numbers to reassemble them in the correct order, regardless of arrival order. This is a core function of TCP.</span><span data-lang="zh">每个数据包的头部包含序列号。接收服务器缓冲数据包并使用序列号按正确顺序重新组装，无论到达顺序如何。这是 TCP 的核心功能。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Sequence numbers in the packet header enable reordering without resending all packets. The Internet is designed to handle out-of-order packet arrival.</span><span data-lang="zh">数据包头部的序列号使重新排序成为可能，无需重发所有数据包。互联网的设计能够处理乱序到达的数据包。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; IP addresses and DNS</span><span data-lang="zh">第 3 节 &middot; IP地址与域名系统</span></div>
+  <h2><span data-lang="en">IP Addresses and DNS</span><span data-lang="zh">IP地址与域名系统</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Two questions: where is the device? and what name does it go by?</span><span data-lang="zh">两个问题：设备在哪里？它叫什么名字？</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">IP address</span><span data-lang="zh">IP地址</span></strong> <span data-lang="en">&mdash; a unique numerical label assigned to every device on a network. IPv4: 32-bit, written as four 0&ndash;255 numbers separated by dots, e.g. <code>192.168.1.1</code>. IPv6: 128-bit, written in hex with colons, e.g. <code>2001:0db8::1</code>. CSTA 3A-NI-04 expects you to describe "addressing" as part of network scalability.</span><span data-lang="zh">&mdash; 分配给网络上每台设备的唯一数字标签。IPv4：32 位，以点分隔四个 0&ndash;255 的数字，如 <code>192.168.1.1</code>。IPv6：128 位，以十六进制加冒号书写，如 <code>2001:0db8::1</code>。CSTA 3A-NI-04 要求你将"寻址"描述为网络可扩展性的一部分。</span></li>
+      <li><strong><span data-lang="en">DNS — Domain Name System</span><span data-lang="zh">域名系统（DNS）</span></strong> <span data-lang="en">&mdash; the Internet's "phone book." Translates human-readable domain names (e.g. <code>google.com</code>) into IP addresses (e.g. <code>142.250.80.46</code>) that routers can forward packets to. Without DNS you would have to memorise IP addresses for every website.</span><span data-lang="zh">&mdash; 互联网的"电话簿"。将人类可读的域名（如 <code>google.com</code>）翻译成路由器可以转发数据包的 IP 地址（如 <code>142.250.80.46</code>）。没有 DNS，你必须记住每个网站的 IP 地址。</span></li>
+      <li><strong><span data-lang="en">Public vs private IP</span><span data-lang="zh">公有 IP 与私有 IP</span></strong> <span data-lang="en">&mdash; private IP addresses (e.g. <code>192.168.x.x</code>) are used inside a LAN and are not routable on the public Internet. Your router's public IP is the address the rest of the world sees. NAT (Network Address Translation) maps many private addresses to one public IP.</span><span data-lang="zh">&mdash; 私有 IP 地址（如 <code>192.168.x.x</code>）在局域网内使用，不可在公共互联网上路由。你的路由器的公有 IP 是外部世界看到的地址。NAT（网络地址转换）将多个私有地址映射到一个公有 IP。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">DNS lookup: step by step (ASCII)</span><span data-lang="zh">DNS 查找：逐步过程（ASCII 图）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">What happens when you type <code>www.example.com</code> in your browser?</span><span data-lang="zh">当你在浏览器中输入 <code>www.example.com</code> 时会发生什么？</span></p>
+  </div>
+  <div class="worked-solution">
+<pre>
+Browser                 DNS Resolver           Root DNS      .com DNS    example.com DNS
+   |                        |                      |             |              |
+   |--"www.example.com?"--->|                      |             |              |
+   |                        |---"who is .com?"---->|             |              |
+   |                        |<---"ask .com DNS"-----|             |              |
+   |                        |---"who is example.com?"---------->|              |
+   |                        |<---"ask example.com DNS"-----------|              |
+   |                        |---"IP of www.example.com?"---------------------->|
+   |                        |<---"93.184.216.34"-----------------------------  |
+   |<---"93.184.216.34"-----|
+   |
+   |---TCP connection to 93.184.216.34:80/443 (HTTP/HTTPS)-----> Web Server
+</pre>
+    <p><span data-lang="en">The DNS resolver caches the result so future lookups are instant. Your router or ISP typically acts as the DNS resolver. This hierarchical system allows the Internet's ~350 million domain names to be looked up without any single server knowing them all.</span><span data-lang="zh">DNS 解析器会缓存结果，使后续查找即时完成。你的路由器或 ISP 通常充当 DNS 解析器。这种层级系统使互联网约 3.5 亿个域名无需任何单一服务器全部知晓即可被查找。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the primary function of DNS (Domain Name System)?</span><span data-lang="zh">域名系统（DNS）的主要功能是什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Encrypting data as it travels across the Internet</span><span data-lang="zh">在数据通过互联网传输时对其进行加密</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Assigning unique IP addresses to each device on a LAN</span><span data-lang="zh">为局域网上的每台设备分配唯一 IP 地址</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Translating human-readable domain names into IP addresses that routers can use</span><span data-lang="zh">将人类可读的域名翻译成路由器可使用的 IP 地址</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Storing all web pages so they load faster</span><span data-lang="zh">存储所有网页使其加载更快</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">DNS translates domain names (like google.com) into IP addresses (like 142.250.80.46). Routers forward packets using IP addresses, not domain names — DNS bridges the human-friendly name and the machine-friendly address.</span><span data-lang="zh">DNS 将域名（如 google.com）翻译成 IP 地址（如 142.250.80.46）。路由器使用 IP 地址而非域名转发数据包——DNS 在人类友好的名称和机器友好的地址之间架起了桥梁。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">DNS = domain-name to IP translation. Encryption is handled by TLS/HTTPS. IP assignment in a LAN is done by DHCP. Caching is a side effect, not the primary function.</span><span data-lang="zh">DNS = 域名到 IP 的翻译。加密由 TLS/HTTPS 处理。局域网内 IP 分配由 DHCP 完成。缓存是副作用，而非主要功能。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Why did the Internet move from IPv4 to IPv6?</span><span data-lang="zh">为什么互联网从 IPv4 迁移到 IPv6？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">IPv6 is faster than IPv4 for routing packets</span><span data-lang="zh">IPv6 在路由数据包时比 IPv4 更快</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">IPv4's 32-bit address space (~4 billion addresses) was nearly exhausted; IPv6's 128-bit space provides vastly more addresses</span><span data-lang="zh">IPv4 的 32 位地址空间（约 40 亿个地址）几近耗尽；IPv6 的 128 位空间提供了大得多的地址数量</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">IPv6 automatically encrypts all traffic</span><span data-lang="zh">IPv6 自动加密所有流量</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">IPv4 could not support wireless networks</span><span data-lang="zh">IPv4 不支持无线网络</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">IPv4 has 2³² ≈ 4.3 billion addresses. With billions of devices (smartphones, IoT sensors, servers), address space ran out. IPv6's 128 bits gives 2¹²⁸ ≈ 3.4×10³⁸ addresses — enough for every grain of sand on Earth to have trillions of addresses.</span><span data-lang="zh">IPv4 有 2³² ≈ 43 亿个地址。随着数十亿设备（智能手机、物联网传感器、服务器）的出现，地址空间耗尽。IPv6 的 128 位提供 2¹²⁸ ≈ 3.4×10³⁸ 个地址——足以让地球上每粒沙子拥有数万亿个地址。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The primary reason is address exhaustion — IPv4's ~4 billion addresses proved insufficient for the modern Internet. Speed and encryption are not the main drivers.</span><span data-lang="zh">主要原因是地址耗尽——IPv4 约 40 亿个地址对现代互联网而言不够用。速度和加密不是主要驱动因素。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; Protocols</span><span data-lang="zh">第 4 节 &middot; 协议</span></div>
+  <h2><span data-lang="en">Protocols: TCP/IP, HTTP, and HTTPS</span><span data-lang="zh">协议：TCP/IP、HTTP 与 HTTPS</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">A protocol is a set of rules that two parties agree to follow when communicating.</span><span data-lang="zh">协议（protocol）是通信双方同意遵守的一套规则。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">IP — Internet Protocol</span><span data-lang="zh">IP — 互联网协议</span></strong> <span data-lang="en">&mdash; responsible for addressing and routing. Puts the sender's and destination's IP addresses on each packet. Connectionless — does not guarantee delivery or order.</span><span data-lang="zh">&mdash; 负责寻址和路由。在每个数据包上放置发送方和目标的 IP 地址。无连接——不保证送达或顺序。</span></li>
+      <li><strong><span data-lang="en">TCP — Transmission Control Protocol</span><span data-lang="zh">TCP — 传输控制协议</span></strong> <span data-lang="en">&mdash; adds reliability on top of IP. Establishes a connection (3-way handshake: SYN → SYN-ACK → ACK), numbers packets, requires acknowledgement (ACK) for each, retransmits lost packets, reorders out-of-sequence packets. Used for web pages, email, file transfer — anywhere accuracy matters. BC CIS 11 Content (verbatim): "four layers of the Transmission Control Protocol/Internet Protocol (TCP/IP)."</span><span data-lang="zh">&mdash; 在 IP 之上增加可靠性。建立连接（三次握手：SYN → SYN-ACK → ACK），对数据包编号，要求每个包的确认（ACK），重传丢失数据包，重新排序乱序数据包。用于网页、电子邮件、文件传输——任何需要准确性的场景。BC CIS 11 内容（原文）："TCP/IP 的四层。"</span></li>
+      <li><strong><span data-lang="en">UDP — User Datagram Protocol</span><span data-lang="zh">UDP — 用户数据报协议</span></strong> <span data-lang="en">&mdash; fast but unreliable; no handshake, no ACK, no retransmission. Used for video streaming and online gaming where speed beats accuracy (a dropped frame is better than a frozen screen).</span><span data-lang="zh">&mdash; 快速但不可靠；无握手、无 ACK、无重传。用于视频流和在线游戏，这些场景中速度优先于准确性（丢帧比画面卡顿更好）。</span></li>
+      <li><strong><span data-lang="en">HTTP / HTTPS</span><span data-lang="zh">HTTP / HTTPS</span></strong> <span data-lang="en">&mdash; HTTP (HyperText Transfer Protocol) is the protocol browsers use to request and receive web pages. HTTPS = HTTP + TLS encryption; data is encrypted end-to-end. CSTA 3A-NI-07: "Compare various security measures, considering tradeoffs between the usability and security of a computing system."</span><span data-lang="zh">&mdash; HTTP（超文本传输协议）是浏览器用于请求和接收网页的协议。HTTPS = HTTP + TLS 加密；数据端到端加密。CSTA 3A-NI-07："比较各种安全措施，考虑计算系统可用性与安全性之间的权衡。"</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">TCP vs UDP — choosing the right protocol (table)</span><span data-lang="zh">TCP 与 UDP — 选择正确的协议（对比表）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Which protocol to use depends on whether accuracy or speed matters more.</span><span data-lang="zh">选择哪种协议取决于准确性还是速度更重要。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span data-lang="en">Feature</span><span data-lang="zh">特性</span></th>
+            <th><span data-lang="en">TCP</span><span data-lang="zh">TCP</span></th>
+            <th><span data-lang="en">UDP</span><span data-lang="zh">UDP</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span data-lang="en">Connection</span><span data-lang="zh">连接</span></td><td><span data-lang="en">3-way handshake before data</span><span data-lang="zh">数据传输前三次握手</span></td><td><span data-lang="en">None (fire and forget)</span><span data-lang="zh">无（发送即忘）</span></td></tr>
+          <tr><td><span data-lang="en">Delivery guarantee</span><span data-lang="zh">送达保证</span></td><td><span data-lang="en">Yes — ACK + retransmit</span><span data-lang="zh">是——ACK + 重传</span></td><td><span data-lang="en">No</span><span data-lang="zh">否</span></td></tr>
+          <tr><td><span data-lang="en">Ordering</span><span data-lang="zh">排序</span></td><td><span data-lang="en">Yes — reorders packets</span><span data-lang="zh">是——重新排序数据包</span></td><td><span data-lang="en">No</span><span data-lang="zh">否</span></td></tr>
+          <tr><td><span data-lang="en">Speed</span><span data-lang="zh">速度</span></td><td><span data-lang="en">Slower (overhead)</span><span data-lang="zh">较慢（开销大）</span></td><td><span data-lang="en">Faster</span><span data-lang="zh">较快</span></td></tr>
+          <tr><td><span data-lang="en">Use cases</span><span data-lang="zh">使用场景</span></td><td><span data-lang="en">HTTP/HTTPS, email, file transfer</span><span data-lang="zh">HTTP/HTTPS、电子邮件、文件传输</span></td><td><span data-lang="en">Video streaming, VoIP, online gaming</span><span data-lang="zh">视频流、VoIP、在线游戏</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">AP CSP CSN-1.C: "The Internet is designed to be fault tolerant … using redundant paths … through a process called packet switching." TCP's retransmission handles the reliability layer; IP handles the routing layer. HTTP is built on TCP — every web page request is a reliable TCP connection.</span><span data-lang="zh">AP CSP CSN-1.C："互联网被设计为通过使用冗余路径的分组交换过程来实现容错。" TCP 的重传处理可靠性层；IP 处理路由层。HTTP 建立在 TCP 之上——每个网页请求都是一个可靠的 TCP 连接。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A video-calling app drops a few frames per second to maintain low latency. Which transport protocol is most likely being used, and why?</span><span data-lang="zh">一个视频通话应用为保持低延迟每秒丢弃几帧。最可能使用哪种传输协议，为什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">UDP — because speed is prioritised over guaranteed delivery; a dropped frame is acceptable</span><span data-lang="zh">UDP——因为速度优先于送达保证；丢帧是可接受的</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">TCP — because all packets must arrive in order</span><span data-lang="zh">TCP——因为所有数据包必须按序到达</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">HTTP — because it is a web-based application</span><span data-lang="zh">HTTP——因为这是一个基于 Web 的应用</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">IP only — no transport protocol is needed</span><span data-lang="zh">仅 IP——不需要传输协议</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">UDP is used for real-time audio/video because it is faster — no handshake, no waiting for retransmissions. A dropped frame appears as a brief glitch; waiting for a TCP retransmission would freeze the video for longer.</span><span data-lang="zh">UDP 用于实时音频/视频，因为它更快——无握手、无等待重传。丢帧表现为短暂卡顿；等待 TCP 重传会导致视频卡顿更长时间。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Real-time video/audio uses UDP for speed. TCP guarantees order and delivery but adds latency. HTTP is application-layer; IP alone has no reliability mechanism.</span><span data-lang="zh">实时视频/音频使用 UDP 以获取速度。TCP 保证顺序和送达但增加延迟。HTTP 是应用层；仅 IP 没有可靠性机制。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What does HTTPS add over plain HTTP?</span><span data-lang="zh">HTTPS 在 HTTP 基础上增加了什么？</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Faster packet routing</span><span data-lang="zh">更快的数据包路由</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Guaranteed packet delivery</span><span data-lang="zh">保证数据包送达</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">TLS encryption so data cannot be read by eavesdroppers in transit</span><span data-lang="zh">TLS 加密，使传输中的数据不被窃听者读取</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A separate IP address for the server</span><span data-lang="zh">服务器的独立 IP 地址</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">HTTPS = HTTP + TLS (Transport Layer Security). TLS encrypts the data between browser and server so that anyone intercepting the packets (e.g. on a public Wi-Fi) sees only ciphertext, not your password or credit card number.</span><span data-lang="zh">HTTPS = HTTP + TLS（传输层安全）。TLS 加密浏览器与服务器之间的数据，使任何截获数据包的人（如在公共 Wi-Fi 上）只看到密文，而非你的密码或信用卡号。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">HTTPS adds TLS encryption — not faster routing, not delivery guarantees (those come from TCP), and not a new IP address. The S stands for Secure.</span><span data-lang="zh">HTTPS 增加了 TLS 加密——而非更快路由、送达保证（那来自 TCP）或新 IP 地址。S 代表 Secure（安全）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; The OSI model</span><span data-lang="zh">第 5 节 &middot; OSI 分层模型</span></div>
+  <h2><span data-lang="en">The Layered / OSI Model</span><span data-lang="zh">分层模型 / OSI 参考模型</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Why layers? Each layer handles one job and talks only to the layers immediately above and below it.</span><span data-lang="zh">为什么分层？每层只做一件事，只与紧邻的上下层通信。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><span data-lang="en">BC CIS 11 Content (verbatim): <strong>"seven layers of the Open System Interconnection (OSI) reference model; 'interoperability' in the functioning of the Internet; four layers of the Transmission Control Protocol/Internet Protocol (TCP/IP)."</strong></span><span data-lang="zh">BC CIS 11 内容（原文）：<strong>"OSI 参考模型的七层；互联网运作中的'互操作性'；TCP/IP 的四层。"</strong></span></li>
+      <li><span data-lang="en">Mnemonic for OSI layers 7→1: <strong>All People Seem To Need Data Processing</strong> (Application, Presentation, Session, Transport, Network, Data Link, Physical). Layer 7 is closest to the user; Layer 1 is the physical wire.</span><span data-lang="zh">OSI 七层（7→1）记忆口诀：<strong>应用、表示、会话、传输、网络、数据链路、物理</strong>。第 7 层最靠近用户；第 1 层是物理线路。</span></li>
+      <li><span data-lang="en">The TCP/IP model (4 layers) collapses OSI's 7 into: <strong>Application</strong> (= OSI 5+6+7), <strong>Transport</strong> (= OSI 4), <strong>Internet</strong> (= OSI 3), <strong>Network Access / Link</strong> (= OSI 1+2).</span><span data-lang="zh">TCP/IP 模型（4 层）将 OSI 7 层合并为：<strong>应用层</strong>（= OSI 5+6+7）、<strong>传输层</strong>（= OSI 4）、<strong>网络层 / 互联网层</strong>（= OSI 3）、<strong>网络接入层 / 链路层</strong>（= OSI 1+2）。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">OSI seven layers with examples (ASCII table)</span><span data-lang="zh">OSI 七层及示例（ASCII 表格）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">What each layer does, and which protocols/hardware live there.</span><span data-lang="zh">每层的功能，以及对应的协议/硬件。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre>
+Layer | Name              | Job                            | Examples
+------+-------------------+--------------------------------+-------------------
+  7   | Application       | User-facing services           | HTTP, HTTPS, DNS, FTP
+  6   | Presentation      | Data format / encryption       | TLS/SSL, JPEG, MP3
+  5   | Session           | Opening/closing sessions       | NetBIOS, RPC
+  4   | Transport         | End-to-end delivery, ports     | TCP, UDP
+  3   | Network           | Routing between networks       | IP, ICMP, routers
+  2   | Data Link         | Frame delivery on one link     | Ethernet, Wi-Fi (802.11), MAC
+  1   | Physical          | Bits on the wire / air         | Cables, fibre, radio waves
+</pre>
+    <p><span data-lang="en">A helpful analogy: sending a letter by courier. Layer 7 = the letter's content (your message). Layer 4 = the envelope (addressing recipient and sender). Layer 3 = the postal sorting office (routing by postcode). Layer 1 = the van's wheels on the road (physical transport). Each layer adds a header when sending and strips it when receiving — called <strong>encapsulation</strong> and <strong>decapsulation</strong>.</span><span data-lang="zh">一个有用的比喻：快递寄信。第 7 层 = 信的内容（你的消息）。第 4 层 = 信封（注明收件人和发件人地址）。第 3 层 = 邮件分拣中心（按邮政编码路由）。第 1 层 = 货车在路上的车轮（物理运输）。每层发送时添加头部信息，接收时去除——称为<strong>封装</strong>和<strong>解封装</strong>。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">At which OSI layer does IP (Internet Protocol) operate?</span><span data-lang="zh">IP（互联网协议）在哪个 OSI 层运行？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Layer 1 — Physical</span><span data-lang="zh">第 1 层——物理层</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Layer 4 — Transport</span><span data-lang="zh">第 4 层——传输层</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Layer 7 — Application</span><span data-lang="zh">第 7 层——应用层</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Layer 3 — Network</span><span data-lang="zh">第 3 层——网络层</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">IP operates at Layer 3 (Network layer). It handles addressing (IP addresses) and routing packets between different networks. TCP/UDP operate at Layer 4 (Transport); HTTP operates at Layer 7 (Application).</span><span data-lang="zh">IP 在第 3 层（网络层）运行。它处理寻址（IP 地址）和在不同网络间路由数据包。TCP/UDP 在第 4 层（传输层）运行；HTTP 在第 7 层（应用层）运行。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Layer 3 = Network = IP (routing). Layer 4 = Transport = TCP/UDP. Layer 7 = Application = HTTP/DNS. Layer 1 = Physical = cables/radio waves.</span><span data-lang="zh">第 3 层 = 网络层 = IP（路由）。第 4 层 = 传输层 = TCP/UDP。第 7 层 = 应用层 = HTTP/DNS。第 1 层 = 物理层 = 电缆/无线电波。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The TCP/IP model has four layers. Which OSI layers does the TCP/IP "Application" layer correspond to?</span><span data-lang="zh">TCP/IP 模型有四层。TCP/IP 的"应用层"对应哪些 OSI 层？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">OSI layers 5, 6, and 7 (Session, Presentation, Application)</span><span data-lang="zh">OSI 第 5、6、7 层（会话层、表示层、应用层）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">OSI layers 1 and 2 (Physical and Data Link)</span><span data-lang="zh">OSI 第 1、2 层（物理层、数据链路层）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">OSI layer 4 only (Transport)</span><span data-lang="zh">仅 OSI 第 4 层（传输层）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">OSI layer 3 only (Network)</span><span data-lang="zh">仅 OSI 第 3 层（网络层）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The TCP/IP Application layer collapses OSI's Session (5), Presentation (6), and Application (7) into one layer. This simplification is why TCP/IP has 4 layers rather than 7.</span><span data-lang="zh">TCP/IP 应用层将 OSI 的会话层（5）、表示层（6）和应用层（7）合并为一层。这种简化是 TCP/IP 只有 4 层而非 7 层的原因。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">TCP/IP Application = OSI 5+6+7. TCP/IP Transport = OSI 4. TCP/IP Internet = OSI 3. TCP/IP Link = OSI 1+2.</span><span data-lang="zh">TCP/IP 应用层 = OSI 5+6+7。TCP/IP 传输层 = OSI 4。TCP/IP 网络层 = OSI 3。TCP/IP 链路层 = OSI 1+2。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; interoperability and open standards <span class="honors-flag">BC CIS 11/12</span></span><span data-lang="zh">深入 &mdash; 互操作性与开放标准 <span class="honors-flag">BC CIS 11/12</span></span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">BC CIS 11 Content names "International Organization for Standardization (ISO) in the creation of open standards for networking" and "'interoperability' in the functioning of the Internet." The OSI model is an ISO standard (ISO/IEC 7498-1). Interoperability means that a Mac, a Windows PC, and an Android phone can all send data to each other because they all implement the same open standards at each layer. Without open standards, every manufacturer would use proprietary protocols and devices from different vendors would be unable to communicate — similar to how locked-down app ecosystems restrict cross-platform data sharing. Open standards at the network layer are why the Internet is global rather than a patchwork of incompatible corporate networks.</span><span data-lang="zh">BC CIS 11 内容提到"ISO 在创建网络开放标准方面的作用"和"互联网运作中的'互操作性'"。OSI 模型是 ISO 标准（ISO/IEC 7498-1）。互操作性意味着 Mac、Windows PC 和 Android 手机都可以相互发送数据，因为它们在每一层都实现了相同的开放标准。没有开放标准，每个制造商都会使用专有协议，不同厂商的设备将无法通信——类似于封闭的应用生态系统如何限制跨平台数据共享。网络层的开放标准是互联网成为全球性而非一堆不兼容企业网络的原因。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Network security</span><span data-lang="zh">第 6 节 &middot; 网络安全基础</span></div>
+  <h2><span data-lang="en">Network Security Basics</span><span data-lang="zh">网络安全基础</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three questions: who can enter? is the data readable? is the device clean?</span><span data-lang="zh">三个问题：谁可以进入？数据可读吗？设备干净吗？</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Firewall</span><span data-lang="zh">防火墙</span></strong> <span data-lang="en">&mdash; a hardware or software system that monitors and controls incoming and outgoing network traffic based on rules. It blocks unauthorised connections while allowing legitimate traffic. CSTA 3A-NI-06: "Recommend security measures to address various scenarios."</span><span data-lang="zh">&mdash; 根据规则监控和控制进出网络流量的硬件或软件系统。它阻止未授权连接，同时允许合法流量。CSTA 3A-NI-06："推荐安全措施以应对各种场景。"</span></li>
+      <li><strong><span data-lang="en">Encryption in transit</span><span data-lang="zh">传输加密</span></strong> <span data-lang="en">&mdash; data is scrambled using a key so that anyone intercepting the packets sees only ciphertext. TLS (used by HTTPS) is the standard. CSTA 3A-NI-07: "Compare various security measures, considering tradeoffs between the usability and security of a computing system."</span><span data-lang="zh">&mdash; 使用密钥对数据进行加密，使截获数据包的任何人只看到密文。TLS（HTTPS 使用）是标准做法。CSTA 3A-NI-07："比较各种安全措施，考虑可用性与安全性之间的权衡。"</span></li>
+      <li><strong><span data-lang="en">Malware</span><span data-lang="zh">恶意软件</span></strong> <span data-lang="en">&mdash; software designed to disrupt, damage, or gain unauthorised access. Types: virus (attaches to files), worm (self-replicates across the network without a host file), Trojan (disguised as legitimate software), ransomware (encrypts your files and demands payment), spyware (secretly monitors you). Ontario ICS3U C2.2 (verbatim): "describe procedures to safeguard data and programs from malware (e.g., viruses, Trojan horses, worms, spyware, adware, malevolent macros)."</span><span data-lang="zh">&mdash; 旨在破坏、损害或获取未授权访问的软件。类型：病毒（附着于文件）、蠕虫（无需宿主文件自行在网络中复制）、木马（伪装成合法软件）、勒索软件（加密你的文件并索要赎金）、间谍软件（秘密监视你）。安大略 ICS3U C2.2（原文）："描述保护数据和程序免受恶意软件（如病毒、木马、蠕虫、间谍软件、广告软件、恶意宏）侵害的程序。"</span></li>
+      <li><strong><span data-lang="en">Key security tradeoff</span><span data-lang="zh">关键安全权衡</span></strong> <span data-lang="en">&mdash; stronger security often reduces usability (e.g., multi-factor authentication is more secure but slower). CSTA 3A-NI-08: "Explain tradeoffs when selecting and implementing cybersecurity recommendations."</span><span data-lang="zh">&mdash; 更强的安全性通常降低可用性（如多因素认证更安全但更慢）。CSTA 3A-NI-08："解释选择和实施网络安全建议时的权衡。"</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">System protection plan (worked example)</span><span data-lang="zh">系统保护计划（综合例题）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Ontario ICS3U C2.2 asks students to "devise a thorough system protection plan." Here is a layered defence for a school network.</span><span data-lang="zh">安大略 ICS3U C2.2 要求学生"制定全面的系统保护计划"。以下是学校网络的分层防护方案。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span data-lang="en">Threat</span><span data-lang="zh">威胁</span></th>
+            <th><span data-lang="en">Defence measure</span><span data-lang="zh">防御措施</span></th>
+            <th><span data-lang="en">Tradeoff</span><span data-lang="zh">权衡</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span data-lang="en">Unauthorised external access</span><span data-lang="zh">未授权外部访问</span></td><td><span data-lang="en">Firewall — block all non-whitelisted ports</span><span data-lang="zh">防火墙——封锁所有非白名单端口</span></td><td><span data-lang="en">May block legitimate services; needs configuration</span><span data-lang="zh">可能阻止合法服务；需要配置</span></td></tr>
+          <tr><td><span data-lang="en">Password theft on shared Wi-Fi</span><span data-lang="zh">在共享 Wi-Fi 上的密码窃取</span></td><td><span data-lang="en">HTTPS / TLS encryption in transit</span><span data-lang="zh">HTTPS / TLS 传输加密</span></td><td><span data-lang="en">Slight performance overhead</span><span data-lang="zh">轻微性能开销</span></td></tr>
+          <tr><td><span data-lang="en">Virus / worm infection</span><span data-lang="zh">病毒 / 蠕虫感染</span></td><td><span data-lang="en">Anti-malware software + patch management</span><span data-lang="zh">反恶意软件 + 补丁管理</span></td><td><span data-lang="en">Ongoing cost; may slow system during scans</span><span data-lang="zh">持续成本；扫描时可能降低系统速度</span></td></tr>
+          <tr><td><span data-lang="en">Account compromise</span><span data-lang="zh">账户泄露</span></td><td><span data-lang="en">Multi-factor authentication (MFA)</span><span data-lang="zh">多因素认证（MFA）</span></td><td><span data-lang="en">Extra step for users; less convenient</span><span data-lang="zh">用户需多一步；便利性降低</span></td></tr>
+          <tr><td><span data-lang="en">Data loss from ransomware</span><span data-lang="zh">勒索软件导致的数据丢失</span></td><td><span data-lang="en">Regular offline backups</span><span data-lang="zh">定期离线备份</span></td><td><span data-lang="en">Storage cost; recovery takes time</span><span data-lang="zh">存储成本；恢复需要时间</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">CSTA 3A-NI-05: "Give examples to illustrate how sensitive data can be affected by malware and other attacks." The table above maps each attack vector to a concrete defence, satisfying CSTA 3A-NI-06 (recommend measures) and 3A-NI-08 (explain tradeoffs).</span><span data-lang="zh">CSTA 3A-NI-05："举例说明敏感数据如何受到恶意软件和其他攻击的影响。"上表将每种攻击向量映射到具体防御措施，满足 CSTA 3A-NI-06（推荐措施）和 3A-NI-08（解释权衡）。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which type of malware self-replicates across a network without needing to attach to a host file?</span><span data-lang="zh">哪种恶意软件无需附着于宿主文件即可在网络中自我复制？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Virus</span><span data-lang="zh">病毒</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Worm</span><span data-lang="zh">蠕虫</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Trojan</span><span data-lang="zh">木马</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Spyware</span><span data-lang="zh">间谍软件</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A worm self-replicates and spreads across the network on its own — no host file needed. Ontario ICS3U C2.2 lists worms among the malware types students must know. A virus needs to attach to a file; a Trojan disguises itself as legitimate software; spyware secretly monitors the user.</span><span data-lang="zh">蠕虫自我复制并独立在网络中传播——无需宿主文件。安大略 ICS3U C2.2 将蠕虫列为学生必须了解的恶意软件类型之一。病毒需要附着于文件；木马伪装成合法软件；间谍软件秘密监视用户。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Worm = self-replicates across network without a host file. Virus = attaches to files. Trojan = disguised as legitimate software. Spyware = secretly monitors.</span><span data-lang="zh">蠕虫 = 无需宿主文件在网络中自我复制。病毒 = 附着于文件。木马 = 伪装成合法软件。间谍软件 = 秘密监视。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A school IT department is deciding whether to require multi-factor authentication (MFA) for all students. Which statement best describes the security tradeoff?</span><span data-lang="zh">学校 IT 部门正在决定是否要求所有学生使用多因素认证（MFA）。哪项陈述最能描述安全权衡？</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">MFA makes the network faster because it uses a second layer</span><span data-lang="zh">MFA 因使用第二层而使网络更快</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">MFA eliminates all security threats</span><span data-lang="zh">MFA 消除所有安全威胁</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">MFA reduces security because it adds complexity</span><span data-lang="zh">MFA 因增加复杂性而降低安全性</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">MFA increases security (harder to compromise) but reduces usability (extra step per login)</span><span data-lang="zh">MFA 提高安全性（更难被攻破）但降低可用性（每次登录需额外步骤）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">MFA requires a second proof of identity (e.g. a one-time code texted to your phone) making account compromise much harder — but every login takes an extra step. CSTA 3A-NI-07 asks you to compare security measures "considering tradeoffs between the usability and security of a computing system."</span><span data-lang="zh">MFA 要求第二种身份证明（如发送到手机的一次性验证码），使账户泄露更难——但每次登录需要额外步骤。CSTA 3A-NI-07 要求你比较安全措施，"考虑计算系统可用性与安全性之间的权衡"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">MFA improves security but reduces convenience — classic security-usability tradeoff. It does not eliminate all threats (phishing, physical theft) and has nothing to do with network speed.</span><span data-lang="zh">MFA 提高安全性但降低便利性——经典的安全性与可用性权衡。它不能消除所有威胁（网络钓鱼、物理盗窃），也与网络速度无关。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; The Web vs. the Internet</span><span data-lang="zh">第 7 节 &middot; 万维网与互联网</span></div>
+  <h2><span data-lang="en">The Web vs. the Internet</span><span data-lang="zh">万维网与互联网的区别</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">The Internet ≠ the Web. The Internet is the infrastructure; the Web is one service running on it.</span><span data-lang="zh">互联网 ≠ 万维网。互联网是基础设施；万维网是运行在它之上的一种服务。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">The Internet</span><span data-lang="zh">互联网</span></strong> <span data-lang="en">&mdash; a global network of networks that uses the TCP/IP protocol suite to route packets. It carries many services: the Web, email (SMTP), file transfer (FTP), video calls (VoIP), online gaming, IoT devices.</span><span data-lang="zh">&mdash; 使用 TCP/IP 协议套件路由数据包的全球网络的网络。它承载多种服务：万维网、电子邮件（SMTP）、文件传输（FTP）、视频通话（VoIP）、在线游戏、物联网设备。</span></li>
+      <li><strong><span data-lang="en">The World Wide Web</span><span data-lang="zh">万维网</span></strong> <span data-lang="en">&mdash; a system of interlinked hypertext documents (web pages) accessed via HTTP/HTTPS. Invented by Tim Berners-Lee in 1989 as one application running over the Internet. Uses URLs to identify resources, HTML to structure pages, and HTTP to transfer them.</span><span data-lang="zh">&mdash; 通过 HTTP/HTTPS 访问的相互链接的超文本文档（网页）系统。由 Tim Berners-Lee 于 1989 年发明，作为运行在互联网上的一种应用。使用 URL 标识资源，HTML 构建页面，HTTP 传输它们。</span></li>
+      <li><strong><span data-lang="en">Client-server model</span><span data-lang="zh">客户端-服务器模型</span></strong> <span data-lang="en">&mdash; a <strong>client</strong> (e.g. your browser) sends a <strong>request</strong> to a <strong>server</strong> (e.g. a web server). The server processes the request and sends back a <strong>response</strong> (e.g. an HTML page). AB CSE1210 and CSE1220 introduce "Internet computing through the use of … Web-specific markup languages" — that is the client-server Web model.</span><span data-lang="zh">&mdash; <strong>客户端</strong>（如你的浏览器）向<strong>服务器</strong>（如 Web 服务器）发送<strong>请求</strong>。服务器处理请求并返回<strong>响应</strong>（如 HTML 页面）。AB CSE1210 和 CSE1220 通过"Web 专用标记语言"介绍"互联网计算"——即客户端-服务器 Web 模型。</span></li>
+      <li><strong><span data-lang="en">URL anatomy</span><span data-lang="zh">URL 解析</span></strong> <span data-lang="en">&mdash; <code>https://www.example.com:443/path?q=1#section</code>: <code>https</code> = protocol, <code>www.example.com</code> = domain name (DNS resolves to IP), <code>443</code> = port (default for HTTPS), <code>/path</code> = resource path on the server, <code>?q=1</code> = query string, <code>#section</code> = fragment (in-page anchor).</span><span data-lang="zh">&mdash; <code>https://www.example.com:443/path?q=1#section</code>：<code>https</code> = 协议，<code>www.example.com</code> = 域名（DNS 解析为 IP），<code>443</code> = 端口（HTTPS 默认端口），<code>/path</code> = 服务器上的资源路径，<code>?q=1</code> = 查询字符串，<code>#section</code> = 片段（页内锚点）。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">A browser loading a web page — full journey (ASCII)</span><span data-lang="zh">浏览器加载网页——完整流程（ASCII 图）</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">From typing a URL to seeing the page — every layer is involved.</span><span data-lang="zh">从输入 URL 到看到页面——每一层都参与其中。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre>
+You type: https://www.example.com/index.html
+
+Step 1  DNS lookup: "www.example.com" -> 93.184.216.34
+Step 2  TCP 3-way handshake:  Browser --SYN-->  Server
+                              Browser <-SYN-ACK- Server
+                              Browser --ACK-->   Server
+Step 3  TLS handshake: exchange certificates, agree on encryption key
+Step 4  HTTP request (encrypted):
+        GET /index.html HTTP/1.1
+        Host: www.example.com
+Step 5  HTTP response (encrypted):
+        HTTP/1.1 200 OK
+        Content-Type: text/html
+        [HTML body]
+Step 6  Browser parses HTML, requests CSS/JS/images (repeat steps 4-5)
+Step 7  Browser renders page on screen
+</pre>
+    <p><span data-lang="en">Notice: DNS (Layer 7, Application) resolves the name. TCP (Layer 4, Transport) guarantees delivery. TLS (Layer 6, Presentation in OSI terms) encrypts. IP (Layer 3, Network) routes. Ethernet/Wi-Fi (Layer 2, Data Link) delivers the frame on the local link. Every OSI layer contributes to one page load.</span><span data-lang="zh">注意：DNS（第 7 层，应用层）解析名称。TCP（第 4 层，传输层）保证送达。TLS（OSI 第 6 层，表示层）加密。IP（第 3 层，网络层）路由。以太网/Wi-Fi（第 2 层，数据链路层）在本地链路上传送帧。每个 OSI 层都参与一次页面加载。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is the most accurate statement about the relationship between the Internet and the Web?</span><span data-lang="zh">以下哪项最准确地描述了互联网与万维网的关系？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The Web and the Internet are two different names for the same thing</span><span data-lang="zh">万维网和互联网是同一事物的两个名称</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">The Internet is a service that runs on top of the Web</span><span data-lang="zh">互联网是运行在万维网之上的一种服务</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The Web is one application (HTTP/HTTPS hypertext documents) that runs over the Internet infrastructure</span><span data-lang="zh">万维网是运行在互联网基础设施之上的一种应用（HTTP/HTTPS 超文本文档）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The Web includes all Internet services such as email and file transfer</span><span data-lang="zh">万维网包含电子邮件和文件传输等所有互联网服务</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The Internet is the global network infrastructure (TCP/IP, routers, cables). The Web is one application that runs over that infrastructure, using HTTP/HTTPS to transfer hypertext documents. Email, FTP, VoIP, and online gaming are other applications that also run over the same Internet infrastructure — none of them are "the Web."</span><span data-lang="zh">互联网是全球网络基础设施（TCP/IP、路由器、电缆）。万维网是运行在该基础设施上的一种应用，使用 HTTP/HTTPS 传输超文本文档。电子邮件、FTP、VoIP 和在线游戏是运行在同一互联网基础设施上的其他应用——它们都不是"万维网"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Web ≠ Internet. The Web (HTTP/HTML) is one service on the Internet. The Internet also carries email, FTP, VoIP, etc. The Internet came before the Web (ARPANET 1969; Web 1989).</span><span data-lang="zh">万维网 ≠ 互联网。万维网（HTTP/HTML）是互联网上的一种服务。互联网还承载电子邮件、FTP、VoIP 等。互联网早于万维网（ARPANET 1969；万维网 1989）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In the URL <code>https://school.ca/grades?term=1</code>, what does <code>https</code> specify?</span><span data-lang="zh">在 URL <code>https://school.ca/grades?term=1</code> 中，<code>https</code> 指定什么？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The protocol used to transfer the resource (HTTP with TLS encryption)</span><span data-lang="zh">用于传输资源的协议（带 TLS 加密的 HTTP）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">The domain name of the server</span><span data-lang="zh">服务器的域名</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The path to the resource on the server</span><span data-lang="zh">服务器上资源的路径</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The query string parameters</span><span data-lang="zh">查询字符串参数</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The part before <code>://</code> is the <strong>scheme / protocol</strong>. <code>https</code> means HTTP with TLS encryption. The domain is <code>school.ca</code>; the path is <code>/grades</code>; the query string is <code>term=1</code>.</span><span data-lang="zh"><code>://</code> 之前的部分是<strong>协议方案</strong>。<code>https</code> 表示带 TLS 加密的 HTTP。域名是 <code>school.ca</code>；路径是 <code>/grades</code>；查询字符串是 <code>term=1</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">URL structure: <code>scheme://domain/path?query#fragment</code>. The scheme (https) is the protocol. Domain = school.ca. Path = /grades. Query = term=1.</span><span data-lang="zh">URL 结构：<code>协议://域名/路径?查询#片段</code>。协议（https）是方案。域名 = school.ca。路径 = /grades。查询 = term=1。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">Distinguish terms precisely</span><span data-lang="zh">精确区分术语</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Internet vs Web.</span><span data-lang="zh">互联网与万维网。</span></strong> <span data-lang="en">Examiners penalise conflating these. The Internet is the global TCP/IP network; the Web is the HTTP/HTTPS hypertext system running over it. Email, FTP, and online gaming are also Internet services — none of them are "the Web."</span><span data-lang="zh">考官会扣分于混淆这两者。互联网是全球 TCP/IP 网络；万维网是运行在其上的 HTTP/HTTPS 超文本系统。电子邮件、FTP 和在线游戏也是互联网服务——它们都不是"万维网"。</span></li>
+      <li><strong><span data-lang="en">LAN vs WAN.</span><span data-lang="zh">局域网与广域网。</span></strong> <span data-lang="en">LAN = one building/campus, privately owned. WAN = spans large distances, connects LANs. The Internet is a WAN (the largest WAN). State both the geographic scope and ownership when asked to distinguish them.</span><span data-lang="zh">局域网 = 一栋建筑/校园，私有。广域网 = 跨越大距离，连接多个局域网。互联网是一个广域网（最大的广域网）。被问到区别时，同时陈述地理范围和所有权。</span></li>
+      <li><strong><span data-lang="en">Protocol vs topology.</span><span data-lang="zh">协议与拓扑结构。</span></strong> <span data-lang="en">A protocol is a set of communication rules (TCP, HTTP). A topology is the physical or logical arrangement of devices (star, mesh). They are different dimensions of network design — mixing them up is a common error.</span><span data-lang="zh">协议是一套通信规则（TCP、HTTP）。拓扑结构是设备的物理或逻辑排布方式（星型、网状型）。它们是网络设计的不同维度——混淆它们是常见错误。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Packets, protocols, and layers (&sect;2&ndash;&sect;5)</span><span data-lang="zh">数据包、协议与分层（&sect;2&ndash;&sect;5）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Explain packets with three benefits.</span><span data-lang="zh">用三个优势解释数据包。</span></strong> <span data-lang="en">When asked why the Internet uses packet switching, state all three: (1) parallel routing, (2) selective retransmission of lost packets only, (3) fair bandwidth sharing. One-line answers lose marks.</span><span data-lang="zh">被问到互联网为何使用分组交换时，说出全部三个优势：（1）并行路由，（2）仅重传丢失的数据包，（3）带宽公平共享。只写一行会丢分。</span></li>
+      <li><strong><span data-lang="en">TCP vs UDP — always state the use case.</span><span data-lang="zh">TCP 与 UDP——始终陈述使用场景。</span></strong> <span data-lang="en">For any protocol comparison question, name the protocol, state whether it is reliable or fast, and give a concrete use case (TCP: web pages; UDP: video streaming). Three elements per protocol answer.</span><span data-lang="zh">对于任何协议比较题，命名协议，说明是可靠还是快速，并给出具体使用场景（TCP：网页；UDP：视频流）。每个协议答案包含三要素。</span></li>
+      <li><strong><span data-lang="en">OSI layer numbers matter (BC CIS).</span><span data-lang="zh">OSI 层编号很重要（BC CIS）。</span></strong> <span data-lang="en">For BC CIS exams, know all seven layer names and numbers. For AP CSP, understand the conceptual purpose of layering (each layer does one job, hides complexity from layers above) rather than memorising all seven names.</span><span data-lang="zh">对于 BC CIS 考试，熟记全部七层的名称和编号。对于 AP CSP，理解分层的概念目的（每层做一件事，向上层隐藏复杂性），而非死记全部七层名称。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Security (&sect;6) — always name the tradeoff</span><span data-lang="zh">安全（&sect;6）——始终说明权衡</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Name the malware type correctly.</span><span data-lang="zh">正确命名恶意软件类型。</span></strong> <span data-lang="en">Virus ≠ worm ≠ Trojan. On Ontario ICS3U C2.2 questions, be specific: a worm self-replicates across the network; a Trojan disguises itself; ransomware encrypts files for payment. Vague use of "virus" for all malware loses marks.</span><span data-lang="zh">病毒 ≠ 蠕虫 ≠ 木马。在安大略 ICS3U C2.2 题目中要具体：蠕虫在网络中自我复制；木马伪装自身；勒索软件加密文件索取赎金。将所有恶意软件笼统称为"病毒"会丢分。</span></li>
+      <li><strong><span data-lang="en">Security recommendation format (CSTA 3A-NI-06 to 3A-NI-08).</span><span data-lang="zh">安全建议格式（CSTA 3A-NI-06 至 3A-NI-08）。</span></strong> <span data-lang="en">For full marks: state the threat, the recommended measure, and the tradeoff (e.g., "Implement MFA — reduces account compromise but adds a login step for every user"). The tradeoff is what CSTA 3A-NI-08 specifically tests.</span><span data-lang="zh">要得满分：陈述威胁、推荐措施和权衡（如"实施 MFA——降低账户泄露风险，但每个用户每次登录需额外步骤"）。权衡正是 CSTA 3A-NI-08 专门测试的内容。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Use the correct technical term, not synonyms.</span><span data-lang="zh">使用正确的技术术语，而非同义词。</span></strong> <span data-lang="en">"Packet" not "chunk." "Protocol" not "rule." "Topology" not "layout." "Client-server" not "request-response pair" (unless the question uses that phrasing). Examiners mark against a mark scheme that expects precise vocabulary.</span><span data-lang="zh">"数据包"而非"块"。"协议"而非"规则"。"拓扑结构"而非"布局"。"客户端-服务器"而非"请求-响应对"（除非题目使用该措辞）。考官依据要求精确词汇的评分标准给分。</span></li>
+      <li><strong><span data-lang="en">Draw the diagram if the question allows.</span><span data-lang="zh">如果题目允许，画出图示。</span></strong> <span data-lang="en">A star topology question almost always earns more marks from a labelled sketch (central switch + labelled device nodes + arrows) than a paragraph. An OSI table (layer number | name | example protocol) is worth more than prose for a "name the layers" question.</span><span data-lang="zh">拓扑结构题几乎总是从标注的草图（中央交换机 + 标注的设备节点 + 箭头）获得比段落更多的分数。OSI 表格（层编号 | 名称 | 示例协议）对于"命名各层"的题目比段落更值分。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 14 flipped</span><span data-lang="zh">0 / 14 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">LAN vs WAN</span><span data-lang="zh">局域网与广域网</span></div><div class="flashcard-back"><span data-lang="en">LAN = Local Area Network — one building/campus, private. WAN = Wide Area Network — spans large distances, connects LANs. The Internet is the largest WAN.</span><span data-lang="zh">LAN = 局域网——一栋建筑/校园，私有。WAN = 广域网——跨越大距离，连接多个局域网。互联网是最大的广域网。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is a packet?</span><span data-lang="zh">什么是数据包？</span></div><div class="flashcard-back"><span data-lang="en">A small chunk of data (typically ≤1,500 bytes) with a header containing source IP, destination IP, sequence number, and total packet count. Data is broken into packets for transmission.</span><span data-lang="zh">一小块数据（通常 ≤1,500 字节），头部包含源 IP、目标 IP、序列号和总包数。数据被拆分为数据包进行传输。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Star topology</span><span data-lang="zh">星型拓扑</span></div><div class="flashcard-back"><span data-lang="en">All devices connect to a central switch/router. Most common in modern LANs. Single point of failure: if the switch fails, all devices lose connectivity.</span><span data-lang="zh">所有设备连接到中央交换机/路由器。现代局域网最常见。单点故障：若交换机故障，所有设备失去连接。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Mesh topology — why fault tolerant?</span><span data-lang="zh">网状拓扑——为何容错？</span></div><div class="flashcard-back"><span data-lang="en">Every device connects to every other. Multiple paths exist between any two nodes — if one link fails, data reroutes. The Internet uses a mesh-like structure for this reason.</span><span data-lang="zh">每台设备与其他所有设备相连。任意两节点间有多条路径——某条链路故障时数据重新路由。互联网正因此采用类似网状结构。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">DNS</span><span data-lang="zh">域名系统</span></div><div class="flashcard-back"><span data-lang="en">Domain Name System — translates human-readable domain names (e.g. google.com) into IP addresses routers can use. The Internet's "phone book." Hierarchical and distributed.</span><span data-lang="zh">域名系统——将人类可读的域名（如 google.com）翻译成路由器可使用的 IP 地址。互联网的"电话簿"。层级化且分布式。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">TCP vs UDP</span><span data-lang="zh">TCP 与 UDP</span></div><div class="flashcard-back"><span data-lang="en">TCP: reliable, ordered, connection (3-way handshake), ACK + retransmit. Used for HTTP, email, files. UDP: fast, connectionless, no ACK. Used for video streaming, VoIP, gaming.</span><span data-lang="zh">TCP：可靠、有序、面向连接（三次握手）、ACK + 重传。用于 HTTP、电子邮件、文件。UDP：快速、无连接、无 ACK。用于视频流、VoIP、游戏。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What does HTTPS add over HTTP?</span><span data-lang="zh">HTTPS 在 HTTP 基础上增加什么？</span></div><div class="flashcard-back"><span data-lang="en">TLS (Transport Layer Security) encryption. Data between browser and server is encrypted end-to-end — eavesdroppers on the network see only ciphertext, not passwords or card numbers.</span><span data-lang="zh">TLS（传输层安全）加密。浏览器与服务器之间的数据端到端加密——网络上的窃听者只看到密文，而非密码或卡号。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">OSI Layer 3 and Layer 4</span><span data-lang="zh">OSI 第 3 层和第 4 层</span></div><div class="flashcard-back"><span data-lang="en">Layer 3 = Network: IP — addresses and routes packets between networks. Layer 4 = Transport: TCP/UDP — end-to-end delivery, ports, reliability (TCP) or speed (UDP).</span><span data-lang="zh">第 3 层 = 网络层：IP——在网络间寻址和路由数据包。第 4 层 = 传输层：TCP/UDP——端到端传输、端口、可靠性（TCP）或速度（UDP）。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">OSI 7 layers (7→1)</span><span data-lang="zh">OSI 七层（7→1）</span></div><div class="flashcard-back"><span data-lang="en">7 Application · 6 Presentation · 5 Session · 4 Transport · 3 Network · 2 Data Link · 1 Physical. Mnemonic: All People Seem To Need Data Processing.</span><span data-lang="zh">7 应用层 · 6 表示层 · 5 会话层 · 4 传输层 · 3 网络层 · 2 数据链路层 · 1 物理层。记忆口诀：应用表示会话传网数物。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Firewall</span><span data-lang="zh">防火墙</span></div><div class="flashcard-back"><span data-lang="en">Hardware or software that monitors and controls network traffic based on rules. Blocks unauthorised connections; allows legitimate traffic. Tradeoff: may block legitimate services if misconfigured.</span><span data-lang="zh">根据规则监控和控制网络流量的硬件或软件。阻止未授权连接；允许合法流量。权衡：配置错误可能阻止合法服务。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Worm vs virus vs Trojan</span><span data-lang="zh">蠕虫 vs 病毒 vs 木马</span></div><div class="flashcard-back"><span data-lang="en">Virus: attaches to a host file; spreads when file is shared. Worm: self-replicates across network — no host file needed. Trojan: disguised as legitimate software; does not self-replicate. ON ICS3U C2.2.</span><span data-lang="zh">病毒：附着于宿主文件；文件共享时传播。蠕虫：在网络中自我复制——无需宿主文件。木马：伪装成合法软件；不自我复制。安大略 ICS3U C2.2。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Internet vs Web</span><span data-lang="zh">互联网与万维网</span></div><div class="flashcard-back"><span data-lang="en">Internet = global TCP/IP network infrastructure (cables, routers, protocols). Web = one application on the Internet using HTTP/HTTPS to transfer hypertext documents. Email, FTP, VoIP are other Internet services — not "the Web."</span><span data-lang="zh">互联网 = 全球 TCP/IP 网络基础设施（电缆、路由器、协议）。万维网 = 互联网上的一种应用，使用 HTTP/HTTPS 传输超文本文档。电子邮件、FTP、VoIP 是其他互联网服务——不是"万维网"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Client-server model</span><span data-lang="zh">客户端-服务器模型</span></div><div class="flashcard-back"><span data-lang="en">Client sends a request (e.g. browser sends HTTP GET). Server processes and sends a response (e.g. HTML page). AB CSE1210/1220 introduce "Internet computing" via this model. Used by every website.</span><span data-lang="zh">客户端发送请求（如浏览器发送 HTTP GET）。服务器处理并返回响应（如 HTML 页面）。AB CSE1210/1220 通过此模型介绍"互联网计算"。每个网站都使用此模型。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">IPv4 vs IPv6</span><span data-lang="zh">IPv4 与 IPv6</span></div><div class="flashcard-back"><span data-lang="en">IPv4: 32-bit, ~4.3 billion addresses, written as 4 decimal octets (e.g. 192.168.1.1). IPv6: 128-bit, ~3.4×10³⁸ addresses, written in hex with colons. Moved to IPv6 because IPv4 addresses were nearly exhausted.</span><span data-lang="zh">IPv4：32 位，约 43 亿个地址，以 4 个十进制数字书写（如 192.168.1.1）。IPv6：128 位，约 3.4×10³⁸ 个地址，以十六进制加冒号书写。迁移到 IPv6 是因为 IPv4 地址几近耗尽。</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A student connects their laptop to a school printer and server all through one central switch. Which network type and topology does this describe?</span><span data-lang="zh">一名学生通过一台中央交换机将笔记本电脑连接到学校打印机和服务器。这描述了哪种网络类型和拓扑结构？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">WAN / mesh</span><span data-lang="zh">广域网 / 网状型</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">WAN / bus</span><span data-lang="zh">广域网 / 总线型</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">LAN / ring</span><span data-lang="zh">局域网 / 环型</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">LAN / star</span><span data-lang="zh">局域网 / 星型</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">One building/campus = LAN. All devices through one central switch = star topology. CSTA 3A-NI-04: "relationship between routers, switches, servers, topology, and addressing."</span><span data-lang="zh">一栋建筑/校园 = 局域网。所有设备通过一台中央交换机 = 星型拓扑。CSTA 3A-NI-04："路由器、交换机、服务器、拓扑结构和寻址之间的关系。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">One building = LAN (not WAN). One central switch = star (not mesh, ring, or bus).</span><span data-lang="zh">一栋建筑 = 局域网（非广域网）。一台中央交换机 = 星型（非网状、环型或总线型）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A 10 MB file is sent as 7,000 packets. Packet 4,532 is lost in transit. What happens next?</span><span data-lang="zh">一个 10 MB 的文件被拆分为 7,000 个数据包发送。数据包 4,532 在传输中丢失。接下来会发生什么？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Only packet 4,532 is retransmitted; the rest of the file is unaffected</span><span data-lang="zh">只重传数据包 4,532；文件其余部分不受影响</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">All 7,000 packets are retransmitted from the beginning</span><span data-lang="zh">全部 7,000 个数据包从头重传</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The file transfer fails permanently</span><span data-lang="zh">文件传输永久失败</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The receiver reconstructs the missing packet from the other packets</span><span data-lang="zh">接收方从其他数据包重建丢失的数据包</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">TCP tracks sequence numbers and sends acknowledgements (ACK) for each packet. If packet 4,532 is not acknowledged, only that packet is retransmitted — selective retransmission is one of TCP's key advantages over sending one continuous stream.</span><span data-lang="zh">TCP 追踪序列号并对每个数据包发送确认（ACK）。若数据包 4,532 未被确认，只重传该数据包——选择性重传是 TCP 相较于连续流传输的关键优势之一。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">TCP uses selective retransmission — only the missing packet is resent. This is one of the three key reasons the Internet uses packet switching.</span><span data-lang="zh">TCP 使用选择性重传——只重传丢失的数据包。这是互联网使用分组交换的三大关键原因之一。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">You type <code>https://school.ca</code>. In what order do the following steps occur: (A) TCP 3-way handshake, (B) DNS lookup, (C) TLS handshake, (D) HTTP GET request?</span><span data-lang="zh">你输入 <code>https://school.ca</code>。以下步骤的发生顺序是什么：（A）TCP 三次握手，（B）DNS 查找，（C）TLS 握手，（D）HTTP GET 请求？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A → B → C → D</span><span data-lang="zh">A → B → C → D</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">D → C → B → A</span><span data-lang="zh">D → C → B → A</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">B → A → C → D</span><span data-lang="zh">B → A → C → D</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">C → B → A → D</span><span data-lang="zh">C → B → A → D</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">DNS resolves the domain name to an IP first (B). Then TCP establishes the connection with a 3-way handshake (A). TLS is negotiated over the TCP connection (C). Finally the HTTP GET request is sent encrypted (D).</span><span data-lang="zh">DNS 先将域名解析为 IP（B）。然后 TCP 通过三次握手建立连接（A）。TLS 在 TCP 连接上进行协商（C）。最后发送加密的 HTTP GET 请求（D）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Order: DNS (need IP to connect) → TCP handshake (connection) → TLS handshake (encryption setup) → HTTP request (application data).</span><span data-lang="zh">顺序：DNS（需要 IP 才能连接）→ TCP 握手（建立连接）→ TLS 握手（加密设置）→ HTTP 请求（应用数据）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which CSTA standard (verbatim) asks students to "Evaluate the scalability and reliability of networks, by describing the relationship between routers, switches, servers, topology, and addressing"? <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">哪个 CSTA 标准（原文）要求学生"通过描述路由器、交换机、服务器、拓扑结构和寻址之间的关系，评估网络的可扩展性和可靠性"？<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>3A-NI-05</code></div>
+      <div class="quiz-opt" data-idx="1"><code>3A-NI-04</code></div>
+      <div class="quiz-opt" data-idx="2"><code>3A-NI-07</code></div>
+      <div class="quiz-opt" data-idx="3"><code>3B-NI-03</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3A-NI-04 (verbatim): "Evaluate the scalability and reliability of networks, by describing the relationship between routers, switches, servers, topology, and addressing." This is the primary networks-and-topology standard at Level 3A.</span><span data-lang="zh">CSTA 3A-NI-04（原文）："通过描述路由器、交换机、服务器、拓扑结构和寻址之间的关系，评估网络的可扩展性和可靠性。"这是 3A 级最主要的网络与拓扑标准。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">3A-NI-04 = scalability/reliability/topology. 3A-NI-05 = sensitive data and malware. 3A-NI-07 = compare security measures. 3B-NI-03 = network functionality issues.</span><span data-lang="zh">3A-NI-04 = 可扩展性/可靠性/拓扑结构。3A-NI-05 = 敏感数据与恶意软件。3A-NI-07 = 比较安全措施。3B-NI-03 = 网络功能问题。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">BC CIS 11 Content (verbatim) names which two network models? <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS</span></span><span data-lang="zh">BC CIS 11 内容（原文）命名了哪两种网络模型？<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS</span></span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">OSI (seven layers) and TCP/IP (four layers)</span><span data-lang="zh">OSI（七层）和 TCP/IP（四层）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">HTTP and HTTPS</span><span data-lang="zh">HTTP 和 HTTPS</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">LAN and WAN only</span><span data-lang="zh">仅局域网和广域网</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">IPv4 and IPv6</span><span data-lang="zh">IPv4 和 IPv6</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">BC CIS 11 Content (verbatim): "seven layers of the Open System Interconnection (OSI) reference model" and "four layers of the Transmission Control Protocol/Internet Protocol (TCP/IP)." Both models are named explicitly — BC CIS is the most protocol-depth curriculum of the four.</span><span data-lang="zh">BC CIS 11 内容（原文）："OSI 参考模型的七层"和"TCP/IP 的四层"。两种模型均被明确命名——BC CIS 是四套大纲中协议深度最大的。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">BC CIS 11 specifically names OSI (7 layers) and TCP/IP (4 layers) verbatim in its Content standards. HTTP/HTTPS, LAN/WAN, and IPv4/IPv6 are also covered but are not "the two network models" the standard points to.</span><span data-lang="zh">BC CIS 11 在内容标准中原文明确命名 OSI（7 层）和 TCP/IP（4 层）。HTTP/HTTPS、LAN/WAN 和 IPv4/IPv6 也有涉及，但不是该标准指向的"两种网络模型"。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Ontario ICS3U C2.2 directly assesses which of the following? <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span><span data-lang="zh">安大略 ICS3U C2.2 直接评估以下哪项？<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The OSI seven-layer model</span><span data-lang="zh">OSI 七层模型</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Packet switching and TCP/IP</span><span data-lang="zh">分组交换和 TCP/IP</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Star and mesh network topologies</span><span data-lang="zh">星型和网状网络拓扑</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Procedures to safeguard data from malware and a system protection plan</span><span data-lang="zh">保护数据免受恶意软件侵害的程序和系统保护计划</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">ICS3U C2.2 (verbatim): "describe procedures to safeguard data and programs from malware (e.g., viruses, Trojan horses, worms, spyware, adware, malevolent macros), and devise a thorough system protection plan." Networking protocol depth is absent from the ICS3U university stream.</span><span data-lang="zh">ICS3U C2.2（原文）："描述保护数据和程序免受恶意软件（如病毒、木马、蠕虫、间谍软件、广告软件、恶意宏）侵害的程序，并制定全面的系统保护计划。"ICS3U 大学方向不涉及网络协议深度内容。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Ontario ICS3U/ICS4U university stream does not cover OSI, TCP/IP, packet switching, or topologies at an assessed level. Only C2.2 (malware + protection plan) is directly assessed for Networks in ICS3U.</span><span data-lang="zh">安大略 ICS3U/ICS4U 大学方向不将 OSI、TCP/IP、分组交换或拓扑结构列为评估级别内容。ICS3U 中网络部分仅 C2.2（恶意软件 + 保护计划）被直接评估。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Distinguish LAN from WAN (geographic scope, ownership) and give two examples of each. Draw a star topology for a four-device LAN and label the central switch. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-04 / &#x1F1E8;&#x1F1E6; BC CS10</span></span><span data-lang="zh">区分局域网与广域网（地理范围、所有权），各举两例。为四设备局域网画出星型拓扑并标注中央交换机。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-04 / &#x1F1E8;&#x1F1E6; BC CS10</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain packet switching: define a packet (header contents), state the three benefits (parallel routing, selective retransmission, fair bandwidth), and draw a simple ASCII diagram of packets taking different routes. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP CSN-1.A</span></span><span data-lang="zh">解释分组交换：定义数据包（头部内容），陈述三大优势（并行路由、选择性重传、带宽公平共享），并画出数据包走不同路径的简单 ASCII 图。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP CSN-1.A</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain what DNS does, why it exists, and trace the steps of a DNS lookup from browser to root server to TLD server to authoritative server. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-04</span></span><span data-lang="zh">解释 DNS 的作用和存在原因，并追踪从浏览器到根服务器、TLD 服务器、权威服务器的 DNS 查找步骤。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-04</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Compare TCP and UDP on four dimensions (connection, delivery guarantee, ordering, speed) and give a concrete use case for each that justifies the choice. <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11</span></span><span data-lang="zh">在四个维度（连接、送达保证、排序、速度）上比较 TCP 与 UDP，并各举一个证明选择合理的具体使用场景。<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain what HTTPS adds over HTTP and why you should always use HTTPS for login pages. Define encryption in transit in one sentence. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-07</span></span><span data-lang="zh">解释 HTTPS 在 HTTP 基础上增加了什么，以及为什么登录页面始终应使用 HTTPS。用一句话定义传输加密。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-NI-07</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Name all seven OSI layers in order (7→1), state the job of each, and give one protocol example per layer. Map the four TCP/IP layers to their OSI equivalents. <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11 (verbatim content)</span></span><span data-lang="zh">按顺序（7→1）命名 OSI 全部七层，说明每层职能，并各举一个协议示例。将 TCP/IP 四层映射到对应的 OSI 层。<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11（原文内容）</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Distinguish virus, worm, Trojan, ransomware, and spyware in one sentence each. Devise a four-item system protection plan for a school network with a named measure and tradeoff for each threat. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U C2.2 / &#x1F1FA;&#x1F1F8; CSTA 3A-NI-05 / 3A-NI-06</span></span><span data-lang="zh">各用一句话区分病毒、蠕虫、木马、勒索软件和间谍软件。为学校网络制定包含四项措施的系统保护计划，每项威胁附上具体措施和权衡。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U C2.2 / &#x1F1FA;&#x1F1F8; CSTA 3A-NI-05 / 3A-NI-06</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the Internet vs. the Web distinction. Name three Internet services that are not the Web. Define client-server model and label the parts of the URL <code>https://school.ca/grades?term=1</code>. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1210 / &#x1F1FA;&#x1F1F8; AP CSP</span></span><span data-lang="zh">解释互联网与万维网的区别。举出三项不属于万维网的互联网服务。定义客户端-服务器模型，并标注 URL <code>https://school.ca/grades?term=1</code> 的各部分。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1210 / &#x1F1FA;&#x1F1F8; AP CSP</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain fault tolerance in the context of the Internet: why can data reach its destination even when some routers fail? Link this to mesh topology. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 4.2 (CSN-1.C)</span></span><span data-lang="zh">在互联网语境下解释容错性：为什么即使某些路由器故障，数据仍能到达目的地？将此与网状拓扑相联系。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 4.2 (CSN-1.C)</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the CSTA standards 3A-NI-04, 3A-NI-05, and 3A-NI-07 (near-verbatim) and explain what each one requires a student to do. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span><span data-lang="zh">近逐字陈述 CSTA 标准 3A-NI-04、3A-NI-05 和 3A-NI-07，并解释每项要求学生做什么。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; BC CIS 12</span> Describe "interoperability" in the context of open networking standards. Explain why the Internet requires open standards (OSI/TCP-IP) rather than proprietary protocols, and name the ISO document that formalises the OSI model. <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11 (verbatim)</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; BC CIS 12</span> 在开放网络标准的语境下描述"互操作性"。解释为什么互联网需要开放标准（OSI/TCP-IP）而非专有协议，并命名使 OSI 模型正式化的 ISO 文件。<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CIS 11（原文）</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Networks and the Internet underpins three major downstream areas. First, the cybersecurity and ethics unit (Unit 12) extends the security concepts in &sect;6: you will go from understanding what a firewall does to evaluating legal, ethical, and societal implications of computing security decisions. Second, AP CSP Big Idea 4 (Computer Systems &amp; Networks, 11&ndash;15% of the exam) is the most direct assessment of this unit's content — if you are aiming for AP CSP, this guide is required reading. Third, the web-scripting pathway (AB CSE1210/1220; any school teaching HTML/CSS/JavaScript) builds directly on the client-server and HTTP foundations in &sect;7.</span><span data-lang="zh">网络与互联网为三大下游领域奠定基础。第一，网络安全与伦理单元（第 12 单元）扩展了 &sect;6 中的安全概念：你将从理解防火墙的作用，进阶到评估计算安全决策的法律、伦理和社会影响。第二，AP CSP 大概念 4（计算机系统与网络，占考试 11&ndash;15%）是对本单元内容最直接的评估——若你以 AP CSP 为目标，本指南是必读材料。第三，Web 脚本路径（AB CSE1210/1220；任何教授 HTML/CSS/JavaScript 的学校）直接建立在 &sect;7 中客户端-服务器和 HTTP 基础之上。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Unit 12 (Cybersecurity, Ethics and Society) is the natural continuation of &sect;6 (Network Security Basics) — CSTA 3A-NI-05 through 3A-NI-08 and the malware taxonomy all feed directly into that unit. Unit 10 (Data, Databases and the Web) pairs with &sect;7 of this guide: understanding how HTTP carries data between browser and server is a prerequisite for understanding web forms, APIs, and database queries. The Boolean Logic unit (Unit 9) connects at Layer 2 (Data Link) — understanding that all data is ultimately bits on a wire ties number systems to physical networking.</span><span data-lang="zh">第 12 单元（网络安全、伦理与社会）是 &sect;6（网络安全基础）的自然延伸——CSTA 3A-NI-05 至 3A-NI-08 以及恶意软件分类法都直接延伸至该单元。第 10 单元（数据、数据库与 Web）与本指南的 &sect;7 配套：理解 HTTP 如何在浏览器与服务器之间传输数据，是理解网络表单、API 和数据库查询的前提。布尔逻辑单元（第 9 单元）在第 2 层（数据链路层）相连——理解所有数据最终都是线路上的比特，将数字系统与物理网络联系起来。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP and downstream connections.</span><span data-lang="zh">AP 及下游连接。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">No AP CSA networks guide exists in this repo (AP CSA focuses on Java OOP and does not assess network protocols). The primary AP feeder is AP CSP Big Idea 4 (CSN). If you are on the AP CSP track, focus on &sect;2 (packets), &sect;4 (TCP/IP, HTTP), and &sect;6 (security tradeoffs) — these map to the CSN Learning Objectives CSN-1.A through CSN-1.E that appear on the AP CSP exam. BC CIS students heading into network administration or IT programs will find &sect;5 (OSI model) the most directly applicable, as it maps verbatim to the CIS 11 Content standards.</span><span data-lang="zh">本仓库中不存在 AP CSA 网络指南（AP CSA 专注于 Java 面向对象，不评估网络协议）。主要的 AP 衔接是 AP CSP 大概念 4（CSN）。若你在 AP CSP 轨道上，重点学习 &sect;2（数据包）、&sect;4（TCP/IP、HTTP）和 &sect;6（安全权衡）——这些对应出现在 AP CSP 考试中的 CSN 学习目标 CSN-1.A 至 CSN-1.E。计划进入网络管理或 IT 专业的 BC CIS 学生会发现 &sect;5（OSI 模型）最直接适用，因为它与 CIS 11 内容标准原文对应。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between the Internet and the Web?</span><span data-lang="zh">互联网和万维网有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">The Internet is a global network of networks that uses TCP/IP to route packets and carries many services, while the Web is just one of those services, a system of interlinked hypertext pages accessed over HTTP/HTTPS using URLs. The Web runs on top of the Internet.</span><span data-lang="zh">互联网是使用 TCP/IP 路由数据包的全球网络之网，承载着许多服务；万维网只是其中一种服务，是通过 HTTP/HTTPS 用网址访问的相互链接的超文本页面系统。万维网运行在互联网之上。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">How does data travel across the Internet in packets?</span><span data-lang="zh">数据是如何以数据包形式在互联网上传输的？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">Data is broken into small packets, typically 1,500 bytes or less, each carrying a header with the source and destination IP addresses and packet numbers. Each packet can take a different route, and they are reassembled in order at the destination.</span><span data-lang="zh">数据被拆成小的数据包，通常不超过 1500 字节，每个包的头部带有源 IP 地址、目标 IP 地址和包编号。每个包可以走不同的路由，到达目的地后再按顺序重新组装。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between TCP and UDP?</span><span data-lang="zh">TCP 和 UDP 有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">TCP adds reliability on top of IP by using a handshake, numbering packets, requiring acknowledgements, and retransmitting lost packets, so it suits web pages and email. UDP is fast but unreliable with no handshake or retransmission, which suits video streaming and gaming where speed beats accuracy.</span><span data-lang="zh">TCP 在 IP 之上增加可靠性，使用握手、给数据包编号、要求确认并重传丢失的包，因此适合网页和电子邮件。UDP 快但不可靠，没有握手也不重传，适合速度优先于准确性的视频流和游戏。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between the Internet and the Web?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Internet is a global network of networks that uses TCP/IP to route packets and carries many services, while the Web is just one of those services, a system of interlinked hypertext pages accessed over HTTP/HTTPS using URLs. The Web runs on top of the Internet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does data travel across the Internet in packets?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Data is broken into small packets, typically 1,500 bytes or less, each carrying a header with the source and destination IP addresses and packet numbers. Each packet can take a different route, and they are reassembled in order at the destination."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between TCP and UDP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TCP adds reliability on top of IP by using a handshake, numbering packets, requiring acknowledgements, and retransmitting lost packets, so it suits web pages and email. UDP is fast but unreliable with no handshake or retransmission, which suits video streaming and gaming where speed beats accuracy."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_11_networks_and_the_internet__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3A-NI-04</code> <span data-lang="en">"Evaluate the scalability and reliability of networks, by describing the relationship between routers, switches, servers, topology, and addressing." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"通过描述路由器、交换机、服务器、拓扑结构和寻址之间的关系，评估网络的可扩展性和可靠性。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
+        <li><code>3A-NI-05</code> <span data-lang="en">"Give examples to illustrate how sensitive data can be affected by malware and other attacks." (CSTA Level 3A)</span><span data-lang="zh">"举例说明敏感数据如何受到恶意软件和其他攻击的影响。"（CSTA 3A 级）</span></li>
+        <li><code>3A-NI-06</code> / <code>3A-NI-07</code> / <code>3A-NI-08</code> <span data-lang="en">"Recommend security measures … Compare various security measures … Explain tradeoffs when selecting and implementing cybersecurity recommendations." (CSTA Level 3A — all three map to &sect;6 of this guide.)</span><span data-lang="zh">"推荐安全措施……比较各种安全措施……解释选择和实施网络安全建议时的权衡。"（CSTA 3A 级——三者均对应本指南 &sect;6。）</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 4 (CSN — Computer Systems &amp; Networks): "Computer systems and networks are used to transfer data. One of the largest and most commonly used networks is the Internet. Through a series of protocols, the Internet can be used to send and receive information and ideas throughout the world." Topics 4.1 The Internet, 4.2 Fault Tolerance, 4.3 Parallel and Distributed Computing. Learning Objectives CSN-1.A through CSN-1.E.</span><span data-lang="zh">AP CSP 大概念 4（CSN — 计算机系统与网络）："计算机系统和网络用于传输数据。互联网是最大、最常用的网络之一。通过一系列协议，互联网可用于向全世界发送和接收信息和想法。"主题 4.1 互联网，4.2 容错，4.3 并行与分布式计算。学习目标 CSN-1.A 至 CSN-1.E。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U</span><span data-lang="zh">安大略 — ICS3U</span></div>
+      <ul>
+        <li><strong>ICS3U</strong> <span data-lang="en">Strand C (Computer Environments and Systems), <code>C2.2</code>: "describe procedures to safeguard data and programs from malware (e.g., viruses, Trojan horses, worms, spyware, adware, malevolent macros), and devise a thorough system protection plan." This is the primary ICS3U network-and-security expectation; broader Internet-protocol coverage is absent from the university stream.</span><span data-lang="zh">ICS3U C 单元（计算机环境与系统），<code>C2.2</code>："描述保护数据和程序免受恶意软件（如病毒、木马、蠕虫、间谍软件、广告软件、恶意宏）侵害的程序，并制定全面的系统保护计划。"这是 ICS3U 最主要的网络与安全期望；大学方向课程中不涉及更广泛的互联网协议内容。</span></li>
+        <li><strong>ICS2O / ICS3C</strong> <span data-lang="en">(Grade 10 open / college stream) <code>ICS2O A4</code>: "demonstrate an understanding of home computer networking concepts." <code>ICS3C C1.4</code>: "compare and contrast common ISP services (e.g., DSL, cable, dial-up, regional Wi-Fi) and home networking hardware (e.g., NICs, routers, hardware used for wired and wireless connections)." — these provide context, not assessment requirements for the university track.</span><span data-lang="zh">（10 年级公开课 / 大学预科方向）<code>ICS2O A4</code>："展示对家用计算机网络概念的理解。" <code>ICS3C C1.4</code>："比较常见 ISP 服务（如 DSL、电缆、拨号、区域 Wi-Fi）和家用网络硬件（如网卡、路由器、有线和无线连接硬件）。"——这些提供背景知识，非大学方向的考核要求。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia — CIS 11/12</span><span data-lang="zh">不列颠哥伦比亚 — CIS 11/12</span></div>
+      <ul>
+        <li><strong>Computer Studies 10</strong> <span data-lang="en">Content (verbatim): "wired and wireless computer networking (network cards, routers, switches, cables, modems, network types)"</span><span data-lang="zh">Computer Studies 10 内容（原文）："有线和无线计算机网络（网卡、路由器、交换机、电缆、调制解调器、网络类型）"</span></li>
+        <li><strong>Computer Information Systems 11</strong> <span data-lang="en">Content (verbatim): "network planning, setup, and diagnostics"; "key aspects of network protocols and standards"; "International Organization for Standardization (ISO) in the creation of open standards for networking; seven layers of the Open System Interconnection (OSI) reference model; 'interoperability' in the functioning of the Internet; four layers of the Transmission Control Protocol/Internet Protocol (TCP/IP); model-wide area networks (WANs) and local area networks (LANs); logical and physical network topologies, including the segmentation of networks"</span><span data-lang="zh">Computer Information Systems 11 内容（原文）："网络规划、设置和诊断"；"网络协议和标准的关键方面"；"ISO 在创建网络开放标准方面的作用；OSI 参考模型的七层；互联网运作中的'互操作性'；TCP/IP 的四层；广域网（WAN）和局域网（LAN）模型；逻辑和物理网络拓扑，包括网络分段"</span></li>
+        <li><strong>Computer Information Systems 12</strong> <span data-lang="en">Content (verbatim, harder stream): "design requirements of network devices, cabling, test equipment, management plans, operation manuals and documentation"; "deployment strategies, ongoing upgrades, maintenance, and security"; "network management tools, including security, imaging, backup, and remote access"</span><span data-lang="zh">Computer Information Systems 12 内容（原文，较难方向）："网络设备、布线、测试设备、管理计划、操作手册和文档的设计要求"；"部署策略、持续升级、维护和安全"；"网络管理工具，包括安全、镜像、备份和远程访问"</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE / NET</span><span data-lang="zh">阿尔伯塔 — CSE / NET</span></div>
+      <ul>
+        <li><span data-lang="en">The CSE cluster touches networking only through the scripting modules: <strong>CSE1210 Client-side Scripting 1</strong> "introduces Internet computing through the use of one or more Web-specific markup languages"; <strong>CSE1220 Client-side Scripting 2</strong> deepens "Internet computing … one or more Web-specific scripting languages." Networking proper (protocols, topologies, TCP/IP) lives in the separate <strong>NET (Networking)</strong> CTS cluster, not CSE.</span><span data-lang="zh">CSE 模块群仅通过脚本模块涉及网络：<strong>CSE1210 客户端脚本 1</strong>"通过使用一种或多种 Web 专用标记语言介绍互联网计算"；<strong>CSE1220 客户端脚本 2</strong> 深化"互联网计算……一种或多种 Web 专用脚本语言"。网络本身（协议、拓扑结构、TCP/IP）属于独立的 <strong>NET（网络）</strong>CTS 模块群，不属于 CSE。</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="syllabus-note">
+    <strong><span data-lang="en">Divergent emphasis.</span><span data-lang="zh">侧重差异。</span></strong>
+    <span data-lang="en">AP CSP weights Big Idea 4 (Computer Systems &amp; Networks) at <strong>11&ndash;15%</strong> of the exam — and when combined with the Internet-adjacent content in Big Ideas 2 and 5, networks form a major share of the assessment. BC's Computer Information Systems 11/12 stream covers OSI and TCP/IP in hands-on depth rivalling a vocational networking course. Ontario's university stream (ICS3U/ICS4U) is the lightest: only C2.2 (malware protection) is directly assessed; LAN/WAN and protocol content sits in the Grade 10 open course and the college stream. Alberta CSE does not cover networking protocols at all — networking proper is a separate CTS cluster (NET).</span><span data-lang="zh">AP CSP 大概念 4（计算机系统与网络）占考试 <strong>11&ndash;15%</strong>——结合大概念 2 和 5 中与互联网相关的内容，网络构成评估的重要部分。BC 的 CIS 11/12 方向对 OSI 和 TCP/IP 进行深入实践讲解，媲美职业网络课程。安大略大学方向（ICS3U/ICS4U）最轻：仅 C2.2（恶意软件防护）被直接评估；LAN/WAN 和协议内容在 10 年级公开课和大专方向中出现。阿尔伯塔 CSE 完全不涵盖网络协议——网络本身属于独立的 CTS 模块群（NET）。</span>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">Networks and the Internet is assessed very differently across the four curricula. AP CSP Big Idea 4 (Computer Systems &amp; Networks, 11&ndash;15% of the exam) is the most assessment-heavy: you need to explain packets, protocols, fault tolerance, and the Internet's structure. BC's Computer Information Systems 11/12 stream goes deepest on infrastructure: OSI seven-layer model, TCP/IP four-layer model, WAN/LAN, topologies, and network management. Ontario's university stream (ICS3U/ICS4U) is the lightest — only malware protection (C2.2) is directly assessed; protocol and topology content appears in the Grade 10 open course and the college stream. Alberta CSE covers the Internet only through Web scripting modules; protocol/topology content sits in the separate NET cluster.</span><span data-lang="zh">网络与互联网在四套大纲中的评估方式差异很大。AP CSP 大概念 4（计算机系统与网络，占考试 11&ndash;15%）评估最重：需要解释数据包、协议、容错和互联网结构。BC 的 CIS 11/12 方向对基础设施要求最深：OSI 七层模型、TCP/IP 四层模型、WAN/LAN、拓扑结构和网络管理。安大略大学方向（ICS3U/ICS4U）最轻——仅恶意软件防护（C2.2）被直接评估；协议和拓扑内容出现在 10 年级公开课和大专方向中。阿尔伯塔 CSE 仅通过 Web 脚本模块涉及互联网；协议/拓扑内容属于独立的 NET 模块群。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Lighter / context only</span><span data-lang="zh">较轻 / 仅作背景</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;7 in full. AP CSP Big Idea 4 (CSN-1.A through CSN-1.E) covers Internet structure, packets, protocols, and fault tolerance. CSTA 3A-NI-04 to 3A-NI-08 add scalability, security, and tradeoffs.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。AP CSP 大概念 4（CSN-1.A 至 CSN-1.E）涵盖互联网结构、数据包、协议和容错。CSTA 3A-NI-04 至 3A-NI-08 增加可扩展性、安全性和权衡。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">OSI layer detail in &sect;5 going-deeper is context for AP CSP; the exam tests conceptual understanding of layers, not their names in order.</span><span data-lang="zh">&sect;5 深入中的 OSI 层详情对 AP CSP 为背景知识；考试测试对分层的概念理解，而非各层名称的记忆顺序。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> &mdash; <span data-lang="en">CSTA 3A-NI-04 through 3A-NI-08; AP CSP Big Idea 4 (CSN) topics 4.1, 4.2, 4.3</span><span data-lang="zh">CSTA 3A-NI-04 至 3A-NI-08；AP CSP 大概念 4（CSN）主题 4.1、4.2、4.3</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;6 (security basics, malware) is the primary assessed content &mdash; ICS3U C2.2 directly. &sect;1 (LAN/WAN) and &sect;7 (Web vs Internet) as background literacy.</span><span data-lang="zh">&sect;6（安全基础、恶意软件）是主要评估内容&mdash;&mdash;对应 ICS3U C2.2。&sect;1（LAN/WAN）和 &sect;7（Web 与互联网）作为背景知识。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Protocol depth in &sect;4 and the OSI model in &sect;5 are not assessed in ICS3U/ICS4U university stream &mdash; treat as enrichment.</span><span data-lang="zh">&sect;4 的协议深度和 &sect;5 的 OSI 模型在 ICS3U/ICS4U 大学方向不被评估&mdash;&mdash;作为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> &mdash; <span data-lang="en">ICS3U Strand C C2.2; ICS3C C1.4; ICS2O A4</span><span data-lang="zh">ICS3U C 单元 C2.2；ICS3C C1.4；ICS2O A4</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CIS 11 / CIS 12</span><span data-lang="zh">BC &mdash; CIS 11 / CIS 12</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;7 in full. CIS 11 Content names OSI seven layers, TCP/IP four layers, WAN/LAN, topologies, and "key aspects of network protocols and standards" verbatim. CIS 12 adds deployment, maintenance, and security management.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。CIS 11 内容原文命名 OSI 七层、TCP/IP 四层、WAN/LAN、拓扑结构和"网络协议和标准的关键方面"。CIS 12 增加部署、维护和安全管理。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">CIS 12 network-device design and remote-access tools are beyond this guide's scope &mdash; see the CIS 12 course page.</span><span data-lang="zh">CIS 12 网络设备设计和远程访问工具超出本指南范围&mdash;&mdash;参见 CIS 12 课程页面。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> &mdash; <span data-lang="en">BC CS10 networking Content; CIS 11 network planning / OSI / TCP/IP Content; CIS 12 deployment Content</span><span data-lang="zh">BC CS10 网络内容；CIS 11 网络规划 / OSI / TCP/IP 内容；CIS 12 部署内容</span></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE scripting / NET cluster</span><span data-lang="zh">阿尔伯塔 &mdash; CSE 脚本 / NET 模块群</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;7 (the Web, client-server, URLs) maps to CSE1210/CSE1220 (Client-side Scripting 1 &amp; 2) which "introduce Internet computing." &sect;1 (LAN/WAN) and &sect;6 (security) as background literacy for any computing course.</span><span data-lang="zh">&sect;7（Web、客户端-服务器、URL）对应 CSE1210/CSE1220（客户端脚本 1 和 2），它们"介绍互联网计算"。&sect;1（LAN/WAN）和 &sect;6（安全）作为任何计算课程的背景知识。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Protocol and OSI layer detail (&sect;4, &sect;5) are in the NET cluster, not CSE &mdash; treat as enrichment for CSE students.</span><span data-lang="zh">协议和 OSI 层详情（&sect;4、&sect;5）属于 NET 模块群，不属于 CSE&mdash;&mdash;对 CSE 学生作为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> &mdash; <span data-lang="en">CSE1210, CSE1220 descriptions; NET cluster note</span><span data-lang="zh">CSE1210、CSE1220 描述；NET 模块群说明</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise five things: what a packet is and why data travels in packets; what IP addresses and DNS do; the difference between TCP and UDP (reliable vs fast); what HTTP vs HTTPS means; and what a firewall does. Read every cram-cheat box. Skip the OSI seven-layer name list in the going-deeper box unless you are in BC CIS.</span><span data-lang="zh">背熟五件事：什么是数据包以及为什么数据以数据包传输；IP地址和DNS的作用；TCP 与 UDP 的区别（可靠 vs 快速）；HTTP 与 HTTPS 的含义；防火墙的作用。读每个速记框，除非你在 BC CIS，否则跳过深入框中的 OSI 七层名称列表。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">For AP CSP: understand how packets are routed, why the Internet is fault-tolerant (multiple paths), and the tradeoff between reliability (TCP) and speed (UDP). For BC CIS: know all seven OSI layers by name and function, the four TCP/IP layers, and the difference between logical and physical topologies. For all curricula: be able to explain why HTTPS is more secure than HTTP, and what a firewall does.</span><span data-lang="zh">AP CSP 要求：理解数据包如何路由、为什么互联网具有容错性（多路径），以及可靠性（TCP）与速度（UDP）的权衡。BC CIS 要求：按名称和功能熟知 OSI 七层、TCP/IP 四层，以及逻辑拓扑与物理拓扑的区别。所有大纲要求：能解释为什么 HTTPS 比 HTTP 更安全，以及防火墙的作用。</span></p>
+    </div>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Networks and the Internet &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 网络与互联网 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_11_Networks_and_the_Internet_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_11_Networks_and_the_Internet_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

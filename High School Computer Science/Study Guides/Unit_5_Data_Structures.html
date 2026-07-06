@@ -1,0 +1,1628 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on data structures: arrays, lists, indexing, 2D arrays, dictionaries, tuples, and sets. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Data Structures | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_5_Data_Structures.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Data Structures | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on data structures: arrays, lists, indexing, 2D arrays, dictionaries, tuples, and sets. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_5_Data_Structures.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Data Structures | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on data structures: arrays, lists, indexing, 2D arrays, dictionaries, tuples, and sets. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-5  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Data Structures",
+  "description": "Free high school Computer Science notes on data structures: arrays, lists, indexing, 2D arrays, dictionaries, tuples, and sets. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_5_Data_Structures.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">DATA STRUCT</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-7-1"><span data-lang="en">Arrays and Lists</span><span data-lang="zh">数组与列表</span></a>
+  <a href="#s-7-2"><span data-lang="en">Indexing and Traversal</span><span data-lang="zh">索引与遍历</span></a>
+  <a href="#s-7-3"><span data-lang="en">List Operations</span><span data-lang="zh">列表操作</span></a>
+  <a href="#s-7-4"><span data-lang="en">2D Arrays and Nested Lists</span><span data-lang="zh">二维数组与嵌套列表</span></a>
+  <a href="#s-7-5"><span data-lang="en">Dictionaries and Maps</span><span data-lang="zh">字典与映射</span></a>
+  <a href="#s-7-6"><span data-lang="en">Tuples and Sets</span><span data-lang="zh">元组与集合</span></a>
+  <a href="#s-7-7"><span data-lang="en">Choosing the Right Data Structure</span><span data-lang="zh">选择合适的数据结构</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Data Structures</span><span data-lang="zh">数据结构</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Programs are not just sequences of instructions — they also need to organise data efficiently. A data structure is a way of arranging information in memory so that you can store, retrieve, and modify it quickly and clearly. This guide covers the foundational data structures you will use across every course: arrays and lists (ordered collections), indexing and traversal, list operations such as append and remove, two-dimensional arrays for grid and table data, dictionaries for key-value lookup, and tuples and sets for fixed or unique collections. Each section pairs pseudocode with Python and ends with guidance on when to choose one structure over another. Worked examples follow real exam scenarios from CSTA, AP CSP, Ontario ICS, BC, and Alberta CSE.</span><span data-lang="zh">程序不仅仅是指令序列——它们还需要高效地组织数据。<code>data structure</code>（数据结构）是在内存中排列信息的方式，使你能够快速清晰地存储、检索和修改数据。本指南涵盖你在每门课程中都会用到的基础数据结构：<code>array</code>（数组）和<code>list</code>（列表）（有序集合）、<code>index</code>（索引）与<code>traversal</code>（遍历）、列表操作（如追加和删除）、用于网格和表格数据的<code>2D array</code>（二维数组）、用于键值查找的<code>dictionary</code>（字典）、以及用于固定或唯一集合的<code>tuple</code>（元组）和<code>set</code>（集合）。每节内容均配有伪代码和 Python 对照，并以"何时选择哪种数据结构"的指导作结。例题均来自 CSTA、AP CSP、安大略 ICS、BC 和阿尔伯塔 CSE 的真实考试场景。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">Pseudocode + Python worked examples</span><span data-lang="zh">伪代码 + Python 例题</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-7-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; Arrays and lists</span><span data-lang="zh">第 1 节 &middot; 数组与列表</span></div>
+  <h2><span data-lang="en">Arrays and Lists</span><span data-lang="zh">数组与列表</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">The two essential facts &mdash; memorise before anything else.</span><span data-lang="zh">两个核心事实 &mdash; 优先背熟。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">An array</span><span data-lang="zh">数组</span></strong> <span data-lang="en">&mdash; a fixed-size, ordered collection of elements of the <em>same type</em>, stored in contiguous memory. Once created, the size does not change. Each element is identified by its <em>index</em> (position number). AB CSE2120 outcome 1.2.1: "the static array including: use of cells to store data, data homogeneity, use of an index (or indices) to identify the location of data elements."</span><span data-lang="zh">&mdash; 固定大小的有序集合，元素<em>类型相同</em>，存储在连续内存中。创建后大小不变。每个元素通过<em>索引</em>（位置编号）标识。AB CSE2120 结果 1.2.1："静态数组，包括：使用单元格存储数据、数据同质性、使用索引标识数据元素位置。"</span></li>
+      <li><strong><span data-lang="en">A list</span><span data-lang="zh">列表</span></strong> <span data-lang="en">&mdash; a dynamic, ordered collection that can grow or shrink. In Python, <code>list</code> is the built-in; in Java (AP CSA), <code>ArrayList</code> is the dynamic equivalent. CSTA 3A-AP-14: "Use lists to simplify solutions, generalizing computational problems instead of repeatedly using simple variables."</span><span data-lang="zh">&mdash; 动态有序集合，可以增长或缩小。在 Python 中，<code>list</code> 是内置类型；在 Java（AP CSA）中，<code>ArrayList</code> 是动态等价物。CSTA 3A-AP-14："使用列表简化解决方案，将计算问题泛化，而不是反复使用简单变量。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>Key difference:</strong> arrays have a fixed size declared at creation; lists resize automatically. Most exam questions that say "list" mean a dynamic list. Most that say "array" mean fixed-size. Ontario ICS3U A1.5 uses "one-dimensional array" for the foundational structure; AP CSP Topic 3.10 uses "list" for both.</span><span data-lang="zh"><strong>关键区别：</strong>数组在创建时声明固定大小；列表自动调整大小。大多数考题中"列表"指动态列表，"数组"指固定大小。安大略 ICS3U A1.5 用"一维数组"表示基础结构；AP CSP 主题 3.10 用"列表"涵盖两者。</span>
+  </div>
+
+  <div class="concept-box">
+    <strong><span data-lang="en">Array anatomy</span><span data-lang="zh">数组结构</span></strong>
+    <p style="margin-top: 8px;"><span data-lang="en">An array of 5 integers: <code>scores = [88, 74, 92, 65, 81]</code>. Positions are zero-indexed in most languages (Python, Java, C). Index 0 holds 88; index 4 holds 81. The <em>bounds</em> of this array are 0 to 4 (length minus 1). Accessing index 5 would be an <em>out-of-bounds</em> error — checked automatically in Python/Java, silent corruption in C.</span><span data-lang="zh">含 5 个整数的数组：<code>scores = [88, 74, 92, 65, 81]</code>。大多数语言（Python、Java、C）中位置从零开始索引。索引 0 存储 88；索引 4 存储 81。该数组的<em>边界</em>为 0 到 4（长度减 1）。访问索引 5 会造成<em>越界</em>错误——Python/Java 自动检测，C 中则是静默内存损坏。</span></p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; Declare, initialise, and access an array</span><span data-lang="zh">例题 1 &middot; 声明、初始化并访问数组</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Pseudocode and Python side by side.</span><span data-lang="zh">伪代码与 Python 对照。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Pseudocode
+DECLARE scores AS ARRAY OF 5 INTEGERS
+SET scores TO [88, 74, 92, 65, 81]
+OUTPUT scores[0]   # first element: 88
+OUTPUT scores[4]   # last element: 81</code></pre>
+    <p><span data-lang="zh">以上伪代码说明：<code>DECLARE</code> 声明，<code>ARRAY OF</code> 数组，<code>SET ... TO</code> 赋值，<code>OUTPUT</code> 输出。</span><span data-lang="en">Python translation below:</span></p>
+    <pre><code># Python
+scores = [88, 74, 92, 65, 81]
+print(scores[0])   # 88
+print(scores[4])   # 81
+print(len(scores)) # 5  — number of elements</code></pre>
+    <p><span data-lang="en">In Python, <code>len()</code> gives the number of elements. The last valid index is always <code>len(scores) - 1</code>. Ontario ICS3U A1.5 requires students to describe elements, indexes, and bounds — these three terms are your vocabulary for any array question.</span><span data-lang="zh">在 Python 中，<code>len()</code> 返回元素数量。最后一个有效索引始终为 <code>len(scores) - 1</code>。安大略 ICS3U A1.5 要求学生描述元素、索引和边界——这三个术语是所有数组题目的词汇。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>temps = [15, 22, 18, 30, 27]</code>, what is the value of <code>temps[2]</code>?</span><span data-lang="zh">给定 <code>temps = [15, 22, 18, 30, 27]</code>，<code>temps[2]</code> 的值是什么？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">22</span><span data-lang="zh">22</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">18</span><span data-lang="zh">18</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">30</span><span data-lang="zh">30</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">15</span><span data-lang="zh">15</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Zero-based indexing: index 0 = 15, index 1 = 22, index 2 = 18. The third element has index 2, not 3.</span><span data-lang="zh">从零开始索引：索引 0 = 15，索引 1 = 22，索引 2 = 18。第三个元素的索引是 2，不是 3。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Remember: index 0 is the first element. Index 2 is the third element (18), not the second or fourth.</span><span data-lang="zh">记住：索引 0 是第一个元素。索引 2 是第三个元素（18），不是第二个或第四个。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which statement best describes the difference between an array and a list?</span><span data-lang="zh">以下哪项最能描述数组与列表的区别？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">An array stores strings; a list stores numbers.</span><span data-lang="zh">数组存储字符串；列表存储数字。</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">An array uses keys; a list uses indexes.</span><span data-lang="zh">数组使用键；列表使用索引。</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">An array has a fixed size declared at creation; a list can grow or shrink dynamically.</span><span data-lang="zh">数组在创建时声明固定大小；列表可以动态增长或缩小。</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Arrays are ordered; lists are unordered.</span><span data-lang="zh">数组是有序的；列表是无序的。</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The defining difference: static arrays have a fixed size; dynamic lists (Python list, Java ArrayList) resize as needed. Both are ordered and indexed by integer position.</span><span data-lang="zh">决定性区别：静态数组大小固定；动态列表（Python list、Java ArrayList）按需调整大小。两者都是有序的，并通过整数位置索引。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Both arrays and lists can hold any data type; both use integer indexes; both are ordered. The key difference is fixed size (array) vs. dynamic size (list).</span><span data-lang="zh">数组和列表都可以存储任意数据类型；两者都使用整数索引；两者都是有序的。关键区别是固定大小（数组）与动态大小（列表）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; CSTA 3B-AP-12: comparing data structures</span><span data-lang="zh">深入 &mdash; CSTA 3B-AP-12：比较数据结构</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">CSTA 3B-AP-12 (Level 3B, grades 11-12) states: "Compare and contrast fundamental data structures and their uses. Examples could include strings, lists, arrays, stacks, and queues." At the HS level you are expected to know: (1) which structures are ordered vs. unordered; (2) which support O(1) access by index; (3) which support efficient insert/delete at arbitrary positions. Arrays excel at random access (index directly); they are poor at insertion in the middle (requires shifting). Linked lists (not covered here) excel at insertion but have O(n) access. This trade-off analysis is the 3B content.</span><span data-lang="zh">CSTA 3B-AP-12（3B 级，11-12 年级）指出："比较和对比基本数据结构及其用途。示例可包括字符串、列表、数组、栈和队列。"在高中层面，你需要知道：(1) 哪些结构是有序的，哪些是无序的；(2) 哪些支持通过索引 O(1) 访问；(3) 哪些支持在任意位置高效插入/删除。数组擅长随机访问（直接索引）；在中间插入表现差（需要移动元素）。链表（本指南不涵盖）擅长插入但访问时间为 O(n)。这种权衡分析是 3B 级内容。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; Indexing and traversal</span><span data-lang="zh">第 2 节 &middot; 索引与遍历</span></div>
+  <h2><span data-lang="en">Indexing and Traversal</span><span data-lang="zh">索引与遍历</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Indexing and traversal &mdash; two operations you must know cold.</span><span data-lang="zh">索引与遍历 &mdash; 必须熟练掌握的两种操作。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Indexing</span><span data-lang="zh">索引</span></strong> <span data-lang="en">&mdash; accessing a single element by its position. <code>list[i]</code>. Zero-based in Python/Java/C. One-based in AP CSP pseudocode notation. Out-of-range index raises an error.</span><span data-lang="zh">&mdash; 通过位置访问单个元素。<code>list[i]</code>。Python/Java/C 中从零开始。AP CSP 伪代码表示法中从一开始。越界索引会引发错误。</span></li>
+      <li><strong><span data-lang="en">Traversal</span><span data-lang="zh">遍历</span></strong> <span data-lang="en">&mdash; visiting every element in a collection exactly once, typically using a <code>for</code> loop. Ontario ICS3U A2.3: "write algorithms with nested structures (e.g., to count elements in an array, calculate a total, find highest or lowest value, or perform a linear search)."</span><span data-lang="zh">&mdash; 恰好访问集合中每个元素一次，通常使用 <code>for</code> 循环。安大略 ICS3U A2.3："编写带嵌套结构的算法（如计算数组中的元素、计算总和、找最高或最低值、或执行线性搜索）。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>Common patterns to memorise:</strong> sum all elements (accumulate into a total); find the maximum (track running max); find an element (linear search — return index or -1). AP CSP Topic 3.10 (AAP-2.K) requires all three.</span><span data-lang="zh"><strong>必背常用模式：</strong>求所有元素之和（累加到总计）；找最大值（跟踪当前最大值）；查找元素（线性搜索——返回索引或 -1）。AP CSP 主题 3.10（AAP-2.K）要求掌握全部三种。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Traversal patterns on a list of scores</span><span data-lang="zh">例题 2 &middot; 对成绩列表的遍历模式</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Given <code>scores = [82, 74, 91, 68, 87]</code>, write pseudocode and Python for: (a) sum all scores; (b) find the highest score.</span><span data-lang="zh">给定 <code>scores = [82, 74, 91, 68, 87]</code>，为以下任务编写伪代码和 Python：(a) 求所有成绩之和；(b) 找最高成绩。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">(a) Sum — pseudocode and Python.</span><span data-lang="zh">(a) 求和——伪代码和 Python。</span></strong></p>
+    <pre><code># Pseudocode
+SET total TO 0
+FOR EACH score IN scores:
+    SET total TO total + score
+OUTPUT total   # 402</code></pre>
+    <pre><code># Python
+scores = [82, 74, 91, 68, 87]
+total = 0
+for score in scores:
+    total += score
+print(total)   # 402</code></pre>
+    <p><span data-lang="zh">说明：<code>FOR EACH</code> 依次取每个元素；<code>SET total TO total + score</code> 累加。</span><span data-lang="en">The accumulator pattern: initialise to 0, add each element one at a time.</span></p>
+    <p><strong><span data-lang="en">(b) Maximum — pseudocode and Python.</span><span data-lang="zh">(b) 最大值——伪代码和 Python。</span></strong></p>
+    <pre><code># Pseudocode
+SET max_val TO scores[0]
+FOR i FROM 1 TO LENGTH(scores) - 1:
+    IF scores[i] > max_val THEN
+        SET max_val TO scores[i]
+OUTPUT max_val   # 91</code></pre>
+    <pre><code># Python
+max_val = scores[0]
+for i in range(1, len(scores)):
+    if scores[i] > max_val:
+        max_val = scores[i]
+print(max_val)   # 91</code></pre>
+    <p><span data-lang="en">Note the use of index variable <code>i</code> to access <code>scores[i]</code> — this is index-based traversal as opposed to the element-based <code>for score in scores</code> used in (a). Both are correct; index-based is required when you need the position, not just the value.</span><span data-lang="zh">注意用索引变量 <code>i</code> 访问 <code>scores[i]</code>——这是基于索引的遍历，与 (a) 中基于元素的 <code>for score in scores</code> 不同。两种都正确；当你需要位置而不仅仅是值时，必须使用基于索引的方式。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>data = [10, 20, 30, 40, 50]</code>, what is the output of the following code? <br><code>total = 0</code><br><code>for i in range(0, 3):</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;total += data[i]</code><br><code>print(total)</code></span><span data-lang="zh">给定 <code>data = [10, 20, 30, 40, 50]</code>，以下代码的输出是什么？<br><code>total = 0</code><br><code>for i in range(0, 3):</code><br><code>&nbsp;&nbsp;&nbsp;&nbsp;total += data[i]</code><br><code>print(total)</code></span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">60</span><span data-lang="zh">60</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">150</span><span data-lang="zh">150</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">90</span><span data-lang="zh">90</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">100</span><span data-lang="zh">100</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>range(0, 3)</code> produces indices 0, 1, 2 — so <code>data[0]=10</code>, <code>data[1]=20</code>, <code>data[2]=30</code>. Total = 10 + 20 + 30 = 60. Note that <code>range(0, 3)</code> excludes 3 (upper bound is exclusive in Python).</span><span data-lang="zh"><code>range(0, 3)</code> 产生索引 0、1、2——因此 <code>data[0]=10</code>、<code>data[1]=20</code>、<code>data[2]=30</code>。总和 = 10 + 20 + 30 = 60。注意 <code>range(0, 3)</code> 排除 3（Python 中上界是排他的）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>range(0, 3)</code> gives 0, 1, 2 only (not 3, 4). Only the first three elements are summed: 10+20+30=60.</span><span data-lang="zh"><code>range(0, 3)</code> 只给出 0、1、2（不包括 3、4）。只有前三个元素被求和：10+20+30=60。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the last valid index for a list of length 8?</span><span data-lang="zh">长度为 8 的列表最后一个有效索引是什么？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">8</span><span data-lang="zh">8</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">9</span><span data-lang="zh">9</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">6</span><span data-lang="zh">6</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">7</span><span data-lang="zh">7</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">With zero-based indexing, a list of length 8 has indices 0 through 7. The last valid index is always <code>len(list) - 1 = 8 - 1 = 7</code>. Accessing index 8 raises an IndexError.</span><span data-lang="zh">使用从零开始的索引，长度为 8 的列表索引为 0 到 7。最后一个有效索引始终为 <code>len(list) - 1 = 8 - 1 = 7</code>。访问索引 8 会引发 IndexError。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Zero-based indexing: first element is index 0, last element is index length-1. For length 8: last index = 7.</span><span data-lang="zh">从零开始的索引：第一个元素是索引 0，最后一个元素是索引"长度-1"。对于长度 8：最后一个索引 = 7。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; AP CSP list notation (1-indexed)</span><span data-lang="zh">深入 &mdash; AP CSP 列表表示法（从 1 开始索引）</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">AP CSP uses its own pseudocode reference sheet where lists are 1-indexed: the first element is at position 1 (not 0). So for <code>scores &larr; [82, 74, 91, 68, 87]</code>, <code>scores[1]</code> is 82 and <code>scores[5]</code> is 87. The College Board pseudocode also uses <code>LENGTH(list)</code> for size and <code>FOR EACH item IN list</code> for traversal. When you see AP CSP exam questions using list notation, remember: 1-indexed, not 0-indexed.</span><span data-lang="zh">AP CSP 使用自己的伪代码参考手册，其中列表从 1 开始索引：第一个元素在位置 1（不是 0）。因此对于 <code>scores &larr; [82, 74, 91, 68, 87]</code>，<code>scores[1]</code> 是 82，<code>scores[5]</code> 是 87。College Board 伪代码还使用 <code>LENGTH(list)</code> 表示大小，使用 <code>FOR EACH item IN list</code> 进行遍历。当你看到使用列表表示法的 AP CSP 考题时，记住：从 1 开始索引，不是从 0 开始。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; List operations</span><span data-lang="zh">第 3 节 &middot; 列表操作</span></div>
+  <h2><span data-lang="en">List Operations: Append, Insert, Remove</span><span data-lang="zh">列表操作：追加、插入、删除</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three core mutation operations &mdash; know all three.</span><span data-lang="zh">三种核心变更操作 &mdash; 全部掌握。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Append</span><span data-lang="zh">追加</span></strong> <span data-lang="en">&mdash; add an element to the end of a list. Pseudocode: <code>APPEND item TO list</code>. Python: <code>list.append(item)</code>. AB CSE2120 outcome 1.3.2: "inserting, deleting and replacing data."</span><span data-lang="zh">&mdash; 在列表末尾添加元素。伪代码：<code>APPEND item TO list</code>。Python：<code>list.append(item)</code>。AB CSE2120 结果 1.3.2："插入、删除和替换数据。"</span></li>
+      <li><strong><span data-lang="en">Insert</span><span data-lang="zh">插入</span></strong> <span data-lang="en">&mdash; add an element at a specific index, shifting later elements right. Python: <code>list.insert(index, item)</code>. Ontario ICS3U A3.3 (ICS4U): "create subprograms to insert and delete array elements."</span><span data-lang="zh">&mdash; 在特定索引处添加元素，后面的元素向右移动。Python：<code>list.insert(index, item)</code>。安大略 ICS3U A3.3（ICS4U）："创建子程序以插入和删除数组元素。"</span></li>
+      <li><strong><span data-lang="en">Remove</span><span data-lang="zh">删除</span></strong> <span data-lang="en">&mdash; delete an element by value (first occurrence) or by index. Python: <code>list.remove(value)</code> by value; <code>list.pop(index)</code> by index and returns the value.</span><span data-lang="zh">&mdash; 按值（第一次出现）或按索引删除元素。Python：<code>list.remove(value)</code> 按值删除；<code>list.pop(index)</code> 按索引删除并返回该值。</span></li>
+    </ul>
+    <span data-lang="en"><strong>AP CSP AAP-2.K</strong> explicitly lists: INSERT, APPEND, REMOVE, and LENGTH as the four required list operations for the AP CSP exam. Know all four.</span><span data-lang="zh"><strong>AP CSP AAP-2.K</strong> 明确列出：INSERT（插入）、APPEND（追加）、REMOVE（删除）和 LENGTH（长度）是 AP CSP 考试要求的四种列表操作。全部掌握。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Building and modifying a shopping list</span><span data-lang="zh">例题 3 &middot; 构建和修改购物清单</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Demonstrate all three operations on a list of strings.</span><span data-lang="zh">演示字符串列表上的全部三种操作。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Pseudocode
+DECLARE cart AS LIST
+APPEND "apples" TO cart       # cart = ["apples"]
+APPEND "bread" TO cart        # cart = ["apples", "bread"]
+INSERT "milk" AT INDEX 1 IN cart  # cart = ["apples", "milk", "bread"]
+REMOVE "bread" FROM cart      # cart = ["apples", "milk"]
+OUTPUT LENGTH(cart)           # 2</code></pre>
+    <pre><code># Python
+cart = []
+cart.append("apples")         # cart = ["apples"]
+cart.append("bread")          # cart = ["apples", "bread"]
+cart.insert(1, "milk")        # cart = ["apples", "milk", "bread"]
+cart.remove("bread")          # cart = ["apples", "milk"]
+print(len(cart))              # 2</code></pre>
+    <p><span data-lang="zh">说明：<code>append</code> 末尾追加；<code>insert(i, x)</code> 在索引 i 处插入 x；<code>remove(x)</code> 删除第一个值为 x 的元素；<code>len()</code> 返回长度。</span><span data-lang="en">Note: <code>insert(1, "milk")</code> pushes "bread" from index 1 to index 2 — all elements at and after the insertion point shift right by 1.</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">After executing the following, what is <code>nums</code>?<br><code>nums = [1, 2, 3, 4]</code><br><code>nums.insert(2, 99)</code></span><span data-lang="zh">执行以下代码后，<code>nums</code> 是什么？<br><code>nums = [1, 2, 3, 4]</code><br><code>nums.insert(2, 99)</code></span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">[1, 2, 3, 99, 4]</span><span data-lang="zh">[1, 2, 3, 99, 4]</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">[1, 99, 2, 3, 4]</span><span data-lang="zh">[1, 99, 2, 3, 4]</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">[1, 2, 99, 3, 4]</span><span data-lang="zh">[1, 2, 99, 3, 4]</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">[99, 1, 2, 3, 4]</span><span data-lang="zh">[99, 1, 2, 3, 4]</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>insert(2, 99)</code> places 99 at index 2. The original elements at indices 2, 3 shift right: [1, 2, 99, 3, 4]. Index 2 in the original list held 3; after insertion 99 is at 2 and 3 is at 3.</span><span data-lang="zh"><code>insert(2, 99)</code> 在索引 2 处插入 99。原来在索引 2、3 的元素向右移动：[1, 2, 99, 3, 4]。原列表中索引 2 存储 3；插入后 99 在索引 2，3 在索引 3。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>list.insert(i, x)</code> inserts x before the element currently at index i. For [1,2,3,4] with insert(2, 99): 99 goes before index-2 element (which is 3), giving [1,2,99,3,4].</span><span data-lang="zh"><code>list.insert(i, x)</code> 在当前索引 i 的元素前插入 x。对 [1,2,3,4] 执行 insert(2, 99)：99 插在索引 2 元素（即 3）之前，得 [1,2,99,3,4]。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which Python method removes the first occurrence of a specific value from a list?</span><span data-lang="zh">哪种 Python 方法从列表中删除特定值的第一次出现？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en"><code>list.pop(value)</code></span><span data-lang="zh"><code>list.pop(value)</code></span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en"><code>list.remove(value)</code></span><span data-lang="zh"><code>list.remove(value)</code></span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en"><code>list.delete(value)</code></span><span data-lang="zh"><code>list.delete(value)</code></span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en"><code>del list[value]</code></span><span data-lang="zh"><code>del list[value]</code></span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>list.remove(value)</code> finds the first element equal to value and removes it. <code>list.pop(index)</code> removes by index position (not value). <code>del list[index]</code> also removes by index. There is no <code>list.delete()</code> method in Python.</span><span data-lang="zh"><code>list.remove(value)</code> 找到第一个等于 value 的元素并删除它。<code>list.pop(index)</code> 按索引位置删除（不是按值）。<code>del list[index]</code> 也是按索引删除。Python 中没有 <code>list.delete()</code> 方法。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>remove(value)</code> removes by value. <code>pop(index)</code> removes by position. Know the difference — exam questions often test this distinction.</span><span data-lang="zh"><code>remove(value)</code> 按值删除。<code>pop(index)</code> 按位置删除。了解区别——考题经常测试这一区别。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; 2D arrays and nested lists</span><span data-lang="zh">第 4 节 &middot; 二维数组与嵌套列表</span></div>
+  <h2><span data-lang="en">2D Arrays and Nested Lists <span class="honors-flag">Honors</span></span><span data-lang="zh">二维数组与嵌套列表 <span class="honors-flag">Honors</span></span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">A 2D array is a table: rows and columns, two indexes.</span><span data-lang="zh">二维数组是一张表格：行和列，两个索引。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Access</span><span data-lang="zh">访问</span></strong> <span data-lang="en">&mdash; <code>grid[row][col]</code>. Row first, column second. Think of it as "first pick the row (outer list), then pick the column (inner list)."</span><span data-lang="zh">&mdash; <code>grid[row][col]</code>。先行，后列。把它想成"先选行（外层列表），再选列（内层列表）"。</span></li>
+      <li><strong><span data-lang="en">Nested loops</span><span data-lang="zh">嵌套循环</span></strong> <span data-lang="en">&mdash; traverse a 2D structure with a loop inside a loop: the outer loop iterates rows, the inner loop iterates columns. Ontario ICS4U A3.5: "create algorithms to process elements in two-dimensional arrays."</span><span data-lang="zh">&mdash; 用嵌套循环遍历二维结构：外层循环遍历行，内层循环遍历列。安大略 ICS4U A3.5："创建处理二维数组元素的算法。"</span></li>
+    </ul>
+    <span data-lang="en">AB CSE2120 outcome 1.2.1 names "double dimensional arrays (tables)" explicitly. AP CSA covers 2D arrays as a required topic. BC CP12 "Uses of pre-built data structures" applies here.</span><span data-lang="zh">AB CSE2120 结果 1.2.1 明确命名"双维数组（表格）"。AP CSA 将二维数组作为必考主题。BC CP12"预构建数据结构的使用"在此适用。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; A classroom grade grid</span><span data-lang="zh">例题 4 &middot; 课堂成绩网格</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">3 students, 3 tests. Access and traverse the 2D array.</span><span data-lang="zh">3 名学生，3 次测试。访问并遍历二维数组。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Pseudocode
+DECLARE grades AS 2D ARRAY [3][3]
+SET grades TO [[85, 90, 78],
+               [72, 88, 94],
+               [91, 67, 83]]
+# Access student 0, test 1: grades[0][1]
+OUTPUT grades[0][1]   # 90
+
+# Sum all grades
+SET total TO 0
+FOR row FROM 0 TO 2:
+    FOR col FROM 0 TO 2:
+        SET total TO total + grades[row][col]
+OUTPUT total   # 748</code></pre>
+    <pre><code># Python
+grades = [[85, 90, 78],
+          [72, 88, 94],
+          [91, 67, 83]]
+
+print(grades[0][1])   # 90  (student 0, test 1)
+
+total = 0
+for row in grades:
+    for score in row:
+        total += score
+print(total)   # 748</code></pre>
+    <p><span data-lang="zh">说明：<code>grades[row][col]</code> 先选第 row 个内层列表，再从中取第 col 个元素。嵌套 <code>for</code> 循环遍历全部行列。</span><span data-lang="en">The outer loop picks a row (a list of 3 scores); the inner loop picks each score in that row. This nested-loop pattern applies to any 2D structure: image pixels, game boards, distance matrices.</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>matrix = [[1,2,3],[4,5,6],[7,8,9]]</code>, what is <code>matrix[2][0]</code>?</span><span data-lang="zh">给定 <code>matrix = [[1,2,3],[4,5,6],[7,8,9]]</code>，<code>matrix[2][0]</code> 是什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">3</span><span data-lang="zh">3</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">1</span><span data-lang="zh">1</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">7</span><span data-lang="zh">7</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>matrix[2]</code> is the third row: [7,8,9]. <code>matrix[2][0]</code> is the first element of that row: 7. Row index 2, column index 0.</span><span data-lang="zh"><code>matrix[2]</code> 是第三行：[7,8,9]。<code>matrix[2][0]</code> 是该行的第一个元素：7。行索引 2，列索引 0。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">First index = row (0-indexed), second index = column. Row 2 = [7,8,9], column 0 of that row = 7.</span><span data-lang="zh">第一个索引 = 行（从 0 开始），第二个索引 = 列。第 2 行 = [7,8,9]，该行的第 0 列 = 7。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which code structure is used to visit every element in a 2D array?</span><span data-lang="zh">哪种代码结构用于访问二维数组中的每个元素？</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A loop inside a loop (nested loops)</span><span data-lang="zh">循环内的循环（嵌套循环）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A single for loop</span><span data-lang="zh">单个 for 循环</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A while loop only</span><span data-lang="zh">仅限 while 循环</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A recursive function</span><span data-lang="zh">递归函数</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A 2D array requires nested loops: the outer loop iterates over rows, the inner loop iterates over columns within each row. A single loop can only access one dimension at a time.</span><span data-lang="zh">二维数组需要嵌套循环：外层循环遍历行，内层循环遍历每行中的列。单个循环一次只能访问一个维度。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">To visit every cell in a grid, you need two loops: one for rows, one for columns. This nested-loop pattern is the standard 2D traversal.</span><span data-lang="zh">要访问网格中的每个单元格，你需要两个循环：一个用于行，一个用于列。这种嵌套循环模式是标准的二维遍历。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; real-world 2D array applications</span><span data-lang="zh">深入 &mdash; 二维数组的实际应用</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">Ontario ICS4U A3.5 specifically cites: "multiply each element by a constant, interchange elements, multiply matrices, process pixels in an image." Each is a nested-loop algorithm. Image processing is the most concrete: a greyscale image is a 2D array of integers 0-255; every filter (blur, sharpen, edge-detect) traverses this array with nested loops, computing a new value for each pixel from its neighbours. AB CSE2120 outcome 1.2.1 names "parallel arrays (look-up or associative tables)" — these are 1D arrays used together as a primitive key-value store, a predecessor to the dictionary structure in &sect;5.</span><span data-lang="zh">安大略 ICS4U A3.5 具体引用："将每个元素乘以常数、交换元素、矩阵相乘、处理图像像素。"每个都是嵌套循环算法。图像处理最为具体：灰度图像是一个 0-255 整数的二维数组；每个滤镜（模糊、锐化、边缘检测）都使用嵌套循环遍历该数组，从其邻居计算每个像素的新值。AB CSE2120 结果 1.2.1 命名"并行数组（查找或关联表）"——这些是共同用作原始键值存储的一维数组，是 &sect;5 中字典结构的前身。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; Dictionaries and maps</span><span data-lang="zh">第 5 节 &middot; 字典与映射</span></div>
+  <h2><span data-lang="en">Dictionaries and Maps (Key-Value Pairs) <span class="honors-flag">Honors</span></span><span data-lang="zh">字典与映射（键值对） <span class="honors-flag">Honors</span></span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">A dictionary stores key-value pairs &mdash; look up any value instantly by its key.</span><span data-lang="zh">字典存储键值对&mdash;&mdash;通过键立即查找任意值。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Key</span><span data-lang="zh">键</span></strong> <span data-lang="en">&mdash; a unique label that identifies a value. Usually a string.</span><span data-lang="zh">&mdash; 标识值的唯一标签，通常是字符串。</span></li>
+      <li><strong><span data-lang="en">Value</span><span data-lang="zh">值</span></strong> <span data-lang="en">&mdash; any data associated with a key (int, string, list, etc.).</span><span data-lang="zh">&mdash; 与键关联的任意数据（整数、字符串、列表等）。</span></li>
+      <li><strong><span data-lang="en">No integer index</span><span data-lang="zh">无整数索引</span></strong> <span data-lang="en">&mdash; access by key: <code>d["name"]</code>. Ontario ICS4U C1.1 names "dictionary" as an abstract data type.</span><span data-lang="zh">&mdash; 通过键访问：<code>d["name"]</code>。安大略 ICS4U C1.1 将"字典"列为抽象数据类型。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Python uses <code>dict</code>.</strong> AB CSE2120 outcome 1.2.1 mentions "parallel arrays (look-up or associative tables)" &mdash; dictionaries are the modern equivalent. AP CSA uses <code>HashMap</code> for this role.</span><span data-lang="zh"><strong>Python 使用 <code>dict</code>。</strong>AB CSE2120 结果 1.2.1 提到"并行数组（查找或关联表）"&mdash;&mdash;字典是现代等价物。AP CSA 使用 <code>HashMap</code>。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Student grade dictionary</span><span data-lang="zh">例题 5 &middot; 学生成绩字典</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Map student names (keys) to their average grade (values).</span><span data-lang="zh">将学生姓名（键）映射到其平均成绩（值）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Pseudocode
+DECLARE grades AS DICTIONARY
+SET grades["Alice"] TO 91
+SET grades["Bob"] TO 78
+OUTPUT grades["Bob"]   # 78
+SET grades["Dave"] TO 88
+FOR EACH name, score IN grades:
+    OUTPUT name, score</code></pre>
+    <pre><code># Python
+grades = {}
+grades["Alice"] = 91
+grades["Bob"] = 78
+print(grades["Bob"])    # 78
+grades["Dave"] = 88
+for name, score in grades.items():
+    print(name, score)</code></pre>
+    <p><span data-lang="zh">说明：<code>dict["key"]</code> 查找键值；<code>dict.items()</code> 返回所有键值对；赋值既可新增也可更新。</span><span data-lang="en">Lookup by key is O(1) on average &mdash; much faster than linear search through a list for the same item.</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What distinguishes a dictionary from a list?</span><span data-lang="zh">字典与列表有何区别？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A dictionary uses keys to access values; a list uses integer indexes.</span><span data-lang="zh">字典使用键访问值；列表使用整数索引。</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A dictionary is ordered; a list is unordered.</span><span data-lang="zh">字典是有序的；列表是无序的。</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A dictionary can only store strings.</span><span data-lang="zh">字典只能存储字符串。</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A dictionary is fixed-size; a list is dynamic.</span><span data-lang="zh">字典是固定大小的；列表是动态的。</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The fundamental difference: lists use consecutive integer indexes (0, 1, 2, &hellip;); dictionaries use arbitrary keys to access values. Both can grow dynamically in Python.</span><span data-lang="zh">根本区别：列表使用连续整数索引（0、1、2……）；字典使用任意键访问值。在 Python 中两者都可以动态增长。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The core distinction is key (dictionary) vs. integer index (list). Both are dynamic and can hold any type as values.</span><span data-lang="zh">核心区别是键（字典）vs 整数索引（列表）。两者都是动态的，值可以是任何类型。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>d = {"x": 10, "y": 20, "z": 30}</code>, what is <code>d["y"]</code>?</span><span data-lang="zh">给定 <code>d = {"x": 10, "y": 20, "z": 30}</code>，<code>d["y"]</code> 是什么？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">10</span><span data-lang="zh">10</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">"y"</span><span data-lang="zh">"y"</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">20</span><span data-lang="zh">20</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">30</span><span data-lang="zh">30</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>d["y"]</code> returns the value associated with key "y": 20. The key is "y"; the value is 20.</span><span data-lang="zh"><code>d["y"]</code> 返回键 "y" 对应的值：20。键是 "y"；值是 20。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Dictionary lookup returns the value, not the key. <code>d["y"]</code> returns 20.</span><span data-lang="zh">字典查找返回值，不是键。<code>d["y"]</code> 返回 20。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Tuples and sets</span><span data-lang="zh">第 6 节 &middot; 元组与集合</span></div>
+  <h2><span data-lang="en">Tuples and Sets</span><span data-lang="zh">元组与集合</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Two more collection types &mdash; each fills a specific niche.</span><span data-lang="zh">另外两种集合类型 &mdash; 各有特定用途。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Tuple</span><span data-lang="zh">元组</span></strong> <span data-lang="en">&mdash; ordered, <em>immutable</em> sequence. Once created, elements cannot be changed. Use for fixed data: coordinates <code>(lat, lon)</code>, RGB colours <code>(255, 128, 0)</code>. Python syntax: round brackets <code>(x, y)</code>.</span><span data-lang="zh">&mdash; 有序、<em>不可变</em>序列。创建后不能更改元素。用于固定数据：坐标 <code>(lat, lon)</code>、RGB 颜色 <code>(255, 128, 0)</code>。Python 语法：圆括号 <code>(x, y)</code>。</span></li>
+      <li><strong><span data-lang="en">Set</span><span data-lang="zh">集合</span></strong> <span data-lang="en">&mdash; <em>unordered</em> collection of <em>unique</em> elements. Automatically removes duplicates. Fast membership testing and set operations (union, intersection, difference). Python syntax: <code>{x, y}</code> or <code>set()</code>.</span><span data-lang="zh">&mdash; <em>无序</em>的<em>唯一</em>元素集合。自动删除重复项。快速成员测试和集合运算（并集、交集、差集）。Python 语法：<code>{x, y}</code> 或 <code>set()</code>。</span></li>
+    </ul>
+    <span data-lang="en">CSTA 3B-AP-12 Descriptive Statement lists "stacks, and queues" alongside lists and arrays. BC CP12 "Uses of pre-built data structures" covers tuples and sets.</span><span data-lang="zh">CSTA 3B-AP-12 描述性声明在列表和数组旁列举"栈和队列"等。BC CP12"预构建数据结构的使用"涵盖元组和集合。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; Tuples and sets in practice</span><span data-lang="zh">例题 6 &middot; 元组与集合实战</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Practical uses of both types with Python code.</span><span data-lang="zh">两种类型的实际使用，附 Python 代码。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Tuple — immutable record
+point = (3, 7)
+print(point[0])   # 3
+# point[0] = 5    # ERROR: tuples are immutable!
+a, b = 10, 20
+a, b = b, a       # swap using tuple unpacking
+print(a, b)       # 20 10</code></pre>
+    <p><span data-lang="zh">元组用于固定搭配的数据；不可变性防止意外修改。</span><span data-lang="en">Tuples are ideal for return values and dictionary keys because they cannot be accidentally modified.</span></p>
+    <pre><code># Set — unique elements only
+scores = [85, 90, 85, 74, 90, 65]
+unique = set(scores)
+print(unique)         # {65, 74, 85, 90}
+print(85 in unique)   # True
+print(100 in unique)  # False
+
+classA = {"Alice", "Bob", "Carol"}
+classB = {"Bob", "Dave", "Carol"}
+print(classA &amp; classB)   # {"Bob", "Carol"}
+print(classA | classB)   # all four
+print(classA - classB)   # {"Alice"}</code></pre>
+    <p><span data-lang="zh">集合自动去重；<code>&amp;</code> 交集，<code>|</code> 并集，<code>-</code> 差集。成员测试 <code>in</code> 对集合平均 O(1)，对列表 O(n)。</span><span data-lang="en">Use a set when you need fast membership testing, deduplication, or set-algebra on two groups.</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which structure would you use to store students who have submitted an assignment, if you frequently check whether a given student has submitted?</span><span data-lang="zh">如果你频繁需要检查某个学生是否已提交作业，应使用哪种结构？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A 2D array</span><span data-lang="zh">二维数组</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A tuple</span><span data-lang="zh">元组</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A list</span><span data-lang="zh">列表</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A set</span><span data-lang="zh">集合</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A set is ideal: <code>in</code> is O(1) on average vs O(n) for a list; sets automatically prevent duplicates; no ordering needed.</span><span data-lang="zh">集合最理想：<code>in</code> 平均 O(1)，而列表 O(n)；自动防止重复；不需要排序。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">For fast membership testing and automatic deduplication, use a set. Lists require O(n) linear search; tuples are immutable; 2D arrays are for grid data.</span><span data-lang="zh">快速成员测试和自动去重，选集合。列表需要 O(n) 搜索；元组不可变；二维数组用于网格数据。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A tuple differs from a list primarily because a tuple is:</span><span data-lang="zh">元组与列表的主要区别在于元组是：</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Unordered</span><span data-lang="zh">无序的</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Immutable (cannot be changed after creation)</span><span data-lang="zh">不可变的（创建后不能更改）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Only able to hold strings</span><span data-lang="zh">只能存储字符串</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Accessed by key, not by index</span><span data-lang="zh">通过键而非索引访问</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A tuple is immutable: once created, you cannot add, remove, or change its elements. A list is mutable. Both are ordered and indexed by integer position.</span><span data-lang="zh">元组是不可变的：创建后不能添加、删除或更改元素。列表是可变的。两者都是有序的，通过整数位置索引。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Tuples are ordered; they hold any type; they are indexed by position. The defining difference is immutability.</span><span data-lang="zh">元组是有序的；可以存储任何类型；通过位置索引。决定性区别是不可变性。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Choosing the right data structure</span><span data-lang="zh">第 7 节 &middot; 选择合适的数据结构</span></div>
+  <h2><span data-lang="en">Choosing the Right Data Structure</span><span data-lang="zh">选择合适的数据结构</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Match the problem to the structure.</span><span data-lang="zh">将问题与结构匹配。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">List / 1D array</span><span data-lang="zh">列表 / 一维数组</span></strong> <span data-lang="en">&mdash; ordered sequence accessed by position. Default choice.</span><span data-lang="zh">&mdash; 有序序列，通过位置访问。默认选择。</span></li>
+      <li><strong><span data-lang="en">2D array</span><span data-lang="zh">二维数组</span></strong> <span data-lang="en">&mdash; grid-shaped data: game boards, images, matrices.</span><span data-lang="zh">&mdash; 网格形状的数据：游戏棋盘、图像、矩阵。</span></li>
+      <li><strong><span data-lang="en">Dictionary</span><span data-lang="zh">字典</span></strong> <span data-lang="en">&mdash; fast lookup by label/ID. Use when you have key-value data.</span><span data-lang="zh">&mdash; 按标签/ID 快速查找。有键值数据时使用。</span></li>
+      <li><strong><span data-lang="en">Set</span><span data-lang="zh">集合</span></strong> <span data-lang="en">&mdash; uniqueness and fast membership testing.</span><span data-lang="zh">&mdash; 唯一性和快速成员测试。</span></li>
+      <li><strong><span data-lang="en">Tuple</span><span data-lang="zh">元组</span></strong> <span data-lang="en">&mdash; fixed, immutable grouping of related values.</span><span data-lang="zh">&mdash; 相关值的固定、不可变组合。</span></li>
+    </ul>
+    <span data-lang="en">CSTA 3B-AP-12: "Compare and contrast fundamental data structures and their uses." A well-designed program picks the right structure for each piece of data.</span><span data-lang="zh">CSTA 3B-AP-12："比较和对比基本数据结构及其用途。"设计良好的程序为每个数据片段选择正确的结构。</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="en">Structure</span><span data-lang="zh">结构</span></th>
+          <th><span data-lang="en">Ordered?</span><span data-lang="zh">有序？</span></th>
+          <th><span data-lang="en">Mutable?</span><span data-lang="zh">可变？</span></th>
+          <th><span data-lang="en">Duplicates?</span><span data-lang="zh">允许重复？</span></th>
+          <th><span data-lang="en">Best for</span><span data-lang="zh">最适合</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span data-lang="en">List</span><span data-lang="zh">列表</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Sequences, ordered data</span><span data-lang="zh">序列、有序数据</span></td></tr>
+        <tr><td><span data-lang="en">2D array</span><span data-lang="zh">二维数组</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Grids, tables, images</span><span data-lang="zh">网格、表格、图像</span></td></tr>
+        <tr><td><span data-lang="en">Dictionary</span><span data-lang="zh">字典</span></td><td><span data-lang="en">Yes (Py 3.7+)</span><span data-lang="zh">是（Py 3.7+）</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Keys: No</span><span data-lang="zh">键：否</span></td><td><span data-lang="en">Labelled data, fast lookup</span><span data-lang="zh">带标签数据、快速查找</span></td></tr>
+        <tr><td><span data-lang="en">Set</span><span data-lang="zh">集合</span></td><td><span data-lang="en">No</span><span data-lang="zh">否</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">No</span><span data-lang="zh">否</span></td><td><span data-lang="en">Unique items, set ops</span><span data-lang="zh">唯一项目、集合运算</span></td></tr>
+        <tr><td><span data-lang="en">Tuple</span><span data-lang="zh">元组</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">No</span><span data-lang="zh">否</span></td><td><span data-lang="en">Yes</span><span data-lang="zh">是</span></td><td><span data-lang="en">Fixed records, return values</span><span data-lang="zh">固定记录、返回值</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">You need to count how many times each word appears in a document. Which data structure is most appropriate?</span><span data-lang="zh">你需要统计文档中每个单词出现的次数。哪种数据结构最合适？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A 2D array</span><span data-lang="zh">二维数组</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A set</span><span data-lang="zh">集合</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A tuple per word</span><span data-lang="zh">每词一个元组</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A dictionary mapping each word to its count</span><span data-lang="zh">将每个单词映射到其计数的字典</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A dictionary (word &rarr; count) is natural: words are keys, counts are values. Updating a count is O(1). A set tracks presence but not count; tuples are immutable; 2D arrays need a custom key-lookup mechanism.</span><span data-lang="zh">字典（单词&rarr;计数）最自然：单词是键，计数是值。更新计数是 O(1)。集合跟踪存在性但不跟踪计数；元组不可变；二维数组需要自定义键查找。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">To associate a label with a value and update it frequently, use a dictionary. <code>word_counts["hello"] += 1</code> is the canonical pattern.</span><span data-lang="zh">将标签与值关联并频繁更新，选字典。<code>word_counts["hello"] += 1</code> 是典型模式。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A chess board&rsquo;s squares are identified by row (0&ndash;7) and column (0&ndash;7). Which structure fits best?</span><span data-lang="zh">棋盘方格通过行（0&ndash;7）和列（0&ndash;7）标识。哪种结构最合适？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A 2D array (8&times;8)</span><span data-lang="zh">二维数组（8&times;8）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A set of tuples</span><span data-lang="zh">元组的集合</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A dictionary with string keys</span><span data-lang="zh">以字符串为键的字典</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A 1D list of 64 items</span><span data-lang="zh">64 项的一维列表</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A chess board is a classic 8&times;8 grid. A 2D array <code>board[row][col]</code> maps directly to the physical layout and gives O(1) access.</span><span data-lang="zh">棋盘是经典的 8&times;8 网格。二维数组 <code>board[row][col]</code> 直接映射物理布局，提供 O(1) 访问。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">When data has a natural row-column structure with integer coordinates, a 2D array is the right choice.</span><span data-lang="zh">当数据具有带整数坐标的自然行列结构时，二维数组是正确选择。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">Choosing and naming structures</span><span data-lang="zh">选择和命名数据结构</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">State why, not just what.</span><span data-lang="zh">说明原因，不只是说明是什么。</span></strong> <span data-lang="en">When asked to choose a data structure on an exam, always justify: "I use a dictionary because lookup by student name is O(1)." Naming the structure without justification earns partial credit at best.</span><span data-lang="zh">在考试中被要求选择数据结构时，始终给出理由："我使用字典，因为按学生姓名查找是 O(1)。"仅命名结构而不说明原因最多只能得部分分。</span></li>
+      <li><strong><span data-lang="en">Know the four distinguishing traits.</span><span data-lang="zh">了解四个区分特征。</span></strong> <span data-lang="en">For any structure: is it ordered? is it mutable? does it allow duplicates? how is it accessed (index, key, or membership)? Knowing these for all five structures in this guide is the CSTA 3B-AP-12 competency.</span><span data-lang="zh">对于任何结构：是有序的吗？是可变的吗？允许重复吗？如何访问（索引、键或成员关系）？了解本指南中所有五种结构的这些特征是 CSTA 3B-AP-12 能力要求。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Indexing and traversal errors (&sect;1&ndash;&sect;3)</span><span data-lang="zh">索引和遍历错误（&sect;1&ndash;&sect;3）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Zero-based vs one-based.</span><span data-lang="zh">从零开始 vs 从一开始。</span></strong> <span data-lang="en">Python/Java are 0-indexed; AP CSP pseudocode is 1-indexed. Off-by-one is the most common indexing error. Always check: first element is <code>list[0]</code> in Python, <code>list[1]</code> in AP CSP pseudocode.</span><span data-lang="zh">Python/Java 从零开始；AP CSP 伪代码从一开始。差一是最常见的索引错误。始终检查：Python 中第一个元素是 <code>list[0]</code>，AP CSP 伪代码中是 <code>list[1]</code>。</span></li>
+      <li><strong><span data-lang="en">Out-of-bounds is a runtime error.</span><span data-lang="zh">越界是运行时错误。</span></strong> <span data-lang="en">Accessing index 5 in a list of length 5 raises an IndexError (Python) or ArrayIndexOutOfBoundsException (Java). State this explicitly when asked about error types in array code.</span><span data-lang="zh">在长度为 5 的列表中访问索引 5 会引发 IndexError（Python）或 ArrayIndexOutOfBoundsException（Java）。在被问及数组代码中的错误类型时明确说明这一点。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">2D arrays, dicts, sets (&sect;4&ndash;&sect;6)</span><span data-lang="zh">二维数组、字典、集合（&sect;4&ndash;&sect;6）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Row first, column second.</span><span data-lang="zh">先行，后列。</span></strong> <span data-lang="en">2D access is always <code>grid[row][col]</code>. Reversing the order accesses the wrong element. Confirm by writing out the first row and first column explicitly in your working.</span><span data-lang="zh">二维访问始终是 <code>grid[row][col]</code>。颠倒顺序会访问错误元素。在草稿中明确写出第一行和第一列来确认。</span></li>
+      <li><strong><span data-lang="en">Tuples as dict keys.</span><span data-lang="zh">元组作为字典键。</span></strong> <span data-lang="en">In Python, tuples (immutable) can be dictionary keys; lists (mutable) cannot. This is a common AP CSP/CSA exam gotcha: <code>d[(1,2)] = "A1"</code> works; <code>d[[1,2]] = "A1"</code> raises TypeError.</span><span data-lang="zh">在 Python 中，元组（不可变）可以是字典键；列表（可变）不能。这是常见的 AP CSP/CSA 考试陷阱：<code>d[(1,2)] = "A1"</code> 有效；<code>d[[1,2]] = "A1"</code> 引发 TypeError。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Trace before you submit.</span><span data-lang="zh">提交前先追踪。</span></strong> <span data-lang="en">For any code-reading or pseudocode question, hand-trace with a concrete example to verify. A trace table takes 60 seconds and catches index and logic errors.</span><span data-lang="zh">对于任何代码阅读或伪代码问题，用具体示例手工追踪验证。追踪表只需 60 秒，能发现索引和逻辑错误。</span></li>
+      <li><strong><span data-lang="en">Use correct Python method names.</span><span data-lang="zh">使用正确的 Python 方法名称。</span></strong> <span data-lang="en"><code>append()</code> not <code>add()</code>; <code>remove(value)</code> not <code>delete(value)</code>; <code>pop(index)</code> to remove by position. Getting the method name wrong in a written exam drops marks even if the logic is correct.</span><span data-lang="zh"><code>append()</code> 不是 <code>add()</code>；<code>remove(value)</code> 不是 <code>delete(value)</code>；<code>pop(index)</code> 按位置删除。在笔试中写错方法名会丢分，即使逻辑正确。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 12 flipped</span><span data-lang="zh">0 / 12 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">data structure</span><span data-lang="zh">数据结构</span></div><div class="flashcard-back"><span data-lang="en">A way of organising information in memory so it can be stored, retrieved, and modified efficiently. Examples: array, list, dict, set, tuple.</span><span data-lang="zh">在内存中组织信息的方式，使其能高效存储、检索和修改。示例：数组、列表、字典、集合、元组。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">array &mdash; key property</span><span data-lang="zh">数组 — 关键属性</span></div><div class="flashcard-back"><span data-lang="en">Fixed size, same element type, contiguous memory. Access by integer index (0-based in Python/Java). Bounds: 0 to length&minus;1.</span><span data-lang="zh">固定大小，元素类型相同，连续内存。通过整数索引访问（Python/Java 从零开始）。边界：0 到"长度-1"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">index — first element?</span><span data-lang="zh">索引 — 第一个元素？</span></div><div class="flashcard-back"><span data-lang="en">Index 0 in Python/Java (zero-based). Index 1 in AP CSP pseudocode (one-based). Last valid index = length &minus; 1 (Python).</span><span data-lang="zh">Python/Java 中索引 0（从零开始）。AP CSP 伪代码中索引 1（从一开始）。最后有效索引 = 长度 &minus; 1（Python）。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">traversal</span><span data-lang="zh">遍历</span></div><div class="flashcard-back"><span data-lang="en">Visiting every element in a collection exactly once, typically using a for loop. Accumulate, find max, linear search are all traversal patterns.</span><span data-lang="zh">恰好访问集合中每个元素一次，通常用 for 循环。累加、找最大值、线性搜索都是遍历模式。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">list.append() vs list.insert()</span><span data-lang="zh">append() vs insert()</span></div><div class="flashcard-back"><span data-lang="en"><code>append(x)</code> adds x to the end. <code>insert(i, x)</code> adds x before index i, shifting later elements right. AP CSP AAP-2.K requires knowing both.</span><span data-lang="zh"><code>append(x)</code> 在末尾添加 x。<code>insert(i, x)</code> 在索引 i 前添加 x，后面元素右移。AP CSP AAP-2.K 要求掌握两者。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">list.remove() vs list.pop()</span><span data-lang="zh">remove() vs pop()</span></div><div class="flashcard-back"><span data-lang="en"><code>remove(value)</code> deletes first occurrence of value. <code>pop(index)</code> removes by position and returns the element.</span><span data-lang="zh"><code>remove(value)</code> 删除第一次出现的值。<code>pop(index)</code> 按位置删除并返回该元素。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">2D array access</span><span data-lang="zh">二维数组访问</span></div><div class="flashcard-back"><span data-lang="en"><code>grid[row][col]</code>. Row index first, column index second. Traverse with nested loops: outer for rows, inner for columns.</span><span data-lang="zh"><code>grid[row][col]</code>。先行索引，后列索引。用嵌套循环遍历：外层遍历行，内层遍历列。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">dictionary &mdash; key-value pair</span><span data-lang="zh">字典 — 键值对</span></div><div class="flashcard-back"><span data-lang="en">A mapping of unique keys to values. <code>d["key"] = value</code> to set; <code>d["key"]</code> to get; <code>d.items()</code> to iterate. O(1) average lookup.</span><span data-lang="zh">唯一键到值的映射。<code>d["key"] = value</code> 设置；<code>d["key"]</code> 获取；<code>d.items()</code> 迭代。平均 O(1) 查找。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">tuple &mdash; defining trait</span><span data-lang="zh">元组 — 定义特征</span></div><div class="flashcard-back"><span data-lang="en">Immutable ordered sequence. Cannot be changed after creation. Use for fixed records, coordinates, dict keys. Python: <code>(x, y)</code>.</span><span data-lang="zh">不可变的有序序列。创建后不能更改。用于固定记录、坐标、字典键。Python：<code>(x, y)</code>。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">set &mdash; two key properties</span><span data-lang="zh">集合 — 两个关键属性</span></div><div class="flashcard-back"><span data-lang="en">Unordered, unique elements. No duplicates. Fast membership test: <code>x in s</code> is O(1). Set ops: <code>&amp;</code> intersection, <code>|</code> union, <code>-</code> difference.</span><span data-lang="zh">无序，唯一元素。无重复。快速成员测试：<code>x in s</code> 是 O(1)。集合运算：<code>&amp;</code> 交集，<code>|</code> 并集，<code>-</code> 差集。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Choosing: word-count program?</span><span data-lang="zh">选择：词频统计程序？</span></div><div class="flashcard-back"><span data-lang="en">Dictionary (word &rarr; count). Keys are words (strings), values are counts (ints). <code>counts["hello"] += 1</code>. O(1) per update.</span><span data-lang="zh">字典（单词&rarr;计数）。键是单词（字符串），值是计数（整数）。<code>counts["hello"] += 1</code>。每次更新 O(1)。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Choosing: chess board?</span><span data-lang="zh">选择：棋盘？</span></div><div class="flashcard-back"><span data-lang="en">2D array <code>board[row][col]</code>. Natural row-column grid. O(1) access. Traverse all squares with nested loops.</span><span data-lang="zh">二维数组 <code>board[row][col]</code>。自然的行列网格。O(1) 访问。用嵌套循环遍历所有方格。</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>items = ["pen", "book", "ruler", "eraser"]</code>, what is <code>len(items)</code>?</span><span data-lang="zh">给定 <code>items = ["pen", "book", "ruler", "eraser"]</code>，<code>len(items)</code> 是什么？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">3</span><span data-lang="zh">3</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">5</span><span data-lang="zh">5</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">0</span><span data-lang="zh">0</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>len()</code> returns the number of elements. The list has 4 elements. Last valid index = 4 &minus; 1 = 3.</span><span data-lang="zh"><code>len()</code> 返回元素数量。列表有 4 个元素。最后有效索引 = 4 &minus; 1 = 3。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Count the elements: "pen", "book", "ruler", "eraser" = 4 elements. <code>len()</code> counts elements, not the last index.</span><span data-lang="zh">数元素："pen"、"book"、"ruler"、"eraser" = 4 个元素。<code>len()</code> 计算元素数量，不是最后一个索引。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">After <code>nums = [10, 20, 30]</code> then <code>nums.append(40)</code>, what is <code>nums</code>?</span><span data-lang="zh">执行 <code>nums = [10, 20, 30]</code> 然后 <code>nums.append(40)</code> 后，<code>nums</code> 是什么？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">[40, 10, 20, 30]</span><span data-lang="zh">[40, 10, 20, 30]</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">[10, 40, 20, 30]</span><span data-lang="zh">[10, 40, 20, 30]</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">[10, 20, 30, 40]</span><span data-lang="zh">[10, 20, 30, 40]</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">[10, 20, 30]</span><span data-lang="zh">[10, 20, 30]</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>append(40)</code> adds 40 to the end of the list. Result: [10, 20, 30, 40].</span><span data-lang="zh"><code>append(40)</code> 在列表末尾添加 40。结果：[10, 20, 30, 40]。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>append()</code> always adds to the end. Use <code>insert(0, x)</code> to add at the beginning.</span><span data-lang="zh"><code>append()</code> 始终在末尾添加。使用 <code>insert(0, x)</code> 在开头添加。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>grid = [[1,2],[3,4],[5,6]]</code>, what is <code>grid[1][0]</code>?</span><span data-lang="zh">给定 <code>grid = [[1,2],[3,4],[5,6]]</code>，<code>grid[1][0]</code> 是什么？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">1</span><span data-lang="zh">1</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">2</span><span data-lang="zh">2</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">3</span><span data-lang="zh">3</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>grid[1]</code> = [3, 4] (second row). <code>grid[1][0]</code> = 3 (first element of that row).</span><span data-lang="zh"><code>grid[1]</code> = [3, 4]（第二行）。<code>grid[1][0]</code> = 3（该行第一个元素）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">First index picks the row: row 1 = [3,4]. Second index picks the column within that row: col 0 = 3.</span><span data-lang="zh">第一个索引选行：第 1 行 = [3,4]。第二个索引在该行中选列：第 0 列 = 3。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A program needs to map each student ID (integer) to their grade (string "A"/"B"/"C"). Which structure is most natural?</span><span data-lang="zh">程序需要将每个学生 ID（整数）映射到其成绩（字符串 "A"/"B"/"C"）。哪种结构最自然？</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A dictionary {student_id: grade}</span><span data-lang="zh">字典 {学生ID: 成绩}</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A 2D array</span><span data-lang="zh">二维数组</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A set of tuples</span><span data-lang="zh">元组的集合</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A list of grades only</span><span data-lang="zh">仅成绩的列表</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A dictionary is the natural key-value structure: student_id is the key, grade is the value. O(1) lookup. Ontario ICS4U C1.1 names "dictionary" as an ADT for exactly this use case.</span><span data-lang="zh">字典是天然的键值结构：学生 ID 是键，成绩是值。O(1) 查找。安大略 ICS4U C1.1 将"字典"列为 ADT，正是针对此用例。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">When you need to pair a label/ID with a value and look it up by label, use a dictionary. A list only works by integer position, not by arbitrary ID.</span><span data-lang="zh">当你需要将标签/ID 与值配对并通过标签查找时，使用字典。列表只能按整数位置工作，不能按任意 ID。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which CSTA standard explicitly names "arrays, stacks, and queues" as example data structures to compare and contrast? <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">哪个 CSTA 标准明确将"数组、栈和队列"列为比较和对比的示例数据结构？<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>3A-AP-14</code></div>
+      <div class="quiz-opt" data-idx="1"><code>3B-AP-12</code></div>
+      <div class="quiz-opt" data-idx="2"><code>3A-AP-17</code></div>
+      <div class="quiz-opt" data-idx="3"><code>3A-AP-13</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3B-AP-12 (verbatim): "Compare and contrast fundamental data structures and their uses." Descriptive Statement: "Examples could include strings, lists, arrays, stacks, and queues."</span><span data-lang="zh">CSTA 3B-AP-12（原文）："比较和对比基本数据结构及其用途。"描述性声明："示例可包括字符串、列表、数组、栈和队列。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">3B-AP-12 = compare/contrast data structures. 3A-AP-14 = use lists to simplify. 3A-AP-17 = decompose problems. 3A-AP-13 = prototypes using algorithms.</span><span data-lang="zh">3B-AP-12 = 比较/对比数据结构。3A-AP-14 = 使用列表简化。3A-AP-17 = 分解问题。3A-AP-13 = 使用算法的原型。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">You have a list <code>[5, 2, 5, 8, 2, 3]</code> and you want to know how many distinct values it contains. What is the simplest Python approach?</span><span data-lang="zh">你有列表 <code>[5, 2, 5, 8, 2, 3]</code>，想知道它包含多少个不同的值。最简单的 Python 方法是什么？</span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Sort the list and count manually</span><span data-lang="zh">对列表排序并手动计数</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Use a 2D array</span><span data-lang="zh">使用二维数组</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Use a dictionary</span><span data-lang="zh">使用字典</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en"><code>len(set([5, 2, 5, 8, 2, 3]))</code> &rarr; 4</span><span data-lang="zh"><code>len(set([5, 2, 5, 8, 2, 3]))</code> &rarr; 4</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>set()</code> removes duplicates: <code>{2, 3, 5, 8}</code>. <code>len()</code> counts: 4 distinct values. This is the idiomatic Python one-liner for counting unique elements.</span><span data-lang="zh"><code>set()</code> 去重：<code>{2, 3, 5, 8}</code>。<code>len()</code> 计数：4 个不同值。这是计算唯一元素的惯用 Python 单行代码。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Converting to a set automatically deduplicates. <code>len(set(lst))</code> counts distinct values in one step — the simplest approach.</span><span data-lang="zh">转换为集合会自动去重。<code>len(set(lst))</code> 一步计算不同值——最简单的方法。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which Ontario ICS course (and strand) explicitly requires algorithms on two-dimensional arrays? <span class="region-chip">&#x1F1E8;&#x1F1E6; ON</span></span><span data-lang="zh">哪门安大略 ICS 课程（及其单元）明确要求对二维数组进行算法操作？<span class="region-chip">&#x1F1E8;&#x1F1E6; ON</span></span></div><div class="quiz-number">Q7</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">ICS4U strand A (A3.5) — Grade 12</span><span data-lang="zh">ICS4U A 单元（A3.5）&mdash; 12 年级</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">ICS3U strand B (B3.1) — Grade 11</span><span data-lang="zh">ICS3U B 单元（B3.1）&mdash; 11 年级</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">ICS3U strand A (A1.5) — Grade 11</span><span data-lang="zh">ICS3U A 单元（A1.5）&mdash; 11 年级</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">ICS2O — Grade 10</span><span data-lang="zh">ICS2O &mdash; 10 年级</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">ICS4U A3.5 (verbatim): "create algorithms to process elements in two-dimensional arrays (e.g., multiply each element by a constant, interchange elements, multiply matrices, process pixels in an image)." 2D arrays are Grade 12 (ICS4U) in Ontario.</span><span data-lang="zh">ICS4U A3.5（原文）："创建处理二维数组元素的算法（如将每个元素乘以常数、交换元素、矩阵相乘、处理图像像素）。"二维数组在安大略属 12 年级（ICS4U）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">ICS3U covers 1D arrays (A1.5, A1.6). 2D arrays and ADTs are ICS4U (Grade 12) in Ontario. B3.1 is about algorithm design, not 2D arrays.</span><span data-lang="zh">ICS3U 涵盖一维数组（A1.5、A1.6）。二维数组和 ADT 在安大略属 ICS4U（12 年级）。B3.1 是关于算法设计，不是二维数组。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Declare, initialise, and access elements of a 1D array by index; state the last valid index for an array of given length; explain what out-of-bounds means. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.5-A1.6 / AB CSE2120 1.2.1</span></span><span data-lang="zh">声明、初始化并通过索引访问一维数组元素；说明给定长度数组的最后有效索引；解释越界的含义。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.5-A1.6 / AB CSE2120 1.2.1</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write traversal loops for three patterns: sum all elements, find the maximum value, and linear search (return index or &minus;1). <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K / &#x1F1E8;&#x1F1E6; ON ICS3U A2.3</span></span><span data-lang="zh">为三种模式编写遍历循环：求所有元素之和、找最大值、线性搜索（返回索引或 &minus;1）。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K / &#x1F1E8;&#x1F1E6; ON ICS3U A2.3</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Use <code>append()</code>, <code>insert(i, x)</code>, <code>remove(value)</code>, and <code>pop(index)</code> correctly; predict the state of a list after a sequence of these operations. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K / &#x1F1E8;&#x1F1E6; AB CSE2120 1.3.2</span></span><span data-lang="zh">正确使用 <code>append()</code>、<code>insert(i, x)</code>、<code>remove(value)</code> 和 <code>pop(index)</code>；预测一系列操作后列表的状态。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K / &#x1F1E8;&#x1F1E6; AB CSE2120 1.3.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Access any element of a 2D array using <code>grid[row][col]</code>; write nested loops to traverse all elements; sum all values in a given 2D array. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.5</span></span><span data-lang="zh">使用 <code>grid[row][col]</code> 访问二维数组的任意元素；编写嵌套循环遍历所有元素；求给定二维数组中所有值的和。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.5</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Create a Python dict, look up a value by key, add a new key-value pair, and iterate over all pairs using <code>.items()</code>. Explain why dict lookup is faster than list search. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U C1.1 / AB CSE2120 1.2.1</span></span><span data-lang="zh">创建 Python 字典，通过键查找值，添加新键值对，并用 <code>.items()</code> 遍历所有对。解释为何字典查找比列表搜索更快。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U C1.1 / AB CSE2120 1.2.1</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain what makes a tuple different from a list (immutability); create a set from a list to remove duplicates; use <code>in</code> to test membership in a set; perform union, intersection, and difference on two sets. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-12 / &#x1F1E8;&#x1F1E6; BC CP12</span></span><span data-lang="zh">解释元组与列表的区别（不可变性）；从列表创建集合以去重；用 <code>in</code> 测试集合的成员关系；对两个集合执行并集、交集和差集操作。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-12 / &#x1F1E8;&#x1F1E6; BC CP12</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">For a given problem, justify which data structure (list, 2D array, dict, set, tuple) is the best fit and explain why, citing ordered/mutable/duplicate properties. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-12</span></span><span data-lang="zh">对于给定问题，说明哪种数据结构（列表、二维数组、字典、集合、元组）最合适并解释原因，引用有序性/可变性/重复性属性。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-12</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim CSTA 3B-AP-12 ("Compare and contrast fundamental data structures and their uses") and its Descriptive Statement example list. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3B</span></span><span data-lang="zh">逐字陈述 CSTA 3B-AP-12（"比较和对比基本数据结构及其用途"）及其描述性声明示例列表。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3B</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the AP CSP pseudocode list notation (1-indexed, APPEND/INSERT/REMOVE/LENGTH) and correctly re-index a Python-indexed answer when translating to AP CSP pseudocode. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K Topic 3.10</span></span><span data-lang="zh">解释 AP CSP 伪代码列表表示法（从 1 开始索引，APPEND/INSERT/REMOVE/LENGTH），并在翻译为 AP CSP 伪代码时正确重新索引 Python 索引的答案。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-2.K 主题 3.10</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Name the Alberta CSE module for data structures (CSE2120) and state its level (Intermediate) and prerequisite (CSE2110). Cite at least one verbatim outcome. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2120</span></span><span data-lang="zh">说明阿尔伯塔数据结构的 CSE 模块（CSE2120）、其级别（中级）和先修要求（CSE2110）。引用至少一个逐字结果。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2120</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; ICS4U / CSE2120</span> Implement insert and delete at an arbitrary index in a 1D array using a loop (shift elements); write a nested-loop algorithm to find the sum of all elements in a 2D array. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.3 &amp; A3.5 / AB CSE2120 1.3.2</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; ICS4U / CSE2120</span> 使用循环（移动元素）在一维数组的任意索引处实现插入和删除；编写嵌套循环算法求二维数组所有元素之和。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.3 &amp; A3.5 / AB CSE2120 1.3.2</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Data structures are the bridge between introductory programming (variables, loops, functions) and higher-level course work in AP CSA and university CS. Every algorithm you will write at the AP level manipulates one or more of the structures covered in this guide. The feeder link below points to the AP CSA Data Collection guide (ArrayList, arrays) which builds directly on this unit.</span><span data-lang="zh">数据结构是初级编程（变量、循环、函数）与 AP CSA 和大学 CS 高阶课程之间的桥梁。你在 AP 层次编写的每个算法都操作本指南中涵盖的一种或多种结构。以下衔接链接指向 AP CSA 数据收集指南（ArrayList、数组），它直接建立在本单元基础上。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Unit 6 (Strings and Text Processing) treats strings as sequences and applies indexing and traversal patterns from this unit to text. Unit 7 (Searching and Sorting) builds directly on 1D array traversal (&sect;2) and introduces formal algorithm efficiency (extending the choosing-the-right-structure thinking of &sect;7). Unit 8 (OOP) uses lists and dicts extensively as object attributes. Mastering this unit is a prerequisite for all of them.</span><span data-lang="zh">第 6 单元（字符串和文本处理）将字符串视为序列，并将本单元的索引和遍历模式应用于文本。第 7 单元（搜索与排序）直接建立在一维数组遍历（&sect;2）基础上，并引入正式的算法效率（扩展 &sect;7 的选择正确结构的思维）。第 8 单元（OOP）广泛使用列表和字典作为对象属性。掌握本单元是所有这些单元的先决条件。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP feeder links (existing in this repo).</span><span data-lang="zh">AP 衔接链接（本仓库中已有）。</span></strong></p>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
+      <a class="feeder-link" href="../../AP CSA/Study Guides/Unit_4_Data_Collection.html"><span data-lang="en">AP CSA Unit 4 &middot; Data Collection (ArrayList, arrays &mdash; the Java equivalents of the Python structures in this guide; 2D arrays and ArrayList are assessed on the AP CSA exam)</span><span data-lang="zh">AP CSA Unit 4 &middot; 数据收集（ArrayList、数组&mdash;&mdash;本指南 Python 结构的 Java 等价物；二维数组和 ArrayList 在 AP CSA 考试中被评测）</span></a>
+    </div>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 Topic 3.10 (lists, AAP-2.K) is directly assessed: you must be able to trace list operations (APPEND, INSERT, REMOVE, LENGTH) on pseudocode and predict the result. AP CSA (Java) expands every structure here: arrays become <code>int[]</code>, lists become <code>ArrayList&lt;E&gt;</code>, dicts become <code>HashMap&lt;K,V&gt;</code>, and 2D arrays become <code>int[][]</code>. The conceptual foundation is identical; only the syntax changes. CSTA 3B-AP-12 (compare/contrast data structures) is the Level 3B standard that ties this guide to the AP-track pipeline.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.10（列表，AAP-2.K）直接在考试中评测：你必须能够追踪伪代码中的列表操作（APPEND、INSERT、REMOVE、LENGTH）并预测结果。AP CSA（Java）扩展了这里的每种结构：数组变为 <code>int[]</code>，列表变为 <code>ArrayList&lt;E&gt;</code>，字典变为 <code>HashMap&lt;K,V&gt;</code>，二维数组变为 <code>int[][]</code>。概念基础相同；只是语法不同。CSTA 3B-AP-12（比较/对比数据结构）是将本指南与 AP 轨道衔接的 3B 级标准。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between a list and a dictionary?</span><span data-lang="zh">列表和字典有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A list stores items in order and accesses them by numeric index, while a dictionary stores key-value pairs and accesses values by their key. Use a dictionary when each value has a natural label, such as mapping a student ID to a grade.</span><span data-lang="zh">列表按顺序存储元素并通过数字索引访问，字典存储键值对并通过键访问值。当每个值都有一个自然标签时使用字典，比如把学号映射到成绩。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">How do you loop through a 2D array?</span><span data-lang="zh">如何遍历二维数组？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A 2D array is a table of rows and columns that requires nested loops: the outer loop iterates over the rows and the inner loop iterates over the columns within each row. A single loop can only access one dimension at a time.</span><span data-lang="zh">二维数组是行与列组成的表格，需要用嵌套循环：外层循环遍历行，内层循环遍历每行中的列。单层循环一次只能访问一个维度。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between a tuple and a list?</span><span data-lang="zh">元组和列表有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A list is mutable, meaning you can change, add, or remove its elements, while a tuple is immutable and cannot be changed after it is created. Tuples are useful for fixed collections of values that should not change.</span><span data-lang="zh">列表是可变的，可以修改、添加或删除元素；元组是不可变的，创建后不能更改。元组适合用于不应改变的固定值集合。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between a list and a dictionary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A list stores items in order and accesses them by numeric index, while a dictionary stores key-value pairs and accesses values by their key. Use a dictionary when each value has a natural label, such as mapping a student ID to a grade."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you loop through a 2D array?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A 2D array is a table of rows and columns that requires nested loops: the outer loop iterates over the rows and the inner loop iterates over the columns within each row. A single loop can only access one dimension at a time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a tuple and a list?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A list is mutable, meaning you can change, add, or remove its elements, while a tuple is immutable and cannot be changed after it is created. Tuples are useful for fixed collections of values that should not change."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_5_data_structures__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3B-AP-12</code> <span data-lang="en">"Compare and contrast fundamental data structures and their uses." (CSTA K-12 CS Standards, Level 3B) Descriptive Statement verbatim: "Examples could include strings, lists, arrays, stacks, and queues."</span><span data-lang="zh">"比较和对比基本数据结构及其用途。"（CSTA K-12 计算机科学标准，3B 级）描述性声明原文："示例可包括字符串、列表、数组、栈和队列。"</span><span class="honors-flag">Honors</span></li>
+        <li><code>3B-AP-13</code> <span data-lang="en">"Illustrate the flow of execution of a recursive algorithm." (CSTA Level 3B) — listed here as a data-structure feeder because recursive traversal of lists and trees builds on this unit.</span><span data-lang="zh">"说明递归算法的执行流程。"（CSTA 3B 级）——此处列出，因为列表和树的递归遍历以本单元为基础。</span><span class="honors-flag">Honors</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 3 (AAP — Algorithms &amp; Programming): Topic 3.10 Lists. Learning Objective <strong>AAP-2.K</strong> covers list operations (access, insert, append, remove, length, iteration). "Use lists to simplify solutions, generalizing computational problems instead of repeatedly using simple variables." (CSTA <code>3A-AP-14</code>)</span><span data-lang="zh">AP CSP 大概念 3（AAP — 算法与编程）：主题 3.10 列表。学习目标 <strong>AAP-2.K</strong> 涵盖列表操作（访问、插入、追加、删除、长度、迭代）。"使用列表简化解决方案，将计算问题泛化，而不是反复使用简单变量。"（CSTA <code>3A-AP-14</code>）</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U / ICS4U</span><span data-lang="zh">安大略 — ICS3U / ICS4U</span></div>
+      <ul>
+        <li><strong>ICS3U</strong> <span data-lang="en">Strand A, <code>A1.5</code>: "describe the structure of one-dimensional arrays and related concepts, including elements, indexes, and bounds." <code>A1.6</code>: "write programs that declare, initialize, modify, and access one-dimensional arrays."</span><span data-lang="zh">ICS3U A 单元，<code>A1.5</code>："描述一维数组的结构及相关概念，包括元素、索引和边界。" <code>A1.6</code>："编写声明、初始化、修改和访问一维数组的程序。"</span></li>
+        <li><strong>ICS4U</strong> <span data-lang="en">Strand A, <code>A3.5</code>: "create algorithms to process elements in two-dimensional arrays (e.g., multiply each element by a constant, interchange elements, multiply matrices, process pixels in an image)." <code>C1.1</code>: "… abstract data types (e.g., stack, queue, dictionary) …"</span><span data-lang="zh">ICS4U A 单元，<code>A3.5</code>："创建处理二维数组元素的算法（如将每个元素乘以常数、交换元素、矩阵相乘、处理图像像素）。" <code>C1.1</code>："……抽象数据类型（如栈、队列、字典）……"</span><span class="honors-flag">Honors</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
+      <ul>
+        <li><strong>Computer Programming 12</strong> <span data-lang="en">Content (verbatim): "Uses of pre-built data structures." BC names data structures only at the grade-12 level and does not enumerate specific types the way CSTA or Ontario do.</span><span data-lang="zh">Computer Programming 12 内容（原文）："预构建数据结构的使用。"BC 仅在 12 年级层面命名数据结构，不像 CSTA 或安大略那样列举具体类型。</span><span class="honors-flag">Honors</span></li>
+        <li><span data-lang="en">Syllabus note: BC Computer Programming 11 does not name arrays or lists explicitly as a content standard. The grade-12 "Uses of pre-built data structures" is the formal anchor. Earlier use of arrays/lists is implied under "programming language constructs" in CP11.</span><span data-lang="zh">大纲说明：BC Computer Programming 11 未将数组或列表明确列为内容标准。12 年级"预构建数据结构的使用"是正式依据。在 CP11 中，数组/列表的早期使用隐含于"编程语言结构"之下。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE2120</span><span data-lang="zh">阿尔伯塔 — CSE2120</span></div>
+      <ul>
+        <li><strong>CSE2120</strong> <span data-lang="en">Data Structures 1 (Intermediate; prereq CSE2110): "Students learn how to design code and debug programs that use a set of data structures that can be used to handle lists of related data." Outcomes: "1.2.1 the static array including: use of cells to store data, data homogeneity, use of an index (or indices) to identify the location of data elements, types; e.g., single dimensional arrays (lists), double dimensional arrays (tables)." "1.3.1 creating the structure; 1.3.2 inserting, deleting and replacing data …; 1.3.4 determining the size …"</span><span data-lang="zh">CSE2120 数据结构 1（中级；先修 CSE2110）："学生学习如何设计、编码和调试使用一组数据结构来处理相关数据列表的程序。"结果："1.2.1 静态数组，包括：使用单元格存储数据、数据同质性、使用索引来标识数据元素的位置、类型；如单维数组（列表）、双维数组（表格）。" "1.3.1 创建结构；1.3.2 插入、删除和替换数据……；1.3.4 确定大小……"</span><span class="honors-flag">Honors</span></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">Data structures appear in every curriculum mapped here, but with different emphasis. Ontario ICS3U (Grade 11) requires one-dimensional arrays with full CRUD operations; ICS4U (Grade 12) adds 2D arrays and abstract types such as stacks, queues, and dictionaries — those sections carry the Honors flag. Alberta CSE2120 (Intermediate, Grade 11-12) is the dedicated data-structures module, requiring static arrays, dynamic arrays, and records. BC Computer Programming 12 names "Uses of pre-built data structures" — grade-12 only. CSTA 3B-AP-12 (Level 3B, grades 11-12) asks students to compare and contrast fundamental structures. AP CSP Big Idea 3 Topic 3.10 covers lists at the exam level (AAP-2.K). Sections 1&ndash;3 (arrays, indexing, list operations) are the floor for all curricula; Sections 4&ndash;7 (2D arrays, dictionaries, tuples/sets, choosing) are core for honors/AP-track students and clearly flagged.</span><span data-lang="zh">所有对照大纲均涉及数据结构，但侧重点各有不同。安大略 ICS3U（11 年级）要求对一维数组进行完整的增删改查操作；ICS4U（12 年级）增加了二维数组和栈、队列、字典等抽象类型——这些节标有 Honors 标志。阿尔伯塔 CSE2120（中级，11-12 年级）是专门的数据结构模块，要求掌握静态数组、动态数组和记录。BC Computer Programming 12 命名"预构建数据结构的使用"——仅限 12 年级。CSTA 3B-AP-12（3B 级，11-12 年级）要求学生比较和对比基本结构。AP CSP 大概念 3 主题 3.10 在考试层面涵盖列表（AAP-2.K）。第 1&ndash;3 节（数组、索引、列表操作）是所有大纲的基础；第 4&ndash;7 节（二维数组、字典、元组/集合、选择）是荣誉/AP 轨道学生的核心内容，并有明确标注。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Defer / lighter</span><span data-lang="zh">可推迟 / 减负</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (arrays/lists) and &sect;2 (indexing/traversal) and &sect;3 (list operations) directly map to AP CSP Big Idea 3 Topic 3.10 (AAP-2.K). CSTA 3A-AP-14 ("Use lists to simplify solutions") applies across &sect;1&ndash;&sect;3.</span><span data-lang="zh">&sect;1（数组/列表）、&sect;2（索引/遍历）和 &sect;3（列表操作）直接对应 AP CSP 大概念 3 主题 3.10（AAP-2.K）。CSTA 3A-AP-14（"使用列表简化解决方案"）适用于 &sect;1&ndash;&sect;3。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">CSTA 3B-AP-12 (compare/contrast structures) and &sect;4&ndash;&sect;7 are Level 3B — grades 11-12 elective track. AP CSP floor students may focus on &sect;1&ndash;&sect;3.</span><span data-lang="zh">CSTA 3B-AP-12（比较/对比结构）和 &sect;4&ndash;&sect;7 属于 3B 级——11-12 年级选修轨道。AP CSP 基础学生可专注于 &sect;1&ndash;&sect;3。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3B-AP-12, 3B-AP-13; AP CSP Big Idea 3 (AAP) Topic 3.10, LO AAP-2.K; CSTA 3A-AP-14</span><span data-lang="zh">&mdash; CSTA 3B-AP-12、3B-AP-13；AP CSP 大概念 3（AAP）主题 3.10、学习目标 AAP-2.K；CSTA 3A-AP-14</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. ICS3U Strand B (B1, B3) explicitly names problem-solving strategies including &ldquo;stepwise refinement, divide and conquer&rdquo; and algorithm design. &sect;7 tracing maps to B3.3 (algorithm testing) and B4 (software development cycle).</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。ICS3U B 单元（B1、B3）明确点名"逐步精化、分而治之"等解题策略和算法设计。&sect;7 追踪对应 B3.3（算法测试）和 B4（软件开发周期）。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4 (2D arrays) and &sect;5 (dictionaries) carry the Honors flag — those map to ICS4U A3.5 and C1.1 (Grade 12).</span><span data-lang="zh">&sect;4（二维数组）和 &sect;5（字典）标有 Honors 标志——对应 ICS4U A3.5 和 C1.1（12 年级）。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS3U Strand A A1.5, A1.6; ICS4U Strand A A1.5, A3.3, A3.5; ICS4U C1.1</span><span data-lang="zh">&mdash; ICS3U A 单元 A1.5、A1.6；ICS4U A 单元 A1.5、A3.3、A3.5；ICS4U C1.1</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CP12</span><span data-lang="zh">BC &mdash; CP12</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">BC Computer Programming 12 Content (verbatim): "Uses of pre-built data structures." This is the explicit BC data-structures anchor &mdash; grade 12 only. Sections &sect;1&ndash;&sect;7 are all relevant.</span><span data-lang="zh">BC Computer Programming 12 内容（原文）："预构建数据结构的使用。"这是 BC 数据结构的明确依据——仅限 12 年级。第 &sect;1&ndash;&sect;7 节均适用。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">BC CP11 does not name arrays/lists explicitly; treating &sect;1&ndash;&sect;3 as foundational is appropriate from CP11 onward even without a formal CP11 standard.</span><span data-lang="zh">BC CP11 未明确命名数组/列表；尽管 CP11 没有正式标准，从 CP11 起将 &sect;1&ndash;&sect;3 视为基础是合适的。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC Computer Programming 12 "Uses of pre-built data structures"</span><span data-lang="zh">&mdash; BC Computer Programming 12"预构建数据结构的使用"</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE2120</span><span data-lang="zh">阿尔伯塔 &mdash; CSE2120</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSE2120 Data Structures 1 (Intermediate) covers static arrays, single- and double-dimensional arrays, dynamic arrays, records, and operations (create, insert, delete, search, size, copy, compare). This guide is a near-complete match for CSE2120 outcomes 1.2&ndash;1.3.</span><span data-lang="zh">&sect;1 至 &sect;7。CSE2120 数据结构 1（中级）涵盖静态数组、单维和双维数组、动态数组、记录以及操作（创建、插入、删除、搜索、大小、复制、比较）。本指南与 CSE2120 结果 1.2&ndash;1.3 高度匹配。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">CSE2120 is Intermediate level — carry the Honors flag. CSE3320 Dynamic Data Structures 1 (Advanced) extends further; that is beyond this guide's scope.</span><span data-lang="zh">CSE2120 属中级——标有 Honors 标志。CSE3320 动态数据结构 1（高级）进一步延伸；超出本指南范围。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE2120 outcomes 1.2.1, 1.2.2, 1.2.3, 1.3.1&ndash;1.3.6</span><span data-lang="zh">&mdash; CSE2120 结果 1.2.1、1.2.2、1.2.3、1.3.1&ndash;1.3.6</span></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">AP CSP / AP CSA feeder track</span><span data-lang="zh">AP CSP / AP CSA 衔接轨道</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">All seven sections including going-deeper boxes. AP CSP Topic 3.10 (lists, AAP-2.K) is directly assessed. AP CSA (Java) expands to arrays, ArrayList, 2D arrays, and HashMap — everything in this guide transfers directly.</span><span data-lang="zh">全部 7 节，包含深入框。AP CSP 主题 3.10（列表，AAP-2.K）直接在考试中评测。AP CSA（Java）扩展至数组、ArrayList、二维数组和 HashMap——本指南的所有内容可直接迁移。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Nothing. Data structures are the bridge between HS CS and AP/university-level programming. Mastering this unit is required for both AP CS courses.</span><span data-lang="zh">无。数据结构是高中计算机科学与 AP/大学编程之间的桥梁。掌握本单元是两门 AP CS 课程的前提。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3B-AP-12, 3A-AP-14; AP CSP Big Idea 3 Topic 3.10, LO AAP-2.K</span><span data-lang="zh">&mdash; CSTA 3B-AP-12、3A-AP-14；AP CSP 大概念 3 主题 3.10、学习目标 AAP-2.K</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top: 12px;"><span data-lang="en">Once you have located your row, use the two cards below to gauge how quickly you should work through the recommended sections.</span><span data-lang="zh">找到所在行后，用下面两张卡片决定推进速度。</span></p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Focus on three things: (1) what an array is and how indexing works (zero-based); (2) the three core list operations — append, insert, remove — and how to write them in pseudocode; (3) what a dictionary is and how to do a key-value lookup. Read every cram-cheat box. The flashcards at the end cover every term you are likely to be tested on.</span><span data-lang="zh">专注三件事：(1) 数组是什么以及索引如何工作（从零开始）；(2) 三种核心列表操作——追加、插入、删除——以及如何用伪代码编写；(3) 字典是什么以及如何进行键值查找。读每个速记框。最后的闪卡涵盖你可能被考到的每个术语。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Work all seven sections including going-deeper boxes. Know not just <em>what</em> each structure does but <em>when</em> to use it and why. AP CSP Big Idea 3 (30&ndash;35% of exam) expects fluent list manipulation. AP CSA adds 2D arrays and ArrayList — &sect;4 is your bridge. ON ICS4U A3.5 requires algorithms on 2D arrays; AB CSE2120 requires insert/delete/search on arrays. Section 7 (choosing the right structure) is the capstone thinking skill tested at the highest level.</span><span data-lang="zh">完成全部七节，包含深入框。不仅要知道每种结构的功能，还要知道何时使用以及原因。AP CSP 大概念 3（占考试 30&ndash;35%）要求流畅操作列表。AP CSA 增加了二维数组和 ArrayList——&sect;4 是你的桥梁。ON ICS4U A3.5 要求对二维数组进行算法操作；AB CSE2120 要求对数组进行插入/删除/搜索。第 7 节（选择正确的数据结构）是最高层次评估的核心思维技能。</span></p>
+    </div>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Honors note.</span><span data-lang="zh">荣誉说明。</span></strong>
+    <span data-lang="en">Sections 4 (2D arrays), 5 (dictionaries), and 6 (tuples/sets) carry the <span class="honors-flag">Honors</span> chip where they map to Grade-12 or Intermediate/Advanced curriculum content. Section 7 (choosing) is conceptually Honors-level but is included in full because AP CSP also assesses it via Topic 3.10. ICS3U and AP CSP floor students should complete &sect;1&ndash;&sect;3 fully and attempt &sect;4&ndash;&sect;7 as enrichment.</span><span data-lang="zh">第 4 节（二维数组）、第 5 节（字典）和第 6 节（元组/集合）在对应 12 年级或中级/高级课程内容时标有 <span class="honors-flag">Honors</span> 标志。第 7 节（选择）概念上属于荣誉级别，但完整收录，因为 AP CSP 通过主题 3.10 也会评测该内容。ICS3U 和 AP CSP 基础学生应完整学习 &sect;1&ndash;&sect;3，并将 &sect;4&ndash;&sect;7 作为拓展内容。</span>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Data Structures &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 数据结构 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_5_Data_Structures_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_5_Data_Structures_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

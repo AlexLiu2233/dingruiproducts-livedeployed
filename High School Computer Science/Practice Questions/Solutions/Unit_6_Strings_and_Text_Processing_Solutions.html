@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Computer Science — Strings and Text Processing — Solutions | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_6_Strings_and_Text_Processing_Solutions.html">
+<meta name="description" content="Worked solutions for Strings and Text Processing in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Strings and Text Processing — Solutions | Dingrui Scholars">
+<meta property="og:description" content="Worked solutions for Strings and Text Processing in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_6_Strings_and_Text_Processing_Solutions.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Strings and Text Processing — Solutions | Dingrui Scholars">
+<meta name="twitter:description" content="Worked solutions for Strings and Text Processing in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-6  dingrui:doc-type solutions -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style>
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --easy-bg:#E7F2E3; --easy-ink:#2F6B2F; --easy-rule:#79A977;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --region-bg:#F5F2EE; --region-ink:#3A322B; --region-rule:#B5A68F;
+    --paper-bg:#FBE9E9;  --paper-ink:#7A2E2E;  --paper-rule:#C97A7A;
+    --honors-bg:#FDF5EC; --honors-ink:#7A5618; --honors-rule:#C4956A;
+    --sol-bg:#F1F7EE;  --sol-rule:#5E8E47;  --sol-ink:#2F4E1E;
+    --sol-accent:#3E7228;
+    --insight-bg:#FBF6EC; --insight-rule:#C49350; --insight-ink:#5E4014;
+    --font-body:'Times New Roman', Times, Georgia, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-sans:'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--font-body);font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:var(--font-sans);font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.easy{background:var(--easy-bg);color:var(--easy-ink);border-color:var(--easy-rule);}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .pill.region{background:var(--region-bg);color:var(--region-ink);border-color:var(--region-rule);letter-spacing:.08em;}
+  .pill.paper {background:var(--paper-bg); color:var(--paper-ink); border-color:var(--paper-rule);}
+  .pill.honors{background:var(--honors-bg);color:var(--honors-ink);border-color:var(--honors-rule);text-transform:uppercase;}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .draft-banner{font-family:var(--font-sans);font-size:9.5pt;color:#7A2E2E;font-style:italic;text-align:center;margin:0 0 8px;border:1px dashed #c9a4a4;border-radius:4px;padding:4px 8px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .instructions{font-family:var(--font-sans);font-size:10pt;color:#444;font-style:italic;margin-bottom:12px;line-height:1.45;}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:14px 20px 6px;margin-bottom:22px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q.app{border-left-color:#C4956A;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:12px;font-family:var(--font-sans);}
+  .q-body{font-size:11pt;line-height:1.55;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;font-style:italic;color:#444;border-left:2px solid #d8cdb8;padding-left:10px;}
+  .q-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .q-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .solution{margin:14px 0 8px;background:var(--sol-bg);border-left:3px solid var(--sol-rule);border-radius:0 4px 4px 0;padding:12px 18px 14px;font-size:11pt;line-height:1.6;}
+  .solution .answer-line{font-family:var(--font-sans);font-weight:700;color:var(--sol-ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #d4e4cb;letter-spacing:.04em;font-size:11pt;}
+  .solution .answer-line .ans{color:var(--sol-accent);font-size:1.08em;letter-spacing:.08em;}
+  .solution .rationale{color:#2a2a2a;}
+  .solution .rationale p{margin:5px 0;}
+  .solution h4{font-family:var(--font-sans);font-weight:700;font-size:10.5pt;color:var(--sol-ink);margin:10px 0 4px;letter-spacing:.05em;text-transform:uppercase;}
+  .solution ul,.solution ol{margin:6px 0 6px 22px;line-height:1.7;}
+  .solution pre{font-family:var(--font-mono);font-size:10pt;background:#e8f2e3;border:1px solid #b5d4a0;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
+  .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  .solution .insight strong{color:#7A4810;}
+  .solution .distractor{font-family:var(--font-sans);font-size:10pt;color:#3a3a3a;background:#fff;border:1px solid #d4e4cb;border-radius:4px;padding:8px 12px;margin-top:8px;}
+  .solution .distractor .lab{color:var(--maroon);font-weight:700;margin-right:6px;}
+  .trace-table{font-family:'JetBrains Mono',monospace;font-size:10pt;border-collapse:collapse;margin:8px 0;width:auto;}
+  .trace-table th{background:#d4e4cb;border:1px solid #9BBD7A;padding:5px 14px;color:#2F4E1E;font-weight:700;}
+  .trace-table td{border:1px solid #9BBD7A;padding:5px 14px;text-align:center;background:#f1f7ee;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:var(--font-sans);font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  .lang-bar{display:flex;justify-content:center;margin:6px 0 10px;}
+  .lang-btn{font-family:var(--font-sans);font-weight:700;font-size:9pt;letter-spacing:.1em;padding:4px 14px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;cursor:pointer;transition:all 0.2s;}
+  .lang-btn:hover{background:var(--maroon);color:#fff;}
+  body:not(.lang-zh) [data-lang="zh"] { display: none; }
+  body.lang-zh       [data-lang="en"] { display: none; }
+  body.lang-zh{font-family:var(--font-sans);}
+  @media (max-width: 600px){body{font-size:10.5pt;}}
+  .consult-cta{border:1.5px solid var(--maroon);border-radius:8px;padding:12px 16px;margin:22px 0 6px;text-align:center;background:var(--paper-bg);break-inside:avoid;}
+  .consult-cta__lead{display:block;font-family:var(--font-sans);font-weight:700;font-size:11pt;color:var(--maroon);}
+  .consult-cta__body{display:block;font-family:var(--font-sans);font-size:9.5pt;color:var(--muted);margin:3px 0 6px;}
+  .consult-cta__btn{display:inline-block;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-decoration:underline;}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.solution{background:#f0f6ec;}.draft-banner{display:none;}.lang-bar{display:none;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Strings and Text Processing — Solutions",
+  "description": "Worked solutions for Strings and Text Processing in High School Computer Science. Step by step answers from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_6_Strings_and_Text_Processing_Solutions.html",
+  "inLanguage": ["en", "zh"],
+  "learningResourceType": "Answer key",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+</div>
+
+<div class="brand">H&nbsp;I&nbsp;G&nbsp;H&nbsp;&nbsp;S&nbsp;C&nbsp;H&nbsp;O&nbsp;O&nbsp;L&nbsp;&nbsp;C&nbsp;O&nbsp;M&nbsp;P&nbsp;U&nbsp;T&nbsp;E&nbsp;R&nbsp;&nbsp;S&nbsp;C&nbsp;I&nbsp;E&nbsp;N&nbsp;C&nbsp;E</div>
+<div class="chapter-tag"><span data-lang="en">Solutions</span><span data-lang="zh">答案与解析</span></div>
+<h1 class="chapter-title"><span data-lang="en">Strings and Text Processing</span><span data-lang="zh">字符串与文本处理</span></h1>
+<p class="chapter-sub"><span data-lang="en">Worked Solutions &middot; AP CSP-Feeder &middot; US / ON / BC / AB Styles</span><span data-lang="zh">详细解析 &middot; AP CSP 衔接 &middot; 美 / 安 / 卑 / 阿省风格</span></p>
+
+<div class="legend">
+  <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+  <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+  <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+  <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+  <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+</div>
+
+<hr class="thick"><hr class="thin">
+
+<!-- PART I SOLUTIONS -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;&middot;&nbsp; SHORT RESPONSE</span><span data-lang="zh">第一部分 &nbsp;&middot;&nbsp; 短答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-style MCQ + ON/BC short answer &middot; 25 marks</span><span data-lang="zh">AP CSP 风格选择题 + 安/卑省考短答 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section A &middot; Short Response</span><span data-lang="zh">A 部分 &middot; 短答题</span></h2>
+
+<!-- S1 Q1 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q1</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">String Basics and Indexing</span><span data-lang="zh">字符串基础与索引</span></span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Given <code>s = "Python"</code>, which expression evaluates to <code>"t"</code>?</span><span data-lang="zh">给定 <code>s = "Python"</code>，哪个表达式的值为 <code>"t"</code>？</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(B) s[2]</span></span><span data-lang="zh">答案：<span class="ans">(B) s[2]</span></span> <span class="marks-call">A1</span> <span class="marks-call">A1</span> <span class="marks-call">A1</span></div>
+    <div class="rationale">
+      <p><span data-lang="en">Index map for <code>"Python"</code>: P=0, y=1, t=2, h=3, o=4, n=5. So <code>s[2]</code> = "t".</span><span data-lang="zh"><code>"Python"</code> 的索引映射：P=0, y=1, t=2, h=3, o=4, n=5。因此 <code>s[2]</code> = "t"。</span></p>
+    </div>
+    <div class="distractor"><span class="lab">(A)</span> <span data-lang="en"><code>s[1]</code> = "y", not "t".</span><span data-lang="zh"><code>s[1]</code> = "y"，不是 "t"。</span></div>
+    <div class="distractor"><span class="lab">(C)</span> <span data-lang="en"><code>s[-1]</code> = "n" (last character).</span><span data-lang="zh"><code>s[-1]</code> = "n"（最后一个字符）。</span></div>
+    <div class="distractor"><span class="lab">(D)</span> <span data-lang="en"><code>s[3]</code> = "h".</span><span data-lang="zh"><code>s[3]</code> = "h"。</span></div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">Python uses zero-based indexing. The character at position 0 is always the first character. A common error is writing <code>s[1]</code> expecting the first character -- that is an off-by-one mistake.</span><span data-lang="zh">Python 使用从零开始的索引。位置 0 处的字符始终是第一个字符。常见错误是写 <code>s[1]</code> 期望得到第一个字符，这是差一错误（off-by-one）。</span></div>
+  </div>
+</div>
+
+<!-- S1 Q2 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q2</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">String Slicing</span><span data-lang="zh">字符串切片</span></span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">What does <code>"computer"[3:6]</code> evaluate to?</span><span data-lang="zh"><code>"computer"[3:6]</code> 的值是什么？</span></p>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(B) "put"</span></span><span data-lang="zh">答案：<span class="ans">(B) "put"</span></span> <span class="marks-call">A1</span> <span class="marks-call">A1</span> <span class="marks-call">A1</span></div>
+    <div class="rationale">
+      <p><span data-lang="en">Index map: c=0, o=1, m=2, p=3, u=4, t=5, e=6, r=7. Slice <code>[3:6]</code> includes indices 3, 4, 5 and excludes 6. Characters at 3, 4, 5 are p, u, t = "put".</span><span data-lang="zh">索引映射：c=0, o=1, m=2, p=3, u=4, t=5, e=6, r=7。切片 <code>[3:6]</code> 包含索引 3、4、5，不含 6。这些位置的字符为 p、u、t = "put"。</span></p>
+    </div>
+    <div class="distractor"><span class="lab">(D)</span> <span data-lang="en"><code>"mpu"</code> comes from indices 2, 3, 4 which is <code>[2:5]</code>, not <code>[3:6]</code>.</span><span data-lang="zh"><code>"mpu"</code> 来自索引 2、3、4，即 <code>[2:5]</code>，不是 <code>[3:6]</code>。</span></div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">The stop index in a slice is always excluded. <code>[3:6]</code> gives 3 characters (indices 3, 4, 5), not 4. To get n characters starting at index k, write <code>[k : k+n]</code>.</span><span data-lang="zh">切片的 stop 索引始终不包含。<code>[3:6]</code> 给出 3 个字符（索引 3、4、5），不是 4 个。要从索引 k 开始取 n 个字符，写 <code>[k : k+n]</code>。</span></div>
+  </div>
+</div>
+
+<!-- S1 Q3 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q3</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;3 <span data-lang="en">String Methods and Immutability</span><span data-lang="zh">字符串方法与不可变性</span></span>
+    <span class="pill marks"><span data-lang="en">[4 marks]</span><span data-lang="zh">[4 分]</span></span>
+  </div>
+  <div class="q-body">
+    <pre><code>word = "hello"
+word.upper()
+print(word)</code></pre>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) <span class="ans">hello</span> &nbsp; (b) strings are immutable &nbsp; (c) <span class="ans">word = word.upper()</span></span><span data-lang="zh">答案：(a) <span class="ans">hello</span> &nbsp; (b) 字符串不可变 &nbsp; (c) <span class="ans">word = word.upper()</span></span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Output [1]</span><span data-lang="zh">(a) 输出 [1]</span></h4>
+      <p><span data-lang="en"><code>hello</code> <span class="marks-call">A1</span> -- <code>word</code> is unchanged.</span><span data-lang="zh"><code>hello</code> <span class="marks-call">A1</span> -- <code>word</code> 未改变。</span></p>
+      <h4><span data-lang="en">(b) Why word does not change [2]</span><span data-lang="zh">(b) word 为何不变 [2]</span></h4>
+      <p><span data-lang="en">Strings are immutable in Python <span class="marks-call">M1</span>: <code>upper()</code> returns a new string object with the uppercased characters, but does not modify the original string that <code>word</code> refers to. <span class="marks-call">A1</span> Because the return value is not assigned to anything, it is discarded.</span><span data-lang="zh">Python 中字符串是不可变的 <span class="marks-call">M1</span>：<code>upper()</code> 返回一个包含大写字符的新字符串对象，但不修改 <code>word</code> 所引用的原始字符串。<span class="marks-call">A1</span> 因为返回值没有赋给任何变量，所以被丢弃了。</span></p>
+      <h4><span data-lang="en">(c) Fixed line 2 [1]</span><span data-lang="zh">(c) 修改后的第 2 行 [1]</span></h4>
+      <pre><code>word = word.upper()</code></pre>
+      <p><span data-lang="en"><span class="marks-call">A1</span> Assigning the return value back to <code>word</code> stores the new uppercased string.</span><span data-lang="zh"><span class="marks-call">A1</span> 将返回值重新赋给 <code>word</code>，即可保存新的大写字符串。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">This is the single most common string method mistake. Every string method returns a new string. If you do not assign it, the result is lost. Always write <code>s = s.method()</code>, not just <code>s.method()</code>, when you want to update a variable.</span><span data-lang="zh">这是字符串方法中最常见的错误。每个字符串方法都返回一个新字符串。如果不赋值，结果就丢失了。当你想更新变量时，始终写 <code>s = s.method()</code>，而不只是 <code>s.method()</code>。</span></div>
+  </div>
+</div>
+
+<!-- S1 Q4 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q4</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+    <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+    <span class="pill topic">&sect;4 <span data-lang="en">Concatenation and Formatting</span><span data-lang="zh">拼接与格式化</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <pre><code>name  = "Alex"
+score = 88
+# Program A: result_a = "Student: " + name + ", Score: " + score
+# Program B: result_b = "Student: " + name + ", Score: " + str(score)
+# Program C: result_c = f"Student: {name}, Score: {score}"</code></pre>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) TypeError &nbsp; (b) <span class="ans">Student: Alex, Score: 88</span> &nbsp; (c) <span class="ans">Student: Alex, Score: 88</span> &nbsp; (d) C (f-string)</span><span data-lang="zh">答案：(a) TypeError &nbsp; (b) <span class="ans">Student: Alex, Score: 88</span> &nbsp; (c) <span class="ans">Student: Alex, Score: 88</span> &nbsp; (d) C（f-string）</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Program A error [2]</span><span data-lang="zh">(a) 程序 A 错误 [2]</span></h4>
+      <p><span data-lang="en">TypeError <span class="marks-call">A1</span>: The <code>+</code> operator cannot concatenate a string and an integer directly. <code>score</code> is the integer 88; Python does not auto-convert it to a string when using <code>+</code>. <span class="marks-call">A1</span></span><span data-lang="zh">TypeError <span class="marks-call">A1</span>：<code>+</code> 运算符不能直接拼接字符串和整数。<code>score</code> 是整数 88；使用 <code>+</code> 时 Python 不会自动将其转换为字符串。<span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(b) Program B output [1]</span><span data-lang="zh">(b) 程序 B 输出 [1]</span></h4>
+      <p><span data-lang="en"><code>Student: Alex, Score: 88</code> <span class="marks-call">A1</span> -- <code>str(88)</code> converts the integer to the string "88" first, enabling concatenation.</span><span data-lang="zh"><code>Student: Alex, Score: 88</code> <span class="marks-call">A1</span> -- <code>str(88)</code> 先将整数转换为字符串 "88"，从而可以拼接。</span></p>
+      <h4><span data-lang="en">(c) Program C output and explanation [3]</span><span data-lang="zh">(c) 程序 C 输出及解释 [3]</span></h4>
+      <p><span data-lang="en"><code>Student: Alex, Score: 88</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>Student: Alex, Score: 88</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en">The <code>f</code> prefix marks the string as a formatted string literal (f-string). <span class="marks-call">M1</span> Any expression inside <code>{}</code> is evaluated at runtime and its result is converted to a string and inserted at that position. <span class="marks-call">A1</span></span><span data-lang="zh"><code>f</code> 前缀将字符串标记为格式化字符串字面量（f-string）。<span class="marks-call">M1</span> <code>{}</code> 内的任何表达式在运行时被求值，其结果被转换为字符串并插入该位置。<span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(d) Preferred style [1]</span><span data-lang="zh">(d) 推荐风格 [1]</span></h4>
+      <p><span data-lang="en">C (f-string) is preferred in modern Python <span class="marks-call">A1</span> because it is more readable and requires no explicit type conversion.</span><span data-lang="zh">现代 Python 中首选 C（f-string）<span class="marks-call">A1</span>，因为可读性更强，无需显式类型转换。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">AB CSE1110 outcome 2.4.6 names concatenation and interpolation as assessed skills. The TypeError in Program A is one of the most frequent runtime errors beginners encounter: you must convert all non-string values to strings before using <code>+</code>. F-strings handle this automatically.</span><span data-lang="zh">AB CSE1110 结果 2.4.6 将拼接和插值列为评估技能。程序 A 中的 TypeError 是初学者最常遇到的运行时错误之一：使用 <code>+</code> 之前必须将所有非字符串值转换为字符串。F-string 会自动处理这一点。</span></div>
+  </div>
+</div>
+
+<!-- S1 Q5 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q5</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+    <span class="pill topic">&sect;5 <span data-lang="en">Searching Within Strings</span><span data-lang="zh">在字符串中搜索</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <pre><code>sentence = "the quick brown fox"</code></pre>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) True, bool &nbsp; (b) 4, -1 &nbsp; (c) 2 &nbsp; (d) use <code>in</code> for boolean check</span><span data-lang="zh">答案：(a) True，布尔型 &nbsp; (b) 4，-1 &nbsp; (c) 2 &nbsp; (d) 只需布尔判断时用 <code>in</code></span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) <code>"fox" in sentence</code> [2]</span><span data-lang="zh">(a) <code>"fox" in sentence</code> [2]</span></h4>
+      <p><span data-lang="en"><code>True</code> <span class="marks-call">A1</span>. The <code>in</code> operator returns a <strong>bool</strong> value (<code>True</code> or <code>False</code>). <span class="marks-call">A1</span> "fox" is a substring of "the quick brown fox".</span><span data-lang="zh"><code>True</code> <span class="marks-call">A1</span>。<code>in</code> 运算符返回<strong>布尔</strong>值（<code>True</code> 或 <code>False</code>）。<span class="marks-call">A1</span> "fox" 是 "the quick brown fox" 的子字符串。</span></p>
+      <h4><span data-lang="en">(b) <code>find()</code> results [3]</span><span data-lang="zh">(b) <code>find()</code> 结果 [3]</span></h4>
+      <p><span data-lang="en"><code>sentence.find("quick")</code> = <strong>4</strong> <span class="marks-call">A1</span>: "quick" starts at index 4 (t=0, h=1, e=2, space=3, q=4). <span class="marks-call">A1</span></span><span data-lang="zh"><code>sentence.find("quick")</code> = <strong>4</strong> <span class="marks-call">A1</span>："quick" 从索引 4 开始（t=0, h=1, e=2, 空格=3, q=4）。<span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en"><code>sentence.find("cat")</code> = <strong>-1</strong> <span class="marks-call">A1</span>: <code>find()</code> returns -1 when the substring is not found in the string.</span><span data-lang="zh"><code>sentence.find("cat")</code> = <strong>-1</strong> <span class="marks-call">A1</span>：<code>find()</code> 在字符串中未找到子字符串时返回 -1。</span></p>
+      <h4><span data-lang="en">(c) <code>count("o")</code> [2]</span><span data-lang="zh">(c) <code>count("o")</code> [2]</span></h4>
+      <p><span data-lang="en"><strong>2</strong> <span class="marks-call">A1</span>. The character "o" appears in "br<u>o</u>wn" (index 10) and "f<u>o</u>x" (index 16) -- two non-overlapping occurrences. <span class="marks-call">A1</span></span><span data-lang="zh"><strong>2</strong> <span class="marks-call">A1</span>。字符 "o" 出现在 "br<u>o</u>wn"（索引 10）和 "f<u>o</u>x"（索引 16）中，共 2 次不重叠出现。<span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(d) When to use <code>in</code> over <code>find()</code> [1]</span><span data-lang="zh">(d) 何时用 <code>in</code> 而非 <code>find()</code> [1]</span></h4>
+      <p><span data-lang="en">Use <code>in</code> when you only need to know whether a substring is present (a boolean answer) and do not need its position. <span class="marks-call">A1</span> It is also cleaner and more readable.</span><span data-lang="zh">当你只需要知道子字符串是否存在（布尔答案）而不需要其位置时，使用 <code>in</code>。<span class="marks-call">A1</span> 它也更简洁易读。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">ON ICS3C A1.2 directly names "count the occurrences of a word or letter" as an assessed skill. The three string search tools cover all the bases: <code>in</code> for existence, <code>find()</code> for position, <code>count()</code> for frequency.</span><span data-lang="zh">ON ICS3C A1.2 直接将"计算单词或字母的出现次数"列为评估技能。三种字符串搜索工具涵盖所有情形：<code>in</code> 用于检查存在性，<code>find()</code> 用于获取位置，<code>count()</code> 用于计算频率。</span></div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- PART II SOLUTIONS -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;&middot;&nbsp; EXTENDED RESPONSE</span><span data-lang="zh">第二部分 &nbsp;&middot;&nbsp; 简答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-feeder FRQ + Honors &middot; 31 marks</span><span data-lang="zh">AP CSP 衔接简答题 + 荣誉级 &middot; 共 31 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section B &middot; Extended Response</span><span data-lang="zh">B 部分 &middot; 简答题</span></h2>
+
+<!-- S2 Q6 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q6</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;6 <span data-lang="en">Looping Over Characters</span><span data-lang="zh">遍历字符</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) 5 vowels, output = 5 &nbsp; (b) len=9, i=0..8 &nbsp; (c) for-range when index needed</span><span data-lang="zh">答案：(a) 5 个元音，输出 = 5 &nbsp; (b) len=9，i=0..8 &nbsp; (c) 需要索引时用 for-range</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Trace Program A [3]</span><span data-lang="zh">(a) 追踪程序 A [3]</span></h4>
+      <table class="trace-table">
+        <tr><th><span data-lang="en">ch</span><span data-lang="zh">ch</span></th><th><span data-lang="en">Vowel?</span><span data-lang="zh">元音？</span></th><th><span data-lang="en">count</span><span data-lang="zh">count</span></th></tr>
+        <tr><td>e</td><td>Yes</td><td>1</td></tr>
+        <tr><td>d</td><td>No</td><td>1</td></tr>
+        <tr><td>u</td><td>Yes</td><td>2</td></tr>
+        <tr><td>c</td><td>No</td><td>2</td></tr>
+        <tr><td>a</td><td>Yes</td><td>3</td></tr>
+        <tr><td>t</td><td>No</td><td>3</td></tr>
+        <tr><td>i</td><td>Yes</td><td>4</td></tr>
+        <tr><td>o</td><td>Yes</td><td>5</td></tr>
+        <tr><td>n</td><td>No</td><td>5</td></tr>
+      </table>
+      <p><span data-lang="en">Final output: <strong>5</strong> <span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span> (1 mark for correct vowel identification, 1 for correct count trace, 1 for output).</span><span data-lang="zh">最终输出：<strong>5</strong> <span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span>（1 分正确识别元音，1 分正确追踪计数，1 分输出）。</span></p>
+      <h4><span data-lang="en">(b) len and i values in Program B [2]</span><span data-lang="zh">(b) 程序 B 中 len 和 i 的值 [2]</span></h4>
+      <p><span data-lang="en"><code>len("education")</code> = <strong>9</strong> <span class="marks-call">A1</span>. <code>i</code> takes values 0, 1, 2, 3, 4, 5, 6, 7, 8 <span class="marks-call">A1</span>.</span><span data-lang="zh"><code>len("education")</code> = <strong>9</strong> <span class="marks-call">A1</span>。<code>i</code> 取值为 0, 1, 2, 3, 4, 5, 6, 7, 8 <span class="marks-call">A1</span>。</span></p>
+      <h4><span data-lang="en">(c) When to choose for-range [3]</span><span data-lang="zh">(c) 何时选择 for-range [3]</span></h4>
+      <p><span data-lang="en">Choose for-range when you need the index (position) of the character, not just its value. <span class="marks-call">M1</span> Example: replacing specific characters -- to change every vowel to "*" you need <code>s[i]</code> and the index to build the new string character by character. <span class="marks-call">A1</span> Accept: comparing adjacent characters (<code>s[i]</code> vs <code>s[i+1]</code>), checking if a character at a specific position satisfies a condition. <span class="marks-call">A1</span></span><span data-lang="zh">当你需要字符的索引（位置）而不只是其值时，选择 for-range。<span class="marks-call">M1</span> 例如：替换特定字符，要将每个元音改为 "*"，你需要 <code>s[i]</code> 和索引，逐字符构建新字符串。<span class="marks-call">A1</span> 也接受：比较相邻字符（<code>s[i]</code> 与 <code>s[i+1]</code>）、检查特定位置的字符是否满足条件等场景。<span class="marks-call">A1</span></span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">The for-each style (<code>for ch in s</code>) is the Pythonic default because it is cleaner. Use for-range only when the index matters. A real-world case: validating an ISBN number requires checking the character at each specific position -- position 0 must be a digit, position 9 can be "X", etc.</span><span data-lang="zh">for-each 风格（<code>for ch in s</code>）是 Python 的默认首选，因为更简洁。只有当索引重要时才使用 for-range。实际案例：验证 ISBN 号需要检查每个特定位置的字符，位置 0 必须是数字，位置 9 可以是 "X" 等。</span></div>
+  </div>
+</div>
+
+<!-- S2 Q7 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q7</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;3 + &sect;5 <span data-lang="en">Methods + Searching</span><span data-lang="zh">方法 + 搜索</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) <span class="ans">["  Alice ", " Biology ", " 92 "]</span> &nbsp; (b) <span class="ans">["alice", "biology", "92"]</span> &nbsp; (c) see below</span><span data-lang="zh">答案：(a) <span class="ans">["  Alice ", " Biology ", " 92 "]</span> &nbsp; (b) <span class="ans">["alice", "biology", "92"]</span> &nbsp; (c) 见下</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) <code>fields</code> after line 2 [2]</span><span data-lang="zh">(a) 第 2 行后 <code>fields</code> [2]</span></h4>
+      <p><span data-lang="en"><code>["  Alice ", " Biology ", " 92 "]</code> <span class="marks-call">A1</span><span class="marks-call">A1</span>. <code>split(",")</code> splits on each comma and preserves leading/trailing whitespace within each piece.</span><span data-lang="zh"><code>["  Alice ", " Biology ", " 92 "]</code> <span class="marks-call">A1</span><span class="marks-call">A1</span>。<code>split(",")</code> 在每个逗号处分割，并保留每段中的首尾空白。</span></p>
+      <h4><span data-lang="en">(b) <code>clean</code> after line 3 [3]</span><span data-lang="zh">(b) 第 3 行后 <code>clean</code> [3]</span></h4>
+      <p><span data-lang="en"><code>["alice", "biology", "92"]</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>["alice", "biology", "92"]</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en">For the first element <code>"  Alice "</code>: <code>strip()</code> removes the leading and trailing spaces to give <code>"Alice"</code> <span class="marks-call">A1</span>; <code>lower()</code> then converts all letters to lowercase to give <code>"alice"</code> <span class="marks-call">A1</span>.</span><span data-lang="zh">对于第一个元素 <code>"  Alice "</code>：<code>strip()</code> 去除首尾空格，得到 <code>"Alice"</code> <span class="marks-call">A1</span>；<code>lower()</code> 将所有字母转为小写，得到 <code>"alice"</code> <span class="marks-call">A1</span>。</span></p>
+      <h4><span data-lang="en">(c) Output of lines 4, 5, 6 [3]</span><span data-lang="zh">(c) 第 4、5、6 行输出 [3]</span></h4>
+      <p><span data-lang="en">Line 4: <code>["alice", "biology", "92"]</code> <span class="marks-call">A1</span></span><span data-lang="zh">第 4 行：<code>["alice", "biology", "92"]</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en">Line 5: <code>clean[0]</code> is <code>"alice"</code>. <code>"alice".count("l")</code> = <strong>1</strong> <span class="marks-call">A1</span> (only one "l" in "alice").</span><span data-lang="zh">第 5 行：<code>clean[0]</code> 为 <code>"alice"</code>。<code>"alice".count("l")</code> = <strong>1</strong> <span class="marks-call">A1</span>（"alice" 中只有一个 "l"）。</span></p>
+      <p><span data-lang="en">Line 6: <code>clean[1]</code> is <code>"biology"</code>. <code>"bio" in "biology"</code> = <strong>True</strong> <span class="marks-call">A1</span> ("bio" is the first three characters of "biology").</span><span data-lang="zh">第 6 行：<code>clean[1]</code> 为 <code>"biology"</code>。<code>"bio" in "biology"</code> = <strong>True</strong> <span class="marks-call">A1</span>（"bio" 是 "biology" 的前三个字符）。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">The pattern strip-then-lower is the standard CSV-cleaning idiom. Real-world data almost always has inconsistent whitespace and capitalisation. Applying <code>strip()</code> before <code>lower()</code> (not after) ensures spaces are removed first, which is slightly more efficient.</span><span data-lang="zh">先 strip 再 lower 是标准的 CSV 清理惯例。真实数据几乎总有不一致的空白和大小写。先 <code>strip()</code> 再 <code>lower()</code>（不是反过来）确保先去除空格，效率略高。</span></div>
+  </div>
+</div>
+
+<!-- S2 Q8 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q8</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;2 + &sect;6 <span data-lang="en">Slicing + loop reversal</span><span data-lang="zh">切片 + 循环反转</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) "racecar" &nbsp; (b) "racecar" &nbsp; (c) <span class="ans">s == s[::-1]</span></span><span data-lang="zh">答案：(a) "racecar" &nbsp; (b) "racecar" &nbsp; (c) <span class="ans">s == s[::-1]</span></span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Method 1 output and slice explanation [3]</span><span data-lang="zh">(a) 方法 1 输出及切片解释 [3]</span></h4>
+      <p><span data-lang="en">Output: <strong>racecar</strong> <span class="marks-call">A1</span></span><span data-lang="zh">输出：<strong>racecar</strong> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en"><code>[::-1]</code>: start is omitted (defaults to end of string), stop is omitted (defaults to beginning), step is -1 (traverse backwards). <span class="marks-call">M1</span> The result is the entire string read from right to left, i.e., reversed. <span class="marks-call">A1</span> Since "racecar" is a palindrome, the reverse equals the original.</span><span data-lang="zh"><code>[::-1]</code>：start 省略（默认为字符串末尾），stop 省略（默认为开头），step 为 -1（从后往前遍历）。<span class="marks-call">M1</span> 结果是从右到左读取整个字符串，即反转。<span class="marks-call">A1</span> 由于 "racecar" 是回文，反转后等于原字符串。</span></p>
+      <h4><span data-lang="en">(b) Trace Method 2 [4]</span><span data-lang="zh">(b) 追踪方法 2 [4]</span></h4>
+      <table class="trace-table">
+        <tr><th><span data-lang="en">Iteration</span><span data-lang="zh">迭代</span></th><th>ch</th><th>rev2</th></tr>
+        <tr><td>1</td><td>r</td><td>"r"</td></tr>
+        <tr><td>2</td><td>a</td><td>"ar"</td></tr>
+        <tr><td>3</td><td>c</td><td>"car"</td></tr>
+        <tr><td>4</td><td>e</td><td>"ecar"</td></tr>
+        <tr><td>5</td><td>c</td><td>"cecar"</td></tr>
+        <tr><td>6</td><td>a</td><td>"acecar"</td></tr>
+        <tr><td>7</td><td>r</td><td>"racecar"</td></tr>
+      </table>
+      <p><span data-lang="en"><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span> (1 mark table set-up, 1 mark correct intermediate values, 1 mark final output). Final output: <strong>racecar</strong> <span class="marks-call">A1</span>. Each iteration prepends <code>ch</code> before <code>rev2</code>, building the reverse character by character.</span><span data-lang="zh"><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span>（1 分表格设置，1 分正确中间值，1 分最终输出）。最终输出：<strong>racecar</strong> <span class="marks-call">A1</span>。每次迭代将 <code>ch</code> 前置于 <code>rev2</code>，逐字符构建反转字符串。</span></p>
+      <h4><span data-lang="en">(c) Palindrome expression [1]</span><span data-lang="zh">(c) 回文表达式 [1]</span></h4>
+      <pre><code>s == s[::-1]</code></pre>
+      <p><span data-lang="en"><span class="marks-call">A1</span> This evaluates to <code>True</code> if the string equals its own reverse.</span><span data-lang="zh"><span class="marks-call">A1</span> 当字符串等于其反转时，该表达式值为 <code>True</code>。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">The prepend pattern <code>result = ch + result</code> is the standard loop-based string reversal. It builds the answer backwards because each new character is placed at the front. The slice <code>[::-1]</code> is O(n) and is the preferred one-liner, but knowing the loop version shows you understand what reversal means structurally.</span><span data-lang="zh">前置模式 <code>result = ch + result</code> 是标准的基于循环的字符串反转。它从后往前构建答案，因为每个新字符被放在最前面。切片 <code>[::-1]</code> 是 O(n) 的，是首选的单行写法，但了解循环版本表明你理解反转在结构上的含义。</span></div>
+  </div>
+</div>
+
+<!-- S2 Q9 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q9</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;7 <span data-lang="en">Text-Processing Pipeline</span><span data-lang="zh">文本处理流水线</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) see below &nbsp; (b) total=9, freq={'the':3,'cat':2,...} &nbsp; (c) 3 output lines</span><span data-lang="zh">答案：(a) 见下 &nbsp; (b) total=9，freq={'the':3,'cat':2,...} &nbsp; (c) 3 行输出</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) <code>text</code> and <code>words</code> [2]</span><span data-lang="zh">(a) <code>text</code> 和 <code>words</code> [2]</span></h4>
+      <p><span data-lang="en"><code>text = "the cat sat on the mat and the cat"</code> <span class="marks-call">A1</span> (<code>lower()</code> lowercases the capital T; <code>strip()</code> removes any leading/trailing whitespace -- none here, so no visible change).</span><span data-lang="zh"><code>text = "the cat sat on the mat and the cat"</code> <span class="marks-call">A1</span>（<code>lower()</code> 将大写 T 转为小写；<code>strip()</code> 去除首尾空白，此处无空白，所以无可见变化）。</span></p>
+      <p><span data-lang="en"><code>words = ["the","cat","sat","on","the","mat","and","the","cat"]</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>words = ["the","cat","sat","on","the","mat","and","the","cat"]</code> <span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(b) <code>total</code> and <code>freq</code> [3]</span><span data-lang="zh">(b) <code>total</code> 和 <code>freq</code> [3]</span></h4>
+      <p><span data-lang="en"><code>total = 9</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>total = 9</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en"><code>freq = {"the": 3, "cat": 2, "sat": 1, "on": 1, "mat": 1, "and": 1}</code> <span class="marks-call">A1</span><span class="marks-call">A1</span> (1 mark for "the":3 and "cat":2; 1 mark for all remaining entries correct).</span><span data-lang="zh"><code>freq = {"the": 3, "cat": 2, "sat": 1, "on": 1, "mat": 1, "and": 1}</code> <span class="marks-call">A1</span><span class="marks-call">A1</span>（1 分 "the":3 和 "cat":2 正确；1 分其余条目全部正确）。</span></p>
+      <h4><span data-lang="en">(c) Three output lines [2]</span><span data-lang="zh">(c) 三行输出 [2]</span></h4>
+      <p><span data-lang="en">Line 1: <code>Total words: 9</code> <span class="marks-call">A1</span></span><span data-lang="zh">第 1 行：<code>Total words: 9</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en">Line 2: <code>Most frequent: 'the' (3 times)</code> <span class="marks-call">A1</span> (<code>max(freq, key=freq.get)</code> finds the key with the highest value = "the" with count 3).</span><span data-lang="zh">第 2 行：<code>Most frequent: 'the' (3 times)</code> <span class="marks-call">A1</span>（<code>max(freq, key=freq.get)</code> 找到值最大的键 = "the"，计数为 3）。</span></p>
+      <p><span data-lang="en">Line 3: <code>'cat' appears: yes</code></span><span data-lang="zh">第 3 行：<code>'cat' appears: yes</code></span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">This pipeline -- normalise, split, count, report -- is the foundation of text analysis. ON ICS3C A1.2 explicitly requires "count the occurrences of a word or letter." The key insight is that calling <code>lower()</code> before <code>split()</code> ensures "The" and "the" are counted as the same word. Without normalisation, "The" and "the" would be separate dictionary keys.</span><span data-lang="zh">这个流水线（规范化、分割、计数、报告）是文本分析的基础。ON ICS3C A1.2 明确要求"计算单词或字母的出现次数"。关键点是在 <code>split()</code> 之前调用 <code>lower()</code>，确保 "The" 和 "the" 被计为同一个词。如果不规范化，"The" 和 "the" 会是字典中的不同键。</span></div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- PART III SOLUTIONS -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;&middot;&nbsp; MODELING / APPLIED</span><span data-lang="zh">第三部分 &nbsp;&middot;&nbsp; 建模与应用</span></span><span class="part-meta"><span data-lang="en">Universal / multi-region applied &middot; 25 marks</span><span data-lang="zh">通用/多地区应用题 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section C &middot; Modeling and Applications</span><span data-lang="zh">C 部分 &middot; 建模与应用</span></h2>
+
+<!-- S3 Q10 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q10</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;5 + &sect;6 <span data-lang="en">Searching + traversal</span><span data-lang="zh">搜索 + 遍历</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) upper_count=2 &nbsp; (b) 2, True &nbsp; (c) <span class="ans">upper_count = sum(1 for ch in text if ch.isupper())</span></span><span data-lang="zh">答案：(a) upper_count=2 &nbsp; (b) 2，True &nbsp; (c) <span class="ans">upper_count = sum(1 for ch in text if ch.isupper())</span></span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Trace loop for "Hello5World" [4]</span><span data-lang="zh">(a) 追踪 "Hello5World" 的循环 [4]</span></h4>
+      <table class="trace-table">
+        <tr><th>ch</th><th><span data-lang="en">isupper()?</span><span data-lang="zh">isupper()？</span></th><th>upper_count</th></tr>
+        <tr><td>H</td><td>True</td><td>1</td></tr>
+        <tr><td>e</td><td>False</td><td>1</td></tr>
+        <tr><td>l</td><td>False</td><td>1</td></tr>
+        <tr><td>l</td><td>False</td><td>1</td></tr>
+        <tr><td>o</td><td>False</td><td>1</td></tr>
+        <tr><td>5</td><td>False</td><td>1</td></tr>
+        <tr><td>W</td><td>True</td><td>2</td></tr>
+        <tr><td>o</td><td>False</td><td>2</td></tr>
+        <tr><td>r</td><td>False</td><td>2</td></tr>
+        <tr><td>l</td><td>False</td><td>2</td></tr>
+        <tr><td>d</td><td>False</td><td>2</td></tr>
+      </table>
+      <p><span data-lang="en"><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span> (1 mark correct isupper for H and W; 1 mark digits/lowercase return False; 1 mark correct count progression; 1 mark final count = 2).</span><span data-lang="zh"><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span><span class="marks-call">A1</span>（1 分 H 和 W 的 isupper 正确；1 分数字/小写字母返回 False；1 分正确计数递进；1 分最终计数 = 2）。</span></p>
+      <h4><span data-lang="en">(b) Two output values [2]</span><span data-lang="zh">(b) 两个输出值 [2]</span></h4>
+      <p><span data-lang="en"><code>2</code> <span class="marks-call">A1</span> and <code>True</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>2</code> <span class="marks-call">A1</span> 和 <code>True</code> <span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(c) One-liner [2]</span><span data-lang="zh">(c) 单行写法 [2]</span></h4>
+      <pre><code>upper_count = sum(1 for ch in text if ch.isupper())</code></pre>
+      <p><span data-lang="en"><span class="marks-call">A1</span><span class="marks-call">A1</span>. <code>sum()</code> over a generator expression that yields 1 for each uppercase character is equivalent to the explicit loop. Accept also: <code>upper_count = sum(ch.isupper() for ch in text)</code> (booleans are integers in Python: True=1, False=0).</span><span data-lang="zh"><span class="marks-call">A1</span><span class="marks-call">A1</span>。对生成器表达式（每遇一个大写字符产生 1）求 <code>sum()</code>，等价于显式循环。也接受：<code>upper_count = sum(ch.isupper() for ch in text)</code>（Python 中布尔值是整数：True=1，False=0）。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">Notice that <code>isupper()</code> returns <code>False</code> for the digit "5" -- it only returns <code>True</code> for alphabetic characters that are uppercase. The generator expression one-liner is a pattern worth memorising: <code>sum(condition for item in iterable)</code> counts items satisfying the condition.</span><span data-lang="zh">注意 <code>isupper()</code> 对数字 "5" 返回 <code>False</code>，它只对大写字母字符返回 <code>True</code>。生成器表达式单行写法值得记忆：<code>sum(condition for item in iterable)</code> 计算满足条件的项目数。</span></div>
+  </div>
+</div>
+
+<!-- S3 Q11 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q11</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;1 + &sect;2 + &sect;4 <span data-lang="en">Indexing + Slicing + Formatting</span><span data-lang="zh">索引 + 切片 + 格式化</span></span>
+    <span class="pill marks"><span data-lang="en">[9 marks]</span><span data-lang="zh">[9 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) "2024", "06", "15" &nbsp; (b) "5" &nbsp; (c) Year: 2024, Month: 06, Day: 15, Last char: 5 &nbsp; (d) immutable; use concatenation</span><span data-lang="zh">答案：(a) "2024"，"06"，"15" &nbsp; (b) "5" &nbsp; (c) Year: 2024, Month: 06, Day: 15, Last char: 5 &nbsp; (d) 不可变；用拼接</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) year, month, day [3]</span><span data-lang="zh">(a) year、month、day [3]</span></h4>
+      <p><span data-lang="en">Index map of <code>"2024-06-15"</code>: 2=0, 0=1, 2=2, 4=3, -=4, 0=5, 6=6, -=7, 1=8, 5=9.</span><span data-lang="zh"><code>"2024-06-15"</code> 的索引映射：2=0, 0=1, 2=2, 4=3, -=4, 0=5, 6=6, -=7, 1=8, 5=9。</span></p>
+      <p><span data-lang="en"><code>year = date[0:4]</code> = <strong>"2024"</strong> <span class="marks-call">A1</span> (indices 0,1,2,3)</span><span data-lang="zh"><code>year = date[0:4]</code> = <strong>"2024"</strong> <span class="marks-call">A1</span>（索引 0,1,2,3）</span></p>
+      <p><span data-lang="en"><code>month = date[5:7]</code> = <strong>"06"</strong> <span class="marks-call">A1</span> (indices 5,6)</span><span data-lang="zh"><code>month = date[5:7]</code> = <strong>"06"</strong> <span class="marks-call">A1</span>（索引 5,6）</span></p>
+      <p><span data-lang="en"><code>day = date[8:10]</code> = <strong>"15"</strong> <span class="marks-call">A1</span> (indices 8,9)</span><span data-lang="zh"><code>day = date[8:10]</code> = <strong>"15"</strong> <span class="marks-call">A1</span>（索引 8,9）</span></p>
+      <h4><span data-lang="en">(b) last_char and negative indexing [2]</span><span data-lang="zh">(b) last_char 和负索引 [2]</span></h4>
+      <p><span data-lang="en"><code>last_char = "5"</code> <span class="marks-call">A1</span>. Negative index -1 counts from the right: index -1 refers to the last character in the string, which is "5". <span class="marks-call">A1</span></span><span data-lang="zh"><code>last_char = "5"</code> <span class="marks-call">A1</span>。负索引 -1 从右计数：索引 -1 指字符串的最后一个字符，即 "5"。<span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(c) Output of print(report) [2]</span><span data-lang="zh">(c) print(report) 的输出 [2]</span></h4>
+      <p><span data-lang="en"><code>Year: 2024, Month: 06, Day: 15, Last char: 5</code> <span class="marks-call">A1</span><span class="marks-call">A1</span></span><span data-lang="zh"><code>Year: 2024, Month: 06, Day: 15, Last char: 5</code> <span class="marks-call">A1</span><span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(d) Why date[0]="3" fails and the fix [2]</span><span data-lang="zh">(d) date[0]="3" 为何失败及修复 [2]</span></h4>
+      <p><span data-lang="en">Strings are immutable <span class="marks-call">A1</span>: individual characters cannot be modified in place. To produce a corrected date string, use string concatenation or slicing: <code>"3" + date[1:]</code> <span class="marks-call">A1</span>. This creates a new string with "3" as the first character followed by the rest of <code>date</code>.</span><span data-lang="zh">字符串是不可变的 <span class="marks-call">A1</span>：不能就地修改单个字符。要生成修改后的日期字符串，使用字符串拼接或切片：<code>"3" + date[1:]</code> <span class="marks-call">A1</span>。这创建了一个以 "3" 为第一个字符、后跟 <code>date</code> 其余部分的新字符串。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">Date-string parsing with slicing is a classic ON ICS3C A1.2 exercise ("extract a portion"). The slice indices must be exact: <code>[0:4]</code> grabs 4 characters, <code>[5:7]</code> skips the dash at index 4 and grabs 2 characters for the month. Negative indices give clean access to the last few characters without knowing the length.</span><span data-lang="zh">用切片解析日期字符串是经典的 ON ICS3C A1.2 练习（"提取一部分"）。切片索引必须精确：<code>[0:4]</code> 取 4 个字符，<code>[5:7]</code> 跳过索引 4 处的连字符并取 2 个字符作为月份。负索引可以在不知道长度的情况下干净地访问最后几个字符。</span></div>
+  </div>
+</div>
+
+<!-- S3 Q12 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q12</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;3 + &sect;5 + &sect;7 <span data-lang="en">Methods + Search + Pipeline debugging</span><span data-lang="zh">方法 + 搜索 + 流水线调试</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="solution">
+    <div class="answer-line"><span data-lang="en">Answers: (a) "Not found." -- case mismatch &nbsp; (b) normalise with lower() &nbsp; (c) "Found!" then "1"</span><span data-lang="zh">答案：(a) "Not found." -- 大小写不匹配 &nbsp; (b) 用 lower() 规范化 &nbsp; (c) "Found!" 然后 "1"</span></div>
+    <div class="rationale">
+      <h4><span data-lang="en">(a) Current output and bug [3]</span><span data-lang="zh">(a) 当前输出及错误 [3]</span></h4>
+      <p><span data-lang="en">Current output: <code>Not found.</code> <span class="marks-call">A1</span></span><span data-lang="zh">当前输出：<code>Not found.</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en">Bug: the <code>in</code> operator is case-sensitive. <span class="marks-call">M1</span> <code>sentence = "The Quick Brown Fox"</code> contains "The" with a capital T, but <code>target = "the"</code> is all lowercase. "the" (lowercase) is not a substring of "The Quick Brown Fox" because the capital T at position 0 does not match the lowercase t. <span class="marks-call">A1</span></span><span data-lang="zh">错误：<code>in</code> 运算符区分大小写。<span class="marks-call">M1</span> <code>sentence = "The Quick Brown Fox"</code> 包含首字母大写的 "The"，但 <code>target = "the"</code> 全是小写。"the"（小写）不是 "The Quick Brown Fox" 的子字符串，因为位置 0 的大写 T 与小写 t 不匹配。<span class="marks-call">A1</span></span></p>
+      <h4><span data-lang="en">(b) Fixed code [3]</span><span data-lang="zh">(b) 修复后的代码 [3]</span></h4>
+      <pre><code>sentence = "The Quick Brown Fox"
+target   = "the"
+s_lower  = sentence.lower()
+if target in s_lower:
+    print("Found!")
+    print(s_lower.count(target))</code></pre>
+      <p><span data-lang="en"><span class="marks-call">M1</span> Normalise <code>sentence</code> to lowercase before searching. <span class="marks-call">A1</span> Use the same normalised string for both <code>in</code> and <code>count()</code> to ensure consistent case-insensitive results. <span class="marks-call">A1</span> Accept also: <code>if target in sentence.lower()</code> and <code>sentence.lower().count(target)</code>.</span><span data-lang="zh"><span class="marks-call">M1</span> 搜索前将 <code>sentence</code> 规范化为小写。<span class="marks-call">A1</span> 对 <code>in</code> 和 <code>count()</code> 使用同一个规范化后的字符串，确保不区分大小写的一致结果。<span class="marks-call">A1</span> 也接受：<code>if target in sentence.lower()</code> 和 <code>sentence.lower().count(target)</code>。</span></p>
+      <h4><span data-lang="en">(c) Correct output [2]</span><span data-lang="zh">(c) 正确输出 [2]</span></h4>
+      <p><span data-lang="en"><code>Found!</code> <span class="marks-call">A1</span></span><span data-lang="zh"><code>Found!</code> <span class="marks-call">A1</span></span></p>
+      <p><span data-lang="en"><code>1</code> <span class="marks-call">A1</span> -- "the quick brown fox" (lowercased) contains "the" exactly once, at the start.</span><span data-lang="zh"><code>1</code> <span class="marks-call">A1</span> -- "the quick brown fox"（小写后）包含 "the" 恰好一次，在开头。</span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">关键点：</span></strong> <span data-lang="en">Case-insensitive search is one of the most common bugs in string programs. The fix pattern -- normalise both the haystack and the needle to the same case before comparing -- is a standard technique. Note: the needle (<code>target</code>) is already lowercase here, so only the haystack needs normalising. If both could be mixed case, normalise both: <code>target.lower() in sentence.lower()</code>.</span><span data-lang="zh">不区分大小写的搜索是字符串程序中最常见的错误之一。修复模式（在比较之前将被搜索字符串和搜索词都规范化为同一大小写）是标准技术。注意：此处搜索词（<code>target</code>）已经是小写，所以只需规范化被搜索字符串。如果两者都可能是混合大小写，则都规范化：<code>target.lower() in sentence.lower()</code>。</span></div>
+  </div>
+</div>
+
+<!-- consult-cta -->
+<aside class="consult-cta">
+  <span class="consult-cta__lead"><span data-lang="en">Want to review these topics with a tutor?</span><span data-lang="zh">想和导师一起复习这些知识点？</span></span>
+  <span class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor:</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估：</span></span>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_6_Strings_and_Text_Processing__solutions__en" target="_blank" rel="noopener">dingruischolars.com/signup</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_6_Strings_and_Text_Processing__solutions__zh" target="_blank" rel="noopener">dingruischolars.com/signup-ch</a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../../Study%20Guides/Unit_6_Strings_and_Text_Processing.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <a href="../Unit_6_Strings_and_Text_Processing_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></span>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">High School Computer Science &middot; Solutions</span><span data-lang="zh">高中计算机科学 &middot; 答案与解析</span> &middot; <code style="color:#555;">v1</code></span>
+  <span><span data-lang="en">Strings and Text Processing Solutions v1 &middot; 12 solutions &middot; ~81 marks &middot; US / ON / BC / AB &middot; HS-CS-6</span><span data-lang="zh">字符串与文本处理 解析 v1 &middot; 共 12 题 &middot; 约 81 分 &middot; 美 / 安 / 卑 / 阿 &middot; HS-CS-6</span></span>
+</footer>
+
+<script>
+function toggleLang() { const isZh = document.body.classList.toggle('lang-zh'); try { localStorage.setItem('lang', isZh ? 'zh' : 'en'); } catch (e) {} }
+try { if (localStorage.getItem('lang') === 'zh') document.body.classList.add('lang-zh'); } catch (e) {}
+</script>
+
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,879 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Computer Science — Searching and Sorting — Solutions | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_7_Searching_and_Sorting_Solutions.html">
+<meta name="description" content="Worked solutions for Searching and Sorting in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Searching and Sorting — Solutions | Dingrui Scholars">
+<meta property="og:description" content="Worked solutions for Searching and Sorting in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_7_Searching_and_Sorting_Solutions.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Searching and Sorting — Solutions | Dingrui Scholars">
+<meta name="twitter:description" content="Worked solutions for Searching and Sorting in High School Computer Science. Step by step answers from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-7  dingrui:doc-type solutions -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style>
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --easy-bg:#E7F2E3; --easy-ink:#2F6B2F; --easy-rule:#79A977;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --region-bg:#F5F2EE; --region-ink:#3A322B; --region-rule:#B5A68F;
+    --paper-bg:#FBE9E9;  --paper-ink:#7A2E2E;  --paper-rule:#C97A7A;
+    --honors-bg:#FDF5EC; --honors-ink:#7A5618; --honors-rule:#C4956A;
+    --sol-bg:#F1F7EE;  --sol-rule:#5E8E47;  --sol-ink:#2F4E1E;
+    --sol-accent:#3E7228;
+    --insight-bg:#FBF6EC; --insight-rule:#C49350; --insight-ink:#5E4014;
+    --font-body:'Times New Roman', Times, Georgia, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-sans:'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--font-body);font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:var(--font-sans);font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.easy{background:var(--easy-bg);color:var(--easy-ink);border-color:var(--easy-rule);}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .pill.region{background:var(--region-bg);color:var(--region-ink);border-color:var(--region-rule);letter-spacing:.08em;}
+  .pill.paper {background:var(--paper-bg); color:var(--paper-ink); border-color:var(--paper-rule);}
+  .pill.honors{background:var(--honors-bg);color:var(--honors-ink);border-color:var(--honors-rule);text-transform:uppercase;}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .draft-banner{font-family:var(--font-sans);font-size:9.5pt;color:#7A2E2E;font-style:italic;text-align:center;margin:0 0 8px;border:1px dashed #c9a4a4;border-radius:4px;padding:4px 8px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .instructions{font-family:var(--font-sans);font-size:10pt;color:#444;font-style:italic;margin-bottom:12px;line-height:1.45;}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:14px 20px 6px;margin-bottom:22px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q.app{border-left-color:#C4956A;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:12px;font-family:var(--font-sans);}
+  .q-body{font-size:11pt;line-height:1.55;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;font-style:italic;color:#444;border-left:2px solid #d8cdb8;padding-left:10px;}
+  .q-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .q-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .solution{margin:14px 0 8px;background:var(--sol-bg);border-left:3px solid var(--sol-rule);border-radius:0 4px 4px 0;padding:12px 18px 14px;font-size:11pt;line-height:1.6;}
+  .solution .answer-line{font-family:var(--font-sans);font-weight:700;color:var(--sol-ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #d4e4cb;letter-spacing:.04em;font-size:11pt;}
+  .solution .answer-line .ans{color:var(--sol-accent);font-size:1.08em;letter-spacing:.08em;}
+  .solution .rationale{color:#2a2a2a;}
+  .solution .rationale p{margin:5px 0;}
+  .solution h4{font-family:var(--font-sans);font-weight:700;font-size:10.5pt;color:var(--sol-ink);margin:10px 0 4px;letter-spacing:.05em;text-transform:uppercase;}
+  .solution ul,.solution ol{margin:6px 0 6px 22px;line-height:1.7;}
+  .solution pre{font-family:var(--font-mono);font-size:10pt;background:#e8f2e3;border:1px solid #b5d4a0;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
+  .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  .solution .insight strong{color:#7A4810;}
+  .solution .distractor{font-family:var(--font-sans);font-size:10pt;color:#3a3a3a;background:#fff;border:1px solid #d4e4cb;border-radius:4px;padding:8px 12px;margin-top:8px;}
+  .solution .distractor .lab{color:var(--maroon);font-weight:700;margin-right:6px;}
+  .trace-table{font-family:'JetBrains Mono',monospace;font-size:10pt;border-collapse:collapse;margin:8px 0;width:auto;}
+  .trace-table th{background:#d4e4cb;border:1px solid #9BBD7A;padding:5px 14px;color:#2F4E1E;font-weight:700;}
+  .trace-table td{border:1px solid #9BBD7A;padding:5px 14px;text-align:center;background:#f1f7ee;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:var(--font-sans);font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  .lang-bar{display:flex;justify-content:center;margin:6px 0 10px;}
+  .lang-btn{font-family:var(--font-sans);font-weight:700;font-size:9pt;letter-spacing:.1em;padding:4px 14px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;cursor:pointer;transition:all 0.2s;}
+  .lang-btn:hover{background:var(--maroon);color:#fff;}
+  body:not(.lang-zh) [data-lang="zh"] { display: none; }
+  body.lang-zh       [data-lang="en"] { display: none; }
+  body.lang-zh{font-family:var(--font-sans);}
+  @media (max-width: 600px){body{font-size:10.5pt;}}
+  .consult-cta{border:1.5px solid var(--maroon);border-radius:8px;padding:12px 16px;margin:22px 0 6px;text-align:center;background:var(--paper-bg);break-inside:avoid;}
+  .consult-cta__lead{display:block;font-family:var(--font-sans);font-weight:700;font-size:11pt;color:var(--maroon);}
+  .consult-cta__body{display:block;font-family:var(--font-sans);font-size:9.5pt;color:var(--muted);margin:3px 0 6px;}
+  .consult-cta__btn{display:inline-block;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-decoration:underline;}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.solution{background:#f0f6ec;}.draft-banner{display:none;}.lang-bar{display:none;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Searching and Sorting — Solutions",
+  "description": "Worked solutions for Searching and Sorting in High School Computer Science. Step by step answers from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_7_Searching_and_Sorting_Solutions.html",
+  "inLanguage": ["en", "zh"],
+  "learningResourceType": "Solutions",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+</div>
+
+<div class="brand">H&nbsp;I&nbsp;G&nbsp;H&nbsp;&nbsp;S&nbsp;C&nbsp;H&nbsp;O&nbsp;O&nbsp;L&nbsp;&nbsp;C&nbsp;O&nbsp;M&nbsp;P&nbsp;U&nbsp;T&nbsp;E&nbsp;R&nbsp;&nbsp;S&nbsp;C&nbsp;I&nbsp;E&nbsp;N&nbsp;C&nbsp;E</div>
+<div class="chapter-tag"><span data-lang="en">Solutions</span><span data-lang="zh">详解</span></div>
+<h1 class="chapter-title"><span data-lang="en">Searching and Sorting &middot; Solutions</span><span data-lang="zh">查找与排序 &middot; 详解</span></h1>
+<p class="chapter-sub"><span data-lang="en">Companion to the Practice Set &middot; Mark-by-mark walkthroughs &middot; AP CSP-Feeder / US / ON / BC / AB styles</span><span data-lang="zh">练习题配套详解 &middot; 逐分讲解 &middot; AP CSP 衔接 / 美 / 安 / 卑 / 阿省考风格</span></p>
+
+<div class="legend">
+  <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+  <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+  <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+  <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+  <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+  <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+</div>
+
+<hr class="thick"><hr class="thin">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART I  SHORT RESPONSE  SOLUTIONS   5 Qs  25 marks
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;&middot;&nbsp; SHORT RESPONSE &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第一部分 &nbsp;&middot;&nbsp; 短答题 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">25 marks</span><span data-lang="zh">共 25 分</span></span></div>
+
+<!-- S1 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q1</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">Linear Search</span><span data-lang="zh">线性查找</span> &middot; AP CSP 3.11 / CSTA 3A-AP-11</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Linear search on <code>[11, 4, 27, 9, 15, 3, 22]</code> for target <code>15</code>. How many comparisons?</span><span data-lang="zh">对 <code>[11, 4, 27, 9, 15, 3, 22]</code> 线性查找目标 <code>15</code>。共几次比较？</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(C) 5</span></span><span data-lang="zh">答案：<span class="ans">(C) 5</span></span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Trace each index in order: <span class="marks-call">[2]</span></span><span data-lang="zh">按顺序追踪每个索引：<span class="marks-call">[2]</span></span></p>
+        <div class="distractor"><span class="lab">i=0:</span> <span data-lang="en"><code>data[0] = 11</code>, 11 != 15. Continue.</span><span data-lang="zh"><code>data[0] = 11</code>，11 != 15。继续。</span></div>
+        <div class="distractor"><span class="lab">i=1:</span> <span data-lang="en"><code>data[1] = 4</code>, 4 != 15. Continue.</span><span data-lang="zh"><code>data[1] = 4</code>，4 != 15。继续。</span></div>
+        <div class="distractor"><span class="lab">i=2:</span> <span data-lang="en"><code>data[2] = 27</code>, 27 != 15. Continue.</span><span data-lang="zh"><code>data[2] = 27</code>，27 != 15。继续。</span></div>
+        <div class="distractor"><span class="lab">i=3:</span> <span data-lang="en"><code>data[3] = 9</code>, 9 != 15. Continue.</span><span data-lang="zh"><code>data[3] = 9</code>，9 != 15。继续。</span></div>
+        <div class="distractor"><span class="lab">i=4:</span> <span data-lang="en"><code>data[4] = 15</code>, 15 == 15. FOUND. That is the 5th comparison. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>data[4] = 15</code>，15 == 15。找到。这是第 5 次比较。<span class="marks-call">[1]</span></span></div>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Linear search counts every comparison, including the final one that succeeds. Target at index 4 means 5 comparisons (indices 0 through 4 inclusive). Option (D) 7 is a trap: that would be the worst case (target at the very last index or not found).</span><span data-lang="zh">线性查找计算每次比较，包括最终成功的那次。目标在索引 4 处意味着 5 次比较（索引 0 到 4，含两端）。选项 (D) 7 是陷阱：那是最坏情况（目标在最后索引或不存在）。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q2</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">Binary Search</span><span data-lang="zh">二分查找</span> &middot; AP CSP 3.11 / CSE3110 1.5.2</span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Which list can binary search be applied to correctly without modification?</span><span data-lang="zh">哪个列表可以正确地直接应用二分查找而无需任何修改？</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Answer: <span class="ans">(C) [1, 3, 8, 12, 19]</span></span><span data-lang="zh">答案：<span class="ans">(C) [1, 3, 8, 12, 19]</span></span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Binary search requires the list to be sorted in ascending order. Evaluate each option: <span class="marks-call">[2]</span></span><span data-lang="zh">二分查找要求列表按升序排列。评估每个选项：<span class="marks-call">[2]</span></span></p>
+        <div class="distractor"><span class="lab">(A)</span> <span data-lang="en"><code>[8, 3, 12, 1, 19]</code> -- unsorted. Binary search would give wrong results.</span><span data-lang="zh"><code>[8, 3, 12, 1, 19]</code> -- 无序。二分查找会给出错误结果。</span></div>
+        <div class="distractor"><span class="lab">(B)</span> <span data-lang="en"><code>[19, 12, 8, 3, 1]</code> -- sorted descending, not ascending. Binary search needs ascending order.</span><span data-lang="zh"><code>[19, 12, 8, 3, 1]</code> -- 降序排列，非升序。二分查找需要升序。</span></div>
+        <div class="distractor"><span class="lab">(C)</span> <span data-lang="en"><code>[1, 3, 8, 12, 19]</code> -- sorted ascending. Binary search applies correctly. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>[1, 3, 8, 12, 19]</code> -- 升序排列。二分查找可正确应用。<span class="marks-call">[1]</span></span></div>
+        <div class="distractor"><span class="lab">(D)</span> <span data-lang="en"><code>[1, 8, 3, 12, 19]</code> -- partially unsorted (8 > 3). Binary search would incorrectly eliminate halves.</span><span data-lang="zh"><code>[1, 8, 3, 12, 19]</code> -- 部分无序（8 > 3）。二分查找会错误地淘汰某些部分。</span></div>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Binary search relies on the sorted property to decide "target must be left" or "target must be right." A single out-of-order element can cause the algorithm to search the wrong half and miss the target entirely, even if the target exists in the list.</span><span data-lang="zh">二分查找依赖有序特性来判断"目标在左"或"目标在右"。即使列表中存在目标，单个乱序元素也可能导致算法搜索错误的一半，完全错过目标。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q3</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">Linear Search</span><span data-lang="zh">线性查找</span> &middot; ICS4U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[5 marks]</span><span data-lang="zh">[5 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Linear search on <code>[6, 14, 2, 31, 8, 20]</code> for target <code>31</code>.</span><span data-lang="zh">对 <code>[6, 14, 2, 31, 8, 20]</code> 线性查找目标 <code>31</code>。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Trace table</span><span data-lang="zh">第 (a) 部分：追踪表</span></div>
+      <div class="rationale">
+        <table class="trace-table">
+          <tr><th>i</th><th>data[i]</th><th><span data-lang="en">data[i] == 31?</span><span data-lang="zh">data[i] == 31？</span></th><th><span data-lang="en">Action</span><span data-lang="zh">操作</span></th></tr>
+          <tr><td>0</td><td>6</td><td>False</td><td><span data-lang="en">continue</span><span data-lang="zh">继续</span></td></tr>
+          <tr><td>1</td><td>14</td><td>False</td><td><span data-lang="en">continue</span><span data-lang="zh">继续</span></td></tr>
+          <tr><td>2</td><td>2</td><td>False</td><td><span data-lang="en">continue</span><span data-lang="zh">继续</span></td></tr>
+          <tr><td>3</td><td>31</td><td>True</td><td><span data-lang="en">found = True, OUTPUT 3, STOP</span><span data-lang="zh">found = True，输出 3，停止</span></td></tr>
+        </table>
+        <p><span data-lang="en">Award 1 mark per correct row up to 3 rows. <span class="marks-call">[3]</span></span><span data-lang="zh">每行正确得 1 分，最多 3 行。<span class="marks-call">[3]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">The program outputs <code class="marks-call" style="margin:0">3</code> (the index where 31 was found). <span class="marks-call">[1]</span></span><span data-lang="zh">程序输出 <code>3</code>（找到 31 的索引）。<span class="marks-call">[1]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">If target = 99, the program outputs <code>-1</code>. The loop runs all 6 iterations without finding 99, so <code>found</code> remains False and the final <code>IF</code> outputs -1. <span class="marks-call">[1]</span></span><span data-lang="zh">若目标为 99，程序输出 <code>-1</code>。循环运行全部 6 次迭代未找到 99，因此 <code>found</code> 仍为 False，最后的 <code>IF</code> 输出 -1。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The sentinel value -1 is the conventional signal for "not found" in search algorithms. It works because -1 is not a valid list index (all valid indices are >= 0), so there is no ambiguity between "found at index 0" and "not found."</span><span data-lang="zh">哨兵值 -1 是查找算法中"未找到"的惯用信号。它之所以有效，是因为 -1 不是有效的列表索引（所有有效索引均 >= 0），所以"在索引 0 处找到"和"未找到"之间不存在歧义。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q4</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+    <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+    <span class="pill topic">&sect;3 <span data-lang="en">Algorithm Efficiency (Big-O)</span><span data-lang="zh">算法效率（大O）</span> &middot; CSE3110 1.5.4 / 1.6.5</span>
+    <span class="pill marks"><span data-lang="en">[6 marks]</span><span data-lang="zh">[6 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Big-O classifications and step counts for n = 64.</span><span data-lang="zh">大O分类及 n = 64 时的步骤数。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Completed table</span><span data-lang="zh">第 (a) 部分：完整表格</span></div>
+      <div class="rationale">
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Algorithm</span><span data-lang="zh">算法</span></th><th><span data-lang="en">Big-O (worst)</span><span data-lang="zh">大O（最坏）</span></th><th><span data-lang="en">Steps at n = 64</span><span data-lang="zh">n = 64 时步骤数</span></th></tr>
+          <tr><td><span data-lang="en">Linear search</span><span data-lang="zh">线性查找</span></td><td>O(n)</td><td>64</td></tr>
+          <tr><td><span data-lang="en">Binary search</span><span data-lang="zh">二分查找</span></td><td>O(log n)</td><td>6</td></tr>
+          <tr><td><span data-lang="en">Bubble sort</span><span data-lang="zh">冒泡排序</span></td><td>O(n&sup2;)</td><td>2016</td></tr>
+        </table>
+        <p><span data-lang="en">Binary search log row: log&#x2082;(64) = 6 because 2&#x2076; = 64. <span class="marks-call">[1]</span></span><span data-lang="zh">二分查找 log 行：log&#x2082;(64) = 6，因为 2&#x2076; = 64。<span class="marks-call">[1]</span></span></p>
+        <p><span data-lang="en">Bubble sort: n(n-1)/2 = 64 x 63 / 2 = 2016. <span class="marks-call">[1]</span></span><span data-lang="zh">冒泡排序：n(n-1)/2 = 64 x 63 / 2 = 2016。<span class="marks-call">[1]</span></span></p>
+        <p><span data-lang="en">Cost of binary search's sorted requirement: sorting takes at least O(n log n) time (or O(n&sup2;) for simple sorts), which must be paid upfront before any binary search can run. If only one search is needed, this overhead can make binary search more expensive overall than repeated linear search. <span class="marks-call">[2]</span></span><span data-lang="zh">二分查找已排序要求的代价：排序至少需要 O(n log n) 时间（简单排序为 O(n²)），这必须在任何二分查找运行之前预先支付。若只需一次查找，这种开销可能使二分查找整体比反复线性查找更昂贵。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">n = 2&#x00B2;&#x2070; = 1,048,576. Binary search worst case = log&#x2082;(2&#x00B2;&#x2070;) = 20 comparisons. <span class="marks-call">[2]</span></span><span data-lang="zh">n = 2&#x00B2;&#x2070; = 1,048,576。二分查找最坏情况 = log&#x2082;(2&#x00B2;&#x2070;) = 20 次比较。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The power of O(log n): for over one million items, binary search takes just 20 steps in the worst case. Every time the list doubles in size, only ONE extra step is added. This is why logarithmic algorithms are so valuable for large datasets.</span><span data-lang="zh">O(log n) 的威力：对于超过一百万个元素，二分查找最坏情况只需 20 步。每次列表大小翻倍，只增加一步。这就是对数算法对大数据集如此宝贵的原因。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="q">
+  <div class="q-head">
+    <span class="pill qnum">Q5</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+    <span class="pill topic">&sect;4 <span data-lang="en">Bubble Sort</span><span data-lang="zh">冒泡排序</span> &middot; CSE3110 1.6.1</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Bubble sort on <code>[7, 2, 9, 4, 6]</code>.</span><span data-lang="zh">对 <code>[7, 2, 9, 4, 6]</code> 冒泡排序。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Pass-by-pass trace</span><span data-lang="zh">第 (a) 部分：逐遍追踪</span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Working through each pass (compare adjacent pairs, swap if left > right): <span class="marks-call">[4]</span></span><span data-lang="zh">逐遍处理（比较相邻元素，若左 > 右则交换）：<span class="marks-call">[4]</span></span></p>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Pass</span><span data-lang="zh">遍</span></th><th><span data-lang="en">List after pass</span><span data-lang="zh">该遍后列表</span></th><th><span data-lang="en">Swaps this pass</span><span data-lang="zh">本遍交换次数</span></th></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>[7, 2, 9, 4, 6]</td><td>--</td></tr>
+          <tr><td>1</td><td>[2, 7, 4, 6, 9]</td><td>3</td></tr>
+          <tr><td>2</td><td>[2, 4, 6, 7, 9]</td><td>2</td></tr>
+          <tr><td>3</td><td>[2, 4, 6, 7, 9]</td><td>0</td></tr>
+          <tr><td>4</td><td>[2, 4, 6, 7, 9]</td><td>0</td></tr>
+        </table>
+        <h4><span data-lang="en">Pass 1 detail:</span><span data-lang="zh">第 1 遍详情：</span></h4>
+        <p><span data-lang="en">(7,2): 7>2, swap → [2,7,9,4,6]. (7,9): 7&lt;9, no swap. (9,4): 9>4, swap → [2,7,4,9,6]. (9,6): 9>6, swap → [2,7,4,6,9]. 3 swaps.</span><span data-lang="zh">(7,2)：7>2，交换 → [2,7,9,4,6]。(7,9)：7&lt;9，不交换。(9,4)：9>4，交换 → [2,7,4,9,6]。(9,6)：9>6，交换 → [2,7,4,6,9]。共 3 次交换。</span></p>
+        <h4><span data-lang="en">Pass 2 detail:</span><span data-lang="zh">第 2 遍详情：</span></h4>
+        <p><span data-lang="en">(2,7): no swap. (7,4): 7>4, swap → [2,4,7,6,9]. (7,6): 7>6, swap → [2,4,6,7,9]. (9 is already placed, boundary shrinks). 2 swaps.</span><span data-lang="zh">(2,7)：不交换。(7,4)：7>4，交换 → [2,4,7,6,9]。(7,6)：7>6，交换 → [2,4,6,7,9]。（9 已就位，边界缩小）。2 次交换。</span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Total swaps = 3 + 2 + 0 + 0 = <strong>5</strong>. <span class="marks-call">[1]</span></span><span data-lang="zh">交换总次数 = 3 + 2 + 0 + 0 = <strong>5</strong>。<span class="marks-call">[1]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">After pass 1, element <strong>9</strong> is guaranteed to be in its final position (index 4). Bubble sort moves the largest unsorted element to the rightmost unsorted position in each pass. After pass 1, 9 is the largest element and has "bubbled up" to index 4. <span class="marks-call">[2]</span></span><span data-lang="zh">第 1 遍后，元素 <strong>9</strong> 一定处于最终位置（索引 4）。冒泡排序每遍将最大的未排序元素移至最右侧未排序位置。第 1 遍后，9 是最大元素，已"冒泡"到索引 4。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (d):</span><span data-lang="zh">第 (d) 部分：</span></strong> <span data-lang="en">Worst-case Big-O: <strong>O(n&sup2;)</strong>. <span class="marks-call">[1]</span></span><span data-lang="zh">最坏情况大O复杂度：<strong>O(n²)</strong>。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Passes with zero swaps are the early-exit signal: if an optimised bubble sort tracks a <code>swapped</code> flag and a full pass makes 0 swaps, the list is already sorted and the algorithm terminates early. This gives O(n) best-case performance on already-sorted input.</span><span data-lang="zh">无交换的遍次是提前退出信号：若优化版冒泡排序追踪 <code>swapped</code> 标志，且某遍完成 0 次交换，则列表已排好，算法提前终止。这使已排序输入的最好情况性能达到 O(n)。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART II  EXTENDED RESPONSE  SOLUTIONS   4 Qs  30 marks
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;&middot;&nbsp; EXTENDED RESPONSE &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第二部分 &nbsp;&middot;&nbsp; 简答题 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">30 marks</span><span data-lang="zh">共 30 分</span></span></div>
+
+<!-- S6 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q6</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">Binary Search</span><span data-lang="zh">二分查找</span> &middot; AP CSP 3.11 / ICS4U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Binary search on <code>[2, 5, 9, 14, 21, 33, 40, 58]</code> (indices 0-7) for target <code>21</code>.</span><span data-lang="zh">对 <code>[2, 5, 9, 14, 21, 33, 40, 58]</code>（索引 0-7）二分查找目标 <code>21</code>。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Binary search trace</span><span data-lang="zh">第 (a) 部分：二分查找追踪</span></div>
+      <div class="rationale">
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Step</span><span data-lang="zh">步骤</span></th><th>low</th><th>high</th><th>mid</th><th>data[mid]</th><th><span data-lang="en">Action</span><span data-lang="zh">操作</span></th></tr>
+          <tr><td>1</td><td>0</td><td>7</td><td>3</td><td>14</td><td><span data-lang="en">14 &lt; 21, low = 4</span><span data-lang="zh">14 &lt; 21，low = 4</span></td></tr>
+          <tr><td>2</td><td>4</td><td>7</td><td>5</td><td>33</td><td><span data-lang="en">33 &gt; 21, high = 4</span><span data-lang="zh">33 &gt; 21，high = 4</span></td></tr>
+          <tr><td>3</td><td>4</td><td>4</td><td>4</td><td>21</td><td><span data-lang="en">21 == 21, FOUND at index 4</span><span data-lang="zh">21 == 21，在索引 4 处找到</span></td></tr>
+        </table>
+        <p><span data-lang="en">Step 1: mid = (0+7)//2 = 3, data[3] = 14. 14 &lt; 21 so low = 4. Step 2: mid = (4+7)//2 = 5, data[5] = 33. 33 > 21 so high = 4. Step 3: mid = (4+4)//2 = 4, data[4] = 21. Match. <span class="marks-call">[4]</span></span><span data-lang="zh">第 1 步：mid = (0+7)//2 = 3，data[3] = 14。14 &lt; 21，low = 4。第 2 步：mid = (4+7)//2 = 5，data[5] = 33。33 > 21，high = 4。第 3 步：mid = (4+4)//2 = 4，data[4] = 21。匹配。<span class="marks-call">[4]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Binary search needed <strong>3</strong> comparisons. Linear search worst case on an 8-element list = <strong>8</strong> comparisons (if target is last or not present). <span class="marks-call">[2]</span></span><span data-lang="zh">二分查找需要 <strong>3</strong> 次比较。线性查找在 8 元素列表上的最坏情况 = <strong>8</strong> 次比较（目标在最后或不存在时）。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">Binary search returns <code>-1</code>. When low > high, the search space is exhausted without finding the target -- the algorithm exits the WHILE loop and returns the sentinel value -1 to signal "not found." <span class="marks-call">[1]</span></span><span data-lang="zh">二分查找返回 <code>-1</code>。当 low > high 时，搜索空间耗尽仍未找到目标--算法退出 WHILE 循环并返回哨兵值 -1 以示"未找到"。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Binary search found target 21 in just 3 steps on an 8-element list. The maximum steps for 8 elements is log&#x2082;(8) = 3 -- so this was actually the worst case, yet still far better than linear search's worst case of 8 steps. The advantage compounds dramatically as n grows.</span><span data-lang="zh">二分查找在 8 元素列表上仅用 3 步就找到目标 21。8 个元素的最大步数为 log&#x2082;(8) = 3，所以这实际上是最坏情况，但仍然远好于线性查找最坏情况的 8 步。随着 n 增大，这种优势急剧增加。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q7</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;5 <span data-lang="en">Selection Sort</span><span data-lang="zh">选择排序</span> &middot; ICS4U A3.4 / CSE3110 1.6.2</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Selection sort on <code>[8, 3, 11, 1, 6]</code>.</span><span data-lang="zh">对 <code>[8, 3, 11, 1, 6]</code> 选择排序。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Selection sort trace</span><span data-lang="zh">第 (a) 部分：选择排序追踪</span></div>
+      <div class="rationale">
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Pass (i)</span><span data-lang="zh">遍（i）</span></th><th><span data-lang="en">Min found (value, idx)</span><span data-lang="zh">找到最小值（值，索引）</span></th><th><span data-lang="en">List after swap</span><span data-lang="zh">交换后列表</span></th></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>--</td><td>[8, 3, 11, 1, 6]</td></tr>
+          <tr><td>0</td><td>1, idx 3</td><td>[1, 3, 11, 8, 6]</td></tr>
+          <tr><td>1</td><td>3, idx 1</td><td>[1, 3, 11, 8, 6]</td></tr>
+          <tr><td>2</td><td>6, idx 4</td><td>[1, 3, 6, 8, 11]</td></tr>
+          <tr><td>3</td><td>8, idx 3</td><td>[1, 3, 6, 8, 11]</td></tr>
+        </table>
+        <p><span data-lang="en">Pass i=0: scan indices 0-4, min = 1 at idx 3. Swap data[0] and data[3] → [1, 3, 11, 8, 6].</span><span data-lang="zh">第 i=0 遍：扫描索引 0-4，最小值 = 1 在 idx 3。交换 data[0] 和 data[3] → [1, 3, 11, 8, 6]。</span></p>
+        <p><span data-lang="en">Pass i=1: scan indices 1-4, min = 3 at idx 1. Swap data[1] with itself (no change).</span><span data-lang="zh">第 i=1 遍：扫描索引 1-4，最小值 = 3 在 idx 1。data[1] 与自身交换（无变化）。</span></p>
+        <p><span data-lang="en">Pass i=2: scan indices 2-4, min = 6 at idx 4. Swap data[2] and data[4] → [1, 3, 6, 8, 11].</span><span data-lang="zh">第 i=2 遍：扫描索引 2-4，最小值 = 6 在 idx 4。交换 data[2] 和 data[4] → [1, 3, 6, 8, 11]。</span></p>
+        <p><span data-lang="en">Pass i=3: scan indices 3-4, min = 8 at idx 3. Swap data[3] with itself (no change). <span class="marks-call">[4]</span></span><span data-lang="zh">第 i=3 遍：扫描索引 3-4，最小值 = 8 在 idx 3。data[3] 与自身交换（无变化）。<span class="marks-call">[4]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Selection sort performs n-1 = 4 swap operations (even if some swap an element with itself). Meaningful position changes: 2 (passes i=0 and i=2). Bubble sort worst case on a 5-element list = (5-1)+(5-2)+(5-3)+(5-4) = 4+3+2+1 = 10 swaps. Selection sort's at most 4 (n-1) swaps vs bubble sort's up to 10: selection sort makes far fewer writes. <span class="marks-call">[2]</span></span><span data-lang="zh">选择排序执行 n-1 = 4 次交换操作（即使某些交换是元素与自身交换）。实际位置变化：2 次（第 i=0 和 i=2 遍）。冒泡排序在 5 元素列表上最坏情况 = 4+3+2+1 = 10 次交换。选择排序最多 4（n-1）次交换 vs 冒泡排序最多 10 次：选择排序写入次数少得多。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">After pass i=2, <strong>3</strong> elements are in their final sorted positions: the 3 smallest elements <strong>1, 3, 6</strong> are now at indices 0, 1, 2 respectively and will not move again. In general, after pass i=k, elements at indices 0 through k are finalized. <span class="marks-call">[2]</span></span><span data-lang="zh">第 i=2 遍后，<strong>3</strong> 个元素处于最终排序位置：3 个最小元素 <strong>1、3、6</strong> 现在分别在索引 0、1、2 处，不会再移动。一般规律：第 i=k 遍后，索引 0 到 k 处的元素已最终确定。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Selection sort's key property is exactly n-1 swaps regardless of input order -- the minimum is always found and placed once per pass. This predictability (no extra swaps on nearly-sorted data, unlike bubble sort) makes selection sort preferable when write operations are expensive, such as on flash memory where each write degrades the hardware.</span><span data-lang="zh">选择排序的关键特性是无论输入顺序如何，恰好进行 n-1 次交换--每遍只找到并放置最小值一次。这种可预测性（不像冒泡排序在近乎有序数据上额外交换）使选择排序在写操作昂贵时（如闪存，每次写入会损耗硬件）更受青睐。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q8</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;6 <span data-lang="en">Insertion Sort</span><span data-lang="zh">插入排序</span> &middot; CSE3110 1.6.3 / ICS4U A3.4</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Insertion sort on <code>[6, 2, 10, 4, 8]</code>.</span><span data-lang="zh">对 <code>[6, 2, 10, 4, 8]</code> 插入排序。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Insertion sort trace</span><span data-lang="zh">第 (a) 部分：插入排序追踪</span></div>
+      <div class="rationale">
+        <table class="trace-table">
+          <tr><th>i</th><th>key</th><th><span data-lang="en">Shifts</span><span data-lang="zh">移位次数</span></th><th><span data-lang="en">List after insertion</span><span data-lang="zh">插入后列表</span></th></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>--</td><td>--</td><td>[6, 2, 10, 4, 8]</td></tr>
+          <tr><td>1</td><td>2</td><td>1</td><td>[2, 6, 10, 4, 8]</td></tr>
+          <tr><td>2</td><td>10</td><td>0</td><td>[2, 6, 10, 4, 8]</td></tr>
+          <tr><td>3</td><td>4</td><td>2</td><td>[2, 4, 6, 10, 8]</td></tr>
+          <tr><td>4</td><td>8</td><td>1</td><td>[2, 4, 6, 8, 10]</td></tr>
+        </table>
+        <p><span data-lang="en">i=1, key=2: j=0, data[0]=6>2, shift data[0] right → [6,6,10,4,8], j=-1 (stop), insert at idx 0 → [2,6,10,4,8]. 1 shift.</span><span data-lang="zh">i=1，key=2：j=0，data[0]=6>2，右移 data[0] → [6,6,10,4,8]，j=-1（停止），插入到 idx 0 → [2,6,10,4,8]。1 次移位。</span></p>
+        <p><span data-lang="en">i=2, key=10: j=1, data[1]=6, 6 &lt; 10 (WHILE condition false immediately). Insert at idx 2. 0 shifts.</span><span data-lang="zh">i=2，key=10：j=1，data[1]=6，6 &lt; 10（WHILE 条件立即为假）。插入到 idx 2。0 次移位。</span></p>
+        <p><span data-lang="en">i=3, key=4: j=2, data[2]=10>4, shift → [...,10,10,8], j=1, data[1]=6>4, shift → [...,6,10,8], j=0, data[0]=2, 2 &lt; 4 (stop), insert at idx 1 → [2,4,6,10,8]. 2 shifts.</span><span data-lang="zh">i=3，key=4：j=2，data[2]=10>4，移位 → [...,10,10,8]，j=1，data[1]=6>4，移位 → [...,6,10,8]，j=0，data[0]=2，2 &lt; 4（停止），插入到 idx 1 → [2,4,6,10,8]。2 次移位。</span></p>
+        <p><span data-lang="en">i=4, key=8: j=3, data[3]=10>8, shift → [...,10,10], j=2, data[2]=6, 6 &lt; 8 (stop), insert at idx 3 → [2,4,6,8,10]. 1 shift. <span class="marks-call">[4]</span></span><span data-lang="zh">i=4，key=8：j=3，data[3]=10>8，移位 → [...,10,10]，j=2，data[2]=6，6 &lt; 8（停止），插入到 idx 3 → [2,4,6,8,10]。1 次移位。<span class="marks-call">[4]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Total shifts = 1 + 0 + 2 + 1 = <strong>4</strong>. <span class="marks-call">[1]</span></span><span data-lang="zh">移位总次数 = 1 + 0 + 2 + 1 = <strong>4</strong>。<span class="marks-call">[1]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">When the input is nearly sorted, most elements are already in roughly the right position. The WHILE loop condition <code>data[j] &gt; key</code> becomes False almost immediately for each i -- requiring 0 or 1 shifts per element instead of many. Total work approaches O(n): one comparison per element. Bubble and selection sort do not benefit from nearly-sorted input in the same way: selection sort always scans the entire remaining unsorted portion for the minimum, and basic bubble sort always performs all n-1 passes. <span class="marks-call">[2]</span></span><span data-lang="zh">当输入已近乎有序时，大多数元素已大致处于正确位置。每个 i 的 WHILE 循环条件 <code>data[j] &gt; key</code> 几乎立即为 False--每个元素只需 0 或 1 次移位而非多次。总工作量趋近 O(n)：每个元素一次比较。冒泡和选择排序不能以同样方式受益于近乎有序的输入：选择排序总是扫描整个剩余未排序部分寻找最小值，基本冒泡排序总是执行全部 n-1 遍。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (d):</span><span data-lang="zh">第 (d) 部分：</span></strong> <span data-lang="en">Best case: <strong>O(n)</strong> -- when the list is already sorted in ascending order (the WHILE loop never executes, just one comparison per element). Worst case: <strong>O(n&sup2;)</strong> -- when the list is in reverse descending order (every element must shift all the way to index 0). <span class="marks-call">[1]</span></span><span data-lang="zh">最好情况：<strong>O(n)</strong>--当列表已按升序排列时（WHILE 循环从不执行，每个元素只需一次比较）。最坏情况：<strong>O(n²)</strong>--当列表完全逆序时（每个元素都需一路移位到索引 0）。<span class="marks-call">[1]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">Notice that when key=10 (i=2), the WHILE loop did not execute at all -- 0 shifts. This is exactly what makes insertion sort fast on nearly-sorted data. Python's built-in Timsort algorithm uses insertion sort internally for small sub-arrays precisely because of this O(n) best-case behavior on partially-ordered data.</span><span data-lang="zh">注意当 key=10（i=2）时，WHILE 循环完全没有执行--0 次移位。这正是插入排序在近乎有序数据上快的原因。Python 内置的 Timsort 算法在小子数组上内部使用插入排序，正是因为这种在部分有序数据上的 O(n) 最好情况性能。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="q frq">
+  <div class="q-head">
+    <span class="pill qnum">Q9</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;3 + &sect;7 <span data-lang="en">Big-O + Algorithm Selection</span><span data-lang="zh">大O + 算法选择</span> &middot; CSTA 3B-AP-11 / ICS4U C2.2</span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">n = 1,000,000 records. Option 1: 10 linear searches. Option 2: O(n&sup2;) sort + 10 binary searches. log&#x2082;(1,000,000) = 20.</span><span data-lang="zh">n = 1,000,000 条记录。方案 1：10 次线性查找。方案 2：O(n²) 排序 + 10 次二分查找。log&#x2082;(1,000,000) = 20。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Algorithm cost analysis</span><span data-lang="zh">算法代价分析</span></div>
+      <div class="rationale">
+        <p><strong><span data-lang="en">Part (a):</span><span data-lang="zh">第 (a) 部分：</span></strong> <span data-lang="en">Option 1 total = 10 x 1,000,000 = <strong>10,000,000</strong> worst-case comparisons. <span class="marks-call">[1]</span></span><span data-lang="zh">方案 1 总计 = 10 x 1,000,000 = <strong>10,000,000</strong> 次最坏情况比较。<span class="marks-call">[1]</span></span></p>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Option 2 sort cost (O(n&sup2;)) = (1,000,000)&sup2; = 10&#xB9;&#x00B2; = 1,000,000,000,000 steps. Binary searches = 10 x 20 = 200 steps. Total = 10&#xB9;&#x00B2; + 200 steps, which is dominated by the sort. <span class="marks-call">[2]</span></span><span data-lang="zh">方案 2 排序代价（O(n²)）= (1,000,000)² = 10&#xB9;&#x00B2; = 1,000,000,000,000 步。二分查找 = 10 x 20 = 200 步。总计 = 10&#xB9;&#x00B2; + 200 步，由排序主导。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">For 10 searches: Option 1 (10,000,000) is dramatically better than Option 2 with O(n&sup2;) sort (10&#xB9;&#x00B2;). The sort cost swamps any gain from binary search. For 1,000 searches: Option 1 = 1,000 x 1,000,000 = 10&#x2079; steps. Option 2 = 10&#xB9;&#x00B2; + 1,000 x 20 = 10&#xB9;&#x00B2; + 20,000 steps -- still dominated by 10&#xB9;&#x00B2;, so Option 1 is still better when using a simple O(n&sup2;) sort. <span class="marks-call">[2]</span></span><span data-lang="zh">对于 10 次查找：方案 1（10,000,000）远优于带 O(n²) 排序的方案 2（10&#xB9;&#x00B2;）。排序代价淹没了二分查找的收益。对于 1,000 次查找：方案 1 = 1,000 x 1,000,000 = 10&#x2079; 步。方案 2 = 10&#xB9;&#x00B2; + 1,000 x 20 = 10&#xB9;&#x00B2; + 20,000 步--仍由 10&#xB9;&#x00B2; 主导，使用简单 O(n²) 排序时方案 1 仍然更好。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (d):</span><span data-lang="zh">第 (d) 部分：</span></strong> <span data-lang="en">Timsort cost = 1,000,000 x 20 = 20,000,000 steps. Plus 10 binary searches = 200. Total = 20,000,200 steps. Compared to linear search Option 1 = 10,000,000 steps. For exactly 10 searches, linear search is still slightly cheaper (10,000,000 vs 20,000,200). However, the crossover point with Timsort is approximately 20,000,000 / 1,000,000 = 20 searches -- so for more than 20 searches on this dataset, Timsort + binary search wins. For 1,000 searches: Option 1 = 10&#x2079;; Option 2 with Timsort = 20,000,000 + 20,000 = 20,020,000 -- Option 2 wins by ~50x. <span class="marks-call">[2]</span></span><span data-lang="zh">Timsort 代价 = 1,000,000 x 20 = 20,000,000 步。加上 10 次二分查找 = 200 步。总计 = 20,000,200 步。与线性查找方案 1 = 10,000,000 步相比。对于恰好 10 次查找，线性查找仍略便宜（10,000,000 vs 20,000,200）。但是，使用 Timsort 的临界点约为 20,000,000 / 1,000,000 = 20 次查找--所以超过 20 次查找时，Timsort + 二分查找胜出。对于 1,000 次查找：方案 1 = 10&#x2079;；带 Timsort 的方案 2 = 20,000,000 + 20,000 = 20,020,000--方案 2 胜出约 50 倍。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The "sort once, binary-search many times" pattern only pays off when the number of searches exceeds the sort cost divided by the search saving. With Timsort this break-even is about 20 searches; with a naive O(n&sup2;) sort it never pays off for any realistic number of searches. Always use Python's built-in sort (Timsort) in practice -- never implement bubble/selection/insertion sort on real large datasets.</span><span data-lang="zh">"排序一次，多次二分查找"模式只有在查找次数超过排序代价除以查找节省量时才有回报。使用 Timsort 时收支平衡点约为 20 次查找；使用朴素 O(n²) 排序时，对任何实际查找次数都无回报。实践中始终使用 Python 内置排序（Timsort）--永远不要在真实大数据集上实现冒泡/选择/插入排序。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART III  MODELING / APPLIED  SOLUTIONS   3 Qs  25 marks
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;&middot;&nbsp; MODELING / APPLIED &nbsp;&middot;&nbsp; SOLUTIONS</span><span data-lang="zh">第三部分 &nbsp;&middot;&nbsp; 建模与应用 &nbsp;&middot;&nbsp; 详解</span></span><span class="part-meta"><span data-lang="en">25 marks</span><span data-lang="zh">共 25 分</span></span></div>
+
+<!-- S10 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q10</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;1 + &sect;2 <span data-lang="en">Search selection + trace</span><span data-lang="zh">查找选择 + 追踪</span> &middot; ICS4U A3.2 / AP CSP 3.11</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Scenario A: unsorted <code>[23, 47, 8, 61, 15, 39, 72]</code>. Scenario B: sorted <code>[8, 15, 23, 39, 47, 61, 72]</code>. Target: 47.</span><span data-lang="zh">场景 A：无序 <code>[23, 47, 8, 61, 15, 39, 72]</code>。场景 B：有序 <code>[8, 15, 23, 39, 47, 61, 72]</code>。目标：47。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Scenario A -- linear search</span><span data-lang="zh">第 (a) 部分：场景 A -- 线性查找</span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Linear search must be used because the list is unsorted. Binary search requires a sorted list as a precondition; applying it to an unsorted list can eliminate the correct half. <span class="marks-call">[1]</span></span><span data-lang="zh">必须使用线性查找，因为列表无序。二分查找要求已排序列表作为前提条件；在无序列表上应用会淘汰正确的一半。<span class="marks-call">[1]</span></span></p>
+        <p><span data-lang="en">Trace: index 0: 23 != 47. Index 1: 47 == 47. FOUND. Indices checked: 0, 1. Total comparisons: 2. <span class="marks-call">[2]</span></span><span data-lang="zh">追踪：索引 0：23 != 47。索引 1：47 == 47。找到。检查的索引：0、1。总比较次数：2。<span class="marks-call">[2]</span></span></p>
+        <div class="answer-line" style="margin-top:10px;"><span data-lang="en">Part (b): Scenario B -- binary search trace</span><span data-lang="zh">第 (b) 部分：场景 B -- 二分查找追踪</span></div>
+        <table class="trace-table">
+          <tr><th><span data-lang="en">Step</span><span data-lang="zh">步骤</span></th><th>low</th><th>high</th><th>mid</th><th>data[mid]</th><th><span data-lang="en">Action</span><span data-lang="zh">操作</span></th></tr>
+          <tr><td>1</td><td>0</td><td>6</td><td>3</td><td>39</td><td><span data-lang="en">39 &lt; 47, low = 4</span><span data-lang="zh">39 &lt; 47，low = 4</span></td></tr>
+          <tr><td>2</td><td>4</td><td>6</td><td>5</td><td>61</td><td><span data-lang="en">61 &gt; 47, high = 4</span><span data-lang="zh">61 &gt; 47，high = 4</span></td></tr>
+          <tr><td>3</td><td>4</td><td>4</td><td>4</td><td>47</td><td><span data-lang="en">47 == 47, FOUND at index 4</span><span data-lang="zh">47 == 47，在索引 4 处找到</span></td></tr>
+        </table>
+        <p><span data-lang="en">Step 1: mid=(0+6)//2=3, data[3]=39&lt;47, low=4. Step 2: mid=(4+6)//2=5, data[5]=61>47, high=4. Step 3: mid=(4+4)//2=4, data[4]=47==47. FOUND. <span class="marks-call">[3]</span></span><span data-lang="zh">第 1 步：mid=(0+6)//2=3，data[3]=39&lt;47，low=4。第 2 步：mid=(4+6)//2=5，data[5]=61>47，high=4。第 3 步：mid=(4+4)//2=4，data[4]=47==47。找到。<span class="marks-call">[3]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">Scenario A (linear): 2 comparisons. Scenario B (binary): 3 comparisons. In this case linear was actually faster because the target happened to be near the start. Advantage of binary: O(log n) worst case vs O(n) worst case -- for large lists and targets near the end, binary is dramatically faster. Disadvantage: requires the list to be sorted in advance, which takes extra time and memory. <span class="marks-call">[2]</span></span><span data-lang="zh">场景 A（线性）：2 次比较。场景 B（二分）：3 次比较。此例中线性查找实际更快，因为目标恰好靠近列表开头。二分查找的优势：最坏情况 O(log n) vs O(n)--对于大列表且目标靠近末尾时，二分查找快得多。缺点：需要列表提前已排序，这需要额外的时间和内存。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">This question illustrates that best-case performance can favor linear search (when the target is near the front). The O(n) vs O(log n) comparison is about worst-case and average-case behavior. For a single search on a 7-item list, any algorithm is fast enough -- the O advantage only becomes significant for large n (thousands or millions of items).</span><span data-lang="zh">本题说明最好情况性能可以有利于线性查找（目标靠近列表前端时）。O(n) vs O(log n) 的比较是关于最坏情况和平均情况行为。对于 7 个元素列表的单次查找，任何算法都足够快--O 优势只在 n 较大时（数千或数百万个元素）才变得显著。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S11 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q11</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+    <span class="pill topic">&sect;4 + &sect;5 + &sect;6 <span data-lang="en">Sort comparison + choice</span><span data-lang="zh">排序比较与选择</span> &middot; ICS4U C2.3 / CSE3110 1.6.5</span>
+    <span class="pill marks"><span data-lang="en">[9 marks]</span><span data-lang="zh">[9 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">Sort algorithm selection for three scenarios.</span><span data-lang="zh">三种场景的排序算法选择。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): Nearly-sorted list</span><span data-lang="zh">第 (a) 部分：近乎有序列表</span></div>
+      <div class="rationale">
+        <p><span data-lang="en">Best choice: <strong>Insertion sort</strong>. Insertion sort has O(n) best-case performance on already-sorted or nearly-sorted data -- the WHILE loop terminates almost immediately for each element since most are already in the correct relative order. Bubble sort and selection sort both always perform O(n&sup2;) work on this input (selection always scans the full unsorted portion; basic bubble always runs n-1 passes). <span class="marks-call">[3]</span></span><span data-lang="zh">最佳选择：<strong>插入排序</strong>。插入排序在已排序或近乎有序数据上具有 O(n) 最好情况性能--由于大多数元素已基本处于正确的相对顺序，每个元素的 WHILE 循环几乎立即终止。冒泡排序和选择排序在此输入上均始终执行 O(n²) 工作（选择排序总是扫描完整未排序部分；基本冒泡排序总是运行 n-1 遍）。<span class="marks-call">[3]</span></span></p>
+        <div class="answer-line" style="margin-top:10px;"><span data-lang="en">Part (b): Reverse-sorted [95, 90, 85, 80, 75, 70, 65] -- swap count comparison</span><span data-lang="zh">第 (b) 部分：完全逆序 [95, 90, 85, 80, 75, 70, 65]--交换次数比较</span></div>
+        <p><strong><span data-lang="en">Bubble sort swaps</span><span data-lang="zh">冒泡排序交换次数</span></strong><span data-lang="en">: Pass 1: 6 swaps (every adjacent pair out of order). Pass 2: 5 swaps. Pass 3: 4. Pass 4: 3. Pass 5: 2. Pass 6: 1. Total = 6+5+4+3+2+1 = <strong>21 swaps</strong>.</span><span data-lang="zh">：第 1 遍：6 次交换（每对相邻元素均乱序）。第 2 遍：5 次。第 3 遍：4 次。第 4 遍：3 次。第 5 遍：2 次。第 6 遍：1 次。总计 = 6+5+4+3+2+1 = <strong>21 次交换</strong>。</span></p>
+        <p><strong><span data-lang="en">Selection sort swaps</span><span data-lang="zh">选择排序交换次数</span></strong><span data-lang="en">: Exactly n-1 = 6 swaps (one per pass, regardless of order).</span><span data-lang="zh">：恰好 n-1 = 6 次交换（每遍一次，与顺序无关）。</span></p>
+        <p><span data-lang="en">Selection sort makes fewer swaps: <strong>6 vs 21</strong>. Selection sort is the better choice when minimizing write operations. <span class="marks-call">[4]</span></span><span data-lang="zh">选择排序交换次数更少：<strong>6 vs 21</strong>。当需要最小化写操作时，选择排序是更好的选择。<span class="marks-call">[4]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">Case where insertion sort is better than bubble sort: nearly-sorted input -- insertion sort runs in O(n) while bubble sort still runs O(n&sup2;) passes. Case where they perform identically in terms of swaps: an already-fully-sorted list -- both perform 0 swaps (insertion sort's WHILE loop never executes; optimised bubble sort's first pass makes 0 swaps and exits). <span class="marks-call">[2]</span></span><span data-lang="zh">插入排序优于冒泡排序的情况：近乎有序输入--插入排序以 O(n) 运行，而冒泡排序仍执行 O(n²) 遍次。两者交换次数相同的情况：已完全排好的列表--两者均执行 0 次交换（插入排序的 WHILE 循环从不执行；优化版冒泡排序第一遍 0 次交换后退出）。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">All three simple sorts share O(n&sup2;) worst case comparisons -- the key differentiators are (1) swaps: selection sort wins with n-1 always; (2) best case: insertion sort wins with O(n) on nearly-sorted; (3) stability: bubble and insertion sort are stable (equal elements maintain relative order), selection sort is not stable by default. These trade-offs are what CSE3110 outcome 1.6.5 and ICS4U C2.3 test directly.</span><span data-lang="zh">三种简单排序均具有 O(n²) 最坏情况比较次数--关键区分在于（1）交换次数：选择排序以始终 n-1 次胜出；（2）最好情况：插入排序在近乎有序时以 O(n) 胜出；（3）稳定性：冒泡和插入排序是稳定的（相等元素保持相对顺序），选择排序默认不稳定。这些权衡正是 CSE3110 结果 1.6.5 和 ICS4U C2.3 直接考查的内容。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S12 -->
+<div class="q app">
+  <div class="q-head">
+    <span class="pill qnum">Q12</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+    <span class="pill topic">&sect;7 <span data-lang="en">Built-in sort + combined search/sort</span><span data-lang="zh">内置排序 + 排序/查找组合</span> &middot; CSTA 3B-AP-11 / ICS4U A3.2</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="q-body">
+    <p class="prompt"><span data-lang="en">students = [("Zara",88),("Alex",95),("Maya",73),("Ben",88),("Priya",91)]. Sort by score ascending, then linear search for score 88.</span><span data-lang="zh">students = [("Zara",88),("Alex",95),("Maya",73),("Ben",88),("Priya",91)]。按分数升序排序，然后线性查找分数 88。</span></p>
+    <div class="solution">
+      <div class="answer-line"><span data-lang="en">Part (a): List after sort</span><span data-lang="zh">第 (a) 部分：排序后列表</span></div>
+      <div class="rationale">
+        <p><span data-lang="en"><code>students.sort(key=lambda s: s[1])</code> sorts by the second element (score) ascending. Python's sort is stable, so equal scores maintain their original relative order. Zara (88) appeared before Ben (88) in the original list. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>students.sort(key=lambda s: s[1])</code> 按第二个元素（分数）升序排序。Python 的排序是稳定的，所以相同分数保持原来的相对顺序。Zara（88）在原始列表中出现在 Ben（88）之前。<span class="marks-call">[2]</span></span></p>
+        <pre>[("Maya", 73), ("Zara", 88), ("Ben", 88), ("Priya", 91), ("Alex", 95)]</pre>
+        <p><strong><span data-lang="en">Part (b):</span><span data-lang="zh">第 (b) 部分：</span></strong> <span data-lang="en">Linear search for score 88: i=0: students[0] = ("Maya",73), 73 != 88. Continue. i=1: students[1] = ("Zara",88), 88 == 88. FOUND. Prints: <code>Found: ('Zara', 88)</code>. Loop exits via break at i=1. <span class="marks-call">[2]</span></span><span data-lang="zh">线性查找分数 88：i=0：students[0]=("Maya",73)，73!=88。继续。i=1：students[1]=("Zara",88)，88==88。找到。打印：<code>Found: ('Zara', 88)</code>。循环在 i=1 时通过 break 退出。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (c):</span><span data-lang="zh">第 (c) 部分：</span></strong> <span data-lang="en">Sort by score descending, name ascending as tiebreaker:</span><span data-lang="zh">按分数降序、姓名升序（作为次要排序键）排序：</span></p>
+        <pre>students.sort(key=lambda s: (-s[1], s[0]))</pre>
+        <p><span data-lang="en">The negation <code>-s[1]</code> reverses the score order (largest score sorts first). <code>s[0]</code> is the name; when scores tie, names sort ascending alphabetically. <span class="marks-call">[2]</span></span><span data-lang="zh">取负 <code>-s[1]</code> 反转分数排序顺序（最高分排在最前）。<code>s[0]</code> 是姓名；当分数相同时，姓名按字母升序排列。<span class="marks-call">[2]</span></span></p>
+        <p><strong><span data-lang="en">Part (d):</span><span data-lang="zh">第 (d) 部分：</span></strong> <span data-lang="en"><code>students.sort(...)</code> modifies the original list in place and returns None. <code>sorted(students, ...)</code> returns a new sorted list and leaves the original <code>students</code> unchanged. If you need to keep the original unsorted list, use <code>sorted()</code> because <code>.sort()</code> would permanently modify <code>students</code> and the original order would be lost. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>students.sort(...)</code> 原地修改原始列表并返回 None。<code>sorted(students, ...)</code> 返回新的排序列表，原始 <code>students</code> 不变。如果需要保留原始未排序列表，使用 <code>sorted()</code>，因为 <code>.sort()</code> 会永久修改 <code>students</code>，原始顺序将丢失。<span class="marks-call">[2]</span></span></p>
+        <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题洞察：</span></strong> <span data-lang="en">The <code>key=lambda s: (-s[1], s[0])</code> trick is a standard Python pattern for multi-key sorting with mixed sort directions. Tuple comparison in Python works left-to-right: first compare by <code>-s[1]</code> (negated score), and only if those are equal, compare by <code>s[0]</code> (name). This is exactly the pattern used in competitive programming and real applications for ranking leaderboards.</span><span data-lang="zh"><code>key=lambda s: (-s[1], s[0])</code> 技巧是 Python 中混合排序方向多键排序的标准模式。Python 中的元组比较从左到右进行：先按 <code>-s[1]</code>（取负的分数）比较，仅当相等时才按 <code>s[0]</code>（姓名）比较。这正是在排行榜排名的竞赛编程和实际应用中使用的模式。</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- consult-cta -->
+<aside class="consult-cta">
+  <span class="consult-cta__lead"><span data-lang="en">Want to go deeper on any of these topics?</span><span data-lang="zh">想在这些主题上更进一步？</span></span>
+  <span class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor:</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估：</span></span>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_7_Searching_and_Sorting__solutions__en" target="_blank" rel="noopener">dingruischolars.com/signup</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_7_Searching_and_Sorting__solutions__zh" target="_blank" rel="noopener">dingruischolars.com/signup-ch</a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../../Study%20Guides/Unit_7_Searching_and_Sorting.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <a href="../Unit_7_Searching_and_Sorting_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></span>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">High School Computer Science &middot; Solutions</span><span data-lang="zh">高中计算机科学 &middot; 详解</span> &middot; <code style="color:#555;">v1</code></span>
+  <span><span data-lang="en">Searching and Sorting Solutions v1 &middot; 12 solutions &middot; ~80 marks &middot; US / ON / BC / AB &middot; HS-CS-7</span><span data-lang="zh">查找与排序 详解 v1 &middot; 共 12 题详解 &middot; 约 80 分 &middot; 美 / 安 / 卑 / 阿 &middot; HS-CS-7</span></span>
+</footer>
+
+<script>
+function toggleLang() { const isZh = document.body.classList.toggle('lang-zh'); try { localStorage.setItem('lang', isZh ? 'zh' : 'en'); } catch (e) {} }
+try { if (localStorage.getItem('lang') === 'zh') document.body.classList.add('lang-zh'); } catch (e) {}
+</script>
+
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

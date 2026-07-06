@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on functions: defining and calling, parameters, return values, variable scope, and modular design. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Functions and Modular Design | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_4_Functions_and_Modular_Design.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Functions and Modular Design | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on functions: defining and calling, parameters, return values, variable scope, and modular design. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_4_Functions_and_Modular_Design.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Functions and Modular Design | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on functions: defining and calling, parameters, return values, variable scope, and modular design. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-4  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Functions and Modular Design",
+  "description": "Free high school Computer Science notes on functions: defining and calling, parameters, return values, variable scope, and modular design. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_4_Functions_and_Modular_Design.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">FUNCTIONS</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-7-1"><span data-lang="en">Why Functions?</span><span data-lang="zh">为什么要用函数？</span></a>
+  <a href="#s-7-2"><span data-lang="en">Defining and Calling Functions</span><span data-lang="zh">定义与调用函数</span></a>
+  <a href="#s-7-3"><span data-lang="en">Parameters and Arguments</span><span data-lang="zh">形参与实参</span></a>
+  <a href="#s-7-4"><span data-lang="en">Return Values</span><span data-lang="zh">返回值</span></a>
+  <a href="#s-7-5"><span data-lang="en">Variable Scope</span><span data-lang="zh">变量作用域</span></a>
+  <a href="#s-7-6"><span data-lang="en">Modular Design and Decomposition</span><span data-lang="zh">模块化设计与分解</span></a>
+  <a href="#s-7-7"><span data-lang="en">Built-in Functions and Libraries</span><span data-lang="zh">内置函数与库</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Functions and Modular Design</span><span data-lang="zh">函数与模块化设计</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Functions are the core tool for writing reusable, readable, and maintainable code. Instead of copying the same logic in five places, you define it once as a named function and call it wherever you need it. This guide builds every concept from scratch: what a function is and why you need one; how to define and call functions; how parameters and arguments let you pass data in; how return values send results out; how variable scope controls which names are visible where; how modular design organises a whole program as a network of cooperating functions; and how built-in functions and libraries save you from reinventing the wheel. All examples use pseudocode and Python side by side.</span><span data-lang="zh">函数（<code>function</code>，函数）是编写可复用、可读性强、易于维护代码的核心工具。与其在五个地方复制同一段逻辑，不如将其定义为一个具名函数（<code>named function</code>，具名函数），在需要时调用（<code>call</code>，调用）。本指南从零开始建立每个概念：函数是什么以及为何需要它；如何定义和调用函数；形参（<code>parameter</code>，形参）和实参（<code>argument</code>，实参）如何让你传入数据；返回值（<code>return value</code>，返回值）如何将结果传出；作用域（<code>scope</code>，作用域）如何控制哪些名称在哪里可见；模块化设计（<code>modular design</code>，模块化设计）如何将整个程序组织为协作函数的网络；以及内置函数（<code>built-in function</code>，内置函数）和库（<code>library</code>，库）如何避免重复造轮子。所有示例均同时使用伪代码和 Python 演示。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">Pseudocode + Python worked examples</span><span data-lang="zh">伪代码 + Python 例题</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-7-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; Why functions?</span><span data-lang="zh">第 1 节 &middot; 为什么要用函数？</span></div>
+  <h2><span data-lang="en">Why Functions? Reuse and Abstraction</span><span data-lang="zh">为什么要用函数？复用与抽象</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three reasons to use a function &mdash; memorise these.</span><span data-lang="zh">使用函数的三个理由 &mdash; 背熟这些。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Reuse</span><span data-lang="zh">复用</span></strong> <span data-lang="en">&mdash; define the logic once; call it anywhere. No copy-paste. If the logic changes, you change one place and all callers get the fix. CSTA 3A-AP-18: "Create artifacts by using procedures within a program."</span><span data-lang="zh">&mdash; 定义逻辑一次，在任何地方调用。无需复制粘贴。如果逻辑需要更改，只需修改一处，所有调用方都获得修复。CSTA 3A-AP-18："通过在程序中使用过程来创建制品。"</span></li>
+      <li><strong><span data-lang="en">Abstraction</span><span data-lang="zh">抽象</span></strong> <span data-lang="en">&mdash; the caller only needs to know <em>what</em> the function does (its name, inputs, output), not <em>how</em> it does it. This hides complexity and lets you think at a higher level. AP CSP LO AAP-3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">&mdash; 调用方只需知道函数<em>做什么</em>（名称、输入、输出），而不需要知道<em>如何做</em>。这隐藏了复杂性，让你在更高层次上思考。AP CSP 学习目标 AAP-3.B："使用抽象管理程序中的复杂性。"</span></li>
+      <li><strong><span data-lang="en">Decomposition</span><span data-lang="zh">分解</span></strong> <span data-lang="en">&mdash; split a big program into small, independently testable functions. Each function solves one clearly-named sub-problem. CSTA 3A-AP-17: "Decompose problems into smaller components … using constructs such as procedures, modules."</span><span data-lang="zh">&mdash; 将大型程序拆分为小型、可独立测试的函数。每个函数解决一个命名清晰的子问题。CSTA 3A-AP-17："通过使用过程、模块等构造将问题分解为更小的组件。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>The one fact that catches people:</strong> a function is an <em>abstraction</em>, not just a shortcut. When you call <code>math.sqrt(9)</code> you do not need to know the algorithm inside &mdash; you just trust the interface. Building your own functions gives the same benefit to whoever calls yours.</span><span data-lang="zh"><strong>最易踩坑的一点：</strong>函数是一种<em>抽象</em>，不仅仅是快捷方式。当你调用 <code>math.sqrt(9)</code> 时，你不需要知道内部算法——只需信任接口。构建自己的函数，就能给调用者带来同样的好处。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; From repeated code to a function</span><span data-lang="zh">例题 1 &middot; 从重复代码到函数</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: a program needs to compute the area of a rectangle in three different places. Show the repeated-code version and the function version.</span><span data-lang="zh">问题：一个程序在三处不同地方需要计算矩形面积。展示重复代码版和函数版。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Repeated-code version (bad).</span><span data-lang="zh">重复代码版（不好）。</span></strong></p>
+    <pre><code>-- Place 1
+SET area1 TO 5 * 3
+
+-- Place 2
+SET area2 TO 8 * 4
+
+-- Place 3
+SET area3 TO 12 * 7</code></pre>
+    <p><span data-lang="en">Three places repeat the same logic (width × height). If the formula needs to change, you must edit three places.</span><span data-lang="zh">三处代码重复相同逻辑（宽 × 高）。如需改为"宽 × 高 × 比例因子"，必须修改三处。</span></p>
+    <p><strong><span data-lang="en">Function version (good).</span><span data-lang="zh">函数版（好）。</span></strong></p>
+    <pre><code>FUNCTION rectangle_area(width, height):
+    RETURN width * height
+
+SET area1 TO rectangle_area(5, 3)
+SET area2 TO rectangle_area(8, 4)
+SET area3 TO rectangle_area(12, 7)</code></pre>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>def rectangle_area(width, height):
+    return width * height
+
+area1 = rectangle_area(5, 3)   # 15
+area2 = rectangle_area(8, 4)   # 32
+area3 = rectangle_area(12, 7)  # 84</code></pre>
+    <p><span data-lang="en">The logic lives in one place. The callers are readable (&ldquo;rectangle area of 5 by 3&rdquo;) without needing to see the multiplication. Ontario ICS3U B2.3: "apply the principle of modularity to design reusable code."</span><span data-lang="zh">逻辑只存在于一处。调用方具有可读性（"5 乘 3 的矩形面积"），无需看到乘法运算。安大略 ICS3U B2.3："应用模块化原则设计可复用代码。"</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A student copies the same 10-line calculation into five different parts of their program. What is the main problem with this approach?</span><span data-lang="zh">一名学生将同一段 10 行计算复制到程序的五个不同部分。这种做法的主要问题是什么？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The program will run more slowly</span><span data-lang="zh">程序运行会更慢</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Python does not allow duplicate code</span><span data-lang="zh">Python 不允许重复代码</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">If the logic needs to change, all five copies must be updated, creating maintenance risk</span><span data-lang="zh">如果逻辑需要更改，必须更新所有五处副本，造成维护风险</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The program will use more memory</span><span data-lang="zh">程序会使用更多内存</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Duplicated code means any bug fix or change must be applied to every copy. Missing even one creates inconsistency. Functions solve this by keeping the logic in one place. CSTA 3A-AP-18 encourages using procedures to avoid exactly this problem.</span><span data-lang="zh">重复代码意味着任何错误修复或更改都必须应用到每个副本。漏掉一处就会造成不一致。函数通过将逻辑保存在一处来解决这个问题。CSTA 3A-AP-18 鼓励使用过程来避免此类问题。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The primary issue is maintainability: five copies mean five places to update. Functions solve this by centralising the logic. Speed and memory impact are negligible for a 10-line block.</span><span data-lang="zh">主要问题是可维护性：五个副本意味着五处需要更新。函数通过集中逻辑来解决这个问题。对于 10 行代码块，速度和内存影响可忽略不计。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which AP CSP Learning Objective says "Use abstraction to manage complexity in a program"?</span><span data-lang="zh">哪个 AP CSP 学习目标说"使用抽象管理程序中的复杂性"？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>AAP-3.B</code></div>
+      <div class="quiz-opt" data-idx="1"><code>AAP-4.A</code></div>
+      <div class="quiz-opt" data-idx="2"><code>DAT-1.A</code></div>
+      <div class="quiz-opt" data-idx="3"><code>CRD-2.A</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">AAP-3.B (verbatim): "Use abstraction to manage complexity in a program." This is the Learning Objective for procedural abstraction in AP CSP Big Idea 3. It maps directly to defining and calling functions/procedures.</span><span data-lang="zh">AAP-3.B（原文）："使用抽象管理程序中的复杂性。"这是 AP CSP 大概念 3 中过程抽象的学习目标。它直接对应定义和调用函数/过程。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">AAP-4.A is about algorithm efficiency. DAT-1.A is about data representation. CRD-2.A is about program design. AAP-3.B is the abstraction and procedures LO.</span><span data-lang="zh">AAP-4.A 关于算法效率。DAT-1.A 关于数据表示。CRD-2.A 关于程序设计。AAP-3.B 是抽象和过程的学习目标。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; procedural abstraction and the &ldquo;black box&rdquo; model</span><span data-lang="zh">深入 &mdash; 过程抽象与"黑盒"模型</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">Computer scientists describe functions using a <strong>black box model</strong>: inputs go in, outputs come out, and the internal implementation is hidden. This separation of <em>interface</em> (what the function promises) from <em>implementation</em> (how it does it) is what allows large teams to build large systems: one developer writes <code>sort_list(data)</code>; every other developer can use it without understanding the sorting algorithm. BC Computer Programming 12 names this "Management of complexity." Ontario ICS4U C1.3 formalises it as "functional decomposition in subprogram design." Alberta CSE2110 outcome 1.1.5 notes "hiding or protecting the program data" as an advantage of modular programming. The principle scales from a 20-line student project to a million-line operating system.</span><span data-lang="zh">计算机科学家使用<strong>黑盒模型</strong>描述函数：输入进去，输出出来，内部实现被隐藏。<em>接口</em>（函数承诺做什么）与<em>实现</em>（如何做到）的分离，使大型团队能够构建大型系统：一个开发者编写 <code>sort_list(data)</code>；其他所有开发者都可以使用它而无需理解排序算法。BC Computer Programming 12 将此称为"复杂性管理"。安大略 ICS4U C1.3 将其正式化为"子程序设计中的函数分解"。阿尔伯塔 CSE2110 结果 1.1.5 指出"隐藏或保护程序数据"是模块化编程的优势。这个原则适用范围从 20 行的学生项目到百万行的操作系统。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; Defining and calling functions</span><span data-lang="zh">第 2 节 &middot; 定义与调用函数</span></div>
+  <h2><span data-lang="en">Defining and Calling Functions</span><span data-lang="zh">定义与调用函数</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Two halves of a function &mdash; know both.</span><span data-lang="zh">函数的两个部分 &mdash; 两者都要掌握。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Definition (FUNCTION keyword)</span><span data-lang="zh">定义（FUNCTION 关键字）</span></strong> <span data-lang="en">&mdash; creates the named block of code. In pseudocode: <code>FUNCTION name(params): ... END FUNCTION</code>. In Python: <code>def name(params): ...</code>. Defining a function does NOT run it.</span><span data-lang="zh">&mdash; 创建具名代码块。伪代码：<code>FUNCTION name(params): ... END FUNCTION</code>。Python：<code>def name(params): ...</code>。定义函数不会运行它。</span></li>
+      <li><strong><span data-lang="en">Call (invoking the function)</span><span data-lang="zh">调用（调用函数）</span></strong> <span data-lang="en">&mdash; runs the code inside the function. In pseudocode: <code>CALL name(args)</code> or just <code>name(args)</code>. In Python: <code>name(args)</code>. The program jumps into the function body, executes it, then returns to where the call was.</span><span data-lang="zh">&mdash; 运行函数内部的代码。伪代码：<code>CALL name(args)</code> 或直接 <code>name(args)</code>。Python：<code>name(args)</code>。程序跳入函数体，执行后返回调用处。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Execution flow:</strong> definition happens at load time (not run time). Each call jumps into the function, runs it to completion (or to a RETURN statement), then execution continues from the line <em>after</em> the call. AB CSE2110 outcome 3.2 says to "use appropriate types of subprograms … functions." Ontario ICS3U A3.2 says to "write subprograms … to perform tasks within programs."</span><span data-lang="zh"><strong>执行流程：</strong>定义在加载时发生（不是运行时）。每次调用跳入函数，运行到结束（或 RETURN 语句），然后继续执行调用<em>之后</em>的那行。AB CSE2110 结果 3.2 要求"使用适当类型的子程序……函数"。安大略 ICS3U A3.2 要求"编写子程序……在程序中执行任务"。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Defining and calling a greeting function</span><span data-lang="zh">例题 2 &middot; 定义和调用问候函数</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function that prints a greeting for a given name, then call it twice with different names.</span><span data-lang="zh">问题：编写一个函数，为给定姓名打印问候语，然后用不同姓名调用两次。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Pseudocode definition and calls.</span><span data-lang="zh">伪代码定义与调用。</span></strong></p>
+    <pre><code>FUNCTION greet(name):
+    OUTPUT "Hello, " + name + "!"
+END FUNCTION
+
+CALL greet("Alice")
+CALL greet("Bob")</code></pre>
+    <p><span data-lang="zh">伪代码说明：<code>FUNCTION</code> 定义函数，<code>OUTPUT</code> 输出，<code>CALL</code> 调用，<code>name</code> 为形参（parameter，形参）。</span><span data-lang="en">Pseudocode: <code>FUNCTION</code> defines, <code>OUTPUT</code> prints, <code>CALL</code> invokes, <code>name</code> is the parameter.</span></p>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>def greet(name):
+    print("Hello, " + name + "!")
+
+greet("Alice")   # Output: Hello, Alice!
+greet("Bob")     # Output: Hello, Bob!</code></pre>
+    <p><span data-lang="en">The <code>def</code> line defines the function; neither print runs until a call occurs. Each call creates a fresh execution of the function body, with the given argument bound to the parameter <code>name</code>.</span><span data-lang="zh"><code>def</code> 行定义函数；在调用发生之前，两次打印都不会运行。每次调用都会重新执行函数体，将给定的实参绑定到形参 <code>name</code>。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">When does the code inside a function definition run?</span><span data-lang="zh">函数定义内部的代码何时运行？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">As soon as the FUNCTION line is reached</span><span data-lang="zh">一旦到达 FUNCTION 行就立即运行</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Only when the function is called</span><span data-lang="zh">只有在函数被调用时</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">At the end of the program</span><span data-lang="zh">在程序结束时</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">When the file is imported</span><span data-lang="zh">当文件被导入时</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Defining a function stores the code but does not execute it. The code inside runs only when the function is called (invoked). This is why you can define a function before you know what arguments will be passed.</span><span data-lang="zh">定义函数会存储代码但不执行它。内部代码只在函数被调用时运行。这就是为什么你可以在知道将传递哪些实参之前定义函数。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The FUNCTION line registers the function's name and code; execution only happens at the call site. Think of a function definition as writing a recipe and a call as cooking it.</span><span data-lang="zh">FUNCTION 行注册函数的名称和代码；执行只在调用处发生。把函数定义想象成写食谱，调用想象成按食谱烹饪。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In Python, which keyword begins a function definition?</span><span data-lang="zh">在 Python 中，哪个关键字开始函数定义？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>function</code></div>
+      <div class="quiz-opt" data-idx="1"><code>PROCEDURE</code></div>
+      <div class="quiz-opt" data-idx="2"><code>define</code></div>
+      <div class="quiz-opt" data-idx="3"><code>def</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Python uses <code>def</code> to begin a function definition: <code>def function_name(params):</code>. The function keyword in pseudocode is <code>FUNCTION</code>; in AP CSP pseudocode it is <code>PROCEDURE</code>; but in Python it is always <code>def</code>.</span><span data-lang="zh">Python 使用 <code>def</code> 开始函数定义：<code>def function_name(params):</code>。伪代码中的函数关键字是 <code>FUNCTION</code>；AP CSP 伪代码中是 <code>PROCEDURE</code>；但在 Python 中始终是 <code>def</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">In Python, the keyword is <code>def</code> (short for define), not <code>function</code> or <code>define</code>. <code>PROCEDURE</code> is the AP CSP pseudocode keyword.</span><span data-lang="zh">在 Python 中，关键字是 <code>def</code>（define 的缩写），而不是 <code>function</code> 或 <code>define</code>。<code>PROCEDURE</code> 是 AP CSP 伪代码关键字。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; AP CSP pseudocode: PROCEDURE vs Python def</span><span data-lang="zh">深入 &mdash; AP CSP 伪代码：PROCEDURE 与 Python def 对比</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">AP CSP uses its own reference-sheet pseudocode for procedures: <code>PROCEDURE name(param1, param2) { ... }</code>. The call syntax is <code>name(arg1, arg2)</code>. Boolean values are <code>TRUE</code>/<code>FALSE</code>; display uses <code>DISPLAY(value)</code>; assignment uses the arrow <code>x &larr; value</code>. This guide uses the generic pseudocode keywords (FUNCTION / RETURN / OUTPUT) that map to any language. For the AP CSP exam, apply the College Board reference sheet notation directly. The underlying concepts (define once, call many times, parameter binding, return value) are identical in both notations.</span><span data-lang="zh">AP CSP 使用其自己的参考手册伪代码定义过程：<code>PROCEDURE name(param1, param2) { ... }</code>。调用语法是 <code>name(arg1, arg2)</code>。布尔值为 <code>TRUE</code>/<code>FALSE</code>；显示使用 <code>DISPLAY(value)</code>；赋值使用箭头 <code>x &larr; value</code>。本指南使用通用伪代码关键字（FUNCTION / RETURN / OUTPUT），可映射到任何语言。对于 AP CSP 考试，直接应用 College Board 参考手册表示法。底层概念（定义一次、多次调用、参数绑定、返回值）在两种表示法中完全相同。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; Parameters and arguments</span><span data-lang="zh">第 3 节 &middot; 形参与实参</span></div>
+  <h2><span data-lang="en">Parameters and Arguments</span><span data-lang="zh">形参与实参</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Parameter vs argument &mdash; different words, different moments.</span><span data-lang="zh">形参与实参 &mdash; 不同的词，不同的时刻。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Parameter</span><span data-lang="zh">形参（parameter）</span></strong> <span data-lang="en">&mdash; the variable name in the function definition. It is a placeholder: it has a name but no value until the function is called. In <code>FUNCTION area(width, height)</code>, <code>width</code> and <code>height</code> are parameters.</span><span data-lang="zh">&mdash; 函数定义中的变量名。它是占位符：有名称但在函数被调用之前没有值。在 <code>FUNCTION area(width, height)</code> 中，<code>width</code> 和 <code>height</code> 是形参。</span></li>
+      <li><strong><span data-lang="en">Argument</span><span data-lang="zh">实参（argument）</span></strong> <span data-lang="en">&mdash; the actual value passed at the call site. In <code>area(5, 3)</code>, <code>5</code> and <code>3</code> are arguments. At call time, <code>width</code> gets <code>5</code> and <code>height</code> gets <code>3</code>.</span><span data-lang="zh">&mdash; 在调用处传递的实际值。在 <code>area(5, 3)</code> 中，<code>5</code> 和 <code>3</code> 是实参。调用时，<code>width</code> 得到 <code>5</code>，<code>height</code> 得到 <code>3</code>。</span></li>
+      <li><strong><span data-lang="en">One-way parameter passing</span><span data-lang="zh">单向参数传递</span></strong> <span data-lang="en">&mdash; the function receives the value; changing the parameter inside the function does not affect the caller's variable. AB CSE2110 outcome 3.3.3 covers "one- and two-way parameter passing."</span><span data-lang="zh">&mdash; 函数接收值；在函数内部更改形参不影响调用方的变量。AB CSE2110 结果 3.3.3 涵盖"单向和双向参数传递"。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Memory trick:</strong> <em>Para</em>meters live in the function <em>definition</em>; <em>Arg</em>uments are the <em>actual</em> values at the call. Ontario ICS3U A3.2 says "write subprograms … that use parameter passing."</span><span data-lang="zh"><strong>记忆技巧：</strong><em>形</em>参存在于函数<em>定义</em>中；<em>实</em>参是调用处的<em>实际</em>值。安大略 ICS3U A3.2 要求"编写……使用参数传递的子程序"。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; A function with two parameters</span><span data-lang="zh">例题 3 &middot; 带两个形参的函数</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function <code>power(base, exponent)</code> that returns base raised to the exponent, then call it with three different argument pairs.</span><span data-lang="zh">问题：编写函数 <code>power(base, exponent)</code>，返回底数的指数次幂，然后用三对不同的实参调用它。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Pseudocode.</span><span data-lang="zh">伪代码。</span></strong></p>
+    <pre><code>FUNCTION power(base, exponent):
+    SET result TO 1
+    FOR i FROM 1 TO exponent:
+        SET result TO result * base
+    RETURN result
+END FUNCTION
+
+OUTPUT power(2, 3)   -- 8
+OUTPUT power(3, 4)   -- 81
+OUTPUT power(5, 2)   -- 25</code></pre>
+    <p><span data-lang="zh">说明：<code>base</code> 和 <code>exponent</code> 是形参（parameter，形参）；<code>2, 3</code> / <code>3, 4</code> / <code>5, 2</code> 是实参（argument，实参）。<code>RETURN</code> 将结果传回调用处。</span><span data-lang="en">Note: <code>base</code> and <code>exponent</code> are parameters; <code>2, 3</code> / <code>3, 4</code> / <code>5, 2</code> are arguments. <code>RETURN</code> sends the result back to the caller.</span></p>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>def power(base, exponent):
+    result = 1
+    for i in range(exponent):
+        result = result * base
+    return result
+
+print(power(2, 3))   # 8
+print(power(3, 4))   # 81
+print(power(5, 2))   # 25</code></pre>
+    <p><span data-lang="en">Each call creates fresh copies of <code>base</code> and <code>exponent</code> with the given argument values. Changing <code>result</code> inside the function does not affect any variable outside &mdash; that is one-way parameter passing in action.</span><span data-lang="zh">每次调用都会创建 <code>base</code> 和 <code>exponent</code> 的新副本，并绑定给定的实参值。在函数内更改 <code>result</code> 不会影响函数外的任何变量——这就是单向参数传递的实际效果。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In <code>FUNCTION square(n): RETURN n * n</code>, what is <code>n</code>?</span><span data-lang="zh">在 <code>FUNCTION square(n): RETURN n * n</code> 中，<code>n</code> 是什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A parameter — a placeholder in the definition</span><span data-lang="zh">形参（parameter）——定义中的占位符</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">An argument — the actual value passed at call time</span><span data-lang="zh">实参（argument）——调用时传递的实际值</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A return value</span><span data-lang="zh">返回值（return value）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A global variable</span><span data-lang="zh">全局变量（global variable）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>n</code> appears in the function definition, so it is a parameter. It is a placeholder that receives the actual value when the function is called. E.g., <code>square(7)</code> binds <code>n = 7</code>; <code>square(9)</code> binds <code>n = 9</code>.</span><span data-lang="zh"><code>n</code> 出现在函数定义中，所以它是形参。它是一个占位符，在函数被调用时接收实际值。例如，<code>square(7)</code> 绑定 <code>n = 7</code>；<code>square(9)</code> 绑定 <code>n = 9</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Parameters are in the definition; arguments are at the call site. <code>n</code> is in the definition &mdash; it is a parameter. The return value is <code>n * n</code>.</span><span data-lang="zh">形参在定义中；实参在调用处。<code>n</code> 在定义中——它是形参。返回值是 <code>n * n</code>。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A function is defined as <code>FUNCTION add(a, b): RETURN a + b</code>. What is the result of <code>add(4, 7)</code>?</span><span data-lang="zh">函数定义为 <code>FUNCTION add(a, b): RETURN a + b</code>。<code>add(4, 7)</code> 的结果是什么？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">4</div>
+      <div class="quiz-opt" data-idx="1">7</div>
+      <div class="quiz-opt" data-idx="2">11</div>
+      <div class="quiz-opt" data-idx="3">47</div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">At the call <code>add(4, 7)</code>, argument <code>4</code> binds to parameter <code>a</code> and argument <code>7</code> binds to parameter <code>b</code>. The function returns <code>4 + 7 = 11</code>.</span><span data-lang="zh">调用 <code>add(4, 7)</code> 时，实参 <code>4</code> 绑定到形参 <code>a</code>，实参 <code>7</code> 绑定到形参 <code>b</code>。函数返回 <code>4 + 7 = 11</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Arguments bind in order: <code>a = 4</code>, <code>b = 7</code>. The return value is <code>a + b = 4 + 7 = 11</code>.</span><span data-lang="zh">实参按顺序绑定：<code>a = 4</code>，<code>b = 7</code>。返回值是 <code>a + b = 4 + 7 = 11</code>。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; Return values</span><span data-lang="zh">第 4 节 &middot; 返回值</span></div>
+  <h2><span data-lang="en">Return Values</span><span data-lang="zh">返回值</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">RETURN sends a value out of the function back to the caller.</span><span data-lang="zh">RETURN 将值从函数传回调用方。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Void / procedure (no return)</span><span data-lang="zh">无返回值函数 / 过程</span></strong> <span data-lang="en">&mdash; does something (prints, modifies a structure) but produces no output value. Example: <code>greet("Alice")</code> just prints; nothing comes back to assign. AB CSE2110 outcome 3.2 distinguishes: "functions (subprograms that return a value) and procedures (subprograms that do not return a value)."</span><span data-lang="zh">&mdash; 执行某些操作（打印、修改结构）但不产生输出值。示例：<code>greet("Alice")</code> 只是打印；没有值返回供赋值。AB CSE2110 结果 3.2 区分："函数（有返回值的子程序）和过程（无返回值的子程序）"。</span></li>
+      <li><strong><span data-lang="en">Function with return value</span><span data-lang="zh">有返回值的函数</span></strong> <span data-lang="en">&mdash; produces a result the caller can store or use directly. <code>SET x TO square(5)</code> stores the return value 25 in <code>x</code>. <code>RETURN</code> also exits the function immediately.</span><span data-lang="zh">&mdash; 产生调用方可以存储或直接使用的结果。<code>SET x TO square(5)</code> 将返回值 25 存入 <code>x</code>。<code>RETURN</code> 也立即退出函数。</span></li>
+      <li><strong><span data-lang="en">Early return</span><span data-lang="zh">提前返回</span></strong> <span data-lang="en">&mdash; a RETURN inside an IF statement exits the function early. After the first RETURN that executes, the rest of the function body is skipped.</span><span data-lang="zh">&mdash; IF 语句内的 RETURN 提前退出函数。在第一个执行的 RETURN 之后，函数体的其余部分被跳过。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Key rule:</strong> always capture the return value if you need it: <code>SET result TO my_function(args)</code>. If you call a value-returning function without capturing the result, the value is discarded.</span><span data-lang="zh"><strong>关键规则：</strong>如果需要返回值，务必捕获它：<code>SET result TO my_function(args)</code>。如果调用有返回值的函数时不捕获结果，值将被丢弃。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; A grade classifier function with early return</span><span data-lang="zh">例题 4 &middot; 带提前返回的成绩分类函数</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function that takes a score and returns the letter grade ("A", "B", "C", "D", or "F").</span><span data-lang="zh">问题：编写一个函数，接受分数并返回字母等级（"A"、"B"、"C"、"D" 或 "F"）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Pseudocode with early returns.</span><span data-lang="zh">带提前返回的伪代码。</span></strong></p>
+    <pre><code>FUNCTION grade(score):
+    IF score >= 90 THEN RETURN "A"
+    IF score >= 80 THEN RETURN "B"
+    IF score >= 70 THEN RETURN "C"
+    IF score >= 60 THEN RETURN "D"
+    RETURN "F"
+END FUNCTION
+
+OUTPUT grade(95)   -- "A"
+OUTPUT grade(82)   -- "B"
+OUTPUT grade(55)   -- "F"</code></pre>
+    <p><span data-lang="zh">说明：每个 <code>RETURN</code> 立即退出函数并将字符串返回给调用方。对于分数 82：第一个 IF（≥90）为假跳过；第二个 IF（≥80）为真，立即返回 "B"，其余 IF 语句均不执行。这是返回值（return value，返回值）的典型用法。</span><span data-lang="en">For score 82: first IF (≥90) is false, skip; second IF (≥80) is true, immediately return "B". The remaining IF statements never execute. This is the return value in action.</span></p>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>def grade(score):
+    if score >= 90: return "A"
+    if score >= 80: return "B"
+    if score >= 70: return "C"
+    if score >= 60: return "D"
+    return "F"
+
+print(grade(95))   # A
+print(grade(82))   # B
+print(grade(55))   # F</code></pre>
+    <p><span data-lang="en">The caller uses the return value directly in <code>print()</code>. Alternatively: <code>letter = grade(82)</code> stores "B" in the variable <code>letter</code>.</span><span data-lang="zh">调用方在 <code>print()</code> 中直接使用返回值。或者：<code>letter = grade(82)</code> 将 "B" 存入变量 <code>letter</code>。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the return value of <code>FUNCTION double(n): RETURN n * 2</code> when called as <code>double(6)</code>?</span><span data-lang="zh"><code>FUNCTION double(n): RETURN n * 2</code> 以 <code>double(6)</code> 调用时，返回值是多少？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">6</div>
+      <div class="quiz-opt" data-idx="1">12</div>
+      <div class="quiz-opt" data-idx="2">2</div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Nothing — the function has no output</span><span data-lang="zh">没有——函数没有输出</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">At call <code>double(6)</code>, <code>n</code> is bound to <code>6</code>. The function returns <code>6 * 2 = 12</code>. The return value 12 is sent back to the caller.</span><span data-lang="zh">调用 <code>double(6)</code> 时，<code>n</code> 绑定到 <code>6</code>。函数返回 <code>6 * 2 = 12</code>。返回值 12 被传回调用方。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The parameter <code>n</code> gets the argument value 6. The RETURN statement sends back <code>n * 2 = 6 * 2 = 12</code>.</span><span data-lang="zh">形参 <code>n</code> 获取实参值 6。RETURN 语句将 <code>n * 2 = 6 * 2 = 12</code> 传回。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A function that prints output but has no RETURN statement is called a&hellip;</span><span data-lang="zh">一个打印输出但没有 RETURN 语句的函数称为……</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Procedure / void function</span><span data-lang="zh">过程 / 无返回值函数（procedure / void function）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Value-returning function</span><span data-lang="zh">有返回值函数（value-returning function）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Parameter</span><span data-lang="zh">形参（parameter）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Library</span><span data-lang="zh">库（library）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">AB CSE2110 outcome 3.2 distinguishes functions (return a value) from procedures (do not return a value). A function that only prints is a procedure or void function &mdash; it does work but sends nothing back to the caller.</span><span data-lang="zh">AB CSE2110 结果 3.2 区分函数（有返回值）和过程（无返回值）。只打印的函数是过程或无返回值函数——它执行工作但不向调用方传回任何值。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">No RETURN = procedure (void). A value-returning function uses a RETURN statement to send a result back. Parameters are inputs; libraries are collections of pre-built functions.</span><span data-lang="zh">没有 RETURN = 过程（void）。有返回值函数使用 RETURN 语句将结果传回。形参是输入；库是预建函数的集合。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; functions as expressions and composing calls</span><span data-lang="zh">深入 &mdash; 函数作为表达式与调用的组合</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">Because a value-returning function produces a value, you can use a call anywhere a value is expected. This means you can <strong>compose</strong> calls: <code>OUTPUT double(square(3))</code> evaluates <code>square(3) = 9</code> first, then passes 9 as the argument to <code>double</code>, giving 18. You can also use a return value in an arithmetic expression: <code>SET total TO price(quantity) + tax(quantity)</code>. This composability is why functions are described as "first-class" building blocks in all of these curricula: Ontario ICS3U A3, AP CSP Big Idea 3 (AAP), BC CP11 "structures," and AB CSE2110 all treat functions as reusable computational units you combine like LEGO bricks. Composition is the heart of modular design (&sect;6).</span><span data-lang="zh">因为有返回值的函数产生一个值，所以你可以在任何需要值的地方使用调用。这意味着你可以<strong>组合</strong>调用：<code>OUTPUT double(square(3))</code> 首先计算 <code>square(3) = 9</code>，然后将 9 作为实参传递给 <code>double</code>，得到 18。你也可以在算术表达式中使用返回值：<code>SET total TO price(quantity) + tax(quantity)</code>。这种可组合性是为什么函数在所有这些大纲中被描述为"一等"构建块：安大略 ICS3U A3、AP CSP 大概念 3（AAP）、BC CP11"结构"和 AB CSE2110 都将函数视为可组合的可复用计算单元，就像乐高积木一样。组合是模块化设计（&sect;6）的核心。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; Variable scope</span><span data-lang="zh">第 5 节 &middot; 变量作用域</span></div>
+  <h2><span data-lang="en">Variable Scope: Local vs Global</span><span data-lang="zh">变量作用域：局部变量与全局变量</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Scope = which parts of the code can see (read/write) a variable.</span><span data-lang="zh">作用域 = 代码的哪些部分可以访问（读/写）一个变量。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Local variable</span><span data-lang="zh">局部变量（local variable）</span></strong> <span data-lang="en">&mdash; created inside a function. Only visible inside that function. Destroyed when the function returns. Two functions can each have a local variable called <code>total</code> without conflict.</span><span data-lang="zh">&mdash; 在函数内创建。只在该函数内可见。函数返回时销毁。两个函数各自都可以有名为 <code>total</code> 的局部变量，互不冲突。</span></li>
+      <li><strong><span data-lang="en">Global variable</span><span data-lang="zh">全局变量（global variable）</span></strong> <span data-lang="en">&mdash; created outside all functions. Visible everywhere in the program. Changing it inside one function affects all other code that reads it. AB CSE2110 outcome 3.3 says to "analyze and determine the type of scope required."</span><span data-lang="zh">&mdash; 在所有函数外创建。在程序的所有地方可见。在一个函数内更改它会影响读取它的所有其他代码。AB CSE2110 结果 3.3 要求"分析并确定所需的作用域类型"。</span></li>
+      <li><strong><span data-lang="en">Best practice</span><span data-lang="zh">最佳实践</span></strong> <span data-lang="en">&mdash; prefer local variables. Pass data in via parameters and get data out via return values. Only use globals for constants or settings that genuinely need to be shared program-wide. Ontario ICS3U A3.2 explicitly says "appropriate variable scope (e.g., local, global)."</span><span data-lang="zh">&mdash; 优先使用局部变量。通过形参传入数据，通过返回值传出数据。只将全局变量用于真正需要程序范围内共享的常量或设置。安大略 ICS3U A3.2 明确要求"适当的变量作用域（如局部、全局）"。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Scope rule summary:</strong> Local beats global inside a function. If a local variable and a global variable have the same name, code inside the function sees the local one. Code outside the function sees the global one.</span><span data-lang="zh"><strong>作用域规则摘要：</strong>在函数内部，局部变量优先于全局变量。如果局部变量和全局变量同名，函数内部的代码看到的是局部变量；函数外部的代码看到的是全局变量。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Tracing local vs global scope</span><span data-lang="zh">例题 5 &middot; 追踪局部作用域与全局作用域</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Trace this program and predict the output for each print statement.</span><span data-lang="zh">追踪此程序，预测每个打印语句的输出。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Pseudocode.</span><span data-lang="zh">伪代码。</span></strong></p>
+    <pre><code>SET total TO 100        -- global variable (全局变量)
+
+FUNCTION add_five():
+    SET total TO total + 5  -- local? or global?
+    RETURN total
+END FUNCTION
+
+OUTPUT total            -- Line A
+OUTPUT add_five()       -- Line B
+OUTPUT total            -- Line C</code></pre>
+    <p><strong><span data-lang="en">Python rendering (Python requires the global keyword to modify a global).</span><span data-lang="zh">Python 实现（Python 需要 global 关键字才能修改全局变量）。</span></strong></p>
+    <pre><code>total = 100            # global variable (全局变量)
+
+def add_five():
+    global total       # must declare to modify the global
+    total = total + 5
+    return total
+
+print(total)           # Line A: 100
+print(add_five())      # Line B: 105 (modifies the global)
+print(total)           # Line C: 105 (global was changed!)</code></pre>
+    <p><span data-lang="en">Without <code>global total</code> inside the function, Python would create a <em>new local variable</em> called <code>total</code>, and the global would remain 100. This is exactly why unintended global modification is a common bug: the behaviour depends on one keyword. Prefer passing <code>total</code> as a parameter and returning the result instead.</span><span data-lang="zh">如果函数内没有 <code>global total</code>，Python 会创建一个名为 <code>total</code> 的<em>新局部变量</em>，全局变量仍为 100。这正是无意的全局变量修改成为常见错误的原因：行为取决于一个关键字。建议改为将 <code>total</code> 作为形参传入，并返回结果。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A variable created inside a function is called a __________ and is only visible __________ .</span><span data-lang="zh">在函数内部创建的变量称为 __________，只在 __________ 可见。</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">global variable / inside the function and in the main program</span><span data-lang="zh">全局变量（global variable）/ 函数内部和主程序中</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">parameter / inside the function and at the call site</span><span data-lang="zh">形参（parameter）/ 函数内部和调用处</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">return value / after the RETURN statement</span><span data-lang="zh">返回值（return value）/ RETURN 语句之后</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">local variable / inside that function only</span><span data-lang="zh">局部变量（local variable）/ 只在该函数内部</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A variable created inside a function is a local variable. It is only visible inside that function, and it is destroyed when the function returns. Ontario ICS3U A3.2 specifies "appropriate variable scope (e.g., local, global)."</span><span data-lang="zh">在函数内部创建的变量是局部变量（local variable）。它只在该函数内可见，函数返回时销毁。安大略 ICS3U A3.2 规定"适当的变量作用域（如局部、全局）"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Local variables are scoped to the function they are created in. Global variables live outside all functions and are visible everywhere. Parameters are placeholders for input, not regular variables.</span><span data-lang="zh">局部变量的作用域限于创建它的函数。全局变量存在于所有函数之外，在任何地方都可见。形参是输入的占位符，不是普通变量。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Two functions each have a local variable named <code>count</code>. Can they interfere with each other?</span><span data-lang="zh">两个函数各自都有一个名为 <code>count</code> 的局部变量。它们会互相干扰吗？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Yes — they both write to the same memory location</span><span data-lang="zh">会——它们都写入同一内存位置</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">No — each function's local variables are independent; same name is fine</span><span data-lang="zh">不会——每个函数的局部变量是独立的；同名没有问题</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Only if the functions call each other</span><span data-lang="zh">只有在函数互相调用时才会</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Yes — Python does not allow two variables with the same name</span><span data-lang="zh">会——Python 不允许两个变量同名</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Local variables are isolated to the function that creates them. Two functions with a local variable called <code>count</code> each have their own independent <code>count</code>. Changing one does not affect the other. This isolation is the main benefit of local scope.</span><span data-lang="zh">局部变量与创建它们的函数隔离。两个函数各自都有名为 <code>count</code> 的局部变量，各自拥有独立的 <code>count</code>。更改一个不会影响另一个。这种隔离是局部作用域的主要优点。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Local variables are isolated per function. The same name in two different functions refers to two completely separate storage locations. Only globals (or shared mutable objects) can create this kind of interference.</span><span data-lang="zh">局部变量按函数隔离。两个不同函数中的相同名称指向两个完全独立的存储位置。只有全局变量（或共享的可变对象）才能造成这种干扰。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; mutable global state and why it causes hard bugs <span class="honors-flag">Honors &mdash; ICS4U C1.3 / CSE2110</span></span><span data-lang="zh">深入 &mdash; 可变全局状态及其引发难以调试的错误 <span class="honors-flag">荣誉 &mdash; ICS4U C1.3 / CSE2110</span></span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">When a function silently reads and writes a global variable, the function's behaviour depends on hidden state outside its parameters. This creates two problems: (1) <strong>Non-reproducibility</strong> — calling the function twice with the same arguments can produce different results if the global changed between calls. (2) <strong>Tight coupling</strong> — every function that touches the global becomes coupled to every other; changing the global's name, type, or range requires editing all of them. AB CSE2110 outcome 3.4 says to "analyze for, and maintain, an appropriate balance between the coupling or dependency and cohesion or focus of subprograms." Ontario ICS4U C1.3 ("functional decomposition in subprogram design") is assessed precisely on this. The fix is simple: pass the value as a parameter and return the new value &mdash; zero hidden state, zero coupling.</span><span data-lang="zh">当函数静默地读写全局变量时，函数的行为取决于其形参之外的隐藏状态。这带来两个问题：(1) <strong>不可重现性</strong>——如果全局变量在两次调用之间发生了变化，用相同实参调用函数两次可能产生不同结果。(2) <strong>紧耦合</strong>——所有触及全局变量的函数都与彼此耦合；更改全局变量的名称、类型或范围需要编辑所有这些函数。AB CSE2110 结果 3.4 要求"分析并维护子程序之间耦合（依赖）和内聚（专注度）的适当平衡"。安大略 ICS4U C1.3（"子程序设计中的函数分解"）正是针对这一点进行评估。解决方法很简单：将值作为形参传入，将新值作为返回值传出——零隐藏状态，零耦合。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Modular design and decomposition</span><span data-lang="zh">第 6 节 &middot; 模块化设计与分解</span></div>
+  <h2><span data-lang="en">Modular Design: Decomposing a Program into Functions</span><span data-lang="zh">模块化设计：将程序分解为函数</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Modular design = give each function one clear job; connect them via calls.</span><span data-lang="zh">模块化设计 = 让每个函数只做一件明确的事；通过调用连接它们。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Single-responsibility rule</span><span data-lang="zh">单一职责规则</span></strong> <span data-lang="en">&mdash; every function should do exactly one thing, named by a verb-noun pair (e.g., <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code>, <code>display_report</code>). AB CSE2110 outcome 3.4: "appropriate balance between coupling … and cohesion."</span><span data-lang="zh">&mdash; 每个函数应该只做一件事，用动词-名词组合命名（如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code>、<code>display_report</code>）。AB CSE2110 结果 3.4："耦合……与内聚的适当平衡"。</span></li>
+      <li><strong><span data-lang="en">Top-down design</span><span data-lang="zh">自顶向下设计</span></strong> <span data-lang="en">&mdash; start with the main function (high level); each step becomes a function call; implement each sub-function; repeat. ICS3U B2.3: "apply the principle of modularity to design reusable code." CSTA 3A-AP-17: "using constructs such as procedures, modules."</span><span data-lang="zh">&mdash; 从主函数（高层）开始；每个步骤变成一个函数调用；实现每个子函数；重复。ICS3U B2.3："应用模块化原则设计可复用代码。" CSTA 3A-AP-17："使用过程、模块等构造"。</span></li>
+      <li><strong><span data-lang="en">Independently testable</span><span data-lang="zh">可独立测试</span></strong> <span data-lang="en">&mdash; you can test <code>compute_average([80, 90, 70])</code> alone before hooking it up to the rest. Isolating bugs becomes trivial.</span><span data-lang="zh">&mdash; 你可以在将 <code>compute_average([80, 90, 70])</code> 连接到其余部分之前单独测试它。隔离错误变得轻而易举。</span></li>
+    </ul>
+    <span data-lang="en">BC CP11 names "structures" and "ways to modify existing code to meet a particular purpose" as core content — modular design is exactly that pattern.</span><span data-lang="zh">BC CP11 将"结构"和"修改现有代码以满足特定目的的方法"列为核心内容——模块化设计正是这种模式。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; A grade-book program in four functions</span><span data-lang="zh">例题 6 &middot; 用四个函数实现成绩册程序</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: a program reads 5 scores, computes the average, determines the letter grade (A/B/C/D/F), and displays a report. Decompose into functions.</span><span data-lang="zh">问题：程序读取 5 个成绩，计算平均分，确定字母等级（A/B/C/D/F），并显示报告。分解为函数。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Decomposition into four functions.</span><span data-lang="zh">分解为四个函数。</span></strong></p>
+    <pre><code>FUNCTION get_scores():
+    SET scores TO empty list
+    FOR i FROM 1 TO 5:
+        INPUT score
+        APPEND score TO scores
+    RETURN scores
+END FUNCTION
+
+FUNCTION compute_average(scores):
+    SET total TO 0
+    FOR EACH s IN scores: SET total TO total + s
+    RETURN total / 5
+END FUNCTION
+
+FUNCTION letter_grade(average):
+    IF average >= 90 THEN RETURN "A"
+    IF average >= 80 THEN RETURN "B"
+    IF average >= 70 THEN RETURN "C"
+    IF average >= 60 THEN RETURN "D"
+    RETURN "F"
+END FUNCTION
+
+FUNCTION display_report(avg, grade):
+    OUTPUT "Average: " + avg
+    OUTPUT "Grade:   " + grade
+END FUNCTION
+
+-- Main program
+SET scores TO get_scores()
+SET avg TO compute_average(scores)
+SET grade TO letter_grade(avg)
+display_report(avg, grade)</code></pre>
+    <p><span data-lang="zh">说明：主程序（main program）只有四行，清晰如故事情节。每个函数（函数，function）只做一件事；可以单独测试每个函数。数据通过形参（parameter，形参）和返回值（return value，返回值）流动，无需全局变量（global variable，全局变量）。</span><span data-lang="en">The main program is four lines — readable as a story. Each function does one thing; each can be tested in isolation. Data flows via parameters and return values, with no global variables needed.</span></p>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>def get_scores():
+    scores = []
+    for i in range(5):
+        scores.append(float(input("Score: ")))
+    return scores
+
+def compute_average(scores):
+    return sum(scores) / len(scores)
+
+def letter_grade(average):
+    if average >= 90: return "A"
+    if average >= 80: return "B"
+    if average >= 70: return "C"
+    if average >= 60: return "D"
+    return "F"
+
+def display_report(avg, grade):
+    print(f"Average: {avg:.1f}")
+    print(f"Grade:   {grade}")
+
+scores = get_scores()
+avg = compute_average(scores)
+grade = letter_grade(avg)
+display_report(avg, grade)</code></pre>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">According to the single-responsibility rule, a function should&hellip;</span><span data-lang="zh">根据单一职责规则，函数应该……</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Be as short as possible (ideally one line)</span><span data-lang="zh">尽可能短（理想情况下只有一行）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Never use parameters</span><span data-lang="zh">从不使用形参</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Do exactly one clearly-named task</span><span data-lang="zh">只做一件命名清晰的任务</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Always return a numeric value</span><span data-lang="zh">总是返回数值</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The single-responsibility rule says each function should do exactly one thing, named by a clear verb-noun pair. This makes the function testable, reusable, and easy to understand. AB CSE2110 describes this as "cohesion" — a function with a single clear focus.</span><span data-lang="zh">单一职责规则要求每个函数只做一件事，用清晰的动词-名词组合命名。这使函数可测试、可复用且易于理解。AB CSE2110 将此描述为"内聚"——具有单一明确关注点的函数。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Single responsibility is about focus, not length. A function can be many lines long and still have a single responsibility. Length and parameter usage are separate concerns.</span><span data-lang="zh">单一职责是关于关注点，而不是长度。函数可以有很多行，但仍然只有一个职责。长度和形参使用是独立的关注点。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In top-down design, what does each step in the main function become?</span><span data-lang="zh">在自顶向下设计中，主函数中的每个步骤变成什么？</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A global variable</span><span data-lang="zh">一个全局变量</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A comment in the code</span><span data-lang="zh">代码中的注释</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A new file</span><span data-lang="zh">一个新文件</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A function call to a sub-function you then implement</span><span data-lang="zh">一个函数调用，然后你再实现该子函数</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In top-down design, you write the main function first using high-level calls like <code>get_scores()</code>, <code>compute_average()</code>, then implement each sub-function. Each step in the main program becomes a function call. The main program stays readable; complexity lives in the sub-functions.</span><span data-lang="zh">在自顶向下设计中，你首先使用高层调用（如 <code>get_scores()</code>、<code>compute_average()</code>）编写主函数，然后实现每个子函数。主程序中的每个步骤变成一个函数调用。主程序保持可读性；复杂性存在于子函数中。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Top-down design turns each high-level step into a function call, then you implement the called functions. This keeps the main program simple and lets you work on one function at a time.</span><span data-lang="zh">自顶向下设计将每个高层步骤转变为函数调用，然后你再实现被调用的函数。这使主程序简单，让你一次专注于一个函数。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Built-in functions and libraries</span><span data-lang="zh">第 7 节 &middot; 内置函数与库</span></div>
+  <h2><span data-lang="en">Built-in Functions and Libraries</span><span data-lang="zh">内置函数与库</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">A library is a collection of pre-written functions you can call without defining them yourself.</span><span data-lang="zh">库是预编写函数的集合，你可以直接调用，无需自己定义。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Built-in functions</span><span data-lang="zh">内置函数</span></strong> <span data-lang="en">&mdash; available without importing anything. Python examples: <code>len()</code>, <code>print()</code>, <code>input()</code>, <code>abs()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>round()</code>, <code>range()</code>, <code>int()</code>, <code>float()</code>, <code>str()</code>.</span><span data-lang="zh">&mdash; 无需导入即可使用。Python 示例：<code>len()</code>、<code>print()</code>、<code>input()</code>、<code>abs()</code>、<code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>round()</code>、<code>range()</code>、<code>int()</code>、<code>float()</code>、<code>str()</code>。</span></li>
+      <li><strong><span data-lang="en">Standard library modules</span><span data-lang="zh">标准库模块</span></strong> <span data-lang="en">&mdash; import with <code>import module_name</code>, then call <code>module_name.function()</code>. Examples: <code>import math</code> gives <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.pi</code>; <code>import random</code> gives <code>random.randint()</code>. BC CP11 Content: "pre-built libraries and their documentation."</span><span data-lang="zh">&mdash; 用 <code>import module_name</code> 导入，然后调用 <code>module_name.function()</code>。示例：<code>import math</code> 提供 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.pi</code>；<code>import random</code> 提供 <code>random.randint()</code>。BC CP11 内容："预建库及其文档"。</span></li>
+      <li><strong><span data-lang="en">Reading documentation</span><span data-lang="zh">阅读文档</span></strong> <span data-lang="en">&mdash; every library function has a signature (its name, parameters, return type) and a description. You do not need to see the implementation — only the interface. Ontario ICS3U A3.1: "use existing subprograms (e.g., random number generator, substring, absolute value) within computer programs."</span><span data-lang="zh">&mdash; 每个库函数都有签名（名称、形参、返回类型）和说明。你不需要看到实现——只需了解接口。安大略 ICS3U A3.1："在计算机程序中使用现有子程序（如随机数生成器、子字符串、绝对值）"。</span></li>
+    </ul>
+    <span data-lang="en">CSTA 3B-AP-16: "Demonstrate code reuse by creating programming solutions using libraries and APIs." AP CSP Big Idea 3 topic 3.14: Libraries. Always check the docs before writing a function — someone may have already written it.</span><span data-lang="zh">CSTA 3B-AP-16："通过使用库和 API 创建编程解决方案来展示代码复用。" AP CSP 大概念 3 主题 3.14：库。在编写函数之前务必查阅文档——可能已经有人写好了。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Using math and random library functions</span><span data-lang="zh">例题 7 &middot; 使用 math 和 random 库函数</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a short program that (a) computes the hypotenuse of a right triangle with legs 3 and 4, and (b) rolls a six-sided die (random integer 1–6).</span><span data-lang="zh">问题：编写一个短程序，(a) 计算腿长为 3 和 4 的直角三角形的斜边，(b) 掷一个六面骰子（随机整数 1–6）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Pseudocode (using library notation).</span><span data-lang="zh">伪代码（使用库表示法）。</span></strong></p>
+    <pre><code>-- (a) hypotenuse
+SET hyp TO math.sqrt(3*3 + 4*4)
+OUTPUT hyp   -- 5.0
+
+-- (b) dice roll
+SET roll TO random.randint(1, 6)
+OUTPUT roll  -- a random integer between 1 and 6 inclusive</code></pre>
+    <p><span data-lang="zh">说明：<code>math.sqrt()</code> 和 <code>random.randint()</code> 是库（library，库）中的内置函数（built-in function，内置函数）。调用方只需知道接口（名称、参数、返回值），不需要知道内部实现——这就是抽象（abstraction，抽象）的体现。</span><span data-lang="en">Callers only need the interface (name, parameters, return value), not the implementation — this is abstraction in action.</span></p>
+    <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
+    <pre><code>import math
+import random
+
+# (a) hypotenuse  斜边
+hyp = math.sqrt(3**2 + 4**2)
+print(f"Hypotenuse: {hyp}")  # 5.0
+
+# (b) dice roll  骰子
+roll = random.randint(1, 6)
+print(f"Rolled: {roll}")</code></pre>
+    <p><span data-lang="en">The <code>import</code> statement loads the module; after that, every function in the module is callable using <code>module.function()</code> syntax. BC CP11 says "pre-built libraries and their documentation" &mdash; you should know how to read the Python docs to find the signature of any built-in.</span><span data-lang="zh"><code>import</code> 语句加载模块；之后，模块中的所有函数都可以用 <code>module.function()</code> 语法调用。BC CP11 要求"预建库及其文档"——你应该知道如何阅读 Python 文档来查找任何内置函数的签名。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In Python, what must you write before using <code>math.sqrt()</code>?</span><span data-lang="zh">在 Python 中，使用 <code>math.sqrt()</code> 之前必须写什么？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>use math</code></div>
+      <div class="quiz-opt" data-idx="1"><code>include math</code></div>
+      <div class="quiz-opt" data-idx="2"><code>import math</code></div>
+      <div class="quiz-opt" data-idx="3"><code>require math</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In Python, you import a standard library module with <code>import module_name</code>. After <code>import math</code>, you can call <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.pi</code>, and all other functions in the math module.</span><span data-lang="zh">在 Python 中，使用 <code>import module_name</code> 导入标准库模块。在 <code>import math</code> 之后，你可以调用 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.pi</code> 以及 math 模块中的所有其他函数。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Python's keyword for loading a module is <code>import</code>. <code>use</code> and <code>require</code> are keywords in other languages; <code>include</code> is used in C/C++. Only <code>import math</code> works in Python.</span><span data-lang="zh">Python 加载模块的关键字是 <code>import</code>。<code>use</code> 和 <code>require</code> 是其他语言的关键字；<code>include</code> 用于 C/C++。只有 <code>import math</code> 在 Python 中有效。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Ontario ICS3U expectation A3.1 says students must be able to "use existing subprograms (e.g., random number generator, substring, absolute value)." Which Python call returns the absolute value of -7?</span><span data-lang="zh">安大略 ICS3U 期望 A3.1 要求学生能够"使用现有子程序（如随机数生成器、子字符串、绝对值）"。哪个 Python 调用返回 -7 的绝对值？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>abs(-7)</code></div>
+      <div class="quiz-opt" data-idx="1"><code>math.abs(-7)</code></div>
+      <div class="quiz-opt" data-idx="2"><code>absolute(-7)</code></div>
+      <div class="quiz-opt" data-idx="3"><code>Math.abs(-7)</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>abs()</code> is a Python built-in function — no import needed. <code>abs(-7)</code> returns 7. It is available the same way <code>print()</code> and <code>len()</code> are, without any import statement.</span><span data-lang="zh"><code>abs()</code> 是 Python 内置函数——无需导入。<code>abs(-7)</code> 返回 7。它与 <code>print()</code> 和 <code>len()</code> 一样可用，无需任何 import 语句。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>abs()</code> is a built-in (no import). <code>math.abs()</code> does not exist in Python's math module. <code>absolute()</code> and <code>Math.abs()</code> are not valid Python (the latter is JavaScript/Java).</span><span data-lang="zh"><code>abs()</code> 是内置函数（无需导入）。<code>math.abs()</code> 在 Python 的 math 模块中不存在。<code>absolute()</code> 和 <code>Math.abs()</code> 不是有效的 Python（后者是 JavaScript/Java）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; reading library documentation and writing docstrings</span><span data-lang="zh">深入 &mdash; 阅读库文档和编写文档字符串</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">Every professional library ships with documentation that follows the same pattern: the function's <strong>signature</strong> (name, parameters, types, return type), a short <strong>description</strong>, and <strong>examples</strong>. For Python's <code>random.randint(a, b)</code>, the docs say: "Return a random integer N such that a &lt;= N &lt;= b." That one sentence tells you everything you need to call the function correctly. You should write the same kind of documentation for your own functions using Python's <strong>docstring</strong> convention: a triple-quoted string immediately after the <code>def</code> line. BC CP11 "pre-built libraries and their documentation" assesses this skill. ICS3U A3.1 implicitly requires you to find and read existing subprogram documentation. Alberta CSE2110 outcome 1.1.4 says a benefit of modular programming is "improving the readability of a program" — a good docstring is the simplest form of readability improvement. Example:</span><span data-lang="zh">每个专业库都附带遵循相同模式的文档：函数的<strong>签名</strong>（名称、形参、类型、返回类型）、简短<strong>描述</strong>和<strong>示例</strong>。对于 Python 的 <code>random.randint(a, b)</code>，文档说："返回一个随机整数 N，使得 a &lt;= N &lt;= b。"这一句话告诉你正确调用该函数所需的一切。你应该使用 Python 的<strong>文档字符串</strong>约定为自己的函数编写同类文档：在 <code>def</code> 行之后立即写一个三引号字符串。BC CP11"预建库及其文档"考查这项技能。ICS3U A3.1 隐含要求你找到并阅读现有子程序文档。阿尔伯塔 CSE2110 结果 1.1.4 指出模块化编程的好处之一是"提高程序的可读性"——好的文档字符串是最简单的可读性改进形式。示例：</span></p>
+      <pre><code>def compute_average(scores):
+    """Return the arithmetic mean of a list of numbers.
+    计算数字列表的算术平均值。
+
+    Args:
+        scores: list of numeric values  (数字列表)
+    Returns:
+        float: the mean  (平均值，浮点数)
+    """
+    return sum(scores) / len(scores)</code></pre>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">Discipline when writing functions</span><span data-lang="zh">编写函数时的纪律</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Name the function and list its parameters before writing the body.</span><span data-lang="zh">在编写函数体之前先命名函数并列出形参。</span></strong> <span data-lang="en">On any exam question that asks you to write a function, start with the signature: <code>FUNCTION name(param1, param2)</code>. This forces you to identify the inputs and clarifies what the function promises to do. Then write the body; then write the RETURN statement last.</span><span data-lang="zh">在任何要求你编写函数的考试题中，从签名开始：<code>FUNCTION name(param1, param2)</code>。这迫使你识别输入并明确函数承诺做什么。然后编写函数体；最后写 RETURN 语句。</span></li>
+      <li><strong><span data-lang="en">Trace your function with a concrete call before submitting.</span><span data-lang="zh">提交前用具体调用追踪你的函数。</span></strong> <span data-lang="en">Pick one argument value, trace the function body step by step, and verify the return matches the expected output. A 60-second trace catches most off-by-one and wrong-operator bugs.</span><span data-lang="zh">选一个实参值，逐步追踪函数体，验证返回值是否符合预期输出。60 秒的追踪能发现大多数"差一"和运算符错误。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Parameter and scope questions (&sect;3–&sect;5)</span><span data-lang="zh">形参与作用域问题（&sect;3–&sect;5）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Parameter vs argument — always use the right word.</span><span data-lang="zh">形参与实参——始终使用正确的词。</span></strong> <span data-lang="en">On Ontario ICS3U A3.2 and AB CSE2110 questions, examiners specifically check whether you can distinguish parameters (in the definition) from arguments (at the call site). Saying "the function takes two parameters" and "I pass two arguments" is precise; saying "inputs" for both loses marks.</span><span data-lang="zh">在安大略 ICS3U A3.2 和 AB CSE2110 题目中，考官会专门检查你是否能区分形参（定义中）和实参（调用处）。说"函数接受两个形参"和"我传递两个实参"是准确的；两者都说"输入"会失分。</span></li>
+      <li><strong><span data-lang="en">For a scope question, always label local vs global.</span><span data-lang="zh">对于作用域问题，始终标注局部变量与全局变量。</span></strong> <span data-lang="en">When tracing a program with both global and local variables, draw two separate columns or sections: one for the global state and one for the current function's local state. Show them separately; examiners award marks for correctly showing that the local variable does not affect the global (or vice versa).</span><span data-lang="zh">当追踪同时包含全局变量和局部变量的程序时，画两个独立的列或区域：一个表示全局状态，一个表示当前函数的局部状态。分开显示；考官会对正确显示局部变量不影响全局变量（反之亦然）的答案给分。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Modular design questions (&sect;6)</span><span data-lang="zh">模块化设计问题（&sect;6）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Name each sub-function with a verb-noun pair.</span><span data-lang="zh">用动词-名词对命名每个子函数。</span></strong> <span data-lang="en">On CSTA 3A-AP-17 / 3A-AP-18 and ICS3U B2.3 questions about modular design, explicitly name each function. "A function that gets the scores, a function that computes the average, a function that determines the grade" &mdash; with names like <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code> &mdash; scores higher than vague descriptions.</span><span data-lang="zh">在关于模块化设计的 CSTA 3A-AP-17 / 3A-AP-18 和 ICS3U B2.3 题目中，明确命名每个函数。"一个获取成绩的函数、一个计算平均值的函数、一个确定等级的函数"——配以如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code> 的名称——比模糊描述得分更高。</span></li>
+      <li><strong><span data-lang="en">Show data flow: what goes in, what comes out.</span><span data-lang="zh">展示数据流：进什么，出什么。</span></strong> <span data-lang="en">For each function in your modular design, state the parameters (input data) and return value (output data). This demonstrates you understand the interface, not just the name.</span><span data-lang="zh">对于模块化设计中的每个函数，说明形参（输入数据）和返回值（输出数据）。这表明你理解接口，而不仅仅是名称。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Use pseudocode keywords for function definition questions.</span><span data-lang="zh">函数定义题使用伪代码关键字。</span></strong> <span data-lang="en">AP CSP uses <code>PROCEDURE name(params) { ... }</code> and <code>RETURN(value)</code>. The generic pseudocode is <code>FUNCTION name(params): ... RETURN value</code>. In Python it is <code>def name(params): ... return value</code>. Know all three; use the one the question specifies.</span><span data-lang="zh">AP CSP 使用 <code>PROCEDURE name(params) { ... }</code> 和 <code>RETURN(value)</code>。通用伪代码是 <code>FUNCTION name(params): ... RETURN value</code>。Python 中是 <code>def name(params): ... return value</code>。了解所有三种；使用题目指定的那种。</span></li>
+      <li><strong><span data-lang="en">Distinguish procedures from functions on AB and ON exams.</span><span data-lang="zh">在 AB 和 ON 考试中区分过程和函数。</span></strong> <span data-lang="en">AB CSE2110 outcome 3.2 specifically tests the difference: a <em>function</em> returns a value; a <em>procedure</em> does not. When a question says "write a procedure to display the result," do not add a RETURN statement.</span><span data-lang="zh">AB CSE2110 结果 3.2 专门考查这一区别：<em>函数</em>有返回值；<em>过程</em>没有。当题目说"编写一个过程来显示结果"时，不要添加 RETURN 语句。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 14 flipped</span><span data-lang="zh">0 / 14 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Function</span><span data-lang="zh">函数（function）</span></div><div class="flashcard-back"><span data-lang="en">A named, reusable block of code. Defined once with FUNCTION / def; called many times. Supports reuse, abstraction, and decomposition.</span><span data-lang="zh">具名的、可复用的代码块。用 FUNCTION / def 定义一次；多次调用。支持复用、抽象和分解。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Parameter vs Argument</span><span data-lang="zh">形参 vs 实参</span></div><div class="flashcard-back"><span data-lang="en">Parameter = variable in the definition (placeholder). Argument = actual value at the call site. In <code>def f(n)</code>, n is a parameter. In <code>f(7)</code>, 7 is an argument.</span><span data-lang="zh">形参（parameter）= 定义中的变量（占位符）。实参（argument）= 调用处的实际值。在 <code>def f(n)</code> 中，n 是形参。在 <code>f(7)</code> 中，7 是实参。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Return value</span><span data-lang="zh">返回值（return value）</span></div><div class="flashcard-back"><span data-lang="en">The value sent back to the caller by the RETURN / return statement. The caller can store it: <code>x = square(5)</code> stores 25 in x. RETURN also exits the function immediately.</span><span data-lang="zh">由 RETURN / return 语句传回调用方的值。调用方可以存储它：<code>x = square(5)</code> 将 25 存入 x。RETURN 也立即退出函数。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Local variable</span><span data-lang="zh">局部变量（local variable）</span></div><div class="flashcard-back"><span data-lang="en">Created inside a function. Visible only inside that function. Destroyed when the function returns. Two functions can each have a local called <code>total</code> without conflict.</span><span data-lang="zh">在函数内部创建。只在该函数内可见。函数返回时销毁。两个函数各自可以有名为 <code>total</code> 的局部变量，互不冲突。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Global variable</span><span data-lang="zh">全局变量（global variable）</span></div><div class="flashcard-back"><span data-lang="en">Created outside all functions. Visible everywhere in the program. Changing it inside one function affects all other code. Prefer local variables; pass data via parameters.</span><span data-lang="zh">在所有函数外创建。在程序的所有地方可见。在一个函数内更改它会影响所有其他代码。优先使用局部变量；通过形参传递数据。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Scope</span><span data-lang="zh">作用域（scope）</span></div><div class="flashcard-back"><span data-lang="en">Which parts of the code can read/write a variable. Local scope = inside one function. Global scope = everywhere. AB CSE2110 outcome 3.3: "analyze and determine the type of scope required."</span><span data-lang="zh">代码的哪些部分可以读/写一个变量。局部作用域 = 函数内部。全局作用域 = 所有地方。AB CSE2110 结果 3.3："分析并确定所需的作用域类型"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Procedure vs Function (AB CSE2110)</span><span data-lang="zh">过程 vs 函数（AB CSE2110）</span></div><div class="flashcard-back"><span data-lang="en">Procedure = subprogram with no return value (void). Function = subprogram that returns a value. AB CSE2110 outcome 3.2 tests this distinction explicitly.</span><span data-lang="zh">过程（procedure）= 无返回值的子程序（void）。函数（function）= 有返回值的子程序。AB CSE2110 结果 3.2 明确考查这一区别。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Modular design</span><span data-lang="zh">模块化设计（modular design）</span></div><div class="flashcard-back"><span data-lang="en">Organising a program as a set of functions, each with one clearly-named responsibility. Data flows via parameters and return values. ICS3U B2.3: "apply the principle of modularity."</span><span data-lang="zh">将程序组织为一组函数，每个函数只有一个命名清晰的职责。数据通过形参和返回值流动。ICS3U B2.3："应用模块化原则"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Abstraction via functions</span><span data-lang="zh">函数的抽象（abstraction）</span></div><div class="flashcard-back"><span data-lang="en">A function hides how it works; the caller only needs the interface (name + parameters + return). AP CSP LO AAP-3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">函数隐藏其工作方式；调用方只需了解接口（名称 + 形参 + 返回值）。AP CSP 学习目标 AAP-3.B："使用抽象管理程序中的复杂性"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Library</span><span data-lang="zh">库（library）</span></div><div class="flashcard-back"><span data-lang="en">A collection of pre-written functions. Use with <code>import</code>. Example: <code>import math</code> gives <code>math.sqrt()</code>. BC CP11: "pre-built libraries and their documentation." CSTA 3B-AP-16: code reuse via libraries.</span><span data-lang="zh">预编写函数的集合。用 <code>import</code> 使用。示例：<code>import math</code> 提供 <code>math.sqrt()</code>。BC CP11："预建库及其文档"。CSTA 3B-AP-16：通过库实现代码复用。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Built-in functions</span><span data-lang="zh">内置函数（built-in function）</span></div><div class="flashcard-back"><span data-lang="en">Available in Python without importing: <code>len()</code>, <code>print()</code>, <code>input()</code>, <code>abs()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>round()</code>, <code>range()</code>, <code>int()</code>, <code>float()</code>, <code>str()</code>.</span><span data-lang="zh">在 Python 中无需导入即可使用：<code>len()</code>、<code>print()</code>、<code>input()</code>、<code>abs()</code>、<code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>round()</code>、<code>range()</code>、<code>int()</code>、<code>float()</code>、<code>str()</code>。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Top-down design</span><span data-lang="zh">自顶向下设计（top-down design）</span></div><div class="flashcard-back"><span data-lang="en">Write the main program first using high-level function calls; then implement each called function. Each step in main becomes a call. Keeps main readable; complexity is in the sub-functions.</span><span data-lang="zh">首先使用高层函数调用编写主程序；然后实现每个被调用的函数。主程序中的每个步骤变成一个调用。主程序保持可读性；复杂性在子函数中。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">CSTA 3A-AP-18 (verbatim)</span><span data-lang="zh">CSTA 3A-AP-18（原文）</span></div><div class="flashcard-back"><span data-lang="en">"Create artifacts by using procedures within a program, combinations of data and procedures, or independent but interrelated programs."</span><span data-lang="zh">"通过在程序中使用过程、数据与过程的组合，或相互关联的独立程序来创建制品。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">ICS3U A3.2 (verbatim)</span><span data-lang="zh">ICS3U A3.2（原文）</span></div><div class="flashcard-back"><span data-lang="en">"Write subprograms (e.g., functions, procedures) that use parameter passing and appropriate variable scope (e.g., local, global), to perform tasks within programs."</span><span data-lang="zh">"编写使用参数传递和适当变量作用域（如局部、全局）在程序中执行任务的子程序（如函数、过程）。"</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the return value of <code>FUNCTION triple(n): RETURN n * 3 END FUNCTION</code> when called as <code>triple(4)</code>?</span><span data-lang="zh"><code>FUNCTION triple(n): RETURN n * 3 END FUNCTION</code> 以 <code>triple(4)</code> 调用时，返回值是多少？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">4</div>
+      <div class="quiz-opt" data-idx="1">3</div>
+      <div class="quiz-opt" data-idx="2">7</div>
+      <div class="quiz-opt" data-idx="3">12</div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Argument 4 binds to parameter n. The function returns <code>4 * 3 = 12</code>.</span><span data-lang="zh">实参 4 绑定到形参 n。函数返回 <code>4 * 3 = 12</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">n receives the argument value 4. RETURN sends back n * 3 = 4 * 3 = 12.</span><span data-lang="zh">n 接收实参值 4。RETURN 传回 n * 3 = 4 * 3 = 12。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Consider: <code>x = 10</code> (global). Inside a function, <code>x = x + 5</code> runs (without declaring global). What is the global <code>x</code> after the function returns?</span><span data-lang="zh">已知：<code>x = 10</code>（全局）。在函数内部，<code>x = x + 5</code> 运行（未声明 global）。函数返回后全局变量 <code>x</code> 是多少？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">15</div>
+      <div class="quiz-opt" data-idx="1">10</div>
+      <div class="quiz-opt" data-idx="2">5</div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Depends on the function name</span><span data-lang="zh">取决于函数名称</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Without <code>global x</code> inside the function, Python creates a new local variable <code>x</code>. The assignment modifies the local, not the global. The global <code>x</code> remains 10.</span><span data-lang="zh">在函数内没有 <code>global x</code>，Python 创建一个新的局部变量 <code>x</code>。赋值修改的是局部变量，而非全局变量。全局 <code>x</code> 仍为 10。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Without <code>global x</code>, Python's assignment creates a local variable. The global is unchanged. This is why modifying globals inside functions requires explicit declaration.</span><span data-lang="zh">没有 <code>global x</code>，Python 的赋值创建一个局部变量。全局变量不变。这就是为什么在函数内修改全局变量需要显式声明。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A student writes a 60-line program in one block. Their teacher says to refactor it into functions. What is the main benefit?</span><span data-lang="zh">一名学生将一个 60 行程序写在一个代码块中。老师说要将其重构为函数。主要好处是什么？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Each function can be tested independently, bugs are easier to isolate, and code is reusable</span><span data-lang="zh">每个函数可以独立测试，错误更容易隔离，代码可复用</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">The program runs faster</span><span data-lang="zh">程序运行更快</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The file uses less disk space</span><span data-lang="zh">文件使用更少的磁盘空间</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">It prevents all runtime errors</span><span data-lang="zh">它防止所有运行时错误</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Modular design (functions) makes each sub-problem independently testable and reusable. Bugs are isolated to one function instead of hiding anywhere in 60 lines. ICS3U B2.3 and AB CSE2110 both cite this as the primary benefit.</span><span data-lang="zh">模块化设计（函数）使每个子问题可以独立测试和复用。错误被隔离到一个函数中，而不是隐藏在 60 行的任何地方。ICS3U B2.3 和 AB CSE2110 都将此列为主要好处。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Refactoring into functions improves maintainability and testability, not runtime speed or file size. The key benefit is modular testability and reuse.</span><span data-lang="zh">将代码重构为函数提高了可维护性和可测试性，而不是运行速度或文件大小。关键好处是模块化可测试性和复用。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What does <code>import math</code> allow you to do?</span><span data-lang="zh"><code>import math</code> 允许你做什么？</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Define a new module called math</span><span data-lang="zh">定义一个名为 math 的新模块</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Use math inside a loop only</span><span data-lang="zh">只在循环内使用 math</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Call pre-built functions like <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.pi</code></span><span data-lang="zh">调用预建函数如 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.pi</code></span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Replace the built-in arithmetic operators</span><span data-lang="zh">替换内置算术运算符</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>import math</code> loads Python's math module, giving access to pre-built functions like <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.ceil()</code>, and constants like <code>math.pi</code>. BC CP11: "pre-built libraries and their documentation."</span><span data-lang="zh"><code>import math</code> 加载 Python 的 math 模块，提供对预建函数（如 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.ceil()</code>）和常量（如 <code>math.pi</code>）的访问。BC CP11："预建库及其文档"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en"><code>import</code> loads an existing module; it does not define a new one or restrict usage. After import, the module's functions are available anywhere in the file.</span><span data-lang="zh"><code>import</code> 加载现有模块；不定义新模块或限制使用。导入后，模块的函数在文件的任何地方都可用。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In the function <code>FUNCTION greet(name): OUTPUT "Hi " + name</code>, what kind of subprogram is this? <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110</span></span><span data-lang="zh">在函数 <code>FUNCTION greet(name): OUTPUT "Hi " + name</code> 中，这是哪种子程序？<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110</span></span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A value-returning function</span><span data-lang="zh">有返回值函数（value-returning function）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A procedure / void function</span><span data-lang="zh">过程 / 无返回值函数（procedure / void function）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A library function</span><span data-lang="zh">库函数（library function）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A parameter</span><span data-lang="zh">形参（parameter）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The function performs an action (output) but has no RETURN statement, so it is a procedure or void function. AB CSE2110 outcome 3.2: "functions (subprograms that return a value) and procedures (subprograms that do not return a value)."</span><span data-lang="zh">该函数执行一个操作（输出）但没有 RETURN 语句，所以它是一个过程或无返回值函数。AB CSE2110 结果 3.2："函数（有返回值的子程序）和过程（无返回值的子程序）"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">No RETURN = procedure (void). A value-returning function must have a RETURN statement that sends a value back to the caller.</span><span data-lang="zh">没有 RETURN = 过程（void）。有返回值函数必须有将值传回调用方的 RETURN 语句。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">CSTA standard 3A-AP-18 (verbatim) says: "Create artifacts by using __________ within a program." <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">CSTA 标准 3A-AP-18（原文）："通过在程序中使用 __________ 来创建制品。" <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">procedures</span><span data-lang="zh">过程（procedures）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">global variables</span><span data-lang="zh">全局变量（global variables）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">flowcharts</span><span data-lang="zh">流程图（flowcharts）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">pseudocode</span><span data-lang="zh">伪代码（pseudocode）</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3A-AP-18 (verbatim): "Create artifacts by using <strong>procedures</strong> within a program, combinations of data and procedures, or independent but interrelated programs."</span><span data-lang="zh">CSTA 3A-AP-18（原文）："通过在程序中使用<strong>过程</strong>、数据与过程的组合，或相互关联的独立程序来创建制品。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The standard specifically names "procedures" (subprograms). 3A-AP-18 is the procedural-programming companion to 3A-AP-17 (decomposition).</span><span data-lang="zh">该标准具体指名"过程"（子程序）。3A-AP-18 是 3A-AP-17（分解）的过程化编程配套标准。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Ontario ICS3U expectation A3.2 requires students to write subprograms that use what two features? <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span><span data-lang="zh">安大略 ICS3U 期望 A3.2 要求学生编写使用哪两个特性的子程序？<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span></div><div class="quiz-number">Q7</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">flowcharts and pseudocode</span><span data-lang="zh">流程图和伪代码</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">loops and conditionals</span><span data-lang="zh">循环和条件语句</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">parameter passing and appropriate variable scope</span><span data-lang="zh">参数传递和适当的变量作用域</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">libraries and APIs</span><span data-lang="zh">库和 API</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">ICS3U A3.2 (verbatim): "write subprograms (e.g., functions, procedures) that use <strong>parameter passing</strong> and <strong>appropriate variable scope</strong> (e.g., local, global), to perform tasks within programs."</span><span data-lang="zh">ICS3U A3.2（原文）："编写使用<strong>参数传递</strong>和<strong>适当变量作用域</strong>（如局部、全局）在程序中执行任务的子程序（如函数、过程）。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A3.2 specifically assesses parameter passing and variable scope. Sections 3, 4, and 5 of this guide cover exactly those two features.</span><span data-lang="zh">A3.2 专门评估参数传递和变量作用域。本指南的第 3、4、5 节正好涵盖这两个特性。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Define a function in pseudocode and in Python that takes two parameters, computes a result, and returns it. State the function definition keyword, the parameter list, the body, and the RETURN statement. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-AP-18 / &#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span><span data-lang="zh">用伪代码和 Python 定义一个接受两个形参、计算结果并返回的函数。说明函数定义关键字、形参列表、函数体和 RETURN 语句。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-AP-18 / &#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Distinguish parameters from arguments: given a function definition and a call, identify which variables are parameters and which values are arguments. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110 outcome 3.3 / ON ICS3U A3.2</span></span><span data-lang="zh">区分形参（parameter）和实参（argument）：给定函数定义和调用，识别哪些变量是形参，哪些值是实参。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110 结果 3.3 / ON ICS3U A3.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Distinguish a value-returning function from a procedure (void function): state what the RETURN statement does and identify whether a given function definition has one. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110 outcome 3.2</span></span><span data-lang="zh">区分有返回值函数和过程（无返回值函数）：说明 RETURN 语句的作用，并识别给定函数定义是否有 RETURN 语句。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2110 结果 3.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Trace a function call with concrete argument values: show the parameter binding, step through the body, and identify the return value. Use a variable trace table. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3 / AB CSE2110</span></span><span data-lang="zh">用具体实参值追踪函数调用：展示形参绑定，逐步执行函数体，确定返回值。使用变量追踪表。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3 / AB CSE2110</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain local scope vs global scope: for a given program, identify which variables are local and which are global, and predict what happens when a function modifies a local variable with the same name as a global. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2 / AB CSE2110 outcome 3.3</span></span><span data-lang="zh">解释局部作用域与全局作用域：对于给定程序，识别哪些变量是局部的，哪些是全局的，并预测当函数修改与全局变量同名的局部变量时会发生什么。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2 / AB CSE2110 结果 3.3</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Apply modular design to a medium-complexity problem: name at least three functions using verb-noun pairs, state the parameters and return type of each, and show how the main program calls them in sequence. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.3 / AB CSE2110 outcome 3.4</span></span><span data-lang="zh">将模块化设计应用于中等复杂度的问题：用动词-名词对命名至少三个函数，说明每个函数的形参和返回类型，并展示主程序如何按顺序调用它们。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.3 / AB CSE2110 结果 3.4</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Use a built-in function (e.g., <code>abs()</code>, <code>len()</code>, <code>max()</code>) and a standard library function (e.g., <code>math.sqrt()</code>, <code>random.randint()</code>) correctly in a program. State the purpose of <code>import</code>. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.1 / &#x1F1E8;&#x1F1E6; BC CP11</span></span><span data-lang="zh">在程序中正确使用内置函数（如 <code>abs()</code>、<code>len()</code>、<code>max()</code>）和标准库函数（如 <code>math.sqrt()</code>、<code>random.randint()</code>）。说明 <code>import</code> 的作用。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.1 / &#x1F1E8;&#x1F1E6; BC CP11</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain procedural abstraction: state why a caller only needs to know the function's interface (name, parameters, return type) and not its implementation. Give an example. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span><span data-lang="zh">解释过程抽象：说明为什么调用方只需知道函数的接口（名称、形参、返回类型）而不需要知道其实现。举一个例子。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim (or near-verbatim) CSTA 3A-AP-17 and 3A-AP-18, and explain how each maps to the concept of functions and modular design. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span><span data-lang="zh">逐字（或近逐字）陈述 CSTA 3A-AP-17 和 3A-AP-18，并解释每个标准如何映射到函数与模块化设计的概念。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim (or near-verbatim) Ontario ICS3U A3.2, and explain what "parameter passing" and "appropriate variable scope" mean in the context of a function you write. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span><span data-lang="zh">逐字（或近逐字）陈述安大略 ICS3U A3.2，并解释"参数传递"和"适当的变量作用域"在你编写的函数上下文中的含义。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; ICS4U C1.3 / CSE2110 / BC CP12</span> Explain the hazards of mutable global state in a modular program: describe what "coupling" means, why modifying globals inside functions increases coupling, and how using parameters and return values eliminates the problem. <span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 outcome 3.4</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; ICS4U C1.3 / CSE2110 / BC CP12</span> 解释模块化程序中可变全局状态的危害：描述"耦合"的含义，为什么在函数内修改全局变量会增加耦合，以及如何使用形参和返回值消除这个问题。<span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 结果 3.4</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Functions and modular design is the hinge unit in this HS Computer Science series: everything before it (computational thinking, variables, control flow) feeds into it as prerequisite; everything after it (data structures, OOP, software development) assumes you can write and call functions fluently. The two downstream AP courses both depend on procedural abstraction. The link below points at the existing AP CSA guide where methods (Java's term for functions) appear from Unit 1 onwards.</span><span data-lang="zh">函数与模块化设计是本 HS 计算机科学系列中的枢纽单元：此前的所有内容（计算思维、变量、控制流）作为先决条件汇入此单元；此后的所有内容（数据结构、OOP、软件开发）都假定你能流利地编写和调用函数。两门下游 AP 课程都依赖过程抽象。以下链接指向现有 AP CSA 指南，其中方法（Java 中函数的术语）从 Unit 1 开始出现。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">The Data Structures guide (Unit 5) assumes you can write functions that accept and return lists. The OOP guide (Unit 8) builds on modular design: an object's methods are functions scoped to the object. The Software Development Process guide shows how the function-per-sub-problem discipline (top-down design) scales to real software projects. The Searching and Sorting guide calls library functions and passes comparison functions as arguments &mdash; both topics require the fluency built here.</span><span data-lang="zh">数据结构指南（Unit 5）假定你能编写接受和返回列表的函数。OOP 指南（Unit 8）以模块化设计为基础：对象的方法是作用域限于对象的函数。软件开发过程指南展示了每个子问题一个函数的原则（自顶向下设计）如何扩展到真实软件项目。搜索与排序指南调用库函数并将比较函数作为实参传递——这两个主题都需要此处建立的流利度。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP feeder links (existing in this repo).</span><span data-lang="zh">AP 衔接链接（本仓库中已有）。</span></strong></p>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
+      <a class="feeder-link" href="../../AP CSA/Study Guides/Unit_1_Using_Objects_and_Methods.html"><span data-lang="en">AP CSA Unit 1 &middot; Using Objects and Methods (Java methods are functions; calling a method is exactly what you practised here with pseudocode calls)</span><span data-lang="zh">AP CSA Unit 1 &middot; 使用对象和方法（Java 方法就是函数；调用方法与你在这里用伪代码调用所练习的完全相同）</span></a>
+    </div>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 topics 3.12–3.14 (Calling Procedures, Developing Procedures, Libraries) directly test the concepts in this guide and account for a significant portion of the 30&ndash;35% AAP exam band. AP CSA (Java-specific) uses methods everywhere from Unit 1; the parameter-passing, return-value, and scope concepts taught here are identical to how Java methods work. Mastering this unit before starting either AP course eliminates the single most common source of confusion in introductory programming.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.12–3.14（调用过程、开发过程、库）直接考查本指南中的概念，占 30–35% AAP 考试段的重要比例。AP CSA（Java 专项）从 Unit 1 起处处使用方法；此处教授的参数传递、返回值和作用域概念与 Java 方法的工作方式完全相同。在开始任一 AP 课程之前掌握本单元，可以消除入门编程中最常见的困惑来源。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between a parameter and an argument?</span><span data-lang="zh">形参和实参有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A parameter is the placeholder name written in the function definition, while an argument is the actual value you pass in when you call the function. The parameter has no value until the function is called with an argument.</span><span data-lang="zh">形参是写在函数定义中的占位符名称，实参是你调用函数时传入的实际值。在用实参调用函数之前，形参没有值。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between a local and a global variable?</span><span data-lang="zh">局部变量和全局变量有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A local variable is created inside a function, is only visible there, and is destroyed when the function returns, while a global variable is created outside all functions and is visible everywhere. Best practice is to prefer local variables and pass data in through parameters.</span><span data-lang="zh">局部变量在函数内部创建，只在该函数中可见，函数返回时被销毁；全局变量在所有函数之外创建，处处可见。最佳做法是优先使用局部变量，并通过参数传入数据。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">Why should I use functions instead of repeating code?</span><span data-lang="zh">为什么要用函数而不是重复写代码？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">Functions let you define logic once and call it anywhere, so there is no copy-paste, and if the logic changes you fix one place and every caller gets the update. They also support modular design by splitting a big program into small, independently testable pieces.</span><span data-lang="zh">函数让你只定义一次逻辑就能到处调用，无需复制粘贴；逻辑改动时只改一处，所有调用方都会得到更新。它们还支持模块化设计，把大程序拆成可独立测试的小块。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between a parameter and an argument?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A parameter is the placeholder name written in the function definition, while an argument is the actual value you pass in when you call the function. The parameter has no value until the function is called with an argument."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a local and a global variable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A local variable is created inside a function, is only visible there, and is destroyed when the function returns, while a global variable is created outside all functions and is visible everywhere. Best practice is to prefer local variables and pass data in through parameters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why should I use functions instead of repeating code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Functions let you define logic once and call it anywhere, so there is no copy-paste, and if the logic changes you fix one place and every caller gets the update. They also support modular design by splitting a big program into small, independently testable pieces."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3A-AP-17</code> <span data-lang="en">"Decompose problems into smaller components through systematic analysis, using constructs such as procedures, modules, and/or objects." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"通过系统分析将问题分解为更小的组件，使用过程、模块和/或对象等构造。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
+        <li><code>3A-AP-18</code> <span data-lang="en">"Create artifacts by using procedures within a program, combinations of data and procedures, or independent but interrelated programs." (CSTA Level 3A)</span><span data-lang="zh">"通过在程序中使用过程、数据与过程的组合，或相互关联的独立程序来创建制品。"（CSTA 3A 级）</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 3 (AAP — Algorithms &amp; Programming): Topics 3.12 Calling Procedures, 3.13 Developing Procedures, 3.14 Libraries. Learning Objective AAP-3.B: "Use abstraction to manage complexity in a program." Procedural abstraction is a core AP CSP concept (topics 3.12–3.14).</span><span data-lang="zh">AP CSP 大概念 3（AAP — 算法与编程）：主题 3.12 调用过程，3.13 开发过程，3.14 库。学习目标 AAP-3.B："使用抽象管理程序中的复杂性。"过程抽象是 AP CSP 的核心概念（主题 3.12–3.14）。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U / ICS4U</span><span data-lang="zh">安大略 — ICS3U / ICS4U</span></div>
+      <ul>
+        <li><strong>ICS3U</strong> <span data-lang="en">Strand A, Overall Expectation <code>A3</code>: "demonstrate the ability to use subprograms within computer programs." Specific Expectation <code>A3.1</code>: "demonstrate the ability to use existing subprograms (e.g., random number generator, substring, absolute value) within computer programs." <code>A3.2</code>: "write subprograms (e.g., functions, procedures) that use parameter passing and appropriate variable scope (e.g., local, global), to perform tasks within programs."</span><span data-lang="zh">ICS3U A 单元，总体期望 <code>A3</code>："展示在计算机程序中使用子程序的能力。"具体期望 <code>A3.1</code>："展示在计算机程序中使用现有子程序（如随机数生成器、子字符串、绝对值）的能力。" <code>A3.2</code>："编写使用参数传递和适当变量作用域（如局部、全局）在程序中执行任务的子程序（如函数、过程）。"</span></li>
+        <li><strong>ICS3U</strong> <code>B2.3</code> <span data-lang="en">"apply the principle of modularity to design reusable code (e.g., subprograms, classes) in computer programs."</span><span data-lang="zh"><code>B2.3</code>："在计算机程序中应用模块化原则设计可复用代码（如子程序、类）。"</span></li>
+        <li><strong>ICS4U</strong> <code>C1.3</code> <span data-lang="en">"demonstrate the ability to apply the process of functional decomposition in subprogram design." <span class="honors-flag">Honors — ICS4U</span></span><span data-lang="zh"><code>C1.3</code>："展示在子程序设计中应用函数分解过程的能力。" <span class="honors-flag">荣誉 — ICS4U</span></span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
+      <ul>
+        <li><strong>Computer Programming 11</strong> <span data-lang="en">Content (verbatim): "structures"; "pre-built libraries and their documentation"; "ways to modify existing code to meet a particular purpose" — the core scope of this guide.</span><span data-lang="zh">Computer Programming 11 内容（原文）："结构"；"预建库及其文档"；"修改现有代码以满足特定目的的方法"——本指南的核心范围。</span></li>
+        <li><strong>Computer Programming 12</strong> <span data-lang="en">Content (verbatim): "Advanced programming structures"; "Management of complexity" — deeper modular design. <span class="honors-flag">Honors — CP12</span></span><span data-lang="zh">Computer Programming 12 内容（原文）："高级编程结构"；"复杂性管理"——更深入的模块化设计。<span class="honors-flag">荣誉 — CP12</span></span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE</span><span data-lang="zh">阿尔伯塔 — CSE</span></div>
+      <ul>
+        <li><strong>CSE2110</strong> <span data-lang="en">Procedural Programming 1: "Students develop their understanding of the procedural programming paradigm … from a structured programming approach … to a more formal modular programming approach in which they are handled through subprograms." Outcomes include: "3.2 use appropriate types of subprograms … functions (subprograms that return a value) and procedures (subprograms that do not return a value); 3.3 analyze and determine the type of scope required … use of appropriate parameters for importing and exporting data … one- and two-way parameter passing."</span><span data-lang="zh">CSE2110 过程化编程 1："学生发展对过程化编程范式的理解……从结构化编程方式……到更正式的模块化编程方式，通过子程序处理。"结果包括："3.2 使用适当类型的子程序……函数（有返回值的子程序）和过程（无返回值的子程序）；3.3 分析并确定所需的作用域类型……使用适当参数导入和导出数据……单向和双向参数传递。"</span></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">Functions and modular design appear in every curriculum we map to. Ontario ICS3U strand A3 explicitly requires students to write subprograms using parameter passing and variable scope. Alberta CSE2110 formalises procedural programming with functions, procedures, scope, and parameter passing. AP CSP Big Idea 3 (topics 3.12–3.14) tests calling and defining procedures and using libraries. BC Computer Programming 11 names "structures" and "pre-built libraries." All four agree on the core concepts covered here. Where curricula diverge is on depth: ICS4U C1.3 adds functional decomposition as a design process (Grade-12 Honors); BC CP12 adds "management of complexity." The table below locates you.</span><span data-lang="zh">函数与模块化设计出现在我们所对应的每个大纲中。安大略 ICS3U A 单元第 3 条（A3）明确要求学生使用参数传递和变量作用域编写子程序。阿尔伯塔 CSE2110 将函数、过程、作用域和参数传递正式化为过程化编程。AP CSP 大概念 3（主题 3.12–3.14）考查调用和定义过程以及使用库。BC Computer Programming 11 点名"结构"和"预建库"。四套大纲在此涵盖的核心概念上高度一致。大纲的分歧在于深度：ICS4U C1.3 将函数分解作为设计过程（12 年级荣誉级别）；BC CP12 增加"复杂性管理"。下表帮助你定位。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Defer / lighter</span><span data-lang="zh">可推迟 / 减负</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSTA 3A-AP-17 (decompose using procedures/modules) and 3A-AP-18 (create artifacts using procedures) both apply. AP CSP topics 3.12–3.14 (calling procedures, developing procedures, libraries) are directly tested.</span><span data-lang="zh">&sect;1 至 &sect;7。CSTA 3A-AP-17（使用过程/模块分解）和 3A-AP-18（使用过程创建制品）均适用。AP CSP 主题 3.12–3.14（调用过程、开发过程、库）直接考查。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;5 scope going-deeper (global state hazards) is enrichment for AP CSP floor students; the exam tests local/global at a conceptual level.</span><span data-lang="zh">&sect;5 作用域深入（全局状态风险）对 AP CSP 基础学生为拓展内容；考试在概念层面考查局部/全局。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3A-AP-17, 3A-AP-18; AP CSP Big Idea 3 (AAP) topics 3.12, 3.13, 3.14; LO AAP-3.B</span><span data-lang="zh">&mdash; CSTA 3A-AP-17、3A-AP-18；AP CSP 大概念 3（AAP）主题 3.12、3.13、3.14；学习目标 AAP-3.B</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. ICS3U A3 (write subprograms using parameter passing and variable scope) and B2.3 (apply modularity for reusable code) are the primary targets. &sect;2–&sect;5 cover the exact skills assessed in A3.2.</span><span data-lang="zh">&sect;1 至 &sect;7。ICS3U A3（使用参数传递和变量作用域编写子程序）和 B2.3（应用模块化设计可复用代码）是主要目标。&sect;2–&sect;5 涵盖 A3.2 考查的确切技能。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Functional decomposition as formal design process (ICS4U C1.3) is Grade 12 &mdash; skip the Honors going-deeper boxes for ICS3U floor.</span><span data-lang="zh">函数分解作为正式设计过程（ICS4U C1.3）属 12 年级&mdash;&mdash;ICS3U 基础学生跳过荣誉深入框。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS3U A3, A3.1, A3.2, B2.3; ICS4U C1.3</span><span data-lang="zh">&mdash; ICS3U A3、A3.1、A3.2、B2.3；ICS4U C1.3</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CP11 / CP12</span><span data-lang="zh">BC &mdash; CP11 / CP12</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CP11 names "structures" and "pre-built libraries and their documentation" as core content. Every section here maps to those topics.</span><span data-lang="zh">&sect;1 至 &sect;7。CP11 将"结构"和"预建库及其文档"列为核心内容。本指南每一节均对应这些主题。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">"Advanced programming structures" and "Management of complexity" (CP12) are Honors enrichment for BC CP11 floor students.</span><span data-lang="zh">"高级编程结构"和"复杂性管理"（CP12）对 BC CP11 基础学生属荣誉拓展。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CP11 "structures", "pre-built libraries"; CP12 "Advanced programming structures", "Management of complexity"</span><span data-lang="zh">&mdash; BC CP11"结构"、"预建库"；CP12"高级编程结构"、"复杂性管理"</span></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE2110</span><span data-lang="zh">阿尔伯塔 &mdash; CSE2110</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSE2110 Procedural Programming 1 is the best match: subprograms, functions vs procedures, scope, one- and two-way parameter passing. This guide covers exactly CSE2110 outcomes 3.2, 3.3, 3.4.</span><span data-lang="zh">&sect;1 至 &sect;7。CSE2110 过程化编程 1 是最佳匹配：子程序、函数与过程、作用域、单向和双向参数传递。本指南正好涵盖 CSE2110 结果 3.2、3.3、3.4。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Object-oriented modularity (CSE3120) is a later Advanced-level topic &mdash; not covered here.</span><span data-lang="zh">面向对象模块化（CSE3120）是后续高级模块&mdash;&mdash;本指南不涵盖。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE2110 outcomes 3.2, 3.3, 3.4</span><span data-lang="zh">&mdash; CSE2110 结果 3.2、3.3、3.4</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top: 12px;"><span data-lang="en">Once you have located your row, use the two cards below for the pace at which to work through the sections.</span><span data-lang="zh">找到所在行后，用下面两张卡片决定推进速度。</span></p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise four things: what a function is and why you need one; how to define and call a function in pseudocode; what a parameter is and what a return value is; and the difference between local and global scope. Read every cram-cheat box. Skip the going-deeper boxes.</span><span data-lang="zh">背熟四件事：函数是什么以及为何需要它；如何用伪代码定义和调用函数；形参是什么以及返回值是什么；局部作用域与全局作用域的区别。读每个速记框，跳过深入框。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Practise the full define-call-trace cycle for every worked example: write the function definition, call it with concrete arguments, trace the execution step by step including the return. AP CSP topics 3.12–3.14 expect you to read procedure definitions and predict their output. Ontario ICS3U A3.2 requires you to write functions with parameter passing and correct scope. Both skills are fully covered here.</span><span data-lang="zh">对每个例题练习完整的定义-调用-追踪循环：编写函数定义，用具体实参调用，逐步追踪执行过程（包括返回）。AP CSP 主题 3.12–3.14 要求你读懂过程定义并预测其输出。安大略 ICS3U A3.2 要求你编写具有参数传递和正确作用域的函数。这两项技能本指南均完整涵盖。</span></p>
+    </div>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Scope and purity note.</span><span data-lang="zh">作用域与纯函数说明。</span></strong>
+    <span data-lang="en">Section 5 (Variable Scope) covers local vs global variables at the assessed level for all four curricula. The going-deeper box discusses the hazards of mutable global state — a concept that maps to Ontario ICS4U C1.3 functional decomposition and AB CSE2110 outcome 3.3.3. For floor students (ICS3U, AP CSP, BC CP11), the rule "prefer local variables; avoid writing to globals inside functions" is the take-away. The Honors box shows why that rule exists.</span><span data-lang="zh">&sect;5（变量作用域）在四套大纲的考查层次上涵盖局部变量与全局变量。深入框讨论可变全局状态的风险——该概念对应安大略 ICS4U C1.3 函数分解和 AB CSE2110 结果 3.3.3。对于基础学生（ICS3U、AP CSP、BC CP11），"优先使用局部变量；避免在函数内写入全局变量"是要点。荣誉框解释该规则存在的原因。</span>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Functions and Modular Design &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 函数与模块化设计 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_4_Functions_and_Modular_Design_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_4_Functions_and_Modular_Design_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

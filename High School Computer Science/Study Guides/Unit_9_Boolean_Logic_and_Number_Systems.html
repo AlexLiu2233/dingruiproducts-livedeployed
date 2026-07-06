@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on binary, hexadecimal, base conversion, ASCII, Unicode, Boolean logic, and truth tables. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Boolean Logic and Number Systems | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_9_Boolean_Logic_and_Number_Systems.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Boolean Logic and Number Systems | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on binary, hexadecimal, base conversion, ASCII, Unicode, Boolean logic, and truth tables. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_9_Boolean_Logic_and_Number_Systems.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Boolean Logic and Number Systems | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on binary, hexadecimal, base conversion, ASCII, Unicode, Boolean logic, and truth tables. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-9  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Boolean Logic and Number Systems",
+  "description": "Free high school Computer Science notes on binary, hexadecimal, base conversion, ASCII, Unicode, Boolean logic, and truth tables. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_9_Boolean_Logic_and_Number_Systems.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">LOGIC/BIN</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-9-1"><span data-lang="en">The Binary Number System</span><span data-lang="zh">二进制数制</span></a>
+  <a href="#s-9-2"><span data-lang="en">Hexadecimal</span><span data-lang="zh">十六进制</span></a>
+  <a href="#s-9-3"><span data-lang="en">Converting Between Bases</span><span data-lang="zh">进制转换</span></a>
+  <a href="#s-9-4"><span data-lang="en">Binary Arithmetic</span><span data-lang="zh">二进制算术</span></a>
+  <a href="#s-9-5"><span data-lang="en">Representing Text and Data</span><span data-lang="zh">文本与数据表示</span></a>
+  <a href="#s-9-6"><span data-lang="en">Boolean Logic</span><span data-lang="zh">布尔逻辑</span></a>
+  <a href="#s-9-7"><span data-lang="en">Logic Gates and Truth Tables</span><span data-lang="zh">逻辑门与真值表</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Boolean Logic and Number Systems</span><span data-lang="zh">布尔逻辑与数制</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Computers speak in binary: every piece of data — a number, a letter, an image — is ultimately a string of 0s and 1s. This guide builds the full picture from the ground up: how the binary number system works and why base-2 maps perfectly onto hardware; how hexadecimal gives programmers a compact shorthand; how to convert fluently between decimal, binary, and hex; how to add in binary; how text is encoded as ASCII and Unicode; and how Boolean logic — AND, OR, NOT — connects the world of numbers to the logic gates that make up every circuit. Truth tables appear throughout so you can reason about any logical expression by hand.</span><span data-lang="zh">计算机用二进制（<code>binary</code>，二进制）"说话"：每一份数据——数字、字母、图像——最终都是一串 0 和 1。本指南从零开始建立完整体系：二进制数制（<code>binary number system</code>）如何工作，以及为何以 2 为底完美地映射到硬件；十六进制（<code>hexadecimal</code>，十六进制）如何给程序员提供紧凑的简写；如何在十进制（<code>decimal</code>，十进制）、二进制和十六进制之间流畅转换；如何做二进制加法；文本如何被编码为 ASCII 和 Unicode；以及布尔逻辑（<code>Boolean logic</code>，布尔逻辑）——与（AND）、或（OR）、非（NOT）——如何将数字世界与构成每个电路的逻辑门（<code>logic gate</code>，逻辑门）连接起来。真值表（<code>truth table</code>，真值表）贯穿全文，使你能够手工推理任意逻辑表达式。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">Tables + worked conversions</span><span data-lang="zh">表格 + 例题转换</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-9-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; Binary number system</span><span data-lang="zh">第 1 节 &middot; 二进制数制</span></div>
+  <h2><span data-lang="en">The Binary Number System</span><span data-lang="zh">二进制数制</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Why binary? Hardware switches have two states: on (1) and off (0). Every decimal number maps to a unique sequence of 1s and 0s.</span><span data-lang="zh">为什么用二进制？硬件开关只有两种状态：开（1）和关（0）。每个十进制数都能唯一映射为一串 1 和 0。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Bit</span><span data-lang="zh">位（bit）</span></strong> <span data-lang="en">&mdash; a single binary digit: 0 or 1.</span><span data-lang="zh">&mdash; 单个二进制位：0 或 1。</span></li>
+      <li><strong><span data-lang="en">Byte</span><span data-lang="zh">字节（byte）</span></strong> <span data-lang="en">&mdash; 8 bits. 1 byte can represent 2<sup>8</sup> = 256 distinct values (0&ndash;255).</span><span data-lang="zh">&mdash; 8 位。1 字节可表示 2<sup>8</sup> = 256 个不同值（0&ndash;255）。</span></li>
+      <li><strong><span data-lang="en">Place values double left-to-right</span><span data-lang="zh">位权从右往左翻倍</span></strong> <span data-lang="en">&mdash; in decimal, columns are 1, 10, 100, 1000. In binary they are 1, 2, 4, 8, 16, 32, 64, 128.</span><span data-lang="zh">&mdash; 十进制中各列位权为 1、10、100、1000；二进制中为 1、2、4、8、16、32、64、128。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Key fact (AP CSP DAT-1.A):</strong> "Data can be represented using bits." Each additional bit doubles the number of possible values: 1 bit = 2 values; 8 bits = 256 values; 16 bits = 65,536 values; 32 bits &asymp; 4 billion values.</span><span data-lang="zh"><strong>关键事实（AP CSP DAT-1.A）：</strong>"数据可以用位来表示。"每增加一位，可表示的值的数量翻倍：1 位 = 2 个值；8 位 = 256 个值；16 位 = 65,536 个值；32 位 &asymp; 40 亿个值。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; Binary place-value table</span><span data-lang="zh">例题 1 &middot; 二进制位权表</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Read the 8-bit number 10110101 and find its decimal value.</span><span data-lang="zh">读取 8 位二进制数 10110101，求其十进制值。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th><span data-lang="en">Bit position</span><span data-lang="zh">位位置</span></th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span data-lang="en">Place value (2<sup>n</sup>)</span><span data-lang="zh">位权（2<sup>n</sup>）</span></td><td>128</td><td>64</td><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td></tr>
+          <tr><td><span data-lang="en">Bit</span><span data-lang="zh">位</span></td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+          <tr><td><span data-lang="en">Contribution</span><span data-lang="zh">贡献值</span></td><td>128</td><td>0</td><td>32</td><td>16</td><td>0</td><td>4</td><td>0</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Sum: 128 + 32 + 16 + 4 + 1 = <strong>181</strong>.</span><span data-lang="zh">求和：128 + 32 + 16 + 4 + 1 = <strong>181</strong>。</span></p>
+    <p><span data-lang="en">Each 1-bit contributes its place value; 0-bits contribute nothing. Add up only the columns where the bit is 1.</span><span data-lang="zh">每个 1 位贡献其位权；0 位不贡献任何值。只将位为 1 的列的位权相加。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the decimal value of the binary number 1010?</span><span data-lang="zh">二进制数 1010 的十进制值是多少？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">8</span><span data-lang="zh">8</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">10</span><span data-lang="zh">10</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">12</span><span data-lang="zh">12</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Place values for 1010: bit 3 = 8 (1&times;8), bit 2 = 4 (0&times;4), bit 1 = 2 (1&times;2), bit 0 = 1 (0&times;1). Sum = 8 + 0 + 2 + 0 = 10.</span><span data-lang="zh">1010 各位权：第 3 位 = 8（1&times;8），第 2 位 = 4（0&times;4），第 1 位 = 2（1&times;2），第 0 位 = 1（0&times;1）。总和 = 8 + 0 + 2 + 0 = 10。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Place values in binary (right to left): 1, 2, 4, 8. For 1010: only bits at positions 3 and 1 are 1. 8 + 2 = 10.</span><span data-lang="zh">二进制位权（从右到左）：1、2、4、8。对于 1010：仅第 3 位和第 1 位为 1。8 + 2 = 10。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">How many distinct values can be represented with 4 bits?</span><span data-lang="zh">4 位二进制可以表示多少个不同的值？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">8</span><span data-lang="zh">8</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">16</span><span data-lang="zh">16</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">32</span><span data-lang="zh">32</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">n bits can represent 2<sup>n</sup> distinct values. 2<sup>4</sup> = 16 (values 0000 through 1111, i.e. decimal 0&ndash;15). AP CSP DAT-1.A: "Each additional bit doubles the number of possible values."</span><span data-lang="zh">n 位可表示 2<sup>n</sup> 个不同值。2<sup>4</sup> = 16（值从 0000 到 1111，即十进制 0&ndash;15）。AP CSP DAT-1.A："每增加一位，可能值的数量翻倍。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">n bits = 2<sup>n</sup> values. 4 bits = 2<sup>4</sup> = 16. Each bit added doubles the count.</span><span data-lang="zh">n 位 = 2<sup>n</sup> 个值。4 位 = 2<sup>4</sup> = 16。每增加一位，数量翻倍。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; Hexadecimal</span><span data-lang="zh">第 2 节 &middot; 十六进制</span></div>
+  <h2><span data-lang="en">Hexadecimal</span><span data-lang="zh">十六进制</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Hex (base 16) is a compact shorthand for binary: each hex digit represents exactly 4 bits (a nibble).</span><span data-lang="zh">十六进制（以 16 为底）是二进制的紧凑缩写：每个十六进制位恰好代表 4 位（半字节，nibble）。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><span data-lang="en">Digits: 0&ndash;9 then A=10, B=11, C=12, D=13, E=14, F=15.</span><span data-lang="zh">数字：0&ndash;9，然后 A=10、B=11、C=12、D=13、E=14、F=15。</span></li>
+      <li><span data-lang="en">One byte (8 bits) = exactly 2 hex digits. e.g. 0xFF = 1111 1111 = decimal 255.</span><span data-lang="zh">一字节（8 位）= 恰好 2 个十六进制位。例如 0xFF = 1111 1111 = 十进制 255。</span></li>
+      <li><span data-lang="en">Hex prefix: <code>0x</code> in code (e.g. <code>0x1F</code>); <code>#</code> in HTML color codes (e.g. <code>#FF0000</code> = pure red).</span><span data-lang="zh">十六进制前缀：代码中用 <code>0x</code>（如 <code>0x1F</code>）；HTML 颜色代码中用 <code>#</code>（如 <code>#FF0000</code> = 纯红色）。</span></li>
+    </ul>
+    <span data-lang="en">CSTA 3A-DA-09 Descriptive Statement (verbatim): "For example, convert hexadecimal color codes to decimal percentages, ASCII/Unicode representation, and logic gates." Hex color codes are the most visible real-world use of hexadecimal.</span><span data-lang="zh">CSTA 3A-DA-09 描述性说明（原文）："例如，将十六进制颜色代码转换为十进制百分比、ASCII/Unicode 表示及逻辑门。"十六进制颜色代码是十六进制最直观的现实应用。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Hex digit table and color code</span><span data-lang="zh">例题 2 &middot; 十六进制数字表与颜色代码</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Show the 16 hex digits and their binary/decimal equivalents, then decode the color #3A7FBE.</span><span data-lang="zh">列出 16 个十六进制数字及其对应的二进制/十进制值，然后解码颜色代码 #3A7FBE。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span data-lang="en">Hex</span><span data-lang="zh">十六进制</span></th><th><span data-lang="en">Decimal</span><span data-lang="zh">十进制</span></th><th><span data-lang="en">4-bit binary</span><span data-lang="zh">4 位二进制</span></th><th><span data-lang="en">Hex</span><span data-lang="zh">十六进制</span></th><th><span data-lang="en">Decimal</span><span data-lang="zh">十进制</span></th><th><span data-lang="en">4-bit binary</span><span data-lang="zh">4 位二进制</span></th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>0000</td><td>8</td><td>8</td><td>1000</td></tr>
+          <tr><td>1</td><td>1</td><td>0001</td><td>9</td><td>9</td><td>1001</td></tr>
+          <tr><td>2</td><td>2</td><td>0010</td><td>A</td><td>10</td><td>1010</td></tr>
+          <tr><td>3</td><td>3</td><td>0011</td><td>B</td><td>11</td><td>1011</td></tr>
+          <tr><td>4</td><td>4</td><td>0100</td><td>C</td><td>12</td><td>1100</td></tr>
+          <tr><td>5</td><td>5</td><td>0101</td><td>D</td><td>13</td><td>1101</td></tr>
+          <tr><td>6</td><td>6</td><td>0110</td><td>E</td><td>14</td><td>1110</td></tr>
+          <tr><td>7</td><td>7</td><td>0111</td><td>F</td><td>15</td><td>1111</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong><span data-lang="en">Decoding #3A7FBE (RGB color):</span><span data-lang="zh">解码 #3A7FBE（RGB 颜色）：</span></strong></p>
+    <pre><code>#3A7FBE  →  R=0x3A  G=0x7F  B=0xBE
+R: 3=0011, A=1010  →  0011 1010  =  58  (decimal)
+G: 7=0111, F=1111  →  0111 1111  =  127 (decimal)
+B: B=1011, E=1110  →  1011 1110  =  190 (decimal)</code></pre>
+    <p><span data-lang="en">Each pair of hex digits is one byte (0&ndash;255). The color #3A7FBE has red=58, green=127, blue=190 — a medium steel-blue.</span><span data-lang="zh">每对十六进制位代表一字节（0&ndash;255）。颜色 #3A7FBE 的红色=58、绿色=127、蓝色=190——一种中等钢蓝色。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the decimal value of the hex digit B?</span><span data-lang="zh">十六进制数字 B 的十进制值是多少？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">11</span><span data-lang="zh">11</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">12</span><span data-lang="zh">12</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">10</span><span data-lang="zh">10</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">16</span><span data-lang="zh">16</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Hex digits A=10, B=11, C=12, D=13, E=14, F=15. B = 11.</span><span data-lang="zh">十六进制数字：A=10、B=11、C=12、D=13、E=14、F=15。B = 11。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A=10, B=11, C=12, D=13, E=14, F=15. Memorise this mapping.</span><span data-lang="zh">A=10、B=11、C=12、D=13、E=14、F=15。记住这个对应关系。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">How many bits does one hex digit represent?</span><span data-lang="zh">一个十六进制位代表多少位二进制？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">1</span><span data-lang="zh">1</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">2</span><span data-lang="zh">2</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">8</span><span data-lang="zh">8</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">One hex digit represents 4 bits (a nibble), because 16 = 2<sup>4</sup>. Two hex digits = one byte (8 bits).</span><span data-lang="zh">一个十六进制位代表 4 位二进制（半字节），因为 16 = 2<sup>4</sup>。两个十六进制位 = 一字节（8 位）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Hex base is 16 = 2<sup>4</sup>, so one hex digit encodes 4 bits. Two hex digits = 8 bits = 1 byte.</span><span data-lang="zh">十六进制底数为 16 = 2<sup>4</sup>，故一个十六进制位编码 4 位二进制。两个十六进制位 = 8 位 = 1 字节。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; Converting between bases</span><span data-lang="zh">第 3 节 &middot; 进制转换</span></div>
+  <h2><span data-lang="en">Converting Between Bases</span><span data-lang="zh">进制转换</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three conversions to master: decimal &rarr; binary, binary &rarr; decimal, binary &harr; hex.</span><span data-lang="zh">需掌握三种转换：十进制 &rarr; 二进制、二进制 &rarr; 十进制、二进制 &harr; 十六进制。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Binary &rarr; Decimal</span><span data-lang="zh">二进制 &rarr; 十进制</span></strong> <span data-lang="en">&mdash; multiply each bit by its place value (1, 2, 4, 8, …) and sum.</span><span data-lang="zh">&mdash; 每位乘以其位权（1、2、4、8……）后求和。</span></li>
+      <li><strong><span data-lang="en">Decimal &rarr; Binary</span><span data-lang="zh">十进制 &rarr; 二进制</span></strong> <span data-lang="en">&mdash; divide by 2 repeatedly; remainders (read bottom-up) are the binary digits.</span><span data-lang="zh">&mdash; 反复除以 2；余数（从下往上读）即为二进制位。</span></li>
+      <li><strong><span data-lang="en">Binary &harr; Hex</span><span data-lang="zh">二进制 &harr; 十六进制</span></strong> <span data-lang="en">&mdash; group bits in fours from the right; look up each group in the hex table.</span><span data-lang="zh">&mdash; 从右侧起每 4 位分为一组；在十六进制表中查找每组的值。</span></li>
+    </ul>
+    <span data-lang="en">Ontario ICS3U A1.2 (verbatim): "demonstrate an understanding of how a computer uses various systems (e.g., binary, hexadecimal, ASCII, Unicode) to internally represent data." Fluent conversion is the assessed skill.</span><span data-lang="zh">安大略 ICS3U A1.2（原文）："展示对计算机如何使用各种系统（如二进制、十六进制、ASCII、Unicode）在内部表示数据的理解。"流畅转换是被评估的技能。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Decimal 45 in binary and hex</span><span data-lang="zh">例题 3 &middot; 十进制 45 转换为二进制和十六进制</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Convert decimal 45 to (a) binary and (b) hexadecimal.</span><span data-lang="zh">将十进制 45 转换为 (a) 二进制和 (b) 十六进制。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">(a) Decimal 45 &rarr; Binary (repeated division by 2).</span><span data-lang="zh">(a) 十进制 45 &rarr; 二进制（反复除以 2）。</span></strong></p>
+    <pre><code>45 &divide; 2 = 22 remainder 1   &larr; least significant bit (LSB)
+22 &divide; 2 = 11 remainder 0
+11 &divide; 2 =  5 remainder 1
+ 5 &divide; 2 =  2 remainder 1
+ 2 &divide; 2 =  1 remainder 0
+ 1 &divide; 2 =  0 remainder 1   &larr; most significant bit (MSB)
+
+Read remainders bottom-up: 101101
+Pad to 8 bits: 00101101</code></pre>
+    <p><span data-lang="en">Check: 32 + 8 + 4 + 1 = 45. Correct.</span><span data-lang="zh">验证：32 + 8 + 4 + 1 = 45。正确。</span></p>
+    <p><strong><span data-lang="en">(b) Binary 00101101 &rarr; Hex (group into nibbles).</span><span data-lang="zh">(b) 二进制 00101101 &rarr; 十六进制（分成半字节）。</span></strong></p>
+    <pre><code>0010 | 1101
+  2  |  D
+Result: 0x2D</code></pre>
+    <p><span data-lang="en">Left nibble 0010 = 2; right nibble 1101 = 13 = D. So 45 decimal = 0x2D hex.</span><span data-lang="zh">左半字节 0010 = 2；右半字节 1101 = 13 = D。因此十进制 45 = 十六进制 0x2D。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is decimal 13 in binary?</span><span data-lang="zh">十进制 13 的二进制是什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>1100</code></div>
+      <div class="quiz-opt" data-idx="1"><code>1101</code></div>
+      <div class="quiz-opt" data-idx="2"><code>1110</code></div>
+      <div class="quiz-opt" data-idx="3"><code>1011</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">13 = 8 + 4 + 1 = 1&times;8 + 1&times;4 + 0&times;2 + 1&times;1 = 1101. Or: 13&divide;2=6 r1, 6&divide;2=3 r0, 3&divide;2=1 r1, 1&divide;2=0 r1 &rarr; read up: 1101.</span><span data-lang="zh">13 = 8 + 4 + 1 = 1&times;8 + 1&times;4 + 0&times;2 + 1&times;1 = 1101。或：13&divide;2=6 余1，6&divide;2=3 余0，3&divide;2=1 余1，1&divide;2=0 余1 &rarr; 从下往上读：1101。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">1100 = 12; 1110 = 14; 1011 = 11. For 13: 8+4+1=13 &rarr; bits 3,2,0 are 1 &rarr; 1101.</span><span data-lang="zh">1100 = 12；1110 = 14；1011 = 11。对于 13：8+4+1=13 &rarr; 第 3、2、0 位为 1 &rarr; 1101。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Convert binary 11110000 to hexadecimal.</span><span data-lang="zh">将二进制 11110000 转换为十六进制。</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>0xEF</code></div>
+      <div class="quiz-opt" data-idx="1"><code>0xFF</code></div>
+      <div class="quiz-opt" data-idx="2"><code>0xF0</code></div>
+      <div class="quiz-opt" data-idx="3"><code>0x0F</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Split: 1111 | 0000. Left nibble 1111 = 15 = F. Right nibble 0000 = 0. Result: 0xF0.</span><span data-lang="zh">分组：1111 | 0000。左半字节 1111 = 15 = F。右半字节 0000 = 0。结果：0xF0。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Group 4 bits at a time: 1111=F and 0000=0. So 11110000 = 0xF0. EF would be 11101111; FF would be 11111111.</span><span data-lang="zh">每 4 位分一组：1111=F，0000=0。所以 11110000 = 0xF0。EF 对应 11101111；FF 对应 11111111。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; Binary arithmetic</span><span data-lang="zh">第 4 节 &middot; 二进制算术</span></div>
+  <h2><span data-lang="en">Binary Arithmetic (Addition)</span><span data-lang="zh">二进制算术（加法）</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Binary addition has four cases only:</span><span data-lang="zh">二进制加法只有四种情况：</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong>0 + 0 = 0</strong> <span data-lang="en">(no carry)</span><span data-lang="zh">（无进位）</span></li>
+      <li><strong>0 + 1 = 1</strong> <span data-lang="en">(no carry)</span><span data-lang="zh">（无进位）</span></li>
+      <li><strong>1 + 0 = 1</strong> <span data-lang="en">(no carry)</span><span data-lang="zh">（无进位）</span></li>
+      <li><strong>1 + 1 = 10</strong> <span data-lang="en">(write 0, carry 1 — exactly like decimal 9+1=10 but happens at 2 not 10)</span><span data-lang="zh">（写 0，进位 1——就像十进制中 9+1=10，但在 2 而不是 10 时发生）</span></li>
+    </ul>
+    <span data-lang="en"><strong>Overflow:</strong> if the result needs more bits than are available, the leading bits are lost. This is a fundamental data-representation constraint. AP CSP DAT-1.B: "Explain the consequences of using bits to represent data" — overflow is one such consequence.</span><span data-lang="zh"><strong>溢出（overflow）：</strong>如果结果需要的位数超过可用位数，最高位将丢失。这是位表示数据的根本限制。AP CSP DAT-1.B："解释用位表示数据的后果"——溢出就是其中一种后果。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; Adding binary numbers</span><span data-lang="zh">例题 4 &middot; 二进制数相加</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Calculate (a) 0110 + 0101 and (b) 1101 + 0111 in binary. Check against decimal.</span><span data-lang="zh">计算二进制 (a) 0110 + 0101 和 (b) 1101 + 0111。与十进制结果对照验证。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">(a) 0110 + 0101 (= decimal 6 + 5 = 11).</span><span data-lang="zh">(a) 0110 + 0101（= 十进制 6 + 5 = 11）。</span></strong></p>
+    <pre><code>  0 1 1 0
++ 0 1 0 1
+---------
+  carry: 0 1 1 0
+
+Step by step (right to left):
+  bit 0: 0+1 = 1, carry 0
+  bit 1: 1+0 = 1, carry 0
+  bit 2: 1+1 = 0, carry 1
+  bit 3: 0+0+1(carry) = 1, carry 0
+
+Result: 1011  (= 8+2+1 = 11 decimal) ✓</code></pre>
+    <p><strong><span data-lang="en">(b) 1101 + 0111 (= decimal 13 + 7 = 20).</span><span data-lang="zh">(b) 1101 + 0111（= 十进制 13 + 7 = 20）。</span></strong></p>
+    <pre><code>  1 1 0 1
++ 0 1 1 1
+---------
+  bit 0: 1+1 = 0, carry 1
+  bit 1: 0+1+1 = 0, carry 1
+  bit 2: 1+1+1 = 1, carry 1
+  bit 3: 1+0+1 = 0, carry 1
+
+Result: 1 0100  (5 bits needed)
+Binary: 10100 = 16+4 = 20 decimal ✓</code></pre>
+    <p><span data-lang="en">If restricted to 4-bit storage, the carry-out bit is lost and the result would be 0100 = 4 — an overflow error.</span><span data-lang="zh">如果限制为 4 位存储，进位位丢失，结果将是 0100 = 4——这是一个溢出错误。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is 0011 + 0101 in binary?</span><span data-lang="zh">二进制 0011 + 0101 的结果是什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>0110</code></div>
+      <div class="quiz-opt" data-idx="1"><code>0111</code></div>
+      <div class="quiz-opt" data-idx="2"><code>1001</code></div>
+      <div class="quiz-opt" data-idx="3"><code>1000</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">3 + 5 = 8. In binary: bit0: 1+1=0 carry1; bit1: 1+0+1=0 carry1; bit2: 0+1+1=0 carry1; bit3: 0+0+1=1. Result: 1000 = 8. ✓</span><span data-lang="zh">3 + 5 = 8。二进制：第 0 位：1+1=0 进 1；第 1 位：1+0+1=0 进 1；第 2 位：0+1+1=0 进 1；第 3 位：0+0+1=1。结果：1000 = 8。✓</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">0011=3, 0101=5, sum=8=1000 in binary. Work right to left with carries: 1+1=10, 1+0+carry=10, 0+1+carry=10, 0+0+carry=1. Result 1000.</span><span data-lang="zh">0011=3，0101=5，和=8=二进制 1000。从右到左处理进位：1+1=10，1+0+进位=10，0+1+进位=10，0+0+进位=1。结果 1000。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In binary addition, what is 1 + 1?</span><span data-lang="zh">在二进制加法中，1 + 1 等于什么？</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">10 (write 0, carry 1)</span><span data-lang="zh">10（写 0，进位 1）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">2</span><span data-lang="zh">2</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">11</span><span data-lang="zh">11</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">1</span><span data-lang="zh">1</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In binary, 1+1 = 2 decimal, but 2 in binary is written 10. Write the 0, carry the 1 to the next column. This is the fundamental carry rule in binary addition.</span><span data-lang="zh">在二进制中，1+1 = 十进制 2，但二进制中 2 写作 10。写下 0，将 1 进位到下一列。这是二进制加法的基本进位规则。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Binary only has 0 and 1. 1+1 exceeds 1, so like decimal 9+1 causing a carry, binary 1+1=10 (write 0, carry 1).</span><span data-lang="zh">二进制只有 0 和 1。1+1 超过 1，就像十进制 9+1 引起进位一样，二进制 1+1=10（写 0，进位 1）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; Representing text and data</span><span data-lang="zh">第 5 节 &middot; 文本与数据表示</span></div>
+  <h2><span data-lang="en">Representing Text and Data (ASCII, Unicode, Bits and Bytes)</span><span data-lang="zh">文本与数据表示（ASCII、Unicode、位与字节）</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Every character is stored as a number. Two encoding standards matter:</span><span data-lang="zh">每个字符都以数字形式存储。两个编码标准至关重要：</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">ASCII</span><span data-lang="zh">ASCII</span></strong> <span data-lang="en">&mdash; 7 bits, 128 characters (0&ndash;127). Covers A&ndash;Z, a&ndash;z, 0&ndash;9, punctuation, and control codes. 'A' = 65, 'a' = 97, '0' = 48.</span><span data-lang="zh">&mdash; 7 位，128 个字符（0&ndash;127）。涵盖 A&ndash;Z、a&ndash;z、0&ndash;9、标点和控制字符。'A' = 65，'a' = 97，'0' = 48。</span></li>
+      <li><strong><span data-lang="en">Unicode</span><span data-lang="zh">Unicode</span></strong> <span data-lang="en">&mdash; superset of ASCII; over 140,000 characters covering virtually every writing system (Chinese, Arabic, emoji, …). Common encoding: UTF-8 (variable 1&ndash;4 bytes; first 128 code points are identical to ASCII).</span><span data-lang="zh">&mdash; ASCII 的超集；超过 140,000 个字符，涵盖几乎所有书写系统（中文、阿拉伯文、表情符号……）。常见编码：UTF-8（可变 1&ndash;4 字节；前 128 个码点与 ASCII 完全相同）。</span></li>
+      <li><strong><span data-lang="en">Bit and byte scale</span><span data-lang="zh">位与字节的换算</span></strong> <span data-lang="en">&mdash; 1 byte = 8 bits; 1 KB = 1,024 bytes; 1 MB = 1,024 KB; 1 GB = 1,024 MB.</span><span data-lang="zh">&mdash; 1 字节 = 8 位；1 KB = 1,024 字节；1 MB = 1,024 KB；1 GB = 1,024 MB。</span></li>
+    </ul>
+    <span data-lang="en">Ontario ICS3U A1.2 (verbatim): "…ASCII, Unicode…" — both encoding standards named. Alberta CSE2130 outcome 1.1.2 (verbatim): "type of data; e.g., text (encoded in a format such as ASCII code), binary (encoded in binary code)."</span><span data-lang="zh">安大略 ICS3U A1.2（原文）："……ASCII、Unicode……"——两个编码标准均被点名。阿尔伯塔 CSE2130 结果 1.1.2（原文）："数据类型；例如，文本（以 ASCII 码等格式编码）、二进制（以二进制代码编码）。"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; ASCII encoding of "Hi"</span><span data-lang="zh">例题 5 &middot; "Hi" 的 ASCII 编码</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Show how the two-character string "Hi" is stored in memory using ASCII, in both decimal and binary.</span><span data-lang="zh">展示双字符字符串"Hi"如何用 ASCII 在内存中存储，包括十进制和二进制形式。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th><span data-lang="en">Character</span><span data-lang="zh">字符</span></th><th><span data-lang="en">ASCII decimal</span><span data-lang="zh">ASCII 十进制</span></th><th><span data-lang="en">Binary (8-bit)</span><span data-lang="zh">二进制（8 位）</span></th><th><span data-lang="en">Hex</span><span data-lang="zh">十六进制</span></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>'H'</td><td>72</td><td>01001000</td><td>0x48</td></tr>
+          <tr><td>'i'</td><td>105</td><td>01101001</td><td>0x69</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Storage: 2 characters &times; 1 byte = 2 bytes = 16 bits total.</span><span data-lang="zh">存储：2 个字符 &times; 1 字节 = 2 字节 = 共 16 位。</span></p>
+    <p><span data-lang="en">Note: 'H' (uppercase) = 72, 'h' (lowercase) = 104. The difference is 32, which means lowercase = uppercase + 32 in ASCII — a useful pattern for case-conversion code.</span><span data-lang="zh">注意：'H'（大写）= 72，'h'（小写）= 104。差值为 32，即 ASCII 中小写 = 大写 + 32——这是大小写转换代码的有用规律。</span></p>
+    <p><strong><span data-lang="en">Why Unicode extends ASCII.</span><span data-lang="zh">为什么 Unicode 扩展了 ASCII。</span></strong> <span data-lang="en">ASCII's 128 code points cannot represent Chinese characters, Arabic script, or emoji. Unicode assigns a unique code point to every character in every writing system. UTF-8 encodes the first 128 Unicode code points identically to ASCII (backward-compatible), then uses 2&ndash;4 bytes for the rest. The Chinese character 中 is Unicode code point U+4E2D, encoded in UTF-8 as three bytes: 0xE4 0xB8 0xAD.</span><span data-lang="zh">ASCII 的 128 个码点无法表示汉字、阿拉伯文字或表情符号。Unicode 为每种书写系统中的每个字符分配唯一码点。UTF-8 将前 128 个 Unicode 码点与 ASCII 完全相同地编码（向后兼容），其余使用 2&ndash;4 字节。汉字"中"是 Unicode 码点 U+4E2D，在 UTF-8 中编码为三字节：0xE4 0xB8 0xAD。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The ASCII code for 'A' is 65. What is the ASCII code for 'B'?</span><span data-lang="zh">字符 'A' 的 ASCII 码为 65。'B' 的 ASCII 码是多少？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">64</span><span data-lang="zh">64</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">97</span><span data-lang="zh">97</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">66</span><span data-lang="zh">66</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">98</span><span data-lang="zh">98</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">ASCII codes for uppercase letters are consecutive: A=65, B=66, C=67, … Z=90. Each letter is one more than the previous.</span><span data-lang="zh">大写字母的 ASCII 码是连续的：A=65、B=66、C=67……Z=90。每个字母比前一个多 1。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A=65, so B=66 (consecutive). 97 = lowercase 'a'. 98 = lowercase 'b'. ASCII uppercase letters run 65–90.</span><span data-lang="zh">A=65，所以 B=66（连续）。97 = 小写 'a'。98 = 小写 'b'。ASCII 大写字母范围为 65–90。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which statement about Unicode and ASCII is correct?</span><span data-lang="zh">关于 Unicode 和 ASCII，哪个说法是正确的？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Unicode replaced ASCII entirely; ASCII is no longer used</span><span data-lang="zh">Unicode 完全取代了 ASCII；ASCII 已不再使用</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Unicode is a superset of ASCII; the first 128 code points are identical</span><span data-lang="zh">Unicode 是 ASCII 的超集；前 128 个码点完全相同</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Unicode uses 7 bits per character, same as ASCII</span><span data-lang="zh">Unicode 每个字符使用 7 位，与 ASCII 相同</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">ASCII can represent all characters that Unicode can</span><span data-lang="zh">ASCII 可以表示 Unicode 所能表示的所有字符</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Unicode is a superset of ASCII. The first 128 Unicode code points (U+0000 to U+007F) are identical to ASCII, making UTF-8 backward-compatible with ASCII text. Unicode extends far beyond ASCII to cover over 140,000 characters.</span><span data-lang="zh">Unicode 是 ASCII 的超集。前 128 个 Unicode 码点（U+0000 到 U+007F）与 ASCII 完全相同，使 UTF-8 与 ASCII 文本向后兼容。Unicode 远超 ASCII，涵盖超过 140,000 个字符。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Unicode extends ASCII (does not replace it); the first 128 code points are identical. Unicode uses variable-width encoding (1–4 bytes in UTF-8), not a fixed 7 bits.</span><span data-lang="zh">Unicode 扩展了 ASCII（而非取代）；前 128 个码点完全相同。Unicode 使用可变宽度编码（UTF-8 中为 1–4 字节），而非固定 7 位。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Boolean logic</span><span data-lang="zh">第 6 节 &middot; 布尔逻辑</span></div>
+  <h2><span data-lang="en">Boolean Logic: AND, OR, NOT</span><span data-lang="zh">布尔逻辑：与、或、非</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Boolean values are TRUE or FALSE only. Three fundamental operators:</span><span data-lang="zh">布尔值只有 TRUE（真）或 FALSE（假）。三个基本运算符：</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">AND</span><span data-lang="zh">AND（与）</span></strong> <span data-lang="en">&mdash; result is TRUE only when <em>both</em> inputs are TRUE. In code: <code>A and B</code>.</span><span data-lang="zh">&mdash; 只有当<em>两个</em>输入都为 TRUE 时结果才为 TRUE。代码中：<code>A and B</code>。</span></li>
+      <li><strong><span data-lang="en">OR</span><span data-lang="zh">OR（或）</span></strong> <span data-lang="en">&mdash; result is TRUE when <em>at least one</em> input is TRUE. In code: <code>A or B</code>.</span><span data-lang="zh">&mdash; 当<em>至少一个</em>输入为 TRUE 时结果为 TRUE。代码中：<code>A or B</code>。</span></li>
+      <li><strong><span data-lang="en">NOT</span><span data-lang="zh">NOT（非）</span></strong> <span data-lang="en">&mdash; flips the input: NOT TRUE = FALSE, NOT FALSE = TRUE. In code: <code>not A</code>.</span><span data-lang="zh">&mdash; 取反：NOT TRUE = FALSE，NOT FALSE = TRUE。代码中：<code>not A</code>。</span></li>
+    </ul>
+    <span data-lang="en">Ontario ICS3U A1.4 (verbatim): "demonstrate the ability to use Boolean operators (e.g., AND, OR, NOT) … correctly in computer programs." Alberta CSE1120 outcome 2.6 (verbatim): "use … Boolean … operators … to process data." BC Computer Studies 10 Content (verbatim): "…Boolean operators, comparison operators…"</span><span data-lang="zh">安大略 ICS3U A1.4（原文）："展示在计算机程序中正确使用布尔运算符（如 AND、OR、NOT）……的能力。"阿尔伯塔 CSE1120 结果 2.6（原文）："使用……布尔……运算符……来处理数据。"BC Computer Studies 10 内容（原文）："……布尔运算符、比较运算符……"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; Truth tables for AND, OR, NOT</span><span data-lang="zh">例题 6 &middot; AND、OR、NOT 的真值表</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Build the truth tables for all three operators and evaluate the expression (A AND B) OR (NOT C) for A=T, B=F, C=F.</span><span data-lang="zh">为三个运算符建立真值表，并求 A=T、B=F、C=F 时表达式 (A AND B) OR (NOT C) 的值。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="two-col">
+      <div>
+        <p><strong><span data-lang="en">AND truth table</span><span data-lang="zh">AND（与）真值表</span></strong></p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>A</th><th>B</th><th>A AND B</th></tr></thead>
+            <tbody>
+              <tr><td>T</td><td>T</td><td>T</td></tr>
+              <tr><td>T</td><td>F</td><td>F</td></tr>
+              <tr><td>F</td><td>T</td><td>F</td></tr>
+              <tr><td>F</td><td>F</td><td>F</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p><strong><span data-lang="en">OR truth table</span><span data-lang="zh">OR（或）真值表</span></strong></p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>A</th><th>B</th><th>A OR B</th></tr></thead>
+            <tbody>
+              <tr><td>T</td><td>T</td><td>T</td></tr>
+              <tr><td>T</td><td>F</td><td>T</td></tr>
+              <tr><td>F</td><td>T</td><td>T</td></tr>
+              <tr><td>F</td><td>F</td><td>F</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p><strong><span data-lang="en">NOT: NOT T = F; NOT F = T.</span><span data-lang="zh">NOT（非）：NOT T = F；NOT F = T。</span></strong></p>
+    <p><strong><span data-lang="en">Evaluating (A AND B) OR (NOT C) with A=T, B=F, C=F:</span><span data-lang="zh">求 A=T、B=F、C=F 时 (A AND B) OR (NOT C) 的值：</span></strong></p>
+    <pre><code>Step 1: A AND B  = T AND F = F
+Step 2: NOT C    = NOT F   = T
+Step 3: F OR T             = T
+
+Result: TRUE</code></pre>
+    <p><span data-lang="en">Evaluate inside parentheses first, then combine with the outer operator — same operator-precedence rule as arithmetic.</span><span data-lang="zh">先求括号内的值，再与外层运算符结合——与算术中的运算符优先级规则相同。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the result of TRUE AND FALSE?</span><span data-lang="zh">TRUE AND FALSE 的结果是什么？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">TRUE</span><span data-lang="zh">TRUE</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">It depends on the context</span><span data-lang="zh">取决于上下文</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">FALSE</span><span data-lang="zh">FALSE</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">TRUE or FALSE randomly</span><span data-lang="zh">随机为 TRUE 或 FALSE</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">AND requires BOTH inputs to be TRUE. Since B=FALSE, the result is FALSE regardless of A. AND is only TRUE when all inputs are TRUE.</span><span data-lang="zh">AND 要求两个输入都为 TRUE。由于 B=FALSE，无论 A 为何值，结果都是 FALSE。AND 只有在所有输入均为 TRUE 时才为 TRUE。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">AND = TRUE only when BOTH inputs are TRUE. TRUE AND FALSE has one FALSE input, so the result is FALSE.</span><span data-lang="zh">AND = 只有当两个输入都为 TRUE 时才为 TRUE。TRUE AND FALSE 有一个 FALSE 输入，所以结果为 FALSE。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Evaluate: NOT (FALSE OR FALSE)</span><span data-lang="zh">求值：NOT (FALSE OR FALSE)</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">TRUE</span><span data-lang="zh">TRUE</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">FALSE</span><span data-lang="zh">FALSE</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Cannot be determined</span><span data-lang="zh">无法确定</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">ERROR</span><span data-lang="zh">错误</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Step 1: FALSE OR FALSE = FALSE (OR is only TRUE when at least one input is TRUE). Step 2: NOT FALSE = TRUE.</span><span data-lang="zh">步骤 1：FALSE OR FALSE = FALSE（OR 只有至少一个输入为 TRUE 时才为 TRUE）。步骤 2：NOT FALSE = TRUE。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Inside parentheses first: FALSE OR FALSE = FALSE. Then NOT FALSE = TRUE.</span><span data-lang="zh">先求括号内：FALSE OR FALSE = FALSE。然后 NOT FALSE = TRUE。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; Boolean expressions in programming conditions</span><span data-lang="zh">深入 &mdash; 编程条件中的布尔表达式</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">In code, Boolean expressions appear inside <code>if</code> statements and <code>while</code> loops. Compound conditions combine comparison operators with Boolean operators: e.g. <code>if (age &gt;= 16 and has_license)</code>. De Morgan's Laws are useful for simplification: NOT (A AND B) = (NOT A) OR (NOT B); NOT (A OR B) = (NOT A) AND (NOT B). These let you rewrite negated compound conditions into a form that is easier to read and test.</span><span data-lang="zh">在代码中，布尔表达式出现在 <code>if</code> 语句和 <code>while</code> 循环中。复合条件将比较运算符与布尔运算符结合：例如 <code>if (age &gt;= 16 and has_license)</code>。德摩根定律对化简很有用：NOT (A AND B) = (NOT A) OR (NOT B)；NOT (A OR B) = (NOT A) AND (NOT B)。这些定律使你能够将取反的复合条件改写为更易读、更易测试的形式。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-9-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Logic gates and truth tables</span><span data-lang="zh">第 7 节 &middot; 逻辑门与真值表</span></div>
+  <h2><span data-lang="en">Logic Gates and Truth Tables</span><span data-lang="zh">逻辑门与真值表</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">A logic gate is a hardware circuit that implements one Boolean operation. Three fundamental gates correspond to the three Boolean operators:</span><span data-lang="zh">逻辑门（logic gate）是实现一个布尔运算的硬件电路。三个基本门对应三个布尔运算符：</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">AND gate</span><span data-lang="zh">AND 门（与门）</span></strong> <span data-lang="en">&mdash; two inputs; output is 1 only when both inputs are 1.</span><span data-lang="zh">&mdash; 两个输入；只有当两个输入都为 1 时输出为 1。</span></li>
+      <li><strong><span data-lang="en">OR gate</span><span data-lang="zh">OR 门（或门）</span></strong> <span data-lang="en">&mdash; two inputs; output is 1 when at least one input is 1.</span><span data-lang="zh">&mdash; 两个输入；至少一个输入为 1 时输出为 1。</span></li>
+      <li><strong><span data-lang="en">NOT gate / inverter</span><span data-lang="zh">NOT 门 / 反相器（非门）</span></strong> <span data-lang="en">&mdash; one input; output is the complement (0&rarr;1, 1&rarr;0).</span><span data-lang="zh">&mdash; 一个输入；输出为补（0&rarr;1，1&rarr;0）。</span></li>
+    </ul>
+    <span data-lang="en">CSTA 3B-CS-02 (verbatim): "Illustrate ways computing systems implement logic, input, and output through hardware components." Descriptive Statement: "Examples of components could include logic gates and IO pins." CSTA 3A-DA-09 Descriptive Statement explicitly names "logic gates" as a conversion example.</span><span data-lang="zh">CSTA 3B-CS-02（原文）："说明计算系统如何通过硬件组件实现逻辑、输入和输出。"描述性说明："组件示例包括逻辑门和 IO 引脚。"CSTA 3A-DA-09 描述性说明明确将"逻辑门"列为转换示例。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Combined gate truth table</span><span data-lang="zh">例题 7 &middot; 组合门真值表</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Build the truth table for the circuit: Output = (A AND B) OR (NOT A). Use 0/1 notation.</span><span data-lang="zh">为以下电路建立真值表：输出 = (A AND B) OR (NOT A)。使用 0/1 表示法。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>A</th><th>B</th><th>A AND B</th><th>NOT A</th><th><span data-lang="en">Output: (A AND B) OR (NOT A)</span><span data-lang="zh">输出：(A AND B) OR (NOT A)</span></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Reading the table: whenever A=0, NOT A=1, so the OR is always 1. When A=1, NOT A=0, so the output equals A AND B = B. The circuit behaves like a conditional: "give me B, but only when A is 1; otherwise output 1."</span><span data-lang="zh">读表：只要 A=0，NOT A=1，则 OR 结果始终为 1。当 A=1 时，NOT A=0，输出等于 A AND B = B。该电路的行为类似于条件：当 A=1 时输出 B，否则输出 1。</span></p>
+    <p><strong><span data-lang="en">How to build any truth table:</span><span data-lang="zh">如何构建任意真值表：</span></strong></p>
+    <pre><code>1. List all input combinations (n inputs = 2^n rows).
+   2 inputs → 4 rows: 00, 01, 10, 11
+   3 inputs → 8 rows: 000, 001, 010, 011, 100, 101, 110, 111
+
+2. Add intermediate columns for each sub-expression.
+
+3. Fill the final output column by evaluating each row.</code></pre>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the output of an AND gate when one input is 0 and the other is 1?</span><span data-lang="zh">当 AND 门的一个输入为 0、另一个为 1 时，输出是什么？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">1</span><span data-lang="zh">1</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">0</span><span data-lang="zh">0</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Depends on which input is 0</span><span data-lang="zh">取决于哪个输入为 0</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Undefined</span><span data-lang="zh">未定义</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">AND gate output is 1 only when BOTH inputs are 1. If either input is 0, the output is 0. Here one input is 0, so output = 0.</span><span data-lang="zh">AND 门只有当两个输入都为 1 时输出才为 1。如果任一输入为 0，输出为 0。此处一个输入为 0，所以输出 = 0。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">AND requires BOTH inputs to be 1 for output=1. One input is 0, so output=0 regardless of which is which.</span><span data-lang="zh">AND 要求两个输入都为 1 才能输出 1。一个输入为 0，所以无论哪个是 0，输出都为 0。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">How many rows does the truth table for a 3-input Boolean expression have?</span><span data-lang="zh">一个 3 输入布尔表达式的真值表有多少行？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">3</span><span data-lang="zh">3</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">6</span><span data-lang="zh">6</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">4</span><span data-lang="zh">4</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">8</span><span data-lang="zh">8</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">n inputs produce 2<sup>n</sup> rows (all combinations of T/F). 3 inputs: 2<sup>3</sup> = 8 rows (000, 001, 010, 011, 100, 101, 110, 111).</span><span data-lang="zh">n 个输入产生 2<sup>n</sup> 行（T/F 的所有组合）。3 个输入：2<sup>3</sup> = 8 行（000、001、010、011、100、101、110、111）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Truth table rows = 2<sup>n</sup> where n = number of inputs. 3 inputs = 2<sup>3</sup> = 8 rows. 2 inputs = 4 rows; 4 inputs = 16 rows.</span><span data-lang="zh">真值表行数 = 2<sup>n</sup>，其中 n = 输入数量。3 个输入 = 2<sup>3</sup> = 8 行。2 个输入 = 4 行；4 个输入 = 16 行。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; NAND, NOR, and universal gates</span><span data-lang="zh">深入 &mdash; NAND、NOR 与通用门</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">NAND (NOT AND) and NOR (NOT OR) are each <strong>universal gates</strong>: any Boolean function can be built from NAND gates alone (or NOR gates alone). This is why real CPUs are built almost entirely from NAND gates — they are cheaper to fabricate in CMOS. NAND truth table: output is 0 only when both inputs are 1 (the complement of AND). XOR (exclusive OR) outputs 1 when exactly one input is 1 (not both) — used in binary addition circuits (the sum bit of a half adder is XOR, the carry bit is AND).</span><span data-lang="zh">NAND（NOT AND）和 NOR（NOT OR）各自都是<strong>通用门</strong>：任何布尔函数都可以仅用 NAND 门（或仅用 NOR 门）构建。这就是为什么真实 CPU 几乎完全由 NAND 门构成——它们在 CMOS 工艺中制造成本更低。NAND 真值表：只有当两个输入都为 1 时输出才为 0（AND 的补）。XOR（异或）在恰好一个输入为 1（而非两个都是）时输出 1——用于二进制加法电路（半加器的和位是 XOR，进位位是 AND）。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">Number system questions (&sect;1&ndash;&sect;4)</span><span data-lang="zh">数制题（&sect;1&ndash;&sect;4）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Always show the place-value table.</span><span data-lang="zh">始终列出位权表。</span></strong> <span data-lang="en">For binary-to-decimal, write out the column headers (128, 64, 32, 16, 8, 4, 2, 1) and fill in the bits. Examiners award method marks even when the final answer is wrong.</span><span data-lang="zh">对于二进制转十进制，写出列标题（128、64、32、16、8、4、2、1）并填入位值。即使最终答案错误，考官也会给方法分。</span></li>
+      <li><strong><span data-lang="en">Hex &harr; binary: go via nibbles.</span><span data-lang="zh">十六进制 &harr; 二进制：通过半字节转换。</span></strong> <span data-lang="en">Never convert hex to decimal then to binary. Split hex digits into 4-bit nibbles directly. 0xB3 = 1011 0011, not "179 in decimal first."</span><span data-lang="zh">不要将十六进制先转十进制再转二进制。直接将十六进制位拆成 4 位半字节。0xB3 = 1011 0011，而不是"先转为十进制 179"。</span></li>
+      <li><strong><span data-lang="en">Binary addition: track carries explicitly.</span><span data-lang="zh">二进制加法：明确追踪进位。</span></strong> <span data-lang="en">Write the carry row above the addition. Forgetting to propagate a carry is the most common arithmetic error. Check by converting both operands to decimal, adding, then converting back.</span><span data-lang="zh">在加法上方写出进位行。忘记传播进位是最常见的算术错误。通过将两个操作数转换为十进制相加后再转回来验证。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Text encoding questions (&sect;5)</span><span data-lang="zh">文本编码题（&sect;5）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Know the key ASCII anchors.</span><span data-lang="zh">记住关键 ASCII 锚点。</span></strong> <span data-lang="en">'A'=65, 'a'=97, '0'=48. From these, any letter or digit offset is computable: 'C' = 65+2 = 67; 'z' = 97+25 = 122.</span><span data-lang="zh">'A'=65，'a'=97，'0'=48。从这些锚点出发，任何字母或数字的偏移量都可以计算：'C' = 65+2 = 67；'z' = 97+25 = 122。</span></li>
+      <li><strong><span data-lang="en">Unicode &ne; ASCII for non-Latin characters.</span><span data-lang="zh">非拉丁字符中 Unicode &ne; ASCII。</span></strong> <span data-lang="en">ASCII cannot encode Chinese, Arabic, or emoji. State this explicitly when a question involves non-English text.</span><span data-lang="zh">ASCII 无法编码中文、阿拉伯文或表情符号。当题目涉及非英文文本时，请明确说明这一点。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Boolean logic and gates (&sect;6&ndash;&sect;7)</span><span data-lang="zh">布尔逻辑与逻辑门（&sect;6&ndash;&sect;7）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Build the truth table column by column.</span><span data-lang="zh">逐列构建真值表。</span></strong> <span data-lang="en">For a compound expression, add one intermediate column per operator. Never try to evaluate the whole expression in your head per row &mdash; evaluate sub-expressions first.</span><span data-lang="zh">对于复合表达式，每个运算符增加一个中间列。不要试图在脑子里逐行求整个表达式——先求子表达式。</span></li>
+      <li><strong><span data-lang="en">AND vs OR: the decisive test.</span><span data-lang="zh">AND 与 OR 的决定性测试。</span></strong> <span data-lang="en">AND is FALSE unless all inputs are TRUE. OR is TRUE unless all inputs are FALSE. Test with all-FALSE and all-TRUE inputs first &mdash; those two rows distinguish AND from OR immediately.</span><span data-lang="zh">除非所有输入都为 TRUE，否则 AND 为 FALSE。除非所有输入都为 FALSE，否则 OR 为 TRUE。首先用全 FALSE 和全 TRUE 输入测试——这两行能立即区分 AND 和 OR。</span></li>
+      <li><strong><span data-lang="en">n inputs = 2<sup>n</sup> rows.</span><span data-lang="zh">n 个输入 = 2<sup>n</sup> 行。</span></strong> <span data-lang="en">Always check that your truth table has the right number of rows before filling it in.</span><span data-lang="zh">在填写真值表之前，始终检查行数是否正确。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Use 0 and 1, not T and F, for gate questions.</span><span data-lang="zh">逻辑门题中用 0 和 1，而非 T 和 F。</span></strong> <span data-lang="en">Hardware and circuit questions conventionally use 0/1. Logical expressions in code use TRUE/FALSE. Use the notation the question uses.</span><span data-lang="zh">硬件和电路题习惯用 0/1。代码中的逻辑表达式用 TRUE/FALSE。使用题目所用的表示法。</span></li>
+      <li><strong><span data-lang="en">Verify conversions in both directions.</span><span data-lang="zh">双向验证转换。</span></strong> <span data-lang="en">After converting decimal 45 to binary 00101101, always verify: 32+8+4+1=45. This 10-second check prevents losing marks on arithmetic slips.</span><span data-lang="zh">将十进制 45 转换为二进制 00101101 后，始终验证：32+8+4+1=45。这个 10 秒检查可防止因算术失误丢分。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 14 flipped</span><span data-lang="zh">0 / 14 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is a bit?</span><span data-lang="zh">什么是位（bit）？</span></div><div class="flashcard-back"><span data-lang="en">A single binary digit: 0 or 1. The smallest unit of digital information. AP CSP DAT-1.A: "Data can be represented using bits."</span><span data-lang="zh">单个二进制位：0 或 1。数字信息的最小单位。AP CSP DAT-1.A："数据可以用位来表示。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How many values can n bits represent?</span><span data-lang="zh">n 位可以表示多少个值？</span></div><div class="flashcard-back"><span data-lang="en">2<sup>n</sup> values. 1 bit = 2 values; 8 bits = 256 values; 16 bits = 65,536 values. Each additional bit doubles the count.</span><span data-lang="zh">2<sup>n</sup> 个值。1 位 = 2 个值；8 位 = 256 个值；16 位 = 65,536 个值。每增加一位，数量翻倍。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binary place values (right to left)</span><span data-lang="zh">二进制位权（从右到左）</span></div><div class="flashcard-back"><span data-lang="en">1, 2, 4, 8, 16, 32, 64, 128, … Each column is double the one to its right.</span><span data-lang="zh">1、2、4、8、16、32、64、128……每列是其右列的两倍。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Decimal 45 in binary?</span><span data-lang="zh">十进制 45 的二进制是什么？</span></div><div class="flashcard-back"><span data-lang="en">00101101. Check: 32+8+4+1 = 45. Method: divide repeatedly by 2, read remainders bottom-up.</span><span data-lang="zh">00101101。验证：32+8+4+1 = 45。方法：反复除以 2，从下往上读余数。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Hex digits A–F in decimal</span><span data-lang="zh">十六进制 A–F 的十进制值</span></div><div class="flashcard-back"><span data-lang="en">A=10, B=11, C=12, D=13, E=14, F=15. One hex digit = 4 bits. Two hex digits = 1 byte.</span><span data-lang="zh">A=10、B=11、C=12、D=13、E=14、F=15。一个十六进制位 = 4 位。两个十六进制位 = 1 字节。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Convert 0xB3 to binary</span><span data-lang="zh">将 0xB3 转换为二进制</span></div><div class="flashcard-back"><span data-lang="en">B=1011, 3=0011 → 10110011. Group 4 bits per hex digit, left to right.</span><span data-lang="zh">B=1011，3=0011 → 10110011。每个十六进制位对应 4 位，从左到右。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binary addition: 1 + 1 = ?</span><span data-lang="zh">二进制加法：1 + 1 = ？</span></div><div class="flashcard-back"><span data-lang="en">10 (write 0, carry 1). Binary has no digit "2" — exceeding 1 causes a carry, just like exceeding 9 causes a carry in decimal.</span><span data-lang="zh">10（写 0，进位 1）。二进制没有数字"2"——超过 1 就会进位，就像十进制超过 9 进位一样。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is overflow?</span><span data-lang="zh">什么是溢出（overflow）？</span></div><div class="flashcard-back"><span data-lang="en">When a result needs more bits than are available; the extra leading bits are lost, giving a wrong answer. AP CSP DAT-1.B consequence of fixed-width bit representation.</span><span data-lang="zh">当结果需要的位数超过可用位数时，多余的高位丢失，导致错误答案。AP CSP DAT-1.B：固定宽度位表示的后果。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">ASCII: 'A', 'a', '0' values</span><span data-lang="zh">ASCII：'A'、'a'、'0' 的值</span></div><div class="flashcard-back"><span data-lang="en">'A' = 65, 'a' = 97, '0' = 48. Lowercase = uppercase + 32. Letters are consecutive (B=66, C=67…).</span><span data-lang="zh">'A' = 65，'a' = 97，'0' = 48。小写 = 大写 + 32。字母连续（B=66、C=67……）。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">ASCII vs Unicode</span><span data-lang="zh">ASCII 与 Unicode</span></div><div class="flashcard-back"><span data-lang="en">ASCII: 7-bit, 128 characters, English only. Unicode: superset of ASCII, 140,000+ characters, every writing system. UTF-8 is backward-compatible with ASCII. ON ICS3U A1.2.</span><span data-lang="zh">ASCII：7 位，128 个字符，仅限英文。Unicode：ASCII 的超集，140,000+ 个字符，涵盖所有书写系统。UTF-8 与 ASCII 向后兼容。ON ICS3U A1.2。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">AND operator: truth table summary</span><span data-lang="zh">AND 运算符（与）：真值表总结</span></div><div class="flashcard-back"><span data-lang="en">TRUE only when BOTH inputs are TRUE. All other cases: FALSE. "Both must be on."</span><span data-lang="zh">只有两个输入都为 TRUE 时才为 TRUE。其他情况均为 FALSE。"两个都必须开启。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">OR operator: truth table summary</span><span data-lang="zh">OR 运算符（或）：真值表总结</span></div><div class="flashcard-back"><span data-lang="en">FALSE only when BOTH inputs are FALSE. All other cases: TRUE. "At least one must be on."</span><span data-lang="zh">只有两个输入都为 FALSE 时才为 FALSE。其他情况均为 TRUE。"至少一个开启即可。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">NOT operator</span><span data-lang="zh">NOT 运算符（非）</span></div><div class="flashcard-back"><span data-lang="en">Flips the input: NOT TRUE = FALSE; NOT FALSE = TRUE. Single input, single output. Inverts the signal.</span><span data-lang="zh">取反：NOT TRUE = FALSE；NOT FALSE = TRUE。单输入、单输出。反转信号。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How many truth table rows for n inputs?</span><span data-lang="zh">n 个输入的真值表有多少行？</span></div><div class="flashcard-back"><span data-lang="en">2<sup>n</sup> rows. 2 inputs = 4 rows; 3 inputs = 8 rows; 4 inputs = 16 rows.</span><span data-lang="zh">2<sup>n</sup> 行。2 个输入 = 4 行；3 个输入 = 8 行；4 个输入 = 16 行。</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the decimal value of the binary number 11001010?</span><span data-lang="zh">二进制数 11001010 的十进制值是多少？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">194</span><span data-lang="zh">194</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">186</span><span data-lang="zh">186</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">200</span><span data-lang="zh">200</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">202</span><span data-lang="zh">202</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Place values for 11001010: 128+64+0+0+8+0+2+0 = 128+64+8+2 = 202.</span><span data-lang="zh">11001010 各位权：128+64+0+0+8+0+2+0 = 128+64+8+2 = 202。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Write out column values (128,64,32,16,8,4,2,1) under each bit: 1,1,0,0,1,0,1,0. Add where bit=1: 128+64+8+2=202.</span><span data-lang="zh">在每位下方写出位权（128、64、32、16、8、4、2、1）：1、1、0、0、1、0、1、0。位为 1 处相加：128+64+8+2=202。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the hexadecimal representation of binary 10101111?</span><span data-lang="zh">二进制 10101111 的十六进制表示是什么？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>0xBA</code></div>
+      <div class="quiz-opt" data-idx="1"><code>0xAF</code></div>
+      <div class="quiz-opt" data-idx="2"><code>0xFA</code></div>
+      <div class="quiz-opt" data-idx="3"><code>0xAB</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Split: 1010 | 1111. Left nibble 1010 = 10 = A. Right nibble 1111 = 15 = F. Result: 0xAF.</span><span data-lang="zh">分组：1010 | 1111。左半字节 1010 = 10 = A。右半字节 1111 = 15 = F。结果：0xAF。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Group 4 bits: 1010=A (=10), 1111=F (=15). So 10101111 = 0xAF, not 0xAB or 0xFA.</span><span data-lang="zh">每 4 位分组：1010=A（=10），1111=F（=15）。所以 10101111 = 0xAF，不是 0xAB 或 0xFA。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the result of 0111 + 0101 in binary?</span><span data-lang="zh">二进制 0111 + 0101 的结果是什么？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>1010</code></div>
+      <div class="quiz-opt" data-idx="1"><code>1011</code></div>
+      <div class="quiz-opt" data-idx="2"><code>1100</code></div>
+      <div class="quiz-opt" data-idx="3"><code>1110</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">7 + 5 = 12. In binary: bit0: 1+1=0 c1; bit1: 1+0+1=0 c1; bit2: 1+1+1=1 c1; bit3: 0+0+1=1. Result: 1100 = 12. ✓</span><span data-lang="zh">7 + 5 = 12。二进制：第 0 位：1+1=0 进 1；第 1 位：1+0+1=0 进 1；第 2 位：1+1+1=1 进 1；第 3 位：0+0+1=1。结果：1100 = 12。✓</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">0111=7, 0101=5, sum=12=1100. Work right-to-left tracking carries carefully.</span><span data-lang="zh">0111=7，0101=5，和=12=1100。从右到左仔细追踪进位。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The ASCII code for 'Z' is 90. What is the ASCII code for 'z' (lowercase)?</span><span data-lang="zh">字符 'Z' 的 ASCII 码为 90。小写字母 'z' 的 ASCII 码是多少？</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">122</span><span data-lang="zh">122</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">91</span><span data-lang="zh">91</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">116</span><span data-lang="zh">116</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">58</span><span data-lang="zh">58</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Lowercase = uppercase + 32. 'Z' = 90, so 'z' = 90 + 32 = 122. The same +32 offset applies to all letter pairs A/a through Z/z.</span><span data-lang="zh">小写 = 大写 + 32。'Z' = 90，所以 'z' = 90 + 32 = 122。同样的 +32 偏移量适用于所有字母对 A/a 到 Z/z。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Lowercase letters = uppercase + 32. 'a'=97='A'+32=65+32. So 'z'='Z'+32=90+32=122.</span><span data-lang="zh">小写字母 = 大写 + 32。'a'=97='A'+32=65+32。所以 'z'='Z'+32=90+32=122。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Evaluate: (TRUE OR FALSE) AND (NOT TRUE)</span><span data-lang="zh">求值：(TRUE OR FALSE) AND (NOT TRUE)</span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">TRUE</span><span data-lang="zh">TRUE</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">FALSE</span><span data-lang="zh">FALSE</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Cannot be determined</span><span data-lang="zh">无法确定</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">TRUE AND FALSE</span><span data-lang="zh">TRUE AND FALSE</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Step 1: TRUE OR FALSE = TRUE. Step 2: NOT TRUE = FALSE. Step 3: TRUE AND FALSE = FALSE.</span><span data-lang="zh">步骤 1：TRUE OR FALSE = TRUE。步骤 2：NOT TRUE = FALSE。步骤 3：TRUE AND FALSE = FALSE。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Left bracket: TRUE OR FALSE = TRUE. Right: NOT TRUE = FALSE. Then TRUE AND FALSE = FALSE.</span><span data-lang="zh">左括号：TRUE OR FALSE = TRUE。右边：NOT TRUE = FALSE。然后 TRUE AND FALSE = FALSE。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which CSTA standard names "ASCII/Unicode representation" and "logic gates" as examples of bit representation? <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">哪个 CSTA 标准将"ASCII/Unicode 表示"和"逻辑门"列为位表示的示例？<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>3B-CS-02</code></div>
+      <div class="quiz-opt" data-idx="1"><code>3A-AP-17</code></div>
+      <div class="quiz-opt" data-idx="2"><code>3A-DA-09</code></div>
+      <div class="quiz-opt" data-idx="3"><code>DAT-1.B</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3A-DA-09 (verbatim): "Translate between different bit representations of real-world phenomena, such as characters, numbers, and images." Its Descriptive Statement names "ASCII/Unicode representation, and logic gates" explicitly.</span><span data-lang="zh">CSTA 3A-DA-09（原文）："在不同位表示形式（如字符、数字和图像）之间转换。"其描述性说明明确点名"ASCII/Unicode 表示及逻辑门"。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">3A-DA-09 is the data-representation standard that names ASCII, Unicode, and logic gates. 3B-CS-02 covers hardware implementation of logic. DAT-1.B is the AP CSP Learning Objective (consequence of bit representation).</span><span data-lang="zh">3A-DA-09 是点名 ASCII、Unicode 和逻辑门的数据表示标准。3B-CS-02 涵盖逻辑的硬件实现。DAT-1.B 是 AP CSP 学习目标（位表示的后果）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Ontario ICS3U expectation A1.4 requires students to correctly use which operators? <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span><span data-lang="zh">安大略 ICS3U 期望 A1.4 要求学生正确使用哪些运算符？<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U</span></span></div><div class="quiz-number">Q7</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Boolean operators (AND, OR, NOT), comparison operators, and arithmetic operators</span><span data-lang="zh">布尔运算符（AND、OR、NOT）、比较运算符和算术运算符</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Only Boolean operators (AND, OR, NOT)</span><span data-lang="zh">仅布尔运算符（AND、OR、NOT）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Only comparison operators</span><span data-lang="zh">仅比较运算符</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Bitwise operators only</span><span data-lang="zh">仅位运算符</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">ICS3U A1.4 (verbatim): "demonstrate the ability to use Boolean operators (e.g., AND, OR, NOT), comparison operators (i.e., equal to, not equal to, greater than, less than, greater than or equal to, less than or equal to), arithmetic operators … and order of operations correctly in computer programs."</span><span data-lang="zh">ICS3U A1.4（原文）："展示在计算机程序中正确使用布尔运算符（如 AND、OR、NOT）、比较运算符（即等于、不等于、大于、小于、大于等于、小于等于）、算术运算符……及运算顺序的能力。"</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A1.4 names all three categories: Boolean operators, comparison operators, AND arithmetic operators. See the verbatim expectation text.</span><span data-lang="zh">A1.4 点名三类：布尔运算符、比较运算符和算术运算符。见原文期望文本。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Convert any 8-bit binary number to decimal using a place-value table (columns 128, 64, 32, 16, 8, 4, 2, 1). Verify by summing the place values where the bit is 1. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-09 / &#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span><span data-lang="zh">用位权表（各列：128、64、32、16、8、4、2、1）将任意 8 位二进制数转换为十进制。通过将位为 1 的各列位权相加来验证。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-09 / &#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Convert a decimal number (0&ndash;255) to 8-bit binary using repeated division by 2. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span><span data-lang="zh">用反复除以 2 的方法将十进制数（0&ndash;255）转换为 8 位二进制。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Convert an 8-bit binary number to hexadecimal by grouping into two nibbles. Recite the 16 hex digits (0&ndash;9, A&ndash;F) and their 4-bit binary equivalents. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-09 / &#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span><span data-lang="zh">通过分成两个半字节将 8 位二进制数转换为十六进制。背出 16 个十六进制数字（0&ndash;9、A&ndash;F）及其对应的 4 位二进制值。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-09 / &#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Add two 4-bit binary numbers showing the carry row, and identify what overflow means when the result exceeds 4 bits. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-1.B</span></span><span data-lang="zh">写出进位行，将两个 4 位二进制数相加，并说明结果超出 4 位时溢出意味着什么。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-1.B</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the ASCII decimal codes for 'A' (65), 'a' (97), and '0' (48), and explain why lowercase = uppercase + 32. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2 / AB CSE2130</span></span><span data-lang="zh">说出 'A'（65）、'a'（97）和 '0'（48）的 ASCII 十进制码，并解释为什么小写 = 大写 + 32。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2 / AB CSE2130</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the relationship between ASCII and Unicode: Unicode is a superset, the first 128 code points are identical, and UTF-8 uses 1&ndash;4 bytes per character. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span><span data-lang="zh">解释 ASCII 与 Unicode 的关系：Unicode 是超集，前 128 个码点完全相同，UTF-8 每字符使用 1&ndash;4 字节。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write the truth tables for AND, OR, and NOT from memory. Evaluate a compound Boolean expression such as (A AND B) OR (NOT C) for given values of A, B, C. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.4 / AB CSE1120 / BC CS10</span></span><span data-lang="zh">凭记忆写出 AND、OR 和 NOT 的真值表。为 A、B、C 的给定值求复合布尔表达式（如 (A AND B) OR (NOT C)）的值。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A1.4 / AB CSE1120 / BC CS10</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Build a full truth table for a 2-input logic expression, listing all 4 input combinations in systematic order (00, 01, 10, 11) with one intermediate column per sub-expression. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-CS-02</span></span><span data-lang="zh">为 2 输入逻辑表达式构建完整真值表，以系统顺序（00、01、10、11）列出全部 4 种输入组合，每个子表达式一个中间列。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-CS-02</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the CSTA standard 3A-DA-09 (verbatim or near-verbatim) and name the three real-world conversion examples in its Descriptive Statement (hex color codes, ASCII/Unicode, logic gates). <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span><span data-lang="zh">逐字（或近逐字）陈述 CSTA 标准 3A-DA-09，并说出其描述性说明中的三个现实世界转换示例（十六进制颜色代码、ASCII/Unicode、逻辑门）。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain why n bits can represent 2<sup>n</sup> distinct values, and calculate: how many values fit in 1 byte (8 bits), in 16 bits, and in 32 bits. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-1.A</span></span><span data-lang="zh">解释为什么 n 位可以表示 2<sup>n</sup> 个不同值，并计算：1 字节（8 位）、16 位和 32 位各能容纳多少个值。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-1.A</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; 3B-CS-02</span> Describe what an AND gate, OR gate, and NOT gate do at the hardware level, and explain why NAND is a universal gate (any Boolean function can be built from NAND gates alone). <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-CS-02</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; 3B-CS-02</span> 描述 AND 门、OR 门和 NOT 门在硬件层面的功能，并解释为什么 NAND 是通用门（任何布尔函数都可以仅用 NAND 门构建）。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-CS-02</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Binary representation, Boolean logic, and data encoding underpin nearly every other topic in computer science. Control flow uses Boolean expressions in every if-statement and while-loop. Data structures store values using bit-level representations. Networks transmit binary data encoded in bytes. Understanding this unit makes every subsequent unit more legible because you will know what the hardware is actually doing beneath the abstraction layers.</span><span data-lang="zh">二进制表示、布尔逻辑和数据编码几乎支撑着计算机科学中的每个其他主题。控制流在每个 if 语句和 while 循环中使用布尔表达式。数据结构使用位级表示在内存中存储值。网络以字节编码的二进制数据进行传输。理解本单元会使每个后续单元更加清晰，因为你将了解硬件在抽象层之下实际在做什么。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Programming Fundamentals (Unit 2) uses Boolean data types and operators directly in code — the truth tables here give you the exact semantics. Control Flow (Unit 3) builds compound conditions from Boolean operators. Strings and Text Processing (Unit 6) depends on character encoding (ASCII / Unicode) established here. Networks and the Internet (Unit 11) transmits binary data in packets — bytes, bits, and hex addresses are the vocabulary of that unit.</span><span data-lang="zh">编程基础（单元 2）在代码中直接使用布尔数据类型和运算符——这里的真值表给出了确切的语义。控制流（单元 3）从布尔运算符构建复合条件。字符串与文本处理（单元 6）依赖于此处建立的字符编码（ASCII / Unicode）。网络与互联网（单元 11）以数据包传输二进制数据——字节、位和十六进制地址是该单元的词汇。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP feeder.</span><span data-lang="zh">AP 衔接。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;"><span data-lang="en">AP CSP Big Idea 2 (Data, 17&ndash;22% of the exam) is the direct downstream assessment of &sect;1&ndash;&sect;5. Learning Objectives DAT-1.A and DAT-1.B are the exam anchors. AP CSA (Java) uses <code>boolean</code> as a primitive type with operators <code>&amp;&amp;</code>, <code>||</code>, <code>!</code> — the same AND/OR/NOT under Java syntax. Fluency with truth tables from this guide transfers directly to AP CSA boolean expression questions.</span><span data-lang="zh">AP CSP 大概念 2（数据，占考试 17&ndash;22%）是 &sect;1&ndash;&sect;5 的直接下游评估。学习目标 DAT-1.A 和 DAT-1.B 是考试锚点。AP CSA（Java）将 <code>boolean</code> 用作原始类型，运算符为 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code>——即 Java 语法下的 AND/OR/NOT。本指南的真值表熟练度直接迁移到 AP CSA 布尔表达式题目。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">How do you convert a decimal number to binary?</span><span data-lang="zh">如何把十进制数转换成二进制？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">Divide the decimal number by 2 repeatedly, recording each remainder, then read the remainders from bottom to top to get the binary digits. To convert back, multiply each bit by its place value (1, 2, 4, 8, and so on) and add them up.</span><span data-lang="zh">把十进制数反复除以 2 并记录每次的余数，然后从下往上读这些余数就得到二进制位。反向转换时，把每一位乘以它的位值（1、2、4、8 等）再相加即可。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between ASCII and Unicode?</span><span data-lang="zh">ASCII 和 Unicode 有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">ASCII uses 7 bits to represent 128 characters covering English letters, digits, punctuation, and control codes, while Unicode is a superset with over 140,000 characters covering virtually every writing system, including Chinese and emoji. Its first 128 code points are identical to ASCII.</span><span data-lang="zh">ASCII 用 7 位表示 128 个字符，涵盖英文字母、数字、标点和控制码；Unicode 是它的超集，拥有超过 14 万个字符，几乎涵盖所有书写系统，包括中文和表情符号。它的前 128 个码点与 ASCII 完全相同。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What do the Boolean operators AND, OR, and NOT do?</span><span data-lang="zh">布尔运算符 AND、OR、NOT 各做什么？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">AND is True only when both inputs are True, OR is True when at least one input is True, and NOT flips its single input so True becomes False and False becomes True. A truth table lists the output for every possible combination of inputs.</span><span data-lang="zh">AND 只有在两个输入都为 True 时才为 True，OR 在至少一个输入为 True 时为 True，NOT 翻转它唯一的输入，使 True 变 False、False 变 True。真值表列出每种输入组合对应的输出。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do you convert a decimal number to binary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide the decimal number by 2 repeatedly, recording each remainder, then read the remainders from bottom to top to get the binary digits. To convert back, multiply each bit by its place value (1, 2, 4, 8, and so on) and add them up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between ASCII and Unicode?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ASCII uses 7 bits to represent 128 characters covering English letters, digits, punctuation, and control codes, while Unicode is a superset with over 140,000 characters covering virtually every writing system, including Chinese and emoji. Its first 128 code points are identical to ASCII."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do the Boolean operators AND, OR, and NOT do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AND is True only when both inputs are True, OR is True when at least one input is True, and NOT flips its single input so True becomes False and False becomes True. A truth table lists the output for every possible combination of inputs."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_9_boolean_logic_and_number_systems__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3A-DA-09</code> <span data-lang="en">"Translate between different bit representations of real-world phenomena, such as characters, numbers, and images." Descriptive Statement (verbatim): "For example, convert hexadecimal color codes to decimal percentages, ASCII/Unicode representation, and logic gates." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"在不同位表示形式（如字符、数字和图像）之间转换。"描述性说明（原文）："例如，将十六进制颜色代码转换为十进制百分比、ASCII/Unicode 表示及逻辑门。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
+        <li><code>3B-CS-02</code> <span data-lang="en">"Illustrate ways computing systems implement logic, input, and output through hardware components." Descriptive Statement: "Examples of components could include logic gates and IO pins." (CSTA Level 3B)</span><span data-lang="zh">"说明计算系统如何通过硬件组件实现逻辑、输入和输出。"描述性说明："组件示例包括逻辑门和 IO 引脚。"（CSTA 3B 级）</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 2: Data (DAT). Big Idea statement (verbatim): "Data are central to computing innovations because they communicate initial conditions to programs and represent new knowledge. Computers store data digitally, which means that the data must be manipulated in order to be presented in a useful way to the user." Topics: 2.1 Binary Numbers, 2.2 Data Compression. Learning Objectives DAT-1.A "Explain how data can be represented using bits" and DAT-1.B "Explain the consequences of using bits to represent data."</span><span data-lang="zh">AP CSP 大概念 2：数据（DAT）。大概念说明（原文）："数据是计算创新的核心，因为它们向程序传达初始条件并代表新知识。计算机以数字方式存储数据，这意味着必须对数据进行处理才能以对用户有用的方式呈现。"主题：2.1 二进制数，2.2 数据压缩。学习目标 DAT-1.A"解释如何用位来表示数据"和 DAT-1.B"解释用位表示数据的后果"。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U</span><span data-lang="zh">安大略 — ICS3U</span></div>
+      <ul>
+        <li><strong>ICS3U</strong> <code>A1.2</code> <span data-lang="en">"demonstrate an understanding of how a computer uses various systems (e.g., binary, hexadecimal, ASCII, Unicode) to internally represent data and store information." (ICS3U Strand A, verbatim)</span><span data-lang="zh">ICS3U <code>A1.2</code>："展示对计算机如何使用各种系统（如二进制、十六进制、ASCII、Unicode）在内部表示数据和存储信息的理解。"（ICS3U A 单元，原文）</span></li>
+        <li><strong>ICS3U</strong> <code>A1.4</code> <span data-lang="en">"demonstrate the ability to use Boolean operators (e.g., AND, OR, NOT), comparison operators (i.e., equal to, not equal to, greater than, less than, greater than or equal to, less than or equal to), arithmetic operators (e.g., addition, subtraction, multiplication, division, exponentiation, parentheses), and order of operations correctly in computer programs." (ICS3U Strand A, verbatim)</span><span data-lang="zh">ICS3U <code>A1.4</code>："展示在计算机程序中正确使用布尔运算符（如 AND、OR、NOT）、比较运算符（即等于、不等于、大于、小于、大于等于、小于等于）、算术运算符（如加、减、乘、除、指数、括号）及运算顺序的能力。"（ICS3U A 单元，原文）</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
+      <ul>
+        <li><strong>Computer Studies 10</strong> <span data-lang="en">Content (verbatim, within the introductory-constructs bullet): "…Boolean operators, comparison operators, arithmetic operators…" — Boolean operators explicitly named in the intro-constructs content list.</span><span data-lang="zh">Computer Studies 10 内容（原文，在入门构造条目内）："……布尔运算符、比较运算符、算术运算符……"——布尔运算符在入门构造内容列表中明确命名。</span></li>
+        <li><strong>Computer Information Systems 11</strong> <span data-lang="en">Content (verbatim): "use of correct terminology to describe the units, rates, and encoding of data communication" — data encoding in a communications context covers bit/byte units and encoding schemes. Note: BC has no explicit binary/hex number-base conversion standard; this guide fills that conceptual gap.</span><span data-lang="zh">Computer Information Systems 11 内容（原文）："使用正确术语描述数据通信的单位、速率和编码"——通信背景下的数据编码涵盖位/字节单位和编码方案。注：BC 无明确的二进制/十六进制进制转换标准；本指南填补该概念空白。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE</span><span data-lang="zh">阿尔伯塔 — CSE</span></div>
+      <ul>
+        <li><strong>CSE1120</strong> <span data-lang="en">(Structured Programming 2): "2.3 use appropriate basic (primitive) data types such as integers, real numbers, characters, strings, and Boolean values … 2.6 use assignment, arithmetical, relational, Boolean, and concatenation and interpolation operators, where appropriate, to process data." (verbatim outcomes)</span><span data-lang="zh">CSE1120（结构化编程 2）："2.3 使用适当的基本（原始）数据类型，如整数、实数、字符、字符串和布尔值……2.6 视情况使用赋值、算术、关系、布尔以及拼接和插值运算符来处理数据。"（原文结果）</span></li>
+        <li><strong>CSE2130</strong> <span data-lang="en">(Files &amp; File Structures 1): "1.1.2 type of data; e.g., text (encoded in a format such as ASCII code), binary (encoded in binary code)" — ASCII and binary encoding in a file-structures context. (verbatim outcome) Note: Alberta CSE has no dedicated number-systems/binary-hex module; Boolean operators appear in CSE1120 and ASCII/binary encoding in CSE2130.</span><span data-lang="zh">CSE2130（文件与文件结构 1）："1.1.2 数据类型；例如，文本（以 ASCII 码等格式编码）、二进制（以二进制代码编码）"——在文件结构背景下的 ASCII 和二进制编码。（原文结果）注：阿尔伯塔 CSE 无专门的数制/二进制-十六进制模块；布尔运算符出现在 CSE1120，ASCII/二进制编码出现在 CSE2130。</span></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">Boolean logic and number systems appear in all four curricula, though with varying depth. Ontario ICS3U is the most explicit: A1.2 names binary, hexadecimal, ASCII, and Unicode verbatim; A1.4 names AND, OR, NOT verbatim. US CSTA 3A-DA-09 links bit representation to characters, numbers, images, and explicitly mentions logic gates in its Descriptive Statement. AP CSP Big Idea 2 (Data) covers binary numbers and bit representation (topics 2.1&ndash;2.2). BC names Boolean operators in Computer Studies 10 but has no explicit binary/hex conversion standard. Alberta names Boolean operators in CSE1120 and ASCII/binary encoding in CSE2130 but has no dedicated number-systems module. The table below maps each section to your curriculum.</span><span data-lang="zh">布尔逻辑和数制在四套课程中均有出现，但深度各异。安大略 ICS3U 最为明确：A1.2 原文点名二进制、十六进制、ASCII 和 Unicode；A1.4 原文点名 AND、OR、NOT。美国 CSTA 3A-DA-09 将位表示与字符、数字、图像关联，其描述性说明明确提及逻辑门。AP CSP 大概念 2（数据）涵盖二进制数和位表示（主题 2.1–2.2）。BC 在 Computer Studies 10 中命名了布尔运算符，但无明确的二进制/十六进制转换标准。阿尔伯塔在 CSE1120 中命名了布尔运算符、在 CSE2130 中命名了 ASCII/二进制编码，但无专门的数制模块。下表将每节内容映射到你的课程。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Defer / lighter</span><span data-lang="zh">可推迟 / 减负</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;5 (binary, hex, conversions, ASCII/Unicode, bit/byte) are the core of AP CSP Big Idea 2 (DAT-1.A, DAT-1.B). &sect;6&ndash;&sect;7 (Boolean logic, gates) map to CSTA 3A-DA-09 Descriptive Statement and 3B-CS-02.</span><span data-lang="zh">&sect;1&ndash;&sect;5（二进制、十六进制、转换、ASCII/Unicode、位/字节）是 AP CSP 大概念 2（DAT-1.A、DAT-1.B）的核心。&sect;6&ndash;&sect;7（布尔逻辑、逻辑门）对应 CSTA 3A-DA-09 描述性说明和 3B-CS-02。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Logic gate circuit diagrams (&sect;7 going-deeper) are enrichment for AP CSP students; the exam tests Boolean expressions, not physical gate drawing.</span><span data-lang="zh">逻辑门电路图（&sect;7 深入）对 AP CSP 学生为拓展内容；考试测试布尔表达式，而非物理门图。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3A-DA-09, 3B-CS-02; AP CSP Big Idea 2 (DAT) topics 2.1, 2.2</span><span data-lang="zh">&mdash; CSTA 3A-DA-09、3B-CS-02；AP CSP 大概念 2（DAT）主题 2.1、2.2</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">All seven sections. ICS3U A1.2 explicitly names binary, hex, ASCII, Unicode (&sect;1&ndash;&sect;5). ICS3U A1.4 explicitly names AND, OR, NOT (&sect;6&ndash;&sect;7). The most direct curriculum match of all four regions.</span><span data-lang="zh">全部 7 节。ICS3U A1.2 明确点名二进制、十六进制、ASCII、Unicode（&sect;1&ndash;&sect;5）。ICS3U A1.4 明确点名 AND、OR、NOT（&sect;6&ndash;&sect;7）。四个地区中课程匹配度最高。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Nothing &mdash; the whole unit is assessed in ICS3U Strand A.</span><span data-lang="zh">无——整个单元均在 ICS3U A 单元中评估。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS3U A1.2, A1.4</span><span data-lang="zh">&mdash; ICS3U A1.2、A1.4</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CS10 / CIS11</span><span data-lang="zh">BC &mdash; CS10 / CIS11</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;6 (Boolean logic: AND, OR, NOT) is the strongest curriculum match (CS10 intro-constructs Content). &sect;5 (ASCII/Unicode, bit/byte) connects to CIS11 data-encoding Content. &sect;1&ndash;&sect;4 (binary/hex/conversion) are conceptual enrichment — BC has no explicit base-conversion standard.</span><span data-lang="zh">&sect;6（布尔逻辑：AND、OR、NOT）是课程匹配度最高的（CS10 入门构造内容）。&sect;5（ASCII/Unicode、位/字节）与 CIS11 数据编码内容关联。&sect;1&ndash;&sect;4（二进制/十六进制/转换）为概念拓展——BC 无明确的进制转换标准。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;7 logic gates going-deeper is enrichment for BC; BC names Boolean operators as a programming construct, not as circuit-level hardware.</span><span data-lang="zh">&sect;7 逻辑门深入对 BC 为拓展；BC 将布尔运算符命名为编程构造，而非电路级硬件。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CS10 Boolean operators content bullet; CIS11 data encoding content</span><span data-lang="zh">&mdash; BC CS10 布尔运算符内容条目；CIS11 数据编码内容</span></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE1120 / CSE2130</span><span data-lang="zh">阿尔伯塔 &mdash; CSE1120 / CSE2130</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;6 (Boolean operators in programs, CSE1120 outcome 2.6) and &sect;5 (ASCII/binary encoding, CSE2130 outcome 1.1.2) are the assessed content. &sect;1&ndash;&sect;4 (binary/hex/arithmetic) are enrichment — Alberta CSE has no dedicated number-base module.</span><span data-lang="zh">&sect;6（程序中的布尔运算符，CSE1120 结果 2.6）和 &sect;5（ASCII/二进制编码，CSE2130 结果 1.1.2）是被评估的内容。&sect;1&ndash;&sect;4（二进制/十六进制/算术）为拓展——阿尔伯塔 CSE 无专门的进制模块。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;7 (logic gates) is enrichment for AB; digital logic / number systems are in other CTS clusters, not CSE.</span><span data-lang="zh">&sect;7（逻辑门）对 AB 为拓展；数字逻辑/数制在其他 CTS 集群中，不在 CSE 中。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE1120 outcomes 2.3, 2.6; CSE2130 outcome 1.1.2</span><span data-lang="zh">&mdash; CSE1120 结果 2.3、2.6；CSE2130 结果 1.1.2</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise five things: how to count in binary and convert a small number to/from decimal; what a bit and byte are; the three Boolean operators AND, OR, NOT and their truth tables; what ASCII is; and how to evaluate a simple Boolean expression. Read every cram-cheat box. Skip the logic gate circuit diagrams in &sect;7 going-deeper.</span><span data-lang="zh">背熟五件事：如何用二进制计数并将小数字与十进制互转；位和字节是什么；AND、OR、NOT 三个布尔运算符及其真值表；ASCII 是什么；以及如何求一个简单布尔表达式的值。读每个速记框，跳过 &sect;7 深入中的逻辑门电路图。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Master fluent conversion in all three directions (binary &harr; decimal &harr; hex). Be able to construct a full truth table for a compound expression like (A AND B) OR (NOT C). Understand why each binary digit doubles the representable range. Know the Unicode extension story beyond ASCII. AP CSP DAT-1.A and DAT-1.B, and Ontario ICS3U A1.2 + A1.4, are the exam anchors for full marks.</span><span data-lang="zh">掌握三个方向的流畅转换（二进制 &harr; 十进制 &harr; 十六进制）。能够为复合表达式（如 (A AND B) OR (NOT C)）构建完整真值表。理解为何每个二进制位将可表示范围翻倍。了解 ASCII 之外的 Unicode 扩展故事。AP CSP DAT-1.A 和 DAT-1.B 以及安大略 ICS3U A1.2 + A1.4 是满分的考试锚点。</span></p>
+    </div>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Boolean Logic and Number Systems &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 布尔逻辑与数制 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_9_Boolean_Logic_and_Number_Systems_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_9_Boolean_Logic_and_Number_Systems_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

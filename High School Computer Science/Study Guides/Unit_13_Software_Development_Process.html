@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on the software development life cycle: requirements, design, testing, debugging, and Git. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Software Development Process | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_13_Software_Development_Process.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Software Development Process | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on the software development life cycle: requirements, design, testing, debugging, and Git. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_13_Software_Development_Process.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Software Development Process | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on the software development life cycle: requirements, design, testing, debugging, and Git. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-13  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Software Development Process",
+  "description": "Free high school Computer Science notes on the software development life cycle: requirements, design, testing, debugging, and Git. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_13_Software_Development_Process.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">SDLC</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-7-1"><span data-lang="en">The Software Development Life Cycle</span><span data-lang="zh">软件开发生命周期</span></a>
+  <a href="#s-7-2"><span data-lang="en">Requirements and Planning</span><span data-lang="zh">需求与规划</span></a>
+  <a href="#s-7-3"><span data-lang="en">Design (pseudocode, flowcharts, UML)</span><span data-lang="zh">设计（伪代码、流程图、UML）</span></a>
+  <a href="#s-7-4"><span data-lang="en">Implementation and Coding Standards</span><span data-lang="zh">实现与编码规范</span></a>
+  <a href="#s-7-5"><span data-lang="en">Testing and Debugging</span><span data-lang="zh">测试与调试</span></a>
+  <a href="#s-7-6"><span data-lang="en">Documentation and Maintenance</span><span data-lang="zh">文档与维护</span></a>
+  <a href="#s-7-7"><span data-lang="en">Collaboration and Version Control</span><span data-lang="zh">协作与版本控制</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Software Development Process</span><span data-lang="zh">软件开发流程</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Professional software is not written in one burst of inspiration — it is built through a disciplined life cycle (<code>SDLC</code>) that transforms a vague wish into a working, documented, maintainable product. This guide walks every phase from requirements gathering through design, implementation, testing, documentation, and maintenance, then introduces the collaboration tools — version control (Git) and code review — that make team software development work. Pseudocode and flowcharts appear in the design section; code examples are in Python but the concepts apply to any language.</span><span data-lang="zh">专业软件不是灵感爆发的产物，而是通过严格的生命周期（<code>SDLC</code>，软件开发生命周期）将模糊的需求（<code>requirements</code>，需求）转化为可工作、有文档、可维护产品的结果。本指南逐一讲解需求收集、设计（<code>design</code>，设计）、实现（<code>implementation</code>，实现）、测试（<code>testing</code>，测试）、文档（<code>documentation</code>，文档）和维护（<code>maintenance</code>，维护）各阶段，再介绍版本控制（<code>version control</code>，版本控制，Git）和代码审查等协作工具。设计节包含伪代码和流程图；代码示例用 Python，但概念适用于任何语言。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">SDLC phases + Git intro + worked examples</span><span data-lang="zh">SDLC 各阶段 + Git 入门 + 例题</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-7-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; The software development life cycle</span><span data-lang="zh">第 1 节 &middot; 软件开发生命周期</span></div>
+  <h2><span data-lang="en">The Software Development Life Cycle</span><span data-lang="zh">软件开发生命周期</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">The seven SDLC phases &mdash; memorise these in order.</span><span data-lang="zh">七个 SDLC 阶段 &mdash; 按顺序背熟。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">1. Problem definition / Requirements</span><span data-lang="zh">1. 问题定义 / 需求</span></strong> <span data-lang="en">&mdash; what does the software need to do? Collect user needs, constraints, and success criteria.</span><span data-lang="zh">&mdash; 软件需要做什么？收集用户需求、约束条件和成功标准。</span></li>
+      <li><strong><span data-lang="en">2. Analysis</span><span data-lang="zh">2. 分析</span></strong> <span data-lang="en">&mdash; study the requirements in detail; identify inputs, outputs, data flows, and edge cases.</span><span data-lang="zh">&mdash; 详细研究需求；确定输入、输出、数据流和边缘情况。</span></li>
+      <li><strong><span data-lang="en">3. Design</span><span data-lang="zh">3. 设计</span></strong> <span data-lang="en">&mdash; produce design artifacts: flowcharts, pseudocode, UML diagrams, data structures, user interface sketches.</span><span data-lang="zh">&mdash; 产出设计制品：流程图、伪代码、UML 图、数据结构、用户界面草图。</span></li>
+      <li><strong><span data-lang="en">4. Implementation (coding)</span><span data-lang="zh">4. 实现（编码）</span></strong> <span data-lang="en">&mdash; translate the design into working code following coding standards.</span><span data-lang="zh">&mdash; 按照编码规范将设计转化为可运行的代码。</span></li>
+      <li><strong><span data-lang="en">5. Testing</span><span data-lang="zh">5. 测试</span></strong> <span data-lang="en">&mdash; verify the code works correctly using a formal test plan (normal, boundary, and error cases).</span><span data-lang="zh">&mdash; 使用正式测试计划（正常、边界和错误情况）验证代码是否正确运行。</span></li>
+      <li><strong><span data-lang="en">6. Documentation / Deployment</span><span data-lang="zh">6. 文档 / 部署</span></strong> <span data-lang="en">&mdash; write user and technical documentation; release the software to users.</span><span data-lang="zh">&mdash; 编写用户文档和技术文档；将软件发布给用户。</span></li>
+      <li><strong><span data-lang="en">7. Maintenance</span><span data-lang="zh">7. 维护</span></strong> <span data-lang="en">&mdash; fix bugs that appear after release, add new features, and adapt the software as requirements change.</span><span data-lang="zh">&mdash; 修复发布后出现的错误，添加新功能，并随着需求变化调整软件。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Waterfall vs Agile:</strong> the waterfall model runs the seven phases in strict sequence (plan everything before coding). Agile iterates in short sprints, revisiting requirements → design → code → test in quick cycles. Ontario ICS3U B4.1 names the phases explicitly; CSTA 3B-AP-17 says "processes could include agile, spiral, or waterfall."</span><span data-lang="zh"><strong>瀑布模型与敏捷：</strong>瀑布模型按严格顺序执行七个阶段（在编码前规划好一切）。敏捷以短冲刺迭代，在快速循环中反复经历需求 → 设计 → 编码 → 测试。安大略 ICS3U B4.1 明确命名各阶段；CSTA 3B-AP-17 说"过程可包括敏捷、螺旋或瀑布"。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; Mapping a homework tracker through the SDLC</span><span data-lang="zh">例题 1 &middot; 作业追踪应用的 SDLC 阶段分析</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: a student team is tasked with building a homework-tracker app. Walk each SDLC phase for this project.</span><span data-lang="zh">问题：一个学生团队负责构建一个作业追踪应用。逐一分析该项目的每个 SDLC 阶段。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Requirements.</span><span data-lang="zh">需求。</span></strong> <span data-lang="en">Users (students) need to add tasks with due dates, mark tasks complete, and sort by urgency. Constraint: must work on mobile.</span><span data-lang="zh">用户（学生）需要添加带截止日期的任务、标记任务为已完成并按紧迫性排序。约束：必须在手机上运行。</span></p>
+    <p><strong><span data-lang="en">Analysis.</span><span data-lang="zh">分析。</span></strong> <span data-lang="en">Inputs: task name, subject, due date. Outputs: sorted task list. Data: each task stores {name, subject, due_date, done}. Edge case: two tasks on the same due date.</span><span data-lang="zh">输入：任务名称、学科、截止日期。输出：已排序的任务列表。数据：每个任务存储 {name, subject, due_date, done}。边缘情况：两个任务的截止日期相同。</span></p>
+    <p><strong><span data-lang="en">Design.</span><span data-lang="zh">设计。</span></strong> <span data-lang="en">Produce a flowchart for "add task," pseudocode for "sort by due date," and a simple UML class sketch showing Task attributes and methods.</span><span data-lang="zh">为"添加任务"画流程图，为"按截止日期排序"写伪代码，并画出显示 Task 属性和方法的简单 UML 类草图。</span></p>
+    <p><strong><span data-lang="en">Implementation.</span><span data-lang="zh">实现。</span></strong> <span data-lang="en">Write Python/JavaScript code following the design. Apply coding standards: meaningful names, inline comments, no magic numbers.</span><span data-lang="zh">按照设计编写 Python/JavaScript 代码。遵循编码规范：有意义的命名、内联注释、无魔法数字。</span></p>
+    <p><strong><span data-lang="en">Testing.</span><span data-lang="zh">测试。</span></strong> <span data-lang="en">Test plan: normal case (add 3 tasks, verify sort), boundary case (task due today), error case (no tasks in list — display "no tasks").</span><span data-lang="zh">测试计划：正常情况（添加 3 个任务，验证排序），边界情况（今天截止的任务），错误情况（列表中无任务——显示"无任务"）。</span></p>
+    <p><strong><span data-lang="en">Documentation/Deployment.</span><span data-lang="zh">文档/部署。</span></strong> <span data-lang="en">Write a README describing how to install and use the app. Deploy to the school server.</span><span data-lang="zh">编写描述如何安装和使用应用的 README。部署到学校服务器。</span></p>
+    <p><strong><span data-lang="en">Maintenance.</span><span data-lang="zh">维护。</span></strong> <span data-lang="en">Users report that tasks with the same due date display in the wrong order — fix the sort comparator and increment the version number.</span><span data-lang="zh">用户报告截止日期相同的任务显示顺序不正确——修复排序比较器并更新版本号。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A developer fixes a bug that appeared six months after the software was released to users. Which SDLC phase does this fix belong to?</span><span data-lang="zh">一名开发人员修复了软件发布给用户六个月后出现的错误。这个修复属于 SDLC 的哪个阶段？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Testing</span><span data-lang="zh">测试</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Implementation</span><span data-lang="zh">实现</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Maintenance</span><span data-lang="zh">维护</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Analysis</span><span data-lang="zh">分析</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Maintenance is the phase after deployment that handles bug fixes, security patches, and feature additions in live software. Ontario ICS3U B4.1 names maintenance as the final SDLC phase.</span><span data-lang="zh">维护是部署后处理实时软件中的错误修复、安全补丁和功能添加的阶段。安大略 ICS3U B4.1 将维护列为最后一个 SDLC 阶段。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Testing happens before deployment; implementation is writing the original code; analysis studies requirements. Post-release bug fixing is maintenance.</span><span data-lang="zh">测试在部署之前进行；实现是编写原始代码；分析研究需求。发布后的错误修复是维护。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which SDLC phase produces design artifacts such as flowcharts, pseudocode, and UML diagrams?</span><span data-lang="zh">SDLC 的哪个阶段产出流程图、伪代码和 UML 图等设计制品？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Design</span><span data-lang="zh">设计</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Implementation</span><span data-lang="zh">实现</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Requirements</span><span data-lang="zh">需求</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Testing</span><span data-lang="zh">测试</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The design phase converts requirements and analysis into concrete blueprints: flowcharts, pseudocode, UML class and sequence diagrams, data-structure sketches, and UI wireframes. Ontario ICS3U B2.4 lists structure charts, flowcharts, UML, pseudocode as the accepted design tools.</span><span data-lang="zh">设计阶段将需求和分析转化为具体的蓝图：流程图、伪代码、UML 类图和序列图、数据结构草图和 UI 线框图。安大略 ICS3U B2.4 将结构图、流程图、UML、伪代码列为公认的设计工具。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Implementation writes the actual code; requirements gathers user needs; testing verifies correctness. Design is where you plan how the code will be structured before writing it.</span><span data-lang="zh">实现编写实际代码；需求收集用户需求；测试验证正确性。设计是在编写代码之前规划代码结构的阶段。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; agile vs waterfall vs spiral</span><span data-lang="zh">深入 &mdash; 敏捷与瀑布与螺旋模型</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">CSTA 3B-AP-17 (verbatim): "Plan and develop programs for broad audiences using a software life cycle process. Processes could include agile, spiral, or waterfall." The three models differ in how rigidly they enforce phase order. <strong>Waterfall</strong>: each phase finishes completely before the next begins; changes are expensive. <strong>Agile</strong>: two-week sprints, each delivering a working increment; requirements can change between sprints. <strong>Spiral</strong>: each revolution of the spiral adds risk analysis before the next round of design/build/test. Ontario ICS4U B strand emphasises managing a real team project — in practice this means agile-style sprint planning. For exam purposes, being able to describe each model and name a tradeoff (waterfall: predictable but inflexible; agile: flexible but requires constant communication) is sufficient.</span><span data-lang="zh">CSTA 3B-AP-17（原文）："使用软件生命周期流程为广大受众规划和开发程序。流程可包括敏捷、螺旋或瀑布。"三种模型的区别在于阶段顺序的严格程度。<strong>瀑布</strong>：每个阶段完全完成后才开始下一个；变更代价高昂。<strong>敏捷</strong>：两周冲刺，每次交付一个可运行的增量；需求可在冲刺之间变化。<strong>螺旋</strong>：每圈螺旋在下一轮设计/构建/测试之前增加风险分析。安大略 ICS4U B 单元强调管理真实团队项目——实际上意味着敏捷式冲刺规划。对于考试来说，能够描述每种模型并指出一个权衡（瀑布：可预测但不灵活；敏捷：灵活但需要持续沟通）就足够了。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; Requirements and planning</span><span data-lang="zh">第 2 节 &middot; 需求与规划</span></div>
+  <h2><span data-lang="en">Requirements and Planning</span><span data-lang="zh">需求与规划</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Two types of requirements &mdash; memorise the distinction.</span><span data-lang="zh">两类需求 &mdash; 背熟这个区别。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Functional requirements</span><span data-lang="zh">功能性需求</span></strong> <span data-lang="en">&mdash; what the system must <em>do</em>. "The user must be able to log in with a username and password." Expressed as user stories or use cases.</span><span data-lang="zh">&mdash; 系统必须<em>做什么</em>。"用户必须能够用用户名和密码登录。"用用户故事或用例表达。</span></li>
+      <li><strong><span data-lang="en">Non-functional requirements</span><span data-lang="zh">非功能性需求</span></strong> <span data-lang="en">&mdash; how the system must <em>perform</em>. "The login must complete in under 2 seconds." Covers performance, security, accessibility, and maintainability.</span><span data-lang="zh">&mdash; 系统必须如何<em>运行</em>。"登录必须在 2 秒内完成。"涵盖性能、安全性、无障碍性和可维护性。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Requirements document format:</strong> each requirement should be numbered, specific, and testable. "The app should be fast" is bad — not testable. "The app must load the task list in under 500 ms on a 4G connection" is good — measurable. Ontario ICS3U B4.1 and AP CSP CRD-2.A require capturing requirements before design.</span><span data-lang="zh"><strong>需求文档格式：</strong>每个需求应编号、具体且可测试。"应用程序应该快"是错误的——无法测试。"应用程序必须在 4G 连接下 500 毫秒内加载任务列表"是正确的——可量化。安大略 ICS3U B4.1 和 AP CSP CRD-2.A 要求在设计之前捕获需求。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Writing requirements for a grade calculator</span><span data-lang="zh">例题 2 &middot; 为成绩计算器编写需求</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a numbered requirements list for a program that reads five assignment scores and outputs a letter grade.</span><span data-lang="zh">问题：为一个读取五个作业成绩并输出字母等级的程序编写编号需求列表。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Functional requirements.</span><span data-lang="zh">功能性需求。</span></strong></p>
+    <pre><code>FR-1: The program shall accept exactly 5 numeric scores as input.
+      -- 程序应接受恰好 5 个数字成绩作为输入。
+FR-2: The program shall compute the arithmetic mean of the 5 scores.
+      -- 程序应计算 5 个成绩的算术平均值。
+FR-3: The program shall output a letter grade (A/B/C/D/F)
+      based on the mean (A>=90, B>=80, C>=70, D>=60, F otherwise).
+      -- 程序应根据平均值输出字母等级（A>=90, B>=80, C>=70, D>=60, 否则 F）。</code></pre>
+    <p><span data-lang="en"><strong>Non-functional requirements.</strong></span><span data-lang="zh"><strong>非功能性需求。</strong></span></p>
+    <pre><code>NFR-1: Scores outside [0, 100] shall trigger an error message, not a crash.
+       -- 范围 [0, 100] 之外的成绩应触发错误消息，而非程序崩溃。
+NFR-2: The program shall run in Python 3.8+ with no external libraries.
+       -- 程序应在 Python 3.8+ 中运行，无需外部库。</code></pre>
+    <p><span data-lang="en">Notice that every requirement is numbered (so test cases can reference them: "Test for FR-3, boundary case score=90") and testable.</span><span data-lang="zh">注意每个需求都有编号（以便测试用例可以引用它们："FR-3 的测试，边界情况 score=90"）且可测试。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is a well-written functional requirement?</span><span data-lang="zh">以下哪项是写得好的功能性需求？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The app should be user-friendly.</span><span data-lang="zh">应用程序应该用户友好。</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">The user shall be able to search for a task by name and the result shall appear within 1 second.</span><span data-lang="zh">用户应能按名称搜索任务，结果应在 1 秒内显示。</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The code should be clean and well-commented.</span><span data-lang="zh">代码应该干净且注释良好。</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The database should be fast.</span><span data-lang="zh">数据库应该快速。</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A good requirement is specific, numbered, and testable. Option B states exactly what the user can do (search by name) and a measurable criterion (1 second). The other options are vague and cannot be tested with a pass/fail result.</span><span data-lang="zh">好的需求具体、有编号且可测试。选项 B 准确说明用户可以做什么（按名称搜索）以及可量化的标准（1 秒）。其他选项含糊，无法用通过/失败结果进行测试。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">"User-friendly," "clean code," and "fast database" are unmeasurable. A requirement must be specific enough to write a test case for it — you need a concrete action and a measurable outcome.</span><span data-lang="zh">"用户友好"、"干净代码"和"快速数据库"无法量化。需求必须具体到可以为其编写测试用例——你需要一个具体的操作和可量化的结果。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A requirement states: "The login must complete in under 2 seconds on a standard 4G connection." What type of requirement is this?</span><span data-lang="zh">一个需求规定："登录必须在标准 4G 连接下 2 秒内完成。"这是什么类型的需求？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Functional requirement</span><span data-lang="zh">功能性需求</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">User story</span><span data-lang="zh">用户故事</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Use case</span><span data-lang="zh">用例</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Non-functional requirement</span><span data-lang="zh">非功能性需求</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Non-functional requirements describe performance, security, or quality constraints — how the system must behave, not what it must do. Speed (2 seconds) is a performance constraint, which is a non-functional requirement.</span><span data-lang="zh">非功能性需求描述性能、安全性或质量约束——系统必须如何行为，而非必须做什么。速度（2 秒）是性能约束，属于非功能性需求。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Functional requirements describe what the system does (log in). Non-functional requirements describe how it performs (under 2 seconds). Speed is a performance metric — non-functional.</span><span data-lang="zh">功能性需求描述系统做什么（登录）。非功能性需求描述如何执行（2 秒内）。速度是性能指标——属于非功能性。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; user stories and acceptance criteria (Agile)</span><span data-lang="zh">深入 &mdash; 用户故事和验收标准（敏捷）</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">In Agile development, requirements are often written as <strong>user stories</strong> in the format: "As a [user role], I want [action] so that [benefit]." Example: "As a student, I want to mark a task complete so that I can track my progress." Each story has <strong>acceptance criteria</strong> — the conditions that must be true for the story to be done: "Given a list of 3 tasks, when I click 'Mark complete' on task 2, then task 2 appears with a strikethrough and moves to the bottom of the list." This Given/When/Then format (also called Gherkin) is used in professional test automation. AP CSP CRD-2.A Learning Objective states: "Describe the purpose of a computing innovation." User stories are one structured way to capture that purpose from the user's perspective.</span><span data-lang="zh">在敏捷开发中，需求通常以<strong>用户故事</strong>的格式编写："作为 [用户角色]，我想要 [操作]，以便 [获益]。"示例："作为一名学生，我想要标记任务为已完成，以便我可以追踪进度。"每个故事都有<strong>验收标准</strong>——故事完成所必须满足的条件："给定一个包含 3 个任务的列表，当我点击任务 2 的'标记为完成'时，任务 2 应显示删除线并移至列表底部。"这种给定/当/则格式（也称 Gherkin）在专业测试自动化中使用。AP CSP CRD-2.A 学习目标指出："描述计算创新的目的。"用户故事是从用户角度捕获该目的的一种结构化方式。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; Design: pseudocode, flowcharts, UML</span><span data-lang="zh">第 3 节 &middot; 设计：伪代码、流程图、UML</span></div>
+  <h2><span data-lang="en">Design (Pseudocode, Flowcharts, UML Intro)</span><span data-lang="zh">设计（伪代码、流程图、UML 入门）</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three design tools &mdash; when to use each.</span><span data-lang="zh">三种设计工具 &mdash; 各自的使用场景。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Pseudocode</span><span data-lang="zh">伪代码</span></strong> <span data-lang="en">&mdash; describe the logic of a single algorithm in structured English. Best for capturing loop/decision logic before coding. Uses keywords: <code>INPUT</code>, <code>OUTPUT</code>, <code>IF/ELSE</code>, <code>WHILE</code>, <code>FOR</code>, <code>SET x TO</code>.</span><span data-lang="zh">&mdash; 用结构化英语描述单个算法的逻辑。最适合在编码前捕获循环/判断逻辑。使用关键字：<code>INPUT</code>、<code>OUTPUT</code>、<code>IF/ELSE</code>、<code>WHILE</code>、<code>FOR</code>、<code>SET x TO</code>。</span></li>
+      <li><strong><span data-lang="en">Flowchart</span><span data-lang="zh">流程图</span></strong> <span data-lang="en">&mdash; visual representation of algorithm control flow. Oval = Start/End; Rectangle = Process; Diamond = Decision (two exits: YES/NO); Parallelogram = Input/Output. BC CP11 verbatim: "tools to aid in the development process."</span><span data-lang="zh">&mdash; 算法控制流的可视化表示。椭圆 = 开始/结束；矩形 = 处理；菱形 = 判断（两个出口：是/否）；平行四边形 = 输入/输出。BC CP11 原文："辅助开发过程的工具。"</span></li>
+      <li><strong><span data-lang="en">UML Class Diagram (intro)</span><span data-lang="zh">UML 类图（入门）</span></strong> <span data-lang="en">&mdash; shows the attributes and methods of a class in a box with three sections: class name (top), attributes (middle), methods (bottom). Ontario ICS3U B2.4 lists "UML" as an accepted design tool.</span><span data-lang="zh">&mdash; 在三节盒子中显示类的属性和方法：类名（顶部）、属性（中部）、方法（底部）。安大略 ICS3U B2.4 将"UML"列为公认的设计工具。</span></li>
+    </ul>
+    <span data-lang="en">The rule: <strong>always produce at least one design artifact before writing code.</strong> AP CSP CRD-2.B states: "Describe the purpose of a code segment or program by writing documentation." Design artifacts are that documentation.</span><span data-lang="zh">规则：<strong>在编写代码之前始终产出至少一个设计制品。</strong>AP CSP CRD-2.B 指出："通过编写文档描述代码段或程序的目的。"设计制品就是那份文档。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Design artifacts for a login system</span><span data-lang="zh">例题 3 &middot; 登录系统的设计制品</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: produce three design artifacts for a simple username/password login function.</span><span data-lang="zh">问题：为简单的用户名/密码登录功能产出三种设计制品。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">1. Pseudocode.</span><span data-lang="zh">1. 伪代码。</span></strong></p>
+    <pre><code>INPUT username, password
+IF username == "admin" AND password == "pass123" THEN
+    OUTPUT "Login successful"
+ELSE
+    OUTPUT "Invalid credentials"
+END IF
+-- 以上：如果用户名为 "admin" 且密码为 "pass123"，输出"登录成功"，否则输出"无效凭据"。</code></pre>
+    <p><strong><span data-lang="en">2. Flowchart (text description).</span><span data-lang="zh">2. 流程图（文字描述）。</span></strong></p>
+    <p><span data-lang="en">Oval "START" → Parallelogram "Input username, password" → Diamond "username='admin' AND password='pass123'?" → YES: Parallelogram "Output: Login successful" → Oval "END"; NO: Parallelogram "Output: Invalid credentials" → Oval "END".</span><span data-lang="zh">椭圆"开始"→ 平行四边形"输入用户名、密码"→ 菱形"username='admin' 且 password='pass123'？"→ 是：平行四边形"输出：登录成功"→ 椭圆"结束"；否：平行四边形"输出：无效凭据"→ 椭圆"结束"。</span></p>
+    <p><strong><span data-lang="en">3. UML Class Diagram (intro level).</span><span data-lang="zh">3. UML 类图（入门级）。</span></strong></p>
+    <pre><code>+------------------+
+|   LoginSystem    |   &lt;-- class name 类名
++------------------+
+| - username: str  |   &lt;-- attributes (- means private)
+| - password: str  |       属性（- 表示私有）
++------------------+
+| + login(): bool  |   &lt;-- methods (+ means public)
+| + logout(): void |       方法（+ 表示公有）
++------------------+</code></pre>
+    <p><span data-lang="en">The UML box shows what data the class stores (attributes) and what actions it can perform (methods). This is the design blueprint; the Python implementation follows from it.</span><span data-lang="zh">UML 盒子显示类存储哪些数据（属性）以及可以执行哪些操作（方法）。这是设计蓝图；Python 实现由此而来。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which design tool is most appropriate for showing the logic of a single algorithm with branches and loops before writing code?</span><span data-lang="zh">在编写代码之前，哪种设计工具最适合显示包含分支和循环的单个算法的逻辑？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">UML class diagram</span><span data-lang="zh">UML 类图</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Requirements document</span><span data-lang="zh">需求文档</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Pseudocode or flowchart</span><span data-lang="zh">伪代码或流程图</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Test plan</span><span data-lang="zh">测试计划</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Pseudocode and flowcharts both represent algorithm control flow (sequences, decisions, loops). UML class diagrams show object structure; requirements documents capture what the system must do; test plans verify correctness after implementation.</span><span data-lang="zh">伪代码和流程图都表示算法控制流（顺序、判断、循环）。UML 类图显示对象结构；需求文档捕获系统必须做什么；测试计划在实现后验证正确性。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">For algorithm logic with branches/loops: pseudocode (structured English) or flowchart (visual). UML class diagrams are for object structure, not algorithm flow.</span><span data-lang="zh">对于含分支/循环的算法逻辑：伪代码（结构化英语）或流程图（可视化）。UML 类图用于对象结构，而非算法流程。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In a UML class diagram, what does the middle section of the box contain?</span><span data-lang="zh">在 UML 类图中，盒子的中间部分包含什么？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The class name</span><span data-lang="zh">类名</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">The attributes (data fields)</span><span data-lang="zh">属性（数据字段）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The methods (operations)</span><span data-lang="zh">方法（操作）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The test cases</span><span data-lang="zh">测试用例</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A UML class box has three sections: top = class name; middle = attributes (data the object stores); bottom = methods (operations the object can perform). Remembering this structure helps you read and draw UML at the design phase.</span><span data-lang="zh">UML 类盒子有三节：顶部 = 类名；中部 = 属性（对象存储的数据）；底部 = 方法（对象可执行的操作）。记住这个结构有助于在设计阶段读取和绘制 UML。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">UML three-section box: top = name, middle = attributes, bottom = methods. Test cases are part of the test plan, not the class diagram.</span><span data-lang="zh">UML 三节盒子：顶部 = 名称，中部 = 属性，底部 = 方法。测试用例是测试计划的一部分，而非类图。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; Implementation and coding standards</span><span data-lang="zh">第 4 节 &middot; 实现与编码规范</span></div>
+  <h2><span data-lang="en">Implementation and Coding Standards</span><span data-lang="zh">实现与编码规范</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Four coding standards every professional applies &mdash; memorise these.</span><span data-lang="zh">每位专业人员都要遵守的四条编码规范 &mdash; 背熟这些。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Meaningful names</span><span data-lang="zh">有意义的命名</span></strong> <span data-lang="en">&mdash; variable and function names should say what they store/do. <code>student_count</code> is good; <code>x</code> is bad (unless it is a local loop counter).</span><span data-lang="zh">&mdash; 变量和函数名应说明其存储/操作的内容。<code>student_count</code> 是好的；<code>x</code> 是不好的（除非是局部循环计数器）。</span></li>
+      <li><strong><span data-lang="en">Inline comments</span><span data-lang="zh">内联注释</span></strong> <span data-lang="en">&mdash; explain the <em>why</em>, not the <em>what</em>. <code># decrement to convert from 1-indexed to 0-indexed</code> is useful; <code># add 1</code> is useless. BC CP11 verbatim: "inline commenting to document source code."</span><span data-lang="zh">&mdash; 解释<em>为什么</em>，而非<em>是什么</em>。<code># 减去 1 以从 1 索引转换为 0 索引</code>是有用的；<code># 加 1</code>是无用的。BC CP11 原文："内联注释记录源代码。"</span></li>
+      <li><strong><span data-lang="en">No magic numbers</span><span data-lang="zh">无魔法数字</span></strong> <span data-lang="en">&mdash; replace hard-coded literals with named constants. Instead of <code>if score &gt;= 90</code> scattered everywhere, use <code>A_THRESHOLD = 90</code> once at the top.</span><span data-lang="zh">&mdash; 用命名常量替换硬编码的字面量。不要在各处写 <code>if score &gt;= 90</code>，而是在顶部一次性定义 <code>A_THRESHOLD = 90</code>。</span></li>
+      <li><strong><span data-lang="en">Consistent indentation and style</span><span data-lang="zh">一致的缩进和风格</span></strong> <span data-lang="en">&mdash; use 4 spaces per indent level (Python PEP 8), consistent brace style, and a style guide shared by the team. Ontario ICS3U B2.4 requires "industry-standard" tool use.</span><span data-lang="zh">&mdash; 每个缩进级别使用 4 个空格（Python PEP 8），一致的花括号风格，以及团队共享的风格指南。安大略 ICS3U B2.4 要求使用"行业标准"工具。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; Refactoring bad code to meet coding standards</span><span data-lang="zh">例题 4 &middot; 将糟糕代码重构为符合编码规范的代码</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: the following Python code works but violates coding standards. Identify the violations and rewrite it.</span><span data-lang="zh">问题：以下 Python 代码可以运行，但违反了编码规范。识别违规之处并重写。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Original (bad) code.</span><span data-lang="zh">原始（糟糕的）代码。</span></strong></p>
+    <pre><code>x = float(input("enter: "))
+y = (x*9/5)+32
+if y>212:
+  print("boiling")  # hot</code></pre>
+    <p><strong><span data-lang="en">Violations identified.</span><span data-lang="zh">识别的违规之处。</span></strong></p>
+    <ul style="margin: 4px 0 10px 20px; font-size: 0.94rem;">
+      <li><span data-lang="en">Poor names: <code>x</code>, <code>y</code>. Magic number: <code>212</code>. Useless comment: <code># hot</code> just repeats what the print says. Inconsistent indentation (2 spaces, not 4).</span><span data-lang="zh">命名不佳：<code>x</code>、<code>y</code>。魔法数字：<code>212</code>。无用注释：<code># hot</code> 只是重复了 print 的内容。缩进不一致（2 个空格，而非 4 个）。</span></li>
+    </ul>
+    <p><strong><span data-lang="en">Refactored (good) code.</span><span data-lang="zh">重构后（好的）代码。</span></strong></p>
+    <pre><code>BOILING_POINT_F = 212  # water boils at 212°F at sea level
+                        # 水在海平面 212°F 沸腾
+
+celsius = float(input("Enter temperature in Celsius: "))
+fahrenheit = (celsius * 9 / 5) + 32
+
+# Check if temperature exceeds boiling point (relevant for lab safety)
+# 检查温度是否超过沸点（与实验室安全相关）
+if fahrenheit > BOILING_POINT_F:
+    print("Warning: above boiling point")</code></pre>
+    <p><span data-lang="en">The refactored version has meaningful names, a named constant, a useful comment explaining the <em>why</em>, and consistent 4-space indentation. The logic is identical — only the readability changed.</span><span data-lang="zh">重构后的版本具有有意义的名称、命名常量、解释<em>为什么</em>的有用注释以及一致的 4 个空格缩进。逻辑完全相同——只有可读性发生了变化。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is an example of a "magic number" that should be replaced with a named constant?</span><span data-lang="zh">以下哪项是应该用命名常量替换的"魔法数字"的例子？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>student_count = 0</code></div>
+      <div class="quiz-opt" data-idx="1"><code>MAX_STUDENTS = 30</code></div>
+      <div class="quiz-opt" data-idx="2"><code>for i in range(len(scores)):</code></div>
+      <div class="quiz-opt" data-idx="3"><code>if score &gt;= 90:  # A grade threshold, hard-coded</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A magic number is a hard-coded literal whose meaning is not obvious from context. <code>90</code> in <code>if score &gt;= 90</code> is a magic number — it should be <code>A_THRESHOLD = 90</code> at the top of the file. Option B already does this correctly (it is a named constant). Options A and C use variables/range() appropriately.</span><span data-lang="zh">魔法数字是上下文中含义不明显的硬编码字面量。<code>if score &gt;= 90</code> 中的 <code>90</code> 是魔法数字——应该在文件顶部定义 <code>A_THRESHOLD = 90</code>。选项 B 已经正确地这样做了（它是命名常量）。选项 A 和 C 适当地使用了变量/range()。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Magic numbers are unexplained hard-coded literals. <code>90</code> for a grade threshold is a magic number — its meaning requires context. Replacing it with <code>A_THRESHOLD = 90</code> (option B style) is the fix.</span><span data-lang="zh">魔法数字是无法解释的硬编码字面量。成绩阈值的 <code>90</code> 是魔法数字——其含义需要上下文。用 <code>A_THRESHOLD = 90</code>（选项 B 风格）替换它是修复方法。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which comment is more useful and follows coding standards?</span><span data-lang="zh">哪条注释更有用并符合编码规范？</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code># add 1 to count</code></div>
+      <div class="quiz-opt" data-idx="1"><code># compensate for 1-based indexing in user input</code></div>
+      <div class="quiz-opt" data-idx="2"><code># this is a loop</code></div>
+      <div class="quiz-opt" data-idx="3"><code># variable</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A good comment explains the <em>why</em> — the reason behind a non-obvious decision. "Compensate for 1-based indexing" explains <em>why</em> the code subtracts 1, which is not obvious from the code itself. The other options just describe what the code does (which the code already shows).</span><span data-lang="zh">好的注释解释<em>为什么</em>——非显而易见决定背后的原因。"补偿基于 1 的索引"解释了代码为什么减去 1，这从代码本身并不明显。其他选项只是描述代码做什么（代码本身已经显示了）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Useful comments explain WHY, not WHAT. "Add 1 to count" is useless — the code already shows that. "Compensate for 1-based indexing" explains the reasoning.</span><span data-lang="zh">有用的注释解释为什么，而非是什么。"将 count 加 1"是无用的——代码已经显示了这一点。"补偿基于 1 的索引"解释了推理过程。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; code review as a quality gate</span><span data-lang="zh">深入 &mdash; 代码审查作为质量门</span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">CSTA 3B-AP-23 (verbatim): "Evaluate key qualities of a program through a process such as a code review." A code review is a structured process in which a colleague reads your code before it is merged into the main codebase. Reviewers check: do variable names explain intent? Are all edge cases handled? Is there dead code? Are comments accurate? In professional teams this is enforced through a pull-request workflow in Git — code cannot merge until at least one reviewer approves it. Ontario ICS4U B1 (project management) and BC CP12 "collaboration tools for programming" both implicitly require this practice. For a solo school project, a self-review checklist (naming, comments, constants, edge cases) achieves the same quality improvement.</span><span data-lang="zh">CSTA 3B-AP-23（原文）："通过代码审查等过程评估程序的关键质量。"代码审查是一个结构化过程，同事在代码合并到主代码库之前阅读你的代码。审查者检查：变量名是否解释了意图？是否处理了所有边缘情况？是否有死代码？注释是否准确？在专业团队中，这通过 Git 的拉取请求工作流强制执行——在至少一个审查者批准之前，代码无法合并。安大略 ICS4U B1（项目管理）和 BC CP12"编程协作工具"都隐含地要求这种做法。对于单独的学校项目，自我审查清单（命名、注释、常量、边缘情况）可实现相同的质量改进。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; Testing and debugging</span><span data-lang="zh">第 5 节 &middot; 测试与调试</span></div>
+  <h2><span data-lang="en">Testing and Debugging</span><span data-lang="zh">测试与调试</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Test plan structure &mdash; four columns, Ontario ICS3U B4.4 names these verbatim.</span><span data-lang="zh">测试计划结构 &mdash; 四列，安大略 ICS3U B4.4 逐字命名这些列。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Test scenario</span><span data-lang="zh">测试场景</span></strong> <span data-lang="en">&mdash; a short description of what is being tested ("Normal login with correct password").</span><span data-lang="zh">&mdash; 被测内容的简短描述（"使用正确密码正常登录"）。</span></li>
+      <li><strong><span data-lang="en">Input data</span><span data-lang="zh">输入数据</span></strong> <span data-lang="en">&mdash; the specific values used (username="admin", password="pass123").</span><span data-lang="zh">&mdash; 使用的具体值（username="admin"，password="pass123"）。</span></li>
+      <li><strong><span data-lang="en">Expected output</span><span data-lang="zh">预期输出</span></strong> <span data-lang="en">&mdash; what the program should produce if correct ("Login successful").</span><span data-lang="zh">&mdash; 正确时程序应产生的内容（"登录成功"）。</span></li>
+      <li><strong><span data-lang="en">Actual output + Pass/Fail</span><span data-lang="zh">实际输出 + 通过/失败</span></strong> <span data-lang="en">&mdash; what the program actually produced, and whether it matches the expected output.</span><span data-lang="zh">&mdash; 程序实际产生的内容，以及是否与预期输出匹配。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Three error types</strong> (BC CP11 names these): (1) <strong>Syntax</strong>: code fails to parse — a typo or missing colon. (2) <strong>Logic</strong>: code runs but produces the wrong answer — the algorithm is flawed. (3) <strong>Runtime (semantic)</strong>: code crashes during execution — division by zero, index out of bounds. Always test <strong>normal cases</strong>, <strong>boundary cases</strong>, and <strong>error/exception cases</strong> — AB CSE1110 outcome 1.7: "test the algorithm for failure as well as success."</span><span data-lang="zh"><strong>三种错误类型</strong>（BC CP11 命名这些）：(1) <strong>语法</strong>：代码解析失败——错别字或缺少冒号。(2) <strong>逻辑</strong>：代码运行但产生错误答案——算法有缺陷。(3) <strong>运行时（语义）</strong>：代码在执行过程中崩溃——除以零、索引越界。始终测试<strong>正常情况</strong>、<strong>边界情况</strong>和<strong>错误/异常情况</strong>——AB CSE1110 结果 1.7："用适当数据测试算法的成功与失败情况。"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Test plan for a grade calculator</span><span data-lang="zh">例题 5 &middot; 成绩计算器的测试计划</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Write a 4-row test plan for a program that reads a score [0–100] and outputs a letter grade (A&ge;90, B&ge;80, C&ge;70, D&ge;60, F otherwise).</span><span data-lang="zh">为一个读取 [0–100] 范围内分数并输出字母等级（A&ge;90，B&ge;80，C&ge;70，D&ge;60，否则 F）的程序编写 4 行测试计划。</span></p>
+  </div>
+  <div class="worked-solution">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span data-lang="en">Scenario</span><span data-lang="zh">场景</span></th>
+            <th><span data-lang="en">Input</span><span data-lang="zh">输入</span></th>
+            <th><span data-lang="en">Expected output</span><span data-lang="zh">预期输出</span></th>
+            <th><span data-lang="en">Type</span><span data-lang="zh">类型</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span data-lang="en">Normal case — B grade</span><span data-lang="zh">正常情况——B 等级</span></td>
+            <td>85</td>
+            <td>B</td>
+            <td><span data-lang="en">Normal</span><span data-lang="zh">正常</span></td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Boundary — exact A threshold</span><span data-lang="zh">边界——恰好 A 阈值</span></td>
+            <td>90</td>
+            <td>A</td>
+            <td><span data-lang="en">Boundary</span><span data-lang="zh">边界</span></td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Boundary — one below A threshold</span><span data-lang="zh">边界——A 阈值下一分</span></td>
+            <td>89</td>
+            <td>B</td>
+            <td><span data-lang="en">Boundary</span><span data-lang="zh">边界</span></td>
+          </tr>
+          <tr>
+            <td><span data-lang="en">Error case — out of range</span><span data-lang="zh">错误情况——超出范围</span></td>
+            <td>150</td>
+            <td><span data-lang="en">Error: score out of range</span><span data-lang="zh">错误：分数超出范围</span></td>
+            <td><span data-lang="en">Error</span><span data-lang="zh">错误</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Note: boundary cases at the exact threshold values (90, 80, 70, 60) are critical — they test whether <code>&gt;=</code> is correctly used instead of <code>&gt;</code>. An off-by-one here is a logic error.</span><span data-lang="zh">注意：恰好在阈值（90、80、70、60）处的边界情况至关重要——它们测试是否正确使用 <code>&gt;=</code> 而非 <code>&gt;</code>。这里的差一错误是逻辑错误。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A grade calculator outputs "A" when the score is 89. The expected output is "B". What type of error is this?</span><span data-lang="zh">一个成绩计算器在分数为 89 时输出"A"。预期输出是"B"。这是什么类型的错误？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Logic error (off-by-one in the boundary condition)</span><span data-lang="zh">逻辑错误（边界条件中的差一错误）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Syntax error</span><span data-lang="zh">语法错误</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Runtime error</span><span data-lang="zh">运行时错误</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">No error — the output is correct</span><span data-lang="zh">无错误——输出是正确的</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The program runs without crashing (not syntax or runtime) but produces the wrong answer — that is a logic error. The likely cause is <code>if score &gt; 90</code> instead of <code>if score &gt;= 90</code>, which would classify 90 correctly but misclassify 89 as A. This is an off-by-one boundary error.</span><span data-lang="zh">程序运行不崩溃（不是语法或运行时错误），但产生错误答案——这是逻辑错误。可能的原因是 <code>if score &gt; 90</code> 而非 <code>if score &gt;= 90</code>，这会正确分类 90，但将 89 错误分类为 A。这是差一边界错误。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Syntax errors prevent parsing; runtime errors crash the program. Wrong answer without crash = logic error. Boundary conditions (&gt; vs &gt;=) are a classic source of logic errors.</span><span data-lang="zh">语法错误阻止解析；运行时错误使程序崩溃。无崩溃的错误答案 = 逻辑错误。边界条件（&gt; 与 &gt;=）是逻辑错误的经典来源。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">According to Ontario ICS3U B4.4, a test plan must include which four elements?</span><span data-lang="zh">根据安大略 ICS3U B4.4，测试计划必须包括哪四个要素？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Code, comments, variable names, output</span><span data-lang="zh">代码、注释、变量名、输出</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Algorithm, pseudocode, flowchart, UML</span><span data-lang="zh">算法、伪代码、流程图、UML</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Test scenario, input data, expected output, actual outcome + pass/fail</span><span data-lang="zh">测试场景、输入数据、预期输出、实际结果 + 通过/失败</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Requirements, design, implementation, maintenance</span><span data-lang="zh">需求、设计、实现、维护</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Ontario ICS3U B4.4 (verbatim): "use a test plan to test programs (i.e., identify test scenarios, identify suitable input data, calculate expected outcomes, record actual outcomes, and conclude 'pass' or 'fail')." These four elements make a test plan verifiable and repeatable.</span><span data-lang="zh">安大略 ICS3U B4.4（原文）："使用测试计划测试程序（即确定测试场景、确定合适的输入数据、计算预期结果、记录实际结果，并得出'通过'或'失败'的结论）。"这四个要素使测试计划可验证且可重复。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A test plan is not design documentation (algorithms/UML) nor SDLC phases. It is a table: scenario | input | expected | actual | pass/fail — as stated in Ontario ICS3U B4.4.</span><span data-lang="zh">测试计划不是设计文档（算法/UML），也不是 SDLC 阶段。它是一个表格：场景 | 输入 | 预期 | 实际 | 通过/失败——如安大略 ICS3U B4.4 所述。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; automated testing and test-driven development <span class="honors-flag">Honors &mdash; ICS4U / CSE3120</span></span><span data-lang="zh">深入 &mdash; 自动化测试与测试驱动开发 <span class="honors-flag">荣誉 &mdash; ICS4U / CSE3120</span></span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">In professional software development, test plans are executed by automated testing frameworks (Python's <code>unittest</code>, JavaScript's Jest, Java's JUnit). Each test case is a function that calls the code under test with specific inputs and asserts the output matches the expected value. <strong>Test-driven development (TDD)</strong> inverts the order: write the test first (which fails), then write the minimum code to make it pass, then refactor. CSTA 3B-AP-21 (verbatim): "Develop and use a series of test cases to verify that a program performs according to its design specifications." CSE3120 outcome 3.1 also requires iterative testing throughout implementation. For ICS3U floor students, a hand-written test plan table is the assessed skill; automated testing is the Grade-12/advanced extension.</span><span data-lang="zh">在专业软件开发中，测试计划由自动化测试框架执行（Python 的 <code>unittest</code>、JavaScript 的 Jest、Java 的 JUnit）。每个测试用例是一个函数，用特定输入调用被测代码并断言输出与预期值匹配。<strong>测试驱动开发（TDD）</strong>颠倒了顺序：先编写测试（失败），然后编写最少的代码使其通过，再重构。CSTA 3B-AP-21（原文）："开发和使用一系列测试用例来验证程序是否按照其设计规格运行。" CSE3120 结果 3.1 也要求在整个实现过程中进行迭代测试。对于 ICS3U 基础学生，手写测试计划表是被评估的技能；自动化测试是 12 年级/高级扩展。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Documentation and maintenance</span><span data-lang="zh">第 6 节 &middot; 文档与维护</span></div>
+  <h2><span data-lang="en">Documentation and Maintenance</span><span data-lang="zh">文档与维护</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three documentation types &mdash; each has a different audience.</span><span data-lang="zh">三种文档类型 &mdash; 各有不同的受众。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Inline / code comments</span><span data-lang="zh">内联 / 代码注释</span></strong> <span data-lang="en">&mdash; audience: future developers (including your future self). Explains non-obvious code decisions using <code>#</code> or <code>/* */</code>. BC CP11 verbatim: "inline commenting to document source code." CP12 verbatim: "Standardized source code documentation."</span><span data-lang="zh">&mdash; 受众：未来的开发人员（包括未来的自己）。使用 <code>#</code> 或 <code>/* */</code> 解释非显而易见的代码决策。BC CP11 原文："内联注释记录源代码。" CP12 原文："标准化源代码文档。"</span></li>
+      <li><strong><span data-lang="en">Technical documentation</span><span data-lang="zh">技术文档</span></strong> <span data-lang="en">&mdash; audience: developers maintaining the system. Includes API reference (what each function does, its parameters, return value), data-structure diagrams, and architecture overview.</span><span data-lang="zh">&mdash; 受众：维护系统的开发人员。包括 API 参考（每个函数的功能、参数、返回值）、数据结构图和架构概述。</span></li>
+      <li><strong><span data-lang="en">User documentation</span><span data-lang="zh">用户文档</span></strong> <span data-lang="en">&mdash; audience: end users. Explains how to install and use the software. Includes a README, user guide, and error-message explanations. Written in plain language, no code.</span><span data-lang="zh">&mdash; 受众：最终用户。解释如何安装和使用软件。包括 README、用户指南和错误消息说明。用简明语言编写，无代码。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Maintenance</strong> is the longest SDLC phase — most software is maintained for years after release. Maintenance activities: corrective (fix bugs), adaptive (update for new OS/hardware), perfective (add features or improve performance). CSTA 3B-AP-22 (verbatim): "Modify an existing program to add additional functionality and discuss intended and unintended implications."</span><span data-lang="zh"><strong>维护</strong>是最长的 SDLC 阶段——大多数软件在发布后维护多年。维护活动：纠正性（修复错误）、适应性（为新操作系统/硬件更新）、完善性（添加功能或提高性能）。CSTA 3B-AP-22（原文）："修改现有程序以添加附加功能，并讨论预期和非预期的影响。"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; Documenting a grade calculator function</span><span data-lang="zh">例题 6 &middot; 为成绩计算器函数编写文档</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Write a properly documented Python function for computing a letter grade, showing three levels of documentation.</span><span data-lang="zh">编写一个有适当文档的 Python 函数来计算字母等级，展示三个层次的文档。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># grade_calculator.py — Dingrui Scholars Grade Tool, v1.0
+# Author: student team | Last updated: 2026-01
+# License: MIT
+# 成绩计算工具 — 模块说明：根据百分制分数返回字母等级
+
+def compute_grade(score: float) -> str:
+    """
+    Convert a numeric score (0-100) to a letter grade.
+    将百分制分数（0-100）转换为字母等级。
+
+    Parameters / 参数:
+        score (float): numeric score, must be in [0, 100]
+                       百分制分数，必须在 [0, 100] 范围内
+    Returns / 返回:
+        str: letter grade "A", "B", "C", "D", or "F"
+             字母等级 "A", "B", "C", "D" 或 "F"
+    Raises / 异常:
+        ValueError: if score is outside [0, 100]
+                    如果分数超出 [0, 100] 范围
+    """
+    # Validate input before processing (NFR-1)
+    # 处理前验证输入（对应非功能性需求 NFR-1）
+    if not (0 <= score <= 100):
+        raise ValueError(f"Score {score} out of range [0, 100]")
+
+    # Grade thresholds — defined as constants to avoid magic numbers
+    # 成绩阈值——定义为常量以避免魔法数字
+    A_THRESHOLD, B_THRESHOLD = 90, 80
+    C_THRESHOLD, D_THRESHOLD = 70, 60
+
+    if score >= A_THRESHOLD:
+        return "A"
+    elif score >= B_THRESHOLD:
+        return "B"
+    elif score >= C_THRESHOLD:
+        return "C"
+    elif score >= D_THRESHOLD:
+        return "D"
+    else:
+        return "F"</code></pre>
+    <p><span data-lang="en">The docstring (triple-quoted string) is the standard Python technical documentation format. Tools like Sphinx auto-generate HTML documentation from docstrings. The inline comments explain the <em>why</em>. The module header is the user-facing documentation for anyone reading the file.</span><span data-lang="zh">文档字符串（三引号字符串）是标准的 Python 技术文档格式。Sphinx 等工具从文档字符串自动生成 HTML 文档。内联注释解释<em>为什么</em>。模块头是面向任何阅读文件的人的用户文档。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A school's homework-tracker app runs on an old OS version. The developers update the app to work on the new OS without adding features. What type of maintenance is this?</span><span data-lang="zh">一所学校的作业追踪应用在旧版操作系统上运行。开发人员更新应用以在新操作系统上运行，未添加新功能。这是什么类型的维护？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Corrective maintenance</span><span data-lang="zh">纠正性维护</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Adaptive maintenance</span><span data-lang="zh">适应性维护</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Perfective maintenance</span><span data-lang="zh">完善性维护</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Documentation maintenance</span><span data-lang="zh">文档维护</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Adaptive maintenance updates software to work in a changed environment (new OS, new hardware, new platform) without changing functionality. Corrective fixes bugs; perfective improves features or performance. No new feature = not perfective; no bug = not corrective; environment change = adaptive.</span><span data-lang="zh">适应性维护将软件更新为在变化的环境（新操作系统、新硬件、新平台）中工作，而不改变功能。纠正性修复错误；完善性改进功能或性能。无新功能 = 非完善性；无错误 = 非纠正性；环境变化 = 适应性。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Three maintenance types: corrective (fix bugs), adaptive (update for new environment), perfective (improve/add features). Updating for a new OS without feature changes is adaptive.</span><span data-lang="zh">三种维护类型：纠正性（修复错误）、适应性（为新环境更新）、完善性（改进/添加功能）。在无功能变化的情况下为新操作系统更新是适应性维护。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which documentation type is intended for end users who need to install and use the software?</span><span data-lang="zh">哪种文档类型面向需要安装和使用软件的最终用户？</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Inline comments</span><span data-lang="zh">内联注释</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">API reference</span><span data-lang="zh">API 参考</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Architecture diagram</span><span data-lang="zh">架构图</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">User guide / README</span><span data-lang="zh">用户指南 / README</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">User documentation (user guide, README) is written for end users in plain language. It covers installation, basic usage, and common errors. Inline comments, API references, and architecture diagrams are developer-facing technical documentation, not user-facing.</span><span data-lang="zh">用户文档（用户指南、README）用简明语言为最终用户编写。它涵盖安装、基本使用和常见错误。内联注释、API 参考和架构图是面向开发人员的技术文档，而非面向用户。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">End users don't read code comments or API references. User documentation = plain-language guides written for non-developers. The README is the classic example.</span><span data-lang="zh">最终用户不阅读代码注释或 API 参考。用户文档 = 为非开发人员编写的简明语言指南。README 是经典示例。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Collaboration and version control</span><span data-lang="zh">第 7 节 &middot; 协作与版本控制</span></div>
+  <h2><span data-lang="en">Collaboration and Version Control (Git Intro)</span><span data-lang="zh">协作与版本控制（Git 入门）</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Four core Git commands &mdash; know what each does.</span><span data-lang="zh">四个核心 Git 命令 &mdash; 了解每个命令的作用。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><code>git init</code></strong> <span data-lang="en">&mdash; initialise a new Git repository in the current folder. Creates a hidden <code>.git</code> directory that tracks all future changes.</span><span data-lang="zh">&mdash; 在当前文件夹中初始化一个新的 Git 仓库。创建一个隐藏的 <code>.git</code> 目录来追踪所有未来的更改。</span></li>
+      <li><strong><code>git add &lt;file&gt;</code></strong> <span data-lang="en">&mdash; stage a file for the next commit (mark it as "ready to save"). <code>git add .</code> stages all changed files at once.</span><span data-lang="zh">&mdash; 将文件暂存为下一次提交（标记为"准备保存"）。<code>git add .</code> 一次暂存所有更改的文件。</span></li>
+      <li><strong><code>git commit -m "message"</code></strong> <span data-lang="en">&mdash; save a snapshot of all staged files with a descriptive message. Each commit is a permanent, retrievable checkpoint.</span><span data-lang="zh">&mdash; 用描述性消息保存所有暂存文件的快照。每次提交都是一个永久的、可检索的检查点。</span></li>
+      <li><strong><code>git push</code></strong> <span data-lang="en">&mdash; upload local commits to a remote repository (e.g., GitHub). Enables team members to access your work.</span><span data-lang="zh">&mdash; 将本地提交上传到远程仓库（如 GitHub）。使团队成员能够访问你的工作。</span></li>
+    </ul>
+    <span data-lang="en"><strong>Why version control matters:</strong> it lets you revert to a previous working version when a change breaks things; it enables multiple developers to work on the same codebase without overwriting each other's work (branches); and it provides a complete audit trail of who changed what and why (commit messages). Ontario ICS4U B1.7 (verbatim): "use shared resources to manage source code effectively and securely … proper version control." BC CP11: "collaboration tools for programming." BC CP12: "Collaboration tools for programming; Advanced pair programming."</span><span data-lang="zh"><strong>版本控制的重要性：</strong>当更改破坏程序时，它让你能够恢复到之前的可用版本；它使多个开发人员能够在同一代码库上工作而不互相覆盖（分支）；它提供完整的审计跟踪，记录谁改变了什么以及为什么（提交消息）。安大略 ICS4U B1.7（原文）："使用共享资源有效、安全地管理源代码……正确的版本控制。" BC CP11："编程协作工具。" BC CP12："编程协作工具；高级结对编程。"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; A typical Git workflow for a school project</span><span data-lang="zh">例题 7 &middot; 学校项目的典型 Git 工作流</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">A pair of students is building a grade calculator. Trace their Git workflow from start to submission.</span><span data-lang="zh">两名学生正在构建成绩计算器。追踪他们从开始到提交的 Git 工作流。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code># Day 1: Student A sets up the repository
+# 第 1 天：学生 A 创建仓库
+git init grade-calc
+cd grade-calc
+# 创建 grade_calculator.py 并编写初始函数
+git add grade_calculator.py
+git commit -m "Add compute_grade() function with A/B/C/D/F thresholds"
+git push origin main
+
+# Day 2: Student B clones and adds tests
+# 第 2 天：学生 B 克隆并添加测试
+git clone https://github.com/team/grade-calc
+# 编写 test_grade_calculator.py 测试文件
+git add test_grade_calculator.py
+git commit -m "Add test plan: normal, boundary, and error cases for compute_grade()"
+git push origin main
+
+# Day 3: Student A fixes a boundary bug found by the tests
+# 第 3 天：学生 A 修复测试发现的边界错误
+# 将 'score > 90' 修正为 'score >= 90'（差一错误）
+git add grade_calculator.py
+git commit -m "Fix off-by-one: change > to >= for A threshold (fixes test TC-2)"
+git push origin main</code></pre>
+    <p><span data-lang="en">Each commit message is specific: it says what changed and why. This makes the project history readable — anyone can understand the change log without opening each file. The commit message "fixes test TC-2" links the code change to the test plan row, closing the requirements → design → implement → test → fix loop.</span><span data-lang="zh">每条提交消息都很具体：它说明了更改了什么以及为什么。这使项目历史可读——任何人都可以在不打开每个文件的情况下理解变更日志。提交消息"fixes test TC-2"将代码更改与测试计划行关联起来，形成需求 → 设计 → 实现 → 测试 → 修复的完整闭环。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What does <code>git commit -m "Add login function"</code> do?</span><span data-lang="zh"><code>git commit -m "Add login function"</code> 做什么？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Uploads all local files to GitHub</span><span data-lang="zh">将所有本地文件上传到 GitHub</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Marks a file as ready to be saved</span><span data-lang="zh">将文件标记为准备保存</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Saves a permanent snapshot of all staged files with the message "Add login function"</span><span data-lang="zh">用消息"Add login function"保存所有暂存文件的永久快照</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Creates a new Git repository</span><span data-lang="zh">创建一个新的 Git 仓库</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>git commit</code> saves a permanent snapshot (checkpoint) of all staged files. The <code>-m</code> flag provides the commit message. Uploading to GitHub requires a separate <code>git push</code> command; marking files ready is <code>git add</code>; creating a repo is <code>git init</code>.</span><span data-lang="zh"><code>git commit</code> 保存所有暂存文件的永久快照（检查点）。<code>-m</code> 标志提供提交消息。上传到 GitHub 需要单独的 <code>git push</code> 命令；标记文件就绪是 <code>git add</code>；创建仓库是 <code>git init</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Git workflow: init → add (stage) → commit (snapshot) → push (upload). <code>commit</code> saves locally; <code>push</code> uploads to remote.</span><span data-lang="zh">Git 工作流：init → add（暂存）→ commit（快照）→ push（上传）。<code>commit</code> 本地保存；<code>push</code> 上传到远程。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Two students edit the same Python file simultaneously on separate computers. Which Git concept prevents their changes from overwriting each other?</span><span data-lang="zh">两名学生在不同的计算机上同时编辑同一个 Python 文件。哪个 Git 概念防止他们的更改互相覆盖？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Branches (each student works on a separate branch, then merges)</span><span data-lang="zh">分支（每个学生在单独的分支上工作，然后合并）</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Commit messages</span><span data-lang="zh">提交消息</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The git push command</span><span data-lang="zh">git push 命令</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">The README file</span><span data-lang="zh">README 文件</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Branches allow parallel development: each developer creates their own branch, makes changes independently, then merges back into the main branch. Git identifies conflicts (two people editing the same lines) and requires manual resolution before the merge completes. This is the core collaboration mechanism in Git.</span><span data-lang="zh">分支允许并行开发：每个开发人员创建自己的分支，独立进行更改，然后合并回主分支。Git 识别冲突（两人编辑同一行），并在合并完成前需要手动解决。这是 Git 的核心协作机制。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Commit messages record what changed; git push uploads commits; README is documentation. <strong>Branches</strong> are the Git feature that enables parallel development and prevents accidental overwrites through structured merging.</span><span data-lang="zh">提交消息记录更改内容；git push 上传提交；README 是文档。<strong>分支</strong>是 Git 功能，通过结构化合并实现并行开发并防止意外覆盖。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Going deeper &mdash; branching strategies and pull requests <span class="honors-flag">Honors &mdash; ICS4U B1.7 / CSTA 3B-AP-20</span></span><span data-lang="zh">深入 &mdash; 分支策略和拉取请求 <span class="honors-flag">荣誉 &mdash; ICS4U B1.7 / CSTA 3B-AP-20</span></span></summary>
+    <div class="detail-body">
+      <p><span data-lang="en">CSTA 3B-AP-20 (verbatim): "Use version control systems, integrated development environments (IDEs), and collaborative tools and practices (code documentation) in a group software project." In professional teams, the workflow is: (1) create a feature branch from <code>main</code> (<code>git checkout -b feature/login</code>); (2) commit work on the feature branch; (3) open a <strong>pull request</strong> (PR) — a request to merge the feature branch into <code>main</code>; (4) teammates review the PR (checking for bugs, style, test coverage); (5) after approval, the branch is merged and deleted. This workflow prevents untested code from entering the main codebase. Ontario ICS4U B1.7 requires "proper version control" for managing a Grade-12 team project — the pull-request workflow is the industry-standard implementation of that requirement.</span><span data-lang="zh">CSTA 3B-AP-20（原文）："在团队软件项目中使用版本控制系统、集成开发环境（IDE）和协作工具及实践（代码文档）。"在专业团队中，工作流是：(1) 从 <code>main</code> 创建功能分支（<code>git checkout -b feature/login</code>）；(2) 在功能分支上提交工作；(3) 开启<strong>拉取请求</strong>（PR）——合并功能分支到 <code>main</code> 的请求；(4) 队友审查 PR（检查错误、风格、测试覆盖率）；(5) 批准后，合并并删除分支。这个工作流防止未经测试的代码进入主代码库。安大略 ICS4U B1.7 要求在 12 年级团队项目中"正确的版本控制"——拉取请求工作流是该要求的行业标准实现。</span></p>
+    </div>
+  </details>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">SDLC questions (&sect;1)</span><span data-lang="zh">SDLC 问题（&sect;1）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Name and sequence all seven phases.</span><span data-lang="zh">命名并排序全部七个阶段。</span></strong> <span data-lang="en">Ontario ICS3U B4.1 names the phases explicitly. Examiners ask you to "identify which SDLC phase" a given activity belongs to. Know: Requirements → Analysis → Design → Implementation → Testing → Documentation/Deployment → Maintenance.</span><span data-lang="zh">安大略 ICS3U B4.1 明确命名各阶段。考官要求你"确定哪个 SDLC 阶段"某项活动属于。牢记：需求 → 分析 → 设计 → 实现 → 测试 → 文档/部署 → 维护。</span></li>
+      <li><strong><span data-lang="en">Waterfall vs Agile &mdash; one key tradeoff each.</span><span data-lang="zh">瀑布 vs 敏捷 &mdash; 各一个关键权衡。</span></strong> <span data-lang="en">Waterfall: predictable schedule but expensive to change. Agile: flexible but requires constant communication. CSTA 3B-AP-17 names both; know one advantage and one disadvantage of each.</span><span data-lang="zh">瀑布：进度可预测，但变更代价高昂。敏捷：灵活但需要持续沟通。CSTA 3B-AP-17 命名了两者；各知道一个优点和一个缺点。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Requirements and design questions (&sect;2-&sect;3)</span><span data-lang="zh">需求和设计问题（&sect;2-&sect;3）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Functional vs non-functional.</span><span data-lang="zh">功能性 vs 非功能性。</span></strong> <span data-lang="en">Functional = what the system does. Non-functional = how it performs (speed, security, accessibility). A common exam question gives a requirement and asks you to classify it.</span><span data-lang="zh">功能性 = 系统做什么。非功能性 = 如何执行（速度、安全性、无障碍性）。常见的考试题给出一个需求，要求你分类它。</span></li>
+      <li><strong><span data-lang="en">Design artifact match.</span><span data-lang="zh">设计制品匹配。</span></strong> <span data-lang="en">Pseudocode/flowchart → algorithm logic. UML class diagram → object structure. Know which tool to use for which problem, citing ICS3U B2.4 if you need to justify tool choice.</span><span data-lang="zh">伪代码/流程图 → 算法逻辑。UML 类图 → 对象结构。了解哪种工具用于哪种问题，如果需要证明工具选择，引用 ICS3U B2.4。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Testing and debugging questions (&sect;5)</span><span data-lang="zh">测试和调试问题（&sect;5）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Name the error type precisely.</span><span data-lang="zh">精确命名错误类型。</span></strong> <span data-lang="en">Syntax: fails to parse. Logic: wrong answer, no crash. Runtime/semantic: crash during execution. Examiners expect the exact term. BC CP11 uses "logical or semantic" — treat runtime and semantic as equivalent for BC.</span><span data-lang="zh">语法：无法解析。逻辑：答案错误，无崩溃。运行时/语义：执行期间崩溃。考官期望准确的术语。BC CP11 使用"逻辑或语义"——对于 BC，将运行时和语义视为等同。</span></li>
+      <li><strong><span data-lang="en">Test plan: always write all three case types.</span><span data-lang="zh">测试计划：始终编写全部三种情况类型。</span></strong> <span data-lang="en">Normal, boundary, error/exception. Ontario B4.4 and AB CSE1110 1.7 both require testing for failure as well as success. A test plan with only normal cases will lose marks.</span><span data-lang="zh">正常、边界、错误/异常。安大略 B4.4 和 AB CSE1110 1.7 都要求对失败和成功情况都进行测试。只有正常情况的测试计划会失分。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Documentation and version control (&sect;6-&sect;7)</span><span data-lang="zh">文档和版本控制（&sect;6-&sect;7）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Three documentation audiences.</span><span data-lang="zh">三类文档受众。</span></strong> <span data-lang="en">Inline comments → developers. API/technical docs → developer-maintainers. User guide/README → end users. A common exam question describes a document and asks which audience it serves.</span><span data-lang="zh">内联注释 → 开发人员。API/技术文档 → 开发维护人员。用户指南/README → 最终用户。常见的考试题描述一份文档，要求说明它服务的受众。</span></li>
+      <li><strong><span data-lang="en">Four core Git commands in order.</span><span data-lang="zh">四个核心 Git 命令的顺序。</span></strong> <span data-lang="en"><code>git init</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code>. Know what each command does. ICS4U B1.7 may ask you to describe version control; knowing these four commands gives you concrete, citable specifics.</span><span data-lang="zh"><code>git init</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code>。了解每个命令的作用。ICS4U B1.7 可能要求你描述版本控制；了解这四个命令为你提供具体、可引用的细节。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 14 flipped</span><span data-lang="zh">0 / 14 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is the SDLC?</span><span data-lang="zh">什么是软件开发生命周期（SDLC）？</span></div><div class="flashcard-back"><span data-lang="en">Software Development Life Cycle — the structured process for building software: Requirements → Analysis → Design → Implementation → Testing → Documentation/Deployment → Maintenance.</span><span data-lang="zh">软件开发生命周期——构建软件的结构化过程：需求 → 分析 → 设计 → 实现 → 测试 → 文档/部署 → 维护。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SDLC phase: Maintenance</span><span data-lang="zh">SDLC 阶段：维护</span></div><div class="flashcard-back"><span data-lang="en">Post-deployment phase: fix bugs (corrective), update for new environment (adaptive), or add/improve features (perfective). CSTA 3B-AP-22.</span><span data-lang="zh">部署后阶段：修复错误（纠正性）、为新环境更新（适应性）或添加/改进功能（完善性）。CSTA 3B-AP-22。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Functional vs non-functional requirement</span><span data-lang="zh">功能性 vs 非功能性需求</span></div><div class="flashcard-back"><span data-lang="en">Functional = what the system does ("user can log in"). Non-functional = how it performs ("login completes in &lt;2 seconds"). Both must be specific and testable.</span><span data-lang="zh">功能性 = 系统做什么（"用户可以登录"）。非功能性 = 如何执行（"登录在 2 秒内完成"）。两者都必须具体且可测试。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Three design tools</span><span data-lang="zh">三种设计工具</span></div><div class="flashcard-back"><span data-lang="en">Pseudocode — algorithm logic. Flowchart — visual control flow (oval/rect/diamond/parallelogram). UML class diagram — object structure (name/attributes/methods). ON ICS3U B2.4.</span><span data-lang="zh">伪代码——算法逻辑。流程图——可视化控制流（椭圆/矩形/菱形/平行四边形）。UML 类图——对象结构（名称/属性/方法）。ON ICS3U B2.4。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">UML class box structure</span><span data-lang="zh">UML 类盒子结构</span></div><div class="flashcard-back"><span data-lang="en">Three sections: top = class name; middle = attributes (- private, + public); bottom = methods (+ public). ON ICS3U B2.4 accepts UML as a design tool.</span><span data-lang="zh">三节：顶部 = 类名；中部 = 属性（- 私有，+ 公有）；底部 = 方法（+ 公有）。ON ICS3U B2.4 接受 UML 作为设计工具。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Four coding standards</span><span data-lang="zh">四条编码规范</span></div><div class="flashcard-back"><span data-lang="en">1. Meaningful names. 2. Inline comments explain WHY. 3. No magic numbers — use named constants. 4. Consistent indentation (4 spaces Python). BC CP11: "inline commenting to document source code."</span><span data-lang="zh">1. 有意义的命名。2. 内联注释解释为什么。3. 无魔法数字——使用命名常量。4. 一致缩进（Python 4 个空格）。BC CP11："内联注释记录源代码。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Test plan: four columns</span><span data-lang="zh">测试计划：四列</span></div><div class="flashcard-back"><span data-lang="en">Scenario | Input data | Expected output | Actual output + Pass/Fail. ON ICS3U B4.4 verbatim: "identify test scenarios, identify suitable input data, calculate expected outcomes, record actual outcomes, conclude pass or fail."</span><span data-lang="zh">场景 | 输入数据 | 预期输出 | 实际输出 + 通过/失败。ON ICS3U B4.4 原文："确定测试场景、确定合适的输入数据、计算预期结果、记录实际结果，得出通过或失败结论。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Three test case types</span><span data-lang="zh">三种测试用例类型</span></div><div class="flashcard-back"><span data-lang="en">Normal cases — typical valid input. Boundary cases — exact edges of conditions (e.g., score=90). Error/exception cases — invalid input (e.g., score=150). AB CSE1110 1.7: test for failure as well as success.</span><span data-lang="zh">正常情况——典型有效输入。边界情况——条件精确边缘（如 score=90）。错误/异常情况——无效输入（如 score=150）。AB CSE1110 1.7：对失败和成功情况都进行测试。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Three error types</span><span data-lang="zh">三种错误类型</span></div><div class="flashcard-back"><span data-lang="en">Syntax: code fails to parse (typo, missing colon). Logic: wrong answer, no crash. Runtime/semantic: crash during execution (division by zero, index out of range). BC CP11: "logical or semantic errors."</span><span data-lang="zh">语法：代码解析失败（错别字、缺少冒号）。逻辑：答案错误，无崩溃。运行时/语义：执行期间崩溃（除以零、索引越界）。BC CP11："逻辑或语义错误。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Three documentation types</span><span data-lang="zh">三种文档类型</span></div><div class="flashcard-back"><span data-lang="en">Inline comments → developers (explain WHY). Technical docs/API reference → developer-maintainers. User guide/README → end users (plain language). BC CP12: "Standardized source code documentation."</span><span data-lang="zh">内联注释 → 开发人员（解释为什么）。技术文档/API 参考 → 开发维护人员。用户指南/README → 最终用户（简明语言）。BC CP12："标准化源代码文档。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Three maintenance types</span><span data-lang="zh">三种维护类型</span></div><div class="flashcard-back"><span data-lang="en">Corrective — fix bugs. Adaptive — update for new environment (new OS, hardware). Perfective — add/improve features or performance. CSTA 3B-AP-22: "Modify an existing program to add additional functionality."</span><span data-lang="zh">纠正性——修复错误。适应性——为新环境更新（新操作系统、硬件）。完善性——添加/改进功能或性能。CSTA 3B-AP-22："修改现有程序以添加附加功能。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Four core Git commands (in order)</span><span data-lang="zh">四个核心 Git 命令（按顺序）</span></div><div class="flashcard-back"><span data-lang="en">git init (create repo) → git add (stage files) → git commit -m "msg" (save snapshot) → git push (upload to remote). ON ICS4U B1.7: "use shared resources to manage source code … proper version control."</span><span data-lang="zh">git init（创建仓库）→ git add（暂存文件）→ git commit -m "消息"（保存快照）→ git push（上传到远程）。ON ICS4U B1.7："使用共享资源管理源代码……正确的版本控制。"</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is a branch in Git?</span><span data-lang="zh">Git 中的分支是什么？</span></div><div class="flashcard-back"><span data-lang="en">A parallel line of development that does not affect the main codebase. Developers work on a feature branch, then merge it into main via a pull request after code review. CSTA 3B-AP-20: version control in group projects.</span><span data-lang="zh">不影响主代码库的并行开发线。开发人员在功能分支上工作，然后通过代码审查后的拉取请求将其合并到主分支。CSTA 3B-AP-20：团队项目中的版本控制。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Waterfall vs Agile</span><span data-lang="zh">瀑布 vs 敏捷</span></div><div class="flashcard-back"><span data-lang="en">Waterfall: phases in strict order, all planned upfront — predictable but inflexible. Agile: iterative 2-week sprints, requirements can change — flexible but requires constant communication. CSTA 3B-AP-17.</span><span data-lang="zh">瀑布：严格按阶段顺序，全部提前规划——可预测但不灵活。敏捷：迭代的 2 周冲刺，需求可以变化——灵活但需要持续沟通。CSTA 3B-AP-17。</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A developer is writing a program to manage student records. Before opening a code editor, they produce a flowchart and a list of numbered requirements. Which two SDLC phases have they just completed?</span><span data-lang="zh">一名开发人员正在编写一个管理学生记录的程序。在打开代码编辑器之前，他们制作了一个流程图和一个编号需求列表。他们刚刚完成了哪两个 SDLC 阶段？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Implementation and Testing</span><span data-lang="zh">实现和测试</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Testing and Maintenance</span><span data-lang="zh">测试和维护</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Requirements and Design</span><span data-lang="zh">需求和设计</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Analysis and Deployment</span><span data-lang="zh">分析和部署</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A numbered requirements list comes from the Requirements phase; a flowchart is a Design artifact. The SDLC sequence is Requirements → Analysis → Design → Implementation → Testing → Deployment → Maintenance.</span><span data-lang="zh">编号需求列表来自需求阶段；流程图是设计制品。SDLC 顺序为需求 → 分析 → 设计 → 实现 → 测试 → 部署 → 维护。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Flowchart = design artifact. Numbered requirements = requirements phase. Together they represent Requirements and Design — two early SDLC phases before implementation.</span><span data-lang="zh">流程图 = 设计制品。编号需求 = 需求阶段。合在一起代表需求和设计——实现之前的两个早期 SDLC 阶段。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A requirement states: "The login page must work on mobile browsers." What type of requirement is this?</span><span data-lang="zh">一个需求规定："登录页面必须在手机浏览器上运行。"这是什么类型的需求？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Non-functional requirement</span><span data-lang="zh">非功能性需求</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Functional requirement</span><span data-lang="zh">功能性需求</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Test plan</span><span data-lang="zh">测试计划</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Maintenance requirement</span><span data-lang="zh">维护需求</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">This requirement specifies something the system must DO (work on mobile browsers) — that is a functional requirement. Non-functional requirements describe HOW the system performs (speed, security, memory usage).</span><span data-lang="zh">这个需求规定了系统必须做的事情（在手机浏览器上运行）——这是功能性需求。非功能性需求描述系统如何执行（速度、安全性、内存使用）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Functional = what the system does. Non-functional = how it performs. "Works on mobile" is what the system must do — functional. Speed/security constraints would be non-functional.</span><span data-lang="zh">功能性 = 系统做什么。非功能性 = 如何执行。"在手机上运行"是系统必须做的——功能性。速度/安全性约束是非功能性的。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A software team discovers that a critical feature was not included in the requirements document. The team now has to redesign and re-implement significant portions of the program. Which poor practice caused this?</span><span data-lang="zh">一个软件团队发现需求文档中遗漏了一个关键功能。团队现在必须重新设计和重新实现程序的大部分内容。这是哪种不良实践导致的？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Skipping or rushing the requirements phase</span><span data-lang="zh">跳过或仓促完成需求阶段</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Using too many inline comments</span><span data-lang="zh">使用过多内联注释</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Choosing Git as the version control system</span><span data-lang="zh">选择 Git 作为版本控制系统</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Writing too many test cases</span><span data-lang="zh">编写过多测试用例</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Incomplete requirements lead to expensive rework later. The cost of fixing a requirement error discovered during implementation is far higher than discovering it during the requirements phase. This is why Ontario ICS3U B4.1 requires capturing all SDLC phases, and AP CSP CRD-2.A requires understanding program purpose before development begins.</span><span data-lang="zh">不完整的需求会导致后期昂贵的返工。在实现阶段发现需求错误的修复成本远高于在需求阶段发现它。这就是为什么安大略 ICS3U B4.1 要求捕获所有 SDLC 阶段，而 AP CSP CRD-2.A 要求在开发开始之前理解程序目的。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The problem is incomplete requirements — missing a feature before design/implementation means expensive redesign. Good requirements documents prevent this. Too many comments or test cases are not harmful; skipping requirements is.</span><span data-lang="zh">问题在于不完整的需求——在设计/实现之前遗漏功能意味着昂贵的重新设计。好的需求文档可以防止这种情况。过多注释或测试用例无害；跳过需求才有害。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which variable name best follows coding standards for a variable that stores the total number of students enrolled?</span><span data-lang="zh">以下哪个变量名最符合存储已注册学生总数变量的编码规范？</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>x</code></div>
+      <div class="quiz-opt" data-idx="1"><code>n</code></div>
+      <div class="quiz-opt" data-idx="2"><code>students</code></div>
+      <div class="quiz-opt" data-idx="3"><code>total_enrolled_students</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>total_enrolled_students</code> is the most descriptive — it tells any developer exactly what it stores without needing a comment. Coding standards require meaningful names. "students" is reasonable but "total" clarifies it is a count, not a list. "x" and "n" are meaningless as variable names for this purpose.</span><span data-lang="zh"><code>total_enrolled_students</code> 是最具描述性的——它准确告诉任何开发人员它存储的内容，无需注释。编码规范要求有意义的命名。"students"合理，但"total"澄清了它是一个计数，而非列表。"x"和"n"作为此目的的变量名毫无意义。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Meaningful names are a core coding standard. The name should reveal intent without a comment. "total_enrolled_students" is self-documenting; "x" and "n" require a comment to understand.</span><span data-lang="zh">有意义的命名是核心编码规范。名称应该在不需要注释的情况下揭示意图。"total_enrolled_students"是自文档化的；"x"和"n"需要注释才能理解。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A student writes a test plan for a login function. They include one test: username="admin", password="pass123" → expected output "Login successful." What is missing from this test plan?</span><span data-lang="zh">一名学生为登录功能编写测试计划。他们包含一个测试：username="admin"，password="pass123"→ 预期输出"登录成功"。这个测试计划缺少什么？</span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A flowchart</span><span data-lang="zh">流程图</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A UML class diagram</span><span data-lang="zh">UML 类图</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Boundary and error test cases (e.g., wrong password, empty username)</span><span data-lang="zh">边界和错误测试用例（如密码错误、用户名为空）</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Nothing — one test case is sufficient</span><span data-lang="zh">没有——一个测试用例就足够了</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A complete test plan requires normal cases, boundary cases, and error/exception cases. One normal case is only the minimum. AB CSE1110 outcome 1.7: "test the algorithm for failure as well as success." BC CP11: "use of test cases to detect logical or semantic errors." Test plans should also test wrong password, empty fields, SQL-injection-like inputs, etc.</span><span data-lang="zh">完整的测试计划需要正常情况、边界情况和错误/异常情况。一个正常情况只是最低要求。AB CSE1110 结果 1.7："用适当数据测试算法的成功与失败情况。" BC CP11："使用测试用例检测逻辑或语义错误。"测试计划还应测试错误密码、空字段、类 SQL 注入输入等。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">One normal test case is insufficient. A proper test plan covers: normal (correct creds), boundary (exact length limits), error (wrong password, empty username, special characters). Flowcharts and UML are design tools, not part of a test plan.</span><span data-lang="zh">一个正常测试用例不够。适当的测试计划涵盖：正常（正确凭据）、边界（精确长度限制）、错误（错误密码、空用户名、特殊字符）。流程图和 UML 是设计工具，而非测试计划的一部分。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which command uploads your local Git commits to a remote repository like GitHub?</span><span data-lang="zh">哪个命令将本地 Git 提交上传到 GitHub 等远程仓库？</span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>git commit</code></div>
+      <div class="quiz-opt" data-idx="1"><code>git push</code></div>
+      <div class="quiz-opt" data-idx="2"><code>git add</code></div>
+      <div class="quiz-opt" data-idx="3"><code>git init</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>git push</code> uploads local commits to the remote repository. <code>git commit</code> saves a snapshot locally; <code>git add</code> stages files; <code>git init</code> creates a new repository. The workflow is: init → add → commit → push.</span><span data-lang="zh"><code>git push</code> 将本地提交上传到远程仓库。<code>git commit</code> 在本地保存快照；<code>git add</code> 暂存文件；<code>git init</code> 创建新仓库。工作流程是：init → add → commit → push。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Git workflow: init (create repo) → add (stage) → commit (local snapshot) → push (upload to remote). Only push sends data to GitHub.</span><span data-lang="zh">Git 工作流程：init（创建仓库）→ add（暂存）→ commit（本地快照）→ push（上传到远程）。只有 push 将数据发送到 GitHub。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which CSTA standard says "Plan and develop programs for broad audiences using a software life cycle process"? <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">哪个 CSTA 标准说"使用软件生命周期流程为广大受众规划和开发程序"？<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q7</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>3B-AP-17</code></div>
+      <div class="quiz-opt" data-idx="1"><code>3B-AP-16</code></div>
+      <div class="quiz-opt" data-idx="2"><code>3B-AP-22</code></div>
+      <div class="quiz-opt" data-idx="3"><code>3B-AP-20</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3B-AP-17 (verbatim): "Plan and develop programs for broad audiences using a software life cycle process. Processes could include agile, spiral, or waterfall." The other standards: 3B-AP-16 = code reuse/libraries; 3B-AP-22 = modify existing programs; 3B-AP-20 = version control in group projects.</span><span data-lang="zh">CSTA 3B-AP-17（原文）："使用软件生命周期流程为广大受众规划和开发程序。流程可包括敏捷、螺旋或瀑布。"其他标准：3B-AP-16 = 代码复用/库；3B-AP-22 = 修改现有程序；3B-AP-20 = 团队项目中的版本控制。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">3B-AP-17 = software life cycle process. 3B-AP-16 = code reuse using libraries/APIs. 3B-AP-22 = modify existing program. 3B-AP-20 = version control in group projects.</span><span data-lang="zh">3B-AP-17 = 软件生命周期流程。3B-AP-16 = 使用库/API 的代码复用。3B-AP-22 = 修改现有程序。3B-AP-20 = 团队项目中的版本控制。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Name all seven SDLC phases in order and give a concrete example of one activity that happens in each phase for a simple school app project. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4.1 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-17</span></span><span data-lang="zh">按顺序命名全部七个 SDLC 阶段，并为简单学校应用项目举出每个阶段发生的一项活动的具体例子。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4.1 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-17</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a numbered requirements document for a given problem, including at least two functional requirements and one non-functional requirement, each specific and testable. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP CRD-2.A / &#x1F1E8;&#x1F1E6; ON ICS3U B4</span></span><span data-lang="zh">为给定问题编写编号需求文档，包括至少两个功能性需求和一个非功能性需求，每个都具体且可测试。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP CRD-2.A / &#x1F1E8;&#x1F1E6; ON ICS3U B4</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Produce two design artifacts for a given problem: a pseudocode/flowchart for an algorithm AND a UML class diagram showing at least two attributes and one method. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.4 / BC CP11</span></span><span data-lang="zh">为给定问题产出两种设计制品：算法的伪代码/流程图以及显示至少两个属性和一个方法的 UML 类图。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.4 / BC CP11</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Identify the four coding standard violations in a given code snippet (poor names, magic numbers, useless comments, inconsistent indentation) and rewrite it to standards. <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CP11 "inline commenting" / ON ICS3U B2.4</span></span><span data-lang="zh">识别给定代码片段中的四个编码规范违规（命名不佳、魔法数字、无用注释、缩进不一致），并按规范重写。<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CP11"内联注释" / ON ICS3U B2.4</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a complete 4-column test plan (scenario / input / expected output / pass-fail) with at least three rows covering normal, boundary, and error cases for a grade calculator. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4.4 / AB CSE1110 1.7</span></span><span data-lang="zh">为成绩计算器编写完整的 4 列测试计划（场景/输入/预期输出/通过失败），至少 3 行，涵盖正常、边界和错误情况。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4.4 / AB CSE1110 1.7</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Distinguish between syntax, logic, and runtime errors with one concrete Python example of each. State which type appears in a given buggy code snippet. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1110 3.1 / BC CP11</span></span><span data-lang="zh">用一个具体的 Python 示例区分语法、逻辑和运行时错误。说明给定有错误代码片段中出现哪种类型。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1110 3.1 / BC CP11</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a properly documented Python function: docstring with parameters and return value, named constants instead of magic numbers, and at least one inline comment explaining WHY. <span class="region-chip">&#x1F1E8;&#x1F1E6; BC CP12 "Standardized source code documentation"</span></span><span data-lang="zh">编写一个有适当文档的 Python 函数：包含参数和返回值的文档字符串、用命名常量替换魔法数字、至少一个解释为什么的内联注释。<span class="region-chip">&#x1F1E8;&#x1F1E6; BC CP12"标准化源代码文档"</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Name and distinguish all three maintenance types (corrective, adaptive, perfective) and give a real-world example of each for a school homework-tracker app. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-22 / &#x1F1E8;&#x1F1E6; ON ICS3U B4.1</span></span><span data-lang="zh">命名并区分全部三种维护类型（纠正性、适应性、完善性），并为学校作业追踪应用举出每种类型的真实示例。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-22 / &#x1F1E8;&#x1F1E6; ON ICS3U B4.1</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain what each of the four Git commands does (<code>git init</code>, <code>git add</code>, <code>git commit</code>, <code>git push</code>) and use them in a sentence describing a team project workflow. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U B1.7 / BC CP11</span></span><span data-lang="zh">解释四个 Git 命令各自的作用（<code>git init</code>、<code>git add</code>、<code>git commit</code>、<code>git push</code>），并在一句话中描述团队项目工作流。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U B1.7 / BC CP11</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Identify which SDLC phase a given scenario belongs to (given 5 scenario cards, correctly place all five). Applicable to any curriculum. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-17</span></span><span data-lang="zh">识别给定场景属于哪个 SDLC 阶段（给定 5 张场景卡，正确放置所有五张）。适用于任何课程。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B4 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-17</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; ICS4U B1 / CSTA 3B-AP-20</span> Explain the pull-request code review workflow (feature branch → PR → review → merge) and state why it prevents untested code from entering the main codebase. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U B1.7 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-20</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; ICS4U B1 / CSTA 3B-AP-20</span> 解释拉取请求代码审查工作流（功能分支 → PR → 审查 → 合并），并说明为什么它能防止未经测试的代码进入主代码库。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U B1.7 / &#x1F1FA;&#x1F1F8; CSTA 3B-AP-20</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Software development process skills underpin every subsequent unit in this series. The SDLC framework you learned here is the scaffold for every project you will build: requirements before design, design before code, code before testing, testing before deployment. The design tools (pseudocode, flowcharts, UML) resurface in every future guide. Version control with Git is expected throughout any professional or advanced academic programming course.</span><span data-lang="zh">软件开发过程技能支撑本系列的每个后续单元。你在这里学到的 SDLC 框架是你将构建的每个项目的支架：需求先于设计，设计先于编码，编码先于测试，测试先于部署。设计工具（伪代码、流程图、UML）在每个未来指南中重现。Git 版本控制在任何专业或高级学术编程课程中都是预期技能。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Every subsequent HS CS unit applies the SDLC: the Control Flow unit produces flowcharts and pseudocode (Design phase) before writing Python; the Functions and Modular Design unit formalises the decomposition discipline into callable sub-programs; the Object-Oriented Programming unit uses UML class diagrams as its primary design tool. The testing and version-control habits from this guide carry through all of them.</span><span data-lang="zh">每个后续 HS CS 单元都应用 SDLC：控制流单元在编写 Python 之前产出流程图和伪代码（设计阶段）；函数与模块化设计单元将分解纪律正式化为可调用子程序；面向对象编程单元使用 UML 类图作为主要设计工具。本指南中的测试和版本控制习惯贯穿所有这些单元。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP feeder links (existing in this repo).</span><span data-lang="zh">AP 衔接链接（本仓库中已有）。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 8px;"><span data-lang="en">AP CSP Big Idea 1 (Creative Development, 10&ndash;13% of the exam) is a direct assessment of the SDLC skills in this guide — CRD-2.A through CRD-2.J map to requirements, design, implementation, testing, and debugging. The AP CSP Create Performance Task requires students to document their development process, which is exactly the documentation skills in &sect;6. AP CSA (Java-specific) expects you to bring version control discipline, UML reading ability, and test-plan writing from a prior course — this guide delivers those prerequisites.</span><span data-lang="zh">AP CSP 大概念 1（创意开发，占考试 10&ndash;13%）直接评估本指南中的 SDLC 技能——CRD-2.A 至 CRD-2.J 对应需求、设计、实现、测试和调试。AP CSP 创作绩效任务要求学生记录其开发过程，这正是 &sect;6 中的文档技能。AP CSA（Java 专项）期望你从先修课程中带来版本控制纪律、UML 阅读能力和测试计划编写能力——本指南提供这些前提条件。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">What are the stages of the software development life cycle?</span><span data-lang="zh">软件开发生命周期有哪些阶段？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">The SDLC moves through analysing requirements, designing the solution with artifacts like flowcharts and pseudocode, implementing the code to coding standards, testing with a formal plan, documenting, and finally maintenance to fix bugs and add features after release.</span><span data-lang="zh">软件开发生命周期依次经过分析需求、用流程图和伪代码等成果设计方案、按编码规范实现代码、按正式计划测试、编写文档，最后是发布后修复漏洞和增加功能的维护阶段。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What makes a good software requirement?</span><span data-lang="zh">什么样的软件需求才算好？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A good requirement is specific and measurable enough to write a test case for, with a concrete action and a measurable outcome. Vague phrases like user-friendly, clean code, or fast database are not requirements because they cannot be tested.</span><span data-lang="zh">好的需求足够具体且可衡量，能为它写出测试用例，包含明确的动作和可衡量的结果。像用户友好、代码整洁或数据库快速这类含糊的说法不算需求，因为它们无法测试。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What are the basic Git commands for version control?</span><span data-lang="zh">版本控制中基本的 Git 命令有哪些？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">git init creates a new repository in the current folder, git add stages a file for the next commit, git commit saves the staged changes, and git push uploads your local commits to a remote repository like GitHub so teammates can access your work.</span><span data-lang="zh">git init 在当前文件夹创建新仓库，git add 把文件暂存以备下次提交，git commit 保存暂存的改动，git push 把本地提交上传到 GitHub 等远程仓库，让队友能访问你的工作。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the stages of the software development life cycle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The SDLC moves through analysing requirements, designing the solution with artifacts like flowcharts and pseudocode, implementing the code to coding standards, testing with a formal plan, documenting, and finally maintenance to fix bugs and add features after release."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes a good software requirement?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A good requirement is specific and measurable enough to write a test case for, with a concrete action and a measurable outcome. Vague phrases like user-friendly, clean code, or fast database are not requirements because they cannot be tested."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the basic Git commands for version control?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "git init creates a new repository in the current folder, git add stages a file for the next commit, git commit saves the staged changes, and git push uploads your local commits to a remote repository like GitHub so teammates can access your work."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_13_software_development_process__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3B-AP-16</code> <span data-lang="en">"Demonstrate code reuse by creating programming solutions using libraries and APIs." (CSTA K-12 CS Standards, Level 3B — part of the software-development and collaboration cluster)</span><span data-lang="zh">"通过使用库和 API 创建编程解决方案来展示代码复用。"（CSTA K-12 计算机科学标准，3B 级——软件开发与协作模块）</span></li>
+        <li><code>3B-AP-22</code> <span data-lang="en">"Modify an existing program to add additional functionality and discuss intended and unintended implications (e.g., extending a chat feature, adding accessibility features)." (CSTA Level 3B — maintenance and iteration in the SDLC)</span><span data-lang="zh">"修改现有程序以添加附加功能，并讨论预期和非预期的影响。"（CSTA 3B 级——SDLC 中的维护与迭代）</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 1 (CRD — Creative Development): "When developing computing innovations, developers can use a formal, iterative design process or a less rigid process of experimentation. While using either approach, developers will encounter phases of investigating and reflecting, designing, prototyping, and testing. Additionally, collaboration is an important tool at any phase of development." Topics 1.1 Collaboration, 1.2 Program Function and Purpose, 1.3 Program Design and Development, 1.4 Identifying and Correcting Errors. Learning Objectives CRD-1.A, CRD-1.B, CRD-2.A through CRD-2.J.</span><span data-lang="zh">AP CSP 大概念 1（CRD — 创意开发）："在开发计算创新时，开发人员可以使用正式的、迭代的设计过程，也可以使用较为灵活的实验过程。无论采用哪种方法，开发人员都会经历调查与反思、设计、原型制作和测试阶段。此外，协作是开发任何阶段的重要工具。"主题 1.1 协作，1.2 程序功能与目的，1.3 程序设计与开发，1.4 识别和纠正错误。学习目标 CRD-1.A、CRD-1.B、CRD-2.A 至 CRD-2.J。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U / ICS4U</span><span data-lang="zh">安大略 — ICS3U / ICS4U</span></div>
+      <ul>
+        <li><strong>ICS3U</strong> <span data-lang="en">Strand B (Software Development) <code>B4</code>: "apply a software development life-cycle model to a software development project." <code>B4.1</code>: "describe the phases (i.e., problem definition, analysis, design, writing code, testing, implementation, maintenance), milestones … and products … of a software development life cycle." <code>B4.4</code>: "use a test plan to test programs (i.e., identify test scenarios, identify suitable input data, calculate expected outcomes, record actual outcomes, and conclude 'pass' or 'fail')."</span><span data-lang="zh">ICS3U B 单元（软件开发）<code>B4</code>："将软件开发生命周期模型应用于软件开发项目。" <code>B4.1</code>："描述软件开发生命周期的各阶段（问题定义、分析、设计、编写代码、测试、实施、维护），里程碑……和产品……" <code>B4.4</code>："使用测试计划测试程序（确定测试场景、确定合适的输入数据、计算预期结果、记录实际结果，并得出'通过'或'失败'的结论）。"</span></li>
+        <li><strong>ICS3U</strong> <span data-lang="en"><code>B2.4</code>: "represent the structure and components of a program using industry-standard programming tools (e.g., structure chart, flow chart, UML [Unified Modeling Language], data flow diagram, pseudocode)."</span><span data-lang="zh"><code>B2.4</code>："使用行业标准编程工具（如结构图、流程图、UML 统一建模语言、数据流图、伪代码）表示程序的结构和组件。"</span></li>
+        <li><strong>ICS4U</strong> <span data-lang="en">Strand B (Project Management) <code>B1</code>: "demonstrate the ability to manage the software development process effectively, through all of its stages — planning, development, production, and closing." <code>B1.7</code>: "demonstrate the ability to use shared resources to manage source code effectively and securely (… proper version control)."</span><span data-lang="zh">ICS4U B 单元（项目管理）<code>B1</code>："展示有效管理软件开发过程所有阶段（规划、开发、生产和结束）的能力。" <code>B1.7</code>："展示使用共享资源有效、安全地管理源代码（……正确的版本控制）的能力。"</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia — CP11 / CP12</span><span data-lang="zh">不列颠哥伦比亚 — CP11 / CP12</span></div>
+      <ul>
+        <li><strong>Computer Programming 11</strong> <span data-lang="en">Content (verbatim): "design cycle"; "pair programming"; "tools to aid in the development process"; "inline commenting to document source code"; "use of test cases to detect logical or semantic errors"; "strategies to predict effects of code modification."</span><span data-lang="zh">Computer Programming 11 内容（原文）："设计周期"；"结对编程"；"辅助开发过程的工具"；"内联注释记录源代码"；"使用测试用例检测逻辑或语义错误"；"预测代码修改效果的策略"。</span></li>
+        <li><strong>Computer Programming 12</strong> <span data-lang="en">Content (verbatim, harder stream): "Standardized source code documentation"; "Self-documenting code"; "Collaboration tools for programming"; "Advanced pair programming"; "User interface design"; "Error handling"; "Debugging tools"; "Bug reports and feature requests from users"; "Interpersonal skills necessary for IT sector work."</span><span data-lang="zh">Computer Programming 12 内容（原文，较难流）："标准化源代码文档"；"自文档化代码"；"编程协作工具"；"高级结对编程"；"用户界面设计"；"错误处理"；"调试工具"；"用户的错误报告和功能请求"；"IT 行业工作必要的人际技能"。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE Projects</span><span data-lang="zh">阿尔伯塔 — CSE 项目</span></div>
+      <ul>
+        <li><strong>CSE1910</strong> <span data-lang="en">"CSE Project A" (Introductory): "Students develop project design and management skills to extend and enhance competencies and skills in other CTS courses." The analyze → design → implement → test → maintain cycle is built into every CSE module's outcome structure.</span><span data-lang="zh">CSE1910"CSE 项目 A"（入门级）："学生发展项目设计和管理技能，以扩展和增强其他 CTS 课程中的能力和技能。"分析 → 设计 → 实现 → 测试 → 维护周期嵌入每个 CSE 模块的结果结构中。</span></li>
+        <li><strong>CSE3120</strong> <span data-lang="en">Outcome 2.2: "use an iterative and incremental approach in the analysis, design and development (architecture) stages of the software development process." Outcome 3.1: "use iterative and incremental approaches in the implementation, testing and maintenance phases of the software development process."</span><span data-lang="zh">CSE3120 结果 2.2："在软件开发过程的分析、设计和开发（架构）阶段使用迭代和增量方法。"结果 3.1："在软件开发过程的实现、测试和维护阶段使用迭代和增量方法。"</span></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">The software development life cycle is covered in all four curricula, but with different emphasis. Ontario ICS3U strand B4 names all seven SDLC phases verbatim and requires a formal test plan — that coverage aligns with &sect;1, &sect;2, and &sect;5. BC Computer Programming 11 frames the entire programming course around the design cycle, making &sect;3 (design) and &sect;7 (collaboration) its core. Alberta builds SDLC skills into every module's outcome structure rather than one dedicated unit. US CSTA 3B-AP-16/22 and AP CSP Big Idea 1 (CRD) emphasise the iterative, collaborative nature of development — matching &sect;7. The table below tells you which sections are core for your curriculum right now.</span><span data-lang="zh">软件开发生命周期在四套大纲中均有覆盖，但侧重点不同。安大略 ICS3U B 单元 B4 逐字命名全部七个 SDLC 阶段，并要求正式测试计划——这对应 &sect;1、&sect;2 和 &sect;5。BC Computer Programming 11 将整个编程课程围绕设计周期展开，使 &sect;3（设计）和 &sect;7（协作）成为核心。阿尔伯塔将软件开发技能嵌入每个模块的结果结构中，而非单独的一个单元。美国 CSTA 3B-AP-16/22 和 AP CSP 大概念 1（CRD）强调开发的迭代性和协作性——对应 &sect;7。下表告诉你当前哪些节属于你大纲的核心内容。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Defer / lighter</span><span data-lang="zh">可推迟 / 减负</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (SDLC overview), &sect;5 (testing — CRD-2.J), &sect;7 (collaboration — CRD-1.A/B). AP CSP Big Idea 1 maps directly to &sect;2&ndash;&sect;5 (design, prototyping, testing, debugging). CSTA 3B-AP-22 (modify and iterate) maps to &sect;6 (maintenance).</span><span data-lang="zh">&sect;1（SDLC 概览）、&sect;5（测试——CRD-2.J）、&sect;7（协作——CRD-1.A/B）。AP CSP 大概念 1 直接对应 &sect;2&ndash;&sect;5（设计、原型制作、测试、调试）。CSTA 3B-AP-22（修改与迭代）对应 &sect;6（维护）。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Formal project management (&sect;2 Gantt/scope docs) is AP CSP-lighter; emphasised more in Ontario ICS4U.</span><span data-lang="zh">正式项目管理（&sect;2 甘特图/范围文档）在 AP CSP 中较轻；安大略 ICS4U 更为强调。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3B-AP-16, 3B-AP-22; AP CSP Big Idea 1 (CRD) topics 1.1&ndash;1.4</span><span data-lang="zh">&mdash; CSTA 3B-AP-16、3B-AP-22；AP CSP 大概念 1（CRD）主题 1.1&ndash;1.4</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;6 in full — ICS3U B4 explicitly names all seven SDLC phases. &sect;3 (UML tools — B2.4), &sect;5 (test plan — B4.4), &sect;6 (documentation). ICS4U B1.7 adds version control (&sect;7).</span><span data-lang="zh">&sect;1 至 &sect;6 完整学习——ICS3U B4 明确命名全部七个 SDLC 阶段。&sect;3（UML 工具——B2.4）、&sect;5（测试计划——B4.4）、&sect;6（文档）。ICS4U B1.7 增加版本控制（&sect;7）。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Full Gantt/PERT project management in &sect;2 is ICS4U strand B1.4 (Grade 12 honors stream).</span><span data-lang="zh">&sect;2 中的完整甘特图/PERT 项目管理属 ICS4U B 单元 B1.4（12 年级荣誉流）。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS3U B2.4, B4, B4.1, B4.4; ICS4U B1, B1.4, B1.7</span><span data-lang="zh">&mdash; ICS3U B2.4、B4、B4.1、B4.4；ICS4U B1、B1.4、B1.7</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CP11 / CP12</span><span data-lang="zh">BC &mdash; CP11 / CP12</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (design cycle Big Idea), &sect;3 (design), &sect;5 (test cases — CP11 verbatim), &sect;7 (pair programming, collaboration tools — CP11/CP12 verbatim). CP12 adds standardized documentation (&sect;6) and debugging tools.</span><span data-lang="zh">&sect;1（设计周期大概念）、&sect;3（设计）、&sect;5（测试用例——CP11 原文）、&sect;7（结对编程、协作工具——CP11/CP12 原文）。CP12 增加标准化文档（&sect;6）和调试工具。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Formal SDLC phase labelling (&sect;1) is more Ontario/CSTA than BC; BC frames it through the design cycle Big Idea rather than a phase checklist.</span><span data-lang="zh">正式的 SDLC 阶段标注（&sect;1）更多属于安大略/CSTA 的风格，而非 BC；BC 通过设计周期大概念而非阶段清单来框架化此内容。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CP11 design cycle / test cases / pair programming; CP12 documentation / debugging tools</span><span data-lang="zh">&mdash; BC CP11 设计周期/测试用例/结对编程；CP12 文档/调试工具</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE Project modules</span><span data-lang="zh">阿尔伯塔 &mdash; CSE 项目模块</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (SDLC framing — built into every module), &sect;4 (implementation — CSE1110 outcome 2.1), &sect;5 (testing — CSE1110 outcome 3.1). The iterative/incremental framing from CSE3120 outcome 2.2 and 3.1 underpins &sect;1 and &sect;7.</span><span data-lang="zh">&sect;1（SDLC 框架——嵌入每个模块）、&sect;4（实现——CSE1110 结果 2.1）、&sect;5（测试——CSE1110 结果 3.1）。CSE3120 结果 2.2 和 3.1 的迭代/增量框架支撑 &sect;1 和 &sect;7。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Dedicated project-management documents (scope doc, Gantt chart) sit in the CSE Project modules (CSE1910/2910/3910); they are handled as separate CTS credits.</span><span data-lang="zh">专项项目管理文档（范围文档、甘特图）在 CSE 项目模块（CSE1910/2910/3910）中；它们作为独立的 CTS 学分处理。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE1110 outcomes 2.1, 3.1; CSE3120 outcomes 2.2, 3.1; CSE Project A/B/C/D descriptions</span><span data-lang="zh">&mdash; CSE1110 结果 2.1、3.1；CSE3120 结果 2.2、3.1；CSE 项目 A/B/C/D 描述</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top: 12px;"><span data-lang="en">Once you have located your row, use the two cards below to calibrate your study pace.</span><span data-lang="zh">找到所在行后，用下面两张卡片决定推进速度。</span></p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise three things: the seven SDLC phases in order (requirements, analysis, design, implementation, testing, documentation/deployment, maintenance); the three types of errors (syntax, logic, runtime); and what a test plan includes (scenario, input, expected output, actual output, pass/fail). Read every cram-cheat box. Skip the Git deep-dive in &sect;7.</span><span data-lang="zh">背熟三件事：七个 SDLC 阶段的顺序（需求、分析、设计、实现、测试、文档/部署、维护）；三种错误类型（语法、逻辑、运行时）；测试计划包含的内容（场景、输入、预期输出、实际输出、通过/失败）。读每个速记框，跳过 &sect;7 中的 Git 深入内容。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Always design before you implement: write requirements first, produce a design artifact (flowchart, pseudocode, or UML sketch), then write a test plan before touching a code editor. Ontario ICS3U B4.4 and AP CSP CRD-2.J both assess your ability to write test plans with expected outputs. AB CSE1110 outcome 3.1 requires testing for both success and failure. &sect;7 version control is assessed in Ontario ICS4U B1.7 — know the four core Git commands.</span><span data-lang="zh">永远先设计再实现：先写需求，产出设计制品（流程图、伪代码或 UML 草图），然后在打开代码编辑器之前写好测试计划。安大略 ICS3U B4.4 和 AP CSP CRD-2.J 都考核你编写包含预期输出的测试计划的能力。AB CSE1110 结果 3.1 要求对成功和失败情况都进行测试。&sect;7 版本控制在安大略 ICS4U B1.7 中被考核——掌握四个核心 Git 命令。</span></p>
+    </div>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">Version control note.</span><span data-lang="zh">版本控制说明。</span></strong>
+    <span data-lang="en">Section 7 (Collaboration and Version Control) introduces Git at a conceptual level: the four commands (<code>git init</code>, <code>git add</code>, <code>git commit</code>, <code>git push</code>) and the branch-merge workflow. The <span class="honors-flag">Honors</span> chip marks the going-deeper box covering branching strategies and pull-request code review. That box maps to Ontario ICS4U B1.7 (version control) and CSTA 3B-AP-20 ("Use version control systems … in a group software project"). For ICS3U / CSE1110 / AP CSP floor students, understanding what version control is and why it matters is the assessed level; you do not need to demonstrate Git commands in an exam.</span><span data-lang="zh">&sect;7（协作与版本控制）从概念层面介绍 Git：四个命令（<code>git init</code>、<code>git add</code>、<code>git commit</code>、<code>git push</code>）和分支合并工作流。<span class="honors-flag">Honors</span> 标记深入框，涵盖分支策略和拉取请求代码审查。该框对应安大略 ICS4U B1.7（版本控制）和 CSTA 3B-AP-20（"在团队软件项目中使用版本控制系统……"）。对于 ICS3U / CSE1110 / AP CSP 基础学生，理解版本控制是什么及其重要性是被评估的层次；考试中不需要演示 Git 命令。</span>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Software Development Process &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 软件开发流程 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_13_Software_Development_Process_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_13_Software_Development_Process_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

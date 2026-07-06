@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free high school Computer Science notes on data and the web: CSV files, relational databases, SQL SELECT/WHERE, HTML, and JSON. Bilingual EN/中文.">
+<meta name="theme-color" content="#7A2E2E">
+<meta name="color-scheme" content="light dark">
+<title>High School Computer Science — Data, Databases and the Web | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_10_Data_Databases_and_the_Web.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Data, Databases and the Web | Dingrui Scholars">
+<meta property="og:description" content="Free high school Computer Science notes on data and the web: CSV files, relational databases, SQL SELECT/WHERE, HTML, and JSON. Bilingual EN/中文.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_10_Data_Databases_and_the_Web.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Data, Databases and the Web | Dingrui Scholars">
+<meta name="twitter:description" content="Free high school Computer Science notes on data and the web: CSV files, relational databases, SQL SELECT/WHERE, HTML, and JSON. Bilingual EN/中文.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-10  dingrui:doc-type study-guide -->
+<link rel="icon" type="image/png" href="../../LOGO.png">
+
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<style>
+:root {
+  --bg: #FAFAFA; --bg-card: #FFFFFF; --bg-code: #0F0F0F;
+  --text: #0F0F0F; --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F; --accent-light: #F2E4E4; --accent-dark: #5A1E1E;
+  --green: #2E6B4F; --green-light: #DFF0E8;
+  --orange: #A65E1A; --orange-light: #FBF0E0;
+  --red: #B03030; --red-light: #FCEAEA;
+  --purple: #5E3D7A; --purple-light: #EDE4F5;
+  --gold: #C4956A; --gold-light: #FDF5EC;
+  --border: #E6E6E6;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.10);
+  --radius: 12px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px; --toc-w: 260px;
+}
+[data-theme="dark"] {
+  --bg: #0F0F0F; --bg-card: #1A1A1A; --bg-code: #000000;
+  --text: #FAFAFA; --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA; --accent-light: #3A1818; --accent-dark: #E08080;
+  --green: #5CB88A; --green-light: #1A2E24;
+  --orange: #D4944A; --orange-light: #2E2010;
+  --red: #E07070; --red-light: #301515;
+  --purple: #A888C8; --purple-light: #201828;
+  --gold: #D4A870; --gold-light: #2A2018;
+  --border: #2A2A2A;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+.score-badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-light); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; white-space: nowrap; transition: all 0.3s; }
+.score-badge.zero { color: var(--text-secondary); background: var(--bg); border-color: var(--border); }
+.progress-track { position: fixed; top: 56px; left: 0; right: 0; height: 3px; background: transparent; z-index: 99; }
+.progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.sidebar { position: fixed; top: 59px; left: 0; bottom: 0; width: var(--toc-w); background: var(--bg-card); border-right: 1px solid var(--border); overflow-y: auto; scrollbar-width: none; padding: 20px 0; transform: translateX(-100%); transition: transform 0.3s ease, background 0.3s; z-index: 90; }
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+.sidebar-title { font-family: var(--font-display); font-size: 0.95rem; padding: 0 20px 12px; color: var(--text-secondary); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.sidebar a { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; background: linear-gradient(90deg, var(--accent-light), transparent); }
+.main-wrap { max-width: var(--max-w); margin: 80px auto 120px; padding: 0 24px; transition: width 0.3s ease, margin-left 0.3s ease; }
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap { max-width: none; margin-left: calc(var(--toc-w) + 40px); margin-right: 0; padding: 0 48px; }
+  body.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+}
+.hero { text-align: center; padding: 56px 24px 48px; background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%); border-radius: var(--radius); margin-bottom: 40px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%); pointer-events: none; }
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
+[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
+.hero-overline { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; position: relative; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; position: relative; }
+.hero-sub { color: var(--text-secondary); max-width: 650px; margin: 0 auto; position: relative; }
+.hero-meta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; }
+.hero-meta .chip { font-size: 0.85rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.chip-maroon { background: var(--bg-card); border: 1px solid var(--accent); color: var(--accent); }
+.chip-green { background: var(--bg-card); border: 1px solid var(--green); color: var(--green); }
+.chip-purple { background: var(--bg-card); border: 1px solid var(--purple); color: var(--purple); }
+.chip-gold { background: var(--bg-card); border: 1px solid var(--gold); color: var(--gold); }
+
+/* HS Math multi-syllabus chrome (locked in Unit 1) */
+.syllabus-map { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 22px 26px 18px; margin: 28px 0 36px; box-shadow: var(--shadow); }
+.syllabus-map-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.syllabus-map-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .syllabus-map-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 600px) { .syllabus-map-grid { grid-template-columns: 1fr; gap: 18px; } }
+.syllabus-map .region-header { font-family: var(--font-display); font-size: 1.02rem; color: var(--text); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.syllabus-map ul { list-style: none; padding: 0; margin: 0; }
+.syllabus-map ul li { font-size: 0.84rem; line-height: 1.5; padding: 4px 0; color: var(--text-secondary); }
+.syllabus-map ul li code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+.region-chip { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.4px; vertical-align: middle; margin-left: 8px; }
+
+.syllabus-note { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 18px; margin: 18px 0; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.syllabus-note strong { color: var(--purple); margin-right: 4px; }
+[data-theme="dark"] .syllabus-note { background: rgba(94, 61, 122, 0.18); }
+
+.honors-flag { display: inline-block; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 8px; }
+
+.feeder-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all 0.2s; margin: 4px 6px 4px 0; }
+.feeder-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.feeder-link::before { content: '\2192'; font-weight: 700; }
+
+.section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.section h2 { font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 16px; line-height: 1.25; border-bottom: 2px solid var(--accent-light); padding-bottom: 8px; display: inline-block; }
+.section h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 32px 0 12px; line-height: 1.3; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 1.05rem; }
+.concept-box { border-left: 5px solid var(--accent); background: var(--bg-card); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0; box-shadow: var(--shadow); }
+.concept-box.green { border-left-color: var(--green); }
+.concept-box.orange { border-left-color: var(--orange); }
+.concept-box.red { border-left-color: var(--red); }
+.concept-box.purple { border-left-color: var(--purple); }
+.concept-box > strong:first-child { display: inline-block; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: var(--bg-card); }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--accent-light); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.3px; text-transform: uppercase; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-light); }
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-q { font-weight: 600; font-size: 1.05rem; flex: 1; }
+.quiz-number { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: 12px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt { padding: 12px 18px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; background: var(--bg); font-weight: 500; position: relative; }
+.quiz-opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-opt.correct::after { content: '\2713'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-opt.wrong::after { content: '\2717'; position: absolute; right: 14px; font-weight: 700; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: fadeSlideIn 0.35s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+.quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-retry.show { display: inline-block; animation: fadeSlideIn 0.35s ease; }
+.quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+details { margin: 16px 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); overflow: hidden; box-shadow: var(--shadow); }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 0.95rem; user-select: none; list-style: none; display: flex; align-items: center; gap: 10px; background: var(--bg); transition: background 0.2s; }
+summary:hover { background: var(--accent-light); }
+summary::before { content: '\25B8'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
+.flashcard-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 4px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
+.flashcard-toolbar button { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: 8px; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+.flashcard-toolbar button:hover { background: var(--accent-light); border-color: var(--accent); }
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin: 24px 0; }
+.flashcard { perspective: 1000px; cursor: pointer; display: grid; }
+.flashcard-inner { display: grid; grid-template-areas: "card"; min-height: 200px; height: 100%; position: relative; transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back { grid-area: card; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: var(--shadow); overflow: hidden; word-break: break-word; hyphens: auto; }
+.flashcard-front { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: clamp(0.92rem, 2.1vw, 1.05rem); line-height: 1.45; padding: 22px 20px 34px; gap: 8px; }
+.flashcard-front::after { content: 'TAP TO FLIP'; position: absolute; bottom: 10px; left: 0; right: 0; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; }
+.flashcard-back { background: var(--bg); border: 2px solid var(--accent); color: var(--text); transform: rotateY(180deg); font-size: clamp(0.88rem, 2vw, 1rem); line-height: 1.6; padding: 26px 22px; gap: 12px; word-break: normal; hyphens: manual; overflow-wrap: break-word; text-wrap: pretty; }
+.flashcard-back .katex-display { margin: 6px 0 !important; font-size: 1.25em; max-width: 100%; overflow: hidden; }
+.flashcard-back .katex-display > .katex { max-width: 100%; }
+.flashcard-back .katex { font-size: 1em; }
+.flashcard-back br { content: ""; display: block; margin-bottom: 8px; }
+.flashcard-back > * { max-width: 100%; }
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.worked-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+.worked-solution .katex-display { margin: 0.65rem 0; }
+.formula-box { background: var(--bg-card); border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 32px; margin: 24px 0; text-align: center; box-shadow: var(--shadow-lg); overflow-x: auto; }
+.formula-box .formula-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.formula-box .katex-display { margin: 14px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula-box .katex-display:first-of-type { margin-top: 10px !important; }
+.formula-box .katex-display:last-of-type { margin-bottom: 4px !important; }
+.formula-box .katex { font-size: 1.12em; }
+.formula-box p { margin: 10px 0; color: var(--text-secondary); font-size: 0.95rem; }
+.sep { border: none; border-top: 1px solid var(--border); margin: 40px 0; opacity: 0.9; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem; background: var(--bg-card); transition: all 0.2s; display: flex; align-items: center; gap: 12px; user-select: none; }
+.checklist li:hover { border-color: var(--accent); }
+.checklist li .check-icon { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 0.8rem; color: transparent; }
+.checklist li.checked { background: var(--green-light); border-color: var(--green); }
+.checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+.footer-wrap { text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex-display > .katex { text-align: center; }
+.worked-solution .katex-display { margin: 0.75rem 0 !important; padding: 2px 0; }
+.worked-solution p { margin: 0.55rem 0; }
+.worked-solution p + .katex-display { margin-top: 0.4rem !important; }
+.concept-box .katex-display { margin: 0.6rem 0 !important; }
+.section-label + h2 { margin-top: 0.2rem; }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } .main-wrap { padding: 0 16px; margin-top: 60px; } .formula-box { padding: 16px; } .top-nav { padding: 0 16px; } }
+@media print {
+  .flashcard-inner { transform: none !important; }
+  .flashcard-back { transform: none !important; position: relative !important; backface-visibility: visible !important; }
+  .flashcard-front { display: none !important; }
+  .flashcard { height: auto !important; min-height: auto !important; }
+  .top-nav, .progress-track, .sidebar, .quiz-retry, .flashcard-toolbar button, .score-badge { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; }
+  body { font-size: 11pt; background: white; color: black; }
+  .card, .formula-box, .concept-box, .quiz, .syllabus-map, .syllabus-note { break-inside: avoid; border: 1px solid #999; box-shadow: none; }
+  details { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 56px; transition: background 0.3s, border 0.3s; }
+[data-theme="dark"] .top-nav { background: rgba(21, 16, 16, 0.92); }
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-badge { background: var(--accent); color: #fff; font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-light); border-color: var(--accent); transform: translateY(-1px); }
+.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); border: 2px dashed var(--gold); border-radius: var(--radius); padding: 20px 26px; margin: 20px 0; position: relative; }
+.cram-cheat::before { content: 'CRAM-MODE CHEAT'; position: absolute; top: -10px; left: 18px; background: var(--gold); color: #fff; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+[data-theme="dark"] .cram-cheat { background: linear-gradient(180deg, var(--gold-light) 0%, var(--bg-card) 100%); }
+
+/* BILINGUAL TOGGLE (locked Sprint 4) */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh       [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (P0) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg-card) 100%); border: 2px solid var(--accent); border-radius: var(--radius); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* faq-section: student FAQ (SEO + value sprint) */
+.faq-section { margin: 30px 0 8px; }
+.faq-section__title { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; margin: 0 0 12px; }
+.faq-item { border: 1px solid var(--border, #ddd); border-radius: var(--radius, 10px); padding: 12px 16px; margin: 0 0 10px; background: var(--bg-card, #fff); }
+.faq-item > summary { cursor: pointer; font-weight: 600; color: var(--text-primary, #111); list-style: revert; }
+.faq-item__a { color: var(--text-secondary, #444); margin: 10px 0 0; line-height: 1.6; }
+@media print { .faq-item { border: 1px solid #999; } .faq-item[open] { } .faq-item > summary { font-weight: 700; } }
+
+/* feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) */
+.feeder-pitch { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+.feeder-pitch a { color: var(--pop); font-weight: 600; }
+@media print { .feeder-pitch { border-left: 3px solid #999; background: #fff; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Data, Databases and the Web",
+  "description": "Free high school Computer Science notes on data and the web: CSV files, relational databases, SQL SELECT/WHERE, HTML, and JSON. Bilingual EN/中文.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Study%20Guides/Unit_10_Data_Databases_and_the_Web.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <span class="nav-badge" style="font-weight:700;">DINGRUI SCHOLARS</span>
+    <span class="nav-badge">DATA/WEB</span>
+  </div>
+  <div class="nav-right">
+    <span class="score-badge zero" id="scoreBadge">0 / 0</span>
+    <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+    <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+  </div>
+</nav>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar open" id="sidebar">
+  <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
+  <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
+  <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
+  <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></a>
+  <a href="#s-7-1"><span data-lang="en">Data vs Information</span><span data-lang="zh">数据与信息</span></a>
+  <a href="#s-7-2"><span data-lang="en">File Input/Output</span><span data-lang="zh">文件读写</span></a>
+  <a href="#s-7-3"><span data-lang="en">CSV and Structured Data</span><span data-lang="zh">CSV 与结构化数据</span></a>
+  <a href="#s-7-4"><span data-lang="en">Relational Databases and Tables</span><span data-lang="zh">关系数据库与表</span></a>
+  <a href="#s-7-5"><span data-lang="en">SQL Basics</span><span data-lang="zh">SQL 基础</span></a>
+  <a href="#s-7-6"><span data-lang="en">HTML and the Web</span><span data-lang="zh">HTML 与网络</span></a>
+  <a href="#s-7-7"><span data-lang="en">Data on the Web: JSON and APIs</span><span data-lang="zh">网络上的数据：JSON 与接口</span></a>
+  <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
+  <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
+  <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
+  <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
+  <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+</aside>
+
+<main class="main-wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-overline">High School Computer Science</div>
+  <h1><span data-lang="en">Data, Databases and the Web</span><span data-lang="zh">数据、数据库与网络</span></h1>
+  <p class="hero-sub">
+    <span data-lang="en">Every modern program stores, retrieves, and transmits data. This guide builds the complete picture: what data (<code>data</code>) and information (<code>information</code>) are and how they differ; how to read and write files (<code>file</code>) on disk; how comma-separated values (<code>CSV</code>) let programs share structured data; how relational databases (<code>relational database</code>) organise information into tables (<code>table</code>) linked by keys; how SQL queries (<code>query</code>) let you ask questions of a database with SELECT and WHERE; how HTML assembles a web page (<code>web page</code>); and how web APIs expose data in JSON format so programs can talk to each other over the internet. Code and SQL examples are shown in <code>&lt;pre&gt;&lt;code&gt;</code> blocks with Chinese explanations alongside.</span><span data-lang="zh">每个现代程序都需要存储、检索和传输数据（<code>data</code>，数据）。本指南构建完整图景：数据（<code>data</code>，数据）与信息（<code>information</code>，信息）是什么、有何区别；如何从磁盘读写文件（<code>file</code>，文件）；逗号分隔值（<code>CSV</code>）如何让程序共享结构化数据；关系数据库（<code>relational database</code>，关系数据库）如何将信息组织成通过键连接的表（<code>table</code>，表）；SQL 查询（<code>query</code>，查询）如何通过 SELECT 和 WHERE 向数据库提问；HTML 如何组合网页（<code>web page</code>，网页）；以及网络接口（<code>API</code>，接口）如何以 JSON 格式暴露数据，使程序能通过互联网相互通信。</span>
+  </p>
+  <div class="hero-meta">
+    <span class="chip chip-maroon"><span data-lang="en">7 sections</span><span data-lang="zh">7 节内容</span></span>
+    <span class="chip chip-green"><span data-lang="en">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span><span data-lang="zh">US CSTA &middot; AP CSP &middot; ON &middot; BC &middot; AB</span></span>
+    <span class="chip chip-purple"><span data-lang="en">Python + SQL + HTML code examples</span><span data-lang="zh">Python + SQL + HTML 代码示例</span></span>
+  </div>
+</section>
+
+
+
+
+
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+  <p class="consult-cta__lead"><span data-lang="en">Want a tutor in your corner?</span><span data-lang="zh">想要导师为你护航？</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Get 1:1 tutoring or join a small-group class with a Dingrui Scholars tutor. Book a free 15-minute assessment and we will build your plan for this unit and beyond.</span><span data-lang="zh">与 Dingrui Scholars 导师进行 1 对 1 辅导，或加入小班课程。预约 15 分钟免费评估，我们将为你规划本单元乃至更长远的学习路径。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__sg_intro__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__sg_intro__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<hr class="sep">
+
+<section class="section" id="s-7-1">
+  <div class="section-label"><span data-lang="en">Section 1 &middot; Data concepts</span><span data-lang="zh">第 1 节 &middot; 数据概念</span></div>
+  <h2><span data-lang="en">Data vs Information</span><span data-lang="zh">数据与信息</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Two definitions to lock in first.</span><span data-lang="zh">先锁定两个定义。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Data</span><span data-lang="zh">数据</span></strong> <span data-lang="en">&mdash; raw, unprocessed facts and symbols. Examples: <code>98.6</code>, <code>"Alice"</code>, <code>true</code>, a pixel value. Data has no inherent meaning on its own.</span><span data-lang="zh">&mdash; 原始、未经处理的事实和符号。例如：<code>98.6</code>、<code>"Alice"</code>、<code>true</code>、一个像素值。数据本身没有固有含义。</span></li>
+      <li><strong><span data-lang="en">Information</span><span data-lang="zh">信息</span></strong> <span data-lang="en">&mdash; data that has been processed, organised, or interpreted so it carries meaning. Example: "Alice's body temperature is 98.6°F, which is normal." Context turns data into information.</span><span data-lang="zh">&mdash; 经过处理、组织或解释后具有含义的数据。例如："Alice 的体温是 98.6°F，属于正常。"上下文将数据转变为信息。</span></li>
+      <li><strong><span data-lang="en">Data types</span><span data-lang="zh">数据类型</span></strong> <span data-lang="en">&mdash; integer, float, string, Boolean, list. Every value stored in a program belongs to a type. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized and where data is stored."</span><span data-lang="zh">&mdash; 整数、浮点数、字符串、布尔值、列表。程序中存储的每个值都属于一种类型。CSTA 3A-DA-10："评估数据元素的组织方式和存储位置的权衡。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>The AP CSP angle:</strong> Big Idea 2 (DAT) opens with "Data are central to computing innovations because they communicate initial conditions to programs and represent new knowledge." (AP CSP CED, verbatim). The whole Big Idea is built on the data &rarr; information pipeline this section introduces.</span><span data-lang="zh"><strong>AP CSP 视角：</strong>大概念 2（DAT）以"数据是计算创新的核心，因为它们向程序传递初始条件并代表新知识"开篇（AP CSP CED 原文）。整个大概念建立在本节介绍的数据 &rarr; 信息管线之上。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; From sensor readings to a weather report</span><span data-lang="zh">例题 1 &middot; 从传感器读数到天气报告</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">A weather station collects three sensor readings every minute: temperature, humidity, pressure. Show the data &rarr; information transformation.</span><span data-lang="zh">气象站每分钟采集三个传感器读数：温度、湿度、气压。展示数据 &rarr; 信息转换过程。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Raw data (numbers, no meaning without context).</span><span data-lang="zh">原始数据（数字，脱离上下文没有含义）。</span></strong></p>
+    <pre><code>22.4, 65, 1013.2
+22.6, 64, 1013.0
+22.9, 63, 1012.7</code></pre>
+    <p><span data-lang="en"><em>The three columns are temperature (°C), humidity (%), and pressure (hPa) — but without column headers these numbers carry no meaning.</em></span><span data-lang="zh">三列分别是温度（°C）、湿度（%）、气压（hPa）——但如果没有列标题，这些数字毫无意义。</span></p>
+    <p><strong><span data-lang="en">Processing step: label, aggregate, interpret.</span><span data-lang="zh">处理步骤：标注、聚合、解释。</span></strong></p>
+    <pre><code># Python: compute average temperature from a list of readings
+readings = [22.4, 22.6, 22.9]
+avg_temp = sum(readings) / len(readings)
+print(f"Average temperature: {avg_temp:.1f} °C")
+# Output: Average temperature: 22.6 °C</code></pre>
+    <p><span data-lang="en"><em><code>sum(readings)</code> adds all values; <code>len(readings)</code> returns the list length; <code>f"..."</code> is a formatted string literal (f-string).</em></span><span data-lang="zh"><code>sum(readings)</code> 求和，<code>len(readings)</code> 取列表长度，<code>f"..."</code> 是格式化字符串。</span></p>
+    <p><strong><span data-lang="en">Information.</span><span data-lang="zh">信息。</span></strong> <span data-lang="en">"Average temperature over the last 3 minutes: 22.6 °C. Trend: rising. Humidity dropping. Pressure falling slowly — possible rain within 6 hours." The same raw numbers now carry actionable meaning. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data collected from a phenomenon or process."</span><span data-lang="zh">"过去 3 分钟平均温度：22.6 °C。趋势：上升。湿度下降。气压缓慢下降——6 小时内可能有雨。"同样的原始数字现在具有了可行动的含义。CSTA 3A-DA-12："创建计算模型，表示从现象或过程中收集的数据的不同元素之间的关系。"</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A spreadsheet contains the values <code>87, 92, 74, 95</code> with no labels. Which best describes these values?</span><span data-lang="zh">一张电子表格包含值 <code>87, 92, 74, 95</code>，没有标签。哪个最能描述这些值？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Information, because they are numbers</span><span data-lang="zh">信息，因为它们是数字</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Information, because a computer can read them</span><span data-lang="zh">信息，因为计算机可以读取它们</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Data, because they have no context or meaning</span><span data-lang="zh">数据，因为它们没有上下文或含义</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Neither data nor information</span><span data-lang="zh">既不是数据也不是信息</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Without labels, we do not know if these are test scores, temperatures, or IDs. Raw values with no context are <strong>data</strong>, not information. Only after labelling and interpreting (e.g., "these are exam scores; average = 87") do they become information.</span><span data-lang="zh">没有标签，我们不知道这些是考试成绩、温度还是 ID。没有上下文的原始值是<strong>数据</strong>，而非信息。只有在标注和解释后（如"这些是考试成绩；平均分 = 87"），它们才成为信息。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Being a number or being computer-readable does not make something information. Information requires context and meaning. Raw unlabelled values are data.</span><span data-lang="zh">是数字或可被计算机读取并不使某物成为信息。信息需要上下文和含义。未标注的原始值是数据。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">CSTA standard 3A-DA-10 says "Evaluate the tradeoffs in how data elements are <em>organized</em> and where data is <em>stored</em>." Which choice is an example of such a tradeoff?</span><span data-lang="zh">CSTA 标准 3A-DA-10 说"评估数据元素<em>组织方式</em>和数据<em>存储位置</em>的权衡"。哪个选项是这种权衡的例子？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Choosing between Python and Java</span><span data-lang="zh">在 Python 和 Java 之间选择</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Deciding whether to use a loop or recursion</span><span data-lang="zh">决定使用循环还是递归</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Selecting a font for a report</span><span data-lang="zh">为报告选择字体</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Storing student records in a flat CSV vs a relational database — CSV is simpler but harder to query across tables</span><span data-lang="zh">将学生记录存储为平面 CSV 与关系数据库——CSV 更简单但跨表查询更难</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">3A-DA-10 is about data organisation and storage decisions. Choosing between a flat file (CSV) and a relational database is a classic data-storage tradeoff: CSV is simple and portable but lacks relational querying power; a database is complex to set up but powerful to query.</span><span data-lang="zh">3A-DA-10 关于数据组织和存储决策。在平面文件（CSV）和关系数据库之间选择是经典的数据存储权衡：CSV 简单且可移植，但缺乏关系查询能力；数据库设置复杂，但查询功能强大。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Language choice, loop vs recursion, and fonts are not data organisation tradeoffs. The tradeoff CSTA 3A-DA-10 asks about is how and where to store data — e.g., CSV vs database.</span><span data-lang="zh">语言选择、循环与递归、字体都不是数据组织权衡。CSTA 3A-DA-10 问的权衡是如何以及在哪里存储数据——例如 CSV 与数据库。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-2">
+  <div class="section-label"><span data-lang="en">Section 2 &middot; File input/output</span><span data-lang="zh">第 2 节 &middot; 文件读写</span></div>
+  <h2><span data-lang="en">File Input/Output (Reading and Writing Files)</span><span data-lang="zh">文件输入/输出（读写文件）</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three file operations to memorise.</span><span data-lang="zh">需要记住的三个文件操作。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Open</span><span data-lang="zh">打开</span></strong> <span data-lang="en">&mdash; connect a program to a file on disk. Modes: <code>"r"</code> read, <code>"w"</code> write (overwrites), <code>"a"</code> append. CSE2130 outcome 1.4.2: "opening an existing file."</span><span data-lang="zh">&mdash; 将程序连接到磁盘上的文件。模式：<code>"r"</code> 读取，<code>"w"</code> 写入（覆盖），<code>"a"</code> 追加。CSE2130 结果 1.4.2："打开现有文件。"</span></li>
+      <li><strong><span data-lang="en">Read / Write</span><span data-lang="zh">读取 / 写入</span></strong> <span data-lang="en">&mdash; transfer data between the program and the file. Read brings data in; write sends data out. CSE2130 outcomes 1.4.5 "importing data from a file" and 1.4.4 "exporting data to a file."</span><span data-lang="zh">&mdash; 在程序和文件之间传输数据。读取将数据带入；写入将数据送出。CSE2130 结果 1.4.5"从文件导入数据"和 1.4.4"将数据导出到文件"。</span></li>
+      <li><strong><span data-lang="en">Close</span><span data-lang="zh">关闭</span></strong> <span data-lang="en">&mdash; flush and disconnect. In Python, use <code>with open(...) as f:</code> — the file closes automatically when the block exits. Always close files to avoid data loss.</span><span data-lang="zh">&mdash; 刷新并断开连接。在 Python 中，使用 <code>with open(...) as f:</code>——代码块退出时文件自动关闭。始终关闭文件以避免数据丢失。</span></li>
+    </ul>
+    <span data-lang="en">Ontario ICS4U A3.1 (verbatim): "demonstrate the ability to read from, and write to, an external file (e.g., text file, binary file, database, XML file) from within a computer program."</span><span data-lang="zh">安大略 ICS4U A3.1（原文）："展示从计算机程序内部读写外部文件（如文本文件、二进制文件、数据库、XML 文件）的能力。"</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Reading a text file and writing a summary</span><span data-lang="zh">例题 2 &middot; 读取文本文件并写入摘要</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">File <code>scores.txt</code> contains one integer per line. Read all scores, compute the average, and write the result to <code>summary.txt</code>.</span><span data-lang="zh">文件 <code>scores.txt</code> 每行包含一个整数。读取所有成绩，计算平均值，并将结果写入 <code>summary.txt</code>。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">scores.txt (sample content).</span><span data-lang="zh">scores.txt（示例内容）。</span></strong></p>
+    <pre><code>87
+92
+74
+95
+88</code></pre>
+    <p><strong><span data-lang="en">Python: read, process, write.</span><span data-lang="zh">Python：读取、处理、写入。</span></strong></p>
+    <pre><code># Read all scores from file
+with open("scores.txt", "r") as f:
+    scores = [int(line.strip()) for line in f]
+
+# Process: compute average
+average = sum(scores) / len(scores)
+
+# Write summary to a new file
+with open("summary.txt", "w") as f:
+    f.write(f"Count: {len(scores)}\n")
+    f.write(f"Average: {average:.1f}\n")
+
+print("Done. summary.txt written.")</code></pre>
+    <p><span data-lang="en"><em><code>open("scores.txt", "r")</code> opens the file in read-only mode; <code>line.strip()</code> removes the trailing newline; <code>int(...)</code> converts the string to an integer; <code>open("summary.txt", "w")</code> creates or overwrites the file in write mode; <code>f.write(...)</code> writes content; <code>\n</code> is the newline character.</em></span><span data-lang="zh"><code>open("scores.txt", "r")</code> 以只读模式（<code>"r"</code>，read）打开文件；<code>line.strip()</code> 去除换行符；<code>int(...)</code> 将字符串转为整数；<code>open("summary.txt", "w")</code> 以写入模式（<code>"w"</code>，write）创建/覆盖文件；<code>f.write(...)</code> 写入内容；<code>\n</code> 是换行符。</span></p>
+    <p><strong><span data-lang="en">Output in summary.txt.</span><span data-lang="zh">summary.txt 中的输出。</span></strong></p>
+    <pre><code>Count: 5
+Average: 87.2</code></pre>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In Python, which mode string opens a file for <em>appending</em> (adding to the end without erasing existing content)?</span><span data-lang="zh">在 Python 中，哪个模式字符串以<em>追加</em>方式打开文件（在末尾添加内容而不删除现有内容）？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>"r"</code></div>
+      <div class="quiz-opt" data-idx="1"><code>"a"</code></div>
+      <div class="quiz-opt" data-idx="2"><code>"w"</code></div>
+      <div class="quiz-opt" data-idx="3"><code>"x"</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>"a"</code> is append mode — it opens the file and positions the write cursor at the end, so new data is added after existing content. <code>"r"</code> = read only, <code>"w"</code> = write (overwrites everything), <code>"x"</code> = create new file (fails if file exists).</span><span data-lang="zh"><code>"a"</code> 是追加模式——打开文件并将写入游标定位在末尾，因此新数据添加到现有内容之后。<code>"r"</code> = 只读，<code>"w"</code> = 写入（覆盖所有内容），<code>"x"</code> = 创建新文件（文件已存在则失败）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">File modes: <code>"r"</code> read, <code>"w"</code> write/overwrite, <code>"a"</code> append, <code>"x"</code> exclusive create. Appending means adding to the end without erasing — that is <code>"a"</code>.</span><span data-lang="zh">文件模式：<code>"r"</code> 读取，<code>"w"</code> 写入/覆盖，<code>"a"</code> 追加，<code>"x"</code> 独占创建。追加意味着在末尾添加而不删除——那就是 <code>"a"</code>。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Why does Python's <code>with open(...) as f:</code> pattern eliminate the need to call <code>f.close()</code>?</span><span data-lang="zh">为什么 Python 的 <code>with open(...) as f:</code> 模式不需要调用 <code>f.close()</code>？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">The <code>with</code> block automatically closes the file when the block exits, even if an error occurs</span><span data-lang="zh"><code>with</code> 块在代码块退出时自动关闭文件，即使发生错误也是如此</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Python never needs files to be closed</span><span data-lang="zh">Python 从不需要关闭文件</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">The <code>as f</code> clause closes the file when f is reassigned</span><span data-lang="zh"><code>as f</code> 子句在 f 被重新赋值时关闭文件</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Only write-mode files need to be closed</span><span data-lang="zh">只有写入模式的文件需要关闭</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>with</code> statement is a context manager. When execution leaves the <code>with</code> block — normally or via an exception — Python calls the file's <code>__exit__</code> method, which flushes and closes the file. This guarantees no data is lost even if an error occurs mid-write.</span><span data-lang="zh"><code>with</code> 语句是一个上下文管理器。当执行离开 <code>with</code> 块时——正常退出或通过异常——Python 调用文件的 <code>__exit__</code> 方法，该方法刷新并关闭文件。这保证即使写入过程中发生错误，数据也不会丢失。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Files should always be closed to flush buffers and release the OS file handle. The <code>with</code> block handles this automatically via Python's context manager protocol.</span><span data-lang="zh">文件应始终关闭以刷新缓冲区并释放操作系统文件句柄。<code>with</code> 块通过 Python 的上下文管理器协议自动处理这一点。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-3">
+  <div class="section-label"><span data-lang="en">Section 3 &middot; CSV and structured data</span><span data-lang="zh">第 3 节 &middot; CSV 与结构化数据</span></div>
+  <h2><span data-lang="en">CSV and Structured Data</span><span data-lang="zh">CSV 与结构化数据</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">CSV in three facts.</span><span data-lang="zh">CSV 的三个要点。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">CSV = Comma-Separated Values</span><span data-lang="zh">CSV = 逗号分隔值</span></strong> <span data-lang="en">&mdash; a plain-text format where each line is a record and fields within a line are separated by commas. The first line is usually a header row naming each column.</span><span data-lang="zh">&mdash; 一种纯文本格式，每行是一条记录，行内字段用逗号分隔。第一行通常是命名每列的标题行。</span></li>
+      <li><strong><span data-lang="en">Universal exchange format</span><span data-lang="zh">通用交换格式</span></strong> <span data-lang="en">&mdash; spreadsheets, databases, and programs all export/import CSV. It is the most common format for sharing tabular data between systems. CSTA 3A-DA-11 says to "create interactive data visualisations" — CSV is how you get the data in.</span><span data-lang="zh">&mdash; 电子表格、数据库和程序都可以导出/导入 CSV。它是系统间共享表格数据最常见的格式。CSTA 3A-DA-11 要求"创建互动数据可视化"——CSV 就是数据的来源方式。</span></li>
+      <li><strong><span data-lang="en">Python's <code>csv</code> module</span><span data-lang="zh">Python 的 <code>csv</code> 模块</span></strong> <span data-lang="en">&mdash; <code>csv.reader</code> parses each row into a list; <code>csv.DictReader</code> maps each row to a dictionary keyed by column name. Always prefer <code>DictReader</code> for named columns.</span><span data-lang="zh">&mdash; <code>csv.reader</code> 将每行解析为列表；<code>csv.DictReader</code> 将每行映射为以列名为键的字典。对于有名列，始终优先使用 <code>DictReader</code>。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Reading a CSV of student records</span><span data-lang="zh">例题 3 &middot; 读取学生记录的 CSV</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">File <code>students.csv</code> stores name, grade, and score. Read it and print students who scored above 85.</span><span data-lang="zh">文件 <code>students.csv</code> 存储姓名、年级和成绩。读取它并打印成绩高于 85 的学生。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">students.csv content.</span><span data-lang="zh">students.csv 内容。</span></strong></p>
+    <pre><code>name,grade,score
+Alice,11,92
+Bob,11,78
+Carol,12,95
+David,12,82
+Eve,11,88</code></pre>
+    <p><strong><span data-lang="en">Python: filter rows where score &gt; 85.</span><span data-lang="zh">Python：过滤成绩 &gt; 85 的行。</span></strong></p>
+    <pre><code>import csv
+
+with open("students.csv", "r") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        if int(row["score"]) > 85:
+            print(row["name"], row["score"])
+
+# Output:
+# Alice 92
+# Carol 95
+# Eve 88</code></pre>
+    <p><span data-lang="en"><em><code>import csv</code> loads the built-in csv module; <code>csv.DictReader(f)</code> reads each row as a dictionary (e.g. <code>{"name": "Alice", "grade": "11", "score": "92"}</code>); <code>int(row["score"])</code> converts the string to an integer before comparing; <code>row["name"]</code> accesses a field by column name.</em></span><span data-lang="zh"><code>import csv</code> 导入内置 csv 模块；<code>csv.DictReader(f)</code> 将每行读为字典（<code>{"name": "Alice", "grade": "11", "score": "92"}</code>）；<code>int(row["score"])</code> 将字符串转为整数后比较；<code>row["name"]</code> 通过列名访问字段。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In a CSV file, the first row is <code>name,grade,score</code>. What is this row called?</span><span data-lang="zh">在 CSV 文件中，第一行是 <code>name,grade,score</code>。这一行叫什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A record</span><span data-lang="zh">记录</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A field</span><span data-lang="zh">字段</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A header row</span><span data-lang="zh">标题行</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A delimiter</span><span data-lang="zh">分隔符</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The first row of a CSV is the <strong>header row</strong> — it names each column. Every subsequent row is a <strong>record</strong> (one row of data). Each item within a row is a <strong>field</strong>. The comma is the <strong>delimiter</strong> (separator character).</span><span data-lang="zh">CSV 的第一行是<strong>标题行</strong>——它命名每列。之后的每行是一条<strong>记录</strong>（一行数据）。行内每项是一个<strong>字段</strong>。逗号是<strong>分隔符</strong>（分隔字符）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Header row = first row naming columns. Record = a subsequent data row. Field = one value within a row. Delimiter = the comma separator character.</span><span data-lang="zh">标题行 = 命名列的第一行。记录 = 后续数据行。字段 = 行内一个值。分隔符 = 逗号分隔字符。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A program reads a CSV where all values are strings. To compare the <code>score</code> field to <code>85</code> numerically, what must you do first?</span><span data-lang="zh">程序读取一个 CSV，所有值都是字符串。要将 <code>score</code> 字段与 <code>85</code> 进行数值比较，必须先做什么？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Nothing — Python compares strings and integers automatically</span><span data-lang="zh">什么都不用做——Python 自动比较字符串和整数</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Convert the string to an integer using <code>int(row["score"])</code></span><span data-lang="zh">使用 <code>int(row["score"])</code> 将字符串转换为整数</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Convert 85 to a string using <code>str(85)</code></span><span data-lang="zh">使用 <code>str(85)</code> 将 85 转换为字符串</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Use double equals: <code>row["score"] == 85</code></span><span data-lang="zh">使用双等号：<code>row["score"] == 85</code></span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSV values are always read as strings. Comparing <code>"92" &gt; 85</code> would raise a TypeError in Python 3 (or give wrong results in Python 2). You must first convert: <code>int(row["score"]) &gt; 85</code>. This is the most common bug when processing CSV data.</span><span data-lang="zh">CSV 值始终作为字符串读取。在 Python 3 中，比较 <code>"92" &gt; 85</code> 会引发 TypeError（在 Python 2 中会给出错误结果）。必须先转换：<code>int(row["score"]) &gt; 85</code>。这是处理 CSV 数据时最常见的错误。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Python 3 raises a TypeError if you compare a string to an integer with &gt;. CSV fields are always strings — convert them first with <code>int()</code> or <code>float()</code> before numeric comparison.</span><span data-lang="zh">Python 3 中用 &gt; 比较字符串和整数会引发 TypeError。CSV 字段始终是字符串——在数值比较之前先用 <code>int()</code> 或 <code>float()</code> 转换。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-4">
+  <div class="section-label"><span data-lang="en">Section 4 &middot; Relational databases and tables</span><span data-lang="zh">第 4 节 &middot; 关系数据库与表</span></div>
+  <h2><span data-lang="en">Relational Databases and Tables</span><span data-lang="zh">关系数据库与表</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Four key terms for relational databases.</span><span data-lang="zh">关系数据库的四个关键术语。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Table</span><span data-lang="zh">表</span></strong> <span data-lang="en">&mdash; a two-dimensional grid of data: rows (records) and columns (fields/attributes). Like a CSV, but stored in the database engine.</span><span data-lang="zh">&mdash; 二维数据网格：行（记录）和列（字段/属性）。类似 CSV，但存储在数据库引擎中。</span></li>
+      <li><strong><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></strong> <span data-lang="en">&mdash; a column (or set of columns) whose value uniquely identifies each row. Example: <code>student_id</code> in a Students table. No two rows may share the same primary key.</span><span data-lang="zh">&mdash; 唯一标识每行的列（或列集合）。例如：Students 表中的 <code>student_id</code>。任何两行不得共享相同的主键。</span></li>
+      <li><strong><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></strong> <span data-lang="en">&mdash; a column in one table that references the primary key of another table. This is the "relational" part — it links two tables together. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized."</span><span data-lang="zh">&mdash; 一个表中引用另一个表主键的列。这就是"关系"的部分——它将两个表连接在一起。CSTA 3A-DA-10："评估数据元素组织方式的权衡。"</span></li>
+      <li><strong><span data-lang="en">Normalisation</span><span data-lang="zh">规范化</span></strong> <span data-lang="en">&mdash; organising data to reduce duplication. Instead of repeating a student's name in every grade record, store the name once in the Students table and reference it by ID.</span><span data-lang="zh">&mdash; 组织数据以减少重复。与其在每条成绩记录中重复学生姓名，不如在 Students 表中存储一次姓名并通过 ID 引用。</span></li>
+    </ul>
+    <span data-lang="en">ICS4C A2.2 (verbatim): "demonstrate the ability to read from, and write to, an external file (e.g., sequential file, database, XML file, <strong>relational database via SQL</strong>)." Note: this is the Ontario college stream (Grade 12 ICS4C), not the university stream (ICS4U).</span><span data-lang="zh">ICS4C A2.2（原文）："展示读写外部文件（如顺序文件、数据库、XML 文件、<strong>通过 SQL 的关系数据库</strong>）的能力。"注意：这是安大略学院流（12 年级 ICS4C），而非大学流（ICS4U）。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; Two linked tables — Students and Grades</span><span data-lang="zh">例题 4 &middot; 两个关联表——Students 与 Grades</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Design a relational database for student grades. One table stores students; another stores assignments. Link them with a foreign key.</span><span data-lang="zh">为学生成绩设计一个关系数据库。一个表存储学生；另一个表存储作业。用外键将它们连接。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Table 1: Students (primary key = student_id).</span><span data-lang="zh">表 1：Students（主键 = student_id）。</span></strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>student_id</th><th>name</th><th>grade</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Alice</td><td>11</td></tr>
+          <tr><td>2</td><td>Bob</td><td>11</td></tr>
+          <tr><td>3</td><td>Carol</td><td>12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong><span data-lang="en">Table 2: Scores (primary key = score_id; foreign key = student_id references Students).</span><span data-lang="zh">表 2：Scores（主键 = score_id；外键 = student_id 引用 Students）。</span></strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>score_id</th><th>student_id</th><th>subject</th><th>score</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>1</td><td>Math</td><td>92</td></tr>
+          <tr><td>2</td><td>1</td><td>CS</td><td>88</td></tr>
+          <tr><td>3</td><td>2</td><td>Math</td><td>78</td></tr>
+          <tr><td>4</td><td>3</td><td>CS</td><td>95</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Alice's name is stored once in Students. Her two score rows in Scores reference her by <code>student_id = 1</code>. If her name changes, we update it in one place only — that is the benefit of normalisation. Without a relational database, every score row would repeat her full name, wasting space and risking inconsistency.</span><span data-lang="zh">Alice 的姓名在 Students 中只存储一次。她在 Scores 中的两条成绩行通过 <code>student_id = 1</code> 引用她。如果她的姓名变了，只需在一个地方更新——这就是规范化的好处。没有关系数据库，每条成绩行都要重复她的全名，浪费空间且容易出现不一致。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In a relational database, what is the purpose of a <em>primary key</em>?</span><span data-lang="zh">在关系数据库中，<em>主键</em>的作用是什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">To uniquely identify each row in a table</span><span data-lang="zh">唯一标识表中的每行</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">To store the most important data value</span><span data-lang="zh">存储最重要的数据值</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">To link two tables together</span><span data-lang="zh">将两个表连接在一起</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">To sort the rows alphabetically</span><span data-lang="zh">按字母顺序对行排序</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A primary key uniquely identifies each row — no two rows can share the same value. It is not necessarily the most important data value (it is often just an auto-incremented ID). A <em>foreign key</em> (not primary key) is what links two tables.</span><span data-lang="zh">主键唯一标识每行——任何两行不能共享相同的值。它不一定是最重要的数据值（通常只是一个自动递增的 ID）。<em>外键</em>（不是主键）才是连接两个表的东西。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Primary key = unique identifier for each row. Foreign key = a column that references the primary key of another table (linking two tables). Sorting is done by ORDER BY in SQL, not by the primary key definition.</span><span data-lang="zh">主键 = 每行的唯一标识符。外键 = 引用另一个表主键的列（连接两个表）。排序由 SQL 中的 ORDER BY 完成，不是由主键定义决定的。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A Scores table has a column <code>student_id</code> that references the <code>student_id</code> column in the Students table. What is <code>student_id</code> called in the Scores table?</span><span data-lang="zh">Scores 表有一列 <code>student_id</code>，它引用 Students 表中的 <code>student_id</code> 列。<code>student_id</code> 在 Scores 表中叫什么？</span></div><div class="quiz-number">&sect;4 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Index key</span><span data-lang="zh">索引键</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Composite key</span><span data-lang="zh">复合键</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A column in one table that references the primary key of another table is called a <strong>foreign key</strong>. It is what makes the database "relational" — the Scores table is related to the Students table through this link.</span><span data-lang="zh">一个表中引用另一个表主键的列称为<strong>外键</strong>。这就是使数据库成为"关系型"的原因——Scores 表通过这个链接与 Students 表相关联。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Foreign key = a column that references another table's primary key. Primary key = the unique identifier of the current table's rows. An index key is a performance optimisation (not a referential constraint). A composite key is a primary key made of multiple columns.</span><span data-lang="zh">外键 = 引用另一个表主键的列。主键 = 当前表行的唯一标识符。索引键是性能优化（不是引用约束）。复合键是由多列组成的主键。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-5">
+  <div class="section-label"><span data-lang="en">Section 5 &middot; SQL basics</span><span data-lang="zh">第 5 节 &middot; SQL 基础</span></div>
+  <h2><span data-lang="en">SQL Basics: SELECT and WHERE</span><span data-lang="zh">SQL 基础：SELECT 与 WHERE</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">The four SQL keywords you need first.</span><span data-lang="zh">首先需要掌握的四个 SQL 关键字。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><code>SELECT</code></strong> <span data-lang="en">&mdash; choose which columns to return. <code>SELECT *</code> returns all columns; <code>SELECT name, score</code> returns only those two.</span><span data-lang="zh">&mdash; 选择要返回的列。<code>SELECT *</code> 返回所有列；<code>SELECT name, score</code> 只返回那两列。</span></li>
+      <li><strong><code>FROM</code></strong> <span data-lang="en">&mdash; specify the table to query. Every SELECT needs a FROM.</span><span data-lang="zh">&mdash; 指定要查询的表。每个 SELECT 都需要 FROM。</span></li>
+      <li><strong><code>WHERE</code></strong> <span data-lang="en">&mdash; filter rows. Only rows where the condition is true are returned. Operators: <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>LIKE</code>, <code>AND</code>, <code>OR</code>.</span><span data-lang="zh">&mdash; 过滤行。只返回条件为真的行。运算符：<code>=</code>、<code>&lt;</code>、<code>&gt;</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>!=</code>、<code>LIKE</code>、<code>AND</code>、<code>OR</code>。</span></li>
+      <li><strong><code>ORDER BY</code></strong> <span data-lang="en">&mdash; sort the results. <code>ORDER BY score DESC</code> sorts highest-first; <code>ASC</code> is lowest-first (the default).</span><span data-lang="zh">&mdash; 对结果排序。<code>ORDER BY score DESC</code> 按从高到低排序；<code>ASC</code> 从低到高（默认）。</span></li>
+    </ul>
+    <span data-lang="en">SQL is not case-sensitive for keywords, but convention capitalises them. SQL statements end with <code>;</code>. ICS4C A2.2 names "relational database via SQL" explicitly. CSTA 3A-DA-10 says to "evaluate the tradeoffs in how data elements are organized and where data is stored" — SQL is the access layer on top of the organised storage.</span><span data-lang="zh">SQL 关键字不区分大小写，但约定大写。SQL 语句以 <code>;</code> 结尾。ICS4C A2.2 明确点名"通过 SQL 的关系数据库"。CSTA 3A-DA-10 要求"评估数据元素组织方式和存储位置的权衡"——SQL 是有组织存储之上的访问层。</span>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Three SQL queries on the Students/Scores tables</span><span data-lang="zh">例题 5 &middot; 对 Students/Scores 表的三个 SQL 查询</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Using the two tables from &sect;4, write SQL queries to answer common questions.</span><span data-lang="zh">使用 &sect;4 中的两个表，编写 SQL 查询来回答常见问题。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Query 1: Get all students.</span><span data-lang="zh">查询 1：获取所有学生。</span></strong></p>
+    <pre><code>SELECT * FROM Students;</code></pre>
+    <p><span data-lang="en"><em><code>SELECT *</code> selects all columns; <code>FROM Students</code> specifies the Students table. All three rows are returned.</em></span><span data-lang="zh"><code>SELECT *</code> 选择所有列，<code>FROM Students</code> 从 Students 表查询。返回所有三行。</span></p>
+    <p><strong><span data-lang="en">Query 2: Get names and scores where score &gt; 85.</span><span data-lang="zh">查询 2：获取成绩 &gt; 85 的姓名和成绩。</span></strong></p>
+    <pre><code>SELECT student_id, subject, score
+FROM Scores
+WHERE score > 85
+ORDER BY score DESC;</code></pre>
+    <p><span data-lang="en"><em><code>WHERE score &gt; 85</code> filters rows to those with a score above 85; <code>ORDER BY score DESC</code> sorts the results from highest to lowest (<code>DESC</code> = descending).</em></span><span data-lang="zh"><code>WHERE score &gt; 85</code> 过滤条件；<code>ORDER BY score DESC</code> 按成绩从高到低排序（<code>DESC</code> = descending，降序）。</span></p>
+    <p><strong><span data-lang="en">Expected result (from the &sect;4 data):</span><span data-lang="zh">预期结果（来自 &sect;4 数据）：</span></strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>student_id</th><th>subject</th><th>score</th></tr></thead>
+        <tbody>
+          <tr><td>3</td><td>CS</td><td>95</td></tr>
+          <tr><td>1</td><td>Math</td><td>92</td></tr>
+          <tr><td>1</td><td>CS</td><td>88</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong><span data-lang="en">Query 3: Count how many CS scores exist.</span><span data-lang="zh">查询 3：统计 CS 成绩的条数。</span></strong></p>
+    <pre><code>SELECT COUNT(*) FROM Scores WHERE subject = 'CS';</code></pre>
+    <p><span data-lang="en"><em><code>COUNT(*)</code> counts the number of matching rows. Result: 2 (Carol and Alice each have one CS record).</em></span><span data-lang="zh"><code>COUNT(*)</code> 计算匹配行的数量。结果：2（Carol 和 Alice 各有一条 CS 记录）。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which SQL query returns only the <code>name</code> column from the <code>Students</code> table where the <code>grade</code> is 11?</span><span data-lang="zh">哪个 SQL 查询从 <code>Students</code> 表中只返回 <code>grade</code> 为 11 的 <code>name</code> 列？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>SELECT * FROM Students;</code></div>
+      <div class="quiz-opt" data-idx="1"><code>SELECT Students WHERE grade = 11;</code></div>
+      <div class="quiz-opt" data-idx="2"><code>SELECT name WHERE grade = 11;</code></div>
+      <div class="quiz-opt" data-idx="3"><code>SELECT name FROM Students WHERE grade = 11;</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A complete SELECT needs: <code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;condition&gt;</code>. Only option D has all three parts correct: column = <code>name</code>, table = <code>Students</code>, filter = <code>grade = 11</code>.</span><span data-lang="zh">完整的 SELECT 需要：<code>SELECT &lt;列&gt; FROM &lt;表&gt; WHERE &lt;条件&gt;</code>。只有选项 D 三个部分都正确：列 = <code>name</code>，表 = <code>Students</code>，过滤 = <code>grade = 11</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">SQL SELECT syntax: <code>SELECT columns FROM table WHERE condition;</code>. You must include FROM to name the table. Option A has no WHERE. Options B and C are missing FROM or SELECT columns.</span><span data-lang="zh">SQL SELECT 语法：<code>SELECT 列 FROM 表 WHERE 条件;</code>。必须包含 FROM 来命名表。选项 A 没有 WHERE。选项 B 和 C 缺少 FROM 或 SELECT 列。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In SQL, <code>ORDER BY score DESC</code> sorts the results in what order?</span><span data-lang="zh">在 SQL 中，<code>ORDER BY score DESC</code> 以什么顺序排序结果？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Lowest score first</span><span data-lang="zh">最低分在前</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Highest score first</span><span data-lang="zh">最高分在前</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Alphabetical order</span><span data-lang="zh">字母顺序</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Random order</span><span data-lang="zh">随机顺序</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>DESC</code> stands for descending — highest to lowest. <code>ASC</code> (ascending) is lowest to highest and is the default. So <code>ORDER BY score DESC</code> puts the highest score first in the result set.</span><span data-lang="zh"><code>DESC</code> 代表降序——从高到低。<code>ASC</code>（升序）从低到高，是默认值。所以 <code>ORDER BY score DESC</code> 将最高分放在结果集的第一位。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">DESC = descending = highest first. ASC = ascending = lowest first (default). ORDER BY does not produce alphabetical or random ordering unless the column contains strings (for alphabetical) or you use RANDOM().</span><span data-lang="zh">DESC = 降序 = 最高在前。ASC = 升序 = 最低在前（默认）。除非列包含字符串（字母顺序）或使用 RANDOM()，否则 ORDER BY 不产生字母或随机顺序。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-6">
+  <div class="section-label"><span data-lang="en">Section 6 &middot; HTML and the web</span><span data-lang="zh">第 6 节 &middot; HTML 与网络</span></div>
+  <h2><span data-lang="en">HTML and the Web: An Introduction</span><span data-lang="zh">HTML 与网络：入门介绍</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">HTML in four facts.</span><span data-lang="zh">HTML 的四个要点。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">HTML = HyperText Markup Language</span><span data-lang="zh">HTML = 超文本标记语言</span></strong> <span data-lang="en">&mdash; the standard language for creating web pages. A browser reads an HTML file and renders it visually. Alberta CSE1210: "Students are introduced to Internet computing through the use of one or more Web-specific markup languages."</span><span data-lang="zh">&mdash; 创建网页的标准语言。浏览器读取 HTML 文件并将其可视化渲染。阿尔伯塔 CSE1210："学生通过使用一种或多种网络专用标记语言了解互联网计算。"</span></li>
+      <li><strong><span data-lang="en">Tags</span><span data-lang="zh">标签</span></strong> <span data-lang="en">&mdash; HTML uses paired tags: <code>&lt;tag&gt;content&lt;/tag&gt;</code>. Opening tag + content + closing tag. Self-closing tags (e.g. <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>) have no content.</span><span data-lang="zh">&mdash; HTML 使用成对标签：<code>&lt;标签&gt;内容&lt;/标签&gt;</code>。开始标签 + 内容 + 结束标签。自闭合标签（如 <code>&lt;br&gt;</code>、<code>&lt;img&gt;</code>）没有内容。</span></li>
+      <li><strong><span data-lang="en">Structure: head + body</span><span data-lang="zh">结构：head + body</span></strong> <span data-lang="en">&mdash; every HTML page has a <code>&lt;head&gt;</code> (metadata: title, charset, links to CSS) and a <code>&lt;body&gt;</code> (visible content).</span><span data-lang="zh">&mdash; 每个 HTML 页面都有一个 <code>&lt;head&gt;</code>（元数据：标题、字符集、CSS 链接）和一个 <code>&lt;body&gt;</code>（可见内容）。</span></li>
+      <li><strong><span data-lang="en">Key tags to know</span><span data-lang="zh">需要了解的关键标签</span></strong> <span data-lang="en">&mdash; <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> headings, <code>&lt;p&gt;</code> paragraph, <code>&lt;a href="..."&gt;</code> link, <code>&lt;ul&gt;/&lt;li&gt;</code> list, <code>&lt;table&gt;</code> table, <code>&lt;form&gt;</code> form, <code>&lt;input&gt;</code> input field.</span><span data-lang="zh">&mdash; <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> 标题，<code>&lt;p&gt;</code> 段落，<code>&lt;a href="..."&gt;</code> 链接，<code>&lt;ul&gt;/&lt;li&gt;</code> 列表，<code>&lt;table&gt;</code> 表格，<code>&lt;form&gt;</code> 表单，<code>&lt;input&gt;</code> 输入框。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; A minimal HTML page displaying a data table</span><span data-lang="zh">例题 6 &middot; 显示数据表的最小 HTML 页面</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Write an HTML page that displays the Students table from &sect;4 as a formatted web table.</span><span data-lang="zh">编写一个 HTML 页面，将 &sect;4 的 Students 表显示为格式化的网页表格。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Student Records&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Students&lt;/h1&gt;
+  &lt;table border="1"&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Grade&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Alice&lt;/td&gt;&lt;td&gt;11&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Bob&lt;/td&gt;&lt;td&gt;11&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Carol&lt;/td&gt;&lt;td&gt;12&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p><span data-lang="en"><em><code>&lt;!DOCTYPE html&gt;</code> declares the document type as HTML5; <code>&lt;head&gt;</code> holds metadata (<code>&lt;meta charset="UTF-8"&gt;</code> sets the character encoding; <code>&lt;title&gt;</code> sets the browser-tab title); <code>&lt;body&gt;</code> contains the visible content; <code>&lt;table&gt;</code> creates a table; <code>&lt;tr&gt;</code> is a table row; <code>&lt;th&gt;</code> is a header cell; <code>&lt;td&gt;</code> is a data cell.</em></span><span data-lang="zh"><code>&lt;!DOCTYPE html&gt;</code> 声明文档类型为 HTML5；<code>&lt;head&gt;</code> 含元数据（<code>&lt;meta charset="UTF-8"&gt;</code> 设置字符编码，<code>&lt;title&gt;</code> 设置浏览器标签标题）；<code>&lt;body&gt;</code> 含可见内容；<code>&lt;table&gt;</code> 创建表格；<code>&lt;tr&gt;</code> 是表格行（table row）；<code>&lt;th&gt;</code> 是表头单元格（table header）；<code>&lt;td&gt;</code> 是普通数据单元格（table data）。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In HTML, what does <code>&lt;a href="https://example.com"&gt;Click here&lt;/a&gt;</code> create?</span><span data-lang="zh">在 HTML 中，<code>&lt;a href="https://example.com"&gt;点击这里&lt;/a&gt;</code> 创建什么？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">An image from the URL</span><span data-lang="zh">来自该 URL 的图片</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">A clickable hyperlink to example.com with text "Click here"</span><span data-lang="zh">指向 example.com 的可点击超链接，文本为"点击这里"</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">A form that submits to example.com</span><span data-lang="zh">提交到 example.com 的表单</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A paragraph with the URL as text</span><span data-lang="zh">以 URL 为文本的段落</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>&lt;a&gt;</code> tag (anchor) creates a hyperlink. The <code>href</code> attribute specifies the destination URL. The content between the tags ("Click here") is the visible link text. Clicking it navigates to example.com.</span><span data-lang="zh"><code>&lt;a&gt;</code> 标签（锚点）创建超链接。<code>href</code> 属性指定目标 URL。标签之间的内容（"点击这里"）是可见的链接文本。点击它导航到 example.com。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The <code>&lt;a&gt;</code> tag with <code>href</code> creates a hyperlink, not an image (<code>&lt;img&gt;</code>), form (<code>&lt;form&gt;</code>), or paragraph (<code>&lt;p&gt;</code>).</span><span data-lang="zh"><code>&lt;a&gt;</code> 标签加 <code>href</code> 创建超链接，不是图片（<code>&lt;img&gt;</code>）、表单（<code>&lt;form&gt;</code>）或段落（<code>&lt;p&gt;</code>）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which HTML section contains the page's visible content (headings, paragraphs, tables)?</span><span data-lang="zh">哪个 HTML 部分包含页面的可见内容（标题、段落、表格）？</span></div><div class="quiz-number">&sect;6 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>&lt;body&gt;</code></div>
+      <div class="quiz-opt" data-idx="1"><code>&lt;head&gt;</code></div>
+      <div class="quiz-opt" data-idx="2"><code>&lt;title&gt;</code></div>
+      <div class="quiz-opt" data-idx="3"><code>&lt;meta&gt;</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>&lt;body&gt;</code> element contains all visible page content. The <code>&lt;head&gt;</code> holds metadata (title, charset, CSS links — not rendered as page content). <code>&lt;title&gt;</code> sets the browser tab title (shown in the tab, not the page). <code>&lt;meta&gt;</code> provides machine-readable metadata.</span><span data-lang="zh"><code>&lt;body&gt;</code> 元素包含所有可见的页面内容。<code>&lt;head&gt;</code> 存放元数据（标题、字符集、CSS 链接——不渲染为页面内容）。<code>&lt;title&gt;</code> 设置浏览器标签标题（显示在标签中，不在页面上）。<code>&lt;meta&gt;</code> 提供机器可读的元数据。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">body = visible content. head = metadata (not visible as page content). title = browser tab text. meta = machine-readable metadata.</span><span data-lang="zh">body = 可见内容。head = 元数据（不作为页面内容可见）。title = 浏览器标签文本。meta = 机器可读元数据。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="s-7-7">
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Data on the web: JSON and APIs</span><span data-lang="zh">第 7 节 &middot; 网络上的数据：JSON 与接口</span></div>
+  <h2><span data-lang="en">Data on the Web: JSON and APIs</span><span data-lang="zh">网络上的数据：JSON 与接口</span></h2>
+
+  <div class="cram-cheat">
+    <strong><span data-lang="en">JSON and API in four facts.</span><span data-lang="zh">JSON 和接口的四个要点。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">JSON = JavaScript Object Notation</span><span data-lang="zh">JSON = JavaScript 对象表示法</span></strong> <span data-lang="en">&mdash; a lightweight text format for storing and transmitting structured data. Looks like Python dictionaries and lists. Human-readable and machine-parseable. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data" — JSON is how those models travel over the web.</span><span data-lang="zh">&mdash; 用于存储和传输结构化数据的轻量级文本格式。看起来像 Python 字典和列表。人类可读且机器可解析。CSTA 3A-DA-12："创建表示数据不同元素之间关系的计算模型"——JSON 就是这些模型在网络上传输的方式。</span></li>
+      <li><strong><span data-lang="en">JSON syntax</span><span data-lang="zh">JSON 语法</span></strong> <span data-lang="en">&mdash; keys must be double-quoted strings; values can be strings, numbers, booleans (<code>true</code>/<code>false</code>), <code>null</code>, arrays (<code>[]</code>), or nested objects (<code>{}</code>).</span><span data-lang="zh">&mdash; 键必须是双引号字符串；值可以是字符串、数字、布尔值（<code>true</code>/<code>false</code>）、<code>null</code>、数组（<code>[]</code>）或嵌套对象（<code>{}</code>）。</span></li>
+      <li><strong><span data-lang="en">API = Application Programming Interface</span><span data-lang="zh">接口 = 应用程序编程接口</span></strong> <span data-lang="en">&mdash; a set of rules that lets one program request data or actions from another. Web APIs expose data over HTTP; the response is usually JSON. Alberta CSE2210/3210 (Client-side Scripting) and AB CSE1220 introduce this web-programming context.</span><span data-lang="zh">&mdash; 让一个程序向另一个程序请求数据或操作的一组规则。Web 接口通过 HTTP 暴露数据；响应通常是 JSON。阿尔伯塔 CSE2210/3210（客户端脚本）和 AB CSE1220 介绍这种网页编程背景。</span></li>
+      <li><strong><span data-lang="en">Python: <code>json</code> module</span><span data-lang="zh">Python：<code>json</code> 模块</span></strong> <span data-lang="en">&mdash; <code>json.loads(text)</code> parses a JSON string into a Python dict/list; <code>json.dumps(obj)</code> serialises a Python object back to a JSON string.</span><span data-lang="zh">&mdash; <code>json.loads(text)</code> 将 JSON 字符串解析为 Python 字典/列表；<code>json.dumps(obj)</code> 将 Python 对象序列化回 JSON 字符串。</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Parsing a JSON API response in Python</span><span data-lang="zh">例题 7 &middot; 在 Python 中解析 JSON 接口响应</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">A weather API returns this JSON response. Extract the city name and temperature and print them.</span><span data-lang="zh">天气接口返回以下 JSON 响应。提取城市名称和温度并打印。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><strong><span data-lang="en">Sample JSON response (the text the API sends back).</span><span data-lang="zh">示例 JSON 响应（接口返回的文本）。</span></strong></p>
+    <pre><code>{
+  "city": "Toronto",
+  "country": "CA",
+  "temperature": 22.4,
+  "humidity": 65,
+  "conditions": ["cloudy", "mild"],
+  "forecast": {
+    "tomorrow": "rain",
+    "temp_high": 18.0
+  }
+}</code></pre>
+    <p><strong><span data-lang="en">Python: parse and extract fields.</span><span data-lang="zh">Python：解析并提取字段。</span></strong></p>
+    <pre><code>import json
+
+# Simulated API response text
+response_text = '''
+{
+  "city": "Toronto",
+  "country": "CA",
+  "temperature": 22.4,
+  "humidity": 65,
+  "conditions": ["cloudy", "mild"],
+  "forecast": {"tomorrow": "rain", "temp_high": 18.0}
+}
+'''
+
+# Parse JSON string into a Python dictionary
+data = json.loads(response_text)
+
+# Access fields
+city = data["city"]
+temp = data["temperature"]
+tomorrow = data["forecast"]["tomorrow"]
+
+print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
+# Output: Toronto: 22.4°C, tomorrow: rain</code></pre>
+    <p><span data-lang="en"><em><code>import json</code> loads the json module; <code>json.loads(...)</code> parses a JSON string into a Python dictionary (loads = load string); <code>data["city"]</code> accesses a value by key; <code>data["forecast"]["tomorrow"]</code> accesses a nested object by first retrieving the <code>"forecast"</code> dictionary, then its <code>"tomorrow"</code> key.</em></span><span data-lang="zh"><code>import json</code> 导入 json 模块；<code>json.loads(...)</code> 将 JSON 字符串（loads = load string）转为 Python 字典；<code>data["city"]</code> 通过键访问字典值；<code>data["forecast"]["tomorrow"]</code> 访问嵌套对象——先取 <code>"forecast"</code> 字典，再取其 <code>"tomorrow"</code> 键。</span></p>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In JSON, which of the following is a <em>valid</em> key-value pair?</span><span data-lang="zh">在 JSON 中，以下哪个是<em>有效的</em>键值对？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>name: "Alice"</code></div>
+      <div class="quiz-opt" data-idx="1"><code>'name': 'Alice'</code></div>
+      <div class="quiz-opt" data-idx="2"><code>name = "Alice"</code></div>
+      <div class="quiz-opt" data-idx="3"><code>"name": "Alice"</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In JSON, keys must be <strong>double-quoted strings</strong>. Values must also use double quotes (not single quotes). So only <code>"name": "Alice"</code> is valid JSON. Single quotes and unquoted keys are not allowed in JSON (though they are valid in Python dicts and JavaScript objects).</span><span data-lang="zh">在 JSON 中，键必须是<strong>双引号字符串</strong>。值也必须使用双引号（不是单引号）。因此只有 <code>"name": "Alice"</code> 是有效的 JSON。单引号和不带引号的键在 JSON 中不被允许（尽管在 Python 字典和 JavaScript 对象中有效）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">JSON requires double-quoted keys and double-quoted string values. No single quotes, no unquoted keys, no equals signs. Only option D follows all three rules.</span><span data-lang="zh">JSON 要求双引号键和双引号字符串值。不允许单引号、不带引号的键或等号。只有选项 D 遵循所有三条规则。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Given <code>data = {"scores": [88, 92, 75]}</code> in Python, what does <code>data["scores"][1]</code> evaluate to?</span><span data-lang="zh">给定 Python 中 <code>data = {"scores": [88, 92, 75]}</code>，<code>data["scores"][1]</code> 的值是什么？</span></div><div class="quiz-number">&sect;7 &middot; Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">92</div>
+      <div class="quiz-opt" data-idx="1">88</div>
+      <div class="quiz-opt" data-idx="2">75</div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Error — you cannot index a list inside a dict</span><span data-lang="zh">错误——不能索引字典内的列表</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>data["scores"]</code> accesses the list <code>[88, 92, 75]</code>. Then <code>[1]</code> accesses index 1 of that list. Python lists are 0-indexed, so index 0 = 88, index 1 = 92, index 2 = 75. Result: 92.</span><span data-lang="zh"><code>data["scores"]</code> 访问列表 <code>[88, 92, 75]</code>。然后 <code>[1]</code> 访问该列表的索引 1。Python 列表从 0 开始索引，所以索引 0 = 88，索引 1 = 92，索引 2 = 75。结果：92。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Two steps: (1) <code>data["scores"]</code> returns the list <code>[88, 92, 75]</code>. (2) <code>[1]</code> on that list returns the item at index 1. Python is 0-indexed: index 0 = 88, index 1 = 92.</span><span data-lang="zh">两步：(1) <code>data["scores"]</code> 返回列表 <code>[88, 92, 75]</code>。(2) 对该列表 <code>[1]</code> 返回索引 1 处的项。Python 从 0 开始索引：索引 0 = 88，索引 1 = 92。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="exam-strategy">
+  <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试策略</span></div>
+  <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
+
+  <div class="concept-box orange">
+    <strong style="color: var(--orange);"><span data-lang="en">Data and file questions (&sect;1&ndash;&sect;3)</span><span data-lang="zh">数据和文件题（&sect;1&ndash;&sect;3）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Data vs information distinction.</span><span data-lang="zh">数据与信息的区别。</span></strong> <span data-lang="en">Examiners frequently ask: "Is this data or information? Explain." The answer always hinges on context: raw unlabelled values are data; values with meaning attached (label, unit, interpretation) are information. State the difference explicitly.</span><span data-lang="zh">考官常问："这是数据还是信息？请解释。"答案总是取决于上下文：未标注的原始值是数据；附有含义（标签、单位、解释）的值是信息。明确说明区别。</span></li>
+      <li><strong><span data-lang="en">CSV type-conversion pitfall.</span><span data-lang="zh">CSV 类型转换陷阱。</span></strong> <span data-lang="en">Every value read from a CSV is a string. Always convert with <code>int()</code> or <code>float()</code> before numeric comparison or arithmetic. Forgetting this is the single most common file-processing bug.</span><span data-lang="zh">从 CSV 读取的每个值都是字符串。在数值比较或算术之前，始终用 <code>int()</code> 或 <code>float()</code> 转换。忘记这一点是最常见的文件处理错误。</span></li>
+      <li><strong><span data-lang="en">File modes.</span><span data-lang="zh">文件模式。</span></strong> <span data-lang="en">Know <code>"r"</code> (read), <code>"w"</code> (write — overwrites), <code>"a"</code> (append). On an exam, if the question says "add a new record without deleting existing ones," the answer is append mode (<code>"a"</code>).</span><span data-lang="zh">了解 <code>"r"</code>（读取）、<code>"w"</code>（写入——覆盖）、<code>"a"</code>（追加）。在考试中，如果题目说"添加新记录而不删除现有记录"，答案是追加模式（<code>"a"</code>）。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Database and SQL questions (&sect;4&ndash;&sect;5)</span><span data-lang="zh">数据库和 SQL 题（&sect;4&ndash;&sect;5）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Primary vs foreign key.</span><span data-lang="zh">主键与外键。</span></strong> <span data-lang="en">Primary key = unique identifier for rows in its own table. Foreign key = references the primary key in another table. Mixing these up is a common error. Remember: foreign key creates the link between tables.</span><span data-lang="zh">主键 = 本表行的唯一标识符。外键 = 引用另一个表的主键。混淆这两者是常见错误。记住：外键创建表之间的链接。</span></li>
+      <li><strong><span data-lang="en">SQL clause order.</span><span data-lang="zh">SQL 子句顺序。</span></strong> <span data-lang="en">Always: SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY. You cannot write WHERE before FROM. Missing FROM is the most common SQL syntax error on exams.</span><span data-lang="zh">始终：SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY。不能在 FROM 之前写 WHERE。缺少 FROM 是考试中最常见的 SQL 语法错误。</span></li>
+      <li><strong><span data-lang="en">Ontario divergence.</span><span data-lang="zh">安大略分流。</span></strong> <span data-lang="en">If you are in ICS4U (university stream), SQL is ICS4C (college stream) content — you are not assessed on SQL in ICS4U. Your file I/O standard is A3.1. Know which course you are in.</span><span data-lang="zh">如果你在 ICS4U（大学流），SQL 是 ICS4C（学院流）内容——ICS4U 不考查 SQL。你的文件读写标准是 A3.1。了解你在哪门课程中。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple">
+    <strong style="color: var(--purple);"><span data-lang="en">HTML and JSON questions (&sect;6&ndash;&sect;7)</span><span data-lang="zh">HTML 和 JSON 题（&sect;6&ndash;&sect;7）</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">Paired tags.</span><span data-lang="zh">成对标签。</span></strong> <span data-lang="en">Every opening tag needs a closing tag (except self-closing ones like <code>&lt;br&gt;</code>). On a "find the error in this HTML" question, missing closing tags are the most common planted bug.</span><span data-lang="zh">每个开始标签都需要一个结束标签（除了 <code>&lt;br&gt;</code> 等自闭合标签）。在"找出 HTML 中的错误"题中，缺少结束标签是最常见的预设错误。</span></li>
+      <li><strong><span data-lang="en">JSON double quotes only.</span><span data-lang="zh">JSON 只用双引号。</span></strong> <span data-lang="en">JSON keys and string values must use double quotes, not single quotes. On a "is this valid JSON?" question, single quotes or unquoted keys make it invalid.</span><span data-lang="zh">JSON 键和字符串值必须使用双引号，而非单引号。在"这是有效的 JSON 吗？"题中，单引号或不带引号的键使其无效。</span></li>
+      <li><strong><span data-lang="en">data vs information for AP CSP.</span><span data-lang="zh">AP CSP 的数据与信息。</span></strong> <span data-lang="en">AP CSP Big Idea 2 (17&ndash;22% of the exam) tests whether you understand that programs can extract knowledge from raw data. When a question shows a JSON payload and asks "what knowledge can be generated from this data?" — apply the data &rarr; information transformation from &sect;1.</span><span data-lang="zh">AP CSP 大概念 2（占考试 17&ndash;22%）测试你是否理解程序可以从原始数据中提取知识。当题目展示 JSON 载荷并问"可以从这些数据中生成什么知识？"——应用 &sect;1 的数据 &rarr; 信息转换。</span></li>
+    </ul>
+  </div>
+
+  <div class="concept-box green">
+    <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
+    <ul style="margin-top: 8px; padding-left: 22px;">
+      <li><strong><span data-lang="en">State the tradeoff explicitly.</span><span data-lang="zh">明确说明权衡。</span></strong> <span data-lang="en">CSTA 3A-DA-10 says to "evaluate tradeoffs." On a question about CSV vs database, do not just say "databases are better." State both sides: CSV is simpler and portable; a database supports complex queries and avoids duplicate data. Then state the recommendation for the given scenario.</span><span data-lang="zh">CSTA 3A-DA-10 要求"评估权衡"。在关于 CSV 与数据库的题中，不要只说"数据库更好"。说明两方面：CSV 更简单且可移植；数据库支持复杂查询并避免数据重复。然后针对给定场景说明建议。</span></li>
+      <li><strong><span data-lang="en">Show the full SQL statement.</span><span data-lang="zh">展示完整的 SQL 语句。</span></strong> <span data-lang="en">On SQL questions, always write the complete statement including SELECT, FROM, and (if required) WHERE. Partial statements score partial marks at best.</span><span data-lang="zh">在 SQL 题中，始终写出完整语句，包括 SELECT、FROM 和（如需）WHERE。不完整的语句最多得部分分。</span></li>
+    </ul>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flashcards">
+  <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动复习</span></div>
+  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <div class="flashcard-toolbar">
+    <div id="fcCount"><span data-lang="en">0 / 14 flipped</span><span data-lang="zh">0 / 14 已翻</span></div>
+    <div>
+      <button onclick="shuffleFlashcards()"><span data-lang="en">Shuffle</span><span data-lang="zh">洗牌</span></button>
+      <button onclick="resetFlashcards()"><span data-lang="en">Reset</span><span data-lang="zh">重置</span></button>
+    </div>
+  </div>
+  <div class="flashcard-grid" id="flashcardGrid">
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Data vs Information</span><span data-lang="zh">数据与信息</span></div><div class="flashcard-back"><span data-lang="en">Data = raw facts without context (e.g., 98.6). Information = data with meaning attached (e.g., "body temperature 98.6°F, normal"). CSTA 3A-DA-10/11/12.</span><span data-lang="zh">数据 = 没有上下文的原始事实（如 98.6）。信息 = 附有含义的数据（如"体温 98.6°F，正常"）。CSTA 3A-DA-10/11/12。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Python file modes</span><span data-lang="zh">Python 文件模式</span></div><div class="flashcard-back"><span data-lang="en">"r" = read only. "w" = write (overwrites). "a" = append (adds to end). Use with open(...) as f: to auto-close. AB CSE2130 outcomes 1.4.2, 1.4.5.</span><span data-lang="zh">"r" = 只读。"w" = 写入（覆盖）。"a" = 追加（在末尾添加）。使用 with open(...) as f: 自动关闭。AB CSE2130 结果 1.4.2、1.4.5。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">CSV header row</span><span data-lang="zh">CSV 标题行</span></div><div class="flashcard-back"><span data-lang="en">The first row of a CSV that names each column. Use csv.DictReader to auto-map rows to column names. All CSV values are read as strings — convert with int() or float() before math.</span><span data-lang="zh">命名每列的 CSV 第一行。使用 csv.DictReader 将行自动映射到列名。所有 CSV 值都作为字符串读取——在数学运算前用 int() 或 float() 转换。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Relational database</span><span data-lang="zh">关系数据库</span></div><div class="flashcard-back"><span data-lang="en">A database that organises data in linked tables. Tables are joined by primary keys (unique row IDs) and foreign keys (references to another table's primary key). CSTA 3A-DA-10.</span><span data-lang="zh">将数据组织在关联表中的数据库。表通过主键（唯一行 ID）和外键（对另一个表主键的引用）连接。CSTA 3A-DA-10。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></div><div class="flashcard-back"><span data-lang="en">A column whose value uniquely identifies each row in a table. No two rows may share the same primary key value.</span><span data-lang="zh">其值唯一标识表中每行的列。任何两行不得共享相同的主键值。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></div><div class="flashcard-back"><span data-lang="en">A column in one table that references the primary key of another table. Creates the relational link between tables.</span><span data-lang="zh">一个表中引用另一个表主键的列。创建表之间的关系链接。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SQL SELECT syntax</span><span data-lang="zh">SQL SELECT 语法</span></div><div class="flashcard-back"><span data-lang="en">SELECT columns FROM table WHERE condition ORDER BY column DESC; Always: SELECT → FROM → WHERE → ORDER BY. Missing FROM is the most common SQL error.</span><span data-lang="zh">SELECT 列 FROM 表 WHERE 条件 ORDER BY 列 DESC; 始终：SELECT → FROM → WHERE → ORDER BY。缺少 FROM 是最常见的 SQL 错误。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SQL WHERE clause</span><span data-lang="zh">SQL WHERE 子句</span></div><div class="flashcard-back"><span data-lang="en">Filters rows. Only rows where the condition is true are returned. Operators: =, &lt;, &gt;, !=, LIKE, AND, OR. E.g., WHERE score &gt; 85 AND grade = 11.</span><span data-lang="zh">过滤行。只返回条件为真的行。运算符：=、&lt;、&gt;、!=、LIKE、AND、OR。例如：WHERE score &gt; 85 AND grade = 11。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">HTML structure</span><span data-lang="zh">HTML 结构</span></div><div class="flashcard-back"><span data-lang="en">&lt;html&gt; contains &lt;head&gt; (metadata: title, charset, CSS) and &lt;body&gt; (visible content). Every tag has an opening and closing form except self-closing tags like &lt;br&gt; and &lt;img&gt;.</span><span data-lang="zh">&lt;html&gt; 包含 &lt;head&gt;（元数据：标题、字符集、CSS）和 &lt;body&gt;（可见内容）。每个标签都有开始和结束形式，除了 &lt;br&gt; 和 &lt;img&gt; 等自闭合标签。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">HTML table tags</span><span data-lang="zh">HTML 表格标签</span></div><div class="flashcard-back"><span data-lang="en">&lt;table&gt; wraps the table. &lt;tr&gt; = table row. &lt;th&gt; = header cell (bold). &lt;td&gt; = data cell. Nest: table &gt; tr &gt; th/td.</span><span data-lang="zh">&lt;table&gt; 包裹表格。&lt;tr&gt; = 表格行。&lt;th&gt; = 表头单元格（粗体）。&lt;td&gt; = 数据单元格。嵌套：table &gt; tr &gt; th/td。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">JSON format rules</span><span data-lang="zh">JSON 格式规则</span></div><div class="flashcard-back"><span data-lang="en">Keys must be double-quoted strings. Values can be strings, numbers, booleans (true/false), null, arrays [], or objects {}. No single quotes. No trailing commas.</span><span data-lang="zh">键必须是双引号字符串。值可以是字符串、数字、布尔值（true/false）、null、数组 [] 或对象 {}。不允许单引号。不允许尾随逗号。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">json.loads() vs json.dumps()</span><span data-lang="zh">json.loads() 与 json.dumps()</span></div><div class="flashcard-back"><span data-lang="en">json.loads(text) = parse JSON string → Python dict/list. json.dumps(obj) = serialise Python dict/list → JSON string. "loads" = load string; "dumps" = dump string.</span><span data-lang="zh">json.loads(text) = 解析 JSON 字符串 → Python 字典/列表。json.dumps(obj) = 序列化 Python 字典/列表 → JSON 字符串。"loads" = 加载字符串；"dumps" = 转储字符串。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">API (web context)</span><span data-lang="zh">接口（网络背景）</span></div><div class="flashcard-back"><span data-lang="en">Application Programming Interface. A set of rules that lets one program request data from another over HTTP. Response is usually JSON. AB CSE1210/1220/2210/3210 web scripting pathway.</span><span data-lang="zh">应用程序编程接口。让一个程序通过 HTTP 向另一个程序请求数据的一组规则。响应通常是 JSON。AB CSE1210/1220/2210/3210 网页脚本路径。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">AP CSP Big Idea 2 (DAT)</span><span data-lang="zh">AP CSP 大概念 2（DAT）</span></div><div class="flashcard-back"><span data-lang="en">Data is central to computing — it communicates initial conditions and represents new knowledge. Topics 2.3 (extracting information from data) and 2.4 (using programs with data). Weighted 17–22% of the exam.</span><span data-lang="zh">数据是计算的核心——它传递初始条件并代表新知识。主题 2.3（从数据中提取信息）和 2.4（将程序与数据结合使用）。占考试 17–22%。</span></div></div></div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="unit-quiz">
+  <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
+  <h2><span data-lang="en">Practice Quiz</span><span data-lang="zh">综合测验</span></h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A program reads the number <code>37</code> from a CSV file. What Python type does the variable hold immediately after reading?</span><span data-lang="zh">程序从 CSV 文件中读取数字 <code>37</code>。读取后变量立即持有什么 Python 类型？</span></div><div class="quiz-number">Q1</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">int</span><span data-lang="zh">整数 int</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">float</span><span data-lang="zh">浮点数 float</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">str</span><span data-lang="zh">字符串 str</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">bool</span><span data-lang="zh">布尔值 bool</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSV files are plain text. Every value read from a CSV &mdash; including numbers &mdash; is a <strong>string</strong> (str) until you convert it. Use <code>int(row["score"])</code> or <code>float(row["score"])</code> before doing math.</span><span data-lang="zh">CSV 文件是纯文本。从 CSV 读取的每个值——包括数字——都是<strong>字符串</strong>（str），直到你转换它。在进行数学运算之前使用 <code>int(row["score"])</code> 或 <code>float(row["score"])</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">CSV values are always strings. Python does not auto-convert CSV text to int or float. You must call int() or float() explicitly.</span><span data-lang="zh">CSV 值始终是字符串。Python 不会自动将 CSV 文本转换为 int 或 float。必须显式调用 int() 或 float()。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A Students table has columns <code>student_id</code>, <code>name</code>, <code>grade</code>. A Scores table has columns <code>score_id</code>, <code>student_id</code>, <code>subject</code>, <code>score</code>. What is <code>student_id</code> called in the Scores table?</span><span data-lang="zh">Students 表有列 <code>student_id</code>、<code>name</code>、<code>grade</code>。Scores 表有列 <code>score_id</code>、<code>student_id</code>、<code>subject</code>、<code>score</code>。<code>student_id</code> 在 Scores 表中叫什么？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Index</span><span data-lang="zh">索引</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Header</span><span data-lang="zh">标题</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In the Scores table, <code>student_id</code> references the primary key of the Students table. A column that references another table's primary key is a <strong>foreign key</strong>. It creates the relational link between the two tables.</span><span data-lang="zh">在 Scores 表中，<code>student_id</code> 引用 Students 表的主键。引用另一个表主键的列是<strong>外键</strong>。它创建两个表之间的关系链接。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">In the Scores table, student_id is a foreign key (it references Students.student_id). The primary key of Scores is score_id (the unique identifier for each row in Scores).</span><span data-lang="zh">在 Scores 表中，student_id 是外键（它引用 Students.student_id）。Scores 的主键是 score_id（Scores 中每行的唯一标识符）。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which SQL query returns the names of all students in grade 12, sorted alphabetically?</span><span data-lang="zh">哪个 SQL 查询返回所有 12 年级学生的姓名，按字母顺序排列？</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>SELECT * WHERE grade = 12 ORDER BY name;</code></div>
+      <div class="quiz-opt" data-idx="1"><code>SELECT name FROM Students grade = 12;</code></div>
+      <div class="quiz-opt" data-idx="2"><code>SELECT name FROM Students ORDER BY name WHERE grade = 12;</code></div>
+      <div class="quiz-opt" data-idx="3"><code>SELECT name FROM Students WHERE grade = 12 ORDER BY name;</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct SQL clause order: SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY. Option D has all four in the right order: SELECT name (column), FROM Students (table), WHERE grade = 12 (filter), ORDER BY name (sort). ASC is the default (alphabetical = ascending).</span><span data-lang="zh">正确的 SQL 子句顺序：SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY。选项 D 四个都按正确顺序：SELECT name（列），FROM Students（表），WHERE grade = 12（过滤），ORDER BY name（排序）。ASC 是默认值（字母顺序 = 升序）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">SQL clause order is fixed: SELECT → FROM → WHERE → ORDER BY. Missing FROM (option A), missing WHERE keyword (option B), and wrong ORDER BY position (option C) all make those queries invalid.</span><span data-lang="zh">SQL 子句顺序是固定的：SELECT → FROM → WHERE → ORDER BY。缺少 FROM（选项 A）、缺少 WHERE 关键字（选项 B）和 ORDER BY 位置错误（选项 C）都使这些查询无效。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In HTML, which tag creates a hyperlink to another page?</span><span data-lang="zh">在 HTML 中，哪个标签创建指向另一页面的超链接？</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>&lt;a href="url"&gt;</code></div>
+      <div class="quiz-opt" data-idx="1"><code>&lt;link href="url"&gt;</code></div>
+      <div class="quiz-opt" data-idx="2"><code>&lt;src="url"&gt;</code></div>
+      <div class="quiz-opt" data-idx="3"><code>&lt;p href="url"&gt;</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>&lt;a&gt;</code> (anchor) tag with the <code>href</code> attribute creates a hyperlink. <code>&lt;link&gt;</code> is used in the &lt;head&gt; to link external CSS stylesheets. <code>&lt;p&gt;</code> is a paragraph. There is no <code>&lt;src&gt;</code> tag.</span><span data-lang="zh"><code>&lt;a&gt;</code>（锚点）标签加 <code>href</code> 属性创建超链接。<code>&lt;link&gt;</code> 在 &lt;head&gt; 中用于链接外部 CSS 样式表。<code>&lt;p&gt;</code> 是段落。没有 <code>&lt;src&gt;</code> 标签。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Hyperlinks use the anchor tag: &lt;a href="url"&gt;text&lt;/a&gt;. The &lt;link&gt; tag in the head links CSS files, not navigational hyperlinks.</span><span data-lang="zh">超链接使用锚点标签：&lt;a href="url"&gt;文本&lt;/a&gt;。head 中的 &lt;link&gt; 标签链接 CSS 文件，不是导航超链接。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A JSON object is <code>{"name": "Bob", "scores": [78, 85, 91]}</code>. What does <code>data["scores"][2]</code> evaluate to in Python?</span><span data-lang="zh">JSON 对象为 <code>{"name": "Bob", "scores": [78, 85, 91]}</code>。在 Python 中 <code>data["scores"][2]</code> 的值是什么？</span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">78</div>
+      <div class="quiz-opt" data-idx="1">85</div>
+      <div class="quiz-opt" data-idx="2">91</div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Error</span><span data-lang="zh">错误</span></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>data["scores"]</code> returns the list <code>[78, 85, 91]</code>. Python lists are 0-indexed: index 0 = 78, index 1 = 85, index 2 = 91. So <code>data["scores"][2]</code> = 91.</span><span data-lang="zh"><code>data["scores"]</code> 返回列表 <code>[78, 85, 91]</code>。Python 列表从 0 开始索引：索引 0 = 78，索引 1 = 85，索引 2 = 91。所以 <code>data["scores"][2]</code> = 91。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Python is 0-indexed. data["scores"] = [78, 85, 91]. Index 0 = 78, index 1 = 85, index 2 = 91.</span><span data-lang="zh">Python 从 0 开始索引。data["scores"] = [78, 85, 91]。索引 0 = 78，索引 1 = 85，索引 2 = 91。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which CSTA standard says "Create interactive data visualizations using software tools to help others better understand real-world phenomena"? <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span><span data-lang="zh">哪个 CSTA 标准说"使用软件工具创建互动数据可视化，以帮助他人更好地理解现实世界现象"？<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA</span></span></div><div class="quiz-number">Q6</div></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0"><code>3A-DA-10</code></div>
+      <div class="quiz-opt" data-idx="1"><code>3A-DA-11</code></div>
+      <div class="quiz-opt" data-idx="2"><code>3A-DA-12</code></div>
+      <div class="quiz-opt" data-idx="3"><code>3B-DA-05</code></div>
+    </div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSTA 3A-DA-11 (verbatim): "Create interactive data visualizations using software tools to help others better understand real-world phenomena." 3A-DA-10 is about data storage tradeoffs. 3A-DA-12 is about computational models of relationships.</span><span data-lang="zh">CSTA 3A-DA-11（原文）："使用软件工具创建互动数据可视化，以帮助他人更好地理解现实世界现象。"3A-DA-10 关于数据存储权衡。3A-DA-12 关于关系的计算模型。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">3A-DA-10 = data storage/organisation tradeoffs. 3A-DA-11 = interactive data visualisation. 3A-DA-12 = computational models of data relationships. 3B-DA-05 = data analysis tools for complex systems.</span><span data-lang="zh">3A-DA-10 = 数据存储/组织权衡。3A-DA-11 = 互动数据可视化。3A-DA-12 = 数据关系的计算模型。3B-DA-05 = 复杂系统的数据分析工具。</span></div>
+    <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+</section>
+
+<hr class="sep">
+
+<section class="section" id="checklist">
+  <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
+  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></h2>
+  <p><span data-lang="en">Tick each item when you can do it cold, without notes, on a first attempt.</span><span data-lang="zh">能在无笔记、首次尝试下完成，再勾选每一项。</span></p>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 11 mastered</span><span data-lang="zh">已掌握 0 / 11</span></div>
+  <ul class="checklist" id="checklistUl">
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the difference between data and information with a concrete example, and state why context is what converts data into information. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-10 / AP CSP DAT</span></span><span data-lang="zh">用具体例子解释数据和信息的区别，并说明为什么上下文将数据转变为信息。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-10 / AP CSP DAT</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a Python program that opens a text file in read mode, reads all lines, computes the average of the numbers, and writes the result to a second file. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.1 / AB CSE2130</span></span><span data-lang="zh">编写一个 Python 程序，以读取模式打开文本文件，读取所有行，计算数字的平均值，并将结果写入第二个文件。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.1 / AB CSE2130</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the three Python file modes ("r", "w", "a"), explain what each does, and identify which to use if you want to add a new record to an existing log file. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2130 outcome 1.4.6</span></span><span data-lang="zh">说明三种 Python 文件模式（"r"、"w"、"a"），解释每种的作用，并识别向现有日志文件添加新记录时应使用哪种。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE2130 结果 1.4.6</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Read a CSV with csv.DictReader, filter rows where a numeric field exceeds a threshold, and explain why int() conversion is required before the comparison. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-11 / AP CSP DAT-2</span></span><span data-lang="zh">使用 csv.DictReader 读取 CSV，过滤数值字段超过阈值的行，并解释为什么比较前需要 int() 转换。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-11 / AP CSP DAT-2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Define primary key and foreign key, and draw or describe the relationship between a Students table and a Scores table linked by student_id. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-10 / &#x1F1E8;&#x1F1E6; ON ICS4C A2.2</span></span><span data-lang="zh">定义主键和外键，并画出或描述通过 student_id 连接的 Students 表和 Scores 表之间的关系。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-10 / &#x1F1E8;&#x1F1E6; ON ICS4C A2.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a complete SQL SELECT statement with a WHERE filter and an ORDER BY clause; identify the correct clause order (SELECT → FROM → WHERE → ORDER BY). <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4C A2.2 / &#x1F1FA;&#x1F1F8; CSTA 3A-DA-10</span></span><span data-lang="zh">写出带 WHERE 过滤和 ORDER BY 子句的完整 SQL SELECT 语句；识别正确的子句顺序（SELECT → FROM → WHERE → ORDER BY）。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4C A2.2 / &#x1F1FA;&#x1F1F8; CSTA 3A-DA-10</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write a minimal valid HTML page with a title, a heading, and a two-column table. Identify the roles of &lt;head&gt;, &lt;body&gt;, &lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, and &lt;td&gt;. <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1210/1220</span></span><span data-lang="zh">编写一个包含标题、标题和两列表格的最小有效 HTML 页面。识别 &lt;head&gt;、&lt;body&gt;、&lt;table&gt;、&lt;tr&gt;、&lt;th&gt; 和 &lt;td&gt; 的角色。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE1210/1220</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Parse a JSON string with json.loads(), access a nested field (e.g., data["forecast"]["tomorrow"]), and explain the difference between json.loads() and json.dumps(). <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-12 / AP CSP DAT-2</span></span><span data-lang="zh">使用 json.loads() 解析 JSON 字符串，访问嵌套字段（如 data["forecast"]["tomorrow"]），并解释 json.loads() 和 json.dumps() 的区别。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3A-DA-12 / AP CSP DAT-2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the three JSON syntax rules: (1) keys must be double-quoted strings, (2) no single quotes, (3) no trailing commas. Identify at least one error in a given invalid JSON snippet. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT</span></span><span data-lang="zh">说明三条 JSON 语法规则：(1) 键必须是双引号字符串，(2) 不允许单引号，(3) 不允许尾随逗号。在给定的无效 JSON 片段中识别至少一个错误。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the Ontario divergence: why SQL/relational databases are in ICS4C (college stream) but not ICS4U (university stream), and what ICS4U students study instead (file I/O, A3.1). <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.1 / ICS4C A2.2</span></span><span data-lang="zh">解释安大略分流：为什么 SQL/关系数据库在 ICS4C（学院流）而非 ICS4U（大学流），以及 ICS4U 学生转而学习什么（文件读写，A3.1）。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.1 / ICS4C A2.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Describe the data &rarr; information transformation pipeline for AP CSP Big Idea 2: raw data enters a program, the program processes it, and the output is knowledge (information). Give one example showing each stage. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-2 / CSTA 3A-DA-11/12</span></span><span data-lang="zh">描述 AP CSP 大概念 2 的数据 &rarr; 信息转换管线：原始数据进入程序，程序处理它，输出是知识（信息）。给出一个显示每个阶段的例子。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP DAT-2 / CSTA 3A-DA-11/12</span></span></span></li>
+  </ul>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="feeders">
+  <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
+  <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
+  <p><span data-lang="en">Data, databases and the web are the infrastructure that every modern program rests on. The skills here — reading files, parsing CSV and JSON, querying a database, building a web page — underpin the AP CSP Create Performance Task (your program must handle real data), the CSTA 3A-DA standards, and the data-handling sections of Ontario's Grade 12 Computer Science courses. No AP CSA database or web guide exists in this repo yet; the section below focuses on within-series and AP CSP connections.</span><span data-lang="zh">数据、数据库和网络是每个现代程序所依赖的基础设施。这里的技能——读取文件、解析 CSV 和 JSON、查询数据库、构建网页——支撑 AP CSP 创作绩效任务（程序必须处理真实数据）、CSTA 3A-DA 标准和安大略 12 年级计算机科学课程的数据处理部分。本仓库中目前没有 AP CSA 数据库或网页指南；以下部分重点介绍系列内和 AP CSP 的连接。</span></p>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Unit 2 (Programming Fundamentals) gave you variables, data types, and I/O — this unit shows where that data lives on disk and in databases. Unit 5 (Data Structures) shows how to organise data in memory (lists, dictionaries); this unit shows how to persist it on disk or transmit it over the web. Unit 9 (Boolean Logic) underpins the WHERE clause logic you used in &sect;5. The data skills here synthesise material from across the series into a complete pipeline: file &rarr; parse &rarr; filter &rarr; display.</span><span data-lang="zh">第 2 单元（编程基础）给了你变量、数据类型和 I/O——本单元展示这些数据在磁盘和数据库中的存储位置。第 5 单元（数据结构）展示如何在内存中组织数据（列表、字典）；本单元展示如何将其持久化到磁盘或通过网络传输。第 9 单元（布尔逻辑）支撑你在 &sect;5 中使用的 WHERE 子句逻辑。这里的数据技能将整个系列的材料综合成一个完整的管线：文件 &rarr; 解析 &rarr; 过滤 &rarr; 显示。</span></p>
+  </div>
+
+  <div style="margin: 20px 0;">
+    <p><strong><span data-lang="en">AP CSP feeder (no link — no AP database guide in this repo).</span><span data-lang="zh">AP CSP 衔接（无链接——本仓库中没有 AP 数据库指南）。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 2 (Data — DAT) is weighted at 17&ndash;22% of the exam and directly tests the skills in this guide: extracting information from data (topics 2.3, 2.4), understanding how programs generate knowledge from raw inputs, and evaluating tradeoffs in data storage and representation (CSTA 3A-DA-10). The Create Performance Task requires you to write a program that processes data — the CSV-reading and JSON-parsing patterns in &sect;2, &sect;3, and &sect;7 are the practical skills that task demands. There is no AP CSA database or web guide in this repo; students moving to AP CSA should treat this unit as enrichment background for data persistence concepts that AP CSA covers through file I/O and 2D arrays.</span><span data-lang="zh">AP CSP 大概念 2（数据——DAT）占考试 17&ndash;22%，直接考查本指南中的技能：从数据中提取信息（主题 2.3、2.4）、理解程序如何从原始输入生成知识，以及评估数据存储和表示的权衡（CSTA 3A-DA-10）。创作绩效任务要求编写处理数据的程序——&sect;2、&sect;3 和 &sect;7 中的 CSV 读取和 JSON 解析模式是该任务要求的实践技能。本仓库中没有 AP CSA 数据库或网页指南；转向 AP CSA 的学生应将本单元视为 AP CSA 通过文件 I/O 和二维数组涵盖的数据持久化概念的拓展背景。</span></p>
+  </div>
+  <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
+  <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
+</section>
+
+<!-- faq-section: student FAQ + FAQPage schema (SEO + value sprint) -->
+<section class="faq-section" id="common-questions" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-section__title"><span data-lang="en">Common Questions</span><span data-lang="zh">常见问题</span></h2>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between data and information?</span><span data-lang="zh">数据和信息有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">Data is raw, unprocessed facts and symbols, such as a list of numbers, while information is data that has been processed, organised, or interpreted so it carries meaning. Adding context, like saying a temperature is normal, turns data into information.</span><span data-lang="zh">数据是原始的、未经处理的事实和符号，比如一串数字；信息是经过处理、组织或解释后带有意义的数据。加上上下文，比如说某个体温是正常的，就把数据变成了信息。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What is the difference between a primary key and a foreign key?</span><span data-lang="zh">主键和外键有什么区别？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">A primary key is a column whose value uniquely identifies each row in a table, while a foreign key is a column that references the primary key of another table. The foreign key is the relational part that links two tables together.</span><span data-lang="zh">主键是其值能唯一标识表中每一行的列，外键是引用另一张表主键的列。外键正是把两张表关联起来的关系部分。</span></p>
+  </details>
+  <details class="faq-item">
+    <summary><span data-lang="en">What do SELECT and WHERE do in SQL?</span><span data-lang="zh">SQL 中的 SELECT 和 WHERE 各做什么？</span></summary>
+    <p class="faq-item__a"><span data-lang="en">SELECT chooses which columns to return from a table, while WHERE filters the rows so only those meeting a condition are returned. Together they let you pull exactly the data you need from a relational database.</span><span data-lang="zh">SELECT 选择从表中返回哪些列，WHERE 过滤行，只返回满足条件的那些行。两者配合可以从关系数据库中精确取出你需要的数据。</span></p>
+  </details>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between data and information?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Data is raw, unprocessed facts and symbols, such as a list of numbers, while information is data that has been processed, organised, or interpreted so it carries meaning. Adding context, like saying a temperature is normal, turns data into information."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a primary key and a foreign key?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A primary key is a column whose value uniquely identifies each row in a table, while a foreign key is a column that references the primary key of another table. The foreign key is the relational part that links two tables together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do SELECT and WHERE do in SQL?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SELECT chooses which columns to return from a table, while WHERE filters the rows so only those meeting a condition are returned. Together they let you pull exactly the data you need from a relational database."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- consult-cta: lead-gen conversion surface (P0 sprint) -->
+<aside class="consult-cta">
+  <p class="consult-cta__lead"><span data-lang="en">Go further, faster.</span><span data-lang="zh">走得更远，也更快。</span></p>
+  <p class="consult-cta__body"><span data-lang="en">Our 1:1 tutoring and small-group classes take you from this unit through AP, IB, and into university. Start with a free assessment.</span><span data-lang="zh">我们的 1 对 1 辅导与小班课程，带你从本单元贯通 AP、IB，直至大学。先从一次免费评估开始。</span></p>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__sg__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__sg__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
+</aside>
+
+
+<!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
+<details class="sg-appendix" id="sg-appendix">
+  <summary><span data-lang="en">Syllabus alignment &amp; how to use this guide</span><span data-lang="zh">大纲对照与使用说明</span></summary>
+  <div class="detail-body">
+      <aside class="syllabus-map" id="syllabus-map">
+  <div class="syllabus-map-label"><span data-lang="en">Where this lives in your syllabus</span><span data-lang="zh">本单元在各大纲中的位置</span></div>
+  <div class="syllabus-map-grid">
+    <div>
+      <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
+      <ul>
+        <li><code>3A-DA-11</code> <span data-lang="en">"Create interactive data visualizations using software tools to help others better understand real-world phenomena." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"使用软件工具创建互动数据可视化，以帮助他人更好地理解现实世界现象。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
+        <li><code>3A-DA-12</code> <span data-lang="en">"Create computational models that represent the relationships among different elements of data collected from a phenomenon or process." (CSTA Level 3A)</span><span data-lang="zh">"创建计算模型，表示从现象或过程中收集的数据的不同元素之间的关系。"（CSTA 3A 级）</span></li>
+        <li><code>3A-DA-10</code> <span data-lang="en">"Evaluate the tradeoffs in how data elements are organized and where data is stored." (CSTA Level 3A) — directly addresses database design.</span><span data-lang="zh">"评估数据元素的组织方式和数据存储位置的权衡。"（CSTA 3A 级）——直接涉及数据库设计。</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 2 (Data — DAT): Topics 2.3 Extracting Information from Data, 2.4 Using Programs with Data. Learning Objective DAT-2 family. Skill 5.B "Explain how knowledge can be generated from data."</span><span data-lang="zh">AP CSP 大概念 2（数据——DAT）：主题 2.3 从数据中提取信息，2.4 将程序与数据结合使用。学习目标 DAT-2 系列。技能 5.B"解释如何从数据中生成知识"。</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS4U / ICS4C</span><span data-lang="zh">安大略 — ICS4U / ICS4C</span></div>
+      <ul>
+        <li><strong>ICS4U</strong> <code>A3.1</code> <span data-lang="en">"demonstrate the ability to read from, and write to, an external file (e.g., text file, binary file, database, XML file) from within a computer program." (Grade 12 University)</span><span data-lang="zh">ICS4U A3.1："展示从计算机程序内部读写外部文件（如文本文件、二进制文件、数据库、XML 文件）的能力。"（12 年级大学预科）</span></li>
+        <li><strong>ICS4C</strong> <code>A2.2</code> <span data-lang="en">"demonstrate the ability to read from, and write to, an external file (e.g., sequential file, database, XML file, relational database via SQL)." (Grade 12 College)</span><span data-lang="zh">ICS4C A2.2："展示读写外部文件（如顺序文件、数据库、XML 文件、通过 SQL 的关系数据库）的能力。"（12 年级学院预科）</span></li>
+      </ul>
+      <div class="syllabus-note"><strong>&#9888; Divergence.</strong> <span data-lang="en">Relational databases and SQL appear only in Ontario's college stream (ICS4C), not the university stream (ICS4U). ICS4U covers file I/O (A3.1) but not SQL. Students in the ICS4U track will encounter the file I/O sections most directly; the SQL section is enrichment mapped to ICS4C and CSTA/AP CSP.</span><span data-lang="zh">关系数据库和 SQL 仅出现在安大略学院流（ICS4C），而非大学流（ICS4U）。ICS4U 涵盖文件读写（A3.1）但不涉及 SQL。ICS4U 学生最直接对应文件读写部分；SQL 部分为拓展内容，对应 ICS4C 及 CSTA/AP CSP。</span></div>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia — CIS 11/12</span><span data-lang="zh">不列颠哥伦比亚 — CIS 11/12</span></div>
+      <ul>
+        <li><strong>Computer Studies 10</strong> <span data-lang="en">Content (verbatim): "risks and rewards (data collection, personal information, privacy concerns, remote hacking, information as a commodity, …) associated with big data, multi-device connectivity, and the Internet of Things."</span><span data-lang="zh">Computer Studies 10 内容（原文）："与大数据、多设备连接和物联网相关的风险与回报（数据收集、个人信息、隐私问题、远程入侵、信息作为商品……）"。</span></li>
+        <li><strong>Computer Information Systems 11</strong> <span data-lang="en">Content (verbatim): "evolution of computer technology, including hardware, software, networks, and the Internet"; "installation and configuration of operating systems"; "proprietary versus open-source applications."</span><span data-lang="zh">Computer Information Systems 11 内容（原文）："计算机技术的演变，包括硬件、软件、网络和互联网"；"操作系统的安装与配置"；"专有应用与开源应用的对比"。</span></li>
+        <li><strong>Computer Information Systems 12</strong> <span data-lang="en">Content (verbatim): "global and societal shifts resulting from emerging technologies, the Internet, and the ubiquity of online access."</span><span data-lang="zh">Computer Information Systems 12 内容（原文）："新兴技术、互联网和在线访问无处不在所带来的全球与社会变革"。</span></li>
+      </ul>
+      <div class="syllabus-note"><strong>&#9888; Note.</strong> <span data-lang="en">BC has no relational-database/SQL learning standard in its ADST computer courses. Data appears as big-data/IoT context (CS10) and Internet/online-access shifts (CIS 11/12).</span><span data-lang="zh">BC 的 ADST 计算机课程中没有关系数据库/SQL 学习标准。数据以大数据/物联网背景（CS10）和互联网/在线访问变革（CIS 11/12）的形式出现。</span></div>
+    </div>
+    <div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔 — CSE2130 / 网页路径</span></div>
+      <ul>
+        <li><strong>CSE2130</strong> <span data-lang="en">Files &amp; File Structures 1 (Intermediate): "Students learn how to design, code and debug programs that use data files to store and retrieve data on secondary storage devices." Outcomes include 1.4.2 "opening an existing file"; 1.4.5 "importing data from a file"; 1.4.6 "appending data to a file."</span><span data-lang="zh">CSE2130 文件与文件结构 1（中级）："学生学习如何设计、编写和调试使用数据文件在辅助存储设备上存储和检索数据的程序。"结果包括 1.4.2"打开现有文件"；1.4.5"从文件导入数据"；1.4.6"向文件追加数据"。</span></li>
+        <li><strong>CSE1210/CSE1220</strong> <span data-lang="en">Client-side Scripting 1 &amp; 2: "Students are introduced to Internet computing through the use of one or more Web-specific markup languages." CSE1220 adds scripting languages.</span><span data-lang="zh">CSE1210/1220 客户端脚本 1 和 2："学生通过使用一种或多种网络专用标记语言了解互联网计算。"CSE1220 增加脚本语言。</span></li>
+        <li><span data-lang="en">Alberta CSE has no relational-database/SQL module — database administration sits in other CTS clusters. The web scripting pathway (CSE1210 → CSE1220 → CSE2210 → CSE3210) is a distinctive Alberta strength.</span><span data-lang="zh">阿尔伯塔 CSE 没有关系数据库/SQL 模块——数据库管理位于其他 CTS 群集。网页脚本路径（CSE1210 → CSE1220 → CSE2210 → CSE3210）是阿尔伯塔的特色优势。</span></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+      <section class="section" id="how-to-use">
+  <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
+  <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
+  <p><span data-lang="en">Data and databases are treated as a core topic by the US frameworks (CSTA 3A-DA family; AP CSP Big Idea 2 at 17&ndash;22% of the exam). Ontario takes a split approach: file I/O sits in ICS4U (university stream, Grade 12), while SQL and web work sit in ICS4C (college stream). BC covers data mainly in the big-data/privacy and Internet-evolution framing of CIS 11/12, with no dedicated SQL standard. Alberta covers files thoroughly in CSE2130 and has a full web-scripting pathway (CSE1210 to CSE3210), but no SQL module in the CSE cluster. Sections &sect;1&ndash;&sect;3 (data, files, CSV) are universal. Sections &sect;4&ndash;&sect;5 (relational databases, SQL) map most directly to US CSTA, AP CSP, and ON ICS4C. Sections &sect;6&ndash;&sect;7 (HTML, JSON/APIs) align with Alberta web scripting and AP CSP Big Idea 2.</span><span data-lang="zh">美国框架将数据和数据库视为核心主题（CSTA 3A-DA 系列；AP CSP 大概念 2 占考试 17&ndash;22%）。安大略采用分流方式：文件读写在 ICS4U（大学预科，12 年级），SQL 和网页工作在 ICS4C（学院预科）。BC 主要在 CIS 11/12 的大数据/隐私和互联网演变框架中涵盖数据，没有专用 SQL 标准。阿尔伯塔在 CSE2130 中详细涵盖文件，并有完整的网页脚本路径（CSE1210 至 CSE3210），但 CSE 群集中没有 SQL 模块。&sect;1&ndash;&sect;3（数据、文件、CSV）是通用的。&sect;4&ndash;&sect;5（关系数据库、SQL）最直接对应美国 CSTA、AP CSP 和安大略 ICS4C。&sect;6&ndash;&sect;7（HTML、JSON/接口）与阿尔伯塔网页脚本和 AP CSP 大概念 2 对齐。</span></p>
+
+  <div style="overflow-x: auto; margin: 16px 0 18px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
+    <thead>
+      <tr style="background: var(--bg); border-bottom: 2px solid var(--accent);">
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">If you are in&hellip;</span><span data-lang="zh">如果你在&hellip;</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Focus on these sections</span><span data-lang="zh">重点学习</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Defer / lighter</span><span data-lang="zh">可推迟 / 减负</span></th>
+        <th style="text-align: left; padding: 8px 10px;"><span data-lang="en">Source</span><span data-lang="zh">依据</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. CSTA 3A-DA-10/11/12 cover data organisation, visualisation and models. AP CSP Big Idea 2 (DAT) topics 2.3 and 2.4 test extracting information from data and using programs with data.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。CSTA 3A-DA-10/11/12 涵盖数据组织、可视化和模型。AP CSP 大概念 2（DAT）主题 2.3 和 2.4 考查从数据中提取信息以及将程序与数据结合使用。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Nothing — AP CSP Big Idea 2 (17–22% of exam) makes all seven sections core for AP students.</span><span data-lang="zh">无——AP CSP 大概念 2（占考试 17–22%）使所有七节对 AP 学生都是核心。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3A-DA-10, 3A-DA-11, 3A-DA-12; AP CSP Big Idea 2 (DAT) topics 2.3, 2.4</span><span data-lang="zh">&mdash; CSTA 3A-DA-10、3A-DA-11、3A-DA-12；AP CSP 大概念 2（DAT）主题 2.3、2.4</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON &mdash; ICS4U (Grade 12 Univ.)</span><span data-lang="zh">安大略 &mdash; ICS4U（12 年级大学预科）</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 (data, file I/O, CSV) map directly to ICS4U A3.1. The file I/O worked examples in &sect;2 are the exact skill assessed. &sect;6 (HTML) for context only.</span><span data-lang="zh">&sect;1&ndash;&sect;3（数据、文件读写、CSV）直接对应 ICS4U A3.1。&sect;2 的文件读写例题是被考查的确切技能。&sect;6（HTML）仅作背景。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL) are ICS4C college-stream content — skip for ICS4U floor.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）是 ICS4C 学院流内容——ICS4U 基础学生可跳过。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS4U A3.1 (file I/O); ICS4C A2.2 (SQL)</span><span data-lang="zh">&mdash; ICS4U A3.1（文件读写）；ICS4C A2.2（SQL）</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CIS 11 / CIS 12</span><span data-lang="zh">BC &mdash; CIS 11 / CIS 12</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (data vs information), &sect;6 (HTML), &sect;7 (JSON/APIs). CIS 11 covers Internet evolution; CIS 12 covers global shifts from online access. File I/O and SQL are enrichment for BC students.</span><span data-lang="zh">&sect;1（数据与信息）、&sect;6（HTML）、&sect;7（JSON/接口）。CIS 11 涵盖互联网演变；CIS 12 涵盖在线访问带来的全球变革。文件读写和 SQL 对 BC 学生为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">BC has no relational-database/SQL standard — &sect;4&ndash;&sect;5 are enrichment, not assessed.</span><span data-lang="zh">BC 没有关系数据库/SQL 标准——&sect;4&ndash;&sect;5 为拓展内容，不被考查。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CS10 big-data/IoT Content; CIS11/12 Internet/online Content bullets</span><span data-lang="zh">&mdash; BC CS10 大数据/物联网内容；CIS11/12 互联网/在线内容条目</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border);">
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔 &mdash; CSE2130 / 网页路径</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 (data, file I/O) align with CSE2130 outcomes. &sect;6 (HTML) maps to CSE1210/1220 client-side scripting. &sect;7 (JSON/APIs) maps to CSE2210/3210.</span><span data-lang="zh">&sect;1&ndash;&sect;3（数据、文件读写）与 CSE2130 结果对齐。&sect;6（HTML）对应 CSE1210/1220 客户端脚本。&sect;7（JSON/接口）对应 CSE2210/3210。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL) — no SQL module in the CSE cluster; treat as enrichment.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）——CSE 群集中没有 SQL 模块；作为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE2130 outcomes 1.4.2, 1.4.5, 1.4.6; CSE1210/1220 descriptions</span><span data-lang="zh">&mdash; CSE2130 结果 1.4.2、1.4.5、1.4.6；CSE1210/1220 描述</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top: 12px;"><span data-lang="en">Once you have located your row, use the two cards below for the speed at which you should work through the recommended sections.</span><span data-lang="zh">找到所在行后，用下面两张卡片决定推进速度。</span></p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise three things: the difference between data and information; how to open, read, and write a file in Python; and what SELECT/WHERE does in SQL. Read every cram-cheat box. For AP CSP, know that Big Idea 2 tests how programs extract knowledge from data — JSON, CSV, and database queries are all fair game.</span><span data-lang="zh">背熟三件事：数据与信息的区别；如何在 Python 中打开、读取和写入文件；SQL 中 SELECT/WHERE 的作用。读每个速记框。对于 AP CSP，要知道大概念 2 考查程序如何从数据中提取知识——JSON、CSV 和数据库查询都可能考到。</span></p>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Work through all seven sections in order. The sections build: data &rarr; files &rarr; CSV &rarr; relational tables &rarr; SQL &rarr; HTML &rarr; JSON/APIs. Each concept assumes the previous. For AP CSP, be able to write a program that reads a CSV, filters rows, and outputs a result — that is the synthesis of &sect;2, &sect;3, and &sect;5 combined. For CSTA 3A-DA-11, be able to describe how you would visualise the data you just queried.</span><span data-lang="zh">按顺序学习全部七节。各节层层递进：数据 &rarr; 文件 &rarr; CSV &rarr; 关系表 &rarr; SQL &rarr; HTML &rarr; JSON/接口。每个概念都以前一个为基础。对于 AP CSP，能够编写读取 CSV、过滤行并输出结果的程序——这是 &sect;2、&sect;3 和 &sect;5 的综合。对于 CSTA 3A-DA-11，能够描述如何可视化刚刚查询到的数据。</span></p>
+    </div>
+  </div>
+</section>
+  </div>
+</details>
+
+<div class="footer-wrap">
+  <div class="footer-brand">DINGRUI SCHOLARS</div>
+  <p><span data-lang="en">High School Computer Science &middot; Data, Databases and the Web &middot; v1</span><span data-lang="zh">高中计算机科学 &middot; 数据、数据库与网络 &middot; v1</span></p>
+</div>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+  <a href="../Practice%20Questions/Unit_10_Data_Databases_and_the_Web_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <a href="../Practice%20Questions/Solutions/Unit_10_Data_Databases_and_the_Web_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> &rarr;</a>
+</nav>
+</main>
+<script>
+let quizScore = { correct: 0, attempted: 0, total: 0 };
+function updateScoreBadge() { const badge = document.getElementById('scoreBadge'); if (!badge) return; if (quizScore.total === 0) { badge.textContent = '0 / 0'; badge.classList.add('zero'); } else { badge.textContent = quizScore.correct + ' / ' + quizScore.total; badge.classList.remove('zero'); } }
+function setThemeBtnLabel(isDark) { const tt = document.getElementById('themeToggle'); if (!tt) return; tt.innerHTML = isDark ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>' : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>'; }
+function toggleTheme() { const isDark = document.documentElement.getAttribute('data-theme') === 'dark'; document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark'); setThemeBtnLabel(!isDark); }
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); setThemeBtnLabel(true); }
+function toggleLang() { document.body.classList.toggle('lang-zh'); }
+window.addEventListener('scroll', () => { const h = document.documentElement.scrollHeight - window.innerHeight; const pct = h > 0 ? (window.scrollY / h) * 100 : 0; const pf = document.getElementById('progressFill'); if (pf) pf.style.width = pct + '%'; });
+const sections = document.querySelectorAll('.section'); const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`); if (link) link.classList.add('active'); } }); }, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.quiz').forEach(quiz => { const answer = parseInt(quiz.dataset.answer); const opts = quiz.querySelectorAll('.quiz-opt'); const expCorrect = quiz.querySelector('.quiz-explain.correct-exp'); const expWrong = quiz.querySelector('.quiz-explain.wrong-exp'); opts.forEach(opt => { opt.addEventListener('click', () => { if(opt.classList.contains('disabled')) return; const idx = parseInt(opt.dataset.idx); opts.forEach(o => o.classList.add('disabled')); quizScore.total++; if (idx === answer) { opt.classList.add('correct'); quizScore.correct++; if (expCorrect) expCorrect.classList.add('show'); } else { opt.classList.add('wrong'); opts[answer].classList.add('correct'); if (expWrong) expWrong.classList.add('show'); const retry = quiz.querySelector('.quiz-retry'); if (retry) retry.classList.add('show'); } updateScoreBadge(); }); }); });
+function retryQuiz(btn) { const quiz = btn.closest('.quiz'); quiz.querySelectorAll('.quiz-opt').forEach(o => { o.classList.remove('disabled', 'correct', 'wrong'); }); quiz.querySelectorAll('.quiz-explain').forEach(e => e.classList.remove('show')); btn.classList.remove('show'); quizScore.total--; updateScoreBadge(); }
+function flipCard(el) { el.classList.toggle('flipped'); updateFlashcardCount(); }
+function updateFlashcardCount() { const total = document.querySelectorAll('#flashcardGrid .flashcard').length; const flipped = document.querySelectorAll('#flashcardGrid .flashcard.flipped').length; const el = document.getElementById('fcCount'); if (el) el.innerHTML = '<span data-lang="en">' + flipped + ' / ' + total + ' flipped</span><span data-lang="zh">' + flipped + ' / ' + total + ' 已翻</span>'; }
+function resetFlashcards() { document.querySelectorAll('#flashcardGrid .flashcard').forEach(c => c.classList.remove('flipped')); updateFlashcardCount(); }
+function shuffleFlashcards() { const grid = document.getElementById('flashcardGrid'); if (!grid) return; const cards = [...grid.children]; for (let i = cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); grid.appendChild(cards[j]); [cards[i], cards[j]] = [cards[j], cards[i]]; } }
+function toggleCheck(li) { li.classList.toggle('checked'); const total = document.querySelectorAll('#checklistUl li').length; const checked = document.querySelectorAll('#checklistUl li.checked').length; const el = document.getElementById('checkProgress'); if (el) el.innerHTML = '<span data-lang="en">' + checked + ' / ' + total + ' mastered</span><span data-lang="zh">已掌握 ' + checked + ' / ' + total + '</span>'; }
+function toggleSidebar() { if (false) { /* dr-e3lite: always overlay TOC (match Physics U1) */ document.body.classList.toggle('sidebar-collapsed'); } else { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const btn = document.getElementById('tocToggle'); if (btn) btn.classList.toggle('active', sidebar.classList.contains('open')); } }
+document.addEventListener('click', function(e) { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (!sidebar) return; if (false /* dr-s3: Contents button is the only TOC toggle */ && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== btn && !btn.contains(e.target)) { sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+document.addEventListener('keydown', function(e) { if (false /* dr-s3: Escape does not close the TOC */ && e.key === 'Escape') { const sidebar = document.getElementById('sidebar'); const btn = document.getElementById('tocToggle'); if (sidebar) sidebar.classList.remove('open'); if (btn) btn.classList.remove('active'); } });
+updateScoreBadge();
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+
+<script>
+/* __sg_appendix_reveal__ open a parent <details> when its anchor is targeted (TOC + deep links) */
+(function(){
+  function openHashDetails(){
+    var h = location.hash; if(!h || h.length < 2) return;
+    var el; try { el = document.querySelector(h); } catch(e){ return; }
+    while(el){ if(el.tagName === 'DETAILS'){ el.open = true; } el = el.parentElement; }
+    var t = document.querySelector(h); if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  window.addEventListener('load', openHashDetails);
+})();
+</script>
+
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

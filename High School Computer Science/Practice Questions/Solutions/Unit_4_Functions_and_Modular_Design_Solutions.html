@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="dingrui:tier" content="gated">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Computer Science — Functions and Modular Design — Solutions | Dingrui Scholars</title>
+<link rel="canonical" href="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_4_Functions_and_Modular_Design_Solutions.html">
+<meta name="description" content="Full worked solutions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH answer key with insight blocks from Dingrui Scholars.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Dingrui Scholars">
+<meta property="og:title" content="High School Computer Science — Functions and Modular Design — Solutions | Dingrui Scholars">
+<meta property="og:description" content="Full worked solutions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH answer key with insight blocks from Dingrui Scholars.">
+<meta property="og:url" content="https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_4_Functions_and_Modular_Design_Solutions.html">
+<meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High School Computer Science — Functions and Modular Design — Solutions | Dingrui Scholars">
+<meta name="twitter:description" content="Full worked solutions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH answer key with insight blocks from Dingrui Scholars.">
+<meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
+<!-- dingrui:version v1  dingrui:pair-key HS-CS-4  dingrui:doc-type solutions -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script defer src="/vendor/katex/katex.min.js"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style data-theme="light">
+  :root{
+    --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
+    --maroon:#7A2E2E; --maroon-ink:#ffffff;
+    --easy-bg:#E7F2E3; --easy-ink:#2F6B2F; --easy-rule:#79A977;
+    --med-bg:#FFF3DE;  --med-ink:#8A5A10;  --med-rule:#D9A94A;
+    --hard-bg:#FBE4E4; --hard-ink:#8E2020; --hard-rule:#C85454;
+    --topic-bg:#EFE9E4; --topic-ink:#4A3A2A; --topic-rule:#B5A68F;
+    --marks-bg:#F5F0EB; --marks-ink:#2C1B1F; --marks-rule:#B5A68F;
+    --region-bg:#F5F2EE; --region-ink:#3A322B; --region-rule:#B5A68F;
+    --paper-bg:#FBE9E9;  --paper-ink:#7A2E2E;  --paper-rule:#C97A7A;
+    --honors-bg:#FDF5EC; --honors-ink:#7A5618; --honors-rule:#C4956A;
+    --font-body:'Times New Roman', Times, Georgia, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', serif;
+    --font-sans:'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  @page { size: letter; margin: 0.6in 0.65in; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--font-body);font-size:11pt;line-height:1.45;max-width:8.5in;margin:0 auto;padding:clamp(16px, 3.5vw, 0.4in) clamp(14px, 4vw, 0.55in) clamp(20px, 4vw, 0.55in);}
+  .brand{letter-spacing:.55em;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-align:center;margin-bottom:4px;}
+  .chapter-tag{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.2em;font-size:10.5pt;color:#333;text-align:center;}
+  .chapter-title{font-family:'DM Serif Display',serif;font-size:26pt;line-height:1.1;text-align:center;margin:2px 0 6px;color:var(--ink);}
+  .chapter-sub{font-family:var(--font-sans);font-size:11pt;color:#444;text-align:center;font-style:italic;}
+  .legend{display:flex;gap:8px;justify-content:center;margin:10px 0 6px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:700;font-size:8.5pt;letter-spacing:.12em;padding:3px 10px;border-radius:999px;border:1px solid;line-height:1.15;white-space:nowrap;}
+  .pill.easy{background:var(--easy-bg);color:var(--easy-ink);border-color:var(--easy-rule);}
+  .pill.med {background:var(--med-bg); color:var(--med-ink); border-color:var(--med-rule);}
+  .pill.hard{background:var(--hard-bg);color:var(--hard-ink);border-color:var(--hard-rule);}
+  .pill.topic{background:var(--topic-bg);color:var(--topic-ink);border-color:var(--topic-rule);}
+  .pill.marks{background:var(--marks-bg);color:var(--marks-ink);border-color:var(--marks-rule);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;}
+  .pill.qnum{background:var(--maroon);color:var(--maroon-ink);border-color:var(--maroon);min-width:50px;text-align:center;}
+  .pill.region{background:var(--region-bg);color:var(--region-ink);border-color:var(--region-rule);letter-spacing:.08em;}
+  .pill.paper {background:var(--paper-bg); color:var(--paper-ink); border-color:var(--paper-rule);}
+  .pill.honors{background:var(--honors-bg);color:var(--honors-ink);border-color:var(--honors-rule);text-transform:uppercase;}
+  .syllabus-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 6px;font-family:var(--font-sans);font-size:9.5pt;}
+  .syllabus-strip .col{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:5px;padding:8px 12px;background:#fdfbf8;}
+  .syllabus-strip .col b{display:block;font-size:10pt;margin-bottom:3px;color:var(--maroon);letter-spacing:.05em;}
+  .syllabus-strip .col code{font-family:'JetBrains Mono',monospace;font-size:9pt;color:#4A3A2A;background:#EFE9E4;padding:1px 4px;border-radius:3px;}
+  .syllabus-strip-note{font-family:var(--font-sans);font-size:9pt;color:#555;font-style:italic;text-align:center;margin:4px 0 12px;}
+  @media (max-width: 600px){.syllabus-strip{grid-template-columns:1fr;}}
+  .topics-line{font-family:var(--font-sans);font-size:10pt;color:#444;text-align:center;margin-bottom:12px;}
+  .topics-line b{color:var(--ink);}
+  hr.thick{border:none;border-top:2.5px solid var(--rule);margin:8px 0 4px;}
+  hr.thin {border:none;border-top:1px solid #666;margin:2px 0 14px;}
+  .nameline{display:flex;justify-content:space-between;font-family:var(--font-sans);font-size:10.5pt;margin:4px 0 22px;color:#222;}
+  .nameline .blank{display:inline-block;border-bottom:1px solid #555;min-width:240px;margin-left:6px;}
+  .nameline .blank.period{min-width:90px;}
+  .draft-banner{font-family:var(--font-sans);font-size:9.5pt;color:#7A2E2E;font-style:italic;text-align:center;margin:0 0 8px;border:1px dashed #c9a4a4;border-radius:4px;padding:4px 8px;}
+  .part{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 2px;margin:18px 0 8px;}
+  .part .part-label{font-size:14pt;font-weight:700;letter-spacing:.18em;}
+  .part .part-meta{font-size:10pt;color:#444;font-style:italic;}
+  .section-head{font-family:'DM Serif Display',serif;font-size:16pt;margin:6px 0 4px;color:var(--maroon);}
+  .instructions{font-family:var(--font-sans);font-size:10pt;color:#444;font-style:italic;margin-bottom:12px;line-height:1.45;}
+  .q{border:1px solid #c9c4bd;border-left:3px solid var(--maroon);border-radius:6px;padding:12px 18px 14px;margin-bottom:16px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .q.frq{border-left-color:#1E3F75;}
+  .q.app{border-left-color:#C4956A;}
+  .q-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:10px;font-family:var(--font-sans);}
+  .q-head .title{margin-left:auto;font-size:9.5pt;color:#666;font-style:italic;}
+  .q-body{font-size:11.5pt;line-height:1.5;}
+  .q-body p{margin:6px 0;}
+  .q-body .prompt{margin:6px 0 10px;}
+  .q-body ol.mcq{list-style:none;padding:0;margin:8px 0 4px;font-size:11pt;}
+  .q-body ol.mcq li{margin:3px 0 3px 6px;}
+  .q-body ol.mcq li .lab{font-family:var(--font-sans);font-weight:700;color:var(--maroon);margin-right:8px;}
+  .q-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .q-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .work{min-height:90px;border-top:1px dashed #c9c4bd;margin-top:8px;}
+  .work.s{min-height:50px;} .work.m{min-height:120px;} .work.l{min-height:170px;} .work.xl{min-height:240px;}
+  .frq-parts{margin-top:6px;}
+  .frq-parts .part-item{margin:6px 0 4px;}
+  .frq-parts .part-item > .tag{font-family:var(--font-sans);font-weight:700;margin-right:6px;}
+  .frq-parts .part-item .marks-inline{font-family:'JetBrains Mono',monospace;font-size:9pt;color:#666;font-weight:700;float:right;letter-spacing:.05em;}
+  .frq-parts .part-item .sub-part{margin:4px 0 4px 18px;}
+  footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:var(--font-sans);font-size:9pt;color:#666;display:flex;justify-content:space-between;}
+  footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
+  .page-break{page-break-after:always;break-after:page;height:0;}
+  .lang-bar{display:flex;justify-content:center;margin:6px 0 10px;}
+  .lang-btn{font-family:var(--font-sans);font-weight:700;font-size:9pt;letter-spacing:.1em;padding:4px 14px;border:1px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;cursor:pointer;transition:all 0.2s;}
+  .lang-btn:hover{background:var(--maroon);color:#fff;}
+  body:not(.lang-zh) [data-lang="zh"] { display: none; }
+  body.lang-zh       [data-lang="en"] { display: none; }
+  body.lang-zh{font-family:var(--font-sans);}
+  @media (max-width: 600px){body{font-size:10.5pt;}.nameline{flex-direction:column;align-items:flex-start;gap:6px;}.nameline .blank{min-width:200px;}}
+  .consult-cta{border:1.5px solid var(--maroon);border-radius:8px;padding:12px 16px;margin:22px 0 6px;text-align:center;background:var(--paper-bg);break-inside:avoid;}
+  .consult-cta__lead{display:block;font-family:var(--font-sans);font-weight:700;font-size:11pt;color:var(--maroon);}
+  .consult-cta__body{display:block;font-family:var(--font-sans);font-size:9.5pt;color:var(--muted);margin:3px 0 6px;}
+  .consult-cta__btn{display:inline-block;font-family:var(--font-sans);font-weight:700;font-size:10pt;color:var(--maroon);text-decoration:underline;}
+  .solution{border:1px solid #c9c4bd;border-left:3px solid #2E6B4F;border-radius:6px;padding:12px 18px 14px;margin-bottom:16px;background:#fff;break-inside:avoid;page-break-inside:avoid;}
+  .solution.frq{border-left-color:#1E3F75;}.solution.app{border-left-color:#C4956A;}
+  .sol-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:10px;font-family:var(--font-sans);}
+  .sol-body{font-size:11.5pt;line-height:1.5;}
+  .sol-body p{margin:6px 0;}
+  .sol-body pre{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;border:1px solid #d8cdb8;border-radius:5px;padding:10px 14px;margin:8px 0;overflow-x:auto;line-height:1.4;}
+  .sol-body code{font-family:var(--font-mono);font-size:10pt;background:#f4f1ee;padding:1px 5px;border-radius:3px;border:1px solid #d8cdb8;}
+  .marks-call{font-family:'JetBrains Mono',monospace;font-size:9pt;color:#666;font-weight:700;letter-spacing:.05em;}
+  .insight{background:#EFE9E4;border-left:4px solid var(--maroon);border-radius:0 6px 6px 0;padding:10px 14px;margin-top:10px;font-family:var(--font-sans);font-size:10pt;line-height:1.5;}
+  .insight strong{color:var(--maroon);}
+  .answer{border-top:1px solid #c9c4bd;padding-top:6px;margin-top:6px;}
+  .answer-line{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-sans);font-size:10pt;margin:3px 0;}
+  .answer-line .part-tag{font-weight:700;margin-right:6px;color:var(--ink);}
+  @media print{@page { size: letter; margin: 0.6in 0.65in; }html,body{background:#fff;}body{padding:0;max-width:none;font-size:11pt;}.q,.solution{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}.draft-banner{display:none;}.lang-bar{display:none;}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "High School Computer Science — Functions and Modular Design — Solutions",
+  "description": "Full worked solutions for Functions and Modular Design in High School Computer Science. Bilingual EN/ZH answer key with insight blocks from Dingrui Scholars.",
+  "url": "https://notes.dingruischolars.com/High%20School%20Computer%20Science/Practice%20Questions/Solutions/Unit_4_Functions_and_Modular_Design_Solutions.html",
+  "inLanguage": ["en", "zh"],
+  "learningResourceType": "Practice problems",
+  "educationalLevel": "High School",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+</div>
+
+<div class="brand">H&nbsp;I&nbsp;G&nbsp;H&nbsp;&nbsp;S&nbsp;C&nbsp;H&nbsp;O&nbsp;O&nbsp;L&nbsp;&nbsp;C&nbsp;O&nbsp;M&nbsp;P&nbsp;U&nbsp;T&nbsp;E&nbsp;R&nbsp;&nbsp;S&nbsp;C&nbsp;I&nbsp;E&nbsp;N&nbsp;C&nbsp;E</div>
+<div class="chapter-tag"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></div>
+<h1 class="chapter-title"><span data-lang="en">Functions and Modular Design</span><span data-lang="zh">函数与模块化设计</span></h1>
+<p class="chapter-sub"><span data-lang="en">Practice Questions &middot; AP CSP-Feeder &middot; US / ON / BC / AB Styles</span><span data-lang="zh">练习题集 &middot; AP CSP 衔接 &middot; 美 / 安 / 卑 / 阿省风格</span></p>
+
+<div class="legend">
+  <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+  <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+  <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+  <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+  <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-style MCQ</span><span data-lang="zh">AP CSP 风格选择题</span></span>
+  <span class="pill paper"><span data-lang="en">AP CSP-feeder FRQ</span><span data-lang="zh">AP CSP 衔接简答题</span></span>
+  <span class="pill paper"><span data-lang="en">ON Provincial-style</span><span data-lang="zh">安大略省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">BC Provincial-style</span><span data-lang="zh">卑诗省考风格</span></span>
+  <span class="pill paper"><span data-lang="en">AB/Universal Applied</span><span data-lang="zh">阿省/通用应用题</span></span>
+  <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+</div>
+
+<div class="syllabus-strip">
+  <div class="col"><b>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></b><code>3A-AP-17</code> &middot; <code>3A-AP-18</code> &middot; <code>AAP-3.B</code></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario</span><span data-lang="zh">安大略</span></b><code>ICS3U A3.1</code> &middot; <code>A3.2</code> &middot; <code>B2.3</code></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></b><span data-lang="en">CS 11 / CP11: functions, modularity, pre-built libraries</span><span data-lang="zh">CS 11 / CP11：函数、模块化、预建库</span></div>
+  <div class="col"><b>&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta</span><span data-lang="zh">阿尔伯塔</span></b><span data-lang="en">CSE2110: outcomes 3.2, 3.3, 3.3.3, 3.4</span><span data-lang="zh">CSE2110：结果 3.2、3.3、3.3.3、3.4</span></div>
+</div>
+<p class="syllabus-strip-note"><span data-lang="en">Full Syllabus Map in Study Guide: <code>../Study Guides/Unit_4_Functions_and_Modular_Design.html</code>. CS has no AB standalone diploma exam; AB framing uses CSE2110 outcomes.</span><span data-lang="zh">完整大纲对照见学习指南：<code>../Study Guides/Unit_4_Functions_and_Modular_Design.html</code>。CS 无独立 AB 毕业考；AB 题使用 CSE2110 结果框架。</span></p>
+
+<hr class="thick"><hr class="thin">
+<div class="nameline"><span><span data-lang="en">Name:</span><span data-lang="zh">姓名：</span><span class="blank"></span></span><span><span data-lang="en">Date:</span><span data-lang="zh">日期：</span><span class="blank period"></span></span></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART I  SHORT RESPONSE   5 Qs  25 marks
+     AP CSP-style MCQ + ON/BC provincial short answer
+     EASY opener, MED middle
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART I &nbsp;&middot;&nbsp; SHORT RESPONSE</span><span data-lang="zh">第一部分 &nbsp;&middot;&nbsp; 短答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-style MCQ + ON/BC short answer &middot; 25 marks</span><span data-lang="zh">AP CSP 风格选择题 + 安/卑省考短答 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section A &middot; Short Response</span><span data-lang="zh">A 部分 &middot; 短答题</span></h2>
+<p class="instructions"><span data-lang="en">Full solutions below. For MCQs, the correct letter is identified with justification. For short-answer items, complete worked solutions are provided. Code traces show each variable at each step.</span><span data-lang="zh">以下为完整解答。选择题标明正确字母并附说明。短答题提供完整解题过程。代码追踪显示每一步每个变量的值。</span></p>
+
+<!-- Q1 SOLUTION -->
+<div class="solution">
+  <div class="sol-head">
+    <span class="pill qnum">Q1</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill topic">&sect;1 <span data-lang="en">Why Functions?</span><span data-lang="zh">为什么要用函数？</span></span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag"><span data-lang="en">Answer:</span><span data-lang="zh">答案：</span></span> <span data-lang="en"><strong>(B)</strong> The bug must be fixed in all four copies; missing even one creates inconsistency. <span class="marks-call">A1</span></span><span data-lang="zh"><strong>(B)</strong> 必须在全部四处修复该错误；漏掉任何一处都会导致不一致。<span class="marks-call">A1</span></span></div>
+      <p><span data-lang="en">Elimination: (A) is false: repeated code does not slow execution meaningfully. (C) is false: Python has no such restriction. (D) is minor and not the main issue. The correct answer is (B): maintainability. Duplicated code creates N places to fix instead of 1. CSTA 3A-AP-18: "Create artifacts by using procedures within a program." <span class="marks-call">M1 (reasoning) + A1 (correct letter)</span></span><span data-lang="zh">排除法：(A) 错误：重复代码对执行速度影响微乎其微。(C) 错误：Python 无此限制。(D) 是次要问题，非主要缺点。正确答案是 (B)：可维护性。重复代码意味着要修复 N 处而非 1 处。CSTA 3A-AP-18："通过在程序中使用过程来创建制品。" <span class="marks-call">M1（推理）+ A1（正确字母）</span></span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Functions are about maintenance, not just convenience. The DRY principle (Don't Repeat Yourself) says every piece of logic should have a single authoritative location. When a bug is found in duplicated code, there is no guarantee all copies will be updated consistently. That is how silent bugs are born.</span><span data-lang="zh">函数关乎的是可维护性，而不仅仅是方便。DRY 原则（不要重复自己）指出每段逻辑都应该有唯一的权威位置。在重复代码中发现错误时，无法保证所有副本都会被一致更新，这正是隐性错误的诞生方式。</span></div>
+  </div>
+</div>
+
+<!-- Q2 SOLUTION -->
+<div class="solution">
+  <div class="sol-head">
+    <span class="pill qnum">Q2</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill topic">&sect;2 <span data-lang="en">Defining and Calling Functions</span><span data-lang="zh">定义与调用函数</span></span>
+    <span class="pill marks"><span data-lang="en">[3 marks]</span><span data-lang="zh">[3 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag"><span data-lang="en">Answer:</span><span data-lang="zh">答案：</span></span> <span data-lang="en"><strong>(C)</strong> <code>Hello, Sam!</code> then <code>Hello, Alex!</code> <span class="marks-call">A1</span></span><span data-lang="zh"><strong>(C)</strong> <code>Hello, Sam!</code> 然后 <code>Hello, Alex!</code> <span class="marks-call">A1</span></span></div>
+      <p><span data-lang="en">The function IS called twice (eliminating A). Arguments bind in order: first call binds <code>name = "Sam"</code> printing <code>Hello, Sam!</code>; second call binds <code>name = "Alex"</code> printing <code>Hello, Alex!</code>. (B) is wrong because <code>name</code> is the parameter placeholder; it receives the actual argument. (D) reverses the order. <span class="marks-call">M1 (reasoning) + A1 (correct letter)</span></span><span data-lang="zh">该函数确实被调用了两次（排除 A）。实参按顺序绑定：第一次调用绑定 <code>name = "Sam"</code>，打印 <code>Hello, Sam!</code>；第二次调用绑定 <code>name = "Alex"</code>，打印 <code>Hello, Alex!</code>。(B) 错误，因为 <code>name</code> 是形参占位符，它接收实际实参。(D) 颠倒了顺序。<span class="marks-call">M1（推理）+ A1（正确字母）</span></span></p>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Defining a function does not run it. Code inside the <code>def</code> block executes only when the function is called. Each call creates a fresh binding of the argument to the parameter name, so the same function can produce different output each time it is called with different arguments.</span><span data-lang="zh">定义函数不会运行它。<code>def</code> 块内的代码只在函数被调用时执行。每次调用都会将实参新鲜地绑定到形参名，因此同一函数每次用不同实参调用时可以产生不同的输出。</span></div>
+  </div>
+</div>
+
+<!-- Q3 SOLUTION -->
+<div class="solution">
+  <div class="sol-head">
+    <span class="pill qnum">Q3</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill topic">&sect;3 <span data-lang="en">Parameters and Arguments</span><span data-lang="zh">形参与实参</span></span>
+    <span class="pill marks"><span data-lang="en">[5 marks]</span><span data-lang="zh">[5 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Parameters: <code>base</code> and <code>exponent</code>. <span class="marks-call">[1]</span></span><span data-lang="zh">形参：<code>base</code> 和 <code>exponent</code>。<span class="marks-call">[1]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Call <code>power(3, 2)</code>: <code>base = 3</code>, <code>exponent = 2</code>. Loop runs twice (i = 1, 2). After i=1: result = 1*3 = 3. After i=2: result = 3*3 = 9. Return value = <strong>9</strong>. <span class="marks-call">M1 (bindings) + M1 (trace) + A1 (return value) = [3]</span></span><span data-lang="zh">调用 <code>power(3, 2)</code>：<code>base = 3</code>，<code>exponent = 2</code>。循环执行两次（i = 1, 2）。i=1 后：result = 1*3 = 3。i=2 后：result = 3*3 = 9。返回值 = <strong>9</strong>。<span class="marks-call">M1（绑定）+ M1（追踪）+ A1（返回值）= [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en"><code>power(2, 4)</code> = <strong>16</strong>; the function multiplies 2 by itself 4 times (2^4 = 16). <span class="marks-call">[1]</span></span><span data-lang="zh"><code>power(2, 4)</code> = <strong>16</strong>；该函数将 2 自乘 4 次（2^4 = 16）。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Parameters (<code>base</code>, <code>exponent</code>) are placeholders in the definition. Arguments (3, 2) are the actual values supplied at the call site. Each call produces fresh, independent copies of the parameters. That is why calling <code>power</code> twice with different arguments gives different results without either call affecting the other.</span><span data-lang="zh">形参（<code>base</code>、<code>exponent</code>）是定义中的占位符。实参（3、2）是调用处提供的实际值。每次调用都会产生形参的全新独立副本，这就是为什么用不同实参两次调用 <code>power</code> 会给出不同结果，而两次调用互不影响。</span></div>
+  </div>
+</div>
+
+<!-- Q4 SOLUTION -->
+<div class="solution">
+  <div class="sol-head">
+    <span class="pill qnum">Q4</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">AB</span><span data-lang="zh">阿</span></span>
+    <span class="pill topic">&sect;4 <span data-lang="en">Return Values</span><span data-lang="zh">返回值</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Call <code>grade(82)</code>, so <code>score = 82</code>. Check: 82 >= 90? No. 82 >= 80? Yes. RETURN "B" executes immediately. Return value = <strong>"B"</strong>. <span class="marks-call">M1 (trace IF sequence) + M1 (identify correct RETURN) + A1 (value) = [3]</span></span><span data-lang="zh">调用 <code>grade(82)</code>，<code>score = 82</code>。检查：82 >= 90？否。82 >= 80？是。立即执行 RETURN "B"。返回值 = <strong>"B"</strong>。<span class="marks-call">M1（追踪 IF 序列）+ M1（确定正确的 RETURN）+ A1（值）= [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Output 1: <strong>B</strong> (stored in <code>result</code>, then output). Output 2: <strong>F</strong> (55 &lt; 60, falls through to last RETURN). <span class="marks-call">[2]</span></span><span data-lang="zh">输出 1：<strong>B</strong>（存入 <code>result</code> 后输出）。输出 2：<strong>F</strong>（55 &lt; 60，落到最后的 RETURN）。<span class="marks-call">[2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">A RETURN statement exits the function immediately; execution returns to the caller, so no code after the executed RETURN runs. <span class="marks-call">[1]</span></span><span data-lang="zh">RETURN 语句立即退出函数；执行权返回调用方，因此执行的 RETURN 之后的代码都不会运行。<span class="marks-call">[1]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">A value-returning function sends a result back to the caller via RETURN, which can be stored or used in an expression. A procedure (void function) performs an action (e.g., prints) but produces no value the caller can capture. <span class="marks-call">[1]</span></span><span data-lang="zh">有返回值的函数通过 RETURN 将结果传回调用方，该结果可被存储或用于表达式。过程（无返回值函数）执行某个操作（如打印），但不产生调用方可捕获的值。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">The early-return pattern (a chain of IF/RETURN statements) is a concise alternative to if/elif/else. Each RETURN acts as a gate: once a condition is true, the function is done. This is why order matters: if the checks were reversed (60 before 90), a score of 95 would incorrectly return "D".</span><span data-lang="zh">提前返回模式（一串 IF/RETURN 语句）是 if/elif/else 的简洁替代方案。每个 RETURN 都充当一个关卡：一旦条件为真，函数就完成了。这就是为什么顺序很重要：如果检查顺序颠倒（60 在 90 之前），分数 95 会错误地返回 "D"。</span></div>
+  </div>
+</div>
+
+<!-- Q5 SOLUTION -->
+<div class="solution">
+  <div class="sol-head">
+    <span class="pill qnum">Q5</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill topic">&sect;5 <span data-lang="en">Variable Scope</span><span data-lang="zh">变量作用域</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Line A: <strong>50</strong>. The global variable <code>score = 50</code> has been set before Line A; the function has not yet been called so it has not been modified. <span class="marks-call">A1 + M1 = [2]</span></span><span data-lang="zh">第 A 行：<strong>50</strong>。全局变量 <code>score = 50</code> 已在第 A 行之前设置；函数尚未被调用，因此未被修改。<span class="marks-call">A1 + M1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Line B: <strong>60</strong> (the function adds 10 to the global 50, returns 60). Line C: <strong>60</strong> (the global was changed to 60 by the function call). <span class="marks-call">[2]</span></span><span data-lang="zh">第 B 行：<strong>60</strong>（函数将全局 50 加 10，返回 60）。第 C 行：<strong>60</strong>（函数调用已将全局变量改为 60）。<span class="marks-call">[2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Using a parameter-based design (<code>update(score)</code> returning the new value) makes the function's behaviour depend only on its inputs, not on hidden state. One risk of global state: calling the function twice gives different results each time because the global accumulates changes, breaking reproducibility. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">使用基于参数的设计（<code>update(score)</code> 返回新值）使函数的行为只取决于其输入，而不取决于隐藏状态。全局状态的一个风险：多次调用函数每次给出不同结果，因为全局变量累积变化，破坏了可重现性。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">No: each function's local variables are completely independent; same name in two different functions refers to two separate storage locations. <span class="marks-call">[1]</span></span><span data-lang="zh">不会：每个函数的局部变量完全独立；两个不同函数中的同名变量指向两个独立的存储位置。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">The key question for scope is: where was the variable created? Global = outside all functions (visible everywhere). Local = inside a function (visible only there, destroyed on return). When a function silently changes a global, it couples its behaviour to program-wide state, which makes debugging and testing much harder.</span><span data-lang="zh">作用域的关键问题是：变量在哪里创建？全局 = 所有函数之外（处处可见）。局部 = 函数内部（只在那里可见，返回时销毁）。当函数悄悄改变全局变量时，它将自身行为与程序范围的状态耦合，这使调试和测试困难得多。</span></div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART II  EXTENDED RESPONSE   4 Qs  31 marks
+     AP CSP-feeder FRQ + Honors
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART II &nbsp;&middot;&nbsp; EXTENDED RESPONSE</span><span data-lang="zh">第二部分 &nbsp;&middot;&nbsp; 简答题</span></span><span class="part-meta"><span data-lang="en">AP CSP-feeder FRQ + Honors &middot; 30 marks</span><span data-lang="zh">AP CSP 衔接简答题 + 荣誉级 &middot; 共 30 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section B &middot; Extended Response</span><span data-lang="zh">B 部分 &middot; 简答题</span></h2>
+<p class="instructions"><span data-lang="en">Worked solutions below. All traces show variable values at each step. Mark scheme notes are shown in JetBrains Mono. Each solution card ends with an Insight block identifying the key examiner expectation.</span><span data-lang="zh">以下为解题过程。所有追踪均显示每一步的变量值。评分要点以等宽字体标注。每张解答卡以解题思路模块结束，指出考查的核心要点。</span></p>
+
+<!-- Q6 SOLUTION -->
+<div class="solution frq">
+  <div class="sol-head">
+    <span class="pill qnum">Q6</span>
+    <span class="pill easy"><span data-lang="en">EASY</span><span data-lang="zh">易</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill topic">&sect;6 <span data-lang="en">Modular Design</span><span data-lang="zh">模块化设计</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Procedures (void): <strong>get_scores</strong> and <strong>display_report</strong>. Wait: <code>get_scores</code> returns a list, so it IS value-returning. Correction: the two procedures are <strong>display_report</strong> only has OUTPUT, no RETURN. <code>get_scores</code> has a RETURN. Re-check: <code>get_scores</code> RETURN scores = value-returning. <code>compute_average</code> RETURN = value-returning. <code>letter_grade</code> RETURN = value-returning. <code>display_report</code> = outputs only, no RETURN = procedure. So only <strong>display_report</strong> is a pure procedure. <em>Accept: display_report (no RETURN); note get_scores also returns.</em> <span class="marks-call">A1 (display_report) + M1 (justification = has OUTPUT but no RETURN) = [2]</span></span><span data-lang="zh">过程（无返回值）：重新检查：<code>get_scores</code> 返回成绩列表（有 RETURN）= 有返回值。<code>compute_average</code> 有 RETURN = 有返回值。<code>letter_grade</code> 有 RETURN = 有返回值。<code>display_report</code> 只有 OUTPUT，无 RETURN = 过程。因此只有 <strong>display_report</strong> 是纯过程。<em>可接受：display_report（无 RETURN）；注意 get_scores 也有返回值。</em> <span class="marks-call">A1（display_report）+ M1（理由 = 只有 OUTPUT 无 RETURN）= [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Scores = [85, 90, 78, 92, 80]. Total = 85 + 90 + 78 + 92 + 80 = 425. Return value = 425 / 5 = <strong>85.0</strong>. <span class="marks-call">M1 (sum) + M1 (divide) + A1 (85.0) = [3]</span></span><span data-lang="zh">成绩 = [85, 90, 78, 92, 80]。合计 = 85 + 90 + 78 + 92 + 80 = 425。返回值 = 425 / 5 = <strong>85.0</strong>。<span class="marks-call">M1（求和）+ M1（除法）+ A1（85.0）= [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Accept any one of: (i) Each function can be tested independently; for example, test <code>compute_average</code> with known values before connecting it to the rest. (ii) If the average formula needs to change, only <code>compute_average</code> needs editing, not the entire program. (iii) The main program reads like a high-level story, hiding complexity in sub-functions. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">接受以下任意一个：(i) 每个函数可以独立测试；例如，在与其余部分连接之前，用已知值测试 <code>compute_average</code>。(ii) 如果平均值公式需要更改，只需编辑 <code>compute_average</code>，而不是整个程序。(iii) 主程序读起来像高层故事，将复杂性隐藏在子函数中。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Modular design gives each function one clear job (single-responsibility). The main program becomes a readable list of high-level actions: get, compute, classify, display. This top-down structure means you can test, debug, and modify each layer independently, and the same sub-functions (like <code>letter_grade</code>) can be reused in other programs.</span><span data-lang="zh">模块化设计让每个函数只做一件明确的事（单一职责）。主程序变成了一个可读的高层操作列表：获取、计算、分类、显示。这种自顶向下的结构意味着你可以独立测试、调试和修改每一层，并且相同的子函数（如 <code>letter_grade</code>）可以在其他程序中复用。</span></div>
+  </div>
+</div>
+
+<!-- Q7 SOLUTION -->
+<div class="solution frq">
+  <div class="sol-head">
+    <span class="pill qnum">Q7</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill topic">&sect;2 + &sect;3 <span data-lang="en">Calling Functions + Parameter Passing</span><span data-lang="zh">调用函数 + 参数传递</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Call <code>add_and_double(3, 7)</code>: <code>a = 3</code>, <code>b = 7</code>. Inside: <code>total = 3 + 7 = 10</code>. Then calls <code>double(10)</code>: <code>n = 10</code>, returns <code>10 * 2 = 20</code>. <code>add_and_double</code> returns <strong>20</strong>. <span class="marks-call">M1 (bindings) + M1 (total) + A1 (20) = [3]</span></span><span data-lang="zh">调用 <code>add_and_double(3, 7)</code>：<code>a = 3</code>，<code>b = 7</code>。内部：<code>total = 3 + 7 = 10</code>。然后调用 <code>double(10)</code>：<code>n = 10</code>，返回 <code>10 * 2 = 20</code>。<code>add_and_double</code> 返回 <strong>20</strong>。<span class="marks-call">M1（绑定）+ M1（total）+ A1（20）= [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Print 1: <strong>20</strong> (x = 20). Print 2: <code>add_and_double(5, 5)</code> = double(10) = <strong>20</strong>. <span class="marks-call">[2]</span></span><span data-lang="zh">打印 1：<strong>20</strong>（x = 20）。打印 2：<code>add_and_double(5, 5)</code> = double(10) = <strong>20</strong>。<span class="marks-call">[2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">A function can call another function, so <code>double</code> is reused inside <code>add_and_double</code> without duplicating the multiplication logic. <span class="marks-call">[1]</span></span><span data-lang="zh">函数可以调用另一个函数，因此 <code>double</code> 在 <code>add_and_double</code> 内部被复用，无需重复乘法逻辑。<span class="marks-call">[1]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">With <code>double</code> multiplying by 3: <code>add_and_double(3, 7)</code> = double(10) = 30. <code>add_and_double(5, 5)</code> = double(10) = 30. New outputs: <strong>30</strong> and <strong>30</strong>. <span class="marks-call">[2]</span></span><span data-lang="zh"><code>double</code> 改为乘以 3 后：<code>add_and_double(3, 7)</code> = double(10) = 30。<code>add_and_double(5, 5)</code> = double(10) = 30。新输出：<strong>30</strong> 和 <strong>30</strong>。<span class="marks-call">[2]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Part (d) is the DRY principle in action: because <code>double</code>'s logic lives in one place, changing it once (multiply by 3) automatically updates every caller. If the multiplication had been written inline in both functions, you would need to change it in two places.</span><span data-lang="zh">(d) 部分正是 DRY 原则的实际体现：因为 <code>double</code> 的逻辑只存在于一处，修改一次（乘以 3）会自动更新所有调用方。如果乘法被内联写在两个函数中，就需要在两处进行修改。</span></div>
+  </div>
+</div>
+
+<!-- Q8 SOLUTION -->
+<div class="solution frq">
+  <div class="sol-head">
+    <span class="pill qnum">Q8</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill topic">&sect;4 + &sect;5 <span data-lang="en">Return Values + Scope</span><span data-lang="zh">返回值 + 作用域</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en"><code>n = 4</code>. <code>result = 4 * 4 = 16</code>. Return value = <strong>16</strong>. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh"><code>n = 4</code>。<code>result = 4 * 4 = 16</code>。返回值 = <strong>16</strong>。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">a = square(4) = 16. b = cube(3) = 3*3*3 = 27. Print 1: <strong>16</strong>. Print 2: <strong>27</strong>. Print 3: 16 + 27 = <strong>43</strong>. <span class="marks-call">A1 + A1 + A1 = [3]</span></span><span data-lang="zh">a = square(4) = 16。b = cube(3) = 3*3*3 = 27。打印 1：<strong>16</strong>。打印 2：<strong>27</strong>。打印 3：16 + 27 = <strong>43</strong>。<span class="marks-call">A1 + A1 + A1 = [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Each function's local variable <code>result</code> is a separate storage location scoped to that function; they are created independently each time the function is called and destroyed when it returns. <span class="marks-call">[1]</span></span><span data-lang="zh">每个函数的局部变量 <code>result</code> 是作用于该函数的独立存储位置；每次调用函数时独立创建，函数返回时销毁。<span class="marks-call">[1]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">Global version of square:<br>
+<pre><code>result = 0   # global
+def square(n):
+    global result
+    result = n * n
+    return result</code></pre>
+This is worse because: if <code>cube</code> also used <code>global result</code>, calling one function would overwrite the value the other stored, causing unpredictable results when the functions are called in sequence. <span class="marks-call">A1 (code) + A1 (reason) = [2]</span></span><span data-lang="zh">全局版本的 square：<br>
+<pre><code>result = 0   # global
+def square(n):
+    global result
+    result = n * n
+    return result</code></pre>
+这样更差，因为：如果 <code>cube</code> 也使用 <code>global result</code>，调用一个函数会覆盖另一个函数存储的值，当函数按序调用时会导致不可预期的结果。<span class="marks-call">A1（代码）+ A1（原因）= [2]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Local scope is what allows two functions to both use <code>result</code> as a variable name without conflict. This is one of the core benefits of functions: they create isolated namespaces. Global variables break this isolation, which is why CSE2110 outcome 3.3 specifically asks students to "analyze and determine the type of scope required."</span><span data-lang="zh">局部作用域使得两个函数都能使用 <code>result</code> 作为变量名而不冲突。这是函数的核心优势之一：它们创建了隔离的命名空间。全局变量破坏了这种隔离，这就是为什么 CSE2110 结果 3.3 特别要求学生"分析并确定所需的作用域类型"。</span></div>
+  </div>
+</div>
+
+<!-- Q9 SOLUTION -->
+<div class="solution frq">
+  <div class="sol-head">
+    <span class="pill qnum">Q9</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill honors"><span data-lang="en">Honors</span><span data-lang="zh">荣誉级</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill topic">&sect;5 + &sect;6 <span data-lang="en">Scope + Coupling / Cohesion</span><span data-lang="zh">作用域 + 耦合与内聚</span></span>
+    <span class="pill marks"><span data-lang="en">[7 marks]</span><span data-lang="zh">[7 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Program A: total starts at 0. add_item(15): total = 0+15 = 15. add_item(30): total = 15+30 = 45. Print: <strong>45</strong>. Program B: t=0. add_item(0,15)=15, t=15. add_item(15,30)=45, t=45. Print: <strong>45</strong>. Both output 45. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">程序 A：total 从 0 开始。add_item(15)：total = 0+15 = 15。add_item(30)：total = 15+30 = 45。打印：<strong>45</strong>。程序 B：t=0。add_item(0,15)=15，t=15。add_item(15,30)=45，t=45。打印：<strong>45</strong>。两者均输出 45。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Calling <code>add_item(10)</code> after the two existing calls adds to the already-accumulated <code>total = 45</code>, giving 55, not 10. The result depends on hidden state (the current value of the global) which is not visible at the call site, making behaviour hard to predict. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">在两次现有调用之后调用 <code>add_item(10)</code>，会在已累积的 <code>total = 45</code> 基础上累加，得到 55，而非 10。结果依赖于隐藏状态（全局变量的当前值），这在调用处不可见，使行为难以预测。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Program B has low <em>coupling</em>: <code>add_item</code> does not depend on any external state; all it needs is its two parameters. It also has high <em>cohesion</em>: the function has one clear job (add a price to a running total) with no side effects. Low coupling + high cohesion is the goal of modular design (AB CSE2110 outcome 3.4). <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">程序 B 的<em>耦合度</em>低：<code>add_item</code> 不依赖任何外部状态，只需要两个形参。它也有高<em>内聚度</em>：函数只做一件明确的事（将价格加到累计总额），没有副作用。低耦合 + 高内聚是模块化设计的目标（AB CSE2110 结果 3.4）。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">Accept e.g.: a program-wide language preference (<code>LANGUAGE = "EN"</code>) used across many functions is appropriate as a global constant because it is set once at startup and never changes during execution. <span class="marks-call">[1]</span></span><span data-lang="zh">可接受例如：程序范围的语言偏好（<code>LANGUAGE = "EN"</code>）在许多函数中使用，作为全局常量是合适的，因为它在启动时设置一次，在执行期间从不改变。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Coupling measures how much a function depends on things outside itself. Cohesion measures how focused the function's job is. The ideal function is a black box: given the same inputs, it always returns the same output, regardless of the rest of the program. Program B's <code>add_item</code> is a pure function; Program A's is not: it is coupled to global state and produces side effects.</span><span data-lang="zh">耦合度衡量函数对外部事物的依赖程度。内聚度衡量函数职责的专注程度。理想的函数是一个黑盒：给定相同的输入，无论程序其余部分如何，它始终返回相同的输出。程序 B 的 <code>add_item</code> 是一个纯函数；程序 A 的不是：它与全局状态耦合并产生副作用。</span></div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART III  MODELING / APPLIED   3 Qs  25 marks
+     Universal / multi-region applied problems
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="part"><span class="part-label"><span data-lang="en">PART III &nbsp;&middot;&nbsp; MODELING / APPLIED</span><span data-lang="zh">第三部分 &nbsp;&middot;&nbsp; 建模与应用</span></span><span class="part-meta"><span data-lang="en">Universal / multi-region applied &middot; 25 marks</span><span data-lang="zh">通用/多地区应用题 &middot; 共 25 分</span></span></div>
+<h2 class="section-head"><span data-lang="en">Section C &middot; Modeling and Applications</span><span data-lang="zh">C 部分 &middot; 建模与应用</span></h2>
+<p class="instructions"><span data-lang="en">Full worked solutions below. All function designs show both pseudocode and Python where applicable. Traces list all parameter bindings and return values explicitly.</span><span data-lang="zh">以下为完整解答。所有函数设计在适用时同时展示伪代码和 Python。追踪过程明确列出所有形参绑定和返回值。</span></p>
+
+<!-- Q10 SOLUTION -->
+<div class="solution app">
+  <div class="sol-head">
+    <span class="pill qnum">Q10</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill topic">&sect;1 + &sect;2 + &sect;3 <span data-lang="en">Writing Functions from Scratch</span><span data-lang="zh">从零编写函数</span></span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">Pseudocode:<br>
+<pre><code>FUNCTION to_fahrenheit(celsius):
+    SET fahrenheit TO celsius * 9 / 5 + 32
+    RETURN fahrenheit
+END FUNCTION</code></pre>
+Award marks for: FUNCTION keyword + parameter name [M1]; correct formula [M1]; RETURN statement [A1]. <span class="marks-call">[3]</span></span><span data-lang="zh">伪代码：<br>
+<pre><code>FUNCTION to_fahrenheit(celsius):
+    SET fahrenheit TO celsius * 9 / 5 + 32
+    RETURN fahrenheit
+END FUNCTION</code></pre>
+评分要点：FUNCTION 关键字 + 形参名 [M1]；正确公式 [M1]；RETURN 语句 [A1]。<span class="marks-call">[3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en"><code>to_fahrenheit(0)</code>: celsius=0, fahrenheit = 0*9/5+32 = <strong>32.0</strong>. <code>to_fahrenheit(100)</code>: celsius=100, fahrenheit = 100*9/5+32 = 180+32 = <strong>212.0</strong>. <span class="marks-call">A1 + A1 = [2]</span></span><span data-lang="zh"><code>to_fahrenheit(0)</code>：celsius=0，fahrenheit = 0*9/5+32 = <strong>32.0</strong>。<code>to_fahrenheit(100)</code>：celsius=100，fahrenheit = 100*9/5+32 = 180+32 = <strong>212.0</strong>。<span class="marks-call">A1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Python:<br>
+<pre><code>def to_fahrenheit(celsius):
+    fahrenheit = celsius * 9 / 5 + 32
+    return fahrenheit</code></pre>
+<span class="marks-call">A1 (def + parameter) + A1 (formula + return) = [2]</span></span><span data-lang="zh">Python：<br>
+<pre><code>def to_fahrenheit(celsius):
+    fahrenheit = celsius * 9 / 5 + 32
+    return fahrenheit</code></pre>
+<span class="marks-call">A1（def + 形参）+ A1（公式 + return）= [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en">The DRY principle says each piece of logic should have a single authoritative location; by placing the formula in a function, any future change to the conversion (e.g., rounding) only needs to be made in one place instead of three. <span class="marks-call">[1]</span></span><span data-lang="zh">DRY 原则规定每段逻辑应只有一个权威位置；通过将公式放入函数，未来对转换的任何更改（如四舍五入）只需在一处进行，而非三处。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">The verification step (b) is not just busywork: 32 F at 0 C and 212 F at 100 C are the two famous checkpoints for the Celsius-to-Fahrenheit formula. Any function you write should be tested against known inputs before trusting it in production. This "verify your function" habit is what the ICS3U A3.1 expectation is testing.</span><span data-lang="zh">验证步骤 (b) 不只是例行公事：0 摄氏度对应 32 华氏度，100 摄氏度对应 212 华氏度，是摄氏到华氏转换公式的两个著名检查点。你编写的任何函数在正式使用前都应该用已知输入进行测试。这个"验证你的函数"习惯正是 ICS3U A3.1 期望所考查的内容。</span></div>
+  </div>
+</div>
+
+<!-- Q11 SOLUTION -->
+<div class="solution app">
+  <div class="sol-head">
+    <span class="pill qnum">Q11</span>
+    <span class="pill med"><span data-lang="en">MEDIUM</span><span data-lang="zh">中</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill topic">&sect;6 + &sect;7 <span data-lang="en">Modular Design + Built-in Functions</span><span data-lang="zh">模块化设计 + 内置函数</span></span>
+    <span class="pill marks"><span data-lang="en">[9 marks]</span><span data-lang="zh">[9 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">scores = [72, 88, 65, 91, 78]. Min = <strong>65</strong>. Max = <strong>91</strong>. Sum = 72+88+65+91+78 = 394. Average = 394/5 = <strong>78.8</strong>. Output:<br><code>Min: 65</code><br><code>Max: 91</code><br><code>Avg: 78.8</code><br><span class="marks-call">A1 (min) + A1 (max) + M1 (sum=394) + A1 (avg=78.8) = [4]</span></span><span data-lang="zh">scores = [72, 88, 65, 91, 78]。最小值 = <strong>65</strong>。最大值 = <strong>91</strong>。总和 = 72+88+65+91+78 = 394。平均值 = 394/5 = <strong>78.8</strong>。输出：<br><code>Min: 65</code><br><code>Max: 91</code><br><code>Avg: 78.8</code><br><span class="marks-call">A1（min）+ A1（max）+ M1（sum=394）+ A1（avg=78.8）= [4]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">CSTA 3B-AP-16 says "Demonstrate code reuse by creating programming solutions using libraries and APIs." Using built-in functions means reusing well-tested, pre-written code rather than re-implementing the same logic manually; this is the library reuse principle. <span class="marks-call">M1 + A1 = [2]</span></span><span data-lang="zh">CSTA 3B-AP-16 指出"通过使用库和 API 创建编程解决方案来展示代码复用。"使用内置函数意味着复用经过充分测试的预编写代码，而非手动重新实现相同逻辑；这就是库复用原则。<span class="marks-call">M1 + A1 = [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Python:<br>
+<pre><code>def find_range(data):
+    return find_max(data) - find_min(data)</code></pre>
+<span class="marks-call">A1 (calls find_max/find_min) + A1 (subtraction, return) = [2]</span></span><span data-lang="zh">Python：<br>
+<pre><code>def find_range(data):
+    return find_max(data) - find_min(data)</code></pre>
+<span class="marks-call">A1（调用 find_max/find_min）+ A1（减法，return）= [2]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(d)</span> <span data-lang="en"><code>find_range(scores)</code> = find_max([72,88,65,91,78]) - find_min([72,88,65,91,78]) = 91 - 65 = <strong>26</strong>. <span class="marks-call">[1]</span></span><span data-lang="zh"><code>find_range(scores)</code> = find_max([72,88,65,91,78]) - find_min([72,88,65,91,78]) = 91 - 65 = <strong>26</strong>。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Part (c) shows function composition: <code>find_range</code> is built on top of <code>find_max</code> and <code>find_min</code>, which are themselves built on top of built-in functions. This layering is the essence of modular design. BC CP11 calls it "pre-built libraries and their documentation": you use existing, tested building blocks rather than starting from scratch every time.</span><span data-lang="zh">(c) 部分展示了函数组合：<code>find_range</code> 构建在 <code>find_max</code> 和 <code>find_min</code> 之上，而后者本身又构建在内置函数之上。这种分层正是模块化设计的本质。BC CP11 将其称为"预建库及其文档"：你使用现有的、经过测试的构建块，而不是每次从头开始。</span></div>
+  </div>
+</div>
+
+<!-- Q12 SOLUTION -->
+<div class="solution app">
+  <div class="sol-head">
+    <span class="pill qnum">Q12</span>
+    <span class="pill hard"><span data-lang="en">HARD</span><span data-lang="zh">难</span></span>
+    <span class="pill region">&#x1F1FA;&#x1F1F8; <span data-lang="en">US</span><span data-lang="zh">美</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">ON</span><span data-lang="zh">安</span></span>
+    <span class="pill region">&#x1F1E8;&#x1F1E6; <span data-lang="en">BC</span><span data-lang="zh">卑</span></span>
+    <span class="pill topic"><span data-lang="en">All Sections</span><span data-lang="zh">全部章节</span> &middot; CSTA 3A-AP-17 / ICS3U B2.3</span>
+    <span class="pill marks"><span data-lang="en">[8 marks]</span><span data-lang="zh">[8 分]</span></span>
+  </div>
+  <div class="sol-body">
+    <div class="answer">
+      <div class="answer-line"><span class="part-tag">(a)</span> <span data-lang="en">bill=120, percent=15, people=4.<br>
+      compute_tip(120, 15): bill=120, percent=15. Returns 120*15/100 = <strong>18.0</strong>. tip=18.0.<br>
+      compute_total(120, 18.0): bill=120, tip=18.0. Returns 120+18.0 = <strong>138.0</strong>. total=138.0.<br>
+      per_person(138.0, 4): total=138.0, people=4. Returns 138.0/4 = <strong>34.5</strong>. share=34.5.<br>
+      Output: "Each person pays: 34.5". <span class="marks-call">M1 (tip) + M1 (total) + A1 (share=34.5) + A1 (output) = [4]</span></span><span data-lang="zh">bill=120，percent=15，people=4。<br>
+      compute_tip(120, 15)：bill=120，percent=15。返回 120*15/100 = <strong>18.0</strong>。tip=18.0。<br>
+      compute_total(120, 18.0)：bill=120，tip=18.0。返回 120+18.0 = <strong>138.0</strong>。total=138.0。<br>
+      per_person(138.0, 4)：total=138.0，people=4。返回 138.0/4 = <strong>34.5</strong>。share=34.5。<br>
+      输出："Each person pays: 34.5"。<span class="marks-call">M1（tip）+ M1（total）+ A1（share=34.5）+ A1（输出）= [4]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(b)</span> <span data-lang="en">Pseudocode:<br>
+<pre><code>FUNCTION apply_discount(total, discount_pct):
+    SET discount TO total * discount_pct / 100
+    RETURN total - discount
+END FUNCTION</code></pre>
+With discount_pct=10: apply_discount(138.0, 10) = 138.0 - 13.8 = <strong>124.2</strong>. New share = per_person(124.2, 4) = <strong>31.05</strong>. <span class="marks-call">A1 (function) + M1 (124.2) + A1 (31.05) = [3]</span></span><span data-lang="zh">伪代码：<br>
+<pre><code>FUNCTION apply_discount(total, discount_pct):
+    SET discount TO total * discount_pct / 100
+    RETURN total - discount
+END FUNCTION</code></pre>
+discount_pct=10 时：apply_discount(138.0, 10) = 138.0 - 13.8 = <strong>124.2</strong>。新人均分摊 = per_person(124.2, 4) = <strong>31.05</strong>。<span class="marks-call">A1（函数）+ M1（124.2）+ A1（31.05）= [3]</span></span></div>
+      <div class="answer-line"><span class="part-tag">(c)</span> <span data-lang="en">Each function has exactly one responsibility: compute_tip only computes tips, compute_total only adds, per_person only divides. Any function can be modified independently without affecting the others (e.g., change the tip formula without touching the split logic). <span class="marks-call">[1]</span></span><span data-lang="zh">每个函数只有一个职责：compute_tip 只计算小费，compute_total 只做加法，per_person 只做除法。任何函数都可以独立修改而不影响其他函数（如更改小费公式而不影响分摊逻辑）。<span class="marks-call">[1]</span></span></div>
+    </div>
+    <div class="insight"><strong><span data-lang="en">Insight:</span><span data-lang="zh">解题思路：</span></strong> <span data-lang="en">Part (b) shows the extension power of top-down design. Adding the discount required only one new function, inserted between existing ones. No existing function was modified. This is "open for extension, closed for modification" in practice. CSTA 3A-AP-17 asks students to "decompose problems into smaller components." The tip calculator is a textbook example: one problem (compute a bill), three clean sub-problems, each solved independently.</span><span data-lang="zh">(b) 部分展示了自顶向下设计的扩展能力。添加折扣只需要一个新函数，插入现有函数之间，无需修改任何现有函数。这就是实践中的"对扩展开放，对修改关闭"。CSTA 3A-AP-17 要求学生"将问题分解为更小的组件"，小费计算器是教科书级别的示例：一个问题（计算账单），三个简洁的子问题，每个独立解决。</span></div>
+  </div>
+</div>
+
+<!-- consult-cta -->
+<aside class="consult-cta">
+  <span class="consult-cta__lead"><span data-lang="en">Stuck, or want to go further?</span><span data-lang="zh">遇到困难，或想更进一步？</span></span>
+  <span class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor:</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估：</span></span>
+  <a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_4_Functions_and_Modular_Design__solutions__en" target="_blank" rel="noopener">dingruischolars.com/signup</a>
+  <a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=high_school_computer_science&amp;utm_content=Unit_4_Functions_and_Modular_Design__solutions__zh" target="_blank" rel="noopener">dingruischolars.com/signup-ch</a>
+</aside>
+
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav class="dr-related" aria-label="Related materials">
+  <span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+  <a href="../../Study%20Guides/Unit_4_Functions_and_Modular_Design.html"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> &rarr;</a>
+  <a href="../Unit_4_Functions_and_Modular_Design_Practice.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> &rarr;</a>
+  <span class="dr-related__cur" aria-current="page"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span></span>
+</nav>
+<footer class="page-foot">
+  <span><span class="mark">DINGRUI&nbsp;SCHOLARS</span> &middot; <span data-lang="en">High School Computer Science &middot; Solutions</span><span data-lang="zh">高中计算机科学 &middot; 解答</span> &middot; <code style="color:#555;">v1</code></span>
+  <span><span data-lang="en">Functions and Modular Design Solutions v1 &middot; 12 Qs &middot; ~80 marks &middot; US / ON / BC / AB &middot; HS-CS-4</span><span data-lang="zh">函数与模块化设计 解答 v1 &middot; 共 12 题 &middot; 约 80 分 &middot; 美 / 安 / 卑 / 阿 &middot; HS-CS-4</span></span>
+</footer>
+
+<script>
+function toggleLang() { const isZh = document.body.classList.toggle('lang-zh'); try { localStorage.setItem('lang', isZh ? 'zh' : 'en'); } catch (e) {} }
+try { if (localStorage.getItem('lang') === 'zh') document.body.classList.add('lang-zh'); } catch (e) {}
+</script>
+
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-type">
+/* S3: on-screen reading comfort; print keeps the compact worksheet density. */
+@media screen {
+  body { line-height: 1.58; font-size: 11.75pt; }
+  .q-body { line-height: 1.6; }
+  .q { margin-bottom: 22px; }
+  .prompt { margin: 6px 0 12px; }
+  .opts { margin-top: 10px; }
+  .opts li { padding: 4px 0; margin-bottom: 6px; }
+  .section-head { margin: 22px 0 12px; }
+}
+</style>
+<style id="dr-practice-overflow-lock">
+/* S3-H1 (#7): match the Study Guide page-pan lock -- a wide equation scrolls
+   inside its own box instead of panning the page on a phone. Overflow only;
+   does not touch the print width (max-width:8.5in body). */
+html, body { overflow-x: hidden; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+</style>
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>
