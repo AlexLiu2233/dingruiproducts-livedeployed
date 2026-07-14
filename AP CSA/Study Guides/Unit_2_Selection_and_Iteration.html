@@ -594,6 +594,19 @@ body.lang-zh [data-lang="en"] { display: none; }
     <strong>关键点</strong>
     顺序、选择、重复这三种结构<em>组合的次序</em>决定了算法的最终结果。
   </div>
+
+  <p data-lang="en"><strong>Worked example — all three blocks together:</strong> finding the largest of a list of numbers.</p>
+  <p data-lang="zh"><strong>示例 —— 三种结构同时出现：</strong>在一列数字中找出最大值。</p>
+<pre><span class="ty">int</span>[] nums = {<span class="num">4</span>, <span class="num">9</span>, <span class="num">2</span>, <span class="num">7</span>};
+<span class="ty">int</span> max = nums[<span class="num">0</span>];                    <span class="cm" data-lang="en">// sequencing: initialize</span><span class="cm" data-lang="zh">// 顺序：初始化</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.length; i++) {  <span class="cm" data-lang="en">// repetition: visit each element</span><span class="cm" data-lang="zh">// 重复：遍历每个元素</span>
+    <span class="kw">if</span> (nums[i] &gt; max) {          <span class="cm" data-lang="en">// selection: decide whether to update</span><span class="cm" data-lang="zh">// 选择：判断是否更新</span>
+        max = nums[i];
+    }
+}
+<span class="cm" data-lang="en">// max = 9</span><span class="cm" data-lang="zh">// max = 9</span></pre>
+  <p data-lang="en">Each block plays a distinct role: sequencing sets up <code>max</code>, repetition steps through every element exactly once, and selection is the only part that changes <code>max</code>—remove it and the loop would just overwrite <code>max</code> every time.</p>
+  <p data-lang="zh">每种结构各司其职：顺序负责初始化 <code>max</code>，重复逐一遍历每个元素，选择是唯一会改变 <code>max</code> 的部分——去掉选择结构，循环就会每次都无条件覆盖 <code>max</code>。</p>
 </section>
 
 <hr class="sep">
@@ -640,6 +653,15 @@ body.lang-zh [data-lang="en"] { display: none; }
 
 <pre><span class="ty">int</span> a = <span class="num">10</span>;
 <span class="ty">boolean</span> result = (a &gt;= <span class="num">5</span>);  <span class="cm" data-lang="en">// true</span><span class="cm" data-lang="zh">// true</span></pre>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Common Mistake — Comparing <code>double</code>s with <code>==</code></strong>
+    Floating-point arithmetic is imprecise, so two <code>double</code> values that "should" be equal mathematically often aren't bit-for-bit equal. <code>0.1 + 0.2 == 0.3</code> evaluates to <code>false</code> in Java! Instead of exact equality, compare that the difference is smaller than a small tolerance: <code>Math.abs(a - b) &lt; 0.0001</code>.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>常见错误 —— 用 <code>==</code> 比较 <code>double</code></strong>
+    浮点运算并不精确，所以两个数学上"应该相等"的 <code>double</code> 值，往往在二进制表示上并不完全相同。在 Java 中，<code>0.1 + 0.2 == 0.3</code> 的结果是 <code>false</code>！应改为判断两者之差是否小于某个很小的容差：<code>Math.abs(a - b) &lt; 0.0001</code>。
+  </div>
 </section>
 
 <hr class="sep">
@@ -691,6 +713,15 @@ body.lang-zh [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp" data-lang="en">Since 7 &gt; 10 is false, the else branch runs → "B".</div>
     <div class="quiz-explain wrong-exp" data-lang="zh">因为 7 &gt; 10 为假，else 分支执行 → "B"。</div>
   </div>
+
+  <div class="concept-box orange" data-lang="en">
+    <strong>Simplify — Don't Wrap a Boolean in an if-else</strong>
+    A common beginner pattern is <code>if (score &gt;= 60) return true; else return false;</code>. Since the condition itself already evaluates to a <code>boolean</code>, this can always be shortened to <code>return score &gt;= 60;</code>. Recognizing and simplifying this pattern is a skill the AP exam rewards.
+  </div>
+  <div class="concept-box orange" data-lang="zh">
+    <strong>简化 —— 不要用 if-else 包裹一个布尔值</strong>
+    初学者常写 <code>if (score &gt;= 60) return true; else return false;</code>。由于条件本身已经是一个 <code>boolean</code> 值，这段代码总能简化为 <code>return score &gt;= 60;</code>。识别并简化这种模式是 AP 考试考查的技能之一。
+  </div>
 </section>
 
 <hr class="sep">
@@ -724,6 +755,23 @@ body.lang-zh [data-lang="en"] { display: none; }
     <strong>多分支选择规则</strong>
     只有<em>第一个</em>条件为 <code>true</code> 的分支会执行，后面的分支全部跳过。若所有条件都不成立且末尾有 <code>else</code>，则执行该 <code>else</code>。
   </div>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Dangling Else — An <code>else</code> Always Binds to the Nearest <code>if</code></strong>
+    Without braces, indentation can be misleading. In the code below, the <code>else</code> attaches to the <em>inner</em> <code>if (y &gt; 0)</code>, not the outer one—no matter how it's indented.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>悬空 else —— else 总是绑定到最近的 if</strong>
+    没有花括号时，缩进可能会误导人。在下面的代码中，<code>else</code> 绑定的是<em>内层</em>的 <code>if (y &gt; 0)</code>，而不是外层，无论缩进如何。
+  </div>
+<pre><span class="kw">if</span> (x &gt; 0)
+    <span class="kw">if</span> (y &gt; 0)
+        <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"A"</span>);
+<span class="kw">else</span>
+    <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"B"</span>);
+<span class="cm" data-lang="en">// If x &lt;= 0, NOTHING prints — the else belongs to "if (y &gt; 0)", not "if (x &gt; 0)"</span><span class="cm" data-lang="zh">// 若 x &lt;= 0，什么都不会输出 —— else 属于 "if (y &gt; 0)"，而非 "if (x &gt; 0)"</span></pre>
+  <p data-lang="en">Always use braces <code>{ }</code> on nested if statements to make the binding explicit and avoid this trap.</p>
+  <p data-lang="zh">嵌套 if 语句务必加上花括号 <code>{ }</code>，让绑定关系一目了然，避免这个陷阱。</p>
 </section>
 
 <hr class="sep">
@@ -1148,6 +1196,42 @@ passed &amp;&amp; onTime
     sum += i;
 }
 <span class="ty">double</span> avg = (<span class="ty">double</span>) sum / n;</pre>
+
+  <h3 data-lang="en">6. Traversal with Early Exit</h3>
+  <h3 data-lang="zh">6. 带提前退出的遍历</h3>
+<pre><span class="ty">boolean</span> found = <span class="kw">false</span>;
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.length; i++) {
+    <span class="kw">if</span> (nums[i] == target) {
+        found = <span class="kw">true</span>;
+        <span class="kw">break</span>;  <span class="cm" data-lang="en">// stop as soon as it's found — no need to keep looping</span><span class="cm" data-lang="zh">// 一旦找到就停止 —— 无需继续遍历</span>
+    }
+}</pre>
+  <div class="concept-box" data-lang="en">
+    <strong>Why <code>break</code> Matters Here</strong>
+    Without <code>break</code>, the loop keeps running to the end even after finding a match, wasting time on a large array. This early-exit pattern is the basis of linear search and shows up constantly in free-response questions.
+  </div>
+  <div class="concept-box" data-lang="zh">
+    <strong>为何这里要用 <code>break</code></strong>
+    如果不用 <code>break</code>，即使已经找到匹配项，循环仍会一直跑到末尾，在大数组上浪费时间。这种提前退出模式正是线性查找的基础，在自由回答题中频繁出现。
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--accent);">
+    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Worked Example: Combining Count, Sum, and Max in one pass</span><span data-lang="zh">例题：在一次遍历中同时完成计数、求和与求最大值</span></div>
+    <p data-lang="en">Free-response questions rarely test one pattern in isolation — they usually ask for a method that combines several of the six patterns above in a single loop. Here is a method that, given an array of exam scores, returns the count of scores at or above 90 <em>and</em> tracks the highest score seen, in one traversal:</p>
+    <p data-lang="zh">自由作答题很少只考单一模式——通常要求在同一个循环里综合运用上面六种模式中的好几种。下面这个方法：给定一个考试成绩数组，在一次遍历中同时返回 90 分及以上的成绩计数，<em>并</em>追踪目前见过的最高分：</p>
+<pre><span class="kw">public static int</span> <span class="fn">countHighAndTrackMax</span>(<span class="ty">int</span>[] scores) {
+    <span class="ty">int</span> count = <span class="num">0</span>;                     <span class="cm" data-lang="en">// Pattern 3: Count</span><span class="cm" data-lang="zh">// 模式 3：计数</span>
+    <span class="ty">int</span> max = Integer.MIN_VALUE;         <span class="cm" data-lang="en">// Pattern 4: Max</span><span class="cm" data-lang="zh">// 模式 4：最大值</span>
+    <span class="kw">for</span> (<span class="ty">int</span> s : scores) {              <span class="cm" data-lang="en">// one pass over the whole array</span><span class="cm" data-lang="zh">// 对整个数组只遍历一次</span>
+        <span class="kw">if</span> (s &gt;= <span class="num">90</span>) count++;          <span class="cm" data-lang="en">// Pattern 1: divisibility-style condition, reused as a threshold check</span><span class="cm" data-lang="zh">// 模式 1：整除性检查的思路，改用作阈值判断</span>
+        <span class="kw">if</span> (s &gt; max) max = s;
+    }
+    <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"Highest: "</span> + max);
+    <span class="kw">return</span> count;
+}</pre>
+    <p data-lang="en" style="margin-top:10px"><strong>Why one pass, not two.</strong> A tempting but wasteful alternative is one loop to find <code>max</code> and a second loop to count scores $\ge 90$. Both accumulator variables (<code>count</code> and <code>max</code>) update independently on every iteration, so a single <code>for-each</code> loop computes both — the same efficiency argument as the early-exit <code>break</code> pattern above, just for combining work instead of skipping it.</p>
+    <p data-lang="zh" style="margin-top:10px"><strong>为何一次遍历就够，不必两次。</strong>一种看似直观但低效的做法是：一个循环求 <code>max</code>，另一个循环统计 $\ge 90$ 的个数。事实上 <code>count</code> 与 <code>max</code> 这两个累加变量在每次迭代中都各自独立更新，所以一个 <code>for-each</code> 循环就能同时算出两者——这与上面提前退出的 <code>break</code> 模式是同一种效率思路，只不过一个是合并工作，一个是跳过工作。</p>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1189,6 +1273,20 @@ passed &amp;&amp; onTime
     <strong>套路：取单字符子串</strong>
     用 <code>str.substring(i, i + 1)</code> 把索引 <code>i</code> 处的字符作为 <code>String</code> 取出来。这是 AP 考试上的标准做法。
   </div>
+
+  <h3 data-lang="en">Check for a Palindrome</h3>
+  <h3 data-lang="zh">检验回文串</h3>
+<pre><span class="ty">String</span> word = <span class="str">"level"</span>;
+<span class="ty">boolean</span> isPalindrome = <span class="kw">true</span>;
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; word.length() / <span class="num">2</span>; i++) {
+    <span class="kw">if</span> (word.charAt(i) != word.charAt(word.length() - <span class="num">1</span> - i)) {
+        isPalindrome = <span class="kw">false</span>;
+        <span class="kw">break</span>;
+    }
+}
+<span class="cm" data-lang="en">// isPalindrome = true</span><span class="cm" data-lang="zh">// isPalindrome = true</span></pre>
+  <p data-lang="en">Only the first half of the string needs checking—comparing index <code>i</code> from the front against its mirror position from the back covers every pair exactly once.</p>
+  <p data-lang="zh">只需检查字符串的前半部分——将前端索引 <code>i</code> 与其在末端的镜像位置比较，恰好覆盖每一对字符一次。</p>
 </section>
 
 <hr class="sep">

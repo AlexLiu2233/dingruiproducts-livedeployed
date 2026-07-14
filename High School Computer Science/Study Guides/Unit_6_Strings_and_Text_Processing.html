@@ -546,6 +546,23 @@ print(clean)                     # ["alice", "biology", "92"]</code></pre>
     <p><span data-lang="zh">以上：<code>split(",")</code> 按逗号分割（方法，method），<code>strip()</code> 去除两端空白，<code>lower()</code> 转为小写。这三个步骤可以链式调用。</span><span data-lang="en">Chain: <code>split(",")</code> splits on comma (returns list), then <code>strip()</code> removes surrounding whitespace, then <code>lower()</code> normalises case. This pattern — split, strip, lower — is the standard CSV-cleaning idiom.</span></p>
   </div>
 
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 3b: Rebuilding a CSV Line with replace() and join()</span><span data-lang="zh">例题 3b：用 replace() 和 join() 重建 CSV 行</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Worked Example 3 parsed a row into clean fields. Now do the reverse: given a list of price strings that carry a currency symbol, strip the symbol from each field with <code>replace()</code>, then rebuild a single comma-separated line with <code>join()</code>. Both <code>replace()</code> and <code>join()</code> are named in the &sect;3 cram-cheat but neither has appeared in a worked example until now.</span><span data-lang="zh">例题 3 把一行数据解析成了干净的字段。现在做相反的事：给定一个带货币符号的价格字符串列表，先用 <code>replace()</code> 从每个字段中去除符号，再用 <code>join()</code> 把它们重建成一行以逗号分隔的数据。<code>replace()</code> 和 <code>join()</code> 都在 &sect;3 的速记框中被点名，但直到现在都还没有在例题中出现过。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre><code>prices = ["$12", "$5", "$100"]
+
+# Step 1: replace() strips the currency symbol from each field
+cleaned = [p.replace("$", "") for p in prices]
+print(cleaned)          # ["12", "5", "100"]
+
+# Step 2: join() rebuilds a single comma-separated line
+csv_line = ",".join(cleaned)
+print(csv_line)          # 12,5,100</code></pre>
+    <p><span data-lang="zh">以上：<code>replace("$", "")</code> 把货币符号替换为空字符串，也就是删除它；列表推导式对列表中的每个字段重复这个操作。<code>",".join(cleaned)</code> 正是 <code>split(",")</code> 的逆操作：把字段列表重新连接成一行文本，逗号插入相邻字段之间。</span><span data-lang="en"><code>replace("$", "")</code> substitutes the empty string for the symbol, which is how you delete a character in Python; the list comprehension applies this to every field. <code>",".join(cleaned)</code> is the exact inverse of <code>split(",")</code> from Worked Example 3: it walks the list once and inserts the separator between adjacent fields, producing a single new string in one pass rather than a manual loop with repeated concatenation.</span></p>
+  </div>
+
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What does <code>"Hello World".lower()</code> return?</span><span data-lang="zh"><code>"Hello World".lower()</code> 返回什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
     <div class="quiz-options">
@@ -743,6 +760,37 @@ for i in range(len(word)):
         count2 += 1
 print(count2)   # 5</code></pre>
     <p><span data-lang="zh">以上：Style 1 用 <code>for ch in word</code> 逐字符（character）遍历；Style 2 用索引（index）访问。"education" 中的元音：e, u, a, i, o，共 5 个。两种方式结果相同。</span><span data-lang="en">Both styles produce the same result. "education": e(vowel), d, u(vowel), c, a(vowel), t, i(vowel), o(vowel), n — 5 vowels. Style 1 is more Pythonic; Style 2 is needed when the position matters (e.g., to replace <code>word[i]</code>).</span></p>
+  </div>
+
+  <div class="concept-box red">
+    <strong style="color: var(--red);"><span data-lang="en">Common mistake: rebuilding a string with <code>+=</code> inside a loop</span><span data-lang="zh">常见错误：在循环中用 <code>+=</code> 重建字符串</span></strong>
+    <p style="margin-top: 8px;"><span data-lang="en">The reversal quiz below uses <code>result = ch + result</code> inside a loop, and it is tempting to reach for the same pattern any time you build a string character by character: start with <code>result = ""</code>, then <code>result += ch</code> on every pass. Because strings are immutable (&sect;1), each <code>+=</code> does not append to <code>result</code> in place; it allocates an entirely new string and copies the old contents into it. For a short word this is invisible, but for a long document processed one character at a time, the total copying work grows roughly with the square of the length, not with the length itself.</span><span data-lang="zh">下面的反转测验在循环中使用了 <code>result = ch + result</code>，而每当你想逐字符构建字符串时，很容易套用同样的写法：先 <code>result = ""</code>，再每次循环 <code>result += ch</code>。由于字符串是不可变的（见 &sect;1），每一次 <code>+=</code> 并不会就地追加到 <code>result</code>；它会分配一个全新的字符串，并把旧内容复制进去。对短单词来说这毫无影响，但对逐字符处理的长文档来说，总复制开销大致随长度的平方增长，而不是随长度线性增长。</span></p>
+    <p style="margin-top: 8px;"><span data-lang="en">The fix mirrors Worked Example 3b: collect the pieces in a list with <code>append()</code>, then call <code>"".join(pieces)</code> once at the end. The list grows in roughly constant time per append, and <code>join()</code> makes a single linear pass over the whole collection, so the total cost stays proportional to the length of the text. Prefer this pattern for any real text-processing pipeline, including the word-count program in &sect;7.</span><span data-lang="zh">修复方式与例题 3b 相呼应：先用 <code>append()</code> 把各片段收集到一个列表中，最后只调用一次 <code>"".join(pieces)</code>。列表的每次追加大致是常数时间，<code>join()</code> 只对整个集合做一次线性遍历，因此总开销与文本长度成正比。在任何真正的文本处理流水线中都应优先采用这种模式，包括 &sect;7 的词频统计程序。</span></p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 6b: Palindrome Check, Combining Slicing and Looping</span><span data-lang="zh">例题 6b：回文检测，结合切片与循环</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">A palindrome reads the same forwards and backwards, such as "level" or "racecar". Write two solutions to the same problem: a one-line slicing solution built from &sect;2, and a manual loop solution that compares characters from both ends inward, stopping in one pass as soon as a mismatch appears.</span><span data-lang="zh">回文正读反读都相同，例如 "level" 或 "racecar"。为同一问题写两种解法：一种是基于 &sect;2 的一行切片解法，另一种是从两端向中间比较字符的手动循环解法，一旦发现不匹配便在一次遍历中提前停止。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre><code>def is_palindrome_slice(s):
+    return s == s[::-1]
+
+def is_palindrome_loop(s):
+    left  = 0
+    right = len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left  += 1
+        right -= 1
+    return True
+
+print(is_palindrome_slice("racecar"))  # True
+print(is_palindrome_loop("racecar"))   # True
+print(is_palindrome_slice("hello"))    # False
+print(is_palindrome_loop("hello"))     # False</code></pre>
+    <p><span data-lang="zh">以上：<code>is_palindrome_slice</code> 用 &sect;2 的反转切片 <code>s[::-1]</code>，把整个字符串复制一份再比较，写法简洁但要建出第二个字符串。<code>is_palindrome_loop</code> 用两个索引（&sect;1 的索引访问）从两端向中间靠拢，一旦 <code>s[left] != s[right]</code> 就立刻用 <code>return False</code> 退出，最坏情况下也只需比较约一半字符，且不需要建出反转副本。两种写法结果相同，但循环写法把索引、比较和提前退出结合在同一次遍历中，是组合多种字符串技巧的典型例子。</span><span data-lang="en"><code>is_palindrome_slice</code> reuses the reversal slice <code>s[::-1]</code> from &sect;2: concise, but it builds an entirely new reversed string just to compare it. <code>is_palindrome_loop</code> uses two indices (index access from &sect;1) that walk inward from both ends, returning <code>False</code> the moment a mismatch is found; in the worst case it only compares roughly half the characters and never allocates a second string. Both return the same answer, but the loop version combines indexing, comparison, and early exit in a single pass, the pattern to reach for once slicing and looping are both in your toolkit.</span></p>
   </div>
 
   <div class="quiz" data-answer="2">

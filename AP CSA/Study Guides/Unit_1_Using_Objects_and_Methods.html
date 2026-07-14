@@ -1018,6 +1018,15 @@ x = x + <span class="num">3</span>;  <span class="cm" data-lang="en">// x is now
 <span class="ty">Scanner</span> input = <span class="kw">new</span> <span class="ty">Scanner</span>(System.in);
 <span class="ty">System</span>.out.<span class="fn">print</span>(<span class="str">"Enter age: "</span>);
 <span class="ty">int</span> age = input.<span class="fn">nextInt</span>();</pre>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Common Mistake — <code>=</code> vs <code>==</code></strong>
+    <code>=</code> assigns a value; <code>==</code> compares two values for equality. Mixing them up is one of the most frequent bugs for new Java programmers. Unlike some languages, Java won't let <code>if (x = 5)</code> compile when it expects a <code>boolean</code> — but the mistake can still slip through inside larger boolean expressions, so always double-check which operator you meant.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>常见错误 —— <code>=</code> 与 <code>==</code></strong>
+    <code>=</code> 用于赋值；<code>==</code> 用于比较两个值是否相等。混淆二者是 Java 新手最常见的错误之一。与某些语言不同，Java 在需要 <code>boolean</code> 的地方不会允许 <code>if (x = 5)</code> 编译通过——但在更复杂的布尔表达式中，这个错误仍可能悄悄溜过去，所以务必确认自己用的是哪一个运算符。
+  </div>
 </section>
 
 <hr class="sep">
@@ -1128,6 +1137,43 @@ x = x + <span class="num">3</span>;  <span class="cm" data-lang="en">// x is now
 score += <span class="num">5</span>;   <span class="cm" data-lang="en">// 15</span><span class="cm" data-lang="zh">// 15</span>
 score *= <span class="num">2</span>;   <span class="cm" data-lang="en">// 30</span><span class="cm" data-lang="zh">// 30</span>
 score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data-lang="zh">// 29</span></pre>
+
+  <div class="concept-box orange" data-lang="en">
+    <strong>Compound Assignment Hides an Implicit Cast</strong>
+    <code>x += y</code> is not just shorthand for <code>x = x + y</code>—it also silently casts the result back to <code>x</code>'s type. That's why <code>byte b = 10; b += 5;</code> compiles fine, even though <code>byte b2 = b + 5;</code> would <strong>not</strong> compile (adding promotes to <code>int</code>, and <code>int</code> can't narrow to <code>byte</code> without an explicit cast). The compound operator quietly does that narrowing cast for you.
+  </div>
+  <div class="concept-box orange" data-lang="zh">
+    <strong>复合赋值隐藏了一次隐式类型转换</strong>
+    <code>x += y</code> 不仅仅是 <code>x = x + y</code> 的简写——它还会把结果悄悄转换（<code>cast</code>）回 <code>x</code> 的类型。这就是为什么 <code>byte b = 10; b += 5;</code> 能编译通过，而 <code>byte b2 = b + 5;</code> <strong>不能</strong>（相加会提升为 <code>int</code>，而 <code>int</code> 若不显式转换是不能缩窄为 <code>byte</code> 的）。复合运算符悄悄替你完成了这次缩窄转换。
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--accent);">
+    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Worked Example: Pre- vs. post-increment inside an expression</span><span data-lang="zh">例题：表达式内的前置自增与后置自增</span></div>
+    <p data-lang="en">The table above only shows <code>x++</code> (post-increment) on its own line, where it behaves just like <code>x = x + 1</code>. The distinction from <code>++x</code> (pre-increment) only matters when the increment is <em>embedded inside a larger expression</em> that also reads the variable's value:</p>
+    <p data-lang="zh">上表只展示了单独一行的 <code>x++</code>（后置自增），此时它的效果就和 <code>x = x + 1</code> 一样。它与 <code>++x</code>（前置自增）的区别，只有在自增被<em>嵌入到同时读取该变量值的更大表达式</em>中时才会显现：</p>
+<pre><span class="ty">int</span> x = <span class="num">5</span>;
+<span class="ty">int</span> a = x++;   <span class="cm" data-lang="en">// a = 5  (reads x FIRST, then increments; x is now 6)</span><span class="cm" data-lang="zh">// a = 5  （先读取 x 的值，再自增；此时 x 变为 6）</span>
+
+<span class="ty">int</span> y = <span class="num">5</span>;
+<span class="ty">int</span> b = ++y;   <span class="cm" data-lang="en">// b = 6  (increments FIRST, then reads y)</span><span class="cm" data-lang="zh">// b = 6  （先自增，再读取 y 的值）</span></pre>
+    <p data-lang="en" style="margin-top:10px"><strong>Rule of thumb.</strong> <code>x++</code> hands over the <em>old</em> value and increments afterward; <code>++x</code> increments first and hands over the <em>new</em> value. Both leave the variable itself one higher — the only difference is which value the surrounding expression sees. On the AP exam this shows up most often inside array indexing or method-argument expressions, e.g. <code>arr[i++]</code> uses the current <code>i</code> to index, then bumps it for next time.</p>
+    <p data-lang="zh" style="margin-top:10px"><strong>记忆法。</strong><code>x++</code> 先交出<em>旧</em>值，之后再自增；<code>++x</code> 先自增，再交出<em>新</em>值。两者都会让变量本身加一——唯一的区别是外层表达式读到的是哪个值。在 AP 考试中，这最常出现在数组下标或方法实参表达式里，例如 <code>arr[i++]</code> 用当前的 <code>i</code> 做下标，然后再把 <code>i</code> 加一供下次使用。</p>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="quiz-q" data-lang="en">After the code below runs, what is the value of <code>result</code>?<br><code>int n = 3; int result = n++ + ++n;</code></div>
+    <div class="quiz-q" data-lang="zh">下面代码执行后，<code>result</code> 的值是多少？<br><code>int n = 3; int result = n++ + ++n;</code></div>
+    <div class="quiz-options">
+      <div class="quiz-opt" data-idx="0">6</div>
+      <div class="quiz-opt" data-idx="1">8</div>
+      <div class="quiz-opt" data-idx="2">7</div>
+      <div class="quiz-opt" data-idx="3">9</div>
+    </div>
+    <div class="quiz-explain correct-exp" data-lang="en">Correct! <code>n++</code> contributes the current value of <code>n</code> (3) to the sum and then bumps <code>n</code> to 4. Next, <code>++n</code> bumps <code>n</code> to 5 first and contributes 5. So <code>result = 3 + 5 = 8</code>.</div>
+    <div class="quiz-explain correct-exp" data-lang="zh">正确！<code>n++</code> 先把 <code>n</code> 当前的值（3）计入总和，再把 <code>n</code> 变为 4。接着 <code>++n</code> 先把 <code>n</code> 变为 5，再把 5 计入总和。所以 <code>result = 3 + 5 = 8</code>。</div>
+    <div class="quiz-explain wrong-exp" data-lang="en"><code>n++</code> uses <code>n</code>'s value <em>before</em> incrementing (contributes 3, n becomes 4); <code>++n</code> increments <em>before</em> using it (n becomes 5, contributes 5). Sum: <code>3 + 5 = 8</code>.</div>
+    <div class="quiz-explain wrong-exp" data-lang="zh"><code>n++</code> 使用自增<em>之前</em>的值（贡献 3，n 变为 4）；<code>++n</code> 先自增再使用（n 变为 5，贡献 5）。总和：<code>3 + 5 = 8</code>。</div>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1153,6 +1199,11 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
 
   <p data-lang="en">Classes in APIs are grouped into <strong>packages</strong>. You use existing classes to create objects and call their methods.</p>
   <p data-lang="zh">API 中的类按<strong>包</strong>来组织。你使用已有的类来创建对象，并调用它们的方法。</p>
+
+  <p data-lang="en">Classes in <code>java.lang</code> (like <code>String</code> and <code>Math</code>) are available automatically. Everything else needs an explicit <code>import</code> naming its package:</p>
+  <p data-lang="zh"><code>java.lang</code> 包中的类（如 <code>String</code> 和 <code>Math</code>）会自动可用。其它所有类都需要用 <code>import</code> 显式声明所在的包：</p>
+<pre><span class="kw">import</span> java.util.ArrayList;  <span class="cm" data-lang="en">// makes ArrayList available</span><span class="cm" data-lang="zh">// 使 ArrayList 可用</span>
+<span class="kw">import</span> java.util.Scanner;    <span class="cm" data-lang="en">// makes Scanner available</span><span class="cm" data-lang="zh">// 使 Scanner 可用</span></pre>
 </section>
 
 <hr class="sep">
@@ -1191,6 +1242,20 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
     <strong>后置条件（Postcondition）</strong>
     方法执行完成<em>之后</em>保证为真的条件。它描述返回了什么，或者对象发生了怎样的变化。
   </div>
+
+  <p data-lang="en"><strong>Worked example.</strong> Documenting a method with Javadoc that states both conditions:</p>
+  <p data-lang="zh"><strong>示例。</strong>用 Javadoc 同时写出前置与后置条件：</p>
+<pre><span class="cm" data-lang="en">/**
+ * Returns the square root of x.
+ * @param x the value to take the square root of
+</span><span class="cm" data-lang="zh">/**
+ * 返回 x 的平方根。
+ * @param x 待开方的值
+</span> * <span class="kw">Precondition</span><span class="cm" data-lang="en">: x &gt;= 0
+</span><span class="cm" data-lang="zh">前置条件：x &gt;= 0
+</span> * <span class="kw">Postcondition</span><span class="cm" data-lang="en">: returns a value r such that r * r == x
+ */</span><span class="cm" data-lang="zh">后置条件：返回值 r 满足 r * r == x
+ */</span></pre>
 </section>
 
 <hr class="sep">
@@ -1263,6 +1328,33 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
 
 <pre><span class="cm" data-lang="en">// Called using ClassName.methodName()</span><span class="cm" data-lang="zh">// 通过 ClassName.methodName() 调用</span>
 <span class="ty">int</span> absVal = <span class="ty">Math</span>.<span class="fn">abs</span>(-<span class="num">42</span>);  <span class="cm" data-lang="en">// 42</span><span class="cm" data-lang="zh">// 42</span></pre>
+
+  <div class="table-wrap" data-lang="en">
+    <table>
+      <tr><th>Method</th><th>Returns</th><th>Example</th></tr>
+      <tr><td><code>Math.abs(x)</code></td><td><code>double</code>/<code>int</code></td><td><code>Math.abs(-7)</code> → <code>7</code></td></tr>
+      <tr><td><code>Math.pow(base, exp)</code></td><td><code>double</code></td><td><code>Math.pow(2, 10)</code> → <code>1024.0</code></td></tr>
+      <tr><td><code>Math.sqrt(x)</code></td><td><code>double</code></td><td><code>Math.sqrt(9)</code> → <code>3.0</code></td></tr>
+      <tr><td><code>Math.random()</code></td><td><code>double</code> in $[0,1)$</td><td>scale/shift for a range</td></tr>
+    </table>
+  </div>
+  <div class="table-wrap" data-lang="zh">
+    <table>
+      <tr><th>方法</th><th>返回类型</th><th>示例</th></tr>
+      <tr><td><code>Math.abs(x)</code></td><td><code>double</code>/<code>int</code></td><td><code>Math.abs(-7)</code> → <code>7</code></td></tr>
+      <tr><td><code>Math.pow(base, exp)</code></td><td><code>double</code></td><td><code>Math.pow(2, 10)</code> → <code>1024.0</code></td></tr>
+      <tr><td><code>Math.sqrt(x)</code></td><td><code>double</code></td><td><code>Math.sqrt(9)</code> → <code>3.0</code></td></tr>
+      <tr><td><code>Math.random()</code></td><td>$[0,1)$ 区间的 <code>double</code></td><td>可缩放/平移以取任意范围</td></tr>
+    </table>
+  </div>
+  <div class="concept-box" data-lang="en">
+    <strong>Getting a Random Integer in a Range</strong>
+    <code>Math.random()</code> returns a <code>double</code> in $[0, 1)$. To get a random int from <code>0</code> to <code>n-1</code>, multiply and cast down: <code>(int)(Math.random() * n)</code>. To shift the range to start at <code>low</code>: <code>(int)(Math.random() * n) + low</code>.
+  </div>
+  <div class="concept-box" data-lang="zh">
+    <strong>在指定范围内取随机整数</strong>
+    <code>Math.random()</code> 返回 $[0, 1)$ 区间内的 <code>double</code>。要得到 <code>0</code> 到 <code>n-1</code> 的随机整数，先乘再强制转换：<code>(int)(Math.random() * n)</code>。若要把范围平移到从 <code>low</code> 开始：<code>(int)(Math.random() * n) + low</code>。
+  </div>
 
   <p data-lang="en">If you call a static method from <em>within</em> the same class, the class name is optional.</p>
   <p data-lang="zh">如果在<em>同一个类内部</em>调用静态方法，类名可以省略。</p>
@@ -1445,6 +1537,11 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
     <strong>NullPointerException</strong>
     在 <code>null</code> 引用上调用方法会在运行时抛出该错误。一定要先确认对象存在！
   </div>
+
+  <p data-lang="en"><strong>Method chaining</strong> calls one instance method directly on the result of another, evaluated strictly left to right:</p>
+  <p data-lang="zh"><strong>方法链</strong>把一个实例方法直接调用在另一个方法的返回结果上，严格从左到右求值：</p>
+<pre><span class="ty">String</span> clean = <span class="str">"  Hello World  "</span>.<span class="fn">trim</span>().<span class="fn">toUpperCase</span>();
+<span class="cm" data-lang="en">// trim() runs first → "Hello World", then toUpperCase() → "HELLO WORLD"</span><span class="cm" data-lang="zh">// 先执行 trim() → "Hello World"，再执行 toUpperCase() → "HELLO WORLD"</span></pre>
 </section>
 
 <hr class="sep">

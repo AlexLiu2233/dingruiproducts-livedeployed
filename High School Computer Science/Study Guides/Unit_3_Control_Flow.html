@@ -659,6 +659,25 @@ print("Blast off!")</code></pre>
     <div class="quiz-explain wrong-exp"><span data-lang="en">If the condition never becomes False, the loop body repeats indefinitely — an infinite loop. This is a logic error, not a syntax error.</span><span data-lang="zh">如果条件永远不变为 False，循环体无限重复——无限循环。这是逻辑错误，不是语法错误。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4b &middot; Input validation with while</span><span data-lang="zh">例题 4b &middot; 用 while 做输入验证</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: keep asking the user for a number between 1 and 10 (inclusive) until they enter a valid one.</span><span data-lang="zh">问题：反复要求用户输入一个 1 到 10（含）之间的数字，直到输入有效为止。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code>INPUT n
+WHILE n < 1 OR n > 10:
+    OUTPUT "Invalid. Try again:"
+    INPUT n
+OUTPUT "Accepted: ", n</code></pre>
+    <p><span data-lang="en">This is a common exam pattern called an <strong>input-validation loop</strong>: read a value first, then loop while it is invalid, re-reading inside the body. The loop condition is the <em>opposite</em> of what counts as valid &mdash; here valid means <code>1 &le; n &le; 10</code>, so the loop repeats while <code>n &lt; 1 OR n &gt; 10</code>.</span><span data-lang="zh">这是常见的考试模式，称为<strong>输入验证循环</strong>（<code>input-validation loop</code>，输入验证循环）：先读入一个值，然后在其无效时循环，在循环体内重新读入。循环条件与"有效"<em>相反</em>——此处有效指 <code>1 &le; n &le; 10</code>，故循环在 <code>n &lt; 1 OR n &gt; 10</code> 时重复。</span></p>
+    <pre><code>n = int(input())
+while n < 1 or n > 10:
+    print("Invalid. Try again:")
+    n = int(input())
+print("Accepted:", n)</code></pre>
+    <p><span data-lang="en">A frequent mistake is writing the loop condition as the <em>valid</em> range instead of its opposite (e.g. mistakenly writing <code>while 1 &lt;= n &lt;= 10</code>, which would loop forever on a valid first entry and never accept bad input for correction). Always ask: "the loop keeps running <em>while</em> what is true?" &mdash; here, while the value is still bad.</span><span data-lang="zh">常见错误是把循环条件写成<em>有效</em>范围而非其反面（例如误写 <code>while 1 &lt;= n &lt;= 10</code>，这会在首次输入有效时永远循环，且永远无法接受待纠正的错误输入）。始终自问："循环在什么条件为真<em>时</em>持续运行？"——此处是当数值仍然无效时。</span></p>
+  </div>
 </section>
 
 <hr class="sep">
@@ -718,6 +737,27 @@ print(total)</code></pre>
     <div class="quiz-explain correct-exp"><span data-lang="en">When the number of repetitions is unknown and depends on a condition (user typing "quit"), while is the natural choice. CSTA 3A-AP-15 asks you to justify this kind of choice.</span><span data-lang="zh">当重复次数未知且取决于条件（用户输入"quit"）时，while 是自然选择。CSTA 3A-AP-15 要求你论证这种选择。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">for is best for known-count iterations; while is best when the count depends on a condition. "Until the user types quit" is condition-controlled → while.</span><span data-lang="zh">for 最适合已知次数的迭代；while 最适合次数取决于条件的情况。"直到用户输入 quit"是条件控制 → while。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5b &middot; Finding the maximum with a for loop</span><span data-lang="zh">例题 5b &middot; 用 for 循环求最大值</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: given a list of exam scores, find the highest score without using a built-in max function.</span><span data-lang="zh">问题：给定一份考试成绩列表，在不使用内置 max 函数的情况下求最高分。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code>SET scores TO [72, 88, 65, 91, 79]
+SET highest TO scores[0]
+FOR i FROM 1 TO length(scores) - 1:
+    IF scores[i] > highest THEN
+        SET highest TO scores[i]
+OUTPUT highest</code></pre>
+    <p><span data-lang="en">This is the <strong>running-maximum pattern</strong>: seed <code>highest</code> with the <em>first</em> element (never with 0 &mdash; that fails if every score were negative), then compare every remaining element against it, updating whenever a bigger value appears. The loop starts at index 1 because index 0 is already stored in <code>highest</code>.</span><span data-lang="zh">这是<strong>滚动最大值模式</strong>（<code>running-maximum pattern</code>，滚动最大值模式）：用<em>第一个</em>元素初始化 <code>highest</code>（切勿用 0——如果所有成绩都是负数就会出错），然后将其余每个元素与之比较，一旦出现更大值就更新。循环从索引 1 开始，因为索引 0 已存入 <code>highest</code>。</span></p>
+    <pre><code>scores = [72, 88, 65, 91, 79]
+highest = scores[0]
+for i in range(1, len(scores)):
+    if scores[i] > highest:
+        highest = scores[i]
+print(highest)   # 91</code></pre>
+    <p><span data-lang="en">Tracing it: highest starts at 72; 88&gt;72 &rarr; highest=88; 65&gt;88 is False, no change; 91&gt;88 &rarr; highest=91; 79&gt;91 is False. Final answer: 91. The same pattern with the comparison flipped (<code>scores[i] &lt; lowest</code>) finds the minimum.</span><span data-lang="zh">追踪过程：highest 从 72 开始；88&gt;72 &rarr; highest=88；65&gt;88 为 False，不变；91&gt;88 &rarr; highest=91；79&gt;91 为 False。最终答案：91。将比较方向反转（<code>scores[i] &lt; lowest</code>）即可用同一模式求最小值。</span></p>
   </div>
 </section>
 
@@ -844,6 +884,25 @@ END FOR</code></pre>
     <div class="quiz-explain correct-exp"><span data-lang="en">range(1,3) gives 1,2. Sequence: i=1,j=1→2; i=1,j=2→3; i=2,j=1→3; i=2,j=2→4. Last printed: 4.</span><span data-lang="zh">range(1,3) 给出 1,2。序列：i=1,j=1→2；i=1,j=2→3；i=2,j=1→3；i=2,j=2→4。最后打印：4。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">range(1,3)=[1,2]. Last pair: i=2,j=2 → 2+2=4.</span><span data-lang="zh">range(1,3)=[1,2]。最后一对：i=2,j=2 → 2+2=4。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 7b &middot; Printing a right triangle of stars</span><span data-lang="zh">例题 7b &middot; 打印星号直角三角形</span></div></div>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Problem: print a right-triangle pattern of asterisks with 4 rows, where row <code>i</code> has <code>i</code> stars.</span><span data-lang="zh">问题：打印一个 4 行的星号直角三角形，第 <code>i</code> 行有 <code>i</code> 个星号。</span></p>
+  </div>
+  <div class="worked-solution">
+    <pre><code>FOR i FROM 1 TO 4:
+    SET line TO ""
+    FOR j FROM 1 TO i:
+        SET line TO line + "*"
+    OUTPUT line</code></pre>
+    <p><span data-lang="en">The <em>outer</em> loop variable <code>i</code> controls which row we are on and, crucially, also controls how many times the <em>inner</em> loop runs &mdash; this is the key difference from the 3&times;3 multiplication table, where both loops always ran a fixed number of times. Here the inner loop's bound (<code>i</code>) changes every outer iteration.</span><span data-lang="zh"><em>外层</em>循环变量 <code>i</code> 既控制当前是第几行，又（关键地）控制<em>内层</em>循环运行的次数——这正是与 3&times;3 乘法表的关键区别：后者两层循环的次数都固定。此处内层循环的边界（<code>i</code>）在每次外层迭代中都会变化。</span></p>
+    <pre><code>for i in range(1, 5):
+    line = ""
+    for j in range(1, i + 1):
+        line += "*"
+    print(line)</code></pre>
+    <p><span data-lang="en">Output: a single <code>*</code>, then <code>**</code>, then <code>***</code>, then <code>****</code> &mdash; four rows of growing width. Building the string with a per-row accumulator (<code>line</code>) inside the outer loop, then printing it once the inner loop finishes, is the standard way to construct one line of output character by character.</span><span data-lang="zh">输出：单个 <code>*</code>，然后 <code>**</code>，然后 <code>***</code>，然后 <code>****</code>——四行宽度递增。在外层循环内用逐行累加器（<code>line</code>）构建字符串，待内层循环结束后再打印一次，是逐字符构造一行输出的标准做法。</span></p>
   </div>
 </section>
 

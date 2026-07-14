@@ -590,6 +590,62 @@ input[type="range"]::-moz-range-thumb {
   margin-top: 1rem;
 }
 .worked-solution .katex-display { margin: 0.65rem 0; }
+
+/* ─── QUIZ (data-answer / quiz-opt style, mirrors AP exemplar) ─── */
+.quiz { margin: 24px 0; background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.quiz-q { font-weight: 600; margin-bottom: 16px; font-size: 1.05rem; color: var(--text); }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  padding: 12px 18px; border: 2px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  font-size: 0.95rem; transition: all 0.2s;
+  background: var(--bg); font-weight: 500; color: var(--text);
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.8; }
+.quiz-explain { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.6; }
+.quiz-explain.show { display: block; animation: quizFadeIn 0.3s ease; }
+.quiz-explain.correct-exp { background: var(--green-light); color: #1a4030; border: 1px solid var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: #6b1d1d; border: 1px solid var(--red); }
+[data-theme="dark"] .quiz-explain.correct-exp { color: var(--green); }
+[data-theme="dark"] .quiz-explain.wrong-exp { color: var(--red); }
+@keyframes quizFadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── WORKED EXAMPLE (visible-by-default, stepped) ─── */
+.worked-example {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-card) 88%, var(--accent-light) 12%), var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 20px 0;
+}
+[data-theme="dark"] .worked-example {
+  background: linear-gradient(180deg, rgba(58,32,32,0.32), rgba(30,24,24,0.98));
+}
+.worked-example .we-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--accent);
+  margin: 0 0 16px 0;
+}
+.worked-example .we-steps { display: flex; flex-direction: column; gap: 12px; }
+.worked-example .we-step {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+[data-theme="dark"] .worked-example .we-step { background: var(--bg-card); }
+.worked-example .we-step strong {
+  color: var(--accent);
+  font-size: 0.92rem;
+  display: block;
+  margin-bottom: 6px;
+}
+.worked-example .we-step .katex-display { margin: 10px 0; }
+
 .interactive-topbar {
   display: flex;
   flex-wrap: wrap;
@@ -1529,6 +1585,114 @@ body.lang-zh [data-lang="en"] { display: none; }
       <p>不要把 $\sin^2 x$（意思是 $(\sin x)^2$）与 $\sin(x^2)$ 弄混。这两种写法的外函数和内函数都不同，得到的导数也完全不同。</p>
     </div>
 
+    <!-- ADDED: worked examples, quizzes, exam tip -->
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Power–Chain Combination</span><span data-lang="zh">例题——幂函数与链式法则结合</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Differentiate $y = (3x^2 + 1)^5$.</span><span data-lang="zh">求 $y = (3x^2 + 1)^5$ 的导数。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Identify inner and outer functions</span><span data-lang="zh">第 1 步——识别内外函数</span></strong>
+          <span data-lang="en">Outer function $f(u) = u^5$; inner function $u = 3x^2 + 1$.</span><span data-lang="zh">外函数 $f(u) = u^5$；内函数 $u = 3x^2 + 1$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Differentiate the outer, hold the inner fixed</span><span data-lang="zh">第 2 步——对外函数求导，内函数保持不变</span></strong>
+          <span data-lang="en">Since $\frac{d}{du}[u^5] = 5u^4$, the outer derivative is $5(3x^2+1)^4$.</span><span data-lang="zh">由于 $\frac{d}{du}[u^5] = 5u^4$，外函数的导数为 $5(3x^2+1)^4$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Multiply by the inner derivative</span><span data-lang="zh">第 3 步——乘以内函数的导数</span></strong>
+          <span data-lang="en">The inner derivative is $\frac{d}{dx}[3x^2+1] = 6x$. Multiply the two pieces:</span><span data-lang="zh">内函数的导数为 $\frac{d}{dx}[3x^2+1] = 6x$。把两部分相乘：</span>
+          $$ \frac{dy}{dx} = 5(3x^2+1)^4 \cdot 6x = 30x(3x^2+1)^4 $$
+        </div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Three Nested Layers</span><span data-lang="zh">例题——三层嵌套</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Differentiate $y = \sqrt{\cos(3x)}$.</span><span data-lang="zh">求 $y = \sqrt{\cos(3x)}$ 的导数。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Peel the layers from the outside in</span><span data-lang="zh">第 1 步——从外向内逐层剥开</span></strong>
+          <span data-lang="en">Outermost is the square root $\sqrt{\,\cdot\,}$, middle is $\cos(\,\cdot\,)$, innermost is $3x$.</span><span data-lang="zh">最外层为平方根 $\sqrt{\,\cdot\,}$，中间层为 $\cos(\,\cdot\,)$，最内层为 $3x$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Rewrite and chain through every layer</span><span data-lang="zh">第 2 步——改写并逐层链式求导</span></strong>
+          <span data-lang="en">Write $y = \bigl(\cos(3x)\bigr)^{1/2}$, then apply the chain rule once per layer:</span><span data-lang="zh">把 $y$ 写成 $\bigl(\cos(3x)\bigr)^{1/2}$，每深入一层就用一次链式法则：</span>
+          $$ \frac{dy}{dx} = \tfrac{1}{2}\bigl(\cos(3x)\bigr)^{-1/2} \cdot \bigl(-\sin(3x)\bigr) \cdot 3 $$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Simplify</span><span data-lang="zh">第 3 步——化简</span></strong>
+          $$ \frac{dy}{dx} = \frac{-3\sin(3x)}{2\sqrt{\cos(3x)}} $$
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-answer="1">
+      <div class="quiz-q"><span data-lang="en">What is $\dfrac{d}{dx}\bigl[\cos(5x)\bigr]$?</span><span data-lang="zh">$\dfrac{d}{dx}\bigl[\cos(5x)\bigr]$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$5\cos(5x)$</div>
+        <div class="quiz-opt" data-idx="1">$-5\sin(5x)$</div>
+        <div class="quiz-opt" data-idx="2">$-\sin(5x)$</div>
+        <div class="quiz-opt" data-idx="3">$5\sin(5x)$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The outer derivative of $\cos(u)$ is $-\sin(u)$, and the inner derivative of $5x$ is $5$, giving $-\sin(5x)\cdot 5 = -5\sin(5x)$.</span><span data-lang="zh">正确！$\cos(u)$ 的外导数是 $-\sin(u)$，$5x$ 的内导数是 $5$，得 $-\sin(5x)\cdot 5 = -5\sin(5x)$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Differentiate the outer $\cos$ to get $-\sin(5x)$, then multiply by the inner derivative $5$. The result is $-5\sin(5x)$.</span><span data-lang="zh">先对外层 $\cos$ 求导得 $-\sin(5x)$，再乘以内导数 $5$，结果为 $-5\sin(5x)$。</span></div>
+    </div>
+
+    <div class="quiz" data-answer="1">
+      <div class="quiz-q"><span data-lang="en">What is $\dfrac{d}{dx}\bigl[(2x+1)^4\bigr]$?</span><span data-lang="zh">$\dfrac{d}{dx}\bigl[(2x+1)^4\bigr]$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$4(2x+1)^3$</div>
+        <div class="quiz-opt" data-idx="1">$8(2x+1)^3$</div>
+        <div class="quiz-opt" data-idx="2">$2(2x+1)^3$</div>
+        <div class="quiz-opt" data-idx="3">$8(2x+1)^4$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The power rule gives $4(2x+1)^3$, and the inner derivative of $2x+1$ is $2$, so $4(2x+1)^3 \cdot 2 = 8(2x+1)^3$.</span><span data-lang="zh">正确！幂法则给出 $4(2x+1)^3$，$2x+1$ 的内导数为 $2$，所以 $4(2x+1)^3 \cdot 2 = 8(2x+1)^3$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Don't forget the inner derivative: $4(2x+1)^3$ must be multiplied by $\frac{d}{dx}[2x+1] = 2$, giving $8(2x+1)^3$.</span><span data-lang="zh">别忘了内导数：$4(2x+1)^3$ 要乘以 $\frac{d}{dx}[2x+1] = 2$，得 $8(2x+1)^3$。</span></div>
+    </div>
+
+    <div class="concept-box purple" data-lang="en">
+      <strong>AP Exam Tip</strong>
+      <p>On the multiple-choice section, chain-rule distractors almost always include the "forgot the inner derivative" answer. Before you bubble, silently confirm you multiplied by $g'(x)$ — that one factor is the difference between the trap answer and the correct one.</p>
+    </div>
+    <div class="concept-box purple" data-lang="zh">
+      <strong>AP 考试提示</strong>
+      <p>在选择题中，链式法则的干扰项几乎总会包含"忘记内导数"的答案。在填涂之前，先默默确认你乘上了 $g'(x)$——正是这一个因子区分了陷阱答案与正确答案。</p>
+    </div>
+
+    <h3 data-lang="en">Going Deeper — Proving the General Power Rule</h3>
+    <h3 data-lang="zh">拓展——证明一般幂法则</h3>
+    <p data-lang="en">Unit 2's power rule, $\frac{d}{dx}[x^n] = nx^{n-1}$, was justified there for integer $n$. The chain rule (combined with implicit differentiation) lets you extend the proof to <em>any</em> rational exponent $n = p/q$.</p>
+    <p data-lang="zh">第 2 单元的幂法则 $\frac{d}{dx}[x^n] = nx^{n-1}$，当时只对整数 $n$ 给出了论证。借助链式法则（配合隐函数求导），可以把这个证明推广到<em>任意</em>有理指数 $n = p/q$。</p>
+
+    <div class="example-box">
+      <div class="example-box-title" data-lang="en">Proof — Power Rule for Rational Exponents</div>
+      <div class="example-box-title" data-lang="zh">证明——有理指数的幂法则</div>
+      <p data-lang="en">Show that $\dfrac{d}{dx}\bigl[x^{p/q}\bigr] = \dfrac{p}{q}x^{(p/q)-1}$ for integers $p, q$ with $q \neq 0$.</p>
+      <p data-lang="zh">证明对整数 $p, q$（$q \neq 0$），$\dfrac{d}{dx}\bigl[x^{p/q}\bigr] = \dfrac{p}{q}x^{(p/q)-1}$。</p>
+      <div class="worked-solution">
+      <p data-lang="en"><strong>Step 1 — Set up an implicit equation.</strong> Let $y = x^{p/q}$. Raise both sides to the $q$ power to clear the fractional exponent:</p>
+      <p data-lang="zh"><strong>第 1 步——建立隐式方程。</strong>令 $y = x^{p/q}$。两边取 $q$ 次幂以消去分数指数：</p>
+      $$y^q = x^p$$
+      <p data-lang="en"><strong>Step 2 — Differentiate implicitly.</strong> The left side needs the chain rule (power rule on $y$, times $\frac{dy}{dx}$); the right side is an ordinary integer power:</p>
+      <p data-lang="zh"><strong>第 2 步——隐式求导。</strong>左边需要链式法则（对 $y$ 用幂法则，再乘以 $\frac{dy}{dx}$）；右边是普通的整数次幂：</p>
+      $$qy^{q-1}\frac{dy}{dx} = px^{p-1}$$
+      <p data-lang="en"><strong>Step 3 — Solve for dy/dx.</strong></p>
+      <p data-lang="zh"><strong>第 3 步——解出 dy/dx。</strong></p>
+      $$\frac{dy}{dx} = \frac{px^{p-1}}{qy^{q-1}}$$
+      <p data-lang="en"><strong>Step 4 — Substitute $y = x^{p/q}$ back in and simplify the exponent.</strong> Since $y^{q-1} = \bigl(x^{p/q}\bigr)^{q-1} = x^{p - p/q}$:</p>
+      <p data-lang="zh"><strong>第 4 步——把 $y = x^{p/q}$ 代回并化简指数。</strong>因为 $y^{q-1} = \bigl(x^{p/q}\bigr)^{q-1} = x^{p - p/q}$：</p>
+      $$\frac{dy}{dx} = \frac{p}{q}\cdot\frac{x^{p-1}}{x^{p-p/q}} = \frac{p}{q}x^{(p-1)-(p-p/q)} = \frac{p}{q}x^{(p/q)-1} \qquad\Box$$
+      <p data-lang="en">This is exactly the power rule's formula with $n = p/q$ — the "obvious" pattern you've been using since Unit 2 is not an assumption, it's a theorem, and this is the proof for every rational exponent.</p>
+      <p data-lang="zh">这正是把 $n = p/q$ 代入幂法则得到的公式——你从第 2 单元起就在使用的这条"显然"规律，其实并非假设，而是一条定理，这里就是它对所有有理指数成立的证明。</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1636,6 +1800,197 @@ body.lang-zh [data-lang="en"] { display: none; }
       <p>在像 $\dfrac{y}{3y - x^2}$ 这样的表达式中，学生有时会忘记对 $y$ 关于 $x$ 求导需要使用链式法则。每一个 $y$ 项都要产生一个因子 $\frac{dy}{dx}$——没有例外。</p>
     </div>
 
+    <!-- ADDED: worked examples, quizzes, exam tip -->
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Tangent Line to a Circle</span><span data-lang="zh">例题——圆的切线</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find the equation of the tangent line to the circle $x^2 + y^2 = 25$ at the point $(3, 4)$.</span><span data-lang="zh">求圆 $x^2 + y^2 = 25$ 在点 $(3, 4)$ 处的切线方程。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Differentiate implicitly</span><span data-lang="zh">第 1 步——隐式求导</span></strong>
+          <span data-lang="en">Differentiating both sides gives $2x + 2y\frac{dy}{dx} = 0$, so $\frac{dy}{dx} = -\frac{x}{y}$.</span><span data-lang="zh">两边求导得 $2x + 2y\frac{dy}{dx} = 0$，所以 $\frac{dy}{dx} = -\frac{x}{y}$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Evaluate the slope at the point</span><span data-lang="zh">第 2 步——在给定点求斜率</span></strong>
+          <span data-lang="en">Substitute $(3, 4)$: $\frac{dy}{dx} = -\frac{3}{4}$.</span><span data-lang="zh">代入 $(3, 4)$：$\frac{dy}{dx} = -\frac{3}{4}$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Write the tangent line</span><span data-lang="zh">第 3 步——写出切线方程</span></strong>
+          <span data-lang="en">Using point-slope form:</span><span data-lang="zh">用点斜式：</span>
+          $$ y - 4 = -\tfrac{3}{4}(x - 3) $$
+        </div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Tangent to an Ellipse</span><span data-lang="zh">例题——椭圆的切线</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find the slope of the tangent line to $x^2 + 4y^2 = 8$ at $(2, 1)$.</span><span data-lang="zh">求 $x^2 + 4y^2 = 8$ 在 $(2, 1)$ 处切线的斜率。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Differentiate every term with respect to $x$</span><span data-lang="zh">第 1 步——每一项对 $x$ 求导</span></strong>
+          <span data-lang="en">The term $4y^2$ needs the chain rule, contributing $8y\frac{dy}{dx}$:</span><span data-lang="zh">$4y^2$ 一项需要链式法则，贡献 $8y\frac{dy}{dx}$：</span>
+          $$ 2x + 8y\frac{dy}{dx} = 0 $$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Solve for $\frac{dy}{dx}$</span><span data-lang="zh">第 2 步——解出 $\frac{dy}{dx}$</span></strong>
+          $$ \frac{dy}{dx} = -\frac{2x}{8y} = -\frac{x}{4y} $$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Evaluate at $(2, 1)$</span><span data-lang="zh">第 3 步——在 $(2, 1)$ 处求值</span></strong>
+          <span data-lang="en">The slope is $-\frac{2}{4(1)} = -\frac{1}{2}$.</span><span data-lang="zh">斜率为 $-\frac{2}{4(1)} = -\frac{1}{2}$。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Implicit Differentiation with an Inverse Trig Function</span><span data-lang="zh">例题——含反三角函数的隐函数求导</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find $\dfrac{dy}{dx}$ given $\arctan(y) + x^2 y = \pi$.</span><span data-lang="zh">已知 $\arctan(y) + x^2 y = \pi$，求 $\dfrac{dy}{dx}$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Differentiate each term with respect to x</span><span data-lang="zh">第 1 步——每一项对 x 求导</span></strong>
+          <span data-lang="en">$\arctan(y)$ needs the inverse-trig formula <em>and</em> the chain rule (since $y$ depends on $x$); $x^2y$ needs the product rule:</span><span data-lang="zh">$\arctan(y)$ 需要反三角函数公式<em>加上</em>链式法则（因为 $y$ 依赖于 $x$）；$x^2y$ 需要乘积法则：</span>
+          $$\frac{1}{1+y^2}\frac{dy}{dx} + 2xy + x^2\frac{dy}{dx} = 0$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Collect every term with dy/dx on one side</span><span data-lang="zh">第 2 步——把所有含 dy/dx 的项归到一侧</span></strong>
+          $$\frac{dy}{dx}\left(\frac{1}{1+y^2} + x^2\right) = -2xy$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Solve for dy/dx</span><span data-lang="zh">第 3 步——解出 dy/dx</span></strong>
+          $$\frac{dy}{dx} = \frac{-2xy}{\dfrac{1}{1+y^2} + x^2}$$
+          <span data-lang="en">This problem is really three earlier skills stacked together — the inverse-trig derivative table, the chain rule for a $y$-term, and the product rule — with no new technique required, only careful bookkeeping of which terms carry a $\frac{dy}{dx}$ factor.</span><span data-lang="zh">这道题其实是把三项之前学过的技能叠在一起——反三角函数导数表、对 $y$ 项使用链式法则、以及乘积法则——不需要任何新技巧，只需要仔细记录哪些项带有 $\frac{dy}{dx}$ 因子。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-answer="2">
+      <div class="quiz-q"><span data-lang="en">Given $x^2 + y^2 = 1$, what is $\dfrac{dy}{dx}$?</span><span data-lang="zh">已知 $x^2 + y^2 = 1$，$\dfrac{dy}{dx}$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$\dfrac{x}{y}$</div>
+        <div class="quiz-opt" data-idx="1">$-\dfrac{2x}{y}$</div>
+        <div class="quiz-opt" data-idx="2">$-\dfrac{x}{y}$</div>
+        <div class="quiz-opt" data-idx="3">$\dfrac{y}{x}$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Differentiating gives $2x + 2y\frac{dy}{dx} = 0$, so $\frac{dy}{dx} = -\frac{x}{y}$.</span><span data-lang="zh">正确！求导得 $2x + 2y\frac{dy}{dx} = 0$，所以 $\frac{dy}{dx} = -\frac{x}{y}$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Differentiate term by term: $2x + 2y\frac{dy}{dx} = 0$. Isolating gives $\frac{dy}{dx} = -\frac{x}{y}$ — the $2$'s cancel.</span><span data-lang="zh">逐项求导：$2x + 2y\frac{dy}{dx} = 0$。整理得 $\frac{dy}{dx} = -\frac{x}{y}$——两个 $2$ 约掉了。</span></div>
+    </div>
+
+    <div class="quiz" data-answer="0">
+      <div class="quiz-q"><span data-lang="en">For the curve $xy = 4$, what is $\dfrac{dy}{dx}$?</span><span data-lang="zh">对于曲线 $xy = 4$，$\dfrac{dy}{dx}$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$-\dfrac{y}{x}$</div>
+        <div class="quiz-opt" data-idx="1">$\dfrac{y}{x}$</div>
+        <div class="quiz-opt" data-idx="2">$-\dfrac{x}{y}$</div>
+        <div class="quiz-opt" data-idx="3">$\dfrac{1}{x}$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The product rule gives $\frac{d}{dx}[xy] = y + x\frac{dy}{dx} = 0$, so $\frac{dy}{dx} = -\frac{y}{x}$.</span><span data-lang="zh">正确！乘积法则给出 $\frac{d}{dx}[xy] = y + x\frac{dy}{dx} = 0$，所以 $\frac{dy}{dx} = -\frac{y}{x}$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Apply the product rule to $xy$: $y + x\frac{dy}{dx} = 0$. Solving gives $\frac{dy}{dx} = -\frac{y}{x}$.</span><span data-lang="zh">对 $xy$ 用乘积法则：$y + x\frac{dy}{dx} = 0$。解得 $\frac{dy}{dx} = -\frac{y}{x}$。</span></div>
+    </div>
+
+    <div class="concept-box purple" data-lang="en">
+      <strong>AP Exam Tip</strong>
+      <p>When a free-response question asks for a tangent line, it is really testing two skills at once: implicit differentiation to get the slope, then point-slope form to write the line. Show both steps explicitly — the slope value and the final equation each earn credit on the rubric.</p>
+    </div>
+    <div class="concept-box purple" data-lang="zh">
+      <strong>AP 考试提示</strong>
+      <p>当自由作答题要求切线时，它其实同时考查两项技能：用隐函数求导求斜率，再用点斜式写出直线。把两步都清楚写出——斜率的数值和最终方程在评分标准里各得一分。</p>
+    </div>
+
+    <h3 data-lang="en">Going Deeper — Logarithmic Differentiation</h3>
+    <h3 data-lang="zh">拓展——对数求导法</h3>
+    <p data-lang="en">Implicit differentiation has one more powerful use beyond curves like $x^2+y^2=25$: it can differentiate functions that are awkward for the ordinary rules — a variable raised to a variable power ($x^x$), or a long product/quotient of several factors. The trick is to take $\ln$ of both sides first, which turns products into sums, quotients into differences, and powers into multiplication — <em>before</em> you differentiate implicitly.</p>
+    <p data-lang="zh">除了像 $x^2+y^2=25$ 这样的曲线之外，隐函数求导还有一个强大的用途：可以对普通法则难以处理的函数求导——底和指数都含变量的函数（如 $x^x$），或是含多个因子的冗长乘积/商。技巧是先对两边取 $\ln$，这会把乘积变成求和、商变成求差、幂变成乘法——然后<em>再</em>隐式求导。</p>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Differentiating $x^x$</span><span data-lang="zh">例题——对 $x^x$ 求导</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find $\dfrac{dy}{dx}$ if $y = x^x$ ($x > 0$).</span><span data-lang="zh">求 $y = x^x$（$x > 0$）的 $\dfrac{dy}{dx}$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Why the ordinary rules fail here</span><span data-lang="zh">第 1 步——为何普通法则在此失效</span></strong>
+          <span data-lang="en">The power rule needs a constant exponent; the exponential rule ($a^x$) needs a constant base. Here <em>both</em> are the variable $x$, so neither rule applies directly.</span><span data-lang="zh">幂法则要求指数是常数；指数函数法则（$a^x$）要求底数是常数。这里底数和指数<em>都</em>是变量 $x$，所以两条法则都不能直接套用。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Take ln of both sides</span><span data-lang="zh">第 2 步——两边取自然对数</span></strong>
+          $$\ln y = \ln(x^x) = x\ln x$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Differentiate implicitly</span><span data-lang="zh">第 3 步——隐式求导</span></strong>
+          <span data-lang="en">The left side needs the chain rule ($\frac{d}{dx}[\ln y] = \frac{1}{y}\frac{dy}{dx}$); the right side needs the product rule:</span><span data-lang="zh">左边需要链式法则（$\frac{d}{dx}[\ln y] = \frac{1}{y}\frac{dy}{dx}$）；右边需要乘积法则：</span>
+          $$\frac{1}{y}\frac{dy}{dx} = (1)\ln x + x\cdot\frac{1}{x} = \ln x + 1$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 4 — Solve for dy/dx and substitute y back in</span><span data-lang="zh">第 4 步——解出 dy/dx 并把 y 代回</span></strong>
+          <span data-lang="en">Multiply both sides by $y = x^x$ — you cannot leave a bare $y$ in the final answer:</span><span data-lang="zh">两边乘以 $y = x^x$——最终答案中不能留下裸露的 $y$：</span>
+          $$\frac{dy}{dx} = y(\ln x + 1) = x^x(\ln x + 1)$$
+        </div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — A Product/Quotient of Several Factors</span><span data-lang="zh">例题——多因子的乘积/商</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find $\dfrac{dy}{dx}$ if $y = \dfrac{x^2\sqrt{x+1}}{(3x-2)^3}$, without repeatedly applying the quotient rule.</span><span data-lang="zh">求 $y = \dfrac{x^2\sqrt{x+1}}{(3x-2)^3}$ 的 $\dfrac{dy}{dx}$，不要反复使用商的法则。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Take ln and expand using log rules</span><span data-lang="zh">第 1 步——取对数并用对数法则展开</span></strong>
+          $$\ln y = 2\ln x + \tfrac{1}{2}\ln(x+1) - 3\ln(3x-2)$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Differentiate every term — each is now just the chain rule on ln, no product/quotient rule needed</span><span data-lang="zh">第 2 步——逐项求导——现在每一项都只是对 ln 用链式法则，不再需要乘积/商法则</span></strong>
+          $$\frac{1}{y}\frac{dy}{dx} = \frac{2}{x} + \frac{1}{2(x+1)} - \frac{9}{3x-2}$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Solve for dy/dx</span><span data-lang="zh">第 3 步——解出 dy/dx</span></strong>
+          $$\frac{dy}{dx} = \frac{x^2\sqrt{x+1}}{(3x-2)^3}\left[\frac{2}{x} + \frac{1}{2(x+1)} - \frac{9}{3x-2}\right]$$
+          <span data-lang="en">This would have required the quotient rule combined with the product rule and chain rule twice over if attacked directly — logarithmic differentiation turns a multi-rule tangle into a sum of simple terms.</span><span data-lang="zh">若直接硬算，这道题需要商的法则、乘积法则与两次链式法则交织在一起——对数求导法把一团多法则纠缠的问题变成了简单几项之和。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-box orange" data-lang="en">
+      <strong>When to Reach for Logarithmic Differentiation</strong>
+      <p>Two signals: (1) a variable base <em>and</em> a variable exponent in the same expression, or (2) a product/quotient with three or more factors, especially with mixed powers and roots. Neither situation is required knowledge for every AP student, but it's a legitimate technique that turns a multi-rule mess into straightforward term-by-term differentiation, and it does occasionally appear as an enrichment or BC-adjacent problem.</p>
+    </div>
+    <div class="concept-box orange" data-lang="zh">
+      <strong>什么时候该用对数求导法</strong>
+      <p>两个信号：(1) 同一表达式中底数和指数都是变量；(2) 含三个或更多因子的乘积/商，尤其是幂和根式混杂的情形。这两种情形并非每位 AP 学生的必修内容，但这是一种合法的技巧，能把一团多法则的混乱变成简单的逐项求导，偶尔也会作为拓展或 BC 相关题目出现。</p>
+    </div>
+
+    <h3 data-lang="en">Preview — Where Implicit Differentiation Goes Next: Related Rates</h3>
+    <h3 data-lang="zh">预告——隐函数求导接下来的应用：相关变化率</h3>
+    <p data-lang="en">Implicit differentiation's most common real-world use isn't a bare equation like $x^2+y^2=25$ — it's a situation where <strong>both quantities change with time</strong>, and $x$ and $y$ are secretly both functions of a third variable, $t$. Differentiating with respect to $t$ (not $x$) links the two rates of change together.</p>
+    <p data-lang="zh">隐函数求导最常见的实际应用，并不是像 $x^2+y^2=25$ 这样的单独方程——而是<strong>两个量都随时间变化</strong>的情形，此时 $x$ 与 $y$ 实际上都是第三个变量 $t$ 的函数。对 $t$（而不是 $x$）求导，就能把两个变化率联系起来。</p>
+
+    <div class="example-box">
+      <div class="example-box-title" data-lang="en">Worked Example — A Related Rates Preview</div>
+      <div class="example-box-title" data-lang="zh">例题——相关变化率预告</div>
+      <p data-lang="en">A point moves along the circle $x^2 + y^2 = 25$ so that both $x$ and $y$ change with time $t$. At the instant when $x = 3$, $y = 4$, and $\dfrac{dx}{dt} = 2$, find $\dfrac{dy}{dt}$.</p>
+      <p data-lang="zh">一点沿圆 $x^2 + y^2 = 25$ 运动，$x$ 与 $y$ 都随时间 $t$ 变化。在 $x = 3$、$y = 4$、$\dfrac{dx}{dt} = 2$ 的时刻，求 $\dfrac{dy}{dt}$。</p>
+      <div class="worked-solution">
+      <p data-lang="en"><strong>Step 1 — Differentiate with respect to $t$, applying the chain rule to every term with $x$ or $y$.</strong></p>
+      <p data-lang="zh"><strong>第 1 步——对 $t$ 求导，对每一个含 $x$ 或 $y$ 的项都使用链式法则。</strong></p>
+      $$2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0$$
+      <p data-lang="en"><strong>Step 2 — Substitute the known values and solve.</strong></p>
+      <p data-lang="zh"><strong>第 2 步——代入已知值并求解。</strong></p>
+      $$2(3)(2) + 2(4)\frac{dy}{dt} = 0 \;\Longrightarrow\; 12 + 8\frac{dy}{dt} = 0 \;\Longrightarrow\; \frac{dy}{dt} = -\frac{3}{2}$$
+      <p data-lang="en">This is exactly the same mechanics as finding $\dfrac{dy}{dx}$ implicitly — the only difference is differentiating with respect to $t$ instead of $x$, so every variable (not just $y$) picks up a rate-of-change factor. This idea is developed fully as its own topic later in the course; the point here is that you already have all the differentiation skill required.</p>
+      <p data-lang="zh">这与隐式求 $\dfrac{dy}{dx}$ 的运算过程完全一致——唯一区别是对 $t$ 而不是 $x$ 求导，因此每个变量（不只是 $y$）都会带出一个变化率因子。这个思路会在课程后面作为独立的一个专题完整展开；这里的要点是，你已经具备了所需的全部求导技能。</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1651,6 +2006,15 @@ body.lang-zh [data-lang="en"] { display: none; }
 
     <p data-lang="en">If $f$ is a one-to-one differentiable function with inverse $f^{-1}$, you can find the derivative of the inverse without knowing its explicit formula. The relationship rests on the chain rule applied to the identity $f(f^{-1}(x)) = x$.</p>
     <p data-lang="zh">若 $f$ 是一个一一对应、可导的函数，其反函数为 $f^{-1}$，那么即使不知道反函数的显式公式，也可以求出反函数的导数。这一关系来自对恒等式 $f(f^{-1}(x)) = x$ 使用链式法则。</p>
+
+    <div class="concept-box" data-lang="en">
+      <strong>Prerequisite — When Does an Inverse Even Exist?</strong>
+      <p>Every formula in this topic assumes $f$ is <strong>one-to-one</strong> (each output comes from exactly one input) on the interval in question — otherwise "$f^{-1}$" is not a well-defined function. Graphically, this is the <strong>horizontal line test</strong>: no horizontal line crosses the graph more than once. A sufficient (and easy to check with calculus) condition is that $f$ is <strong>strictly monotonic</strong> — always increasing or always decreasing — which happens whenever $f'(x)$ keeps one consistent sign on the interval.</p>
+    </div>
+    <div class="concept-box" data-lang="zh">
+      <strong>前提条件——反函数何时存在？</strong>
+      <p>本节的每一个公式都假设 $f$ 在所讨论的区间上<strong>一一对应</strong>（每个输出恰好来自一个输入）——否则"$f^{-1}$"就不是一个定义良好的函数。从图像上看，这就是<strong>水平线检验</strong>：任何水平线与图像的交点都不超过一个。一个充分条件（也易于用微积分检验）是 $f$ <strong>严格单调</strong>——始终递增或始终递减——只要 $f'(x)$ 在该区间上符号保持一致，就能保证这一点。</p>
+    </div>
 
     <div class="formula-box">
       <div class="formula-box-label" data-lang="en">Inverse Function Derivative</div>
@@ -1728,6 +2092,105 @@ body.lang-zh [data-lang="en"] { display: none; }
       <p>这个公式要求 $f'(a) \neq 0$。如果原函数在 $x = a$ 处有水平切线，反函数在对应点就会有竖直切线，那里的导数不存在。</p>
     </div>
 
+    <!-- ADDED: worked examples, quizzes, exam tip -->
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Inverse Derivative from a Formula</span><span data-lang="zh">例题——由公式求反函数导数</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Let $f(x) = x^3 + 2x + 1$. Find $(f^{-1})'(4)$.</span><span data-lang="zh">设 $f(x) = x^3 + 2x + 1$，求 $(f^{-1})'(4)$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Find the input that maps to $4$</span><span data-lang="zh">第 1 步——找出映射到 $4$ 的输入</span></strong>
+          <span data-lang="en">Solve $f(a) = 4$. Testing $a = 1$: $1 + 2 + 1 = 4$, so $f^{-1}(4) = 1$.</span><span data-lang="zh">解 $f(a) = 4$。试 $a = 1$：$1 + 2 + 1 = 4$，所以 $f^{-1}(4) = 1$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Differentiate $f$ and evaluate at $a = 1$</span><span data-lang="zh">第 2 步——对 $f$ 求导并在 $a = 1$ 处求值</span></strong>
+          <span data-lang="en">$f'(x) = 3x^2 + 2$, so $f'(1) = 3 + 2 = 5$.</span><span data-lang="zh">$f'(x) = 3x^2 + 2$，所以 $f'(1) = 3 + 2 = 5$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Take the reciprocal</span><span data-lang="zh">第 3 步——取倒数</span></strong>
+          $$ (f^{-1})'(4) = \frac{1}{f'(1)} = \frac{1}{5} $$
+        </div>
+      </div>
+    </div>
+
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Reading Values from a Table</span><span data-lang="zh">例题——从表格读取数值</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">A differentiable one-to-one function $g$ satisfies $g(2) = 6$ and $g'(2) = \tfrac{1}{4}$. Find $(g^{-1})'(6)$.</span><span data-lang="zh">一个可导的一一函数 $g$ 满足 $g(2) = 6$ 且 $g'(2) = \tfrac{1}{4}$，求 $(g^{-1})'(6)$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Locate the matching input</span><span data-lang="zh">第 1 步——找到对应的输入</span></strong>
+          <span data-lang="en">Since $g(2) = 6$, we have $g^{-1}(6) = 2$.</span><span data-lang="zh">由于 $g(2) = 6$，所以 $g^{-1}(6) = 2$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Apply the inverse-derivative formula</span><span data-lang="zh">第 2 步——套用反函数导数公式</span></strong>
+          <span data-lang="en">Take the reciprocal of $g'$ at that input:</span><span data-lang="zh">在该输入处取 $g'$ 的倒数：</span>
+          $$ (g^{-1})'(6) = \frac{1}{g'(2)} = \frac{1}{\tfrac{1}{4}} = 4 $$
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-answer="1">
+      <div class="quiz-q"><span data-lang="en">Suppose $f(2) = 5$ and $f'(2) = 3$. What is $(f^{-1})'(5)$?</span><span data-lang="zh">设 $f(2) = 5$ 且 $f'(2) = 3$，$(f^{-1})'(5)$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$3$</div>
+        <div class="quiz-opt" data-idx="1">$\dfrac{1}{3}$</div>
+        <div class="quiz-opt" data-idx="2">$\dfrac{1}{5}$</div>
+        <div class="quiz-opt" data-idx="3">$5$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Since $f(2) = 5$, we have $f^{-1}(5) = 2$, so $(f^{-1})'(5) = \frac{1}{f'(2)} = \frac{1}{3}$.</span><span data-lang="zh">正确！由 $f(2) = 5$ 知 $f^{-1}(5) = 2$，所以 $(f^{-1})'(5) = \frac{1}{f'(2)} = \frac{1}{3}$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Use $(f^{-1})'(5) = \frac{1}{f'(f^{-1}(5))} = \frac{1}{f'(2)} = \frac{1}{3}$. The answer is the reciprocal of $f'(2)$, not $f'(2)$ itself.</span><span data-lang="zh">用 $(f^{-1})'(5) = \frac{1}{f'(f^{-1}(5))} = \frac{1}{f'(2)} = \frac{1}{3}$。答案是 $f'(2)$ 的倒数，而不是 $f'(2)$ 本身。</span></div>
+    </div>
+
+    <div class="quiz" data-answer="3">
+      <div class="quiz-q"><span data-lang="en">If $f(x) = x^3$, what is $(f^{-1})'(8)$?</span><span data-lang="zh">若 $f(x) = x^3$，$(f^{-1})'(8)$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$12$</div>
+        <div class="quiz-opt" data-idx="1">$\dfrac{1}{3}$</div>
+        <div class="quiz-opt" data-idx="2">$\dfrac{1}{4}$</div>
+        <div class="quiz-opt" data-idx="3">$\dfrac{1}{12}$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $f^{-1}(8) = 2$ because $2^3 = 8$. Then $f'(x) = 3x^2$, so $f'(2) = 12$ and $(f^{-1})'(8) = \frac{1}{12}$.</span><span data-lang="zh">正确！因为 $2^3 = 8$，故 $f^{-1}(8) = 2$。又 $f'(x) = 3x^2$，所以 $f'(2) = 12$，得 $(f^{-1})'(8) = \frac{1}{12}$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">First find $f^{-1}(8) = 2$. Then $f'(2) = 3(2)^2 = 12$, and the inverse derivative is its reciprocal, $\frac{1}{12}$.</span><span data-lang="zh">先求 $f^{-1}(8) = 2$。再算 $f'(2) = 3(2)^2 = 12$，反函数导数是它的倒数，即 $\frac{1}{12}$。</span></div>
+    </div>
+
+    <div class="concept-box purple" data-lang="en">
+      <strong>AP Exam Tip</strong>
+      <p>The hardest step is almost never the calculus — it is finding $f^{-1}(x)$, the input that produces the given output. Always solve $f(a) = x$ first, then differentiate. If the problem gives a table, scan the $f(x)$ column for the target value and read off the matching $x$.</p>
+    </div>
+    <div class="concept-box purple" data-lang="zh">
+      <strong>AP 考试提示</strong>
+      <p>最难的一步几乎从来不是微积分本身——而是找到 $f^{-1}(x)$，也就是产生给定输出的那个输入。永远先解 $f(a) = x$，再求导。如果题目给出表格，就在 $f(x)$ 一列里找目标值，读出对应的 $x$。</p>
+    </div>
+
+    <h3 data-lang="en">Going Deeper — Second Derivatives of an Inverse Function</h3>
+    <h3 data-lang="zh">拓展——反函数的二阶导数</h3>
+    <p data-lang="en">The formula $(f^{-1})'(x) = \dfrac{1}{f'(f^{-1}(x))}$ is itself a function of $x$ that you can differentiate again — using the chain rule and quotient (or reciprocal) rule together, exactly as in an implicit second-derivative problem.</p>
+    <p data-lang="zh">公式 $(f^{-1})'(x) = \dfrac{1}{f'(f^{-1}(x))}$ 本身也是 $x$ 的函数，可以再对它求导——同时用到链式法则和商的法则（或倒数法则），就像隐函数二阶导数问题一样。</p>
+
+    <div class="example-box">
+      <div class="example-box-title" data-lang="en">Worked Example — Second Derivative of an Inverse</div>
+      <div class="example-box-title" data-lang="zh">例题——反函数的二阶导数</div>
+      <p data-lang="en">Suppose $f(2) = 5$, $f'(2) = 3$, and $f''(2) = 4$. Find $(f^{-1})''(5)$.</p>
+      <p data-lang="zh">设 $f(2) = 5$，$f'(2) = 3$，$f''(2) = 4$，求 $(f^{-1})''(5)$。</p>
+      <div class="worked-solution">
+      <p data-lang="en"><strong>Step 1 — Write the reciprocal-rule form of the derivative.</strong> Using the reciprocal rule from Topic 2.9 with $g(x) = f'(f^{-1}(x))$:</p>
+      <p data-lang="zh"><strong>第 1 步——把导数写成倒数法则的形式。</strong>用第 2.9 节的倒数法则，令 $g(x) = f'(f^{-1}(x))$：</p>
+      $$(f^{-1})''(x) = \frac{d}{dx}\left[\frac{1}{f'(f^{-1}(x))}\right] = -\frac{f''(f^{-1}(x)) \cdot (f^{-1})'(x)}{\bigl[f'(f^{-1}(x))\bigr]^2}$$
+      <p data-lang="en"><strong>Step 2 — Evaluate the pieces at $x = 5$.</strong> Since $f(2) = 5$, $f^{-1}(5) = 2$. So $f'(f^{-1}(5)) = f'(2) = 3$ and $f''(f^{-1}(5)) = f''(2) = 4$. From Topic 3.3's basic formula, $(f^{-1})'(5) = \dfrac{1}{f'(2)} = \dfrac{1}{3}$.</p>
+      <p data-lang="zh"><strong>第 2 步——在 $x = 5$ 处求出各部分的值。</strong>由 $f(2) = 5$ 知 $f^{-1}(5) = 2$。故 $f'(f^{-1}(5)) = f'(2) = 3$，$f''(f^{-1}(5)) = f''(2) = 4$。由 3.3 节的基本公式，$(f^{-1})'(5) = \dfrac{1}{f'(2)} = \dfrac{1}{3}$。</p>
+      <p data-lang="en"><strong>Step 3 — Substitute everything in.</strong></p>
+      <p data-lang="zh"><strong>第 3 步——把所有结果代入。</strong></p>
+      $$(f^{-1})''(5) = -\frac{4 \cdot \tfrac{1}{3}}{3^2} = -\frac{4/3}{9} = -\frac{4}{27}$$
+      <p data-lang="en">This kind of problem rewards recognizing the structure — it's the reciprocal/quotient rule and chain rule you already know, applied to a formula you already derived, not a new rule to memorize.</p>
+      <p data-lang="zh">这类题目考察的是识别结构的能力——用到的仍是你已经掌握的倒数/商法则和链式法则，套用在你已经推导过的公式上，而不是要背一条新法则。</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1765,6 +2228,15 @@ body.lang-zh [data-lang="en"] { display: none; }
     <div class="concept-box purple" data-lang="zh">
       <strong>记忆要点</strong>
       <p>注意到带 "co-" 前缀的反三角函数（$\arccos$、$\text{arccot}$、$\text{arccsc}$）的导数都是其对应不带 "co-" 函数导数的<strong>相反数</strong>。只需记三条公式，再给余函数加上负号即可。</p>
+    </div>
+
+    <div class="concept-box green" data-lang="en">
+      <strong>Going Deeper — Why the "Co-" Pattern Isn't a Coincidence</strong>
+      <p>Each cofunction identity ($\arcsin x + \arccos x = \tfrac{\pi}{2}$, $\arctan x + \text{arccot}\,x = \tfrac{\pi}{2}$, $\text{arcsec}\,x + \text{arccsc}\,x = \tfrac{\pi}{2}$) differentiates to "derivative of the plain function $+$ derivative of the co-function $= 0$," since $\tfrac{\pi}{2}$ is a constant. That forces the co-function's derivative to be the exact negative of its partner's — the same argument used above for $\arccos$ generalizes to all three pairs at once, so you only ever need to derive (or memorize) half the table.</p>
+    </div>
+    <div class="concept-box green" data-lang="zh">
+      <strong>拓展——"co-"规律并非巧合</strong>
+      <p>每一对余函数恒等式（$\arcsin x + \arccos x = \tfrac{\pi}{2}$、$\arctan x + \text{arccot}\,x = \tfrac{\pi}{2}$、$\text{arcsec}\,x + \text{arccsc}\,x = \tfrac{\pi}{2}$）求导后都变为"普通函数的导数 + 余函数的导数 = 0"，因为 $\tfrac{\pi}{2}$ 是常数。这就迫使余函数的导数恰好是其配对函数导数的相反数——前面对 $\arccos$ 用过的这个论证，可以一次性推广到全部三对函数，所以你实际上只需要推导（或记住）表格的一半。</p>
     </div>
 
     <details style="margin: 14px 0;">
@@ -1878,6 +2350,49 @@ body.lang-zh [data-lang="en"] { display: none; }
       <div class="graph-note" data-lang="zh">虚线水平线标出渐近线 $y=\pm\dfrac{\pi}{2}$。</div>
     </div>
 
+    <div class="worked-example">
+      <div class="we-title"><span data-lang="en">Worked Example — Product Rule with an Inverse Trig Factor</span><span data-lang="zh">例题——乘积法则结合反三角函数</span></div>
+      <div class="we-steps">
+        <div class="we-step">
+          <strong><span data-lang="en">Problem</span><span data-lang="zh">题目</span></strong>
+          <span data-lang="en">Find $\dfrac{d}{dx}\bigl[x^2 \arctan(x)\bigr]$.</span><span data-lang="zh">求 $\dfrac{d}{dx}\bigl[x^2 \arctan(x)\bigr]$。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 1 — Recognize the product structure</span><span data-lang="zh">第 1 步——识别乘积结构</span></strong>
+          <span data-lang="en">This is a product of $x^2$ and $\arctan(x)$, so the product rule governs the top level; the inverse-trig derivative only comes in for the second factor.</span><span data-lang="zh">这是 $x^2$ 与 $\arctan(x)$ 的乘积，最外层用乘积法则；反三角函数导数只用在第二个因子上。</span>
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 2 — Apply the product rule</span><span data-lang="zh">第 2 步——套用乘积法则</span></strong>
+          $$\frac{d}{dx}\bigl[x^2 \arctan(x)\bigr] = 2x\arctan(x) + x^2 \cdot \frac{1}{1+x^2}$$
+        </div>
+        <div class="we-step">
+          <strong><span data-lang="en">Step 3 — Simplify the second term if useful</span><span data-lang="zh">第 3 步——如有需要可化简第二项</span></strong>
+          <span data-lang="en">$\dfrac{x^2}{1+x^2} = 1 - \dfrac{1}{1+x^2}$, but on the AP exam leaving the answer unsimplified is fully acceptable — don't spend time simplifying past a correct, clearly-derived expression.</span><span data-lang="zh">$\dfrac{x^2}{1+x^2} = 1 - \dfrac{1}{1+x^2}$，但在 AP 考试中，不化简、保留正确且清晰推导出的表达式同样可以得满分——不必在已经正确的答案上再花时间化简。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-answer="2">
+      <div class="quiz-q"><span data-lang="en">What is $\dfrac{d}{dx}\bigl[\arccos(2x)\bigr]$?</span><span data-lang="zh">$\dfrac{d}{dx}\bigl[\arccos(2x)\bigr]$ 等于？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0">$\dfrac{1}{\sqrt{1-4x^2}}$</div>
+        <div class="quiz-opt" data-idx="1">$\dfrac{-1}{\sqrt{1-2x^2}}$</div>
+        <div class="quiz-opt" data-idx="2">$\dfrac{-2}{\sqrt{1-4x^2}}$</div>
+        <div class="quiz-opt" data-idx="3">$\dfrac{2}{\sqrt{1-4x^2}}$</div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The outer derivative of $\arccos(u)$ is $\dfrac{-1}{\sqrt{1-u^2}}$ with $u = 2x$, giving $\dfrac{-1}{\sqrt{1-4x^2}}$; the inner derivative of $2x$ is $2$. Multiply: $\dfrac{-2}{\sqrt{1-4x^2}}$.</span><span data-lang="zh">正确！$\arccos(u)$ 的外导数是 $\dfrac{-1}{\sqrt{1-u^2}}$（$u = 2x$），得 $\dfrac{-1}{\sqrt{1-4x^2}}$；$2x$ 的内导数是 $2$。相乘得 $\dfrac{-2}{\sqrt{1-4x^2}}$。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Don't forget both the negative sign from $\arccos$ <em>and</em> the inner derivative factor of $2$ from $2x$. The correct chain is $\dfrac{-1}{\sqrt{1-(2x)^2}} \cdot 2 = \dfrac{-2}{\sqrt{1-4x^2}}$.</span><span data-lang="zh">别忘了 $\arccos$ 带来的负号，<em>以及</em> $2x$ 的内导数因子 $2$。正确的链式过程是 $\dfrac{-1}{\sqrt{1-(2x)^2}} \cdot 2 = \dfrac{-2}{\sqrt{1-4x^2}}$。</span></div>
+    </div>
+
+    <div class="concept-box purple" data-lang="en">
+      <strong>AP Exam Tip</strong>
+      <p>Inverse trig derivative questions are graded almost entirely on whether you picked the right formula from the table and correctly applied the chain rule to the inner function — there's rarely any algebraic simplification expected afterward. Spend your time double-checking the sign (arccos, arccot, arccsc are negative) and the inner derivative, not searching for a "nicer" final form.</p>
+    </div>
+    <div class="concept-box purple" data-lang="zh">
+      <strong>AP 考试提示</strong>
+      <p>反三角函数求导题的得分几乎完全取决于你是否从表中选对了公式，并对内函数正确使用了链式法则——之后通常不需要再做代数化简。把时间花在核对符号（arccos、arccot、arccsc 均为负）和内导数上，而不是去找一个"更好看"的最终形式。</p>
+    </div>
+
   </div>
 </section>
 
@@ -1987,6 +2502,37 @@ body.lang-zh [data-lang="en"] { display: none; }
       </div>
     </div>
 
+    <div class="example-box">
+      <div class="example-box-title" data-lang="en">Worked Example — Reading the Layers Before Choosing a Rule</div>
+      <div class="example-box-title" data-lang="zh">例题——选择法则前先读懂各层结构</div>
+      <p data-lang="en">Find $\dfrac{dy}{dx}$ for $y = x^2 \sqrt{\sin(3x)}$.</p>
+      <p data-lang="zh">求 $y = x^2 \sqrt{\sin(3x)}$ 的 $\dfrac{dy}{dx}$。</p>
+      <div class="worked-solution">
+      <p data-lang="en"><strong>Step 1 — Identify the outermost structure.</strong> This is a <em>product</em> of $x^2$ and $\sqrt{\sin(3x)}$, so the product rule governs the top level.</p>
+      <p data-lang="zh"><strong>第 1 步——识别最外层结构。</strong>这是 $x^2$ 与 $\sqrt{\sin(3x)}$ 的<em>乘积</em>，所以最外层要用乘积法则。</p>
+      <p data-lang="en"><strong>Step 2 — Look inside the second factor.</strong> $\sqrt{\sin(3x)} = [\sin(3x)]^{1/2}$ is a composition three layers deep: an outer power, then sine, then $3x$. That calls for the chain rule applied twice.</p>
+      <p data-lang="zh"><strong>第 2 步——查看第二个因子的内部。</strong>$\sqrt{\sin(3x)} = [\sin(3x)]^{1/2}$ 是一个三层的复合：外层是幂，再是正弦，再是 $3x$。这需要两次使用链式法则。</p>
+      $$\frac{d}{dx}\left[\sin(3x)\right]^{1/2} = \tfrac{1}{2}\left[\sin(3x)\right]^{-1/2} \cdot \cos(3x) \cdot 3 = \frac{3\cos(3x)}{2\sqrt{\sin(3x)}}$$
+      <p data-lang="en"><strong>Step 3 — Assemble with the product rule.</strong></p>
+      <p data-lang="zh"><strong>第 3 步——套用乘积法则组合。</strong></p>
+      $$\frac{dy}{dx} = 2x\sqrt{\sin(3x)} + x^2 \cdot \frac{3\cos(3x)}{2\sqrt{\sin(3x)}}$$
+      <p data-lang="en">Notice that no single rule from the toolkit solved this alone — the skill being tested is the <em>decomposition</em>, not any one differentiation formula.</p>
+      <p data-lang="zh">注意，工具箱里没有任何单一法则能独自解决这道题——真正考察的能力是<em>分解结构</em>，而不是某一条求导公式本身。</p>
+      </div>
+    </div>
+
+    <div class="quiz" data-answer="1">
+      <div class="quiz-q"><span data-lang="en">Which combination of rules is needed to differentiate $y = \dfrac{\sin(x^2)}{x}$?</span><span data-lang="zh">求 $y = \dfrac{\sin(x^2)}{x}$ 的导数需要哪些法则的组合？</span></div>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0"><span data-lang="en">Product rule only</span><span data-lang="zh">只需乘积法则</span></div>
+        <div class="quiz-opt" data-idx="1"><span data-lang="en">Quotient rule + chain rule</span><span data-lang="zh">商的法则 + 链式法则</span></div>
+        <div class="quiz-opt" data-idx="2"><span data-lang="en">Implicit differentiation</span><span data-lang="zh">隐函数求导</span></div>
+        <div class="quiz-opt" data-idx="3"><span data-lang="en">Power rule only</span><span data-lang="zh">只需幂法则</span></div>
+      </div>
+      <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The outermost structure is a quotient ($\sin(x^2)$ over $x$), so start with the quotient rule; the numerator $\sin(x^2)$ is itself a composition, requiring the chain rule inside that step.</span><span data-lang="zh">正确！最外层结构是商（$\sin(x^2)$ 除以 $x$），所以先用商的法则；分子 $\sin(x^2)$ 本身是一个复合，在那一步内部还需要链式法则。</span></div>
+      <div class="quiz-explain wrong-exp"><span data-lang="en">Read the layers: the overall structure is a fraction (quotient rule), and its numerator is a composite function (chain rule). Neither rule alone is sufficient.</span><span data-lang="zh">按层次阅读：整体结构是分式（商的法则），其分子是复合函数（链式法则）。单独任何一条法则都不够。</span></div>
+    </div>
+
   </div>
 </section>
 
@@ -2087,6 +2633,38 @@ body.lang-zh [data-lang="en"] { display: none; }
       <p>用隐函数法对 $\frac{dy}{dx}$ 求导时，要记住 $y$ 仍是 $x$ 的函数。这一步会用到链式法则（常常还要用到商的法则）。</p>
     </div>
 
+    <div class="example-box">
+      <div class="example-box-title" data-lang="en">Worked Example — Implicit Second Derivative</div>
+      <div class="example-box-title" data-lang="zh">例题——隐函数的二阶导数</div>
+      <p data-lang="en">Find $\dfrac{d^2y}{dx^2}$ in terms of $x$ and $y$ if $x^2 + y^2 = 25$.</p>
+      <p data-lang="zh">已知 $x^2 + y^2 = 25$，求用 $x$、$y$ 表示的 $\dfrac{d^2y}{dx^2}$。</p>
+      <div class="worked-solution">
+      <p data-lang="en"><strong>Step 1 — First derivative, implicitly.</strong></p>
+      <p data-lang="zh"><strong>第 1 步——先隐式求一阶导数。</strong></p>
+      $$2x + 2y\frac{dy}{dx} = 0 \;\Longrightarrow\; \frac{dy}{dx} = -\frac{x}{y}$$
+      <p data-lang="en"><strong>Step 2 — Differentiate again, using the quotient rule (and the chain rule on the $y$ in the denominator).</strong></p>
+      <p data-lang="zh"><strong>第 2 步——再求一次导，使用商的法则（分母中的 $y$ 还要用链式法则）。</strong></p>
+      $$\frac{d^2y}{dx^2} = \frac{d}{dx}\left(-\frac{x}{y}\right) = -\frac{(1)(y) - x\left(\frac{dy}{dx}\right)}{y^2}$$
+      <p data-lang="en"><strong>Step 3 — Substitute $\frac{dy}{dx} = -\frac{x}{y}$ back in and simplify.</strong> This is the step students most often skip — leaving $\frac{dy}{dx}$ in the answer is an incomplete simplification.</p>
+      <p data-lang="zh"><strong>第 3 步——把 $\frac{dy}{dx} = -\frac{x}{y}$ 代回并化简。</strong>这一步是学生最容易漏掉的——答案中留着 $\frac{dy}{dx}$ 属于化简不完整。</p>
+      $$\frac{d^2y}{dx^2} = -\frac{y - x\left(-\frac{x}{y}\right)}{y^2} = -\frac{y + \frac{x^2}{y}}{y^2} = -\frac{y^2 + x^2}{y^3}$$
+      <p data-lang="en"><strong>Step 4 — Use the original equation to simplify further.</strong> Since $x^2 + y^2 = 25$:</p>
+      <p data-lang="zh"><strong>第 4 步——用原方程进一步化简。</strong>因为 $x^2 + y^2 = 25$：</p>
+      $$\frac{d^2y}{dx^2} = -\frac{25}{y^3}$$
+      <p data-lang="en">This final substitution — recognizing that the constraint equation itself can simplify the answer — is a hallmark of a fully-worked implicit second-derivative problem and is exactly what separates a 9/9 from a partial-credit response on the free-response section.</p>
+      <p data-lang="zh">这最后一步代入——认识到约束方程本身也能用来化简答案——正是完整解答隐函数二阶导数题目的标志，也是自由作答题中拿满分与只拿部分分的关键区别所在。</p>
+      </div>
+    </div>
+
+    <div class="concept-box gold" data-lang="en">
+      <strong>Going Deeper — What Higher-Order Derivatives Mean Physically</strong>
+      <p>If $s(t)$ is position, $s'(t) = v(t)$ is velocity, and $s''(t) = a(t)$ is acceleration — a physical meaning for a second derivative you already know from Unit 2's rate-of-change work. The third derivative, $s'''(t)$, is called <strong>jerk</strong>: the rate at which acceleration itself changes. A smooth car ride has low jerk (acceleration changes gradually) even if the acceleration itself is nonzero; a jarring ride has high jerk. This gives every order of derivative a concrete interpretation, not just an abstract "derivative of a derivative."</p>
+    </div>
+    <div class="concept-box gold" data-lang="zh">
+      <strong>拓展——高阶导数的物理意义</strong>
+      <p>若 $s(t)$ 是位置，则 $s'(t) = v(t)$ 是速度，$s''(t) = a(t)$ 是加速度——这是你在第 2 单元变化率内容中已经了解的二阶导数的物理意义。三阶导数 $s'''(t)$ 称为<strong>加加速度（jerk）</strong>：加速度本身变化的速率。乘坐平稳的汽车加加速度很低（加速度变化缓慢），即使加速度本身不为零；颠簸的乘坐体验则加加速度很高。这让每一阶导数都有了具体的解释，而不只是"导数的导数"这样一个抽象说法。</p>
+    </div>
+
   </div>
 </section>
 
@@ -2125,6 +2703,15 @@ body.lang-zh [data-lang="en"] { display: none; }
     <div class="concept-box green" data-lang="zh">
       <strong>简答题建议</strong>
       <p>在说明答案时，写出所使用的求导法则。例如："由链式法则，$\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)$。"这能展示出你对概念的理解，并拿到方法分。</p>
+    </div>
+
+    <div class="concept-box" data-lang="en">
+      <strong>A Capstone Habit — Combine, Don't Just Recall</strong>
+      <p>By the end of this unit you have six named techniques (power, product, quotient, chain, implicit, inverse — plus logarithmic differentiation as a bonus tool). The AP Exam rarely tests one in isolation on the harder questions; it tests whether you can read a nested expression, identify <em>every</em> layer, and apply the right tool at each layer in the right order. When you get stuck, don't search for "the one rule" — ask "what's the outermost structure, and what's inside it?" and work inward one layer at a time.</p>
+    </div>
+    <div class="concept-box" data-lang="zh">
+      <strong>压轴习惯——组合运用，而非单纯回忆</strong>
+      <p>学完本单元后，你已经掌握了六种命名法则（幂、乘积、商、链式、隐函数、反函数——外加对数求导法这个额外工具）。AP 考试中较难的题目很少只单独考查一条法则；它考查的是你能否读懂一个嵌套表达式、识别出<em>每一层</em>结构，并按正确顺序在每一层使用恰当的工具。卡壳时，不要去找"唯一那一条法则"，而要问"最外层结构是什么？里面又是什么？"，然后一层一层向内处理。</p>
     </div>
 
   </div>
@@ -2183,6 +2770,15 @@ body.lang-zh [data-lang="en"] { display: none; }
     <div class="concept-box red" data-lang="zh">
       <strong>错误 #5 ——遇到 $e^x$ 或三角函数过早停手</strong>
       <p>学生有时只对最外层用了链式法则，却忘了 $e^{g(x)}$ 还要乘 $g'(x)$，或 $\cos(g(x))$ 也要乘 $g'(x)$。要把链式贯穿到每一层。</p>
+    </div>
+
+    <div class="concept-box red" data-lang="en">
+      <strong>Mistake #6 — Forgetting to Multiply Back by y in Logarithmic Differentiation</strong>
+      <p>After differentiating $\ln y$ implicitly, you get $\frac{1}{y}\frac{dy}{dx} = (\text{something})$. The final answer needs $\frac{dy}{dx}$ alone, so you must multiply both sides by $y$ — and then substitute the <em>original</em> expression for $y$ back in. Leaving a bare $y$ (or worse, stopping at $\frac{1}{y}\frac{dy}{dx} = \ldots$) is an incomplete answer.</p>
+    </div>
+    <div class="concept-box red" data-lang="zh">
+      <strong>错误 #6 ——对数求导法中忘记乘回 y</strong>
+      <p>对 $\ln y$ 隐式求导后，会得到 $\frac{1}{y}\frac{dy}{dx} = (\text{某表达式})$。最终答案需要单独的 $\frac{dy}{dx}$，所以必须两边同乘 $y$——然后把 $y$ 的<em>原始</em>表达式代回去。留下裸露的 $y$（或者更糟，停在 $\frac{1}{y}\frac{dy}{dx} = \ldots$）都是不完整的答案。</p>
     </div>
 
   </div>
@@ -2645,6 +3241,30 @@ window.addEventListener('scroll', () => {
     location.reload();
   };
 })();
+
+// ── Inline click-to-reveal quizzes (class="quiz" data-answer) ──
+document.querySelectorAll('.quiz').forEach(quiz => {
+  const answer = parseInt(quiz.dataset.answer);
+  const opts = quiz.querySelectorAll('.quiz-opt');
+  const expCorrect = quiz.querySelector('.quiz-explain.correct-exp');
+  const expWrong = quiz.querySelector('.quiz-explain.wrong-exp');
+
+  opts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (opt.classList.contains('disabled')) return;
+      const idx = parseInt(opt.dataset.idx);
+      opts.forEach(o => o.classList.add('disabled'));
+      if (idx === answer) {
+        opt.classList.add('correct');
+        if (expCorrect) expCorrect.classList.add('show');
+      } else {
+        opt.classList.add('wrong');
+        if (opts[answer]) opts[answer].classList.add('correct');
+        if (expWrong) expWrong.classList.add('show');
+      }
+    });
+  });
+});
 
 // ── KaTeX Auto-Render ──
 function renderMathSafe(root) {
