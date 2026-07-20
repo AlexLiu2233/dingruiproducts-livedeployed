@@ -337,6 +337,108 @@ body.lang-zh       [data-lang="en"] { display: none; }
  .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
 }
 </style>
+<!-- BEGIN unit-nav-css -->
+<style data-section="unit-nav">
+.unit-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 980px;
+  margin: 64px auto 32px;
+  padding: 0 24px;
+}
+.unit-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 18px 20px;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #DDD0C8);
+  border-radius: 12px;
+  color: inherit;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.unit-nav__link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #7A2E2E);
+  box-shadow: 0 6px 16px -4px rgba(60, 20, 30, 0.12);
+}
+.unit-nav__link--next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.unit-nav__arrow {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent, #7A2E2E);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.unit-nav__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.unit-nav__hint {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6B5058);
+}
+.unit-nav__title {
+  font-family: var(--font-display, 'DM Serif Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--text, #2C1B1F);
+}
+.unit-nav__placeholder {
+  border: 1px dashed var(--border, #DDD0C8);
+  border-radius: 12px;
+  background: transparent;
+  opacity: 0.6;
+}
+@media (max-width: 640px) {
+  .unit-nav { grid-template-columns: 1fr; gap: 10px; margin-top: 48px; }
+  .unit-nav__link--next { flex-direction: row; text-align: left; }
+}
+@media print { .unit-nav { display: none; } }
+</style>
+<!-- END unit-nav-css -->
+<!-- BEGIN toc-course-nav-css -->
+<style data-section="toc-course-nav">
+.sidebar-course-nav { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 4px; }
+.sidebar-course-nav summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 20px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.sidebar-course-nav summary::-webkit-details-marker { display: none; }
+.sidebar-course-nav summary::marker { content: ""; }
+.sidebar-course-nav summary::after {
+  content: "\25BE"; font-size: 0.7rem; transition: transform 0.15s; flex: 0 0 auto;
+}
+.sidebar-course-nav details[open] summary::after { transform: rotate(180deg); }
+.sidebar-course-count {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary); opacity: 0.7;
+}
+.sidebar-course-list { padding-bottom: 4px; }
+.sidebar-course-link {
+  display: block; padding: 6px 20px 6px 32px;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar-course-link:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar-course-link--current {
+  color: var(--accent); border-left-color: var(--accent);
+  font-weight: 600; background: var(--accent-light);
+}
+</style>
+<!-- END toc-course-nav-css -->
 </head>
 <body>
 
@@ -346,6 +448,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="nav-badge">THERMO</span>
   </div>
   <div class="nav-right">
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">&larr; All Units</span><span data-lang="zh">&larr; 返回单元列表</span></a>
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -355,7 +459,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 
-<aside class="sidebar open" id="sidebar">
+<aside class="sidebar" id="sidebar">
+<!-- BEGIN toc-mobile-default -->
+<script>(function(){var s=document.getElementById('sidebar');if(s&&window.innerWidth>=1100)s.classList.add('open');})();</script>
+<!-- END toc-mobile-default -->
   <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
   <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
   <a href="#syllabus-map"><span data-lang="en">Syllabus Map</span><span data-lang="zh">大纲对照</span></a>
@@ -372,6 +479,29 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
   <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">准备就绪清单</span></a>
   <a href="#feeders"><span data-lang="en">What This Feeds Into</span><span data-lang="zh">后续单元</span></a>
+<!-- BEGIN toc-course-nav -->
+  <div class="sidebar-course-nav">
+    <details>
+      <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">14 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
+      <div class="sidebar-course-list">
+        <a class="sidebar-course-link" href="Unit_1_Atomic_Structure_and_the_Quantum_Model.html"><span data-lang="en">Atomic Structure and the Quantum Model</span><span data-lang="zh">原子结构与量子模型</span></a>
+        <a class="sidebar-course-link" href="Unit_2_The_Periodic_Table_and_Periodic_Trends.html"><span data-lang="en">The Periodic Table and Periodic Trends</span><span data-lang="zh">周期表与周期性</span></a>
+        <a class="sidebar-course-link" href="Unit_3_Chemical_Bonding.html"><span data-lang="en">Chemical Bonding</span><span data-lang="zh">化学键</span></a>
+        <a class="sidebar-course-link" href="Unit_4_Nomenclature_and_Chemical_Formulae.html"><span data-lang="en">Nomenclature and Chemical Formulae</span><span data-lang="zh">命名法与化学式</span></a>
+        <a class="sidebar-course-link" href="Unit_5_The_Mole_and_Stoichiometry.html"><span data-lang="en">The Mole and Stoichiometry</span><span data-lang="zh">摩尔与化学计量</span></a>
+        <a class="sidebar-course-link" href="Unit_6_Chemical_Reactions_and_Equations.html"><span data-lang="en">Chemical Reactions and Equations</span><span data-lang="zh">化学反应与方程式</span></a>
+        <a class="sidebar-course-link" href="Unit_7_States_of_Matter_and_the_Gas_Laws.html"><span data-lang="en">States of Matter and the Gas Laws</span><span data-lang="zh">物质状态与气体定律</span></a>
+        <a class="sidebar-course-link" href="Unit_8_Solutions_and_Solubility.html"><span data-lang="en">Solutions and Solubility</span><span data-lang="zh">溶液与溶解度</span></a>
+        <a class="sidebar-course-link" href="Unit_9_Acids_Bases_and_pH.html"><span data-lang="en">Acids, Bases and pH</span><span data-lang="zh">酸、碱与pH</span></a>
+        <a class="sidebar-course-link sidebar-course-link--current" href="Unit_10_Thermochemistry_and_Energy.html" aria-current="page"><span data-lang="en">Thermochemistry and Energy</span><span data-lang="zh">热化学与能量</span></a>
+        <a class="sidebar-course-link" href="Unit_11_Reaction_Rates_and_Kinetics.html"><span data-lang="en">Reaction Rates and Kinetics</span><span data-lang="zh">反应速率与动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_12_Chemical_Equilibrium.html"><span data-lang="en">Chemical Equilibrium</span><span data-lang="zh">化学平衡</span></a>
+        <a class="sidebar-course-link" href="Unit_13_Redox_and_Electrochemistry.html"><span data-lang="en">Redox and Electrochemistry</span><span data-lang="zh">氧化还原与电化学</span></a>
+        <a class="sidebar-course-link" href="Unit_14_Introduction_to_Organic_Chemistry.html"><span data-lang="en">Introduction to Organic Chemistry</span><span data-lang="zh">有机化学入门</span></a>
+      </div>
+    </details>
+  </div>
+<!-- END toc-course-nav -->
 </aside>
 
 <main class="main-wrap">
@@ -1174,6 +1304,28 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 </details>
 
+
+
+
+<!-- BEGIN unit-nav -->
+<nav class="unit-nav" aria-label="Course navigation">
+  <a class="unit-nav__link unit-nav__link--prev" href="Unit_9_Acids_Bases_and_pH.html">
+    <span class="unit-nav__arrow" aria-hidden="true">&larr;</span>
+    <span class="unit-nav__body">
+      <span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Acids, Bases and pH</span><span data-lang="zh">酸、碱与pH</span></span>
+    </span>
+  </a>
+  <a class="unit-nav__link unit-nav__link--next" href="Unit_11_Reaction_Rates_and_Kinetics.html">
+    <span class="unit-nav__arrow" aria-hidden="true">&rarr;</span>
+    <span class="unit-nav__body">
+      <span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Reaction Rates and Kinetics</span><span data-lang="zh">反应速率与动力学</span></span>
+    </span>
+  </a>
+</nav>
+<!-- END unit-nav -->
+
 <div class="footer-wrap">
   <div class="footer-brand">DINGRUI SCHOLARS</div>
   <p><span data-lang="en">High School Chemistry &middot; Thermochemistry and Energy &middot; v1</span><span data-lang="zh">高中化学 &middot; 热化学与能量 &middot; v1</span></p>
@@ -1511,5 +1663,21 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 </body>
 </html>

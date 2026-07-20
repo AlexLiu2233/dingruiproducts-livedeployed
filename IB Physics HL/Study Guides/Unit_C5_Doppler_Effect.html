@@ -300,6 +300,108 @@ body.lang-zh       [data-lang="en"] { display: none; }
  .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
 }
 </style>
+<!-- BEGIN unit-nav-css -->
+<style data-section="unit-nav">
+.unit-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 980px;
+  margin: 64px auto 32px;
+  padding: 0 24px;
+}
+.unit-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 18px 20px;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #DDD0C8);
+  border-radius: 12px;
+  color: inherit;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.unit-nav__link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #7A2E2E);
+  box-shadow: 0 6px 16px -4px rgba(60, 20, 30, 0.12);
+}
+.unit-nav__link--next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.unit-nav__arrow {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent, #7A2E2E);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.unit-nav__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.unit-nav__hint {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6B5058);
+}
+.unit-nav__title {
+  font-family: var(--font-display, 'DM Serif Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--text, #2C1B1F);
+}
+.unit-nav__placeholder {
+  border: 1px dashed var(--border, #DDD0C8);
+  border-radius: 12px;
+  background: transparent;
+  opacity: 0.6;
+}
+@media (max-width: 640px) {
+  .unit-nav { grid-template-columns: 1fr; gap: 10px; margin-top: 48px; }
+  .unit-nav__link--next { flex-direction: row; text-align: left; }
+}
+@media print { .unit-nav { display: none; } }
+</style>
+<!-- END unit-nav-css -->
+<!-- BEGIN toc-course-nav-css -->
+<style data-section="toc-course-nav">
+.sidebar-course-nav { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 4px; }
+.sidebar-course-nav summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 20px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.sidebar-course-nav summary::-webkit-details-marker { display: none; }
+.sidebar-course-nav summary::marker { content: ""; }
+.sidebar-course-nav summary::after {
+  content: "\25BE"; font-size: 0.7rem; transition: transform 0.15s; flex: 0 0 auto;
+}
+.sidebar-course-nav details[open] summary::after { transform: rotate(180deg); }
+.sidebar-course-count {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary); opacity: 0.7;
+}
+.sidebar-course-list { padding-bottom: 4px; }
+.sidebar-course-link {
+  display: block; padding: 6px 20px 6px 32px;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar-course-link:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar-course-link--current {
+  color: var(--accent); border-left-color: var(--accent);
+  font-weight: 600; background: var(--accent-light);
+}
+</style>
+<!-- END toc-course-nav-css -->
 </head>
 <body>
 
@@ -309,6 +411,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="nav-badge">UNIT C.5</span>
   </div>
   <div class="nav-right">
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">&larr; All Units</span><span data-lang="zh">&larr; 返回单元列表</span></a>
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -318,7 +422,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 
-<aside class="sidebar open" id="sidebar">
+<aside class="sidebar" id="sidebar">
+<!-- BEGIN toc-mobile-default -->
+<script>(function(){var s=document.getElementById('sidebar');if(s&&window.innerWidth>=1100)s.classList.add('open');})();</script>
+<!-- END toc-mobile-default -->
   <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
   <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
   <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">使用指南</span></a>
@@ -332,6 +439,39 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
   <a href="#unit-quiz"><span data-lang="en">Practice Quiz</span><span data-lang="zh">练习测验</span></a>
   <a href="#checklist"><span data-lang="en">Readiness Checklist</span><span data-lang="zh">备考清单</span></a>
+<!-- BEGIN toc-course-nav -->
+  <div class="sidebar-course-nav">
+    <details>
+      <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">24 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
+      <div class="sidebar-course-list">
+        <a class="sidebar-course-link" href="Unit_A1_Kinematics.html"><span data-lang="en">Unit A1: Kinematics</span><span data-lang="zh">单元 A1：运动学</span></a>
+        <a class="sidebar-course-link" href="Unit_A2_Forces_and_Momentum.html"><span data-lang="en">Unit A2: Forces and momentum</span><span data-lang="zh">单元 A2：力与动量</span></a>
+        <a class="sidebar-course-link" href="Unit_A3_Work_Energy_and_Power.html"><span data-lang="en">Unit A3: Work, energy and power</span><span data-lang="zh">单元 A3：功、能量与功率</span></a>
+        <a class="sidebar-course-link" href="Unit_A4_Rigid_Body_Mechanics.html"><span data-lang="en">Unit A4: Rigid body mechanics</span><span data-lang="zh">单元 A4：刚体力学HLonly</span></a>
+        <a class="sidebar-course-link" href="Unit_A5_Galilean_and_Special_Relativity.html"><span data-lang="en">Unit A5: Galilean and special relativity</span><span data-lang="zh">单元 A5：伽利略与狭义相对论HLonly</span></a>
+        <a class="sidebar-course-link" href="Unit_B1_Thermal_Energy_Transfers.html"><span data-lang="en">Unit B1: Thermal energy transfers</span><span data-lang="zh">单元 B1：热能传递</span></a>
+        <a class="sidebar-course-link" href="Unit_B2_Greenhouse_Effect.html"><span data-lang="en">Unit B2: Greenhouse effect</span><span data-lang="zh">单元 B2：温室效应</span></a>
+        <a class="sidebar-course-link" href="Unit_B3_Gas_Laws.html"><span data-lang="en">Unit B3: Gas laws</span><span data-lang="zh">单元 B3：气体定律</span></a>
+        <a class="sidebar-course-link" href="Unit_B4_Thermodynamics.html"><span data-lang="en">Unit B4: Thermodynamics</span><span data-lang="zh">单元 B4：热力学</span></a>
+        <a class="sidebar-course-link" href="Unit_B5_Current_and_Circuits.html"><span data-lang="en">Unit B5: Current and circuits</span><span data-lang="zh">单元 B5：电流与电路</span></a>
+        <a class="sidebar-course-link" href="Unit_C1_Simple_Harmonic_Motion.html"><span data-lang="en">Unit C1: Simple harmonic motion</span><span data-lang="zh">单元 C1：简谐运动</span></a>
+        <a class="sidebar-course-link" href="Unit_C2_Wave_Model.html"><span data-lang="en">Unit C2: Wave model</span><span data-lang="zh">单元 C2：波模型</span></a>
+        <a class="sidebar-course-link" href="Unit_C3_Wave_Phenomena.html"><span data-lang="en">Unit C3: Wave phenomena</span><span data-lang="zh">单元 C3：波动现象</span></a>
+        <a class="sidebar-course-link" href="Unit_C4_Standing_Waves_and_Resonance.html"><span data-lang="en">Unit C4: Standing waves and resonance</span><span data-lang="zh">单元 C4：驻波与共振</span></a>
+        <a class="sidebar-course-link sidebar-course-link--current" href="Unit_C5_Doppler_Effect.html" aria-current="page"><span data-lang="en">Unit C5: Doppler effect</span><span data-lang="zh">单元 C5：多普勒效应</span></a>
+        <a class="sidebar-course-link" href="Unit_D1_Gravitational_Fields.html"><span data-lang="en">Unit D1: Gravitational fields</span><span data-lang="zh">单元 D1：引力场</span></a>
+        <a class="sidebar-course-link" href="Unit_D2_Electric_and_Magnetic_Fields.html"><span data-lang="en">Unit D2: Electric and magnetic fields</span><span data-lang="zh">单元 D2：电场与磁场</span></a>
+        <a class="sidebar-course-link" href="Unit_D3_Motion_in_Electromagnetic_Fields.html"><span data-lang="en">Unit D3: Motion in electromagnetic fields</span><span data-lang="zh">单元 D3：电磁场中的运动</span></a>
+        <a class="sidebar-course-link" href="Unit_D4_Induction.html"><span data-lang="en">Unit D4: Induction</span><span data-lang="zh">单元 D4：电磁感应</span></a>
+        <a class="sidebar-course-link" href="Unit_E1_Structure_of_the_Atom.html"><span data-lang="en">Unit E1: Structure of the atom</span><span data-lang="zh">单元 E1：原子结构</span></a>
+        <a class="sidebar-course-link" href="Unit_E2_Quantum_Physics.html"><span data-lang="en">Unit E2: Quantum physics</span><span data-lang="zh">单元 E2：量子物理HLonly</span></a>
+        <a class="sidebar-course-link" href="Unit_E3_Radioactive_Decay.html"><span data-lang="en">Unit E3: Radioactive decay</span><span data-lang="zh">单元 E3：放射性衰变</span></a>
+        <a class="sidebar-course-link" href="Unit_E4_Fission.html"><span data-lang="en">Unit E4: Fission</span><span data-lang="zh">单元 E4：核裂变</span></a>
+        <a class="sidebar-course-link" href="Unit_E5_Fusion_and_Stars.html"><span data-lang="en">Unit E5: Fusion and stars</span><span data-lang="zh">单元 E5：聚变与恒星</span></a>
+      </div>
+    </details>
+  </div>
+<!-- END toc-course-nav -->
 </aside>
 
 <main class="main-wrap">
@@ -1023,6 +1163,28 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 </details>
 
+
+
+
+<!-- BEGIN unit-nav -->
+<nav class="unit-nav" aria-label="Course navigation">
+  <a class="unit-nav__link unit-nav__link--prev" href="Unit_C4_Standing_Waves_and_Resonance.html">
+    <span class="unit-nav__arrow" aria-hidden="true">&larr;</span>
+    <span class="unit-nav__body">
+      <span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Unit C4: Standing waves and resonance</span><span data-lang="zh">单元 C4：驻波与共振</span></span>
+    </span>
+  </a>
+  <a class="unit-nav__link unit-nav__link--next" href="Unit_D1_Gravitational_Fields.html">
+    <span class="unit-nav__arrow" aria-hidden="true">&rarr;</span>
+    <span class="unit-nav__body">
+      <span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Unit D1: Gravitational fields</span><span data-lang="zh">单元 D1：引力场</span></span>
+    </span>
+  </a>
+</nav>
+<!-- END unit-nav -->
+
 <div class="footer-wrap">
   <div class="footer-brand">鼎睿学苑 · Dingrui Scholars</div>
   <p><span data-lang="en">IB Physics HL · Unit C.5 Doppler Effect · <code>v1</code> · First Assessment 2025</span><span data-lang="zh">IB 物理 HL · 单元 C.5 多普勒效应 · <code>v1</code> · 首次考核 2025</span></p>
@@ -1360,5 +1522,21 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 </body>
 </html>
