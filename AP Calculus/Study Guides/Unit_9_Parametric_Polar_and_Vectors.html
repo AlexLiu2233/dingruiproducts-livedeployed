@@ -545,14 +545,14 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 .widget-controls input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px; height: 20px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .widget-controls input[type="range"]::-moz-range-thumb {
-  width: 20px; height: 20px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
@@ -690,8 +690,12 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 .nav-btn.active { background: var(--accent, #7A2E2E) !important; color: #FFFFFF !important; border-color: var(--accent, #7A2E2E) !important; }
 
 /* ─── BILINGUAL TOGGLE ─── */
-body:not(.lang-zh) [data-lang="zh"] { display: none; }
-body.lang-zh [data-lang="en"] { display: none; }
+/* !important: 20 spans in this file (10 en + 10 zh, inside .concept-box
+   "common mistakes" blocks) carry an inline style="display:block" which
+   otherwise outranks this rule on specificity alone and leaks the wrong
+   language in regardless of toggle state. */
+body:not(.lang-zh) [data-lang="zh"] { display: none !important; }
+body.lang-zh [data-lang="en"] { display: none !important; }
 
 /* consult-cta: lead-gen conversion surface (Sprint A) */
 .consult-cta { background: linear-gradient(180deg, var(--accent-light, #F2E4E4) 0%, var(--bg-card, #fff) 100%); border: 2px solid var(--accent); border-radius: var(--radius, 12px); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
@@ -825,19 +829,6 @@ body.lang-zh [data-lang="en"] { display: none; }
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }

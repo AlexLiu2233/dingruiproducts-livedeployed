@@ -366,42 +366,48 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 }
 @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 .explorer-title {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   color: var(--accent); text-transform: uppercase; letter-spacing: 2px;
   margin-bottom: 8px; text-align: center;
 }
 .explorer-subtitle {
-  text-align: center; font-size: 14px; color: var(--text-secondary);
+  text-align: center; font-size: 16px; color: var(--text-secondary);
   margin-bottom: 20px;
 }
 .explorer-sliders {
   display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
 }
 @media (max-width: 600px) { .explorer-sliders { grid-template-columns: 1fr; } }
-.slider-group { display: flex; flex-direction: column; gap: 6px; }
+.slider-group { display: flex; flex-direction: column; gap: 8px; }
 .slider-group label {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 600;
   color: var(--text-secondary); display: flex; justify-content: space-between;
 }
 .slider-group label .val { color: var(--accent); font-weight: 700; }
 .slider-group input[type="range"] {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 6px; background: var(--border);
-  border-radius: 3px; outline: none; cursor: pointer;
+  width: 100%; height: 24px; background: transparent;
+  border-radius: 4px; outline: none; cursor: pointer; margin: 0;
+}
+.slider-group input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 4px; background: var(--border);
+}
+.slider-group input[type="range"]::-moz-range-track {
+  height: 8px; border-radius: 4px; background: var(--border);
 }
 .slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--accent); cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; margin-top: -7px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .slider-group input[type="range"]::-moz-range-thumb {
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 22px; height: 22px; border-radius: 50%;
   background: var(--accent); cursor: pointer; border: none;
 }
 .explorer-results {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px; margin-top: 20px;
+  gap: 12px; margin-top: 20px;
 }
 .result-card {
   background: var(--bg); border: 1px solid var(--border);
@@ -410,16 +416,16 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 }
 .result-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .result-card .result-label {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
   color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 4px;
 }
 .result-card .result-value {
-  font-family: var(--font-mono); font-size: 1.2em; font-weight: 700;
+  font-family: var(--font-mono); font-size: 1.6em; font-weight: 700;
   color: var(--accent);
 }
 .result-card .result-unit {
-  font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary);
 }
 
 /* ═══════════ ANIMATE IN ═══════════ */
@@ -568,6 +574,25 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     img, table, video, iframe, pre { max-width: 100%; }
     .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
   }
+
+/* ─────────── FIGURES ─────────── */
+/* Injected figures had no layout or caption styling: the caption rendered at
+   body size/colour and ran straight into the following paragraph, and the
+   figure sat flush against the text above it. The per-figure <style> blocks in
+   each <figure> only swap light/dark images, so these rules are the shared
+   presentation layer for every dr-fig. */
+figure.dr-fig { margin: 32px 0; }
+figure.dr-fig img { max-width: 100%; height: auto; }
+figure.dr-fig figcaption {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem; line-height: 1.5;
+  color: var(--text-secondary); text-align: center;
+}
+@media (max-width: 600px) {
+  figure.dr-fig { margin: 24px 0; }
+  figure.dr-fig figcaption { font-size: 0.8rem; }
+}
 </style>
 <!-- BEGIN unit-nav-css -->
 <style data-section="unit-nav">
@@ -658,19 +683,6 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
@@ -755,11 +767,11 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
       <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">7 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
       <div class="sidebar-course-list">
         <a class="sidebar-course-link sidebar-course-link--current" href="Unit_1_Kinematics.html" aria-current="page"><span data-lang="en">Unit 1: Kinematics</span><span data-lang="zh">第 1 单元：运动学</span></a>
-        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
         <a class="sidebar-course-link" href="Unit_3_Work_Energy_Power.html"><span data-lang="en">Unit 3: Work, Energy, and Power</span><span data-lang="zh">第 3 单元：功、能量与功率</span></a>
         <a class="sidebar-course-link" href="Unit_4_Linear_Momentum.html"><span data-lang="en">Unit 4: Linear Momentum</span><span data-lang="zh">第 4 单元：线动量</span></a>
-        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp;amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
-        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp;amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
+        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
         <a class="sidebar-course-link" href="Unit_7_Oscillations.html"><span data-lang="en">Unit 7: Oscillations</span><span data-lang="zh">第 7 单元：振动</span></a>
       </div>
     </details>
@@ -837,6 +849,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Components from Magnitude and Angle</span><span data-lang="zh">由大小与角度求分量</span></h3>
+<!-- dingrui:fig u1-vector-decomposition -->
+<figure class="dr-fig" id="fig-u1-vector-decomposition">
+<style>
+  #fig-u1-vector-decomposition img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-vector-decomposition .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-vector-decomposition .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-vector-decomposition .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-vector-decomposition_light.png" alt="Resolving a vector into components, and reading the correct quadrant / 将矢量分解为分量，并判断正确的象限">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-vector-decomposition_dark.png" alt="Resolving a vector into components, and reading the correct quadrant / 将矢量分解为分量，并判断正确的象限">
+<figcaption><span data-lang="en">Resolving a vector into components, and reading the correct quadrant</span><span data-lang="zh">将矢量分解为分量，并判断正确的象限</span></figcaption>
+</figure>
+
   <p data-lang="en">To decompose a vector of magnitude $A$ at angle $\theta$ from the positive $x$-axis:</p>
   <p data-lang="zh">把大小为 $A$、与正 $x$ 轴夹角为 $\theta$ 的矢量分解为分量（<code>components</code>）：</p>
   <div class="formula-box">
@@ -962,6 +987,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Average vs. Instantaneous</span><span data-lang="zh">平均量与瞬时量</span></h3>
+<!-- dingrui:fig u1-secant-tangent-velocity -->
+<figure class="dr-fig" id="fig-u1-secant-tangent-velocity">
+<style>
+  #fig-u1-secant-tangent-velocity img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-secant-tangent-velocity .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-secant-tangent-velocity .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-secant-tangent-velocity .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-secant-tangent-velocity_light.png" alt="Average velocity (secant line) vs. instantaneous velocity (tangent line) on a position-time graph / 位置-时间图上的平均速度（割线）与瞬时速度（切线）">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-secant-tangent-velocity_dark.png" alt="Average velocity (secant line) vs. instantaneous velocity (tangent line) on a position-time graph / 位置-时间图上的平均速度（割线）与瞬时速度（切线）">
+<figcaption><span data-lang="en">Average velocity (secant line) vs. instantaneous velocity (tangent line) on a position-time graph</span><span data-lang="zh">位置-时间图上的平均速度（割线）与瞬时速度（切线）</span></figcaption>
+</figure>
+
   <p data-lang="en">Average quantities are computed over a finite time interval using initial and final states. As the time interval shrinks toward zero, the average approaches the instantaneous value — and this limit is exactly the derivative.</p>
   <p data-lang="zh">平均量（<code>average</code>）在某段有限时间间隔内由始末状态算出。当时间间隔趋于零时，平均量就趋近于瞬时量（<code>instantaneous</code>）—— 这个极限正是导数（<code>derivative</code>）。</p>
 
@@ -1100,6 +1138,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Graph Relationships</span><span data-lang="zh">图像之间的关系</span></h3>
+<!-- dingrui:fig u1-vt-graph-area -->
+<figure class="dr-fig" id="fig-u1-vt-graph-area">
+<style>
+  #fig-u1-vt-graph-area img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-vt-graph-area .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-vt-graph-area .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-vt-graph-area .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-vt-graph-area_light.png" alt="Displacement as the area under a velocity-time graph / 速度-时间图中曲线下方的面积即为位移">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-vt-graph-area_dark.png" alt="Displacement as the area under a velocity-time graph / 速度-时间图中曲线下方的面积即为位移">
+<figcaption><span data-lang="en">Displacement as the area under a velocity-time graph</span><span data-lang="zh">速度-时间图中曲线下方的面积即为位移</span></figcaption>
+</figure>
+
   <p data-lang="en">The connections between position, velocity, and acceleration graphs are the backbone of kinematics analysis. Slopes give derivatives; areas give integrals.</p>
   <p data-lang="zh">位置、速度、加速度三种图像（<code>graph</code>）之间的联系是运动学分析的脊梁。斜率（<code>slope</code>）就是导数；曲线下面积（<code>area under the curve</code>）就是积分。</p>
 
@@ -1155,6 +1206,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </details>
 
   <h3><span data-lang="en">Free Fall</span><span data-lang="zh">自由落体</span></h3>
+<!-- dingrui:fig u1-freefall-motion -->
+<figure class="dr-fig" id="fig-u1-freefall-motion">
+<style>
+  #fig-u1-freefall-motion img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-freefall-motion .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-freefall-motion .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-freefall-motion .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-freefall-motion_light.png" alt="Velocity vs. time for an object thrown upward, crossing zero at maximum height / 竖直上抛物体的速度-时间图，在最高点处速度为零">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-freefall-motion_dark.png" alt="Velocity vs. time for an object thrown upward, crossing zero at maximum height / 竖直上抛物体的速度-时间图，在最高点处速度为零">
+<figcaption><span data-lang="en">Velocity vs. time for an object thrown upward, crossing zero at maximum height</span><span data-lang="zh">竖直上抛物体的速度-时间图，在最高点处速度为零</span></figcaption>
+</figure>
+
   <div class="concept-box" data-lang="en">
     <strong style="color: var(--accent);">Gravitational Acceleration</strong>
     Near Earth's surface, the vertical acceleration due to gravity is downward, constant, and approximately $g \approx 10\;\text{m/s}^2$. On the AP exam, always use $g \approx 10$ m/s² unless otherwise directed.
@@ -1272,6 +1336,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section class="section" id="s1-4">
   <div class="section-label"><span data-lang="en">Topic 1.4</span><span data-lang="zh">专题 1.4</span></div>
   <h2><span data-lang="en">Reference Frames and Relative Motion</span><span data-lang="zh">参考系与相对运动</span></h2>
+<!-- dingrui:fig u1-river-crossing -->
+<figure class="dr-fig" id="fig-u1-river-crossing">
+<style>
+  #fig-u1-river-crossing img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-river-crossing .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-river-crossing .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-river-crossing .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-river-crossing_light.png" alt="Relative velocity as vector addition: boat, current, and ground track / 相对速度的矢量加法：船速、水流速度与对地速度">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-river-crossing_dark.png" alt="Relative velocity as vector addition: boat, current, and ground track / 相对速度的矢量加法：船速、水流速度与对地速度">
+<figcaption><span data-lang="en">Relative velocity as vector addition: boat, current, and ground track</span><span data-lang="zh">相对速度的矢量加法：船速、水流速度与对地速度</span></figcaption>
+</figure>
+
 
   <p data-lang="en">A <strong>reference frame</strong> defines the origin and coordinate system from which an observer makes measurements. Two observers in different reference frames may measure different velocities for the same object. The key tool for connecting their measurements is the relative velocity equation.</p>
   <p data-lang="zh"><strong>参考系</strong>（<code>reference frame</code>）规定了观察者测量时所用的原点和坐标系。处在不同参考系的两个观察者对同一物体测得的速度可能不同。把它们联系起来的关键工具就是相对速度方程（<code>relative velocity</code>）。</p>
@@ -1388,6 +1465,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Derived Formulas (Level Ground)</span><span data-lang="zh">推导公式（同高度发射与落地）</span></h3>
+<!-- dingrui:fig u1-projectile-trajectory -->
+<figure class="dr-fig" id="fig-u1-projectile-trajectory">
+<style>
+  #fig-u1-projectile-trajectory img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u1-projectile-trajectory .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u1-projectile-trajectory .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u1-projectile-trajectory .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_1_Kinematics/u1-projectile-trajectory_light.png" alt="A projectile&#x27;s parabolic trajectory, with launch angle, range, and maximum height labeled / 抛体运动的抛物线轨迹，标出发射角、射程与最大高度">
+<img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-projectile-trajectory_dark.png" alt="A projectile&#x27;s parabolic trajectory, with launch angle, range, and maximum height labeled / 抛体运动的抛物线轨迹，标出发射角、射程与最大高度">
+<figcaption><span data-lang="en">A projectile's parabolic trajectory, with launch angle, range, and maximum height labeled</span><span data-lang="zh">抛体运动的抛物线轨迹，标出发射角、射程与最大高度</span></figcaption>
+</figure>
+
   <div class="formula-box" style="border-top-color: var(--orange);">
     <div class="formula-label" style="color: var(--orange);"><span data-lang="en">Range</span><span data-lang="zh">射程</span></div>
     $$R = \frac{v_0^2\sin 2\theta}{g}$$
@@ -1941,7 +2031,7 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     <span class="unit-nav__arrow" aria-hidden="true">&rarr;</span>
     <span class="unit-nav__body">
       <span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span>
-      <span class="unit-nav__title"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></span>
     </span>
   </a>
 </nav>

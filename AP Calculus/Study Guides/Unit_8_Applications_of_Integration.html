@@ -125,7 +125,7 @@ body.sidebar-collapsed .sidebar{transform:translateX(-100%)}.content-inner{max-w
 .concept-box{border-left:4px solid var(--accent);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0;background:linear-gradient(180deg,var(--accent-bg),transparent 140%)}.concept-box strong{display:block;margin-bottom:6px;font-size:.93rem}.concept-box.green{border-left-color:var(--green);background:linear-gradient(180deg,var(--green-bg),transparent 140%)}.concept-box.green strong{color:var(--green)}.concept-box.orange{border-left-color:var(--orange);background:linear-gradient(180deg,var(--orange-bg),transparent 140%)}.concept-box.orange strong{color:var(--orange)}.concept-box.red{border-left-color:var(--red);background:linear-gradient(180deg,var(--red-bg),transparent 140%)}.concept-box.red strong{color:var(--red)}.concept-box.purple{border-left-color:var(--purple);background:linear-gradient(180deg,var(--purple-bg),transparent 140%)}.concept-box.purple strong{color:var(--purple)}
 .formula-box{background:var(--formula-bg);border:1px solid var(--border-color);border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center;overflow-x:auto}.formula-box .katex{font-size:1.14em}
 .worked-example{border-radius:12px;padding:22px 22px 18px;margin:22px 0}.worked-example h3{margin-bottom:10px}.example-steps{padding-left:22px;margin:10px 0 0}.example-steps li{margin:10px 0}
-.interactive-card{border-radius:14px;padding:20px 20px 18px;margin:24px 0}.interactive-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.interactive-panel{background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:12px;padding:14px}.interactive-panel h4{font-size:.95rem;margin-bottom:8px}.control-row{margin:12px 0}.control-row label{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;margin-bottom:6px;color:var(--text-secondary)}.control-row input[type=range]{width:100%}.live-values{font-family:var(--font-mono);font-size:.78rem;line-height:1.7;color:var(--text-secondary)}
+.interactive-card{border-radius:14px;padding:20px 20px 18px;margin:24px 0}.interactive-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.interactive-panel{background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:12px;padding:14px}.interactive-panel h4{font-size:.95rem;margin-bottom:8px}.control-row{margin:12px 0}.control-row label{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;margin-bottom:6px;color:var(--text-secondary)}.control-row input[type=range]{width:100%}.control-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:48px;height:48px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 2px 4px rgba(0,0,0,0.2)}.control-row input[type=range]::-moz-range-thumb{width:48px;height:48px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}.live-values{font-family:var(--font-mono);font-size:.78rem;line-height:1.7;color:var(--text-secondary)}
 .graph-wrap{background:var(--bg-secondary);border:1px solid var(--border-light);border-radius:12px;padding:10px}.graph-caption{font-size:.82rem;color:var(--text-secondary);margin-top:8px}
 .content-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.92rem}.content-table th{text-align:left;padding:10px 14px;background:var(--bg-secondary);border-bottom:2px solid var(--accent);font-weight:700;font-size:.84rem}.content-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:top}
 .checkpoint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}.checkpoint-card{border-radius:12px;padding:16px}.checkpoint-card h4{font-size:.96rem;margin-bottom:8px}
@@ -226,8 +226,12 @@ body.sidebar-collapsed .sidebar{transform:translateX(-100%)}.content-inner{max-w
 .checklist li.checked .check-icon { background: var(--green); border-color: var(--green); color: #fff; }
 
 /* ─── BILINGUAL TOGGLE ─── */
-body:not(.lang-zh) [data-lang="zh"] { display: none; }
-body.lang-zh [data-lang="en"] { display: none; }
+/* !important: the "AP-Style Practice Problems" h2 pair carries an inline
+   style="display:inline-block" which otherwise outranks this rule on
+   specificity alone and leaks the wrong language in regardless of toggle
+   state. */
+body:not(.lang-zh) [data-lang="zh"] { display: none !important; }
+body.lang-zh [data-lang="en"] { display: none !important; }
 
 /* consult-cta: lead-gen conversion surface (Sprint A) */
 .consult-cta { background: linear-gradient(180deg, var(--accent-light, #F2E4E4) 0%, var(--bg-card, #fff) 100%); border: 2px solid var(--accent); border-radius: var(--radius, 12px); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
@@ -361,19 +365,6 @@ body.lang-zh [data-lang="en"] { display: none; }
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }

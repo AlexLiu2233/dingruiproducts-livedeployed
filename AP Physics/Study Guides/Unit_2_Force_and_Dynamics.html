@@ -513,14 +513,14 @@ summary:hover { background: var(--accent-light); }
 }
 @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 .explorer-title {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   color: var(--accent); text-transform: uppercase; letter-spacing: 2px;
   margin-bottom: 8px; text-align: center;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .explorer-title .icon { font-size: 1.1rem; }
 .explorer-subtitle {
-  text-align: center; font-size: 14px; color: var(--text-secondary);
+  text-align: center; font-size: 16px; color: var(--text-secondary);
   margin-bottom: 20px;
 }
 .explorer-sliders {
@@ -528,30 +528,36 @@ summary:hover { background: var(--accent-light); }
 }
 @media (max-width: 600px) {
   .top-nav { padding: 0 16px; } .explorer-sliders { grid-template-columns: 1fr; } }
-.slider-group { display: flex; flex-direction: column; gap: 6px; }
+.slider-group { display: flex; flex-direction: column; gap: 8px; }
 .slider-group label {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 600;
   color: var(--text-secondary); display: flex; justify-content: space-between;
 }
 .slider-group label .val { color: var(--accent); font-weight: 700; }
 .slider-group input[type="range"] {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 6px; background: var(--border);
-  border-radius: 3px; outline: none; cursor: pointer;
+  width: 100%; height: 24px; background: transparent;
+  border-radius: 4px; outline: none; cursor: pointer; margin: 0;
+}
+.slider-group input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 4px; background: var(--border);
+}
+.slider-group input[type="range"]::-moz-range-track {
+  height: 8px; border-radius: 4px; background: var(--border);
 }
 .slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--accent); cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; margin-top: -7px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .slider-group input[type="range"]::-moz-range-thumb {
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 22px; height: 22px; border-radius: 50%;
   background: var(--accent); cursor: pointer; border: none;
 }
 .explorer-results {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px; margin-top: 20px;
+  gap: 12px; margin-top: 20px;
 }
 .result-card {
   background: var(--bg); border: 1px solid var(--border);
@@ -560,16 +566,16 @@ summary:hover { background: var(--accent-light); }
 }
 .result-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .result-card .result-label {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
   color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 4px;
 }
 .result-card .result-value {
-  font-family: var(--font-mono); font-size: 1.2em; font-weight: 700;
+  font-family: var(--font-mono); font-size: 1.6em; font-weight: 700;
   color: var(--accent);
 }
 .result-card .result-unit {
-  font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary);
 }
 
 /* ═══════════ CONFETTI ═══════════ */
@@ -729,6 +735,25 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     img, table, video, iframe, pre { max-width: 100%; }
     .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
   }
+
+/* ─────────── FIGURES ─────────── */
+/* Injected figures had no layout or caption styling: the caption rendered at
+   body size/colour and ran straight into the following paragraph, and the
+   figure sat flush against the text above it. The per-figure <style> blocks in
+   each <figure> only swap light/dark images, so these rules are the shared
+   presentation layer for every dr-fig. */
+figure.dr-fig { margin: 32px 0; }
+figure.dr-fig img { max-width: 100%; height: auto; }
+figure.dr-fig figcaption {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem; line-height: 1.5;
+  color: var(--text-secondary); text-align: center;
+}
+@media (max-width: 600px) {
+  figure.dr-fig { margin: 24px 0; }
+  figure.dr-fig figcaption { font-size: 0.8rem; }
+}
 </style>
 <!-- BEGIN unit-nav-css -->
 <style data-section="unit-nav">
@@ -819,19 +844,6 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
@@ -925,11 +937,11 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
       <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">7 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
       <div class="sidebar-course-list">
         <a class="sidebar-course-link" href="Unit_1_Kinematics.html"><span data-lang="en">Unit 1: Kinematics</span><span data-lang="zh">第 1 单元：运动学</span></a>
-        <a class="sidebar-course-link sidebar-course-link--current" href="Unit_2_Force_and_Dynamics.html" aria-current="page"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
+        <a class="sidebar-course-link sidebar-course-link--current" href="Unit_2_Force_and_Dynamics.html" aria-current="page"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
         <a class="sidebar-course-link" href="Unit_3_Work_Energy_Power.html"><span data-lang="en">Unit 3: Work, Energy, and Power</span><span data-lang="zh">第 3 单元：功、能量与功率</span></a>
         <a class="sidebar-course-link" href="Unit_4_Linear_Momentum.html"><span data-lang="en">Unit 4: Linear Momentum</span><span data-lang="zh">第 4 单元：线动量</span></a>
-        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp;amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
-        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp;amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
+        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
         <a class="sidebar-course-link" href="Unit_7_Oscillations.html"><span data-lang="en">Unit 7: Oscillations</span><span data-lang="zh">第 7 单元：振动</span></a>
       </div>
     </details>
@@ -996,6 +1008,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Center of Mass for Continuous Objects</span><span data-lang="zh">连续体的质心</span></h3>
+<!-- dingrui:fig u2-center-of-mass-rod -->
+<figure class="dr-fig" id="fig-u2-center-of-mass-rod">
+<style>
+  #fig-u2-center-of-mass-rod img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-center-of-mass-rod .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-center-of-mass-rod .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-center-of-mass-rod .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-center-of-mass-rod_light.png" alt="A non-uniform rod with density increasing along its length, and where its center of mass actually sits / 线密度沿杆长增大的非均匀杆，及其质心的实际位置">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-center-of-mass-rod_dark.png" alt="A non-uniform rod with density increasing along its length, and where its center of mass actually sits / 线密度沿杆长增大的非均匀杆，及其质心的实际位置">
+<figcaption><span data-lang="en">A non-uniform rod with density increasing along its length, and where its center of mass actually sits</span><span data-lang="zh">线密度沿杆长增大的非均匀杆，及其质心的实际位置</span></figcaption>
+</figure>
+
   <p data-lang="en">When you have a continuous mass distribution (like a rod with non-uniform density), you replace the sum with an integral. Split the object into infinitesimal mass elements \(dm\), each at position \(\vec{r}\):</p>
   <p data-lang="zh">对连续质量分布（例如非均匀密度的杆），把求和替换为积分（<code>integral</code>）：将物体切分为位置为 \(\vec{r}\) 的无穷小质量元 \(dm\)：</p>
 
@@ -1119,6 +1144,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   <p data-lang="zh">一个物体或系统无法对自己施加净力。这一点微妙但极其关键——汽车看似"自己加速"，其实是发动机驱动轮胎向后蹬地，地面通过摩擦把轮胎向前推，真正让汽车加速的外力来自地面。</p>
 
   <h3><span data-lang="en">Drawing Free-Body Diagrams</span><span data-lang="zh">绘制受力分析图</span></h3>
+<!-- dingrui:fig u2-free-body-diagram-conventions -->
+<figure class="dr-fig" id="fig-u2-free-body-diagram-conventions">
+<style>
+  #fig-u2-free-body-diagram-conventions img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-free-body-diagram-conventions .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-free-body-diagram-conventions .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-free-body-diagram-conventions .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-free-body-diagram-conventions_light.png" alt="A free-body diagram: the object as a dot, force arrows drawn from that dot, for a block on a frictionless incline / 受力分析图：物体简化为一点，力箭头从该点出发——以无摩擦斜面上的木块为例">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-free-body-diagram-conventions_dark.png" alt="A free-body diagram: the object as a dot, force arrows drawn from that dot, for a block on a frictionless incline / 受力分析图：物体简化为一点，力箭头从该点出发——以无摩擦斜面上的木块为例">
+<figcaption><span data-lang="en">A free-body diagram: the object as a dot, force arrows drawn from that dot, for a block on a frictionless incline</span><span data-lang="zh">受力分析图：物体简化为一点，力箭头从该点出发——以无摩擦斜面上的木块为例</span></figcaption>
+</figure>
+
   <p data-lang="en">A free-body diagram (FBD) is your most important problem-solving tool. It isolates a single object, represents it as a dot (its center of mass), and shows every external force acting on it as an arrow originating from that dot. The arrow's direction shows the force direction and relative length indicates relative magnitude.</p>
   <p data-lang="zh">受力分析图（<code>free-body diagram / FBD</code>）是你最重要的解题工具。它把单个物体单独取出，用一个点表示（即其质心），然后把作用其上的每一个外力画成从该点出发的箭头。箭头方向表示力的方向，相对长度表示相对大小。</p>
 
@@ -1196,6 +1234,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   <p data-lang="zh">一个关键推论：系统内部的内力总是成对相互抵消。只有外力能改变系统的动量（或者说让系统质心加速）。这正是聪明地选取系统边界为何如此强大的原因。</p>
 
   <h3><span data-lang="en">Tension in Strings</span><span data-lang="zh">绳中的张力</span></h3>
+<!-- dingrui:fig u2-atwood-machine -->
+<figure class="dr-fig" id="fig-u2-atwood-machine">
+<style>
+  #fig-u2-atwood-machine img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-atwood-machine .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-atwood-machine .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-atwood-machine .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-atwood-machine_light.png" alt="An Atwood machine: two masses over an ideal pulley, with tension and weight shown on each / 阿特伍德机：两个质量挂在理想滑轮两侧，标出各自的张力与重力">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-atwood-machine_dark.png" alt="An Atwood machine: two masses over an ideal pulley, with tension and weight shown on each / 阿特伍德机：两个质量挂在理想滑轮两侧，标出各自的张力与重力">
+<figcaption><span data-lang="en">An Atwood machine: two masses over an ideal pulley, with tension and weight shown on each</span><span data-lang="zh">阿特伍德机：两个质量挂在理想滑轮两侧，标出各自的张力与重力</span></figcaption>
+</figure>
+
   <p data-lang="en">Tension is the macroscopic result of countless interatomic forces along a string, rope, or cable. For an <em>ideal string</em> (massless and inextensible), the tension is the same at every point. When the string has mass, however, different segments may experience different tensions — a key distinction in more advanced problems.</p>
   <p data-lang="zh">张力（<code>tension</code>）是绳、索内部无数个原子间作用力的宏观体现。对于<em>理想绳</em>（<code>ideal string</code>，无质量且不可伸长），整根绳上每一点的张力都相同。当绳本身有质量时，不同位置的张力可以不同——这在更高阶题目中是关键的区分。</p>
 
@@ -1289,6 +1340,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section id="s2-5">
   <div class="section-label"><span data-lang="en">Topic 2.5</span><span data-lang="zh">专题 2.5</span></div>
   <h2><span data-lang="en">Newton's Second Law</span><span data-lang="zh">牛顿第二定律</span></h2>
+<!-- dingrui:fig u2-fma-relationship -->
+<figure class="dr-fig" id="fig-u2-fma-relationship">
+<style>
+  #fig-u2-fma-relationship img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-fma-relationship .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-fma-relationship .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-fma-relationship .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-fma-relationship_light.png" alt="Acceleration vs. force (linear) and acceleration vs. mass (inverse) under Newton&#x27;s second law / 牛顿第二定律下，加速度与力的线性关系、加速度与质量的反比关系">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-fma-relationship_dark.png" alt="Acceleration vs. force (linear) and acceleration vs. mass (inverse) under Newton&#x27;s second law / 牛顿第二定律下，加速度与力的线性关系、加速度与质量的反比关系">
+<figcaption><span data-lang="en">Acceleration vs. force (linear) and acceleration vs. mass (inverse) under Newton's second law</span><span data-lang="zh">牛顿第二定律下，加速度与力的线性关系、加速度与质量的反比关系</span></figcaption>
+</figure>
+
 
   <p data-lang="en">Newton's second law is the backbone of classical mechanics. It states that the acceleration of a system's center of mass is proportional to the net external force and inversely proportional to the total mass:</p>
   <p data-lang="zh">牛顿第二定律（<code>Newton's second law</code>）是经典力学的脊梁：系统质心的加速度与净外力（<code>net external force</code>）成正比、与总质量（<code>mass</code>）成反比：</p>
@@ -1323,7 +1387,7 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
           <div class="step-math">$$F = (m_1 + m_2)a$$</div>
           <div class="step-math">$$a = F / (m_1 + m_2)$$</div>
           <div class="step-comment"><span data-lang="en">Individual block (m₂ alone, pushed by contact force N₁₂):</span><span data-lang="zh">单体视角（单独考虑 m₂，受接触力 N₁₂ 推动）：</span></div>
-          <div class="step-math">$$N_1_2 = m_2 \cdot a = m_2F / (m_1 + m_2)$$</div>
+          <div class="step-math">$$N_{12} = m_2 \cdot a = m_2F / (m_1 + m_2)$$</div>
           <div class="step-comment"><span data-lang="en">Check: N₁₂ < F (the contact force is less than the</span><span data-lang="zh">检验：N₁₂ &lt; F（接触力小于外加力——</span></div>
           <div class="step-comment"><span data-lang="en">applied force — it only needs to accelerate m₂). ✓</span><span data-lang="zh">它只需要让 m₂ 加速）。✓</span></div>
           <div class="step-comment"><span data-lang="en">Check: if m₂ = 0, N₁₂ = 0 (no block to push). ✓</span><span data-lang="zh">检验：若 m₂ = 0，则 N₁₂ = 0（没有后块要推）。✓</span></div>
@@ -1493,6 +1557,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Static Friction</span><span data-lang="zh">静摩擦</span></h3>
+<!-- dingrui:fig u2-incline-friction-fbd -->
+<figure class="dr-fig" id="fig-u2-incline-friction-fbd">
+<style>
+  #fig-u2-incline-friction-fbd img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-incline-friction-fbd .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-incline-friction-fbd .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-incline-friction-fbd .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-incline-friction-fbd_light.png" alt="Free-body diagram for a block on a rough incline: weight, normal force, and kinetic friction / 粗糙斜面上木块的受力分析图：重力、法向力与动摩擦力">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-incline-friction-fbd_dark.png" alt="Free-body diagram for a block on a rough incline: weight, normal force, and kinetic friction / 粗糙斜面上木块的受力分析图：重力、法向力与动摩擦力">
+<figcaption><span data-lang="en">Free-body diagram for a block on a rough incline: weight, normal force, and kinetic friction</span><span data-lang="zh">粗糙斜面上木块的受力分析图：重力、法向力与动摩擦力</span></figcaption>
+</figure>
+
   <p data-lang="en">Static friction adjusts its magnitude to prevent slipping, up to a maximum value:</p>
   <p data-lang="zh">静摩擦力的大小会自动调整以防止滑动，但有最大值上限：</p>
 
@@ -1572,6 +1649,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section id="s2-8">
   <div class="section-label"><span data-lang="en">Topic 2.8</span><span data-lang="zh">专题 2.8</span></div>
   <h2><span data-lang="en">Spring Forces</span><span data-lang="zh">弹力</span></h2>
+<!-- dingrui:fig u2-spring-hookes-law -->
+<figure class="dr-fig" id="fig-u2-spring-hookes-law">
+<style>
+  #fig-u2-spring-hookes-law img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-spring-hookes-law .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-spring-hookes-law .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-spring-hookes-law .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-spring-hookes-law_light.png" alt="Spring force vs. displacement under Hooke&#x27;s law: a restoring force through the origin / 胡克定律下弹簧力与位移的关系：过原点的回复力">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-spring-hookes-law_dark.png" alt="Spring force vs. displacement under Hooke&#x27;s law: a restoring force through the origin / 胡克定律下弹簧力与位移的关系：过原点的回复力">
+<figcaption><span data-lang="en">Spring force vs. displacement under Hooke's law: a restoring force through the origin</span><span data-lang="zh">胡克定律下弹簧力与位移的关系：过原点的回复力</span></figcaption>
+</figure>
+
 
   <p data-lang="en">An ideal spring has negligible mass and obeys Hooke's law: the force it exerts is proportional to how far it's stretched or compressed from its natural (relaxed) length. The spring force is always directed back toward the equilibrium position — it's a restoring force.</p>
   <p data-lang="zh">理想弹簧（<code>ideal spring</code>）质量可忽略，并遵守胡克定律（<code>Hooke's law</code>）：弹簧施加的力与其相对自然（松弛）长度的拉伸或压缩量成正比。弹簧力始终指向平衡位置——它是一种回复力（<code>restoring force</code>）。</p>
@@ -1696,6 +1786,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section id="s2-9">
   <div class="section-label"><span data-lang="en">Topic 2.9</span><span data-lang="zh">专题 2.9</span></div>
   <h2><span data-lang="en">Resistive Forces</span><span data-lang="zh">阻力</span></h2>
+<!-- dingrui:fig u2-terminal-velocity-graph -->
+<figure class="dr-fig" id="fig-u2-terminal-velocity-graph">
+<style>
+  #fig-u2-terminal-velocity-graph img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-terminal-velocity-graph .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-terminal-velocity-graph .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-terminal-velocity-graph .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-terminal-velocity-graph_light.png" alt="Velocity approaching terminal velocity exponentially under linear drag / 线性阻力下速度按指数方式趋近终极速度">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-terminal-velocity-graph_dark.png" alt="Velocity approaching terminal velocity exponentially under linear drag / 线性阻力下速度按指数方式趋近终极速度">
+<figcaption><span data-lang="en">Velocity approaching terminal velocity exponentially under linear drag</span><span data-lang="zh">线性阻力下速度按指数方式趋近终极速度</span></figcaption>
+</figure>
+
 
   <p data-lang="en">A resistive (drag) force opposes an object's velocity. In the simplest model, it's proportional to speed:</p>
   <p data-lang="zh">阻力（<code>resistive force / drag</code>）的方向与物体速度方向相反。在最简单的模型中，它与速率成正比：</p>
@@ -1883,6 +1986,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   <p>$$\sum F_{\text{toward center}} = \frac{mv^2}{r}$$</p>
 
   <h3><span data-lang="en">Key Scenarios</span><span data-lang="zh">几个关键情景</span></h3>
+<!-- dingrui:fig u2-banked-curve-fbd -->
+<figure class="dr-fig" id="fig-u2-banked-curve-fbd">
+<style>
+  #fig-u2-banked-curve-fbd img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u2-banked-curve-fbd .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u2-banked-curve-fbd .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u2-banked-curve-fbd .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-banked-curve-fbd_light.png" alt="Free-body diagram for a car on a frictionless banked curve: weight and normal force, and their centripetal component / 无摩擦倾斜弯道上汽车的受力分析图：重力、法向力及其向心分量">
+<img class="dr-fig-dark" src="../../out/figures/Unit_2_Force_and_Dynamics/u2-banked-curve-fbd_dark.png" alt="Free-body diagram for a car on a frictionless banked curve: weight and normal force, and their centripetal component / 无摩擦倾斜弯道上汽车的受力分析图：重力、法向力及其向心分量">
+<figcaption><span data-lang="en">Free-body diagram for a car on a frictionless banked curve: weight and normal force, and their centripetal component</span><span data-lang="zh">无摩擦倾斜弯道上汽车的受力分析图：重力、法向力及其向心分量</span></figcaption>
+</figure>
+
 
   <p data-lang="en"><strong>Top of a vertical loop:</strong> At the top, both gravity and normal force point toward the center (downward). The minimum speed to maintain contact occurs when \(N = 0\), giving:</p>
   <p data-lang="zh"><strong>竖直圆轨道顶端：</strong>在顶端，重力与法向力都指向圆心（向下）。保持接触所需的最小速度发生在 \(N = 0\) 时：</p>

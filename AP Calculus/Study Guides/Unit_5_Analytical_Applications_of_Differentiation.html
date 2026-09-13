@@ -553,6 +553,16 @@ p .katex, .concept-box p .katex, .example-step .katex {
   margin-bottom: 6px;
 }
 .control-group input[type="range"] { width: 100%; }
+.control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.control-group input[type="range"]::-moz-range-thumb {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; border: none;
+}
 .interactive-stage {
   background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg) 100%);
   border: 1px solid var(--border);
@@ -616,6 +626,32 @@ svg.interactive-graph { width: 100%; height: auto; display: block; }
 }
 @media (max-width: 700px) {
   .compare-grid { grid-template-columns: 1fr; }
+}
+/* Representation Link widget only (#derivative-explorer's .interactive-card) --
+   its two side-by-side graphs are cramped inside the page's shared 780px
+   reading column. Widened here, scoped to this one widget by the section id,
+   NOT by changing .interactive-card generally -- the Mean Value Theorem
+   widget above (#mvt-explorer's .interactive-card) and the shared --max-w
+   reading-column token used by 7 of 9 units are untouched.
+   Gate math: at >=1100px this page's permanent sidebar (--toc-w:260px)
+   reserves .main-content's left 300px (measured, not the 1100px source
+   comment's stale "max-width:none" -- a later plain .content-wrap rule at
+   line ~247 wins the cascade over that media-query override, so
+   content-wrap stays capped at --max-w:860px and auto-centers in
+   .main-content's *remaining* width, not the full viewport). Pulling this
+   card 130px wider each side is only safe once that centering leaves
+   >=150px clearance from the sidebar's right edge (260px) and the
+   viewport's own right edge -- solving that against the actual layout
+   requires viewport >= ~1380px; gated at 1400px for a clean margin.
+   Verified empirically (not just by this math) at 1100-1440px in 20px
+   steps: zero sidebar overlap, zero viewport overflow, at every width. */
+@media (min-width: 1400px) {
+  #derivative-explorer .interactive-card {
+    width: calc(100% + 260px);
+    max-width: 1040px;
+    margin-left: -130px;
+    margin-right: -130px;
+  }
 }
 
 /* ─── PRINT ─── */
@@ -836,19 +872,6 @@ body.lang-zh [data-lang="en"] { display: none; }
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
@@ -1079,6 +1102,19 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-2">
   <div class="section-label">Topic 5.2 · FUN-1</div>
   <h2><span data-lang="en">Extreme Value Theorem, Global vs. Local Extrema, and Critical Points</span><span data-lang="zh">极值定理、全局与局部极值、临界点</span></h2>
+<!-- dingrui:fig calc5-global-vs-local-extrema -->
+<figure class="dr-fig" id="fig-calc5-global-vs-local-extrema">
+<style>
+  #fig-calc5-global-vs-local-extrema img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-global-vs-local-extrema .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-calc5-global-vs-local-extrema .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-global-vs-local-extrema .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-global-vs-local-extrema_light.png" alt="On a closed interval, absolute extrema may occur at endpoints where no local extremum exists; local extrema are interior by definition. / 在闭区间上，绝对极值可能出现在端点处，而端点处并不存在局部极值；局部极值根据定义必在区间内部。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-global-vs-local-extrema_dark.png" alt="On a closed interval, absolute extrema may occur at endpoints where no local extremum exists; local extrema are interior by definition. / 在闭区间上，绝对极值可能出现在端点处，而端点处并不存在局部极值；局部极值根据定义必在区间内部。">
+<figcaption><span data-lang="en">On a closed interval, absolute extrema may occur at endpoints where no local extremum exists; local extrema are interior by definition.</span><span data-lang="zh">在闭区间上，绝对极值可能出现在端点处，而端点处并不存在局部极值；局部极值根据定义必在区间内部。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">The Extreme Value Theorem (EVT) provides another existence guarantee: a continuous function on a closed interval must attain both an absolute maximum and an absolute minimum. This simple-sounding result is the foundation for all optimization analysis.</span><span data-lang="zh">极值定理（<code>Extreme Value Theorem</code>，EVT）给出了另一个存在性保证：闭区间上的连续函数必能取到至少一个绝对最大值（<code>absolute maximum</code>）和至少一个绝对最小值（<code>absolute minimum</code>）。这一看似简单的结论是所有最优化（<code>optimization</code>）分析的基础。</span></p>
@@ -1089,6 +1125,26 @@ body.lang-zh [data-lang="en"] { display: none; }
   </div>
 
   <h3><span data-lang="en">Critical Points</span><span data-lang="zh">临界点</span></h3>
+<!-- dingrui:fig calc5-critical-point-types -->
+<figure class="dr-fig" id="fig-calc5-critical-point-types">
+<style>
+  #fig-calc5-critical-point-types img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-critical-point-types .dr-fig-dark, #fig-calc5-critical-point-types .dr-fig-light-zh, #fig-calc5-critical-point-types .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-calc5-critical-point-types .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-critical-point-types .dr-fig-dark { display: block; }
+  body.lang-zh #fig-calc5-critical-point-types .dr-fig-light { display: none; }
+  body.lang-zh #fig-calc5-critical-point-types .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-critical-point-types .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-critical-point-types .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-critical-point-types .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-critical-point-types_light.png" alt="Three critical points: a smooth turning point where f&#x27;(c) = 0, a corner where f&#x27;(c) is undefined, and a stationary point that is not an extremum. / 三类临界点：f&#x27;(c) = 0 的光滑极值点、f&#x27;(c) 不存在的尖角点，以及 f&#x27;(c) = 0 但并非极值的驻点。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-critical-point-types_dark.png" alt="Three critical points: a smooth turning point where f&#x27;(c) = 0, a corner where f&#x27;(c) is undefined, and a stationary point that is not an extremum. / 三类临界点：f&#x27;(c) = 0 的光滑极值点、f&#x27;(c) 不存在的尖角点，以及 f&#x27;(c) = 0 但并非极值的驻点。">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-critical-point-types_light_zh.png" alt="Three critical points: a smooth turning point where f&#x27;(c) = 0, a corner where f&#x27;(c) is undefined, and a stationary point that is not an extremum. / 三类临界点：f&#x27;(c) = 0 的光滑极值点、f&#x27;(c) 不存在的尖角点，以及 f&#x27;(c) = 0 但并非极值的驻点。">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-critical-point-types_dark_zh.png" alt="Three critical points: a smooth turning point where f&#x27;(c) = 0, a corner where f&#x27;(c) is undefined, and a stationary point that is not an extremum. / 三类临界点：f&#x27;(c) = 0 的光滑极值点、f&#x27;(c) 不存在的尖角点，以及 f&#x27;(c) = 0 但并非极值的驻点。">
+<figcaption><span data-lang="en">Three critical points: a smooth turning point where f'(c) = 0, a corner where f'(c) is undefined, and a stationary point that is not an extremum.</span><span data-lang="zh">三类临界点：f'(c) = 0 的光滑极值点、f'(c) 不存在的尖角点，以及 f'(c) = 0 但并非极值的驻点。</span></figcaption>
+</figure>
+
   <p><span data-lang="en">A <strong>critical point</strong> of $f$ is a point $x = c$ in the domain of $f$ where $f'(c) = 0$ or $f'(c)$ does not exist. Critical points are the only candidates for local extrema—but not every critical point produces one. A critical point where the derivative changes sign yields a local extremum; one where it does not (such as an inflection point with a horizontal tangent) does not.</span><span data-lang="zh">$f$ 的<strong>临界点（<code>critical point</code>）</strong>是其定义域中满足 $f'(c) = 0$ 或 $f'(c)$ 不存在的点 $x = c$。临界点是局部极值（<code>local extremum</code>）的唯一候选——但并非每个临界点都产生极值。导数在该点变号才会产生局部极值；若不变号（如带水平切线的拐点（<code>inflection point</code>）），则不构成极值。</span></p>
 
   <div class="concept-box red">
@@ -1154,6 +1210,26 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-4">
   <div class="section-label">Topic 5.4 · FUN-4</div>
   <h2><span data-lang="en">Using the First Derivative Test to Determine Relative (Local) Extrema</span><span data-lang="zh">运用一阶导数判别法确定相对（局部）极值</span></h2>
+<!-- dingrui:fig calc5-first-derivative-test -->
+<figure class="dr-fig" id="fig-calc5-first-derivative-test">
+<style>
+  #fig-calc5-first-derivative-test img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-first-derivative-test .dr-fig-dark, #fig-calc5-first-derivative-test .dr-fig-light-zh, #fig-calc5-first-derivative-test .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-calc5-first-derivative-test .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-first-derivative-test .dr-fig-dark { display: block; }
+  body.lang-zh #fig-calc5-first-derivative-test .dr-fig-light { display: none; }
+  body.lang-zh #fig-calc5-first-derivative-test .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-first-derivative-test .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-first-derivative-test .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-first-derivative-test .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-first-derivative-test_light.png" alt="The sign of f&#x27; read against f on shared axes: positive-to-negative gives a local maximum, negative-to-positive a local minimum, and no sign change gives neither. / 在共用横轴上对照读取 f&#x27; 的符号与 f 的图像：由正变负得到局部最大值，由负变正得到局部最小值，符号不变则二者皆非。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-first-derivative-test_dark.png" alt="The sign of f&#x27; read against f on shared axes: positive-to-negative gives a local maximum, negative-to-positive a local minimum, and no sign change gives neither. / 在共用横轴上对照读取 f&#x27; 的符号与 f 的图像：由正变负得到局部最大值，由负变正得到局部最小值，符号不变则二者皆非。">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-first-derivative-test_light_zh.png" alt="The sign of f&#x27; read against f on shared axes: positive-to-negative gives a local maximum, negative-to-positive a local minimum, and no sign change gives neither. / 在共用横轴上对照读取 f&#x27; 的符号与 f 的图像：由正变负得到局部最大值，由负变正得到局部最小值，符号不变则二者皆非。">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-first-derivative-test_dark_zh.png" alt="The sign of f&#x27; read against f on shared axes: positive-to-negative gives a local maximum, negative-to-positive a local minimum, and no sign change gives neither. / 在共用横轴上对照读取 f&#x27; 的符号与 f 的图像：由正变负得到局部最大值，由负变正得到局部最小值，符号不变则二者皆非。">
+<figcaption><span data-lang="en">The sign of f' read against f on shared axes: positive-to-negative gives a local maximum, negative-to-positive a local minimum, and no sign change gives neither.</span><span data-lang="zh">在共用横轴上对照读取 f' 的符号与 f 的图像：由正变负得到局部最大值，由负变正得到局部最小值，符号不变则二者皆非。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">The First Derivative Test uses sign changes of $f'$ around a critical point to classify it as a local maximum, local minimum, or neither.</span><span data-lang="zh">一阶导数判别法（<code>first derivative test</code>）通过 $f'$ 在临界点附近的变号情况，将该临界点判定为局部最大值、局部最小值或两者皆非。</span></p>
@@ -1219,6 +1295,19 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-6">
   <div class="section-label">Topic 5.6 · FUN-4</div>
   <h2><span data-lang="en">Determining Concavity of Functions over Their Domains</span><span data-lang="zh">在定义域上判定函数的凹凸性</span></h2>
+<!-- dingrui:fig calc5-concavity-inflection -->
+<figure class="dr-fig" id="fig-calc5-concavity-inflection">
+<style>
+  #fig-calc5-concavity-inflection img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-concavity-inflection .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-calc5-concavity-inflection .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-concavity-inflection .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-concavity-inflection_light.png" alt="Concave up, concave down, and the inflection point between them; the tangent line lies below the curve where f&#x27;&#x27; &gt; 0 and above it where f&#x27;&#x27; &lt; 0. / 凹、凸以及两者之间的拐点；当 f&#x27;&#x27; &gt; 0 时切线位于曲线下方，当 f&#x27;&#x27; &lt; 0 时切线位于曲线上方。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-concavity-inflection_dark.png" alt="Concave up, concave down, and the inflection point between them; the tangent line lies below the curve where f&#x27;&#x27; &gt; 0 and above it where f&#x27;&#x27; &lt; 0. / 凹、凸以及两者之间的拐点；当 f&#x27;&#x27; &gt; 0 时切线位于曲线下方，当 f&#x27;&#x27; &lt; 0 时切线位于曲线上方。">
+<figcaption><span data-lang="en">Concave up, concave down, and the inflection point between them; the tangent line lies below the curve where f'' > 0 and above it where f'' < 0.</span><span data-lang="zh">凹、凸以及两者之间的拐点；当 f'' > 0 时切线位于曲线下方，当 f'' < 0 时切线位于曲线上方。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">Concavity describes the curvature of a graph. While the first derivative tells us direction (increasing/decreasing), the second derivative tells us how the rate of change itself is changing—the shape of the curve.</span><span data-lang="zh">凹凸性（<code>concavity</code>）描述图像的弯曲方式。一阶导数告诉我们方向（递增/递减），二阶导数（<code>second derivative</code>）则告诉我们变化率本身如何变化——即曲线的形状。</span></p>
@@ -1258,6 +1347,26 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-7">
   <div class="section-label">Topic 5.7 · FUN-4</div>
   <h2><span data-lang="en">Using the Second Derivative Test to Determine Extrema</span><span data-lang="zh">运用二阶导数判别法确定极值</span></h2>
+<!-- dingrui:fig calc5-second-derivative-test -->
+<figure class="dr-fig" id="fig-calc5-second-derivative-test">
+<style>
+  #fig-calc5-second-derivative-test img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-second-derivative-test .dr-fig-dark, #fig-calc5-second-derivative-test .dr-fig-light-zh, #fig-calc5-second-derivative-test .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-calc5-second-derivative-test .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-second-derivative-test .dr-fig-dark { display: block; }
+  body.lang-zh #fig-calc5-second-derivative-test .dr-fig-light { display: none; }
+  body.lang-zh #fig-calc5-second-derivative-test .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-second-derivative-test .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-second-derivative-test .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-second-derivative-test .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-second-derivative-test_light.png" alt="At a stationary point, f&#x27;&#x27; &gt; 0 opens upward to a local minimum and f&#x27;&#x27; &lt; 0 opens downward to a local maximum; f&#x27;&#x27; = 0 is inconclusive. / 在驻点处，f&#x27;&#x27; &gt; 0 时图像向上开口为局部最小值，f&#x27;&#x27; &lt; 0 时向下开口为局部最大值；f&#x27;&#x27; = 0 时判别法失效。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-second-derivative-test_dark.png" alt="At a stationary point, f&#x27;&#x27; &gt; 0 opens upward to a local minimum and f&#x27;&#x27; &lt; 0 opens downward to a local maximum; f&#x27;&#x27; = 0 is inconclusive. / 在驻点处，f&#x27;&#x27; &gt; 0 时图像向上开口为局部最小值，f&#x27;&#x27; &lt; 0 时向下开口为局部最大值；f&#x27;&#x27; = 0 时判别法失效。">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-second-derivative-test_light_zh.png" alt="At a stationary point, f&#x27;&#x27; &gt; 0 opens upward to a local minimum and f&#x27;&#x27; &lt; 0 opens downward to a local maximum; f&#x27;&#x27; = 0 is inconclusive. / 在驻点处，f&#x27;&#x27; &gt; 0 时图像向上开口为局部最小值，f&#x27;&#x27; &lt; 0 时向下开口为局部最大值；f&#x27;&#x27; = 0 时判别法失效。">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-second-derivative-test_dark_zh.png" alt="At a stationary point, f&#x27;&#x27; &gt; 0 opens upward to a local minimum and f&#x27;&#x27; &lt; 0 opens downward to a local maximum; f&#x27;&#x27; = 0 is inconclusive. / 在驻点处，f&#x27;&#x27; &gt; 0 时图像向上开口为局部最小值，f&#x27;&#x27; &lt; 0 时向下开口为局部最大值；f&#x27;&#x27; = 0 时判别法失效。">
+<figcaption><span data-lang="en">At a stationary point, f'' > 0 opens upward to a local minimum and f'' < 0 opens downward to a local maximum; f'' = 0 is inconclusive.</span><span data-lang="zh">在驻点处，f'' > 0 时图像向上开口为局部最小值，f'' < 0 时向下开口为局部最大值；f'' = 0 时判别法失效。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">The Second Derivative Test provides an alternative to the First Derivative Test for classifying critical points. It is often more efficient when the second derivative is easy to evaluate.</span><span data-lang="zh">二阶导数判别法（<code>second derivative test</code>）为临界点分类提供了一阶导数判别法之外的另一种途径。当二阶导数易于计算时，它通常更高效。</span></p>
@@ -1381,6 +1490,26 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-10">
   <div class="section-label">Topic 5.10 · FUN-4</div>
   <h2><span data-lang="en">Introduction to Optimization Problems</span><span data-lang="zh">最优化问题简介</span></h2>
+<!-- dingrui:fig calc5-optimization-box-setup -->
+<figure class="dr-fig" id="fig-calc5-optimization-box-setup">
+<style>
+  #fig-calc5-optimization-box-setup img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-optimization-box-setup .dr-fig-dark, #fig-calc5-optimization-box-setup .dr-fig-light-zh, #fig-calc5-optimization-box-setup .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-calc5-optimization-box-setup .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-optimization-box-setup .dr-fig-dark { display: block; }
+  body.lang-zh #fig-calc5-optimization-box-setup .dr-fig-light { display: none; }
+  body.lang-zh #fig-calc5-optimization-box-setup .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-optimization-box-setup .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-optimization-box-setup .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-calc5-optimization-box-setup .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-optimization-box-setup_light.png" alt="Cutting an x-by-x square from each corner of a 12-by-12 sheet and folding gives an open box of volume V(x) = x(12 - 2x)^2. / 从 12 × 12 的方形薄板四角各剪去边长为 x 的正方形并折起，得到体积为 V(x) = x(12 - 2x)^2 的无盖盒子。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-optimization-box-setup_dark.png" alt="Cutting an x-by-x square from each corner of a 12-by-12 sheet and folding gives an open box of volume V(x) = x(12 - 2x)^2. / 从 12 × 12 的方形薄板四角各剪去边长为 x 的正方形并折起，得到体积为 V(x) = x(12 - 2x)^2 的无盖盒子。">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-optimization-box-setup_light_zh.png" alt="Cutting an x-by-x square from each corner of a 12-by-12 sheet and folding gives an open box of volume V(x) = x(12 - 2x)^2. / 从 12 × 12 的方形薄板四角各剪去边长为 x 的正方形并折起，得到体积为 V(x) = x(12 - 2x)^2 的无盖盒子。">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-optimization-box-setup_dark_zh.png" alt="Cutting an x-by-x square from each corner of a 12-by-12 sheet and folding gives an open box of volume V(x) = x(12 - 2x)^2. / 从 12 × 12 的方形薄板四角各剪去边长为 x 的正方形并折起，得到体积为 V(x) = x(12 - 2x)^2 的无盖盒子。">
+<figcaption><span data-lang="en">Cutting an x-by-x square from each corner of a 12-by-12 sheet and folding gives an open box of volume V(x) = x(12 - 2x)^2.</span><span data-lang="zh">从 12 × 12 的方形薄板四角各剪去边长为 x 的正方形并折起，得到体积为 V(x) = x(12 - 2x)^2 的无盖盒子。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">Optimization problems ask you to find the maximum or minimum value of a quantity subject to given constraints. These are among the most applied and most tested topics in AP Calculus. The key challenge is translating a word problem into a single-variable function that you can analyze with calculus.</span><span data-lang="zh">最优化（<code>optimization</code>）问题要求在给定约束（<code>constraint</code>）下，求某量的最大值或最小值。这是 AP 微积分中最具应用性、考查频率最高的主题之一。关键难点在于将文字题转化为单变量函数，再用微积分分析。</span></p>
@@ -1467,6 +1596,19 @@ body.lang-zh [data-lang="en"] { display: none; }
 <section class="section-block" id="topic-5-12">
   <div class="section-label">Topic 5.12 · FUN-4</div>
   <h2><span data-lang="en">Exploring Behaviors of Implicit Relations</span><span data-lang="zh">探究隐式关系的行为</span></h2>
+<!-- dingrui:fig calc5-implicit-relation-tangents -->
+<figure class="dr-fig" id="fig-calc5-implicit-relation-tangents">
+<style>
+  #fig-calc5-implicit-relation-tangents img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-calc5-implicit-relation-tangents .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-calc5-implicit-relation-tangents .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-calc5-implicit-relation-tangents .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-implicit-relation-tangents_light.png" alt="On an implicit curve, dy/dx = 0 marks horizontal tangents while an undefined dy/dx marks vertical tangents. / 在隐函数曲线上，dy/dx = 0 处为水平切线，而 dy/dx 不存在处为铅直切线。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_5_Analytical_Applications_of_Differentiation/calc5-implicit-relation-tangents_dark.png" alt="On an implicit curve, dy/dx = 0 marks horizontal tangents while an undefined dy/dx marks vertical tangents. / 在隐函数曲线上，dy/dx = 0 处为水平切线，而 dy/dx 不存在处为铅直切线。">
+<figcaption><span data-lang="en">On an implicit curve, dy/dx = 0 marks horizontal tangents while an undefined dy/dx marks vertical tangents.</span><span data-lang="zh">在隐函数曲线上，dy/dx = 0 处为水平切线，而 dy/dx 不存在处为铅直切线。</span></figcaption>
+</figure>
+
   <div class="section-divider"></div>
 
   <p><span data-lang="en">The analytical techniques developed throughout this unit—finding critical points, determining increasing/decreasing behavior, analyzing concavity—extend naturally to implicitly defined functions. The key difference is that derivatives obtained via implicit differentiation are typically expressed in both $x$ and $y$.</span><span data-lang="zh">本单元发展的分析技巧——求临界点、判定递增/递减、分析凹凸性——可自然推广到隐式定义的函数。主要差异在于：通过隐式求导（<code>implicit differentiation</code>）得到的导数通常同时含 $x$ 与 $y$。</span></p>
@@ -1912,6 +2054,11 @@ body.lang-zh [data-lang="en"] { display: none; }
   const mvtSvg = document.getElementById('mvtSvg');
   function fm(x) { return x*x*x - 3*x; }
   function fmp(x) { return 3*x*x - 3; }
+  function chooseMVTPoint(a, b, slope) {
+    const root = Math.sqrt(Math.max(0, (slope + 3) / 3));
+    const candidates = root < 1e-12 ? [0] : [-root, root];
+    return candidates.find(candidate => candidate > a + 1e-9 && candidate < b - 1e-9);
+  }
   function sx(x, min, max, w) { return (x - min) / (max - min) * w; }
   function sy(y, min, max, h) { return h - (y - min) / (max - min) * h; }
   function updateMVT() {
@@ -1923,7 +2070,8 @@ body.lang-zh [data-lang="en"] { display: none; }
     document.getElementById('mvtBValue').textContent = b.toFixed(1);
     const width = 720, height = 360, xMin = -3, xMax = 3, yMin = -18, yMax = 18;
     const slope = (fm(b)-fm(a))/(b-a);
-    const c = Math.sqrt((slope + 3)/3);
+    const c = chooseMVTPoint(a, b, slope);
+    if (c === undefined) throw new Error('No MVT point found inside the selected interval');
     const x1 = sx(a, xMin, xMax, width), y1 = sy(fm(a), yMin, yMax, height);
     const x2 = sx(b, xMin, xMax, width), y2 = sy(fm(b), yMin, yMax, height);
     const xc = sx(c, xMin, xMax, width), yc = sy(fm(c), yMin, yMax, height);

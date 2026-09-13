@@ -349,12 +349,12 @@ summary::-webkit-details-marker { display: none; }
 }
 @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 .explorer-title {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   color: var(--accent); text-transform: uppercase; letter-spacing: 2px;
   margin-bottom: 8px; text-align: center;
 }
 .explorer-subtitle {
-  text-align: center; font-size: 14px; color: var(--text-secondary);
+  text-align: center; font-size: 16px; color: var(--text-secondary);
   margin-bottom: 20px;
 }
 .explorer-sliders {
@@ -362,30 +362,36 @@ summary::-webkit-details-marker { display: none; }
 }
 @media (max-width: 600px) {
   .top-nav { padding: 0 16px; } .explorer-sliders { grid-template-columns: 1fr; } }
-.slider-group { display: flex; flex-direction: column; gap: 6px; }
+.slider-group { display: flex; flex-direction: column; gap: 8px; }
 .slider-group label {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 600;
   color: var(--text-secondary); display: flex; justify-content: space-between;
 }
 .slider-group label .val { color: var(--accent); font-weight: 700; }
 .slider-group input[type="range"] {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 6px; background: var(--border);
-  border-radius: 3px; outline: none; cursor: pointer;
+  width: 100%; height: 24px; background: transparent;
+  border-radius: 4px; outline: none; cursor: pointer; margin: 0;
+}
+.slider-group input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 4px; background: var(--border);
+}
+.slider-group input[type="range"]::-moz-range-track {
+  height: 8px; border-radius: 4px; background: var(--border);
 }
 .slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--accent); cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; margin-top: -7px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .slider-group input[type="range"]::-moz-range-thumb {
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 22px; height: 22px; border-radius: 50%;
   background: var(--accent); cursor: pointer; border: none;
 }
 .explorer-results {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px; margin-top: 20px;
+  gap: 12px; margin-top: 20px;
 }
 .result-card {
   background: var(--bg); border: 1px solid var(--border);
@@ -394,16 +400,16 @@ summary::-webkit-details-marker { display: none; }
 }
 .result-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .result-card .result-label {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
   color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 4px;
 }
 .result-card .result-value {
-  font-family: var(--font-mono); font-size: 1.2em; font-weight: 700;
+  font-family: var(--font-mono); font-size: 1.6em; font-weight: 700;
   color: var(--accent);
 }
 .result-card .result-unit {
-  font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary);
 }
 .explorer-canvas-wrap {
   margin-top: 16px; border-radius: 8px; overflow: hidden;
@@ -608,6 +614,25 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     img, table, video, iframe, pre { max-width: 100%; }
     .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
   }
+
+/* ─────────── FIGURES ─────────── */
+/* Injected figures had no layout or caption styling: the caption rendered at
+   body size/colour and ran straight into the following paragraph, and the
+   figure sat flush against the text above it. The per-figure <style> blocks in
+   each <figure> only swap light/dark images, so these rules are the shared
+   presentation layer for every dr-fig. */
+figure.dr-fig { margin: 32px 0; }
+figure.dr-fig img { max-width: 100%; height: auto; }
+figure.dr-fig figcaption {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem; line-height: 1.5;
+  color: var(--text-secondary); text-align: center;
+}
+@media (max-width: 600px) {
+  figure.dr-fig { margin: 24px 0; }
+  figure.dr-fig figcaption { font-size: 0.8rem; }
+}
 </style>
 <!-- BEGIN unit-nav-css -->
 <style data-section="unit-nav">
@@ -698,19 +723,6 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
@@ -770,7 +782,7 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
-    <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+    <button class="nav-btn" id="themeToggle"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
 
@@ -799,11 +811,11 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
       <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">7 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
       <div class="sidebar-course-list">
         <a class="sidebar-course-link" href="Unit_1_Kinematics.html"><span data-lang="en">Unit 1: Kinematics</span><span data-lang="zh">第 1 单元：运动学</span></a>
-        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
         <a class="sidebar-course-link sidebar-course-link--current" href="Unit_3_Work_Energy_Power.html" aria-current="page"><span data-lang="en">Unit 3: Work, Energy, and Power</span><span data-lang="zh">第 3 单元：功、能量与功率</span></a>
         <a class="sidebar-course-link" href="Unit_4_Linear_Momentum.html"><span data-lang="en">Unit 4: Linear Momentum</span><span data-lang="zh">第 4 单元：线动量</span></a>
-        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp;amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
-        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp;amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
+        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
         <a class="sidebar-course-link" href="Unit_7_Oscillations.html"><span data-lang="en">Unit 7: Oscillations</span><span data-lang="zh">第 7 单元：振动</span></a>
       </div>
     </details>
@@ -918,6 +930,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   <p data-lang="zh">功是标量。可以为正（能量流<em>入</em>系统）、为负（能量流<em>出</em>），也可以为零（无能量传递）。正负号由力与位移之间的夹角决定。</p>
 
   <h3><span data-lang="en">The Dot Product and Constant-Force Work</span><span data-lang="zh">标量积与恒力做功</span></h3>
+<!-- dingrui:fig u3-work-angle-decomposition -->
+<figure class="dr-fig" id="fig-u3-work-angle-decomposition">
+<style>
+  #fig-u3-work-angle-decomposition img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u3-work-angle-decomposition .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u3-work-angle-decomposition .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u3-work-angle-decomposition .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_3_Work_Energy_Power/u3-work-angle-decomposition_light.png" alt="A force at an angle to displacement, decomposed into the parallel component that does work and the perpendicular component that doesn&#x27;t / 力与位移成一定夹角时的分解：沿位移做功的平行分量与不做功的垂直分量">
+<img class="dr-fig-dark" src="../../out/figures/Unit_3_Work_Energy_Power/u3-work-angle-decomposition_dark.png" alt="A force at an angle to displacement, decomposed into the parallel component that does work and the perpendicular component that doesn&#x27;t / 力与位移成一定夹角时的分解：沿位移做功的平行分量与不做功的垂直分量">
+<figcaption><span data-lang="en">A force at an angle to displacement, decomposed into the parallel component that does work and the perpendicular component that doesn't</span><span data-lang="zh">力与位移成一定夹角时的分解：沿位移做功的平行分量与不做功的垂直分量</span></figcaption>
+</figure>
+
 
   <p data-lang="en">When a constant force $\vec{F}$ acts on an object undergoing displacement $\vec{d}$, the work done is the dot product of the two vectors. Only the component of force <em>parallel</em> to the displacement transfers energy. The perpendicular component changes direction without changing speed — think of centripetal force in circular motion.</p>
   <p data-lang="zh">当恒力 $\vec{F}$ 作用于发生位移 $\vec{d}$ 的物体时，所做的功就是两个矢量的标量积（<code>dot product</code>，又称点积）。只有与位移<em>平行</em>的分量传递能量；垂直分量只改变方向、不改变速率——想想圆周运动中的向心力（<code>centripetal force</code>）。</p>
@@ -938,6 +963,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Work by a Variable Force: Integration</span><span data-lang="zh">变力做功：积分</span></h3>
+<!-- dingrui:fig u3-work-variable-force-area -->
+<figure class="dr-fig" id="fig-u3-work-variable-force-area">
+<style>
+  #fig-u3-work-variable-force-area img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u3-work-variable-force-area .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u3-work-variable-force-area .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u3-work-variable-force-area .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_3_Work_Energy_Power/u3-work-variable-force-area_light.png" alt="Work as the area under a force-vs-displacement graph, for a force that varies with position / 力随位置变化时，功即为力—位移图中曲线下方的面积">
+<img class="dr-fig-dark" src="../../out/figures/Unit_3_Work_Energy_Power/u3-work-variable-force-area_dark.png" alt="Work as the area under a force-vs-displacement graph, for a force that varies with position / 力随位置变化时，功即为力—位移图中曲线下方的面积">
+<figcaption><span data-lang="en">Work as the area under a force-vs-displacement graph, for a force that varies with position</span><span data-lang="zh">力随位置变化时，功即为力—位移图中曲线下方的面积</span></figcaption>
+</figure>
+
 
   <p data-lang="en">In AP Physics C, forces are often not constant — springs, gravity at large distances, and many applied forces vary with position. When force depends on position, we must <em>integrate</em> along the path. This is one of the signature calculus applications in the course.</p>
   <p data-lang="zh">在 AP Physics C 中，力往往不是恒定的——弹簧力、远距离的引力以及许多外加力都会随位置变化。当力依赖于位置时，必须沿路径做<em>积分</em>（<code>integral</code>）。这是本课程最具标志性的微积分应用之一。</p>
@@ -1170,6 +1208,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Equilibrium and $U(x)$ Graphs</span><span data-lang="zh">平衡与 $U(x)$ 图像</span></h3>
+<!-- dingrui:fig u3-potential-energy-landscape -->
+<figure class="dr-fig" id="fig-u3-potential-energy-landscape">
+<style>
+  #fig-u3-potential-energy-landscape img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u3-potential-energy-landscape .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u3-potential-energy-landscape .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u3-potential-energy-landscape .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_3_Work_Energy_Power/u3-potential-energy-landscape_light.png" alt="A potential energy landscape: stable equilibrium at a valley, unstable equilibrium at a peak / 势能曲线：稳定平衡位于谷底，不稳定平衡位于峰顶">
+<img class="dr-fig-dark" src="../../out/figures/Unit_3_Work_Energy_Power/u3-potential-energy-landscape_dark.png" alt="A potential energy landscape: stable equilibrium at a valley, unstable equilibrium at a peak / 势能曲线：稳定平衡位于谷底，不稳定平衡位于峰顶">
+<figcaption><span data-lang="en">A potential energy landscape: stable equilibrium at a valley, unstable equilibrium at a peak</span><span data-lang="zh">势能曲线：稳定平衡位于谷底，不稳定平衡位于峰顶</span></figcaption>
+</figure>
+
 
   <p data-lang="en">At any position where $dU/dx = 0$, the force is zero and the system is in equilibrium. <strong>Stable equilibrium</strong> occurs at a local <em>minimum</em> (valleys) — displaced objects get pushed back. <strong>Unstable equilibrium</strong> occurs at a local <em>maximum</em> (peaks) — displaced objects get pushed away.</p>
   <p data-lang="zh">凡是 $dU/dx = 0$ 的位置，力为零，系统处于平衡（<code>equilibrium</code>）。在局部<em>极小值</em>（势能"谷底"）处为<strong>稳定平衡（<code>stable equilibrium</code>）</strong>——物体偏离后会被推回。在局部<em>极大值</em>（势能"顶峰"）处为<strong>不稳定平衡（<code>unstable equilibrium</code>）</strong>——物体偏离后会被推得更远。</p>
@@ -1287,6 +1338,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section class="section" id="s3-4">
   <div class="section-label"><span data-lang="en">Topic 3.4</span><span data-lang="zh">专题 3.4</span></div>
   <h2><span data-lang="en">Conservation of Energy</span><span data-lang="zh">能量守恒</span></h2>
+<!-- dingrui:fig u3-spring-energy-conversion -->
+<figure class="dr-fig" id="fig-u3-spring-energy-conversion">
+<style>
+  #fig-u3-spring-energy-conversion img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u3-spring-energy-conversion .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u3-spring-energy-conversion .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u3-spring-energy-conversion .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_3_Work_Energy_Power/u3-spring-energy-conversion_light.png" alt="Energy conservation as a spring launches a block: all potential energy converts to kinetic energy / 弹簧发射木块过程中的能量守恒：势能全部转化为动能">
+<img class="dr-fig-dark" src="../../out/figures/Unit_3_Work_Energy_Power/u3-spring-energy-conversion_dark.png" alt="Energy conservation as a spring launches a block: all potential energy converts to kinetic energy / 弹簧发射木块过程中的能量守恒：势能全部转化为动能">
+<figcaption><span data-lang="en">Energy conservation as a spring launches a block: all potential energy converts to kinetic energy</span><span data-lang="zh">弹簧发射木块过程中的能量守恒：势能全部转化为动能</span></figcaption>
+</figure>
+
 
   <p data-lang="en">Energy conservation is one of the most profound principles in all of science. The total energy of an isolated system never changes — energy can be transformed and transferred, but never created or destroyed.</p>
   <p data-lang="zh">能量守恒（<code>conservation of energy</code>）是整个科学中最深刻的原理之一：孤立系统的总能量永远不变——能量只能转化或传递，不能被创生或毁灭。</p>
@@ -1441,6 +1505,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section class="section" id="s3-5">
   <div class="section-label"><span data-lang="en">Topic 3.5</span><span data-lang="zh">专题 3.5</span></div>
   <h2><span data-lang="en">Power</span><span data-lang="zh">功率</span></h2>
+<!-- dingrui:fig u3-constant-power-velocity-growth -->
+<figure class="dr-fig" id="fig-u3-constant-power-velocity-growth">
+<style>
+  #fig-u3-constant-power-velocity-growth img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u3-constant-power-velocity-growth .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u3-constant-power-velocity-growth .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u3-constant-power-velocity-growth .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_3_Work_Energy_Power/u3-constant-power-velocity-growth_light.png" alt="Velocity growing as the square root of time under constant power, contrasted with the linear growth of constant acceleration / 恒功率下速度按时间的平方根增长，与恒加速度下的线性增长形成对比">
+<img class="dr-fig-dark" src="../../out/figures/Unit_3_Work_Energy_Power/u3-constant-power-velocity-growth_dark.png" alt="Velocity growing as the square root of time under constant power, contrasted with the linear growth of constant acceleration / 恒功率下速度按时间的平方根增长，与恒加速度下的线性增长形成对比">
+<figcaption><span data-lang="en">Velocity growing as the square root of time under constant power, contrasted with the linear growth of constant acceleration</span><span data-lang="zh">恒功率下速度按时间的平方根增长，与恒加速度下的线性增长形成对比</span></figcaption>
+</figure>
+
 
   <p data-lang="en">Power measures how <em>quickly</em> energy is transferred or converted. Two machines might do the same total work, but the faster one delivers more power. The SI unit is the Watt (W = J/s). One horsepower ≈ 746 W.</p>
   <p data-lang="zh">功率（<code>power</code>）衡量能量被传递或转化的<em>快慢</em>。两台机器即使做的总功相同，做得更快的那台输出更大的功率。SI 单位是瓦特（<code>Watt</code>，W = J/s）。一马力 ≈ 746 W。</p>
@@ -2915,7 +2992,7 @@ body.dr-locked{overflow:hidden;}
     <span class="unit-nav__arrow" aria-hidden="true">&larr;</span>
     <span class="unit-nav__body">
       <span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span>
-      <span class="unit-nav__title"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></span>
     </span>
   </a>
   <a class="unit-nav__link unit-nav__link--next" href="Unit_4_Linear_Momentum.html">

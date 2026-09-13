@@ -334,12 +334,12 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 }
 @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 .explorer-title {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
   color: var(--accent); text-transform: uppercase; letter-spacing: 2px;
   margin-bottom: 8px; text-align: center;
 }
 .explorer-subtitle {
-  text-align: center; font-size: 14px; color: var(--text-secondary);
+  text-align: center; font-size: 16px; color: var(--text-secondary);
   margin-bottom: 20px;
 }
 .explorer-sliders {
@@ -347,30 +347,36 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 }
 @media (max-width: 600px) {
   .top-nav { padding: 0 16px; } .explorer-sliders { grid-template-columns: 1fr; } }
-.slider-group { display: flex; flex-direction: column; gap: 6px; }
+.slider-group { display: flex; flex-direction: column; gap: 8px; }
 .slider-group label {
-  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 600;
   color: var(--text-secondary); display: flex; justify-content: space-between;
 }
 .slider-group label .val { color: var(--accent); font-weight: 700; }
 .slider-group input[type="range"] {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 6px; background: var(--border);
-  border-radius: 3px; outline: none; cursor: pointer;
+  width: 100%; height: 24px; background: transparent;
+  border-radius: 4px; outline: none; cursor: pointer; margin: 0;
+}
+.slider-group input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 4px; background: var(--border);
+}
+.slider-group input[type="range"]::-moz-range-track {
+  height: 8px; border-radius: 4px; background: var(--border);
 }
 .slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--accent); cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; margin-top: -7px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .slider-group input[type="range"]::-moz-range-thumb {
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 22px; height: 22px; border-radius: 50%;
   background: var(--accent); cursor: pointer; border: none;
 }
 .explorer-results {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px; margin-top: 20px;
+  gap: 12px; margin-top: 20px;
 }
 .result-card {
   background: var(--bg); border: 1px solid var(--border);
@@ -379,16 +385,16 @@ details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-c
 }
 .result-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .result-card .result-label {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
   color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 4px;
 }
 .result-card .result-value {
-  font-family: var(--font-mono); font-size: 1.2em; font-weight: 700;
+  font-family: var(--font-mono); font-size: 1.6em; font-weight: 700;
   color: var(--accent);
 }
 .result-card .result-unit {
-  font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary);
 }
 .explorer-canvas-wrap { margin-top: 16px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
 .explorer-canvas-wrap canvas { display: block; width: 100%; height: auto; }
@@ -577,6 +583,25 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     img, table, video, iframe, pre { max-width: 100%; }
     .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
   }
+
+/* ─────────── FIGURES ─────────── */
+/* Injected figures had no layout or caption styling: the caption rendered at
+   body size/colour and ran straight into the following paragraph, and the
+   figure sat flush against the text above it. The per-figure <style> blocks in
+   each <figure> only swap light/dark images, so these rules are the shared
+   presentation layer for every dr-fig. */
+figure.dr-fig { margin: 32px 0; }
+figure.dr-fig img { max-width: 100%; height: auto; }
+figure.dr-fig figcaption {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem; line-height: 1.5;
+  color: var(--text-secondary); text-align: center;
+}
+@media (max-width: 600px) {
+  figure.dr-fig { margin: 24px 0; }
+  figure.dr-fig figcaption { font-size: 0.8rem; }
+}
 </style>
 <!-- BEGIN unit-nav-css -->
 <style data-section="unit-nav">
@@ -667,19 +692,6 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   }
 }
 </script>
-<style id="dr-hide-widgets">
-/* Interactive AP graph widgets (slider/canvas explorers) hidden 2026-06-27 per
-   user: several did not work, esp. on phones. REVERSIBLE — remove this block (or
-   run `python scripts/hide_interactive_widgets.py --restore`) to restore them.
-   Hidden, not deleted: the widget markup + JS remain in the file.
-   AP Physics wraps each widget in .formula-explorer; AP Calculus uses a per-unit
-   `interactive-*` namespace (.interactive-widget / -container / -card / -shell),
-   so we hide that whole namespace. KaTeX uses .katex/<svg>, not these, so math
-   and prose are untouched. */
-.formula-explorer,
-[class^="interactive-"],
-[class*=" interactive-"] { display: none !important; }
-</style>
 <style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
 @media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
 #sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
@@ -764,11 +776,11 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
       <summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">7 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
       <div class="sidebar-course-list">
         <a class="sidebar-course-link" href="Unit_1_Kinematics.html"><span data-lang="en">Unit 1: Kinematics</span><span data-lang="zh">第 1 单元：运动学</span></a>
-        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp;amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_2_Force_and_Dynamics.html"><span data-lang="en">Unit 2: Force &amp; Translational Dynamics</span><span data-lang="zh">第 2 单元：力与平动动力学</span></a>
         <a class="sidebar-course-link" href="Unit_3_Work_Energy_Power.html"><span data-lang="en">Unit 3: Work, Energy, and Power</span><span data-lang="zh">第 3 单元：功、能量与功率</span></a>
         <a class="sidebar-course-link sidebar-course-link--current" href="Unit_4_Linear_Momentum.html" aria-current="page"><span data-lang="en">Unit 4: Linear Momentum</span><span data-lang="zh">第 4 单元：线动量</span></a>
-        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp;amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
-        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp;amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
+        <a class="sidebar-course-link" href="Unit_5_Torque_and_Rotational_Dynamics.html"><span data-lang="en">Unit 5: Torque &amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></a>
+        <a class="sidebar-course-link" href="Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span data-lang="en">Unit 6: Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></a>
         <a class="sidebar-course-link" href="Unit_7_Oscillations.html"><span data-lang="en">Unit 7: Oscillations</span><span data-lang="zh">第 7 单元：振动</span></a>
       </div>
     </details>
@@ -810,6 +822,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section class="section" id="s4-1">
   <div class="section-label"><span data-lang="en">Topic 4.1</span><span data-lang="zh">专题 4.1</span></div>
   <h2><span data-lang="en">Linear Momentum</span><span data-lang="zh">线动量</span></h2>
+<!-- dingrui:fig u4-momentum-vector-sign -->
+<figure class="dr-fig" id="fig-u4-momentum-vector-sign">
+<style>
+  #fig-u4-momentum-vector-sign img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-momentum-vector-sign .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-momentum-vector-sign .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-momentum-vector-sign .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-momentum-vector-sign_light.png" alt="Equal-mass objects moving at the same speed in opposite directions: equal kinetic energy, opposite momentum / 等质量物体以相同速率反向运动：动能相同，动量相反">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-momentum-vector-sign_dark.png" alt="Equal-mass objects moving at the same speed in opposite directions: equal kinetic energy, opposite momentum / 等质量物体以相同速率反向运动：动能相同，动量相反">
+<figcaption><span data-lang="en">Equal-mass objects moving at the same speed in opposite directions: equal kinetic energy, opposite momentum</span><span data-lang="zh">等质量物体以相同速率反向运动：动能相同，动量相反</span></figcaption>
+</figure>
+
 
   <p data-lang="en">Momentum is the quantity that captures how much "motion" an object has — and in what direction. Unlike kinetic energy, momentum is a <em>vector</em>. Two identical cars traveling at the same speed in opposite directions have the same kinetic energy but <em>opposite</em> momenta. This distinction is essential for collision analysis — it's why momentum, not energy, captures the full picture of a system's state of motion.</p>
   <p data-lang="zh">动量（<code>momentum</code>）刻画了物体"运动得有多多"——以及朝哪个方向。与动能不同，动量是一个<em>矢量</em>。两辆完全相同、以同样速率反向行驶的汽车，动能相同但动量<em>相反</em>。这一区分对碰撞分析至关重要——正因如此，要完整描述系统的运动状态，靠的是动量而不是能量。</p>
@@ -986,6 +1011,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Graphical Interpretation</span><span data-lang="zh">图像解读</span></h3>
+<!-- dingrui:fig u4-impulse-equal-area-profiles -->
+<figure class="dr-fig" id="fig-u4-impulse-equal-area-profiles">
+<style>
+  #fig-u4-impulse-equal-area-profiles img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-impulse-equal-area-profiles .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-impulse-equal-area-profiles .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-impulse-equal-area-profiles .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-impulse-equal-area-profiles_light.png" alt="Different force-time profiles with equal area produce the same impulse and change in momentum / 不同的力—时间曲线具有相同面积时，会产生相同的冲量与动量变化">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-impulse-equal-area-profiles_dark.png" alt="Different force-time profiles with equal area produce the same impulse and change in momentum / 不同的力—时间曲线具有相同面积时，会产生相同的冲量与动量变化">
+<figcaption><span data-lang="en">Different force-time profiles with equal area produce the same impulse and change in momentum</span><span data-lang="zh">不同的力—时间曲线具有相同面积时，会产生相同的冲量与动量变化</span></figcaption>
+</figure>
+
   <p data-lang="en">On a <strong>force vs. time</strong> graph, the impulse delivered to a system is the area under the curve. On a <strong>momentum vs. time</strong> graph, the net external force at any instant is the slope of the curve. These graphical connections are heavily tested on the AP exam.</p>
   <p data-lang="zh">在<strong>力—时间</strong>图上，冲量等于曲线下方的面积。在<strong>动量—时间</strong>图上，任意瞬时的净外力等于该曲线的斜率。这些图像关系在 AP 考试中频繁出现。</p>
 
@@ -1040,8 +1078,22 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Variable-Mass Systems</span><span data-lang="zh">变质量系统</span></h3>
+
   <p data-lang="en">When an object's mass changes with time (such as a rocket expelling fuel), the impulse–momentum theorem in its general form still applies. If velocity is constant but mass changes:</p>
   <p data-lang="zh">当物体的质量随时间变化（例如喷射燃料的火箭），动量定理的一般形式依然成立。若速度恒定而质量变化：</p>
+
+<!-- dingrui:fig u4-variable-mass-momentum-flux -->
+<figure class="dr-fig" id="fig-u4-variable-mass-momentum-flux">
+<style>
+  #fig-u4-variable-mass-momentum-flux img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-variable-mass-momentum-flux .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-variable-mass-momentum-flux .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-variable-mass-momentum-flux .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-variable-mass-momentum-flux_light.png" alt="Momentum flow in a variable-mass system as a rocket expels exhaust across its system boundary / 火箭喷出燃料时，质量流携带动量穿过系统边界">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-variable-mass-momentum-flux_dark.png" alt="Momentum flow in a variable-mass system as a rocket expels exhaust across its system boundary / 火箭喷出燃料时，质量流携带动量穿过系统边界">
+<figcaption><span data-lang="en">Momentum flow in a variable-mass system as a rocket expels exhaust across its system boundary</span><span data-lang="zh">火箭喷出燃料时，质量流携带动量穿过系统边界</span></figcaption>
+</figure>
 
   <div class="formula-box" style="border-top-color: var(--purple);">
     <div class="formula-label" style="color: var(--purple);"><span data-lang="en">Variable-Mass Form</span><span data-lang="zh">变质量形式</span></div>
@@ -1050,8 +1102,8 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">当速度恒定但质量变化时成立（例如沙子落到匀速传送带上）。</p>
   </div>
 
-  <p data-lang="en">For a rocket, the general form is $\vec{F}_\text{net} = m\frac{d\vec{v}}{dt} + \frac{dm}{dt}\vec{v}_\text{exhaust}$. The AP exam occasionally tests this — know the concept even if you aren't asked to derive the full rocket equation.</p>
-  <p data-lang="zh">对于火箭，一般形式为 $\vec{F}_\text{net} = m\frac{d\vec{v}}{dt} + \frac{dm}{dt}\vec{v}_\text{exhaust}$。AP 考试偶尔会考——即便不要求你完整推出火箭方程，也要懂这个概念。</p>
+  <p data-lang="en">For a rocket, define $\vec{v}_\text{rel} = \vec{v}_\text{ejecta} - \vec{v}_\text{rocket}$ (exhaust velocity relative to the rocket, pointing backward for backward exhaust) and take $\frac{dm}{dt} < 0$ when mass leaves the rocket. The momentum balance is $m\frac{d\vec{v}}{dt} = \vec{F}_\text{ext} + \frac{dm}{dt}\vec{v}_\text{rel}$. When $\vec{F}_\text{ext}=0$ and the exhaust leaves backward, $\frac{dm}{dt}\vec{v}_\text{rel}$ points forward, so the rocket accelerates forward. The AP exam occasionally tests this — know the concept even if you aren't asked to derive the full rocket equation.</p>
+  <p data-lang="zh">对于火箭，定义 $\vec{v}_\text{rel} = \vec{v}_\text{ejecta} - \vec{v}_\text{rocket}$（排气相对火箭的速度，向后喷出时指向后方），质量离开火箭时取 $\frac{dm}{dt} < 0$。动量平衡为 $m\frac{d\vec{v}}{dt} = \vec{F}_\text{ext} + \frac{dm}{dt}\vec{v}_\text{rel}$：当 $\vec{F}_\text{ext}=0$ 且排气向后时，$\frac{dm}{dt}\vec{v}_\text{rel}$ 指向前方，火箭向前加速。AP 考试偶尔会考——即便不要求你完整推出火箭方程，也要懂这个概念。</p>
 
   <details>
     <summary><span data-lang="en">Worked Example — Impulse from a Variable Force</span><span data-lang="zh">例题 —— 由变力求冲量</span></summary>
@@ -1135,6 +1187,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Center-of-Mass Velocity</span><span data-lang="zh">质心速度</span></h3>
+<!-- dingrui:fig u4-center-of-mass-velocity-invariance -->
+<figure class="dr-fig" id="fig-u4-center-of-mass-velocity-invariance">
+<style>
+  #fig-u4-center-of-mass-velocity-invariance img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-center-of-mass-velocity-invariance .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-center-of-mass-velocity-invariance .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-center-of-mass-velocity-invariance .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-center-of-mass-velocity-invariance_light.png" alt="Internal motion changes during a collision while the system&#x27;s center of mass continues at constant velocity / 碰撞中内部运动发生变化，而系统质心仍保持恒定速度">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-center-of-mass-velocity-invariance_dark.png" alt="Internal motion changes during a collision while the system&#x27;s center of mass continues at constant velocity / 碰撞中内部运动发生变化，而系统质心仍保持恒定速度">
+<figcaption><span data-lang="en">Internal motion changes during a collision while the system's center of mass continues at constant velocity</span><span data-lang="zh">碰撞中内部运动发生变化，而系统质心仍保持恒定速度</span></figcaption>
+</figure>
+
   <p data-lang="en">A collection of objects with individual momenta can be described as one system with one center-of-mass velocity. This velocity is constant whenever the net external force on the system is zero — even if objects within the system are bouncing off each other chaotically.</p>
   <p data-lang="zh">由若干各自具有动量的物体组成的整体，可用一个系统、一种质心速度（<code>center-of-mass velocity</code>）来描述。当系统所受净外力为零时，该速度保持恒定——即使内部物体之间正在杂乱无章地碰撞。</p>
 
@@ -1153,6 +1218,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">System Selection</span><span data-lang="zh">系统选择</span></h3>
+<!-- dingrui:fig u4-system-selection-boundaries -->
+<figure class="dr-fig" id="fig-u4-system-selection-boundaries">
+<style>
+  #fig-u4-system-selection-boundaries img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-system-selection-boundaries .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-system-selection-boundaries .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-system-selection-boundaries .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-system-selection-boundaries_light.png" alt="System boundaries change whether collision forces are internal or external to the momentum analysis / 系统边界的选择决定碰撞力在动量分析中属于内力还是外力">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-system-selection-boundaries_dark.png" alt="System boundaries change whether collision forces are internal or external to the momentum analysis / 系统边界的选择决定碰撞力在动量分析中属于内力还是外力">
+<figcaption><span data-lang="en">System boundaries change whether collision forces are internal or external to the momentum analysis</span><span data-lang="zh">系统边界的选择决定碰撞力在动量分析中属于内力还是外力</span></figcaption>
+</figure>
+
   <p data-lang="en">Whether momentum is conserved depends on <em>what you choose as your system</em>. A bullet hitting a block has external forces if you analyze the bullet alone (the block pushes on it), but if you analyze the bullet + block system, the collision forces become internal and momentum is conserved. Choosing the right system is a critical skill.</p>
   <p data-lang="zh">动量是否守恒取决于<em>你把什么当作系统</em>。如果只分析撞向木块的子弹，由于木块对子弹施力，存在外力；而如果把子弹和木块视为一个系统，碰撞力就变成内力，动量守恒。选对系统是一项关键技能。</p>
 
@@ -1210,6 +1288,26 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
 <section class="section" id="s4-4">
   <div class="section-label"><span data-lang="en">Topic 4.4</span><span data-lang="zh">专题 4.4</span></div>
   <h2><span data-lang="en">Elastic and Inelastic Collisions</span><span data-lang="zh">弹性碰撞与非弹性碰撞</span></h2>
+<!-- dingrui:fig u4-collision-regime-comparison -->
+<figure class="dr-fig" id="fig-u4-collision-regime-comparison">
+<style>
+  #fig-u4-collision-regime-comparison img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-collision-regime-comparison .dr-fig-dark, #fig-u4-collision-regime-comparison .dr-fig-light-zh, #fig-u4-collision-regime-comparison .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-u4-collision-regime-comparison .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-collision-regime-comparison .dr-fig-dark { display: block; }
+  body.lang-zh #fig-u4-collision-regime-comparison .dr-fig-light { display: none; }
+  body.lang-zh #fig-u4-collision-regime-comparison .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-u4-collision-regime-comparison .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-u4-collision-regime-comparison .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-u4-collision-regime-comparison .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-collision-regime-comparison_light.png" alt="The same initial collision compared as elastic and perfectly inelastic: momentum is conserved, kinetic-energy retention differs / 同一碰撞初态下的弹性与完全非弹性结果：动量均守恒，动能保留程度不同">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-collision-regime-comparison_dark.png" alt="The same initial collision compared as elastic and perfectly inelastic: momentum is conserved, kinetic-energy retention differs / 同一碰撞初态下的弹性与完全非弹性结果：动量均守恒，动能保留程度不同">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_4_Linear_Momentum/u4-collision-regime-comparison_light_zh.png" alt="The same initial collision compared as elastic and perfectly inelastic: momentum is conserved, kinetic-energy retention differs / 同一碰撞初态下的弹性与完全非弹性结果：动量均守恒，动能保留程度不同">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_4_Linear_Momentum/u4-collision-regime-comparison_dark_zh.png" alt="The same initial collision compared as elastic and perfectly inelastic: momentum is conserved, kinetic-energy retention differs / 同一碰撞初态下的弹性与完全非弹性结果：动量均守恒，动能保留程度不同">
+<figcaption><span data-lang="en">The same initial collision compared as elastic and perfectly inelastic: momentum is conserved, kinetic-energy retention differs</span><span data-lang="zh">同一碰撞初态下的弹性与完全非弹性结果：动量均守恒，动能保留程度不同</span></figcaption>
+</figure>
+
 
   <p data-lang="en">Momentum is conserved in <em>all</em> collisions (provided no external forces act). But kinetic energy is not necessarily conserved — and the amount of kinetic energy retained is what distinguishes different types of collisions.</p>
   <p data-lang="zh"><em>所有</em>碰撞（在无外力的前提下）都满足动量守恒，但动能未必守恒——保留下来的动能多少正是区分不同碰撞类型的关键。</p>
@@ -1228,6 +1326,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Perfectly Inelastic Collisions</span><span data-lang="zh">完全非弹性碰撞</span></h3>
+<!-- dingrui:fig u4-ballistic-pendulum-law-sequence -->
+<figure class="dr-fig" id="fig-u4-ballistic-pendulum-law-sequence">
+<style>
+  #fig-u4-ballistic-pendulum-law-sequence img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-ballistic-pendulum-law-sequence .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-ballistic-pendulum-law-sequence .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-ballistic-pendulum-law-sequence .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-ballistic-pendulum-law-sequence_light.png" alt="Ballistic pendulum solution sequence: conserve momentum during impact, then mechanical energy during the swing / 弹道摆的两阶段求解：碰撞时用动量守恒，摆升时用机械能守恒">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-ballistic-pendulum-law-sequence_dark.png" alt="Ballistic pendulum solution sequence: conserve momentum during impact, then mechanical energy during the swing / 弹道摆的两阶段求解：碰撞时用动量守恒，摆升时用机械能守恒">
+<figcaption><span data-lang="en">Ballistic pendulum solution sequence: conserve momentum during impact, then mechanical energy during the swing</span><span data-lang="zh">弹道摆的两阶段求解：碰撞时用动量守恒，摆升时用机械能守恒</span></figcaption>
+</figure>
+
   <p data-lang="en">In a perfectly inelastic collision, the objects stick together and move with a common final velocity. This gives the simplest algebra — one equation, one unknown.</p>
   <p data-lang="zh">在完全非弹性碰撞中，物体碰后粘在一起以共同速度运动。这种情形的代数最简——一个方程一个未知数。</p>
 
@@ -1393,6 +1504,19 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
   </div>
 
   <h3><span data-lang="en">Two-Dimensional Collisions</span><span data-lang="zh">二维碰撞</span></h3>
+<!-- dingrui:fig u4-two-dimensional-momentum-components -->
+<figure class="dr-fig" id="fig-u4-two-dimensional-momentum-components">
+<style>
+  #fig-u4-two-dimensional-momentum-components img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u4-two-dimensional-momentum-components .dr-fig-dark { display: none; }
+  [data-theme="dark"] #fig-u4-two-dimensional-momentum-components .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u4-two-dimensional-momentum-components .dr-fig-dark { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_4_Linear_Momentum/u4-two-dimensional-momentum-components_light.png" alt="A two-dimensional collision resolved into independently conserved x- and y-momentum components / 二维碰撞中的动量矢量分解：x、y 分量分别守恒">
+<img class="dr-fig-dark" src="../../out/figures/Unit_4_Linear_Momentum/u4-two-dimensional-momentum-components_dark.png" alt="A two-dimensional collision resolved into independently conserved x- and y-momentum components / 二维碰撞中的动量矢量分解：x、y 分量分别守恒">
+<figcaption><span data-lang="en">A two-dimensional collision resolved into independently conserved x- and y-momentum components</span><span data-lang="zh">二维碰撞中的动量矢量分解：x、y 分量分别守恒</span></figcaption>
+</figure>
+
   <p data-lang="en">In 2D collisions, momentum is conserved independently in each direction — this gives you two equations (one for $x$, one for $y$). The AP exam expects you to handle these by decomposing all velocity vectors into components.</p>
   <p data-lang="zh">在二维碰撞中，动量在每个方向上都独立守恒——这给出两个方程（$x$ 方向一个，$y$ 方向一个）。AP 考试要求你将所有速度矢量分解为分量来处理。</p>
 
@@ -1845,7 +1969,7 @@ button:focus-visible, .quiz-opt:focus-visible, .type-btn:focus-visible, summary:
     <span class="unit-nav__arrow" aria-hidden="true">&rarr;</span>
     <span class="unit-nav__body">
       <span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span>
-      <span class="unit-nav__title"><span data-lang="en">Unit 5: Torque &amp;amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></span>
+      <span class="unit-nav__title"><span data-lang="en">Unit 5: Torque &amp; Rotational Dynamics</span><span data-lang="zh">第 5 单元：力矩与转动动力学</span></span>
     </span>
   </a>
 </nav>
