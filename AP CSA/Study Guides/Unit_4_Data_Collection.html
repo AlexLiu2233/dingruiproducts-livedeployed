@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta name="dingrui:tier" content="gated">
@@ -112,7 +112,7 @@ details .detail-body{padding:0 18px 16px;font-size:.92rem}
 [data-theme="dark"] .flashcard-back code{background:var(--bg)}
 .sep{border:none;border-top:1px solid var(--border);margin:40px 0}
 @media(min-width:1100px){.sidebar{transform:translateX(0);box-shadow:none}.main-wrap{max-width:none;margin-left:calc(var(--toc-w) + 40px);margin-right:0;padding:0 48px}}
-@media(max-width:600px){.hero h1{font-size:1.8rem}.main-wrap{padding:0 16px}pre{font-size:.75rem;padding:14px}.flashcard-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.hero h1{font-size:1.8rem}.main-wrap{padding:0 16px}pre{font-size:.75rem;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere}.flashcard-grid{grid-template-columns:1fr}}
 @media print{.topnav,.progress-track,.sidebar,.topnav-actions{display:none!important}.main-wrap{margin:0 auto;max-width:100%;padding:0}body{font-size:11pt;background:white;color:black}pre{border:1px solid #ccc;white-space:pre-wrap}.card,.concept-box,.quiz{break-inside:avoid}}
 :root{color-scheme:light}[data-theme="dark"]{color-scheme:dark}
 ::selection{background:var(--accent-light);color:var(--accent-dark)}
@@ -155,6 +155,16 @@ body.lang-zh [data-lang="en"] { display: none; }
 }
 @media (max-width: 430px){
   .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+@media (max-width: 600px){
+  html{ scroll-padding-top: 120px; }
+  .topnav{ height: 104px; padding: 6px 8px; display: grid; grid-template-rows: 32px 44px; gap: 4px; }
+  .topnav-brand{ min-width: 0; justify-content: center; font-size: 0.95rem; }
+  .topnav-actions{ width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, auto)); justify-content: space-between; gap: 3px; }
+  .topnav-actions button, .topnav-actions .back-link{ padding: 7px 5px; font-size: 0.7rem; white-space: nowrap; }
+  .progress-track{ top: 104px; }
+  .sidebar{ top: 107px; }
+  .main-wrap{ margin-top: 112px !important; }
 }
 /* __end_sg_mobile_spacing__ */
 
@@ -456,6 +466,29 @@ body.lang-zh [data-lang="en"] { display: none; }
     <p><strong>处理数据</strong>：分析数据集时，集合中的值会被逐个访问、逐个使用，然后按所需结果进行处理。</p>
     <p style="margin-top:10px"><strong>可视化规划</strong>：可以用图表或表格把数据画出来。这种可视化形式可以用来规划接下来操作数据所要使用的算法。</p>
   </div>
+
+  <div class="card" style="border-left:4px solid var(--accent);" data-lang="en">
+    <div class="card-header" style="color:var(--accent);">Worked Example: Plan from a data table</div>
+    <p>Suppose the question is: “How many school days reached at least 20°C?” Represent the everyday data first:</p>
+    <div class="table-wrap" style="margin-top:8px">
+      <table>
+        <tr><th>Day</th><th>Mon</th><th>Tue</th><th>Wed</th></tr>
+        <tr><td>Temperature (°C)</td><td>18</td><td>21</td><td>19</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:10px"><strong>Written algorithm:</strong> set <code>count</code> to 0 → inspect one temperature at a time → if it is at least 20, add 1 to <code>count</code> → after the last value, report <code>count</code>. For this table the result is <code>1</code>. The table identifies the values to visit; the arrows describe the traversal and decision before any Java collection is chosen.</p>
+  </div>
+  <div class="card" style="border-left:4px solid var(--accent);" data-lang="zh">
+    <div class="card-header" style="color:var(--accent);">例题：根据数据表规划算法</div>
+    <p>假设问题是：“一周中有多少个上课日的最高气温至少为 20°C？”先用表格表示日常数据：</p>
+    <div class="table-wrap" style="margin-top:8px">
+      <table>
+        <tr><th>日期</th><th>周一</th><th>周二</th><th>周三</th></tr>
+        <tr><td>气温（°C）</td><td>18</td><td>21</td><td>19</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:10px"><strong>文字算法：</strong>令 <code>count</code> 为 0 → 每次检查一个气温 → 如果气温至少为 20，就把 <code>count</code> 加 1 → 检查完最后一个值后报告 <code>count</code>。这张表的结果是 <code>1</code>。表格确定要访问的数据，箭头步骤在选择具体 Java 集合之前说明了遍历和判断过程。</p>
+  </div>
 </section>
 
 <hr class="sep">
@@ -530,11 +563,11 @@ arr[<span class="num">2</span>] = <span class="num">99</span>;             <span
   </div>
 
   <div class="concept-box red" data-lang="en">
-    <strong>AP Trap: <code>length</code> on arrays vs <code>length()</code> on Strings and ArrayLists</strong>
+    <strong>AP Trap: <code>length</code> on arrays vs <code>length()</code> on Strings vs <code>size()</code> on ArrayLists</strong>
     Arrays use <code>arr.length</code>, no parentheses, because <code>length</code> is a public field, not a method. Strings use <code>s.length()</code>; ArrayLists use <code>list.size()</code>. Writing <code>arr.length()</code> or <code>s.length</code> is a compile error and shows up on MCQs as a "which line fails to compile?" trap.
   </div>
   <div class="concept-box red" data-lang="zh">
-    <strong>AP 陷阱：数组的 <code>length</code> 与 String/ArrayList 的 <code>length()</code></strong>
+    <strong>AP 陷阱：数组的 <code>length</code>、String 的 <code>length()</code> 与 ArrayList 的 <code>size()</code></strong>
     数组使用 <code>arr.length</code>，没有括号，因为 <code>length</code> 是公有字段而不是方法。String 使用 <code>s.length()</code>；ArrayList 使用 <code>list.size()</code>。写成 <code>arr.length()</code> 或 <code>s.length</code> 都是编译错误，常以"下列哪一行无法编译？"的形式出现在选择题中。
   </div>
 </section>
@@ -646,6 +679,9 @@ arr[<span class="num">2</span>] = <span class="num">99</span>;             <span
   <p data-lang="en">Standard algorithms that traverse arrays to accomplish common tasks are fundamental to AP CSA.</p>
   <p data-lang="zh">通过遍历数组完成常见任务的标准算法，是 AP CSA 的基础内容。</p>
 
+  <p data-lang="en"><code>findMax</code> and <code>average</code> below assume a nonempty array: <code>findMax</code> reads <code>arr[0]</code>, and <code>average</code> divides by <code>arr.length</code>.</p>
+  <p data-lang="zh">下面的 <code>findMax</code> 和 <code>average</code> 假定数组非空：<code>findMax</code> 会读取 <code>arr[0]</code>，而 <code>average</code> 会除以 <code>arr.length</code>。</p>
+
   <details>
     <summary><span data-lang="en">Find Minimum / Maximum</span><span data-lang="zh">求最小值 / 最大值</span></summary>
     <div class="detail-body">
@@ -705,17 +741,45 @@ arr[<span class="num">2</span>] = <span class="num">99</span>;             <span
   <details>
     <summary><span data-lang="en">Shift / Rotate / Reverse Elements</span><span data-lang="zh">元素的平移 / 循环移位 / 反转</span></summary>
     <div class="detail-body">
-<pre><span class="cm" data-lang="en">// Shift left (first element lost, last becomes 0)</span><span class="cm" data-lang="zh">// 左移（首元素丢失，末位变为 0）</span>
-<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span> - <span class="num">1</span>; i++) {
-    arr[i] = arr[i + <span class="num">1</span>];
+      <p data-lang="en"><strong>Shift</strong> discards an end value and opens a position for a replacement. <strong>Rotate</strong> saves that end value and moves it to the opposite end. The loop direction matters: when copying right, work from right to left so a source value is not overwritten before it is copied. These examples assume the array has at least one element.</p>
+      <p data-lang="zh"><strong>平移</strong>会丢弃一端的值，并在另一端腾出位置放入替代值；<strong>循环移位</strong>会先保存这一端的值，再把它放到另一端。循环方向很重要：向右复制时必须从右向左处理，避免源值在复制前被覆盖。以下示例假定数组至少有一个元素。</p>
+<pre><span class="cm" data-lang="en">// Shift left: {2, 4, 6, 8} becomes {4, 6, 8, 0}</span><span class="cm" data-lang="zh">// 左移：{2, 4, 6, 8} 变为 {4, 6, 8, 0}</span>
+<span class="kw">public static void</span> <span class="fn">shiftLeft</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span> - <span class="num">1</span>; i++)
+        arr[i] = arr[i + <span class="num">1</span>];
+    arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span class="num">0</span>;
 }
-arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span class="num">0</span>;
 
-<span class="cm" data-lang="en">// Reverse the array</span><span class="cm" data-lang="zh">// 反转数组</span>
-<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span> / <span class="num">2</span>; i++) {
-    <span class="ty">int</span> temp = arr[i];
-    arr[i] = arr[arr.<span class="fn">length</span> - <span class="num">1</span> - i];
-    arr[arr.<span class="fn">length</span> - <span class="num">1</span> - i] = temp;
+<span class="cm" data-lang="en">// Shift right: {2, 4, 6, 8} becomes {0, 2, 4, 6}</span><span class="cm" data-lang="zh">// 右移：{2, 4, 6, 8} 变为 {0, 2, 4, 6}</span>
+<span class="kw">public static void</span> <span class="fn">shiftRight</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = arr.<span class="fn">length</span> - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--)
+        arr[i] = arr[i - <span class="num">1</span>];
+    arr[<span class="num">0</span>] = <span class="num">0</span>;
+}
+
+<span class="cm" data-lang="en">// Rotate left: {2, 4, 6, 8} becomes {4, 6, 8, 2}</span><span class="cm" data-lang="zh">// 左循环移位：{2, 4, 6, 8} 变为 {4, 6, 8, 2}</span>
+<span class="kw">public static void</span> <span class="fn">rotateLeft</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> first = arr[<span class="num">0</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span> - <span class="num">1</span>; i++)
+        arr[i] = arr[i + <span class="num">1</span>];
+    arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = first;
+}
+
+<span class="cm" data-lang="en">// Rotate right: {2, 4, 6, 8} becomes {8, 2, 4, 6}</span><span class="cm" data-lang="zh">// 右循环移位：{2, 4, 6, 8} 变为 {8, 2, 4, 6}</span>
+<span class="kw">public static void</span> <span class="fn">rotateRight</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> last = arr[arr.<span class="fn">length</span> - <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = arr.<span class="fn">length</span> - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--)
+        arr[i] = arr[i - <span class="num">1</span>];
+    arr[<span class="num">0</span>] = last;
+}
+
+<span class="cm" data-lang="en">// Reverse in place: swap matching positions from the two ends</span><span class="cm" data-lang="zh">// 原地反转：交换从两端向中间对应的位置</span>
+<span class="kw">public static void</span> <span class="fn">reverse</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span> / <span class="num">2</span>; i++) {
+        <span class="ty">int</span> temp = arr[i];
+        arr[i] = arr[arr.<span class="fn">length</span> - <span class="num">1</span> - i];
+        arr[arr.<span class="fn">length</span> - <span class="num">1</span> - i] = temp;
+    }
 }</pre>
     </div>
   </details>
@@ -768,26 +832,31 @@ arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span cla
 <span class="kw">import</span> java.io.IOException;
 <span class="kw">import</span> java.util.Scanner;
 
-<span class="kw">public static void</span> <span class="fn">readFile</span>() <span class="kw">throws</span> <span class="ty">IOException</span> {
-    <span class="ty">File</span> f = <span class="kw">new</span> <span class="ty">File</span>(<span class="str">"data.txt"</span>);
-    <span class="ty">Scanner</span> sc = <span class="kw">new</span> <span class="ty">Scanner</span>(f);
+<span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countTokens</span>() <span class="kw">throws</span> <span class="ty">IOException</span> {
+    <span class="ty">File</span> file = <span class="kw">new</span> <span class="ty">File</span>(<span class="str">"data.txt"</span>);
+    <span class="ty">Scanner</span> input = <span class="kw">new</span> <span class="ty">Scanner</span>(file);
+    <span class="ty">int</span> count = <span class="num">0</span>;
 
-    <span class="kw">while</span> (sc.<span class="fn">hasNext</span>()) {
-        <span class="ty">String</span> line = sc.<span class="fn">nextLine</span>();
-        System.out.<span class="fn">println</span>(line);
+    <span class="kw">while</span> (input.<span class="fn">hasNext</span>()) {
+        <span class="ty">String</span> token = input.<span class="fn">next</span>();
+        count++;
     }
-    sc.<span class="fn">close</span>();
+    input.<span class="fn">close</span>();
+    <span class="kw">return</span> count;
 }</pre>
+
+  <p data-lang="en">This assessed pattern uses <code>hasNext()</code> to test whether another item exists, <code>next()</code> to consume exactly one token, and <code>close()</code> when the file is finished. If the pathname cannot be opened, declaring <code>throws IOException</code> is one way to specify that the program terminates instead of continuing with missing input.</p>
+  <p data-lang="zh">这个考试范围内的模式用 <code>hasNext()</code> 判断是否还有下一个项目，用 <code>next()</code> 恰好读取一个 token，并在文件使用完毕后调用 <code>close()</code>。如果路径无法打开，在方法头声明 <code>throws IOException</code> 是一种处理方式：程序终止，而不是在缺少输入的情况下继续运行。</p>
 
   <div class="qref" data-lang="en">
     <div class="qref-title">Scanner Methods, Quick Reference</div>
     <div class="table-wrap">
       <table>
         <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
-        <tr><td><code>nextInt()</code></td><td><code>int</code></td><td>Reads next integer</td></tr>
-        <tr><td><code>nextDouble()</code></td><td><code>double</code></td><td>Reads next double</td></tr>
-        <tr><td><code>nextBoolean()</code></td><td><code>boolean</code></td><td>Reads next boolean</td></tr>
-        <tr><td><code>nextLine()</code></td><td><code>String</code></td><td>Reads next full line</td></tr>
+        <tr><td><code>nextInt()</code></td><td><code>int</code></td><td>Reads the next <code>int</code>; if the next <code>int</code> does not exist or is out of range, it results in an <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextDouble()</code></td><td><code>double</code></td><td>Reads the next <code>double</code>; if the next <code>double</code> does not exist, it results in an <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextBoolean()</code></td><td><code>boolean</code></td><td>Reads the next <code>boolean</code>; if the next <code>boolean</code> does not exist, it results in an <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextLine()</code></td><td><code>String</code></td><td>Reads the next line; can return <code>""</code> immediately after another Scanner method</td></tr>
         <tr><td><code>next()</code></td><td><code>String</code></td><td>Reads next token (word)</td></tr>
         <tr><td><code>hasNext()</code></td><td><code>boolean</code></td><td>True if more data remains</td></tr>
         <tr><td><code>close()</code></td><td><code>void</code></td><td>Closes the scanner/file</td></tr>
@@ -799,10 +868,10 @@ arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span cla
     <div class="table-wrap">
       <table>
         <tr><th>方法</th><th>返回值</th><th>说明</th></tr>
-        <tr><td><code>nextInt()</code></td><td><code>int</code></td><td>读取下一个整数</td></tr>
-        <tr><td><code>nextDouble()</code></td><td><code>double</code></td><td>读取下一个 double 值</td></tr>
-        <tr><td><code>nextBoolean()</code></td><td><code>boolean</code></td><td>读取下一个布尔值</td></tr>
-        <tr><td><code>nextLine()</code></td><td><code>String</code></td><td>读取下一整行</td></tr>
+        <tr><td><code>nextInt()</code></td><td><code>int</code></td><td>读取下一个 <code>int</code>；如果下一个 <code>int</code> 不存在或超出范围，会产生 <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextDouble()</code></td><td><code>double</code></td><td>读取下一个 <code>double</code>；如果下一个 <code>double</code> 不存在，会产生 <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextBoolean()</code></td><td><code>boolean</code></td><td>读取下一个 <code>boolean</code>；如果下一个 <code>boolean</code> 不存在，会产生 <code>InputMismatchException</code></td></tr>
+        <tr><td><code>nextLine()</code></td><td><code>String</code></td><td>读取下一整行；紧接在另一个 Scanner 方法之后调用时可能返回 <code>""</code></td></tr>
         <tr><td><code>next()</code></td><td><code>String</code></td><td>读取下一个 token（单词）</td></tr>
         <tr><td><code>hasNext()</code></td><td><code>boolean</code></td><td>是否还有更多数据</td></tr>
         <tr><td><code>close()</code></td><td><code>void</code></td><td>关闭扫描器/文件</td></tr>
@@ -817,12 +886,22 @@ arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span cla
 <span class="cm" data-lang="en">// parts = {"Alice", "90", "85", "92"}</span><span class="cm" data-lang="zh">// parts = {"Alice", "90", "85", "92"}</span></pre>
 
   <div class="concept-box orange" data-lang="en">
-    <strong>IOException Required</strong>
-    When using the <code>File</code> class, you must add <code>throws IOException</code> to the method header. The <code>File</code> and <code>IOException</code> classes are in <code>java.io</code> and must be imported.
+    <strong>File and Input Assumptions</strong>
+    A method that opens a file must indicate what happens if the file cannot be opened. Adding <code>throws IOException</code> to its header is one supported approach. <code>File</code> and <code>IOException</code> are in <code>java.io</code>; <code>Scanner</code> is in <code>java.util</code>. The Java Quick Reference specifies when <code>nextInt</code>, <code>nextDouble</code>, and <code>nextBoolean</code> result in an <code>InputMismatchException</code>.
   </div>
+
   <div class="concept-box orange" data-lang="zh">
-    <strong>必须声明 IOException</strong>
-    使用 <code>File</code> 类时，必须在方法签名上加上 <code>throws IOException</code>。<code>File</code> 和 <code>IOException</code> 类位于 <code>java.io</code> 包中，必须 import。
+    <strong>文件与输入假设</strong>
+    打开文件的方法必须说明文件无法打开时如何处理。在方法头加入 <code>throws IOException</code> 是一种受支持的做法。<code>File</code> 和 <code>IOException</code> 位于 <code>java.io</code>，<code>Scanner</code> 位于 <code>java.util</code>。Java Quick Reference 明确规定了 <code>nextInt</code>、<code>nextDouble</code> 和 <code>nextBoolean</code> 在何种情况下会产生 <code>InputMismatchException</code>。
+  </div>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Current AP Scope Boundaries</strong>
+    Keyboard input is outside the AP CSA course and exam. Although <code>nextLine()</code> can behave differently from token-reading methods because of whitespace, you will not be asked to write or analyze code that mixes <code>nextLine()</code> with other <code>Scanner</code> methods on the same input source. The delimiter passed to <code>split</code> is technically a regular expression, but special regular-expression behavior such as <code>\*</code> or <code>\.</code> is also outside scope; use ordinary delimiters such as <code>","</code> in assessed examples.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>当前 AP 范围边界</strong>
+    键盘输入不在 AP CSA 课程与考试范围内。由于空白字符的处理方式不同，<code>nextLine()</code> 与读取 token 的方法混用时可能出现特殊行为；但考试不会要求你编写或分析在同一输入源上混用 <code>nextLine()</code> 和其他 <code>Scanner</code> 方法的代码。<code>split</code> 的分隔符从技术上说是正则表达式，但 <code>\*</code>、<code>\.</code> 等正则表达式特殊性质也不在范围内；考试示例应使用 <code>","</code> 这类普通分隔符。
   </div>
 </section>
 
@@ -847,6 +926,20 @@ arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span cla
 <span class="cm" data-lang="en">// Unboxing: wrapper object → primitive</span><span class="cm" data-lang="zh">// 拆箱：包装对象 → 基本类型</span>
 <span class="ty">int</span> a = x;              <span class="cm" data-lang="en">// Integer → int</span><span class="cm" data-lang="zh">// Integer → int</span>
 <span class="ty">double</span> b = y;           <span class="cm" data-lang="en">// Double → double</span><span class="cm" data-lang="zh">// Double → double</span></pre>
+
+  <p data-lang="en">The compiler also boxes and unboxes method arguments when the parameter type requires the corresponding conversion:</p>
+  <p data-lang="zh">当方法形参需要对应类型时，编译器也会对实参自动装箱或拆箱：</p>
+<pre><span class="kw">public static void</span> <span class="fn">printInteger</span>(<span class="ty">Integer</span> value) {
+    System.out.<span class="fn">println</span>(value);
+}
+<span class="kw">public static void</span> <span class="fn">printInt</span>(<span class="ty">int</span> value) {
+    System.out.<span class="fn">println</span>(value);
+}
+
+<span class="ty">int</span> primitive = <span class="num">8</span>;
+<span class="ty">Integer</span> wrapped = <span class="num">12</span>;
+<span class="fn">printInteger</span>(primitive);    <span class="cm" data-lang="en">// autoboxes int to Integer</span><span class="cm" data-lang="zh">// 把 int 自动装箱为 Integer</span>
+<span class="fn">printInt</span>(wrapped);  <span class="cm" data-lang="en">// unboxes Integer to int</span><span class="cm" data-lang="zh">// 把 Integer 自动拆箱为 int</span></pre>
 
   <h3 data-lang="en">Parsing Strings to Numbers</h3>
   <h3 data-lang="zh">把字符串解析成数字</h3>
@@ -909,6 +1002,15 @@ arr[arr.<span class="fn">length</span> - <span class="num">1</span>] = <span cla
         <tr><td><code>remove(int i)</code></td><td><code>E</code></td><td>删除索引 <code>i</code> 处的元素；其后元素整体左移；返回被删元素</td></tr>
       </table>
     </div>
+  </div>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Index Ranges</strong>
+    For a list of size <code>n</code>, <code>get</code>, <code>set</code>, and <code>remove</code> require an existing index from <code>0</code> through <code>n - 1</code>. Indexed <code>add</code> accepts <code>0</code> through <code>n</code>, because index <code>n</code> appends after the current last element. An index outside the method's valid range results in an <code>IndexOutOfBoundsException</code>.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>索引范围</strong>
+    对大小为 <code>n</code> 的列表，<code>get</code>、<code>set</code> 和 <code>remove</code> 必须使用已有索引 <code>0</code> 到 <code>n - 1</code>。带索引的 <code>add</code> 可使用 <code>0</code> 到 <code>n</code>，因为索引 <code>n</code> 表示追加到当前最后一个元素之后。索引超出相应方法的有效范围会导致 <code>IndexOutOfBoundsException</code>。
   </div>
 
 <pre><span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; list = <span class="kw">new</span> <span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt;();
@@ -1039,12 +1141,12 @@ list.<span class="fn">remove</span>(<span class="num">1</span>);        <span cl
   </div>
 
   <div class="concept-box red" data-lang="en">
-    <strong>AP Trap: ConcurrentModificationException with enhanced for</strong>
-    Using an enhanced for loop and calling <code>list.add(...)</code> or <code>list.remove(...)</code> inside the body throws <code>ConcurrentModificationException</code> at runtime, even though the code compiles. MCQs love to plant this in a snippet that "looks correct". The fix is always: switch to an indexed for loop, or use an iterator with its own <code>.remove()</code>.
+    <strong>AP Scope: Changing Size During Enhanced for</strong>
+    Adding or removing elements changes an <code>ArrayList</code>'s size and, during an enhanced for traversal, <em>can result in</em> a <code>ConcurrentModificationException</code>. Therefore, do not add or remove elements in that loop form. Within the AP Java Quick Reference, use an indexed loop: traverse backward for deletion, or adjust the index after a forward deletion so the shifted element is not skipped. The Topic 4.8 index ranges still apply during traversal; an invalid indexed access results in an <code>IndexOutOfBoundsException</code>.
   </div>
   <div class="concept-box red" data-lang="zh">
-    <strong>AP 陷阱：增强 for 中的 ConcurrentModificationException</strong>
-    在增强 for 循环中调用 <code>list.add(...)</code> 或 <code>list.remove(...)</code>，编译是能过的，但运行时会抛出 <code>ConcurrentModificationException</code>。选择题最喜欢把这种"看起来没问题"的代码作为陷阱。解决办法永远是：改用带索引的 for 循环，或使用带有自己 <code>.remove()</code> 方法的迭代器。
+    <strong>AP 范围：在增强 for 中改变大小</strong>
+    添加或删除元素会改变 <code>ArrayList</code> 的大小；在增强 for 遍历期间这样做<em>可能导致</em> <code>ConcurrentModificationException</code>。因此，不要在这种循环中添加或删除元素。在 AP Java Quick Reference 范围内应使用带索引的循环：删除时倒序遍历，或在正向删除后调整索引，避免跳过左移后的元素。遍历时仍须遵守小节 4.8 的索引范围；无效的索引访问会导致 <code>IndexOutOfBoundsException</code>。
   </div>
 </section>
 
@@ -1059,6 +1161,125 @@ list.<span class="fn">remove</span>(<span class="num">1</span>);        <span cl
 
   <p data-lang="en">The same standard algorithms from arrays apply to ArrayLists, plus the ability to <strong>insert</strong> and <strong>delete</strong> elements. Some algorithms require traversing multiple <code>String</code>, array, or <code>ArrayList</code> objects simultaneously.</p>
   <p data-lang="zh">数组上的那套标准算法同样适用于 ArrayList，并且还可以<strong>插入</strong>和<strong>删除</strong>元素。有些算法需要同时遍历多个 <code>String</code>、数组或 <code>ArrayList</code> 对象。</p>
+
+  <div class="table-wrap" data-lang="en">
+    <table>
+      <tr><th>Required algorithm family</th><th>ArrayList pattern</th></tr>
+      <tr><td>Minimum/maximum; sum/average</td><td>Accumulator updated from <code>get(i)</code></td></tr>
+      <tr><td>At least one; all; count</td><td>Boolean return or counter inside a traversal</td></tr>
+      <tr><td>Consecutive pairs</td><td>Compare <code>get(i)</code> with <code>get(i + 1)</code>; stop at <code>size() - 1</code></td></tr>
+      <tr><td>Duplicates</td><td>Compare each element with elements at later indices</td></tr>
+      <tr><td>Shift/rotate; reverse</td><td>Use <code>get</code>/<code>set</code> and choose a direction that does not overwrite a needed value</td></tr>
+      <tr><td>Insert/delete</td><td>Use indexed <code>add</code>/<code>remove</code> and account for shifted indices</td></tr>
+      <tr><td>Simultaneous traversal</td><td>Use one index to access corresponding positions in multiple collections</td></tr>
+    </table>
+  </div>
+  <div class="table-wrap" data-lang="zh">
+    <table>
+      <tr><th>必备算法类别</th><th>ArrayList 模式</th></tr>
+      <tr><td>最小/最大值；总和/平均值</td><td>用 <code>get(i)</code> 读取元素并更新累积变量</td></tr>
+      <tr><td>至少一个；全部；计数</td><td>在遍历中返回布尔值或更新计数器</td></tr>
+      <tr><td>相邻元素对</td><td>比较 <code>get(i)</code> 与 <code>get(i + 1)</code>；循环在 <code>size() - 1</code> 前停止</td></tr>
+      <tr><td>重复元素</td><td>把每个元素与它后面索引位置的元素比较</td></tr>
+      <tr><td>平移/循环移位；反转</td><td>使用 <code>get</code>/<code>set</code>，并选择不会提前覆盖所需值的方向</td></tr>
+      <tr><td>插入/删除</td><td>使用带索引的 <code>add</code>/<code>remove</code>，同时考虑索引移动</td></tr>
+      <tr><td>同步遍历</td><td>用同一个索引访问多个集合中的对应位置</td></tr>
+    </table>
+  </div>
+
+  <details>
+    <summary><span data-lang="en">Aggregates, Any/All, and Count</span><span data-lang="zh">聚合、任意/全部与计数</span></summary>
+    <div class="detail-body">
+      <p data-lang="en"><code>findMax</code> and <code>average</code> assume a nonempty list. Notice how each pattern differs only in its initial value, update, and final return.</p>
+      <p data-lang="zh"><code>findMax</code> 和 <code>average</code> 假定列表非空。注意这些模式的差别主要在初始值、更新方式和最终返回值。</p>
+<pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">findMax</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="ty">int</span> max = nums.<span class="fn">get</span>(<span class="num">0</span>);
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.<span class="fn">size</span>(); i++)
+        <span class="kw">if</span> (nums.<span class="fn">get</span>(i) &gt; max) max = nums.<span class="fn">get</span>(i);
+    <span class="kw">return</span> max;
+}
+
+<span class="kw">public static</span> <span class="ty">double</span> <span class="fn">average</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="ty">int</span> sum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> value : nums) sum += value;
+    <span class="kw">return</span> (<span class="ty">double</span>) sum / nums.<span class="fn">size</span>();
+}
+
+<span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">hasNegative</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="kw">for</span> (<span class="ty">int</span> value : nums)
+        <span class="kw">if</span> (value &lt; <span class="num">0</span>) <span class="kw">return true</span>;   <span class="cm" data-lang="en">// at least one</span><span class="cm" data-lang="zh">// 至少一个</span>
+    <span class="kw">return false</span>;
+}
+
+<span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">allPositive</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="kw">for</span> (<span class="ty">int</span> value : nums)
+        <span class="kw">if</span> (value &lt;= <span class="num">0</span>) <span class="kw">return false</span>;  <span class="cm" data-lang="en">// one counterexample</span><span class="cm" data-lang="zh">// 一个反例即可</span>
+    <span class="kw">return true</span>;
+}
+
+<span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countEven</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> value : nums)
+        <span class="kw">if</span> (value % <span class="num">2</span> == <span class="num">0</span>) count++;
+    <span class="kw">return</span> count;
+}</pre>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">Consecutive Pairs and Duplicates</span><span data-lang="zh">相邻元素对与重复元素</span></summary>
+    <div class="detail-body">
+<pre><span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">hasAdjacentRepeat</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; words) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; words.<span class="fn">size</span>() - <span class="num">1</span>; i++)
+        <span class="kw">if</span> (words.<span class="fn">get</span>(i).<span class="fn">equals</span>(words.<span class="fn">get</span>(i + <span class="num">1</span>)))
+            <span class="kw">return true</span>;
+    <span class="kw">return false</span>;
+}
+
+<span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">hasDuplicate</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; words) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; words.<span class="fn">size</span>(); i++)
+        <span class="kw">for</span> (<span class="ty">int</span> j = i + <span class="num">1</span>; j &lt; words.<span class="fn">size</span>(); j++)
+            <span class="kw">if</span> (words.<span class="fn">get</span>(i).<span class="fn">equals</span>(words.<span class="fn">get</span>(j)))
+                <span class="kw">return true</span>;
+    <span class="kw">return false</span>;
+}</pre>
+      <p data-lang="en">The first method examines only consecutive pairs. The nested-loop method checks every later position, so it detects duplicates anywhere in the list.</p>
+      <p data-lang="zh">第一个方法只检查相邻元素对；嵌套循环方法会检查每个元素之后的所有位置，因此能发现列表中任意位置的重复元素。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">Shift, Rotate, and Reverse</span><span data-lang="zh">平移、循环移位与反转</span></summary>
+    <div class="detail-body">
+      <p data-lang="en">These examples assume a nonempty list. As with arrays, a shift discards a value; a rotation preserves it at the opposite end.</p>
+      <p data-lang="zh">以下示例假定列表非空。与数组相同，平移会丢弃一个值；循环移位会把它保留到另一端。</p>
+<pre><span class="cm" data-lang="en">// Shift left, filling the final position with 0</span><span class="cm" data-lang="zh">// 左移，并用 0 填充最后一个位置</span>
+<span class="kw">public static void</span> <span class="fn">shiftLeft</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="fn">size</span>() - <span class="num">1</span>; i++)
+        nums.<span class="fn">set</span>(i, nums.<span class="fn">get</span>(i + <span class="num">1</span>));
+    nums.<span class="fn">set</span>(nums.<span class="fn">size</span>() - <span class="num">1</span>, <span class="num">0</span>);
+}
+
+<span class="cm" data-lang="en">// Rotate right: save the last value before shifting right</span><span class="cm" data-lang="zh">// 右循环移位：向右移动前先保存最后一个值</span>
+<span class="kw">public static void</span> <span class="fn">rotateRight</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="ty">int</span> last = nums.<span class="fn">get</span>(nums.<span class="fn">size</span>() - <span class="num">1</span>);
+    <span class="kw">for</span> (<span class="ty">int</span> i = nums.<span class="fn">size</span>() - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--)
+        nums.<span class="fn">set</span>(i, nums.<span class="fn">get</span>(i - <span class="num">1</span>));
+    nums.<span class="fn">set</span>(<span class="num">0</span>, last);
+}
+
+<span class="kw">public static void</span> <span class="fn">reverse</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="fn">size</span>() / <span class="num">2</span>; i++) {
+        <span class="ty">int</span> opposite = nums.<span class="fn">size</span>() - <span class="num">1</span> - i;
+        <span class="ty">int</span> temp = nums.<span class="fn">get</span>(i);
+        nums.<span class="fn">set</span>(i, nums.<span class="fn">get</span>(opposite));
+        nums.<span class="fn">set</span>(opposite, temp);
+    }
+}</pre>
+      <p data-lang="en">A right shift uses the same backward-copy loop as <code>rotateRight</code>, but places a replacement value at index 0 instead of restoring <code>last</code>. A left rotation uses the same forward-copy loop as <code>shiftLeft</code>, but restores the saved first value at the last index.</p>
+      <p data-lang="zh">右移与 <code>rotateRight</code> 使用同样的反向复制循环，但会在索引 0 放入替代值，而不是恢复 <code>last</code>。左循环移位与 <code>shiftLeft</code> 使用同样的正向复制循环，但会把预先保存的首元素放到最后一个索引。</p>
+    </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Remove All Elements with a Property</span><span data-lang="zh">删除所有具有某种性质的元素</span></summary>
@@ -1087,11 +1308,25 @@ list.<span class="fn">remove</span>(<span class="num">1</span>);        <span cl
 
   <div class="concept-box purple" data-lang="en">
     <strong>Simultaneous Traversal</strong>
-    Some algorithms require traversing multiple String, array, or ArrayList objects simultaneously, for example, comparing two lists element-by-element or merging two sorted lists.
+    Some algorithms require traversing multiple String, array, or ArrayList objects simultaneously. If two lists have the same size, one index can compare corresponding elements:
+<pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countMatches</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; a,
+                               <span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; b) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; a.<span class="fn">size</span>(); i++)
+        <span class="kw">if</span> (a.<span class="fn">get</span>(i).<span class="fn">equals</span>(b.<span class="fn">get</span>(i))) count++;
+    <span class="kw">return</span> count;
+}</pre>
   </div>
   <div class="concept-box purple" data-lang="zh">
     <strong>并行遍历</strong>
-    有些算法需要同时遍历多个 String、数组或 ArrayList 对象，例如逐元素比较两个列表，或合并两个有序列表。
+    有些算法需要同时遍历多个 String、数组或 ArrayList 对象。如果两个列表大小相同，可以用同一个索引比较对应元素：
+<pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countMatches</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; a,
+                               <span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; b) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; a.<span class="fn">size</span>(); i++)
+        <span class="kw">if</span> (a.<span class="fn">get</span>(i).<span class="fn">equals</span>(b.<span class="fn">get</span>(i))) count++;
+    <span class="kw">return</span> count;
+}</pre>
   </div>
 </section>
 
@@ -1132,11 +1367,29 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
 
   <div class="concept-box" data-lang="en">
     <strong>2D Array Dimensions</strong>
-    <code>arr.length</code> = number of rows. <code>arr[0].length</code> = number of columns. First index is <strong>row</strong>, second is <strong>column</strong>: <code>arr[row][col]</code>.
+    <code>arr.length</code> = number of rows. <code>arr[0].length</code> = number of columns. First index is <strong>row</strong>, second is <strong>column</strong>: <code>arr[row][col]</code>. Current AP CSA questions use rectangular 2D arrays; nonrectangular (“ragged”) 2D arrays are explicitly outside scope.
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>二维数组的维度</strong>
-    <code>arr.length</code> = 行数。<code>arr[0].length</code> = 列数。第一个下标是<strong>行</strong>，第二个下标是<strong>列</strong>：<code>arr[row][col]</code>。
+    <code>arr.length</code> = 行数。<code>arr[0].length</code> = 列数。第一个下标是<strong>行</strong>，第二个下标是<strong>列</strong>：<code>arr[row][col]</code>。当前 AP CSA 题目使用矩形二维数组；非矩形（“ragged”）二维数组被明确排除在范围之外。
+  </div>
+
+  <div class="concept-box teal" data-lang="en">
+    <strong>Default Element Values</strong>
+    With <code>new</code>, every element receives its type’s default: <code>int</code> → <code>0</code>, <code>double</code> → <code>0.0</code>, <code>boolean</code> → <code>false</code>, and any reference type → <code>null</code>. For example, every element of <code>new String[2][3]</code> is initially <code>null</code>.
+  </div>
+  <div class="concept-box teal" data-lang="zh">
+    <strong>元素默认值</strong>
+    使用 <code>new</code> 创建时，每个元素都会取得该类型的默认值：<code>int</code> → <code>0</code>，<code>double</code> → <code>0.0</code>，<code>boolean</code> → <code>false</code>，任意引用类型 → <code>null</code>。例如，<code>new String[2][3]</code> 的每个元素初始时都是 <code>null</code>。
+  </div>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Valid 2D Indices</strong>
+    For a nonempty rectangular array, a valid row index is <code>0</code> through <code>arr.length - 1</code>, and a valid column index is <code>0</code> through <code>arr[0].length - 1</code>. Access outside either range results in an <code>ArrayIndexOutOfBoundsException</code>.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>有效的二维索引</strong>
+    对非空矩形二维数组，有效行索引是 <code>0</code> 到 <code>arr.length - 1</code>，有效列索引是 <code>0</code> 到 <code>arr[0].length - 1</code>。访问任一范围之外的位置会导致 <code>ArrayIndexOutOfBoundsException</code>。
   </div>
 </section>
 
@@ -1238,13 +1491,26 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
     <p style="margin-top:10px"><strong>判断代码是哪种遍历的快速方法：</strong>看哪个下标在<em>外层</em>循环。如果行下标 <code>r</code> 变化最慢（在外层），输出就是按行进行。如果列下标变化最慢，输出就是按列进行。无论哪种方式，总迭代次数都是 <code>rows × cols</code>。</p>
   </div>
 
+  <h3 data-lang="en">A Uniquely Defined Order: Serpentine</h3>
+  <h3 data-lang="zh">自定义顺序示例：蛇形遍历</h3>
+  <p data-lang="en">A problem may define its own traversal order. In a serpentine traversal, rows with even indices move left to right and rows with odd indices move right to left. For the same grid, the output is <code>1 2 3 6 5 4</code>.</p>
+  <p data-lang="zh">题目也可能自行规定遍历顺序。在蛇形遍历中，索引为偶数的行从左向右，索引为奇数的行从右向左。对同一个网格，输出为 <code>1 2 3 6 5 4</code>。</p>
+<pre><span class="kw">for</span> (<span class="ty">int</span> r = <span class="num">0</span>; r &lt; g.<span class="fn">length</span>; r++) {
+    <span class="kw">if</span> (r % <span class="num">2</span> == <span class="num">0</span>) {
+        <span class="kw">for</span> (<span class="ty">int</span> c = <span class="num">0</span>; c &lt; g[<span class="num">0</span>].<span class="fn">length</span>; c++)
+            System.out.<span class="fn">print</span>(g[r][c] + <span class="str">" "</span>);
+    } <span class="kw">else</span> {
+        <span class="kw">for</span> (<span class="ty">int</span> c = g[<span class="num">0</span>].<span class="fn">length</span> - <span class="num">1</span>; c &gt;= <span class="num">0</span>; c--)
+            System.out.<span class="fn">print</span>(g[r][c] + <span class="str">" "</span>);
+    }
+}</pre>
   <div class="concept-box red" data-lang="en">
-    <strong>AP Trap: Ragged 2D arrays</strong>
-    Java 2D arrays are arrays-of-arrays, so rows can have different lengths (e.g., <code>{{1,2},{3,4,5}}</code>). Using <code>g[0].length</code> as the inner bound assumes every row is the same length as row 0, which fails on ragged arrays. The safer pattern is <code>g[r].length</code> as the inner bound, which re-reads the row length each pass.
+    <strong>AP Scope: Rectangular 2D Arrays</strong>
+    For the current AP CSA course and exam, 2D arrays are rectangular: every row has the same number of columns. Use <code>g.length</code> for the row count and <code>g[0].length</code> for the column count. Java can represent nonrectangular arrays, but writing or analyzing them is explicitly outside the tested scope, so do not treat ragged-array behavior as an AP trap.
   </div>
   <div class="concept-box red" data-lang="zh">
-    <strong>AP 陷阱：不规则二维数组（<code>ragged 2D array</code>）</strong>
-    Java 的二维数组是数组的数组，所以各行的长度可以不同（例如 <code>{{1,2},{3,4,5}}</code>）。用 <code>g[0].length</code> 作为内层循环边界，就是默认所有行的长度都和第 0 行一样，遇到不规则数组就会出错。更安全的写法是用 <code>g[r].length</code> 作为内层边界，每次都重新读取当前行的长度。
+    <strong>AP 范围：矩形二维数组</strong>
+    在当前 AP CSA 课程与考试中，二维数组是矩形的：每一行的列数相同。用 <code>g.length</code> 表示行数，用 <code>g[0].length</code> 表示列数。Java 可以表示非矩形数组，但编写或分析这类数组被明确排除在考试范围之外，因此不要把 ragged-array 行为当作 AP 陷阱来学习。
   </div>
 </section>
 
@@ -1259,6 +1525,27 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
 
   <p data-lang="en">Standard 2D array algorithms extend 1D algorithms to work on the entire grid or specific rows, columns, or subsections.</p>
   <p data-lang="zh">标准的二维数组算法是把一维算法扩展到整张网格，或者扩展到特定的行、列或子区域上。</p>
+
+  <div class="table-wrap" data-lang="en">
+    <table>
+      <tr><th>Required family</th><th>2D traversal decision</th></tr>
+      <tr><td>Minimum/maximum; sum/average</td><td>Choose the entire grid or designated row, column, or subsection</td></tr>
+      <tr><td>At least one; all; count</td><td>Return on a match/counterexample or update a counter</td></tr>
+      <tr><td>Consecutive pairs; duplicates</td><td>Define whether neighbors are horizontal/vertical and avoid crossing a boundary</td></tr>
+      <tr><td>Shift/rotate</td><td>Move within one row left/right or one column up/down in a safe copy direction</td></tr>
+      <tr><td>Reverse</td><td>Swap opposite positions within a designated row or column</td></tr>
+    </table>
+  </div>
+  <div class="table-wrap" data-lang="zh">
+    <table>
+      <tr><th>必备类别</th><th>二维遍历决策</th></tr>
+      <tr><td>最小/最大值；总和/平均值</td><td>确定处理整张网格，还是指定行、列或子区域</td></tr>
+      <tr><td>至少一个；全部；计数</td><td>找到匹配/反例时返回，或更新计数器</td></tr>
+      <tr><td>相邻元素对；重复元素</td><td>明确相邻是水平方向还是垂直方向，并避免越过边界</td></tr>
+      <tr><td>平移/循环移位</td><td>在一行内向左/右移动，或在一列内向上/下移动，并选择安全的复制方向</td></tr>
+      <tr><td>反转</td><td>交换指定行或列中位置相对的元素</td></tr>
+    </table>
+  </div>
 
   <details>
     <summary><span data-lang="en">Sum of a Specific Row or Column</span><span data-lang="zh">求某一行或某一列的和</span></summary>
@@ -1284,6 +1571,8 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
   <details>
     <summary><span data-lang="en">Find Max of Entire 2D Array</span><span data-lang="zh">求整张二维数组的最大值</span></summary>
     <div class="detail-body">
+      <p data-lang="en">This example assumes a rectangular grid with at least one row and one column, because its initial maximum is read from <code>grid[0][0]</code>.</p>
+      <p data-lang="zh">此示例假定网格至少包含一行一列，因为它的初始最大值从 <code>grid[0][0]</code> 读取。</p>
 <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">findMax2D</span>(<span class="ty">int</span>[][] grid) {
     <span class="ty">int</span> max = grid[<span class="num">0</span>][<span class="num">0</span>];
     <span class="kw">for</span> (<span class="ty">int</span>[] row : grid) {
@@ -1293,6 +1582,83 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
     }
     <span class="kw">return</span> max;
 }</pre>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">Properties and Counts in a Subsection</span><span data-lang="zh">子区域中的性质判断与计数</span></summary>
+    <div class="detail-body">
+      <p data-lang="en">The bounds define a rectangular subsection: rows <code>firstRow</code> through <code>lastRow</code> and columns <code>firstCol</code> through <code>lastCol</code>, inclusive.</p>
+      <p data-lang="zh">边界定义一个矩形子区域：从 <code>firstRow</code> 到 <code>lastRow</code> 的行，以及从 <code>firstCol</code> 到 <code>lastCol</code> 的列，均包含端点。</p>
+<pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countNegative</span>(<span class="ty">int</span>[][] grid,
+                                <span class="ty">int</span> firstRow, <span class="ty">int</span> lastRow,
+                                <span class="ty">int</span> firstCol, <span class="ty">int</span> lastCol) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> r = firstRow; r &lt;= lastRow; r++)
+        <span class="kw">for</span> (<span class="ty">int</span> c = firstCol; c &lt;= lastCol; c++)
+            <span class="kw">if</span> (grid[r][c] &lt; <span class="num">0</span>) count++;
+    <span class="kw">return</span> count;
+}</pre>
+      <p data-lang="en">The same bounds support a subsection minimum, sum, average, “at least one,” or “all” algorithm by changing the accumulator and update. For “all,” return <code>false</code> on the first counterexample; for “at least one,” return <code>true</code> on the first match.</p>
+      <p data-lang="zh">只需改变累积变量和更新方式，同样的边界就能用于求子区域最小值、总和、平均值、“至少一个”或“全部”算法。判断“全部”时遇到第一个反例就返回 <code>false</code>；判断“至少一个”时遇到第一个匹配就返回 <code>true</code>。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">Consecutive Pairs and Duplicates</span><span data-lang="zh">相邻元素对与重复元素</span></summary>
+    <div class="detail-body">
+<pre><span class="cm" data-lang="en">// Check horizontal consecutive pairs throughout the grid</span><span class="cm" data-lang="zh">// 检查整张网格中的水平相邻元素对</span>
+<span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">hasHorizontalRepeat</span>(<span class="ty">int</span>[][] grid) {
+    <span class="kw">for</span> (<span class="ty">int</span> r = <span class="num">0</span>; r &lt; grid.<span class="fn">length</span>; r++)
+        <span class="kw">for</span> (<span class="ty">int</span> c = <span class="num">0</span>; c &lt; grid[<span class="num">0</span>].<span class="fn">length</span> - <span class="num">1</span>; c++)
+            <span class="kw">if</span> (grid[r][c] == grid[r][c + <span class="num">1</span>]) <span class="kw">return true</span>;
+    <span class="kw">return false</span>;
+}
+
+<span class="cm" data-lang="en">// Check for a duplicate anywhere within one designated row</span><span class="cm" data-lang="zh">// 检查指定行内任意位置是否存在重复元素</span>
+<span class="kw">public static</span> <span class="ty">boolean</span> <span class="fn">hasDuplicateInRow</span>(<span class="ty">int</span>[][] grid, <span class="ty">int</span> row) {
+    <span class="kw">for</span> (<span class="ty">int</span> c1 = <span class="num">0</span>; c1 &lt; grid[<span class="num">0</span>].<span class="fn">length</span>; c1++)
+        <span class="kw">for</span> (<span class="ty">int</span> c2 = c1 + <span class="num">1</span>; c2 &lt; grid[<span class="num">0</span>].<span class="fn">length</span>; c2++)
+            <span class="kw">if</span> (grid[row][c1] == grid[row][c2]) <span class="kw">return true</span>;
+    <span class="kw">return false</span>;
+}</pre>
+      <p data-lang="en">For vertical consecutive pairs, compare <code>grid[r][c]</code> with <code>grid[r + 1][c]</code> and stop the row loop at <code>grid.length - 1</code>. A whole-grid duplicate check extends the nested comparison so every position is compared only with positions that come later.</p>
+      <p data-lang="zh">检查垂直相邻元素对时，比较 <code>grid[r][c]</code> 与 <code>grid[r + 1][c]</code>，并让行循环在 <code>grid.length - 1</code> 之前停止。检查整张网格的重复元素时，可扩展嵌套比较，使每个位置只与它后面的位置比较。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span data-lang="en">Shift, Rotate, and Reverse a Row or Column</span><span data-lang="zh">平移、循环移动或反转一行/一列</span></summary>
+    <div class="detail-body">
+      <p data-lang="en">These examples assume a rectangular grid with at least one row and one column.</p>
+      <p data-lang="zh">以下示例假定网格为至少包含一行一列的矩形二维数组。</p>
+<pre><span class="cm" data-lang="en">// Rotate one row right</span><span class="cm" data-lang="zh">// 把指定行向右循环移动</span>
+<span class="kw">public static void</span> <span class="fn">rotateRowRight</span>(<span class="ty">int</span>[][] grid, <span class="ty">int</span> row) {
+    <span class="ty">int</span> last = grid[row][grid[<span class="num">0</span>].<span class="fn">length</span> - <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> c = grid[<span class="num">0</span>].<span class="fn">length</span> - <span class="num">1</span>; c &gt; <span class="num">0</span>; c--)
+        grid[row][c] = grid[row][c - <span class="num">1</span>];
+    grid[row][<span class="num">0</span>] = last;
+}
+
+<span class="cm" data-lang="en">// Rotate one column down</span><span class="cm" data-lang="zh">// 把指定列向下循环移动</span>
+<span class="kw">public static void</span> <span class="fn">rotateColumnDown</span>(<span class="ty">int</span>[][] grid, <span class="ty">int</span> col) {
+    <span class="ty">int</span> last = grid[grid.<span class="fn">length</span> - <span class="num">1</span>][col];
+    <span class="kw">for</span> (<span class="ty">int</span> r = grid.<span class="fn">length</span> - <span class="num">1</span>; r &gt; <span class="num">0</span>; r--)
+        grid[r][col] = grid[r - <span class="num">1</span>][col];
+    grid[<span class="num">0</span>][col] = last;
+}
+
+<span class="cm" data-lang="en">// Reverse one row in place</span><span class="cm" data-lang="zh">// 原地反转指定行</span>
+<span class="kw">public static void</span> <span class="fn">reverseRow</span>(<span class="ty">int</span>[][] grid, <span class="ty">int</span> row) {
+    <span class="kw">for</span> (<span class="ty">int</span> c = <span class="num">0</span>; c &lt; grid[<span class="num">0</span>].<span class="fn">length</span> / <span class="num">2</span>; c++) {
+        <span class="ty">int</span> opposite = grid[<span class="num">0</span>].<span class="fn">length</span> - <span class="num">1</span> - c;
+        <span class="ty">int</span> temp = grid[row][c];
+        grid[row][c] = grid[row][opposite];
+        grid[row][opposite] = temp;
+    }
+}</pre>
+      <p data-lang="en">A shift uses the same copy loops but writes a replacement value instead of restoring the saved end. Left/up versions reverse the copy direction. To reverse a column, swap <code>grid[r][col]</code> with <code>grid[grid.length - 1 - r][col]</code>.</p>
+      <p data-lang="zh">平移使用相同的复制循环，但会写入替代值，而不是恢复预先保存的末端值。向左/向上的版本会反转复制方向。若要反转一列，可交换 <code>grid[r][col]</code> 与 <code>grid[grid.length - 1 - r][col]</code>。</p>
     </div>
   </details>
 
@@ -1317,14 +1683,32 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
 
   <h3 data-lang="en">Linear Search</h3>
   <h3 data-lang="zh">线性查找（<code>linear search</code>）</h3>
-  <p data-lang="en"><strong>Linear search</strong> checks each element in order until the target is found or all elements have been checked. Works on both sorted and unsorted data.</p>
-  <p data-lang="zh"><strong>线性查找</strong>按顺序依次检查每一个元素，直到找到目标或检查完所有元素为止。对有序和无序数据都适用。</p>
+  <p data-lang="en"><strong>Linear search</strong> checks each element in order until the target is found or all elements have been checked. It works on sorted or unsorted arrays and <code>ArrayList</code> objects, and the search may begin at either end.</p>
+  <p data-lang="zh"><strong>线性查找</strong>按顺序依次检查每一个元素，直到找到目标或检查完所有元素为止。它适用于有序或无序的数组和 <code>ArrayList</code>，并且可以从任意一端开始查找。</p>
 <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">linearSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target) {
     <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="fn">length</span>; i++) {
         <span class="kw">if</span> (arr[i] == target) <span class="kw">return</span> i;
     }
     <span class="kw">return</span> -<span class="num">1</span>;  <span class="cm" data-lang="en">// not found</span><span class="cm" data-lang="zh">// 未找到</span>
 }</pre>
+
+  <h3 data-lang="en">Search from the Other End and Search an ArrayList</h3>
+  <h3 data-lang="zh">从另一端查找与查找 ArrayList</h3>
+<pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">linearSearchFromRight</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = arr.<span class="fn">length</span> - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--)
+        <span class="kw">if</span> (arr[i] == target) <span class="kw">return</span> i;
+    <span class="kw">return</span> -<span class="num">1</span>;
+}
+
+<span class="kw">public static</span> <span class="ty">int</span> <span class="fn">linearSearch</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">String</span>&gt; list,
+                               <span class="ty">String</span> target) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; list.<span class="fn">size</span>(); i++)
+        <span class="kw">if</span> (list.<span class="fn">get</span>(i).<span class="fn">equals</span>(target)) <span class="kw">return</span> i;
+    <span class="kw">return</span> -<span class="num">1</span>;
+}</pre>
+
+  <p data-lang="en">If duplicates exist, direction affects which matching index is returned: the left-to-right version returns the first match from the left; the right-to-left version returns the first match from the right.</p>
+  <p data-lang="zh">如果存在重复值，查找方向会影响返回哪个匹配索引：从左向右的版本返回左侧遇到的第一个匹配，从右向左的版本返回右侧遇到的第一个匹配。</p>
 
   <h3 data-lang="en">Linear Search on a 2D Array</h3>
   <h3 data-lang="zh">在二维数组上的线性查找</h3>
@@ -1386,7 +1770,7 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
         <tr><th>Feature</th><th>Selection Sort</th><th>Insertion Sort</th></tr>
         <tr><td>Method</td><td>Select min, swap into place</td><td>Insert into sorted portion</td></tr>
         <tr><td>Position after pass</td><td>Final position</td><td>Correct but not necessarily final</td></tr>
-        <tr><td>Best on</td><td>Small arrays</td><td>Nearly sorted arrays</td></tr>
+        <tr><td>Core comparison</td><td>Selects the minimum from the unsorted suffix</td><td>Shifts values within the growing sorted prefix</td></tr>
       </table>
     </div>
   </div>
@@ -1397,14 +1781,14 @@ matrix[<span class="num">0</span>][<span class="num">0</span>] = <span class="nu
         <tr><th>特性</th><th>选择排序</th><th>插入排序</th></tr>
         <tr><td>方法</td><td>选出最小值，交换到位</td><td>插入到已排序部分</td></tr>
         <tr><td>每轮过后元素位置</td><td>最终位置</td><td>正确但不一定是最终位置</td></tr>
-        <tr><td>适合的场景</td><td>小数组</td><td>接近有序的数组</td></tr>
+        <tr><td>核心区别</td><td>从未排序后缀中选出最小值</td><td>在不断扩大的有序前缀中移动元素</td></tr>
       </table>
     </div>
   </div>
 
   <div class="card" style="border-left:4px solid var(--accent);" data-lang="en">
     <div class="card-header" style="color:var(--accent);">Worked Example: Sorting state after pass k</div>
-    <p>Both algorithms keep the first <code>k</code> elements sorted after pass <code>k</code>, but only one of them puts those elements in their <em>final</em> positions.</p>
+    <p>After pass <code>k</code>, selection sort has placed the smallest <code>k</code> elements in final positions. Insertion sort has sorted the first <code>k + 1</code> original elements relative to one another, but they need not be in final positions.</p>
 <pre>Start: [5, 2, 4, 6, 1, 3]
 
 Selection sort, after pass 1: [<strong>1</strong>, 2, 4, 6, 5, 3]
@@ -1413,11 +1797,11 @@ Selection sort, after pass 1: [<strong>1</strong>, 2, 4, 6, 5, 3]
 Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
   ↳ The first two elements are sorted, but 5 is NOT in its final position.
     The 1 and 3 still to come will push it right.</pre>
-    <p style="margin-top:10px"><strong>How AP MCQs phrase this:</strong> "After pass 3, which of the following must be true?" The selection-sort answer is "the smallest 3 elements are in positions 0–2". The insertion-sort answer is "the first 3 elements are in sorted order relative to each other" (not relative to the full array).</p>
+    <p style="margin-top:10px"><strong>How AP MCQs phrase this:</strong> "After pass 3, which of the following must be true?" The selection-sort answer is "the smallest 3 elements are in positions 0–2". The insertion-sort answer is "the first 4 original elements are in sorted order relative to each other" (not relative to the full array).</p>
   </div>
   <div class="card" style="border-left:4px solid var(--accent);" data-lang="zh">
     <div class="card-header" style="color:var(--accent);">例题：第 k 轮过后的排序状态</div>
-    <p>两种算法在第 <code>k</code> 轮过后，前 <code>k</code> 个元素都是有序的，但只有其中一种算法会让这些元素处于它们的<em>最终</em>位置。</p>
+    <p>第 <code>k</code> 轮过后，选择排序已经把最小的 <code>k</code> 个元素放到最终位置；插入排序则把原序列的前 <code>k + 1</code> 个元素按彼此关系排好序，但它们不一定处于最终位置。</p>
 <pre>起始: [5, 2, 4, 6, 1, 3]
 
 选择排序，第 1 轮后: [<strong>1</strong>, 2, 4, 6, 5, 3]
@@ -1426,15 +1810,15 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 插入排序，第 1 轮后: [<strong>2, 5</strong>, 4, 6, 1, 3]
   ↳ 前两个元素已经有序，但 5 还不在它的最终位置。
     后面还会出现的 1 和 3 会把它向右挤。</pre>
-    <p style="margin-top:10px"><strong>AP 选择题的常见问法：</strong>"第 3 轮过后，下列哪一项一定成立？"选择排序的答案是"最小的 3 个元素位于位置 0–2"。插入排序的答案是"前 3 个元素相对彼此有序"（而不是相对于整个数组有序）。</p>
+    <p style="margin-top:10px"><strong>AP 选择题的常见问法：</strong>"第 3 轮过后，下列哪一项一定成立？"选择排序的答案是"最小的 3 个元素位于位置 0–2"。插入排序的答案是"原序列的前 4 个元素相对彼此有序"（而不是相对于整个数组有序）。</p>
   </div>
 
   <div class="concept-box red" data-lang="en">
-    <strong>AP Trap: "Number of passes" includes the implicit last one</strong>
+    <strong>AP Trap: Exactly <code>n - 1</code> Outer Passes</strong>
     For an array of <code>n</code> elements, selection sort runs <code>n - 1</code> outer passes (the last element falls into place automatically). Insertion sort also runs <code>n - 1</code> outer passes (it starts at index 1 and inserts each subsequent element). The classic wrong answer on MCQs is <code>n</code> passes.
   </div>
   <div class="concept-box red" data-lang="zh">
-    <strong>AP 陷阱："轮数"包含那隐含的最后一轮</strong>
+    <strong>AP 陷阱：外层循环恰好执行 <code>n - 1</code> 轮</strong>
     对长度为 <code>n</code> 的数组，选择排序的外层循环跑 <code>n - 1</code> 轮（最后一个元素会自动落到正确位置）。插入排序的外层循环也跑 <code>n - 1</code> 轮（它从索引 1 开始，依次插入后续每一个元素）。选择题中经典的错误答案是 <code>n</code> 轮。
   </div>
 </section>
@@ -1450,6 +1834,9 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 
   <p data-lang="en">A <strong>recursive method</strong> is a method that calls itself. Every recursive method needs at least one <strong>base case</strong> (stops the recursion) and at least one <strong>recursive call</strong>.</p>
   <p data-lang="zh"><strong>递归方法</strong>是会调用自身的方法。每个递归方法都至少需要一个<strong>基线条件</strong>（<code>base case</code>，用来终止递归）和至少一次<strong>递归调用</strong>（<code>recursive case</code>）。</p>
+
+  <p data-lang="en">The factorial example assumes <code>n &gt;= 0</code>; a negative input would keep moving away from the base case.</p>
+  <p data-lang="zh">下面的阶乘示例假定 <code>n &gt;= 0</code>；负数输入会不断远离基线条件。</p>
 
 <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">factorial</span>(<span class="ty">int</span> n) {
     <span class="kw">if</span> (n == <span class="num">0</span>)          <span class="cm" data-lang="en">// base case</span><span class="cm" data-lang="zh">// 基线条件</span>
@@ -1473,11 +1860,11 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 
   <div class="concept-box green" data-lang="en">
     <strong>Exam Tip</strong>
-    Recursion appears <strong>only on multiple-choice</strong>, you won't need to write recursive code on the free-response. Practice tracing recursive calls using call trees or stack traces.
+    Current AP CSA requires you to determine the result of recursive calls; writing recursive code is explicitly outside scope. Practice tracing parameter values, pending operations, and returns with a call tree.
   </div>
   <div class="concept-box green" data-lang="zh">
     <strong>考试提示</strong>
-    递归<strong>只会出现在选择题中</strong>，你不需要在自由作答题中编写递归代码。请通过调用树或栈调用图来练习追踪递归调用。
+    当前 AP CSA 要求你判断递归调用的结果；编写递归代码被明确排除在范围之外。请用调用树练习追踪形参值、等待执行的运算和返回过程。
   </div>
 
   <div class="quiz" data-answer="2">
@@ -1551,10 +1938,47 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
   <h2 data-lang="en">Recursive Searching and Sorting</h2>
   <h2 data-lang="zh">递归查找与排序</h2>
 
+  <h3 data-lang="en">Tracing Recursive Traversals</h3>
+  <h3 data-lang="zh">追踪递归遍历</h3>
+  <p data-lang="en">Recursion can traverse <code>String</code>, array, and <code>ArrayList</code> objects. Current AP CSA asks you to <strong>determine the result</strong> of recursive code, not to write recursive methods. In each example, the index parameter records progress toward the base case.</p>
+  <p data-lang="zh">递归可以遍历 <code>String</code>、数组和 <code>ArrayList</code>。当前 AP CSA 要求你<strong>判断递归代码的结果</strong>，而不是编写递归方法。在每个示例中，索引形参都记录着朝基线条件推进的过程。</p>
+<pre><span class="cm" data-lang="en">// String traversal: everyOther("ABCDE", 0) returns "ACE"</span><span class="cm" data-lang="zh">// String 遍历：everyOther("ABCDE", 0) 返回 "ACE"</span>
+<span class="kw">public static</span> <span class="ty">String</span> <span class="fn">everyOther</span>(<span class="ty">String</span> text, <span class="ty">int</span> index) {
+    <span class="kw">if</span> (index &gt;= text.<span class="fn">length</span>()) <span class="kw">return</span> <span class="str">""</span>;
+    <span class="kw">return</span> text.<span class="fn">substring</span>(index, index + <span class="num">1</span>)
+           + <span class="fn">everyOther</span>(text, index + <span class="num">2</span>);
+}
+
+<span class="cm" data-lang="en">// Array traversal: sumFrom({3, 1, 4}, 0) returns 8</span><span class="cm" data-lang="zh">// 数组遍历：sumFrom({3, 1, 4}, 0) 返回 8</span>
+<span class="kw">public static</span> <span class="ty">int</span> <span class="fn">sumFrom</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> index) {
+    <span class="kw">if</span> (index == nums.<span class="fn">length</span>) <span class="kw">return</span> <span class="num">0</span>;
+    <span class="kw">return</span> nums[index] + <span class="fn">sumFrom</span>(nums, index + <span class="num">1</span>);
+}
+
+<span class="cm" data-lang="en">// ArrayList traversal: for [-2, 5, 0, 7], countPositive(..., 0) returns 2</span><span class="cm" data-lang="zh">// ArrayList 遍历：对 [-2, 5, 0, 7]，countPositive(..., 0) 返回 2</span>
+<span class="kw">public static</span> <span class="ty">int</span> <span class="fn">countPositive</span>(<span class="ty">ArrayList</span>&lt;<span class="ty">Integer</span>&gt; nums,
+                                <span class="ty">int</span> index) {
+    <span class="kw">if</span> (index == nums.<span class="fn">size</span>()) <span class="kw">return</span> <span class="num">0</span>;
+    <span class="ty">int</span> current = <span class="num">0</span>;
+    <span class="kw">if</span> (nums.<span class="fn">get</span>(index) &gt; <span class="num">0</span>) current = <span class="num">1</span>;
+    <span class="kw">return</span> current + <span class="fn">countPositive</span>(nums, index + <span class="num">1</span>);
+}</pre>
+
+  <div class="concept-box orange" data-lang="en">
+    <strong>Trace, Do Not Author</strong>
+    For <code>sumFrom</code>, the return expression expands to <code>3 + 1 + 4 + 0</code>. Track the parameter values and the pending operations on the way down, then evaluate returns on the way back up. Writing recursive code is outside the current course and exam scope.
+  </div>
+  <div class="concept-box orange" data-lang="zh">
+    <strong>只需追踪，不要求编写</strong>
+    对 <code>sumFrom</code>，返回表达式展开为 <code>3 + 1 + 4 + 0</code>。向下调用时记录形参值和等待执行的运算，再在返回时从下往上求值。编写递归代码不在当前课程与考试范围内。
+  </div>
+
   <h3 data-lang="en">Binary Search</h3>
   <h3 data-lang="zh">二分查找（<code>binary search</code>）</h3>
   <p data-lang="en"><strong>Binary search</strong> requires data to be <strong>sorted</strong>. It starts at the middle and eliminates half of the remaining elements each step.</p>
   <p data-lang="zh"><strong>二分查找</strong>要求数据必须<strong>有序</strong>。它从中间开始，每一步都把剩下的元素排除掉一半。</p>
+  <p data-lang="en">Binary search can be implemented iteratively or recursively on a sorted array or <code>ArrayList</code>. The recursive array version below is for tracing; students are not required to write recursive code.</p>
+  <p data-lang="zh">二分查找可以用迭代或递归方式处理有序数组或 <code>ArrayList</code>。下面的递归数组版本用于追踪；学生不需要编写递归代码。</p>
 
 <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">binarySearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> lo, <span class="ty">int</span> hi, <span class="ty">int</span> target) {
     <span class="kw">if</span> (lo &gt; hi) <span class="kw">return</span> -<span class="num">1</span>;  <span class="cm" data-lang="en">// base case: not found</span><span class="cm" data-lang="zh">// 基线条件：未找到</span>
@@ -1572,7 +1996,7 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
       <table>
         <tr><th>Feature</th><th>Linear Search</th><th>Binary Search</th></tr>
         <tr><td>Requires sorted data?</td><td>No</td><td>Yes</td></tr>
-        <tr><td>Worst-case comparisons (n items)</td><td>n</td><td>log₂(n)</td></tr>
+        <tr><td>Worst-case comparisons (n items)</td><td>n</td><td>At most ⌊log₂(n)⌋ + 1 for <code>n &gt; 0</code></td></tr>
         <tr><td>Example: 1,000,000 elements</td><td>1,000,000</td><td>~20</td></tr>
       </table>
     </div>
@@ -1583,7 +2007,7 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
       <table>
         <tr><th>特性</th><th>线性查找</th><th>二分查找</th></tr>
         <tr><td>是否要求数据有序？</td><td>否</td><td>是</td></tr>
-        <tr><td>最坏情况比较次数（n 个元素）</td><td>n</td><td>log₂(n)</td></tr>
+        <tr><td>最坏情况比较次数（n 个元素）</td><td>n</td><td>当 <code>n &gt; 0</code> 时至多为 ⌊log₂(n)⌋ + 1</td></tr>
         <tr><td>例：1,000,000 个元素</td><td>1,000,000</td><td>约 20</td></tr>
       </table>
     </div>
@@ -1591,8 +2015,8 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 
   <h3 data-lang="en">Merge Sort</h3>
   <h3 data-lang="zh">归并排序</h3>
-  <p data-lang="en"><strong>Merge sort</strong> is a recursive sorting algorithm that divides the array in half, sorts each half, then merges the sorted halves together.</p>
-  <p data-lang="zh"><strong>归并排序</strong>是一种递归的排序算法：把数组对半分开，分别对两半进行排序，然后再把已排序的两半合并起来。</p>
+  <p data-lang="en"><strong>Merge sort</strong> is a recursive sorting algorithm for arrays or <code>ArrayList</code> objects. It divides the collection in half, sorts each half, then merges the sorted halves together.</p>
+  <p data-lang="zh"><strong>归并排序</strong>是一种用于数组或 <code>ArrayList</code> 对象的递归排序算法：把集合对半分开，分别对两半进行排序，然后再把已排序的两半合并起来。</p>
 
   <div class="card" data-lang="en">
     <p><strong>1. Divide</strong>: Split the array into two halves repeatedly until each subarray has one element.</p>
@@ -1610,6 +2034,15 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 <span class="cm" data-lang="en">// Split: [38] [27]    [43] [3]</span><span class="cm" data-lang="zh">// 分解：[38] [27]    [43] [3]</span>
 <span class="cm" data-lang="en">// Merge: [27, 38]     [3, 43]</span><span class="cm" data-lang="zh">// 合并：[27, 38]     [3, 43]</span>
 <span class="cm" data-lang="en">// Merge: [3, 27, 38, 43]</span><span class="cm" data-lang="zh">// 合并：[3, 27, 38, 43]</span></pre>
+
+  <div class="concept-box red" data-lang="en">
+    <strong>Current AP Algorithm Boundary</strong>
+    For search, the assessed algorithms are linear search and binary search. For sorting, they are selection sort, insertion sort, and merge sort. Writing recursive code and writing merge-sort code are outside scope; you should trace recursive calls and merge-sort stages instead.
+  </div>
+  <div class="concept-box red" data-lang="zh">
+    <strong>当前 AP 算法边界</strong>
+    查找部分考查线性查找和二分查找；排序部分考查选择排序、插入排序和归并排序。编写递归代码和编写归并排序代码不在范围内；你应当能够追踪递归调用与归并排序的各个阶段。
+  </div>
 </section>
 
 <hr class="sep">
@@ -1618,8 +2051,8 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 <section class="section" id="mcq-patterns">
   <div class="section-label" data-lang="en">AP MCQ Preview</div>
   <div class="section-label" data-lang="zh">AP 选择题预览</div>
-  <h2 data-lang="en">Unit 4 MCQ Patterns That Show Up Every Year</h2>
-  <h2 data-lang="zh">单元 4 每年都会出现的选择题套路</h2>
+  <h2 data-lang="en">Common Unit 4 MCQ Patterns</h2>
+  <h2 data-lang="zh">单元 4 常见选择题模式</h2>
   <p data-lang="en">Unit 4 carries the most weight on the AP CSA MCQ section. The questions cluster around a handful of operational pitfalls. Knowing the pattern usually beats tracing the whole snippet.</p>
   <p data-lang="zh">单元 4 在 AP CSA 选择题中占比最大。题目集中考查几类操作上的陷阱。摸清套路往往比从头追踪整段代码更高效。</p>
 
@@ -1643,29 +2076,29 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
 
   <div class="concept-box" data-lang="en">
     <strong>Pattern 3: Remove during forward traversal</strong>
-    Calling <code>list.remove(i)</code> in a forward indexed loop without a compensating <code>i--</code> skips the element that slid into position <code>i</code>. Either traverse backward or adjust the index. Using an enhanced for at all throws <code>ConcurrentModificationException</code>. (See Topic 4.9.)
+    Calling <code>list.remove(i)</code> in a forward indexed loop without a compensating <code>i--</code> skips the element that slid into position <code>i</code>. Either traverse backward or adjust the index. Adding or removing during an enhanced for traversal can result in <code>ConcurrentModificationException</code>, so do not change the list's size in that loop form. (See Topic 4.9.)
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>套路 3：正向遍历过程中的删除</strong>
-    在正向带索引循环中调用 <code>list.remove(i)</code> 而没有相应的 <code>i--</code>，会跳过滑到位置 <code>i</code> 的元素。要么倒序遍历，要么调整索引。只要使用增强 for 循环就会抛出 <code>ConcurrentModificationException</code>。（见小节 4.9。）
+    在正向带索引循环中调用 <code>list.remove(i)</code> 而没有相应的 <code>i--</code>，会跳过滑到位置 <code>i</code> 的元素。要么倒序遍历，要么调整索引。在增强 for 遍历中添加或删除元素可能导致 <code>ConcurrentModificationException</code>，因此不要在这种循环中改变列表大小。（见小节 4.9。）
   </div>
 
   <div class="concept-box" data-lang="en">
     <strong>Pattern 4: Row-major vs column-major output</strong>
-    Which loop is outer tells you the traversal direction. Iteration count is always <code>rows × cols</code>. Ragged 2D arrays use <code>g[r].length</code> as the per-row inner bound, not <code>g[0].length</code>. (See Topic 4.12.)
+    Which loop is outer tells you the traversal direction. For the rectangular 2D arrays assessed by current AP CSA, a complete traversal visits <code>rows × cols</code> elements; use <code>g.length</code> and <code>g[0].length</code> as the dimensions. Nonrectangular arrays are outside scope. (See Topic 4.12.)
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>套路 4：行优先 vs 列优先的输出</strong>
-    哪个循环在外层，决定了遍历方向。总迭代次数始终是 <code>rows × cols</code>。不规则二维数组的内层边界要用 <code>g[r].length</code>（按行读取），而不是 <code>g[0].length</code>。（见小节 4.12。）
+    哪个循环在外层，决定了遍历方向。对于当前 AP CSA 考查的矩形二维数组，完整遍历会访问 <code>rows × cols</code> 个元素；维度使用 <code>g.length</code> 与 <code>g[0].length</code>。非矩形数组不在范围内。（见小节 4.12。）
   </div>
 
   <div class="concept-box" data-lang="en">
     <strong>Pattern 5: Sort state after pass k</strong>
-    Selection sort: the first <code>k</code> elements are the <em>k smallest</em>, in final position. Insertion sort: the first <code>k</code> elements are sorted <em>relative to each other</em>, but not necessarily in their final spots. (See Topic 4.15.)
+    Selection sort: after pass <code>k</code>, the first <code>k</code> elements are the <em>k smallest</em>, in final position. Insertion sort: after pass <code>k</code>, the first <code>k + 1</code> original elements are sorted <em>relative to each other</em>, but not necessarily in their final spots. (See Topic 4.15.)
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>套路 5：第 k 轮过后的排序状态</strong>
-    选择排序：前 <code>k</code> 个元素就是<em>最小的 k 个</em>，且处于最终位置。插入排序：前 <code>k</code> 个元素<em>相对彼此</em>有序，但不一定在它们的最终位置上。（见小节 4.15。）
+    选择排序：第 <code>k</code> 轮后，前 <code>k</code> 个元素就是<em>最小的 k 个</em>，且处于最终位置。插入排序：第 <code>k</code> 轮后，原序列的前 <code>k + 1</code> 个元素<em>相对彼此</em>有序，但不一定在最终位置上。（见小节 4.15。）
   </div>
 
   <div class="concept-box" data-lang="en">
@@ -1677,14 +2110,6 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
     递归调用出现在表达式<em>前面</em>，意味着工作发生在递归返回的过程中。出现在<em>后面</em>，则发生在向下递归的过程中。先追踪基线条件，再由此展开。（见小节 4.16。）
   </div>
 
-  <div class="concept-box" data-lang="en">
-    <strong>Pattern 7: <code>ArrayList&lt;Integer&gt;.remove()</code> overload trap</strong>
-    <code>list.remove(2)</code> on an <code>ArrayList&lt;Integer&gt;</code> removes the element <em>at index 2</em>, not the value <code>2</code>. To remove the value, pass it boxed: <code>list.remove(Integer.valueOf(2))</code>. AP MCQs occasionally hide this in a "what is the list after these calls?" trace.
-  </div>
-  <div class="concept-box" data-lang="zh">
-    <strong>套路 7：<code>ArrayList&lt;Integer&gt;.remove()</code> 重载陷阱</strong>
-    对 <code>ArrayList&lt;Integer&gt;</code> 调用 <code>list.remove(2)</code>，删除的是<em>索引 2</em> 处的元素，而不是值为 <code>2</code> 的元素。要删除某个值，必须把它装箱后传入：<code>list.remove(Integer.valueOf(2))</code>。AP 选择题偶尔会把这一点藏在"执行这些调用后列表是什么？"的追踪题里。
-  </div>
 </section>
 
 <hr class="sep">
@@ -1713,7 +2138,7 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
     </div></div>
     <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner">
       <div class="flashcard-front"><span data-lang="en">Add/remove from ArrayList in enhanced for loop?</span><span data-lang="zh">在增强 for 循环中对 ArrayList 增/删？</span></div>
-      <div class="flashcard-back"><span data-lang="en">No, throws<br><code>ConcurrentModificationException</code></span><span data-lang="zh">不行，会抛出<br><code>ConcurrentModificationException</code></span></div>
+      <div class="flashcard-back"><span data-lang="en">Do not do it; changing size can result in<br><code>ConcurrentModificationException</code></span><span data-lang="zh">不要这样做；改变大小可能导致<br><code>ConcurrentModificationException</code></span></div>
     </div></div>
     <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner">
       <div class="flashcard-front"><span data-lang="en">Autoboxing: <code>int</code> → ???</span><span data-lang="zh">自动装箱：<code>int</code> → ？？？</span></div>
@@ -1775,18 +2200,18 @@ Insertion sort, after pass 1: [<strong>2, 5</strong>, 4, 6, 1, 3]
   </div>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-q" data-lang="en">2. Which causes a <code>ConcurrentModificationException</code>?</div>
-    <div class="quiz-q" data-lang="zh">2. 下列哪种操作会导致 <code>ConcurrentModificationException</code>？</div>
+    <div class="quiz-q" data-lang="en">2. Which operation can result in a <code>ConcurrentModificationException</code>?</div>
+    <div class="quiz-q" data-lang="zh">2. 下列哪种操作可能导致 <code>ConcurrentModificationException</code>？</div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">Modifying an element via indexed for loop on an ArrayList</span><span data-lang="zh">在 ArrayList 上用带索引的 for 循环修改某个元素</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">Removing an element during an enhanced for loop on an ArrayList</span><span data-lang="zh">在 ArrayList 的增强 for 循环中删除某个元素</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Using <code>get()</code> in an enhanced for loop</span><span data-lang="zh">在增强 for 循环中使用 <code>get()</code></span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Adding to an ArrayList outside of any loop</span><span data-lang="zh">在所有循环之外向 ArrayList 添加元素</span></div>
     </div>
-    <div class="quiz-explain correct-exp" data-lang="en">Correct! Changing the size of an ArrayList during an enhanced for loop causes ConcurrentModificationException.</div>
-    <div class="quiz-explain correct-exp" data-lang="zh">正确！在增强 for 循环中改变 ArrayList 的大小会导致 ConcurrentModificationException。</div>
-    <div class="quiz-explain wrong-exp" data-lang="en">Adding or removing elements during an enhanced for loop on an ArrayList causes ConcurrentModificationException.</div>
-    <div class="quiz-explain wrong-exp" data-lang="zh">在 ArrayList 的增强 for 循环中添加或删除元素会导致 ConcurrentModificationException。</div>
+    <div class="quiz-explain correct-exp" data-lang="en">Correct! Changing an ArrayList's size during an enhanced for traversal can result in ConcurrentModificationException, so additions and removals are not safe in that loop form.</div>
+    <div class="quiz-explain correct-exp" data-lang="zh">正确！在增强 for 遍历中改变 ArrayList 的大小可能导致 ConcurrentModificationException，因此不应在这种循环中添加或删除元素。</div>
+    <div class="quiz-explain wrong-exp" data-lang="en">Adding or removing elements changes the ArrayList's size and can result in ConcurrentModificationException during an enhanced for traversal.</div>
+    <div class="quiz-explain wrong-exp" data-lang="zh">添加或删除元素会改变 ArrayList 的大小，并可能在增强 for 遍历中导致 ConcurrentModificationException。</div>
   </div>
 
   <div class="quiz" data-answer="3">

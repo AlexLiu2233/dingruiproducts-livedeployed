@@ -527,6 +527,16 @@ body.lang-zh [data-lang="en"] { display: none; }
 @media (max-width: 430px){
   .nav-left .nav-badge:nth-child(2){ display: none !important; }
 }
+@media (max-width: 600px){
+  html{ scroll-padding-top: 120px; }
+  .topnav{ height: 104px; padding: 6px 8px; display: grid; grid-template-rows: 32px 44px; gap: 4px; }
+  .topnav-brand{ min-width: 0; justify-content: center; font-size: 0.95rem; }
+  .topnav-actions{ width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, auto)); justify-content: space-between; gap: 3px; }
+  .topnav-actions button, .topnav-actions .back-link{ padding: 7px 5px; font-size: 0.7rem; white-space: nowrap; }
+  .progress-track{ top: 104px; }
+  .sidebar{ top: 107px; }
+  .main-wrap{ margin-top: 112px !important; }
+}
 /* __end_sg_mobile_spacing__ */
 
   /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
@@ -1006,7 +1016,7 @@ body.lang-zh [data-lang="en"] { display: none; }
   <div class="quiz" data-answer="2">
     <div class="quiz-q"><span data-lang="en">What is the value of <code>13 / 5 + 13 % 5</code>?</span><span data-lang="zh"><code>13 / 5 + 13 % 5</code> 的值是多少？</span></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0">5</div>
+      <div class="quiz-opt" data-idx="0">6</div>
       <div class="quiz-opt" data-idx="1">4</div>
       <div class="quiz-opt" data-idx="2">5</div>
       <div class="quiz-opt" data-idx="3">2.6</div>
@@ -1061,13 +1071,24 @@ x = x + <span class="num">3</span>;  <span class="cm" data-lang="en">// x is now
     引用类型可以被赋值为 <code>null</code>（表示没有对象）。
   </div>
 
-  <h3 data-lang="en">Reading Input</h3>
-  <h3 data-lang="zh">读取输入</h3>
+  <h3 data-lang="en">Reading Input (enrichment)</h3>
+  <h3 data-lang="zh">读取输入（拓展）</h3>
+  <p data-lang="en">The assessed idea is that an assignment can store a value supplied from outside the program. The concrete <code>Scanner(System.in)</code> syntax is not part of the Unit 1 assessed method set; it is shown here only for context. File input is covered later in Topic 4.6.</p>
+  <p data-lang="zh">考查的核心概念是：赋值语句可以保存来自程序外部的值。具体的 <code>Scanner(System.in)</code> 语法不属于 Unit 1 的考查方法集，这里仅作为背景展示。文件输入会在第 4.6 小节介绍。</p>
 <pre><span class="kw">import</span> java.util.Scanner;
 
 <span class="ty">Scanner</span> input = <span class="kw">new</span> <span class="ty">Scanner</span>(System.in);
 <span class="ty">System</span>.out.<span class="fn">print</span>(<span class="str">"Enter age: "</span>);
 <span class="ty">int</span> age = input.<span class="fn">nextInt</span>();</pre>
+
+  <div class="concept-box purple" data-lang="en">
+    <strong>Enrichment only</strong>
+    <code>Scanner</code>, <code>System.in</code>, and <code>nextInt()</code> are useful Java but are not on the Unit 1 assessment. Treat this block as syntax exposure, not exam preparation.
+  </div>
+  <div class="concept-box purple" data-lang="zh">
+    <strong>仅作拓展</strong>
+    <code>Scanner</code>、<code>System.in</code> 和 <code>nextInt()</code> 是实用的 Java 语法，但不属于 Unit 1 考查范围。请把这段代码当作语法了解，而不是备考内容。
+  </div>
 
   <div class="concept-box red" data-lang="en">
     <strong>Common Mistake — <code>=</code> vs <code>==</code></strong>
@@ -1117,8 +1138,8 @@ x = x + <span class="num">3</span>;  <span class="cm" data-lang="en">// x is now
 
   <h3 data-lang="en">Integer Range &amp; Overflow</h3>
   <h3 data-lang="zh">整数取值范围与溢出</h3>
-  <p data-lang="en"><code>int</code> uses 4 bytes: range is <code>Integer.MIN_VALUE</code> (−2,147,483,648) to <code>Integer.MAX_VALUE</code> (2,147,483,647). Going beyond → <strong>integer overflow</strong>: result wraps around unpredictably.</p>
-  <p data-lang="zh"><code>int</code> 占 4 字节：取值范围是 <code>Integer.MIN_VALUE</code>（−2,147,483,648）到 <code>Integer.MAX_VALUE</code>（2,147,483,647）。超出该范围会发生<strong>整数溢出（<code>integer overflow</code>）</strong>：结果会以不可预测的方式回卷。</p>
+  <p data-lang="en"><code>int</code> uses 4 bytes: range is <code>Integer.MIN_VALUE</code> (−2,147,483,648) to <code>Integer.MAX_VALUE</code> (2,147,483,647). Going beyond → <strong>integer overflow</strong>: Java wraps deterministically using two's-complement arithmetic, so <code>Integer.MAX_VALUE + 1</code> becomes <code>Integer.MIN_VALUE</code>.</p>
+  <p data-lang="zh"><code>int</code> 占 4 字节：取值范围是 <code>Integer.MIN_VALUE</code>（−2,147,483,648）到 <code>Integer.MAX_VALUE</code>（2,147,483,647）。超出该范围会发生<strong>整数溢出（<code>integer overflow</code>）</strong>：Java 按二进制补码（<code>two's-complement</code>）确定性地回卷，因此 <code>Integer.MAX_VALUE + 1</code> 会变成 <code>Integer.MIN_VALUE</code>。</p>
 
   <div class="concept-box orange" data-lang="en">
     <strong>Round-off Errors</strong>
@@ -1189,40 +1210,58 @@ score *= <span class="num">2</span>;   <span class="cm" data-lang="en">// 30</sp
 score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data-lang="zh">// 29</span></pre>
 
   <div class="concept-box orange" data-lang="en">
-    <strong>Compound Assignment Hides an Implicit Cast</strong>
-    <code>x += y</code> is not just shorthand for <code>x = x + y</code>—it also silently casts the result back to <code>x</code>'s type. That's why <code>byte b = 10; b += 5;</code> compiles fine, even though <code>byte b2 = b + 5;</code> would <strong>not</strong> compile (adding promotes to <code>int</code>, and <code>int</code> can't narrow to <code>byte</code> without an explicit cast). The compound operator quietly does that narrowing cast for you.
+    <strong>Compound assignment is shorthand</strong>
+    For a scalar <code>int</code> variable, <code>x += 5;</code> means exactly <code>x = x + 5;</code>. The same pattern applies to <code>-=</code>, <code>*=</code>, <code>/=</code>, and <code>%=</code>. Read the operator as "update x by applying the operation to the right-hand side."
   </div>
   <div class="concept-box orange" data-lang="zh">
-    <strong>复合赋值隐藏了一次隐式类型转换</strong>
-    <code>x += y</code> 不仅仅是 <code>x = x + y</code> 的简写——它还会把结果悄悄转换（<code>cast</code>）回 <code>x</code> 的类型。这就是为什么 <code>byte b = 10; b += 5;</code> 能编译通过，而 <code>byte b2 = b + 5;</code> <strong>不能</strong>（相加会提升为 <code>int</code>，而 <code>int</code> 若不显式转换是不能缩窄为 <code>byte</code> 的）。复合运算符悄悄替你完成了这次缩窄转换。
+    <strong>复合赋值是简写形式</strong>
+    对于标量 <code>int</code> 变量，<code>x += 5;</code> 的含义与 <code>x = x + 5;</code> 完全相同。<code>-=</code>、<code>*=</code>、<code>/=</code> 和 <code>%=</code> 也遵循同样的规则。可以把这类运算符理解为“用右侧的值对 x 做一次运算，再更新 x”。
+  </div>
+
+  <div class="concept-box purple" data-lang="en">
+    <strong>Enrichment: narrower types</strong>
+    The fact that <code>byte b = 10; b += 5;</code> compiles while <code>byte b2 = b + 5;</code> does not is a deeper type-conversion detail. It is useful Java knowledge but is not part of the Unit 1 assessment.
+  </div>
+  <div class="concept-box purple" data-lang="zh">
+    <strong>拓展：更窄的类型</strong>
+    <code>byte b = 10; b += 5;</code> 能编译，而 <code>byte b2 = b + 5;</code> 不能编译，这属于更深的类型转换细节。它是实用的 Java 知识，但不属于 Unit 1 考查范围。
+  </div>
+
+  <div class="concept-box" data-lang="en">
+    <strong>Postfix on its own line</strong>
+    A standalone <code>x++;</code> or <code>x--;</code> simply increments or decrements <code>x</code> by one. Do not read the expression's value at the same time on the assessment; use it as a statement.
+  </div>
+  <div class="concept-box" data-lang="zh">
+    <strong>单独成行的后置自增/自减</strong>
+    单独成行的 <code>x++;</code> 或 <code>x--;</code> 只是把 <code>x</code> 增加或减少 1。考试中请把它当作语句使用，不要在同一时刻读取该表达式的值。
   </div>
 
   <div class="card" style="border-left:4px solid var(--accent);">
-    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Worked Example: Pre- vs. post-increment inside an expression</span><span data-lang="zh">例题：表达式内的前置自增与后置自增</span></div>
-    <p data-lang="en">The table above only shows <code>x++</code> (post-increment) on its own line, where it behaves just like <code>x = x + 1</code>. The distinction from <code>++x</code> (pre-increment) only matters when the increment is <em>embedded inside a larger expression</em> that also reads the variable's value:</p>
-    <p data-lang="zh">上表只展示了单独一行的 <code>x++</code>（后置自增），此时它的效果就和 <code>x = x + 1</code> 一样。它与 <code>++x</code>（前置自增）的区别，只有在自增被<em>嵌入到同时读取该变量值的更大表达式</em>中时才会显现：</p>
+    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Enrichment: pre- vs. post-increment inside an expression</span><span data-lang="zh">拓展：表达式内的前置自增与后置自增</span></div>
+    <p data-lang="en">The distinction between <code>x++</code> and <code>++x</code> only matters when the increment is <em>embedded inside a larger expression</em> that also reads the variable's value. That pattern, including <code>arr[i++]</code>, is outside the assessed Unit 1 surface and is shown only as background.</p>
+    <p data-lang="zh"><code>x++</code> 与 <code>++x</code> 的区别，只有在自增被<em>嵌入到同时读取该变量值的更大表达式</em>中时才会显现。这类模式（包括 <code>arr[i++]</code>）不属于 Unit 1 考查范围，这里仅作背景说明。</p>
 <pre><span class="ty">int</span> x = <span class="num">5</span>;
 <span class="ty">int</span> a = x++;   <span class="cm" data-lang="en">// a = 5  (reads x FIRST, then increments; x is now 6)</span><span class="cm" data-lang="zh">// a = 5  （先读取 x 的值，再自增；此时 x 变为 6）</span>
 
 <span class="ty">int</span> y = <span class="num">5</span>;
 <span class="ty">int</span> b = ++y;   <span class="cm" data-lang="en">// b = 6  (increments FIRST, then reads y)</span><span class="cm" data-lang="zh">// b = 6  （先自增，再读取 y 的值）</span></pre>
-    <p data-lang="en" style="margin-top:10px"><strong>Rule of thumb.</strong> <code>x++</code> hands over the <em>old</em> value and increments afterward; <code>++x</code> increments first and hands over the <em>new</em> value. Both leave the variable itself one higher — the only difference is which value the surrounding expression sees. On the AP exam this shows up most often inside array indexing or method-argument expressions, e.g. <code>arr[i++]</code> uses the current <code>i</code> to index, then bumps it for next time.</p>
-    <p data-lang="zh" style="margin-top:10px"><strong>记忆法。</strong><code>x++</code> 先交出<em>旧</em>值，之后再自增；<code>++x</code> 先自增，再交出<em>新</em>值。两者都会让变量本身加一——唯一的区别是外层表达式读到的是哪个值。在 AP 考试中，这最常出现在数组下标或方法实参表达式里，例如 <code>arr[i++]</code> 用当前的 <code>i</code> 做下标，然后再把 <code>i</code> 加一供下次使用。</p>
+    <p data-lang="en" style="margin-top:10px"><strong>Rule of thumb.</strong> <code>x++</code> hands over the <em>old</em> value and increments afterward; <code>++x</code> increments first and hands over the <em>new</em> value. Both leave the variable itself one higher — the only difference is which value the surrounding expression sees.</p>
+    <p data-lang="zh" style="margin-top:10px"><strong>记忆法。</strong><code>x++</code> 先交出<em>旧</em>值，之后再自增；<code>++x</code> 先自增，再交出<em>新</em>值。两者都会让变量本身加一——唯一的区别是外层表达式读到的是哪个值。</p>
   </div>
 
-  <div class="quiz" data-answer="1">
-    <div class="quiz-q" data-lang="en">After the code below runs, what is the value of <code>result</code>?<br><code>int n = 3; int result = n++ + ++n;</code></div>
-    <div class="quiz-q" data-lang="zh">下面代码执行后，<code>result</code> 的值是多少？<br><code>int n = 3; int result = n++ + ++n;</code></div>
+  <div class="quiz" data-answer="0">
+    <div class="quiz-q" data-lang="en">After the code below runs, what is the value of <code>score</code>?<br><code>int score = 10; score += 5; score *= 2; score--;</code></div>
+    <div class="quiz-q" data-lang="zh">下面代码执行后，<code>score</code> 的值是多少？<br><code>int score = 10; score += 5; score *= 2; score--;</code></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0">6</div>
-      <div class="quiz-opt" data-idx="1">8</div>
-      <div class="quiz-opt" data-idx="2">7</div>
-      <div class="quiz-opt" data-idx="3">9</div>
+      <div class="quiz-opt" data-idx="0">29</div>
+      <div class="quiz-opt" data-idx="1">30</div>
+      <div class="quiz-opt" data-idx="2">20</div>
+      <div class="quiz-opt" data-idx="3">28</div>
     </div>
-    <div class="quiz-explain correct-exp" data-lang="en">Correct! <code>n++</code> contributes the current value of <code>n</code> (3) to the sum and then bumps <code>n</code> to 4. Next, <code>++n</code> bumps <code>n</code> to 5 first and contributes 5. So <code>result = 3 + 5 = 8</code>.</div>
-    <div class="quiz-explain correct-exp" data-lang="zh">正确！<code>n++</code> 先把 <code>n</code> 当前的值（3）计入总和，再把 <code>n</code> 变为 4。接着 <code>++n</code> 先把 <code>n</code> 变为 5，再把 5 计入总和。所以 <code>result = 3 + 5 = 8</code>。</div>
-    <div class="quiz-explain wrong-exp" data-lang="en"><code>n++</code> uses <code>n</code>'s value <em>before</em> incrementing (contributes 3, n becomes 4); <code>++n</code> increments <em>before</em> using it (n becomes 5, contributes 5). Sum: <code>3 + 5 = 8</code>.</div>
-    <div class="quiz-explain wrong-exp" data-lang="zh"><code>n++</code> 使用自增<em>之前</em>的值（贡献 3，n 变为 4）；<code>++n</code> 先自增再使用（n 变为 5，贡献 5）。总和：<code>3 + 5 = 8</code>。</div>
+    <div class="quiz-explain correct-exp" data-lang="en">Correct! First <code>score += 5</code> makes <code>score = 15</code>, then <code>score *= 2</code> makes it <code>30</code>, and finally <code>score--;</code> makes it <code>29</code>.</div>
+    <div class="quiz-explain correct-exp" data-lang="zh">正确！先执行 <code>score += 5</code>，得到 <code>score = 15</code>；再执行 <code>score *= 2</code>，得到 <code>30</code>；最后 <code>score--;</code> 使其变为 <code>29</code>。</div>
+    <div class="quiz-explain wrong-exp" data-lang="en">Apply the operations in order: <code>10 + 5 = 15</code>, <code>15 * 2 = 30</code>, and <code>30 - 1 = 29</code>.</div>
+    <div class="quiz-explain wrong-exp" data-lang="zh">按顺序执行：<code>10 + 5 = 15</code>，<code>15 * 2 = 30</code>，<code>30 - 1 = 29</code>。</div>
   </div>
 </section>
 
@@ -1385,7 +1424,7 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
       <tr><td><code>Math.abs(x)</code></td><td><code>double</code>/<code>int</code></td><td><code>Math.abs(-7)</code> → <code>7</code></td></tr>
       <tr><td><code>Math.pow(base, exp)</code></td><td><code>double</code></td><td><code>Math.pow(2, 10)</code> → <code>1024.0</code></td></tr>
       <tr><td><code>Math.sqrt(x)</code></td><td><code>double</code></td><td><code>Math.sqrt(9)</code> → <code>3.0</code></td></tr>
-      <tr><td><code>Math.random()</code></td><td><code>double</code> in $[0,1)$</td><td>scale/shift for a range</td></tr>
+      <tr><td><code>Math.random()</code></td><td><code>double</code> in [0, 1)</td><td>scale/shift for a range</td></tr>
     </table>
   </div>
   <div class="table-wrap" data-lang="zh">
@@ -1394,12 +1433,12 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
       <tr><td><code>Math.abs(x)</code></td><td><code>double</code>/<code>int</code></td><td><code>Math.abs(-7)</code> → <code>7</code></td></tr>
       <tr><td><code>Math.pow(base, exp)</code></td><td><code>double</code></td><td><code>Math.pow(2, 10)</code> → <code>1024.0</code></td></tr>
       <tr><td><code>Math.sqrt(x)</code></td><td><code>double</code></td><td><code>Math.sqrt(9)</code> → <code>3.0</code></td></tr>
-      <tr><td><code>Math.random()</code></td><td>$[0,1)$ 区间的 <code>double</code></td><td>可缩放/平移以取任意范围</td></tr>
+      <tr><td><code>Math.random()</code></td><td>[0, 1) 区间的 <code>double</code></td><td>可缩放/平移以取任意范围</td></tr>
     </table>
   </div>
   <div class="concept-box" data-lang="en">
     <strong>Getting a Random Integer in a Range</strong>
-    <code>Math.random()</code> returns a <code>double</code> in $[0, 1)$. To get a random int from <code>0</code> to <code>n-1</code>, multiply and cast down: <code>(int)(Math.random() * n)</code>. To shift the range to start at <code>low</code>: <code>(int)(Math.random() * n) + low</code>.
+    <code>Math.random()</code> returns a <code>double</code> in [0, 1). To get a random int from <code>0</code> to <code>n-1</code>, multiply and cast down: <code>(int)(Math.random() * n)</code>. To shift the range to start at <code>low</code>: <code>(int)(Math.random() * n) + low</code>.
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>在指定范围内取随机整数</strong>
@@ -1543,7 +1582,6 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
   <p data-lang="zh">使用 <code>new</code> 关键字加上一次<strong>构造方法（<code>constructor</code>）</strong>调用来创建对象。</p>
 
 <pre><span class="cm" data-lang="en">// ClassName variableName = new ClassName(arguments);</span><span class="cm" data-lang="zh">// 类名 变量名 = new 类名(参数列表);</span>
-<span class="ty">Scanner</span> sc = <span class="kw">new</span> <span class="ty">Scanner</span>(System.in);
 <span class="ty">String</span> greeting = <span class="kw">new</span> <span class="ty">String</span>(<span class="str">"Hello"</span>);</pre>
 
   <div class="concept-box" data-lang="en">
@@ -1590,8 +1628,8 @@ score--;       <span class="cm" data-lang="en">// 29</span><span class="cm" data
 
   <p data-lang="en"><strong>Method chaining</strong> calls one instance method directly on the result of another, evaluated strictly left to right:</p>
   <p data-lang="zh"><strong>方法链</strong>把一个实例方法直接调用在另一个方法的返回结果上，严格从左到右求值：</p>
-<pre><span class="ty">String</span> clean = <span class="str">"  Hello World  "</span>.<span class="fn">trim</span>().<span class="fn">toUpperCase</span>();
-<span class="cm" data-lang="en">// trim() runs first → "Hello World", then toUpperCase() → "HELLO WORLD"</span><span class="cm" data-lang="zh">// 先执行 trim() → "Hello World"，再执行 toUpperCase() → "HELLO WORLD"</span></pre>
+<pre><span class="ty">boolean</span> startsWithA = <span class="str">"Alice"</span>.<span class="fn">substring</span>(<span class="num">0</span>, <span class="num">1</span>).<span class="fn">equals</span>(<span class="str">"A"</span>);
+<span class="cm" data-lang="en">// substring(0, 1) runs first → "A", then equals("A") → true</span><span class="cm" data-lang="zh">// 先执行 substring(0, 1) → "A"，再执行 equals("A") → true</span></pre>
 </section>
 
 <hr class="sep">
@@ -1692,17 +1730,17 @@ s.<span class="fn">substring</span>(<span class="num">2</span>, <span class="num
 a == b           <span class="cm" data-lang="en">// true   (string-pool sharing, both point to the same literal)</span><span class="cm" data-lang="zh">// true   （字符串池共享，两者指向同一个字面量）</span>
 a == c           <span class="cm" data-lang="en">// false  (c is a fresh object on the heap)</span><span class="cm" data-lang="zh">// false  （c 是堆上新建的对象）</span>
 a.<span class="fn">equals</span>(c)      <span class="cm" data-lang="en">// true   (same characters)</span><span class="cm" data-lang="zh">// true   （字符序列相同）</span></pre>
-    <p data-lang="en" style="margin-top:10px"><strong>The rule:</strong> use <code>.equals()</code> for content equality on every object type. <code>==</code> on references asks "are these the same object?", which is almost never what an AP MCQ wants when the question says "is the text the same?".</p>
-    <p data-lang="zh" style="margin-top:10px"><strong>规则：</strong>对任何对象类型的内容相等判断都用 <code>.equals()</code>。<code>==</code> 作用在引用上问的是"是不是同一个对象？"，当 AP 选择题问"文本是否相同？"时，这几乎永远不是它想要的。</p>
+    <p data-lang="en" style="margin-top:10px"><strong>The rule:</strong> use <code>.equals()</code> for <code>String</code> text equality, or for another class that defines equality semantics in the problem specification. <code>==</code> on references asks "are these the same object?", which is not the right question for comparing text.</p>
+    <p data-lang="zh" style="margin-top:10px"><strong>规则：</strong>对 <code>String</code> 的文本比较使用 <code>.equals()</code>；如果题目规范为其它类定义了相等语义，也可按规范使用。<code>==</code> 作用在引用上问的是"是不是同一个对象？"，这不是比较文本时应该问的问题。</p>
   </div>
 
   <div class="concept-box red" data-lang="en">
     <strong>AP Trap: Strings are immutable</strong>
-    Methods like <code>toUpperCase()</code>, <code>substring()</code>, and <code>replace()</code> return a <em>new</em> String, they don't modify the original. <code>s.toUpperCase();</code> by itself does nothing useful, you have to write <code>s = s.toUpperCase();</code> to keep the result. Forgetting to reassign is one of the most common String-manipulation MCQ traps.
+    Methods like <code>substring()</code> return a <em>new</em> String, and joining strings with <code>+</code> builds another new String; neither modifies the original. <code>s.substring(1);</code> by itself does nothing useful, you have to write <code>s = s.substring(1);</code> to keep the result. Forgetting to reassign is one of the most common String-manipulation MCQ traps.
   </div>
   <div class="concept-box red" data-lang="zh">
     <strong>AP 陷阱：字符串是不可变的</strong>
-    <code>toUpperCase()</code>、<code>substring()</code>、<code>replace()</code> 等方法返回的是<em>新的</em> String，并不会修改原字符串。单独写 <code>s.toUpperCase();</code> 没有任何效果，必须写成 <code>s = s.toUpperCase();</code> 才能保留结果。忘了重新赋值，是字符串操作选择题里最常见的陷阱之一。
+    <code>substring()</code> 等方法返回的是<em>新的</em> String，用 <code>+</code> 拼接字符串同样会生成新的 String；两者都不会修改原字符串。单独写 <code>s.substring(1);</code> 没有任何效果，必须写成 <code>s = s.substring(1);</code> 才能保留结果。忘了重新赋值，是字符串操作选择题里最常见的陷阱之一。
   </div>
 </section>
 
@@ -1763,12 +1801,12 @@ a.<span class="fn">equals</span>(c)      <span class="cm" data-lang="en">// true
   </div>
 
   <div class="concept-box" data-lang="en">
-    <strong>Pattern 6: NullPointerException on uninitialized reference</strong>
-    Calling any instance method on a <code>null</code> reference crashes the program. If a code segment declares <code>String s;</code> but never assigns it, then <code>s.length()</code> throws NullPointerException. Watch for the missing <code>new</code>.
+    <strong>Pattern 6: NullPointerException on a null reference</strong>
+    Calling any instance method on a <code>null</code> reference throws a run-time exception. For example, after <code>String s = null;</code>, the call <code>s.length()</code> throws <code>NullPointerException</code>. By contrast, using a local variable that was never initialized is a compile-time error.
   </div>
   <div class="concept-box" data-lang="zh">
-    <strong>套路 6：在未初始化的引用上发生 NullPointerException</strong>
-    在 <code>null</code> 引用上调用任何实例方法都会让程序崩溃。如果一段代码只写了 <code>String s;</code> 却始终没有给它赋值，那么 <code>s.length()</code> 会抛出 NullPointerException。留意缺失的 <code>new</code>。
+    <strong>套路 6：在 null 引用上发生 NullPointerException</strong>
+    在 <code>null</code> 引用上调用实例方法会抛出运行时异常。例如，执行 <code>String s = null;</code> 后，调用 <code>s.length()</code> 会抛出 <code>NullPointerException</code>。相反，使用从未初始化的局部变量属于编译时错误。
   </div>
 </section>
 

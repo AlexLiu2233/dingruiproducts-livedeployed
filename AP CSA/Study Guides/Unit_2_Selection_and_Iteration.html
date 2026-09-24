@@ -384,6 +384,16 @@ body.lang-zh [data-lang="en"] { display: none; }
 @media (max-width: 430px){
   .nav-left .nav-badge:nth-child(2){ display: none !important; }
 }
+@media (max-width: 600px){
+  html{ scroll-padding-top: 120px; }
+  .topnav{ height: 104px; padding: 6px 8px; display: grid; grid-template-rows: 32px 44px; gap: 4px; }
+  .topnav-brand{ min-width: 0; justify-content: center; font-size: 0.95rem; }
+  .topnav-actions{ width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, auto)); justify-content: space-between; gap: 3px; }
+  .topnav-actions button, .topnav-actions .back-link{ padding: 7px 5px; font-size: 0.7rem; white-space: nowrap; }
+  .progress-track{ top: 104px; }
+  .sidebar{ top: 107px; }
+  .main-wrap{ margin-top: 112px !important; }
+}
 /* __end_sg_mobile_spacing__ */
 
   /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
@@ -645,18 +655,20 @@ body.lang-zh [data-lang="en"] { display: none; }
     顺序、选择、重复这三种结构<em>组合的次序</em>决定了算法的最终结果。
   </div>
 
-  <p data-lang="en"><strong>Worked example — all three blocks together:</strong> finding the largest of a list of numbers.</p>
-  <p data-lang="zh"><strong>示例 —— 三种结构同时出现：</strong>在一列数字中找出最大值。</p>
-<pre><span class="ty">int</span>[] nums = {<span class="num">4</span>, <span class="num">9</span>, <span class="num">2</span>, <span class="num">7</span>};
-<span class="ty">int</span> max = nums[<span class="num">0</span>];                    <span class="cm" data-lang="en">// sequencing: initialize</span><span class="cm" data-lang="zh">// 顺序：初始化</span>
-<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.length; i++) {  <span class="cm" data-lang="en">// repetition: visit each element</span><span class="cm" data-lang="zh">// 重复：遍历每个元素</span>
-    <span class="kw">if</span> (nums[i] &gt; max) {          <span class="cm" data-lang="en">// selection: decide whether to update</span><span class="cm" data-lang="zh">// 选择：判断是否更新</span>
-        max = nums[i];
-    }
-}
+  <p data-lang="en"><strong>Everyday-language algorithm (no code yet):</strong> start with the first number and call it the largest. Then, for each remaining number, ask: "Is this number larger than my current largest?" If yes, replace the largest. That plan uses sequencing, repetition, and selection in order.</p>
+  <p data-lang="zh"><strong>日常语言算法（先不写代码）：</strong>先取第一个数字，把它称为当前最大值。然后对其余每个数字问：“这个数字比当前最大值大吗？”如果是，就替换最大值。这个方案依次使用了顺序、重复和选择。</p>
+
+  <p data-lang="en"><strong>Java version with three scalar values:</strong></p>
+  <p data-lang="zh"><strong>用三个标量值表示的 Java 版本：</strong></p>
+<pre><span class="ty">int</span> first = <span class="num">4</span>;
+<span class="ty">int</span> second = <span class="num">9</span>;
+<span class="ty">int</span> third = <span class="num">2</span>;
+<span class="ty">int</span> max = first;                    <span class="cm" data-lang="en">// sequencing: initialize</span><span class="cm" data-lang="zh">// 顺序：初始化</span>
+<span class="kw">if</span> (second &gt; max) { max = second; }  <span class="cm" data-lang="en">// selection: compare and update</span><span class="cm" data-lang="zh">// 选择：比较并更新</span>
+<span class="kw">if</span> (third &gt; max) { max = third; }    <span class="cm" data-lang="en">// selection: compare and update</span><span class="cm" data-lang="zh">// 选择：比较并更新</span>
 <span class="cm" data-lang="en">// max = 9</span><span class="cm" data-lang="zh">// max = 9</span></pre>
-  <p data-lang="en">Each block plays a distinct role: sequencing sets up <code>max</code>, repetition steps through every element exactly once, and selection is the only part that changes <code>max</code>—remove it and the loop would just overwrite <code>max</code> every time.</p>
-  <p data-lang="zh">每种结构各司其职：顺序负责初始化 <code>max</code>，重复逐一遍历每个元素，选择是唯一会改变 <code>max</code> 的部分——去掉选择结构，循环就会每次都无条件覆盖 <code>max</code>。</p>
+  <p data-lang="en">Sequencing sets up <code>max</code>, repetition appears in the everyday plan ("for each remaining number"), and selection is the only part that changes <code>max</code>. A loop over many values is introduced in Topics 2.8 and 2.9.</p>
+  <p data-lang="zh">顺序负责初始化 <code>max</code>；日常语言计划中的“对其余每个数字”体现了重复；选择是唯一会改变 <code>max</code> 的部分。对大量值进行循环遍历会在第 2.8 和 2.9 小节介绍。</p>
 </section>
 
 <hr class="sep">
@@ -694,11 +706,11 @@ body.lang-zh [data-lang="en"] { display: none; }
 
   <div class="concept-box red" data-lang="en">
     <strong>== with Reference Types</strong>
-    For primitives, <code>==</code> compares <em>values</em>. For objects (reference types), <code>==</code> compares <em>references</em> (memory addresses), not content. Use <code>.equals()</code> to compare object content.
+    For primitives, <code>==</code> compares <em>values</em>. For objects (reference types), <code>==</code> compares <em>references</em>, not content. Use <code>String.equals</code> for String content, or a class-provided <code>equals</code> method when its specified behavior defines content equality.
   </div>
   <div class="concept-box red" data-lang="zh">
     <strong>引用类型上的 ==</strong>
-    对基本类型，<code>==</code> 比较<em>值</em>。对对象（<code>object</code>，引用类型），<code>==</code> 比较的是<em>引用</em>（内存地址），不是内容。要比较对象内容请用 <code>.equals()</code>。
+    对基本类型，<code>==</code> 比较<em>值</em>。对对象（引用类型），<code>==</code> 比较的是<em>引用</em>，不是内容。比较 String 内容使用 <code>String.equals</code>；对于其他类，只有当类所提供的 <code>equals</code> 规范定义了内容相等时才使用它。
   </div>
 
 <pre><span class="ty">int</span> a = <span class="num">10</span>;
@@ -730,7 +742,7 @@ body.lang-zh [data-lang="en"] { display: none; }
 <pre><span class="kw">if</span> (score &gt;= <span class="num">90</span>) {
     <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"Excellent!"</span>);
 }
-<span class="cm" data-lang="en">// Body runs ONLY if condition is true</span><span class="cm" data-lang="zh">// 仅当条件为 true 时循环体才执行</span></pre>
+<span class="cm" data-lang="en">// Body runs ONLY if condition is true</span><span class="cm" data-lang="zh">// 仅当条件为 true 时 if 语句块才执行</span></pre>
 
   <h3 data-lang="en">Two-Way Selection (if-else)</h3>
   <h3 data-lang="zh">双分支选择（if-else）</h3>
@@ -750,8 +762,8 @@ body.lang-zh [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-q" data-lang="en">What prints when <code>x = 7</code>?<br><code>if (x &gt; 10) print("A"); else print("B");</code></div>
-    <div class="quiz-q" data-lang="zh">当 <code>x = 7</code> 时输出什么？<br><code>if (x &gt; 10) print("A"); else print("B");</code></div>
+    <div class="quiz-q" data-lang="en">What prints when <code>x = 7</code>?<br><code>if (x &gt; 10) System.out.print("A"); else System.out.print("B");</code></div>
+    <div class="quiz-q" data-lang="zh">当 <code>x = 7</code> 时输出什么？<br><code>if (x &gt; 10) System.out.print("A"); else System.out.print("B");</code></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">A</div>
       <div class="quiz-opt" data-idx="1">B</div>
@@ -900,11 +912,11 @@ body.lang-zh [data-lang="en"] { display: none; }
 
   <div class="concept-box red" data-lang="en">
     <strong>AP Trap: Operator precedence inside if-conditions</strong>
-    <code>!</code> binds tightest, then <code>&amp;&amp;</code>, then <code>||</code>. So <code>a || b &amp;&amp; c</code> is read as <code>a || (b &amp;&amp; c)</code>, not <code>(a || b) &amp;&amp; c</code>. When in doubt, add parentheses. The AP rubric does not subtract points for "redundant" parentheses, but it does subtract for wrong groupings.
+    <code>!</code> binds tightest, then <code>&amp;&amp;</code>, then <code>||</code>. So <code>a || b &amp;&amp; c</code> is read as <code>a || (b &amp;&amp; c)</code>, not <code>(a || b) &amp;&amp; c</code>. When in doubt, add parentheses: redundant grouping preserves the result, while incorrect grouping can change it.
   </div>
   <div class="concept-box red" data-lang="zh">
     <strong>AP 陷阱：if 条件中的运算符优先级</strong>
-    <code>!</code> 结合最紧，其次是 <code>&amp;&amp;</code>，最后是 <code>||</code>。所以 <code>a || b &amp;&amp; c</code> 应解读为 <code>a || (b &amp;&amp; c)</code>，而不是 <code>(a || b) &amp;&amp; c</code>。拿不准时就加括号。AP 评分标准不会因"多余"的括号扣分，但会因错误分组扣分。
+    <code>!</code> 结合最紧，其次是 <code>&amp;&amp;</code>，最后是 <code>||</code>。所以 <code>a || b &amp;&amp; c</code> 应解读为 <code>a || (b &amp;&amp; c)</code>，而不是 <code>(a || b) &amp;&amp; c</code>。拿不准时就加括号：多余分组不改变结果，错误分组则可能改变结果。
   </div>
 </section>
 
@@ -1174,30 +1186,32 @@ passed &amp;&amp; onTime
 
   <div class="card" style="border-left:4px solid var(--accent);" data-lang="en">
     <div class="card-header" style="color:var(--accent);">Worked Example: Final value of a loop variable</div>
-<pre><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+<pre><span class="ty">int</span> i = <span class="num">0</span>;
+<span class="kw">for</span> (; i &lt; <span class="num">5</span>; i++) {
     <span class="cm">// body runs with i = 0, 1, 2, 3, 4</span>
 }
-<span class="cm">// after the loop, i = 5  (but only if i was declared OUTSIDE the for header)</span></pre>
-    <p style="margin-top:10px">The update step runs after every iteration, including the one that fails the condition. So <code>i</code> reaches the first value that makes the condition false. With <code>i &lt; 5</code>, that's <code>i = 5</code>. With <code>i &lt;= 5</code>, it's <code>i = 6</code>.</p>
+<span class="cm">// after the loop, i = 5</span></pre>
+    <p style="margin-top:10px">The update runs after each successful body iteration and before the next condition check. When the condition fails, neither the body nor the update runs. For <code>i &lt; 5</code>, the body runs at <code>0, 1, 2, 3, 4</code>; after the last body, update sets <code>i = 5</code>, the condition fails, and the loop stops. For <code>i &lt;= 5</code>, the final value is <code>i = 6</code>.</p>
     <p style="margin-top:8px"><strong>Catch:</strong> when <code>i</code> is declared inside the for header (<code>for (int i = 0; ...)</code>), it goes out of scope when the loop ends, and you can't read its final value. Declare <code>i</code> outside the header if you need it afterward.</p>
   </div>
   <div class="card" style="border-left:4px solid var(--accent);" data-lang="zh">
     <div class="card-header" style="color:var(--accent);">例题：循环变量（<code>loop variable</code>）的最终值</div>
-<pre><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+<pre><span class="ty">int</span> i = <span class="num">0</span>;
+<span class="kw">for</span> (; i &lt; <span class="num">5</span>; i++) {
     <span class="cm">// 循环体在 i = 0, 1, 2, 3, 4 下执行</span>
 }
-<span class="cm">// 循环结束后，i = 5（仅当 i 在 for 头部之外声明时可见）</span></pre>
-    <p style="margin-top:10px">更新步骤在每次迭代后都会执行，包括让条件变假的那一次。所以 <code>i</code> 会到达让条件首次为假的那个值。<code>i &lt; 5</code> 时是 <code>i = 5</code>；<code>i &lt;= 5</code> 时是 <code>i = 6</code>。</p>
+<span class="cm">// 循环结束后，i = 5</span></pre>
+    <p style="margin-top:10px">更新在每次成功执行循环体之后、下一次条件检查之前运行。当条件为假时，循环体和更新都不会再运行。对于 <code>i &lt; 5</code>，循环体在 <code>0, 1, 2, 3, 4</code> 下执行；最后一次循环体后，更新使 <code>i = 5</code>，条件失败，循环停止。对于 <code>i &lt;= 5</code>，最终值是 <code>i = 6</code>。</p>
     <p style="margin-top:8px"><strong>注意：</strong> 当 <code>i</code> 在 for 头部内声明（<code>for (int i = 0; ...)</code>）时，循环结束后 <code>i</code> 就出了作用域，你拿不到它的最终值。如果之后还要读它，就把 <code>i</code> 在头部外声明。</p>
   </div>
 
   <div class="concept-box red" data-lang="en">
     <strong>AP Trap: Iteration count formulas</strong>
-    For <code>for (int i = a; i &lt; b; i++)</code> with <code>a &lt; b</code>: iteration count is <code>b - a</code>. For <code>i &lt;= b</code>: count is <code>b - a + 1</code>. For <code>i += step</code>: count is <code>ceil((b - a) / step)</code>. Memorising the closed-form is faster than tracing the full loop on a timed MCQ.
+    For <code>for (int i = a; i &lt; b; i++)</code> with <code>a &lt; b</code>: iteration count is <code>b - a</code>. For <code>i &lt;= b</code>: count is <code>b - a + 1</code>. For <code>for (int i = a; i &lt; b; i += step)</code> with <code>a &lt; b</code> and a positive <code>step</code>, divide <code>b - a</code> by <code>step</code> and round up. Trace loops whose bounds, comparison, or update differ.
   </div>
   <div class="concept-box red" data-lang="zh">
     <strong>AP 陷阱：迭代次数公式</strong>
-    对于 <code>for (int i = a; i &lt; b; i++)</code>（<code>a &lt; b</code>）：次数为 <code>b - a</code>。对 <code>i &lt;= b</code>：次数为 <code>b - a + 1</code>。对 <code>i += step</code>：次数为 <code>ceil((b - a) / step)</code>。在限时选择题里，背公式比完整追踪更快。
+    对于 <code>for (int i = a; i &lt; b; i++)</code>（<code>a &lt; b</code>）：次数为 <code>b - a</code>。对 <code>i &lt;= b</code>：次数为 <code>b - a + 1</code>。对于 <code>for (int i = a; i &lt; b; i += step)</code>，仅当 <code>a &lt; b</code> 且 <code>step</code> 为正数时，用 <code>b - a</code> 除以 <code>step</code> 并向上取整。边界、比较或更新不同的循环应直接追踪。
   </div>
 </section>
 
@@ -1209,8 +1223,8 @@ passed &amp;&amp; onTime
   <h2 data-lang="en">Implementing Selection and Iteration Algorithms</h2>
   <h2 data-lang="zh">实现选择与循环算法</h2>
 
-  <p data-lang="en">The AP exam expects you to recognize and implement these <strong>standard algorithms</strong>:</p>
-  <p data-lang="zh">AP 考试要求你能识别并实现下列<strong>标准算法（<code>algorithm</code>）</strong>：</p>
+  <p data-lang="en">The AP exam expects you to recognize and implement these <strong>five standard algorithms</strong>, all of which work without data structures:</p>
+  <p data-lang="zh">AP 考试要求你能识别并实现下列<strong>五个标准算法（<code>algorithm</code>）</strong>，它们都不依赖数据结构：</p>
 
   <h3 data-lang="en">1. Divisibility Check</h3>
   <h3 data-lang="zh">1. 整除性检查</h3>
@@ -1247,8 +1261,8 @@ passed &amp;&amp; onTime
 }
 <span class="ty">double</span> avg = (<span class="ty">double</span>) sum / n;</pre>
 
-  <h3 data-lang="en">6. Traversal with Early Exit</h3>
-  <h3 data-lang="zh">6. 带提前退出的遍历</h3>
+  <h3 data-lang="en">Beyond the five: array traversal with early exit (enrichment, not assessed)</h3>
+  <h3 data-lang="zh">五个算法之外：带提前退出的数组遍历（拓展，不考查）</h3>
 <pre><span class="ty">boolean</span> found = <span class="kw">false</span>;
 <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.length; i++) {
     <span class="kw">if</span> (nums[i] == target) {
@@ -1256,31 +1270,34 @@ passed &amp;&amp; onTime
         <span class="kw">break</span>;  <span class="cm" data-lang="en">// stop as soon as it's found — no need to keep looping</span><span class="cm" data-lang="zh">// 一旦找到就停止 —— 无需继续遍历</span>
     }
 }</pre>
-  <div class="concept-box" data-lang="en">
-    <strong>Why <code>break</code> Matters Here</strong>
-    Without <code>break</code>, the loop keeps running to the end even after finding a match, wasting time on a large array. This early-exit pattern is the basis of linear search and shows up constantly in free-response questions.
+  <div class="concept-box purple" data-lang="en">
+    <strong>Enrichment only</strong>
+    Arrays, enhanced <code>for</code> traversal, and <code>break</code> early exit are not part of the Topic 2.9 assessed surface. The five scalar algorithms above are the exam focus; this array example is included only for context.
   </div>
-  <div class="concept-box" data-lang="zh">
-    <strong>为何这里要用 <code>break</code></strong>
-    如果不用 <code>break</code>，即使已经找到匹配项，循环仍会一直跑到末尾，在大数组上浪费时间。这种提前退出模式正是线性查找的基础，在自由回答题中频繁出现。
+  <div class="concept-box purple" data-lang="zh">
+    <strong>仅作拓展</strong>
+    数组、增强 <code>for</code> 遍历和 <code>break</code> 提前退出不属于第 2.9 小节的考查范围。上面五个标量算法才是考试重点；这个数组示例仅作背景参考。
   </div>
 
   <div class="card" style="border-left:4px solid var(--accent);">
-    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Worked Example: Combining Count, Sum, and Max in one pass</span><span data-lang="zh">例题：在一次遍历中同时完成计数、求和与求最大值</span></div>
-    <p data-lang="en">Free-response questions rarely test one pattern in isolation — they usually ask for a method that combines several of the six patterns above in a single loop. Here is a method that, given an array of exam scores, returns the count of scores at or above 90 <em>and</em> tracks the highest score seen, in one traversal:</p>
-    <p data-lang="zh">自由作答题很少只考单一模式——通常要求在同一个循环里综合运用上面六种模式中的好几种。下面这个方法：给定一个考试成绩数组，在一次遍历中同时返回 90 分及以上的成绩计数，<em>并</em>追踪目前见过的最高分：</p>
-<pre><span class="kw">public static int</span> <span class="fn">countHighAndTrackMax</span>(<span class="ty">int</span>[] scores) {
-    <span class="ty">int</span> count = <span class="num">0</span>;                     <span class="cm" data-lang="en">// Pattern 3: Count</span><span class="cm" data-lang="zh">// 模式 3：计数</span>
-    <span class="ty">int</span> max = Integer.MIN_VALUE;         <span class="cm" data-lang="en">// Pattern 4: Max</span><span class="cm" data-lang="zh">// 模式 4：最大值</span>
-    <span class="kw">for</span> (<span class="ty">int</span> s : scores) {              <span class="cm" data-lang="en">// one pass over the whole array</span><span class="cm" data-lang="zh">// 对整个数组只遍历一次</span>
-        <span class="kw">if</span> (s &gt;= <span class="num">90</span>) count++;          <span class="cm" data-lang="en">// Pattern 1: divisibility-style condition, reused as a threshold check</span><span class="cm" data-lang="zh">// 模式 1：整除性检查的思路，改用作阈值判断</span>
-        <span class="kw">if</span> (s &gt; max) max = s;
+    <div class="card-header" style="color:var(--accent);"><span data-lang="en">Worked Example: Combining Count, Sum, and Max in one loop</span><span data-lang="zh">例题：在一个循环中同时完成计数、求和与求最大值</span></div>
+    <p data-lang="en"><strong>Precondition: <code>limit &gt;= 1</code>.</strong> This scalar-only method processes the integers from <code>1</code> through <code>limit</code>. It counts values at or above <code>threshold</code>, sums every value, and tracks the largest value seen:</p>
+    <p data-lang="zh"><strong>前置条件：<code>limit &gt;= 1</code>。</strong>下面这个方法只使用标量变量，处理从 <code>1</code> 到 <code>limit</code> 的整数。它统计大于等于 <code>threshold</code> 的个数，累加所有值，并追踪已见到的最大值：</p>
+<pre><span class="kw">public static int</span> <span class="fn">countSumAndMax</span>(<span class="ty">int</span> limit, <span class="ty">int</span> threshold) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="ty">int</span> sum = <span class="num">0</span>;
+    <span class="ty">int</span> max = Integer.MIN_VALUE;
+    <span class="kw">for</span> (<span class="ty">int</span> value = <span class="num">1</span>; value &lt;= limit; value++) {
+        <span class="kw">if</span> (value &gt;= threshold) { count++; }
+        sum += value;
+        <span class="kw">if</span> (value &gt; max) { max = value; }
     }
+    <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"Sum: "</span> + sum);
     <span class="ty">System</span>.out.<span class="fn">println</span>(<span class="str">"Highest: "</span> + max);
     <span class="kw">return</span> count;
 }</pre>
-    <p data-lang="en" style="margin-top:10px"><strong>Why one pass, not two.</strong> A tempting but wasteful alternative is one loop to find <code>max</code> and a second loop to count scores $\ge 90$. Both accumulator variables (<code>count</code> and <code>max</code>) update independently on every iteration, so a single <code>for-each</code> loop computes both — the same efficiency argument as the early-exit <code>break</code> pattern above, just for combining work instead of skipping it.</p>
-    <p data-lang="zh" style="margin-top:10px"><strong>为何一次遍历就够，不必两次。</strong>一种看似直观但低效的做法是：一个循环求 <code>max</code>，另一个循环统计 $\ge 90$ 的个数。事实上 <code>count</code> 与 <code>max</code> 这两个累加变量在每次迭代中都各自独立更新，所以一个 <code>for-each</code> 循环就能同时算出两者——这与上面提前退出的 <code>break</code> 模式是同一种效率思路，只不过一个是合并工作，一个是跳过工作。</p>
+    <p data-lang="en" style="margin-top:10px"><strong>Why one pass, not two.</strong> A tempting but wasteful alternative is one loop to find <code>max</code> and a second loop to count values ≥ <code>threshold</code>. The <code>count</code>, <code>sum</code>, and <code>max</code> accumulators update independently on every iteration, so one loop computes all three.</p>
+    <p data-lang="zh" style="margin-top:10px"><strong>为何一次遍历就够，不必两次。</strong>一种看似直观但低效的做法是：一个循环求 <code>max</code>，另一个循环统计 ≥ <code>threshold</code> 的个数。事实上 <code>count</code>、<code>sum</code> 与 <code>max</code> 在每次迭代中都各自独立更新，所以一个循环就能同时算出三者。</p>
   </div>
 </section>
 
@@ -1329,9 +1346,10 @@ passed &amp;&amp; onTime
 <pre><span class="ty">String</span> word = <span class="str">"level"</span>;
 <span class="ty">boolean</span> isPalindrome = <span class="kw">true</span>;
 <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; word.length() / <span class="num">2</span>; i++) {
-    <span class="kw">if</span> (word.charAt(i) != word.charAt(word.length() - <span class="num">1</span> - i)) {
+    <span class="ty">String</span> left = word.<span class="fn">substring</span>(i, i + <span class="num">1</span>);
+    <span class="ty">String</span> right = word.<span class="fn">substring</span>(word.length() - <span class="num">1</span> - i, word.length() - i);
+    <span class="kw">if</span> (!left.<span class="fn">equals</span>(right)) {
         isPalindrome = <span class="kw">false</span>;
-        <span class="kw">break</span>;
     }
 }
 <span class="cm" data-lang="en">// isPalindrome = true</span><span class="cm" data-lang="zh">// isPalindrome = true</span></pre>
@@ -1477,11 +1495,11 @@ passed &amp;&amp; onTime
 
   <div class="concept-box" data-lang="en">
     <strong>Pattern 1: Iteration counting (closed form vs trace)</strong>
-    The question gives a for-loop header and asks how many times the body runs. For <code>i &lt; b</code> starting at <code>a</code>, the count is <code>b - a</code>. For <code>i &lt;= b</code>, it's <code>b - a + 1</code>. For <code>i += step</code>, count is <code>ceil((b - a) / step)</code>. Skip the trace if you can spot the form. (See Topic 2.8.)
+    The question gives a for-loop header and asks how many times the body runs. For an increasing-by-one loop with <code>a &lt; b</code>, <code>i &lt; b</code> runs <code>b - a</code> times and <code>i &lt;= b</code> runs <code>b - a + 1</code> times. With a positive larger step, divide the distance by the step and round up. Trace when the loop does not match these conditions. (See Topic 2.8.)
   </div>
   <div class="concept-box" data-lang="zh">
     <strong>套路 1：迭代（<code>iteration</code>）计数（公式法 vs 追踪法）</strong>
-    题目给出 for 循环头部，问循环体执行多少次。从 <code>a</code> 起的 <code>i &lt; b</code>：次数为 <code>b - a</code>。<code>i &lt;= b</code>：次数为 <code>b - a + 1</code>。<code>i += step</code>：次数为 <code>ceil((b - a) / step)</code>。能套公式就不要全程追踪。（见 2.8 节）
+    题目给出 for 循环头部，问循环体执行多少次。对从 <code>a</code> 开始、每次加一且 <code>a &lt; b</code> 的循环，<code>i &lt; b</code> 执行 <code>b - a</code> 次，<code>i &lt;= b</code> 执行 <code>b - a + 1</code> 次。正的较大步长要用距离除以步长并向上取整；不满足这些条件时应直接追踪。（见 2.8 节）
   </div>
 
   <div class="concept-box" data-lang="en">
@@ -1578,7 +1596,7 @@ passed &amp;&amp; onTime
     <div class="flashcard" onclick="this.classList.toggle('flipped')">
       <div class="flashcard-inner">
         <div class="flashcard-front"><code>==</code> vs <code>.equals()</code>?</div>
-        <div class="flashcard-back"><span data-lang="en"><code>==</code> → compares references<br><code>.equals()</code> → compares content</span><span data-lang="zh"><code>==</code> → 比较引用<br><code>.equals()</code> → 比较内容</span></div>
+        <div class="flashcard-back"><span data-lang="en"><code>==</code> → compares object references<br><code>String.equals</code> → compares String content; other classes define their own <code>equals</code> behavior</span><span data-lang="zh"><code>==</code> → 比较对象引用<br><code>String.equals</code> → 比较 String 内容；其他类自行定义其 <code>equals</code> 行为</span></div>
       </div>
     </div>
     <div class="flashcard" onclick="this.classList.toggle('flipped')">
@@ -1611,8 +1629,8 @@ passed &amp;&amp; onTime
   <h2 data-lang="zh">单元 2 练习小测</h2>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-q" data-lang="en">1. What is the output?<br><code>int x = 15;<br>if (x &gt; 20) print("A");<br>else if (x &gt; 10) print("B");<br>else if (x &gt; 5) print("C");<br>else print("D");</code></div>
-    <div class="quiz-q" data-lang="zh">1. 输出是什么？<br><code>int x = 15;<br>if (x &gt; 20) print("A");<br>else if (x &gt; 10) print("B");<br>else if (x &gt; 5) print("C");<br>else print("D");</code></div>
+    <div class="quiz-q" data-lang="en">1. What is the output?<br><code>int x = 15;<br>if (x &gt; 20) System.out.print("A");<br>else if (x &gt; 10) System.out.print("B");<br>else if (x &gt; 5) System.out.print("C");<br>else System.out.print("D");</code></div>
+    <div class="quiz-q" data-lang="zh">1. 输出是什么？<br><code>int x = 15;<br>if (x &gt; 20) System.out.print("A");<br>else if (x &gt; 10) System.out.print("B");<br>else if (x &gt; 5) System.out.print("C");<br>else System.out.print("D");</code></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">A</div>
       <div class="quiz-opt" data-idx="1">B</div>
