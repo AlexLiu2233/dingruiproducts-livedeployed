@@ -10,6 +10,18 @@
 
 ---
 
+> [!WARNING]
+> **⏳ These notes are going offline soon.**
+> We will shortly stop serving the notes on the open web. After that, they will be available **only as offline copies handed directly to enrolled students**.
+>
+> **For now, everything is still up:**
+> - The **free preview units** stay readable on <https://notes.dingruischolars.com>, and you can [save your own copy](#host-the-free-preview-locally) today.
+> - The **unlockable units** are still online behind the email gate. If you can figure out how to get past it, [the puzzle below](#-a-puzzle-for-cs-students) is your chance.
+>
+> **Don't wait.** Once the site comes down, anything you haven't saved will be gone for good.
+>
+> **⏳ 笔记即将下线。** 我们很快将停止在公开网络上提供这些笔记，之后只以离线文件的形式直接提供给正式学员。目前免费预览单元仍可在线阅读，也可以[立即下载到本地](#host-the-free-preview-locally)；需解锁的单元仍在邮箱验证之后——如果你能想办法绕过它，请看下面的[谜题](#-a-puzzle-for-cs-students)。请趁现在尽快保存。
+
 ## What you get
 
 Each unit comes as a set of three linked products:
@@ -76,7 +88,7 @@ Then open <http://localhost:8000/>.
 
 ## 🧩 A puzzle for CS students
 
-The download script only gives you the free preview.
+The download script only gives you the free preview. The rest is online only until the site goes offline-only, so this puzzle has a deadline.
 
 The whole site lives in a public git repository, and you may be looking at it right now. Get *all* of it onto your own machine, serve it the way this README showed you, and see what opens.
 
