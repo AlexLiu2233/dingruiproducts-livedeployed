@@ -611,7 +611,7 @@ footer {
         <input id="notesAccessEmail" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="notesAccessHelp notesAccessStatus">
         <button id="notesAccessSubmit" type="submit"><span data-lang="en">Request free guides</span><span data-lang="zh">申请免费学习指南</span></button>
       </div>
-      <p id="notesAccessHelp" class="notes-access__help"><span data-lang="en">We’ll review your request and follow up by email. You’ll also get details for a free 30-minute consultation with Allen, our liaison, and may receive a reminder. Full guides open after approval.</span><span data-lang="zh">我们会审核申请，并通过邮件与您联系。您也会收到联络顾问 Allen 的 30 分钟免费咨询预约信息，之后可能收到提醒。完整资料将在审核通过后开放。</span></p>
+      <p id="notesAccessHelp" class="notes-access__help"><span data-lang="en">We’ll email you an unlock address right away. Paste it into the unlock box on any locked guide to open the full collection.</span><span data-lang="zh">我们会立即通过邮件发送一个解锁邮箱。在任意带锁的学习指南中，把它粘贴到解锁框里，即可打开完整资料。</span></p>
       <p id="notesAccessStatus" class="notes-access__status" role="status" aria-live="polite" aria-atomic="true"></p>
     </form>
     <p class="hero-stats">
@@ -2589,7 +2589,7 @@ function toggleLang() {
   window.refreshCatalogSearch = refresh;
 })();
 </script>
-<script>/* notes-access-form: production sends one lead-marker POST; local previews make no network calls. */
+<script>/* notes-access-form: production POSTs {email, language} to /api/notes/request, which emails the shared unlock address; local previews make no network calls. */
 (function () {
   var form = document.getElementById('notesAccessForm');
   if (!form) return;
@@ -2603,14 +2603,14 @@ function toggleLang() {
       sending: 'Sending your request…',
       invalid: 'Please enter a valid email address.',
       failed: 'We couldn’t send that just now. Please try again.',
-      received: 'Thanks, your request is in. We’ll follow up by email. Full guides open once your access is approved.',
+      received: 'Thanks! Check your inbox for your unlock address, then paste it into the unlock box on any locked guide.',
       preview: 'Preview only — no email was sent.'
     },
     zh: {
       sending: '正在提交申请…',
       invalid: '请填写有效的邮箱地址。',
       failed: '暂时没能提交，请再试一次。',
-      received: '谢谢，申请已收到。我们会通过邮件与您联系；完整资料将在审核通过后开放。',
+      received: '谢谢！请查收邮件中的解锁邮箱，然后把它粘贴到任意带锁指南的解锁框中。',
       preview: '仅供预览 — 未发送任何邮件。'
     }
   };
@@ -2656,9 +2656,8 @@ function toggleLang() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        parent_email: email,
-        language: document.body.classList.contains('lang-zh') ? 'zh' : 'en',
-        source: 'notes_lead'
+        email: email,
+        language: document.body.classList.contains('lang-zh') ? 'zh' : 'en'
       })
     };
     if (typeof AbortController === 'function') {
@@ -2684,7 +2683,7 @@ function toggleLang() {
     };
     var pending;
     try {
-      pending = Promise.resolve(transport('https://dingrui-backend.onrender.com/signup', options));
+      pending = Promise.resolve(transport('https://dingrui-backend.onrender.com/api/notes/request', options));
     } catch (err) {
       pending = Promise.reject(err);
     }
