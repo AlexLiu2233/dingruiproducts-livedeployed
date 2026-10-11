@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free bilingual study guides and practice for High School, AP, and IB. Worked examples, quizzes, and full solutions from Dingrui Scholars.">
+<meta name="description" content="Free bilingual study guides for Dingrui students, from high school to university. Explore previews and request the complete collection.">
 <meta name="theme-color" content="#7A2E2E">
 <meta name="color-scheme" content="light dark">
 <title>Study Guides | Dingrui Scholars</title>
@@ -15,14 +15,14 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Dingrui Scholars">
 <meta property="og:title" content="Dingrui Scholars: HS, AP &amp; IB Study Guides">
-<meta property="og:description" content="Free bilingual study guides and practice for High School, AP, and IB. Worked examples, quizzes, and full solutions from Dingrui Scholars.">
+<meta property="og:description" content="Free bilingual study guides for Dingrui students. Explore previews and request the complete collection.">
 <meta property="og:url" content="https://notes.dingruischolars.com/index.html">
 <meta property="og:image" content="https://notes.dingruischolars.com/og-cover.png">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dingrui Scholars: HS, AP &amp; IB Study Guides">
-<meta name="twitter:description" content="Free bilingual study guides and practice for High School, AP, and IB. Worked examples, quizzes, and full solutions from Dingrui Scholars.">
+<meta name="twitter:description" content="Free bilingual study guides for Dingrui students. Explore previews and request the complete collection.">
 <meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
 <link rel="icon" type="image/png" href="LOGO.png">
 
@@ -48,6 +48,11 @@
   --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --max-w: 1040px;
+  /* Small, locally adapted spacing/motion tokens inspired by Open Props (MIT). */
+  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --paper: #F3F0EA; --paper-border: #E0D8C7;
+  --catalog-radius: 6px;
 }
 [data-theme="dark"] {
   --bg: #0F0F0F;
@@ -63,6 +68,7 @@
   --purple: #A68AC4;
   --gold: #D4A870;
   --border: #2A2A2A;
+  --paper: #211C1B; --paper-border: #453634;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -112,61 +118,68 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
 
 /* Hero */
 .hero {
-  text-align: center; padding: 48px 24px 40px;
-  background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%);
-  border-radius: var(--radius);
-  margin-bottom: 48px;
+  text-align: left; padding: clamp(24px, 2.2vw, 26px);
+  background: var(--paper);
+  border: 1px solid var(--paper-border);
+  border-radius: var(--catalog-radius);
+  margin-bottom: 28px;
   position: relative; overflow: hidden;
 }
 .hero::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.03) 0%, transparent 70%);
+  background: none;
   pointer-events: none;
 }
-[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(0,0,0, 0.4) 0%, transparent 100%); }
-[data-theme="dark"] .hero::before { background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.04) 0%, transparent 70%); }
-.hero-logo {
-  height: 72px; width: auto; margin-bottom: 20px;
-  position: relative;
-}
+[data-theme="dark"] .hero { background: var(--paper); }
+[data-theme="dark"] .hero::before { background: none; }
 .hero-overline {
   font-family: var(--font-mono);
   font-size: 0.8rem; font-weight: 600;
-  color: var(--accent); letter-spacing: 2px;
-  text-transform: uppercase; margin-bottom: 12px;
+  color: var(--accent); letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 8px;
   position: relative;
 }
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: clamp(2.35rem, 5vw, 3.5rem);
   font-weight: 400; line-height: 1.15;
-  margin: 0 0 16px; position: relative;
+  margin: 0 0 8px; position: relative;
   color: var(--text);
 }
 .hero-sub {
   color: var(--text-secondary);
-  max-width: 620px; margin: 0 auto;
+  max-width: 60ch; margin: 0;
   font-size: 1.05rem; position: relative;
 }
 .hero-meta {
-  display: flex; gap: 12px; justify-content: center;
-  flex-wrap: wrap; margin-top: 24px; position: relative;
+  display: flex; gap: 8px; justify-content: flex-start;
+  flex-wrap: wrap; margin-top: 12px; position: relative;
 }
+.hero .tier-nav { justify-content: flex-start; }
+.hero .hero-cta { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
+.hero .hero-cta__note { margin: 0; max-width: 38ch; }
+.catalog-search { margin: 14px 0 0; max-width: 720px; position: relative; }
+.catalog-search label { display: block; font-size: .77rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.catalog-search__box { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--catalog-radius); padding: 5px 8px 5px 16px; box-shadow: none; transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+.catalog-search__box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+.catalog-search__icon { width: 20px; height: 20px; flex: none; color: var(--accent); }
+.catalog-search input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; padding: 10px 0; }
+.catalog-search input::placeholder { color: var(--text-secondary); opacity: .9; }
+.catalog-search button { border: 0; background: var(--accent-light); color: var(--accent); border-radius: 8px; padding: 8px 12px; font: 600 .82rem var(--font-body); cursor: pointer; }
+.catalog-search button[hidden], .search-hidden { display: none !important; }
+.search-status { color: var(--text-secondary); font-size: .84rem; margin: 8px 0 0; min-height: 1.4em; }
 .chip {
   font-size: 0.8rem; font-weight: 600;
-  padding: 6px 14px; border-radius: 20px;
-  background: var(--bg-card);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  padding: 2px 6px 2px 0; border-radius: 0;
+  background: transparent; border: 0; color: var(--text-secondary);
+  box-shadow: none;
 }
-.chip-maroon { border: 1px solid var(--accent); color: var(--accent); }
-.chip-green  { border: 1px solid var(--green);  color: var(--green);  }
-.chip-purple { border: 1px solid var(--purple); color: var(--purple); }
-.chip-gold   { border: 1px solid var(--gold);   color: var(--gold);   }
+.chip-maroon, .chip-green, .chip-purple, .chip-gold { border: 0; color: var(--text-secondary); }
 
 /* Tier nav (in hero) */
 .tier-nav {
-  display: flex; gap: 10px; flex-wrap: wrap;
-  justify-content: center; margin-top: 28px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: flex-start; margin-top: 12px;
   position: relative;
 }
 .tier-pill {
@@ -174,23 +187,23 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
   text-decoration: none;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--catalog-radius);
   padding: 8px 16px 8px 12px;
-  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: border-color 0.18s, background 0.18s;
+  box-shadow: none;
 }
 .tier-pill:hover {
-  transform: translateY(-2px);
-  border-color: var(--tier-color, var(--accent));
-  box-shadow: var(--shadow);
+  border-color: var(--accent);
+  background: var(--accent-light);
 }
+.tier-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tier-pill__num {
   font-family: var(--font-mono);
   font-size: 0.7rem; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--bg-card);
-  background: var(--tier-color, var(--accent));
-  padding: 3px 8px; border-radius: 999px;
+  color: var(--accent);
+  background: transparent;
+  padding: 3px 0; border-radius: 0;
   line-height: 1;
 }
 .tier-pill__name {
@@ -210,17 +223,17 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
 .tier__head {
   display: flex; align-items: baseline;
   flex-wrap: wrap; gap: 10px 16px;
-  margin: 0 0 28px;
-  padding-bottom: 18px;
+  margin: 0 0 24px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
 }
 .tier__num {
   font-family: var(--font-mono);
   font-size: 0.72rem; font-weight: 700;
   letter-spacing: 1.8px; text-transform: uppercase;
-  color: var(--bg-card);
-  background: var(--tier-color, var(--accent));
-  padding: 5px 10px; border-radius: 4px;
+  color: var(--accent);
+  background: transparent;
+  padding: 5px 0; border-radius: 0;
   line-height: 1;
 }
 .tier__title {
@@ -236,22 +249,22 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
   color: var(--text-secondary);
   max-width: 720px;
 }
-.tier-1 { --tier-color: var(--gold); }
+.tier-1 { --tier-color: var(--accent); }
 .tier-2 { --tier-color: var(--accent); }
-.tier-3 { --tier-color: var(--purple); }
+.tier-3 { --tier-color: var(--accent); }
 
 /* Subject subgroups inside a tier (collapsible) */
 .subject-group {
   margin-bottom: 14px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--catalog-radius);
   background: var(--bg-card);
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .subject-group:last-child { margin-bottom: 0; }
 .subject-group:hover { border-color: var(--accent); }
-.subject-group[open] { box-shadow: var(--shadow); }
+.subject-group[open] { box-shadow: none; }
 
 .subject-group__toggle {
   list-style: none;
@@ -312,14 +325,14 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
 .super-topic {
   margin-bottom: 10px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--catalog-radius);
   background: var(--bg);
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .super-topic:last-child { margin-bottom: 0; }
 .super-topic:hover { border-color: var(--accent); }
-.super-topic[open] { background: var(--bg-card); box-shadow: var(--shadow); }
+.super-topic[open] { background: var(--bg-card); box-shadow: none; }
 
 .super-topic__toggle {
   list-style: none;
@@ -440,6 +453,7 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
   border-color: var(--card-color, var(--accent));
   box-shadow: var(--shadow-lg);
 }
+.card:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
 .card__num {
   font-family: var(--font-mono);
   font-size: 0.7rem; font-weight: 700;
@@ -490,7 +504,7 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
 
 /* Hero credibility line: all three products at a glance */
 .hero-stats {
-  margin: 14px auto 0; max-width: 60ch;
+  margin: 8px 0 0; max-width: 60ch;
   font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
   letter-spacing: 0.3px; color: var(--text-secondary);
 }
@@ -512,10 +526,25 @@ footer {
   text-align: center; letter-spacing: 1px;
   text-transform: uppercase;
 }
-/* consult-cta: lead-gen conversion surface (P0) */
-.hero-cta { margin-top: 24px; }
-.hero-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 1.02rem; text-decoration: none; padding: 14px 34px; border-radius: 12px; box-shadow: var(--shadow); transition: transform 0.15s, opacity 0.2s; }
-.hero-cta__btn:hover { opacity: 0.88; transform: translateY(-2px); }
+/* notes-access: compact request surface */
+.notes-access { max-width: 640px; margin: 20px 0 0; position: relative; }
+.notes-access label { display: block; margin-bottom: 7px; font-size: .84rem; font-weight: 700; color: var(--text); }
+.notes-access__row { display: flex; gap: 8px; }
+.notes-access input { flex: 1; min-width: 0; min-height: 44px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--catalog-radius); background: var(--bg-card); color: var(--text); font: inherit; }
+.notes-access input[aria-invalid="true"] { border-color: var(--red); }
+.notes-access button { min-height: 44px; padding: 9px 16px; border: 1px solid var(--accent); border-radius: var(--catalog-radius); background: var(--accent); color: var(--bg); font: 600 .94rem var(--font-body); cursor: pointer; }
+.notes-access button:hover { opacity: .9; }
+.notes-access button:disabled { opacity: .65; cursor: wait; }
+.notes-access input:focus-visible, .notes-access button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.notes-access__help, .notes-access__status { margin: 9px 0 0; font-size: .84rem; line-height: 1.5; color: var(--text-secondary); }
+.notes-access__status { min-height: 1.5em; }
+.notes-access__status[data-state="received"] { color: var(--green); }
+.notes-access__status[data-state="invalid"], .notes-access__status[data-state="failed"] { color: var(--red); }
+/* consult-cta: secondary path */
+.hero-cta { margin-top: 10px; }
+.hero-cta__btn { display: inline-block; color: var(--accent); font-family: var(--font-body); font-weight: 600; font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; padding: 8px 0; transition: opacity 0.2s; }
+.hero-cta__btn:hover { opacity: 0.88; }
+.hero-cta__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .hero-cta__note { margin: 13px auto 0; max-width: 54ch; font-size: 0.86rem; color: var(--text-secondary); }
 .footer-cta { font-size: 0.92rem; text-transform: none; letter-spacing: 0; margin-bottom: 14px; }
 .footer-cta a { color: var(--pop); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--pop); }
@@ -524,8 +553,8 @@ footer {
 /* Responsive */
 @media (max-width: 600px) {
   .wrap { padding: 80px 16px 48px; }
-  .hero { padding: 36px 16px 32px; margin-bottom: 36px; }
-  .hero-logo { height: 60px; }
+  .hero { padding: 16px 18px; margin-bottom: 24px; }
+  .hero h1 { font-size: 2.35rem; }
   .nav-wordmark { display: none; }
   .tier { margin-bottom: 40px; }
   .tier__head { gap: 8px 12px; margin-bottom: 22px; padding-bottom: 14px; }
@@ -534,6 +563,12 @@ footer {
   .subject-group__toggle { padding: 16px 18px; }
   .subject-group__title { font-size: 1.1rem; }
   .subject-group__body { padding: 0 18px 18px; }
+  .hero .hero-cta { align-items: flex-start; }
+  .catalog-search { margin-top: 12px; }
+  .tier-nav { margin-top: 8px; }
+  .hero-cta { margin-top: 8px; }
+  .notes-access__row { flex-direction: column; }
+  .notes-access button { width: 100%; }
 }
 </style>
 
@@ -543,7 +578,7 @@ footer {
   "@type": "EducationalOrganization",
   "name": "Dingrui Scholars",
   "url": "https://notes.dingruischolars.com/",
-  "description": "Free bilingual study guides and practice for High School, AP, and IB. Worked examples, quizzes, and full solutions from Dingrui Scholars.",
+  "description": "Free bilingual study guides for Dingrui students. Explore previews and request the complete collection.",
   "sameAs": [
     "https://www.dingruischolars.com"
   ]
@@ -558,6 +593,7 @@ footer {
     <span class="nav-wordmark">Dingrui Scholars</span>
   </div>
   <div class="nav-group">
+    <a class="nav-btn nav-site-link" href="https://www.dingruischolars.com/" style="text-decoration:none"><span data-lang="en">Main site</span><span data-lang="zh">主站</span></a>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
     <button class="nav-btn" id="themeToggle" aria-label="Toggle dark mode"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
@@ -566,17 +602,33 @@ footer {
 <div class="wrap">
 
   <section class="hero">
-    <img class="hero-logo" src="LOGO.png" alt="">
-    <div class="hero-overline">Dingrui Scholars</div>
-    <h1><span data-lang="en">Study Guides</span><span data-lang="zh">学习指南</span></h1>
-    <p class="hero-sub">
-      <span data-lang="en">Comprehensive study materials for High School Foundations, AP and IB college credit courses, and University Level subjects. Every unit includes exam style worked examples, retrieval practice quizzes, and complete solutions.</span><span data-lang="zh">覆盖高中基础、AP 与 IB 大学学分课程及大学水平课程的完整学习资料。每个单元配有考试风格例题、检索练习测验与完整解析。</span>
-    </p>
+    <div class="hero-overline"><span data-lang="en">Dingrui Scholars · Study Guides</span><span data-lang="zh">鼎睿学苑 · 学习指南</span></div>
+    <h1><span data-lang="en">Free study guides for Dingrui students</span><span data-lang="zh">鼎睿学员免费学习指南</span></h1>
+    <p class="hero-sub"><span data-lang="en">From high school to AP, IB, and university: bilingual notes, worked examples, practice, and full solutions. Explore the free previews, then leave your email to request the complete collection.</span><span data-lang="zh">从高中到 AP、IB 和大学课程，这里有中英双语讲解、例题、练习与完整解析。先看开放章节，再留下邮箱申请完整资料。</span></p>
+    <form id="notesAccessForm" class="notes-access" novalidate>
+      <label for="notesAccessEmail"><span data-lang="en">Your email</span><span data-lang="zh">您的邮箱</span></label>
+      <div class="notes-access__row">
+        <input id="notesAccessEmail" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="notesAccessHelp notesAccessStatus">
+        <button id="notesAccessSubmit" type="submit"><span data-lang="en">Request free guides</span><span data-lang="zh">申请免费学习指南</span></button>
+      </div>
+      <p id="notesAccessHelp" class="notes-access__help"><span data-lang="en">We’ll review your request and follow up by email. You’ll also get details for a free 30-minute consultation with Allen, our liaison, and may receive a reminder. Full guides open after approval.</span><span data-lang="zh">我们会审核申请，并通过邮件与您联系。您也会收到联络顾问 Allen 的 30 分钟免费咨询预约信息，之后可能收到提醒。完整资料将在审核通过后开放。</span></p>
+      <p id="notesAccessStatus" class="notes-access__status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
     <p class="hero-stats">
       <!-- BEGIN stats:home -->
       <span data-lang="en">172 study guides &middot; 172 practice sets &middot; 172 full solution sets &middot; bilingual EN / 中文</span><span data-lang="zh">172 份学习指南 &middot; 172 套练习 &middot; 172 套完整解答 &middot; 中英双语</span>
     <!-- END stats:home -->
     </p>
+    <div class="catalog-search" role="search">
+      <label for="catalogSearch"><span data-lang="en">Find your next topic</span><span data-lang="zh">查找学习主题</span></label>
+      <div class="catalog-search__box">
+        <!-- Search icon adapted from Lucide (ISC); see Sprint-WEBSITE-NOTES.md. -->
+        <svg class="catalog-search__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="catalogSearch" type="search" autocomplete="off" aria-controls="tier-1 tier-2 tier-3" placeholder="Search a subject or unit / 搜索科目或单元">
+        <button id="clearSearch" type="button" hidden><span data-lang="en">Clear</span><span data-lang="zh">清除</span></button>
+      </div>
+      <p id="searchStatus" class="search-status" role="status" aria-live="polite"><span data-lang="en">Browse by course below, or search all units.</span><span data-lang="zh">按课程浏览，或搜索全部单元。</span></p>
+    </div>
     <nav class="tier-nav" aria-label="Course tiers">
       <a class="tier-pill tier-1" href="#tier-1">
         <span class="tier-pill__num">01</span>
@@ -592,9 +644,9 @@ footer {
       </a>
     </nav>
     <div class="hero-cta">
-      <a class="hero-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=hero__landing__en" target="_blank" rel="noopener">Book a free assessment &rarr;</a>
-      <a class="hero-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=hero__landing__zh" target="_blank" rel="noopener">预约免费评估 &rarr;</a>
-      <p class="hero-cta__note"><span data-lang="en">A free 15-minute assessment with a Dingrui Scholars tutor. We map your path from high school through AP, IB, and into university.</span><span data-lang="zh">与 Dingrui Scholars 导师的 15 分钟免费评估。我们为你规划从高中到 AP、IB 直至大学的学习路径。</span></p>
+      <a class="hero-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=hero__landing__en" target="_blank" rel="noopener">Meet Allen for a free consultation &rarr;</a>
+      <a class="hero-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=hero__landing__zh" target="_blank" rel="noopener">了解与 Allen 的免费咨询 &rarr;</a>
+      <p class="hero-cta__note"><span data-lang="en">Talk through your goals with Allen, our liaison, in a free 30-minute consultation. A free online trial may follow.</span><span data-lang="zh">与联络顾问 Allen 免费聊 30 分钟，谈谈学习目标和下一步计划。之后可视情况安排免费线上试听课。</span></p>
     </div>
   </section>
 
@@ -2422,7 +2474,7 @@ footer {
   </section>
 
   <footer>
-  <p class="footer-cta"><span data-lang="en">Ready to start? <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=footer__landing__en" target="_blank" rel="noopener">Book a free assessment</a></span><span data-lang="zh">准备好了吗？<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=landing&utm_content=footer__landing__zh" target="_blank" rel="noopener">预约免费评估</a></span></p>
+  <p class="footer-cta"><span data-lang="en">Dingrui student? <a href="#notesAccessForm">Request your free guides.</a></span><span data-lang="zh">鼎睿学员？<a href="#notesAccessForm">在上方申请免费学习指南。</a></span></p>
   <span data-lang="en">© Dingrui Scholars · High School Foundations · College Credit (AP &amp; IB) · University Level</span><span data-lang="zh">© 鼎睿学苑 · 高中基础 · 大学学分（AP 与 IB） · 大学水平</span></footer>
 </div>
 
@@ -2430,7 +2482,7 @@ footer {
 var DOC_TITLE_EN = 'Study Guides | Dingrui Scholars';
 var DOC_TITLE_ZH = '学习指南 | 鼎睿学苑';
 var DOC_DESC_EN = document.querySelector('meta[name="description"]').getAttribute('content');
-var DOC_DESC_ZH = '鼎睿学苑学习指南。覆盖高中基础（BC、安大略、阿尔伯塔、美国 Common Core）、AP 与 IB 大学学分课程，以及大学水平课程。每个单元配有考试风格例题、检索练习测验、深色模式与打印友好排版。';
+var DOC_DESC_ZH = '鼎睿学员免费学习指南，涵盖高中、AP、IB 和大学课程。先看开放章节，再申请完整资料。';
 
 function applyDocLang() {
   var isZh = document.body.classList.contains('lang-zh');
@@ -2443,6 +2495,8 @@ function applyDocLang() {
 function toggleLang() {
   document.body.classList.toggle('lang-zh');
   applyDocLang();
+  if (window.refreshCatalogSearch) window.refreshCatalogSearch();
+  if (window.refreshNotesAccessStatus) window.refreshNotesAccessStatus();
 }
 
 (function () {
@@ -2480,6 +2534,165 @@ function toggleLang() {
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', next);
     apply(next);
+  });
+})();
+
+(function () {
+  var input = document.getElementById('catalogSearch');
+  var clear = document.getElementById('clearSearch');
+  var status = document.getElementById('searchStatus');
+  var cards = Array.from(document.querySelectorAll('.tier .card'));
+  var groups = Array.from(document.querySelectorAll('.subject-group, .super-topic'));
+  var originalOpen = new Map();
+  function clean(value) { return value.toLocaleLowerCase().normalize('NFKD').trim(); }
+  function label(node) { return node ? node.textContent : ''; }
+  function refresh() {
+    var query = clean(input.value);
+    var zh = document.body.classList.contains('lang-zh');
+    clear.hidden = !query;
+    if (query && !originalOpen.size) groups.forEach(function (group) { originalOpen.set(group, group.open); });
+    var count = 0;
+    cards.forEach(function (card) {
+      var subject = card.closest('.subject-group');
+      var topic = card.closest('.super-topic');
+      var tier = card.closest('.tier');
+      var haystack = clean([
+        label(card.querySelector('.card__num')),
+        label(card.querySelector('.card__title')),
+        label(subject && subject.querySelector('.subject-group__title')),
+        label(topic && topic.querySelector('.super-topic__title')),
+        label(tier && tier.querySelector('.tier__title'))
+      ].join(' '));
+      var available = !zh || !card.closest('[data-zh-ready="false"]');
+      var match = available && (!query || haystack.includes(query));
+      card.classList.toggle('search-hidden', !match);
+      if (match) count++;
+    });
+    groups.slice().reverse().forEach(function (group) {
+      var match = !!group.querySelector('.card:not(.search-hidden)');
+      group.classList.toggle('search-hidden', !!query && !match);
+      if (query && match) group.open = true;
+      if (!query && originalOpen.has(group)) group.open = originalOpen.get(group);
+    });
+    document.querySelectorAll('.tier').forEach(function (tier) {
+      tier.classList.toggle('search-hidden', !!query && !tier.querySelector('.card:not(.search-hidden)'));
+    });
+    if (!query) {
+      originalOpen.clear();
+      status.textContent = zh ? '按课程浏览，或搜索全部单元。' : 'Browse by course below, or search all units.';
+    } else {
+      status.textContent = zh ? '找到 ' + count + ' 个单元' : count + (count === 1 ? ' unit found' : ' units found');
+    }
+  }
+  input.addEventListener('input', refresh);
+  clear.addEventListener('click', function () { input.value = ''; refresh(); input.focus(); });
+  window.refreshCatalogSearch = refresh;
+})();
+</script>
+<script>/* notes-access-form: production sends one lead-marker POST; local previews make no network calls. */
+(function () {
+  var form = document.getElementById('notesAccessForm');
+  if (!form) return;
+  var input = document.getElementById('notesAccessEmail');
+  var button = document.getElementById('notesAccessSubmit');
+  var status = document.getElementById('notesAccessStatus');
+  var loc = window.location;
+  var isLocal = loc.protocol === 'file:' || loc.hostname === 'localhost' || loc.hostname === '127.0.0.1' || loc.hostname === '[::1]' || loc.hostname === '::1';
+  var STRINGS = {
+    en: {
+      sending: 'Sending your request…',
+      invalid: 'Please enter a valid email address.',
+      failed: 'We couldn’t send that just now. Please try again.',
+      received: 'Thanks, your request is in. We’ll follow up by email. Full guides open once your access is approved.',
+      preview: 'Preview only — no email was sent.'
+    },
+    zh: {
+      sending: '正在提交申请…',
+      invalid: '请填写有效的邮箱地址。',
+      failed: '暂时没能提交，请再试一次。',
+      received: '谢谢，申请已收到。我们会通过邮件与您联系；完整资料将在审核通过后开放。',
+      preview: '仅供预览 — 未发送任何邮件。'
+    }
+  };
+  var state = 'idle';
+  var settled = true;
+  var controller = null;
+  function strings() { return document.body.classList.contains('lang-zh') ? STRINGS.zh : STRINGS.en; }
+  function render() {
+    if (state === 'idle') {
+      status.textContent = '';
+      status.removeAttribute('data-state');
+      return;
+    }
+    status.setAttribute('data-state', state);
+    status.textContent = strings()[state];
+  }
+  window.refreshNotesAccessStatus = render;
+  input.addEventListener('input', function () {
+    if (state === 'received' || state === 'sending') return;
+    input.removeAttribute('aria-invalid');
+    state = 'idle';
+    render();
+  });
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!settled || state === 'received') return;
+    var email = input.value.trim();
+    if (!email || !input.validity.valid) {
+      state = 'invalid';
+      input.setAttribute('aria-invalid', 'true');
+      render();
+      input.focus();
+      return;
+    }
+    input.removeAttribute('aria-invalid');
+    if (isLocal && typeof window.__notesSignupTestFetch !== 'function') {
+      state = 'preview';
+      render();
+      return;
+    }
+    var transport = isLocal ? window.__notesSignupTestFetch : function (url, options) { return window.fetch(url, options); };
+    var options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        parent_email: email,
+        language: document.body.classList.contains('lang-zh') ? 'zh' : 'en',
+        source: 'notes_lead'
+      })
+    };
+    if (typeof AbortController === 'function') {
+      controller = new AbortController();
+      options.signal = controller.signal;
+    }
+    var timer = options.signal ? setTimeout(function () { controller.abort(); }, 15000) : null;
+    settled = false;
+    button.disabled = true;
+    state = 'sending';
+    render();
+    var finish = function (next) {
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      state = next;
+      if (next === 'received') {
+        input.readOnly = true;
+      } else {
+        button.disabled = false;
+      }
+      render();
+    };
+    var pending;
+    try {
+      pending = Promise.resolve(transport('https://dingrui-backend.onrender.com/signup', options));
+    } catch (err) {
+      pending = Promise.reject(err);
+    }
+    pending.then(function (response) {
+      finish(response && response.ok ? 'received' : 'failed');
+    }, function () {
+      finish('failed');
+    });
   });
 })();
 </script>
