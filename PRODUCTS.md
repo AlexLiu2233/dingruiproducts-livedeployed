@@ -10,9 +10,11 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 
 | Course | 🆓 Free preview pages | 🔒 Unlockable pages | Total pages |
 |---|---:|---:|---:|
-| AP CSA | 9 | 3 | 12 |
+| AP CSA | 10 | 3 | 13 |
+| AP CSP | 9 | 6 | 15 |
 | AP Calculus | 9 | 21 | 30 |
 | AP Physics | 9 | 12 | 21 |
+| AP Statistics | 12 | 8 | 20 |
 | High School Biology | 9 | 27 | 36 |
 | High School Chemistry | 9 | 33 | 42 |
 | High School Computer Science | 9 | 30 | 39 |
@@ -22,7 +24,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | IB Math HL | 9 | 58 | 67 |
 | IB Physics HL | 9 | 63 | 72 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **137** | **379** | **516** |
+| **Grand total** | **159** | **393** | **552** |
 
 ## Legend
 
@@ -46,6 +48,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | [Unit 2: Selection and Iteration](https://notes.dingruischolars.com/AP%20CSA/Study%20Guides/Unit_2_Selection_and_Iteration.html) | Study Guide | 🆓 Free preview |
 | [Unit 2: Selection and Iteration — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSA/Practice%20Questions/Unit_2_Selection_and_Iteration_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 2: Selection and Iteration — Solutions](https://notes.dingruischolars.com/AP%20CSA/Practice%20Questions/Solutions/Unit_2_Selection_and_Iteration_Solutions.html) | Solutions | 🆓 Free preview |
+| [Trace a while loop](https://notes.dingruischolars.com/AP%20CSA/Runners/csa-u2-while-loop-sum.html) | Code Runner | 🆓 Free preview |
 
 ### Unit 3: Class Creation
 
@@ -62,6 +65,48 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit 4: Data Collections | Study Guide | 🔒 Unlockable |
 | Unit 4: Data Collections — AP-Style Practice | Practice Questions | 🔒 Unlockable |
 | Unit 4: Data Collections — Solutions | Solutions | 🔒 Unlockable |
+
+## AP CSP
+
+### Unit 1: Creative Development
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 1: Creative Development](https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_1_Creative_Development.html) | Study Guide | 🆓 Free preview |
+| [Unit 1: Creative Development — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Unit_1_Creative_Development_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 1: Creative Development — Solutions](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Solutions/Unit_1_Creative_Development_Solutions.html) | Solutions | 🆓 Free preview |
+
+### Unit 2: Data
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 2: Data](https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_2_Data.html) | Study Guide | 🆓 Free preview |
+| [Unit 2: Data — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Unit_2_Data_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 2: Data — Solutions](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Solutions/Unit_2_Data_Solutions.html) | Solutions | 🆓 Free preview |
+
+### Unit 3: Algorithms and Programming
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 3: Algorithms and Programming](https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_3_Algorithms_and_Programming.html) | Study Guide | 🆓 Free preview |
+| [Unit 3: Algorithms and Programming — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Unit_3_Algorithms_and_Programming_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 3: Algorithms and Programming — Solutions](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Solutions/Unit_3_Algorithms_and_Programming_Solutions.html) | Solutions | 🆓 Free preview |
+
+### Unit 4: Computer Systems and Networks
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 4: Computer Systems and Networks | Study Guide | 🔒 Unlockable |
+| Unit 4: Computer Systems and Networks — AP-Style Practice | Practice Questions | 🔒 Unlockable |
+| Unit 4: Computer Systems and Networks — Solutions | Solutions | 🔒 Unlockable |
+
+### Unit 5: Impact of Computing
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 5: Impact of Computing | Study Guide | 🔒 Unlockable |
+| Unit 5: Impact of Computing — AP-Style Practice | Practice Questions | 🔒 Unlockable |
+| Unit 5: Impact of Computing — Solutions | Solutions | 🔒 Unlockable |
 
 ## AP Calculus
 
@@ -202,6 +247,53 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit 7: Oscillations | Study Guide | 🔒 Unlockable |
 | Chapter 7: Oscillations, AP-Style Practice | Practice Questions | 🔒 Unlockable |
 | C: Mechanics, Unit 7: Oscillations, Solutions | Solutions | 🔒 Unlockable |
+
+## AP Statistics
+
+### Unit 1: Exploring One-Variable Data and Collecting Data
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 1: Exploring One-Variable Data and Collecting Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data.html) | Study Guide | 🆓 Free preview |
+| [Unit 1: Exploring One-Variable Data and Collecting Data Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 1: Exploring One-Variable Data and Collecting Data Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Solutions.html) | Solutions | 🆓 Free preview |
+| [Unit 1: Commute time: center and spread](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u1-commute-summary.html) | TI-84 Worked Stepper | 🆓 Free preview |
+
+### Unit 2: Probability, Random Variables, and Probability Distributions
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 2: Probability, Random Variables, and Probability Distributions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Probability_Random_Variables_and_Probability_Distributions.html) | Study Guide | 🆓 Free preview |
+| [Unit 2: Probability, Random Variables, and Probability Distributions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 2: Probability, Random Variables, and Probability Distributions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Solutions.html) | Solutions | 🆓 Free preview |
+| [Unit 2: Free throws: binomial probability](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-free-throw-binomial.html) | TI-84 Worked Stepper | 🆓 Free preview |
+
+### Unit 3: Inference for Categorical Data: Proportions
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 3: Inference for Categorical Data: Proportions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Inference_for_Categorical_Data_Proportions.html) | Study Guide | 🆓 Free preview |
+| [Unit 3: Inference for Categorical Data: Proportions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_3_Inference_for_Categorical_Data_Proportions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 3: Inference for Categorical Data: Proportions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_3_Inference_for_Categorical_Data_Proportions_Solutions.html) | Solutions | 🆓 Free preview |
+| [Unit 3: Transit fares: one-proportion confidence interval](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-one-proportion-ci.html) | TI-84 Worked Stepper | 🆓 Free preview |
+
+### Unit 4: Inference for Quantitative Data: Means
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 4: Inference for Quantitative Data: Means | Study Guide | 🔒 Unlockable |
+| Unit 4: Inference for Quantitative Data: Means Practice Problems | Practice Questions | 🔒 Unlockable |
+| Unit 4: Inference for Quantitative Data: Means Solutions | Solutions | 🔒 Unlockable |
+| Unit 4: Sleep study: one-sample t confidence interval | TI-84 Worked Stepper | 🔒 Unlockable |
+
+### Unit 5: Regression Analysis
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 5: Regression Analysis | Study Guide | 🔒 Unlockable |
+| Unit 5: Regression Analysis Practice Problems | Practice Questions | 🔒 Unlockable |
+| Unit 5: Regression Analysis Solutions | Solutions | 🔒 Unlockable |
+| Unit 5: Cyclist training: linear regression and residuals | TI-84 Worked Stepper | 🔒 Unlockable |
 
 ## High School Biology
 

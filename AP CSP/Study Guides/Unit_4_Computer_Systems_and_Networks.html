@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="gated" name="dingrui:tier"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="AP Computer Science Principles, Unit 4: Computer Systems and Networks | Dingrui Scholars. Review Internet protocols, packets, fault tolerance, and the efficiency of parallel and distributed computing." name="description"/>
+<meta content="#7A2E2E" name="theme-color"/>
+<meta content="light dark" name="color-scheme"/>
+<title>AP CSP — Unit 4: Computer Systems and Networks | Dingrui Scholars</title>
+<link href="https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_4_Computer_Systems_and_Networks.html" rel="canonical"/>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta content="article" property="og:type"/>
+<meta content="Dingrui Scholars" property="og:site_name"/>
+<meta content="AP CSP — Unit 4: Computer Systems and Networks | Dingrui Scholars" property="og:title"/>
+<meta content="AP Computer Science Principles, Unit 4: Computer Systems and Networks | Dingrui Scholars. Review Internet protocols, packets, fault tolerance, and the efficiency of parallel and distributed computing." property="og:description"/>
+<meta content="https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_4_Computer_Systems_and_Networks.html" property="og:url"/>
+<meta content="https://notes.dingruischolars.com/og-cover.png" property="og:image"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="zh_CN" property="og:locale:alternate"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="AP CSP — Unit 4: Computer Systems and Networks | Dingrui Scholars" name="twitter:title"/>
+<meta content="AP Computer Science Principles, Unit 4: Computer Systems and Networks | Dingrui Scholars. Review Internet protocols, packets, fault tolerance, and the efficiency of parallel and distributed computing." name="twitter:description"/>
+<meta content="https://notes.dingruischolars.com/og-cover.png" name="twitter:image"/>
+<link href="../../LOGO.png" rel="icon" type="image/png"/>
+<style>
+:root {
+  --bg: #FAFAFA;
+  --bg-card: #FFFFFF;
+  --bg-code: #0F0F0F;
+  --text: #0F0F0F;
+  --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F;
+  --accent-light: #F2E4E4;
+  --accent-dark: #5C1E1E;
+  --green: #2E6B4F;
+  --green-light: #DFF0E8;
+  --orange: #A65E1A;
+  --orange-light: #FBF0E0;
+  --red: #B03030;
+  --red-light: #FCEAEA;
+  --purple: #5E3D7A;
+  --purple-light: #EDE4F5;
+  --border: #E6E6E6;
+  --shadow: 0 1px 3px rgba(60,30,30,0.06), 0 1px 2px rgba(60,30,30,0.04);
+  --shadow-lg: 0 4px 12px rgba(60,30,30,0.10);
+  --radius: 10px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px;
+  --toc-w: 280px;
+}
+
+[data-theme="dark"] {
+  --bg: #0F0F0F;
+  --bg-card: #1A1A1A;
+  --bg-code: #000000;
+  --text: #FAFAFA;
+  --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA;
+  --accent-light: #3A2020;
+  --accent-dark: #E89090;
+  --green: #5CB88A;
+  --green-light: #1A2E24;
+  --orange: #D4944A;
+  --orange-light: #2E2010;
+  --red: #E07070;
+  --red-light: #301515;
+  --purple: #A888C8;
+  --purple-light: #201828;
+  --border: #2A2A2A;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ─── SKIP LINK (A11Y) ─── */
+.skip-link {
+  position: absolute; left: 16px; top: -48px; z-index: 2000;
+  background: var(--accent); color: #fff; text-decoration: none;
+  padding: 10px 14px; border-radius: 10px; font-weight: 700;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 12px; }
+
+/* ─── BACK TO TOP ─── */
+.backtotop {
+  position: fixed; right: 18px; bottom: 18px; z-index: 120;
+  width: 46px; height: 46px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-card); color: var(--accent);
+  box-shadow: var(--shadow-lg); font-size: 1.05rem; font-weight: 700; cursor: pointer;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+.backtotop.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.backtotop:hover { background: var(--accent-light); }
+@media print { .backtotop { display: none !important; } }
+
+/* ─── TOP NAV ─── */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 56px;
+  transition: background 0.3s, border 0.3s;
+}
+.topnav-brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem; color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+}
+.topnav-brand .unit-badge {
+  background: var(--accent);
+  color: #fff; font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.topnav-actions { display: flex; align-items: center; gap: 8px; }
+.topnav-actions button {
+  background: none; border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 6px 12px; font-size: 0.82rem;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.topnav-actions button:hover { background: var(--accent-light); border-color: var(--accent); }
+.topnav-actions button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.topnav-actions .back-link {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 6px 12px; font-size: 0.82rem;
+  cursor: pointer; font-family: var(--font-body); font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.topnav-actions .back-link:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* ─── PROGRESS BAR ─── */
+.progress-track {
+  position: fixed; top: 56px; left: 0; right: 0;
+  height: 3px; background: var(--border); z-index: 99;
+}
+.progress-fill {
+  height: 100%; width: 0; background: var(--accent);
+  transition: width 0.15s;
+}
+
+/* ─── SIDEBAR TOC ─── */
+.sidebar {
+  position: fixed; top: 59px; left: 0; bottom: 0;
+  width: var(--toc-w); background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; padding: 20px 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, background 0.3s;
+  z-index: 90;
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem; padding: 0 20px 12px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.sidebar a {
+  display: block; padding: 7px 20px;
+  color: var(--text-secondary);
+  text-decoration: none; font-size: 0.85rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.sidebar a.sub { padding-left: 36px; font-size: 0.8rem; }
+
+/* ─── MAIN ─── */
+.main-wrap {
+  max-width: var(--max-w);
+  margin: 80px auto 120px;
+  padding: 0 24px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center; padding: 56px 24px 48px;
+  background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%);
+  border-radius: var(--radius); margin-bottom: 40px;
+}
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(58,32,32,0.4) 0%, transparent 100%); }
+.hero-overline {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.15; margin-bottom: 16px;
+}
+.hero-meta {
+  display: flex; gap: 24px; justify-content: center;
+  flex-wrap: wrap; margin-top: 16px;
+}
+.hero-meta .chip {
+  font-size: 0.8rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 20px;
+}
+.chip-maroon { background: var(--accent-light); color: var(--accent); }
+.chip-green { background: var(--green-light); color: var(--green); }
+.chip-purple { background: var(--purple-light); color: var(--purple); }
+
+/* ─── SECTION ─── */
+.section {
+  margin-bottom: 48px;
+  scroll-margin-top: 80px;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: 1.65rem; margin-bottom: 16px;
+  line-height: 1.25;
+  border-bottom: 2px solid var(--accent-light);
+  padding-bottom: 8px; display: inline-block;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem; margin: 28px 0 10px;
+  line-height: 1.3;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border 0.3s;
+}
+.card-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.card-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 0.95rem; }
+
+/* ─── CODE BLOCKS ─── */
+pre {
+  background: var(--bg-code);
+  color: #CDD6F4;
+  padding: 18px 22px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin: 12px 0;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+:not(pre) > code {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.kw { color: #CBA6F7; }
+.ty { color: #89B4FA; }
+.str { color: #A6E3A1; }
+.cm { color: #6C7086; font-style: italic; }
+.num { color: #FAB387; }
+.fn { color: #89DCEB; }
+
+/* ─── KEY CONCEPT BOX ─── */
+.concept-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-light);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+}
+.concept-box.green { border-left-color: var(--green); background: var(--green-light); }
+.concept-box.orange { border-left-color: var(--orange); background: var(--orange-light); }
+.concept-box.red { border-left-color: var(--red); background: var(--red-light); }
+.concept-box.purple { border-left-color: var(--purple); background: var(--purple-light); }
+.concept-box strong { display: block; margin-bottom: 4px; }
+
+/* ─── TABLES ─── */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--accent-light);
+  font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.3px;
+}
+tr:hover td { background: var(--accent-light); }
+
+/* ─── QUIZ ─── */
+.quiz { margin: 20px 0; }
+.quiz-q {
+  font-weight: 600; margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-opt {
+  padding: 10px 16px; border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  font-size: 0.9rem; transition: all 0.2s;
+  background: var(--bg-card);
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-explain {
+  margin-top: 10px; padding: 12px 16px;
+  border-radius: 8px; font-size: 0.88rem;
+  display: none;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain.correct-exp { background: var(--green-light); color: var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: var(--red); }
+
+/* ─── ACCORDION / DETAILS ─── */
+details {
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  overflow: hidden;
+}
+summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  user-select: none;
+  list-style: none;
+  display: flex; align-items: center; gap: 8px;
+}
+summary::before {
+  content: '▸'; transition: transform 0.2s;
+  font-size: 0.8rem; color: var(--accent);
+}
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 0 18px 16px; font-size: 0.92rem; }
+
+/* ─── QUICK REF ─── */
+.qref {
+  background: var(--bg-card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.qref-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--accent); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 10px;
+}
+
+/* ─── FLASHCARD ─── */
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 16px 0; }
+.flashcard {
+  perspective: 600px; height: 160px; cursor: pointer;
+}
+.flashcard-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s; transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; text-align: center;
+  font-size: 0.88rem;
+}
+.flashcard-front {
+  background: var(--bg-card);
+  font-weight: 700;
+}
+.flashcard-back {
+  background: var(--accent-light);
+  transform: rotateY(180deg);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  padding: 20px;
+  overflow-y: auto;
+}
+.flashcard-front code, .flashcard-back code {
+  background: var(--bg-card);
+  font-size: 0.92em;
+}
+[data-theme="dark"] .flashcard-back code {
+  background: var(--bg);
+}
+
+/* ─── SEPARATOR ─── */
+.sep {
+  border: none; border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap {
+    max-width: none;
+    margin-left: calc(var(--toc-w) + 40px);
+    margin-right: 0;
+    padding: 0 48px;
+  }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.8rem; }
+  .main-wrap { padding: 0 16px; }
+  pre { font-size: 0.75rem; padding: 14px; }
+  .flashcard-grid { grid-template-columns: 1fr; }
+}
+
+/* Print */
+@media print {
+  .topnav, .progress-track, .sidebar, .topnav-actions { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; padding: 0; }
+  body { font-size: 11pt; background: white; color: black; }
+  pre { border: 1px solid #ccc; white-space: pre-wrap; }
+  .card, .concept-box, .quiz { break-inside: avoid; }
+}
+
+/* ─── FINAL POLISH ─── */
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+::selection { background: var(--accent-light); color: var(--accent-dark); }
+button:focus-visible, .quiz-opt:focus-visible, summary:focus-visible, a:focus-visible, .flashcard:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ─── BILINGUAL TOGGLE ─── */
+/* Default: English visible, Chinese hidden. Toggle by adding body.lang-zh.
+   body-scoped selectors raise specificity to (0,2,1) so they beat .section h2
+   (0,1,1) and similar class+element rules. */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (Sprint A) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light, #F2E4E4) 0%, var(--bg-card, #fff) 100%); border: 2px solid var(--accent); border-radius: var(--radius, 12px); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+@media (max-width: 600px){
+  html{ scroll-padding-top: 120px; }
+  .topnav{ height: 104px; padding: 6px 8px; display: grid; grid-template-rows: 32px 44px; gap: 4px; }
+  .topnav-brand{ min-width: 0; justify-content: center; font-size: 0.95rem; }
+  .topnav-actions{ width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, auto)); justify-content: space-between; gap: 3px; }
+  .topnav-actions button, .topnav-actions .back-link{ padding: 7px 5px; font-size: 0.7rem; white-space: nowrap; }
+  .progress-track{ top: 104px; }
+  .sidebar{ top: 107px; }
+  .main-wrap{ margin-top: 112px !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+<!-- BEGIN unit-nav-css -->
+<style data-section="unit-nav">
+.unit-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 980px;
+  margin: 64px auto 32px;
+  padding: 0 24px;
+}
+.unit-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 18px 20px;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #DDD0C8);
+  border-radius: 12px;
+  color: inherit;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.unit-nav__link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #7A2E2E);
+  box-shadow: 0 6px 16px -4px rgba(60, 20, 30, 0.12);
+}
+.unit-nav__link--next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.unit-nav__arrow {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent, #7A2E2E);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.unit-nav__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.unit-nav__hint {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6B5058);
+}
+.unit-nav__title {
+  font-family: var(--font-display, 'DM Serif Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--text, #2C1B1F);
+}
+.unit-nav__placeholder {
+  border: 1px dashed var(--border, #DDD0C8);
+  border-radius: 12px;
+  background: transparent;
+  opacity: 0.6;
+}
+@media (max-width: 640px) {
+  .unit-nav { grid-template-columns: 1fr; gap: 10px; margin-top: 48px; }
+  .unit-nav__link--next { flex-direction: row; text-align: left; }
+}
+@media print { .unit-nav { display: none; } }
+</style>
+<!-- END unit-nav-css -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "AP CSP — Unit 4: Computer Systems and Networks",
+  "description": "AP Computer Science Principles, Unit 4: Computer Systems and Networks | Dingrui Scholars. Review Internet protocols, packets, fault tolerance, and the efficiency of parallel and distributed computing.",
+  "url": "https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_4_Computer_Systems_and_Networks.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "AP",
+  "isAccessibleForFree": false,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+<!-- BEGIN toc-course-nav-css -->
+<style data-section="toc-course-nav">
+.sidebar-course-nav { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 4px; }
+.sidebar-course-nav summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 20px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.sidebar-course-nav summary::-webkit-details-marker { display: none; }
+.sidebar-course-nav summary::marker { content: ""; }
+.sidebar-course-nav summary::after {
+  content: "\25BE"; font-size: 0.7rem; transition: transform 0.15s; flex: 0 0 auto;
+}
+.sidebar-course-nav details[open] summary::after { transform: rotate(180deg); }
+.sidebar-course-count {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary); opacity: 0.7;
+}
+.sidebar-course-list { padding-bottom: 4px; }
+.sidebar-course-link {
+  display: block; padding: 6px 20px 6px 32px;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar-course-link:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar-course-link--current {
+  color: var(--accent); border-left-color: var(--accent);
+  font-weight: 600; background: var(--accent-light);
+}
+</style>
+<!-- END toc-course-nav-css -->
+<style id="csp-extra-css">.concept-box ul,.concept-box ol,.rationale ul,.rationale ol,.card ol,.card ul{margin:6px 0 6px 1.4em;padding-left:.4em}.concept-box li,.rationale li{margin:2px 0}</style></head>
+<body>
+<a class="skip-link" href="#main-content"><span data-lang="en">Skip to content</span><span data-lang="zh">跳到正文</span></a>
+<!-- TOP NAV -->
+<nav class="topnav">
+<div class="topnav-brand">
+<span class="unit-badge">UNIT 4</span>
+<span data-lang="en">Computer Systems and Networks</span><span data-lang="zh">计算机系统与网络</span>
+</div>
+<div class="topnav-actions">
+<a aria-label="Back to all units" class="back-link" href="../../index.html"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
+<a aria-label="Back to course hub" class="back-link" href="../index.html"><span data-lang="en">← Course Hub</span><span data-lang="zh">← 课程主页</span></a>
+<button id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+<button id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+<button id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+</div>
+</nav>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+<!-- BEGIN toc-mobile-default -->
+<script>(function(){var s=document.getElementById('sidebar');if(s&&window.innerWidth>=1100)s.classList.add('open');})();</script>
+<!-- END toc-mobile-default -->
+<div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div><a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">单元概览</span></a><a href="#s4-1"><span data-lang="en">4.1 The Internet</span><span data-lang="zh">4.1 互联网</span></a><a href="#s4-2"><span data-lang="en">4.2 Fault Tolerance</span><span data-lang="zh">4.2 容错</span></a><a href="#s4-3"><span data-lang="en">4.3 Parallel and Distributed Computing</span><span data-lang="zh">4.3 并行与分布式计算</span></a><a href="#mcq-patterns"><span data-lang="en">MCQ Patterns</span><span data-lang="zh">选择题套路</span></a><a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a><a href="#unit-quiz"><span data-lang="en">Unit Quiz</span><span data-lang="zh">单元小测</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN toc-course-nav -->
+<div class="sidebar-course-nav">
+<details>
+<summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">5 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
+<div class="sidebar-course-list"><a class="sidebar-course-link" href="Unit_1_Creative_Development.html"><span data-lang="en">Unit 1: Creative Development</span><span data-lang="zh">第 1 单元：创造性开发</span></a><a class="sidebar-course-link" href="Unit_2_Data.html"><span data-lang="en">Unit 2: Data</span><span data-lang="zh">第 2 单元：数据</span></a><a class="sidebar-course-link" href="Unit_3_Algorithms_and_Programming.html"><span data-lang="en">Unit 3: Algorithms and Programming</span><span data-lang="zh">第 3 单元：算法与编程</span></a><a aria-current="page" class="sidebar-course-link sidebar-course-link--current" href="Unit_4_Computer_Systems_and_Networks.html"><span data-lang="en">Unit 4: Computer Systems and Networks</span><span data-lang="zh">第 4 单元：计算机系统与网络</span></a><a class="sidebar-course-link" href="Unit_5_Impact_of_Computing.html"><span data-lang="en">Unit 5: Impact of Computing</span><span data-lang="zh">第 5 单元：计算的影响</span></a></div>
+</details>
+</div>
+<!-- END toc-course-nav -->
+</aside>
+<!-- MAIN CONTENT -->
+<main class="main-wrap" id="main-content">
+<!-- HERO -->
+<section class="hero" id="hero">
+<div class="hero-overline">AP Computer Science Principles · 鼎睿学苑</div>
+<h1 data-lang="en">Unit 4: Computer Systems and Networks</h1>
+<h1 data-lang="zh">单元 4：计算机系统与网络</h1>
+<p data-lang="en" style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">Explore how networks transfer data and keep working through failures. Compare sequential, parallel, and distributed computing solutions.</p>
+<p data-lang="zh" style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">探索网络如何传输数据并在发生故障时继续运行，再比较顺序计算、并行计算与分布式计算方案。</p>
+<div class="hero-meta"><span class="chip chip-maroon" data-lang="en">11–15% of AP Exam MCQ</span><span class="chip chip-maroon" data-lang="zh">占 AP 选择题 11–15%</span><span class="chip chip-green" data-lang="en">Big Idea 4 · CSN</span><span class="chip chip-green" data-lang="zh">大概念 4 · CSN</span><span class="chip chip-purple" data-lang="en">3 Topics</span><span class="chip chip-purple" data-lang="zh">3 个小节</span></div>
+</section>
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+<p class="consult-cta__lead"><span data-lang="en">Aiming for the top of the mark scheme?</span><span data-lang="zh">想冲刺满分？</span></p>
+<p class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor. We will help you master this unit and map your path forward.</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估。我们将帮助你掌握本单元，并规划下一步的学习路径。</span></p>
+<a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_4_computer_systems_and_networks__sg_intro__en" rel="noopener" target="_blank">Book a free assessment →</a>
+<a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_4_computer_systems_and_networks__sg_intro__zh" rel="noopener" target="_blank">预约免费评估 →</a>
+</aside><hr class="sep"/><!-- TOPIC 4.1 --><section class="section" id="s4-1">
+<div class="section-label" data-lang="en">Topic 4.1</div><div class="section-label" data-lang="zh">小节 4.1</div>
+<h2 data-lang="en">The Internet</h2><h2 data-lang="zh">互联网</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>A computing device can run a program; a computing system is devices and programs working together. A computer network connects devices that can send or receive data and is a type of computing system. (CSN-1.A.1, CSN-1.A.2, CSN-1.A.3, CSN-1.A.4)</li>
+<li>A path is a sequence of directly connected devices from sender to receiver; routing finds a path. Bandwidth is the maximum data sent per fixed time, usually measured in bits per second. (CSN-1.A.5, CSN-1.A.6, CSN-1.A.7, CSN-1.A.8)</li>
+<li>The Internet connects networks using standardized, open protocols. A protocol is an agreed set of rules; open protocols make it easy to connect more devices. Access requires a connection to an Internet-connected device. (CSN-1.B.1, CSN-1.B.2, CSN-1.B.3, CSN-1.B.4)</li>
+<li>Internet routing is usually dynamic, not specified in advance. Scalability is the capacity to change size or scale for new demands; the Internet was designed to be scalable. (CSN-1.B.5, CSN-1.B.6, CSN-1.B.7)</li>
+<li>Internet data streams contain chunks encapsulated in packets. Packets carry data and metadata for routing and reassembly; they can arrive in order, out of order, or not at all. IP, TCP, and UDP are common Internet protocols. (CSN-1.C.1, CSN-1.C.2, CSN-1.C.3, CSN-1.C.4)</li>
+<li>The World Wide Web is a system of linked pages, programs, and files. It uses the Internet and the HTTP protocol. (CSN-1.D.1, CSN-1.D.2, CSN-1.D.3)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>计算设备（computing device）可以运行程序；计算系统（computing system）是为共同目的协作的设备和程序。计算机网络（computer network）连接能够发送或接收数据的设备，是一种计算系统。(CSN-1.A.1, CSN-1.A.2, CSN-1.A.3, CSN-1.A.4)</li>
+<li>路径（path）是从发送方到接收方的一串直接相连的设备；路由（routing）寻找这样的路径。带宽（bandwidth）是固定时间内可发送的数据最大量，通常以比特每秒计量。(CSN-1.A.5, CSN-1.A.6, CSN-1.A.7, CSN-1.A.8)</li>
+<li>互联网（Internet）使用标准化的开放协议连接各个网络。协议（protocol）是一组约定的规则；开放协议使连接更多设备更容易。接入互联网需要连接到已接入互联网的设备。(CSN-1.B.1, CSN-1.B.2, CSN-1.B.3, CSN-1.B.4)</li>
+<li>互联网路由通常是动态的，不预先指定。可扩展性（scalability）是系统为满足新需求而改变大小或规模的能力；互联网的设计具有可扩展性。(CSN-1.B.5, CSN-1.B.6, CSN-1.B.7)</li>
+<li>互联网数据流（data stream）中的数据块被封装在数据包（packet）中。数据包携带数据和用于路由及重新组装的元数据（metadata）；它们可能按序、乱序到达，也可能根本不到达。IP、TCP 和 UDP 是常见的互联网协议。(CSN-1.C.1, CSN-1.C.2, CSN-1.C.3, CSN-1.C.4)</li>
+<li>万维网（World Wide Web）是由相互链接的页面、程序和文件组成的系统。它使用互联网和 HTTP 协议。(CSN-1.D.1, CSN-1.D.2, CSN-1.D.3)</li>
+</ul>
+</div>
+<h3 data-lang="en">Devices, paths, and bandwidth</h3><h3 data-lang="zh">设备、路径与带宽</h3>
+<p data-lang="en">Computers, tablets, servers, routers, and smart sensors are examples of computing devices. In a network path, each consecutive pair of devices is directly connected. Routing finds a path from the sender to the receiver.</p>
+<p data-lang="zh">计算机、平板电脑、服务器、路由器和智能传感器都是计算设备的例子。在网络路径中，每两个相邻设备都直接相连。路由负责寻找从发送方到接收方的路径。</p>
+<p data-lang="en">Bandwidth describes a maximum rate, not the amount of data in a single message. For example, a bandwidth of 8 million bits per second allows at most 8 million bits to be sent in one second.</p>
+<p data-lang="zh">带宽描述的是最大速率，而不是单条消息的数据量。例如，带宽为每秒 800 万比特时，一秒内最多可发送 800 万比特。</p>
+<h3 data-lang="en">Open protocols and packets</h3><h3 data-lang="zh">开放协议与数据包</h3>
+<p data-lang="en">The Internet is a network of interconnected networks. Its open, standardized protocols let devices follow shared rules, making it easier to connect additional devices. Its design supports growth as demands change.</p>
+<p data-lang="zh">互联网是由相互连接的网络组成的网络。开放且标准化的协议让设备遵循共同规则，使连接更多设备更容易。互联网的设计支持随需求变化而扩展。</p>
+<p data-lang="en">A data stream is sent in packets. Each packet contains a data chunk and metadata used for routing and reassembly. Routes are usually chosen dynamically, and arrival order is not guaranteed.</p>
+<p data-lang="zh">数据流以数据包的形式发送。每个数据包都包含一个数据块，以及用于路由和重新组装的元数据。路径通常是动态选择的，数据包不保证按序到达。</p>
+<h3 data-lang="en">The Web and the Internet</h3><h3 data-lang="zh">万维网与互联网</h3>
+<p data-lang="en">The Web uses the Internet to connect linked pages, programs, and files. HTTP is a Web protocol. The Web is not the same thing as the Internet.</p>
+<p data-lang="zh">万维网使用互联网来连接相互链接的页面、程序和文件。HTTP 是万维网使用的协议。万维网与互联网不是同一个概念。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Routes and packet order</span><span data-lang="zh">例题：路径与数据包顺序</span></div>
+<p data-lang="en">Sender A and receiver E are connected through routers. Direct links are A–B, B–E, A–C, C–D, and D–E. A sends a message in packets P1, P2, and P3. E receives P2 first, then P1; P3 does not arrive. What paths are possible, and can E reassemble the complete message from the received packets?</p>
+<p data-lang="zh">发送方 A 和接收方 E 通过路由器连接。直接连接分别为 A–B、B–E、A–C、C–D 和 D–E。A 将一条消息分成数据包 P1、P2 和 P3 发送。E 先收到 P2，再收到 P1；P3 没有到达。有哪些可能的路径？E 能否仅用收到的数据包重新组装完整消息？</p>
+<ol data-lang="en">
+<li>A–B–E and A–C–D–E are both paths because each consecutive pair is directly connected.</li>
+<li>Routing finds a path. Internet routing is usually dynamic, so do not assume a path was fixed in advance.</li>
+<li>The received packets arrived out of order. Their metadata can be used for reassembly, but P3 is missing.</li>
+<li>Answer: Both listed paths are possible. E cannot reassemble the complete message from only P1 and P2.</li>
+</ol>
+<ol data-lang="zh">
+<li>A–B–E 和 A–C–D–E 都是路径，因为每两个相邻设备都直接相连。</li>
+<li>路由会寻找路径。互联网路由通常是动态的，因此不要假定路径已预先固定。</li>
+<li>收到的数据包是乱序到达的。元数据可用于重新组装，但 P3 缺失。</li>
+<li>答案：列出的两条路径都可能使用。E 仅凭 P1 和 P2 无法重新组装完整消息。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+<p>A common wrong answer is that all packets must follow one fixed path and arrive in the order sent. Internet routing is usually dynamic, and packets can arrive out of order or not at all. Another trap is treating the Web as the entire Internet: the Web uses the Internet.</p>
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+<p>常见错误答案是：所有数据包必须沿同一条固定路径，并按发送顺序到达。互联网路由通常是动态的，数据包可能乱序到达，也可能根本不到达。另一个陷阱是把万维网当作整个互联网：万维网使用互联网。</p>
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+<p>A possible path is not necessarily the path a packet takes. In the example, knowing the network links gives possible routes, but it does not reveal which route carried each packet. Similarly, bandwidth is a maximum rate, not proof that data is always sent at that rate.</p>
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+<p>可能的路径不一定是数据包实际经过的路径。在例题中，知道网络连接只能确定可能的路线，不能确定每个数据包实际经过了哪条路线。同样，带宽是最大速率，不能证明数据总是以该速率发送。</p>
+</div>
+</section><hr class="sep"/><!-- TOPIC 4.2 --><section class="section" id="s4-2">
+<div class="section-label" data-lang="en">Topic 4.2</div>
+<div class="section-label" data-lang="zh">小节 4.2</div>
+<h2 data-lang="en">Fault Tolerance</h2>
+<h2 data-lang="zh">容错（fault tolerance）</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>The Internet is engineered for fault tolerance, using abstractions for routing and transmitting data. (CSN-1.E.1)</li>
+<li>Redundancy adds components to mitigate failures. Multiple paths between connected devices are one form of network redundancy. (CSN-1.E.2, CSN-1.E.3)</li>
+<li>If an Internet device or connection fails, subsequent data takes another route if one is available. (CSN-1.E.4)</li>
+<li>A fault-tolerant system keeps functioning despite failures. This lets users continue using the network when components fail unexpectedly, sometimes in groups. (CSN-1.E.5)</li>
+<li>Redundancy often costs extra resources but can provide fault tolerance. (CSN-1.E.6)</li>
+<li>Multiple routing options increase Internet reliability and help it scale to more devices and people. (CSN-1.E.7)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>互联网被设计为具有容错能力，并使用抽象（abstraction）来进行路由（routing）和数据传输。 (CSN-1.E.1)</li>
+<li>冗余（redundancy）通过增加组件来减轻故障的影响。连接的设备之间有多条路径是网络冗余的一种形式。 (CSN-1.E.2, CSN-1.E.3)</li>
+<li>如果互联网中的设备或连接发生故障，后续数据会在有其他路线可用时改走其他路线。 (CSN-1.E.4)</li>
+<li>容错系统在发生故障时仍能继续运行。这使用户在组件意外发生故障，有时甚至成组发生故障时，仍能使用网络。 (CSN-1.E.5)</li>
+<li>冗余通常需要额外资源，但可以提供容错能力。 (CSN-1.E.6)</li>
+<li>多种路由选择提高了互联网的可靠性，也帮助互联网扩展以支持更多设备和用户。 (CSN-1.E.7)</li>
+</ul>
+</div>
+<h3 data-lang="en">Routes, failures, and trade-offs</h3>
+<h3 data-lang="zh">路线、故障与权衡</h3>
+<p data-lang="en">Routing abstractions help the Internet direct data without requiring users to manage each connection. If one route fails, another route can allow communication to continue. Extra connections require resources, so redundancy has a cost as well as a benefit.</p>
+<p data-lang="zh">路由抽象帮助互联网引导数据传输，无须用户管理每一条连接。如果一条路线发生故障，另一条路线可以让通信继续。额外连接需要资源，因此冗余既有成本，也有好处。</p>
+<p data-lang="en">Exam pattern: trace the available paths after the stated failure. If every path between the devices uses the failed component, those devices cannot communicate through that network. Do not assume that an alternate path exists.</p>
+<p data-lang="zh">考试常见题型：在指定故障发生后，追踪仍可用的路径。如果两台设备之间的所有路径都经过发生故障的组件，它们就无法通过该网络通信。不要假设一定存在备用路径。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Testing alternate paths</span><span data-lang="zh">例题：检查备用路径</span></div>
+<p data-lang="en">A network has connections A–B, B–D, A–C, C–D, and D–E. Can A still reach E if A–B fails? What if D–E fails instead?</p>
+<p data-lang="zh">一个网络有连接 A–B、B–D、A–C、C–D 和 D–E。如果 A–B 发生故障，A 还能到达 E 吗？如果换成 D–E 发生故障呢？</p>
+<ol data-lang="en">
+<li>Before a failure, A can reach D through either B or C, then reach E through D–E.</li>
+<li>If A–B fails, A can still reach E along A–C–D–E. The alternate path provides fault tolerance for that failure.</li>
+<li>If D–E fails instead, neither route to D can reach E. Every path from A to E uses D–E.</li>
+<li>Answer: A can reach E after A–B fails, but not after D–E fails. D–E is a vulnerability in this network.</li>
+</ol>
+<ol data-lang="zh">
+<li>故障发生前，A 可以经 B 或 C 到达 D，再通过 D–E 到达 E。</li>
+<li>如果 A–B 发生故障，A 仍可沿 A–C–D–E 到达 E。备用路径使网络能够容忍这一故障。</li>
+<li>如果换成 D–E 发生故障，两条到达 D 的路线都无法再通向 E。因为 A 到 E 的每条路径都经过 D–E。</li>
+<li>答案：A–B 故障后，A 仍可到达 E；D–E 故障后则不能。D–E 是该网络中的一个薄弱点。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+The wrong answer is “any extra path makes the whole network immune to failure.” An alternate path helps only if it avoids the failed component and still connects the required devices.
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+错误答案是“只要有额外路径，整个网络就不会因故障而中断”。备用路径只有在避开发生故障的组件，并且仍能连接所需设备时才有帮助。
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+Failures can occur in groups. In the example, losing both A–B and A–C isolates A even though either connection alone has an alternative. Evaluate the specific failures and remaining paths, not just the number of connections.
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+故障可能成组发生。在例题中，即使 A–B 和 A–C 各自都有替代路线，两者同时失效仍会使 A 与网络隔离。要分析具体发生的故障和剩余路径，而不只是数连接的数量。
+</div>
+</section><hr class="sep"/><!-- TOPIC 4.3 --><section class="section" id="s4-3">
+<div class="section-label" data-lang="en">Topic 4.3</div>
+<div class="section-label" data-lang="zh">小节 4.3</div>
+<h2 data-lang="en">Parallel and Distributed Computing</h2>
+<h2 data-lang="zh">并行与分布式计算</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>Sequential computing performs operations one at a time in order. Parallel computing breaks a program into smaller sequential operations, some performed simultaneously. Distributed computing uses multiple devices to run a program. (CSN-2.A.1, CSN-2.A.2, CSN-2.A.3)</li>
+<li>Compare efficiency by the time solutions take for the same task. Sequential time is the sum of all steps; parallel time is the time of the sequential portions plus the longest simultaneous task. (CSN-2.A.4, CSN-2.A.5, CSN-2.A.6)</li>
+<li>Speedup equals sequential time divided by parallel time. (CSN-2.A.7)</li>
+<li>Parallel solutions have sequential and parallel portions and can scale more effectively than sequential solutions. The sequential portion limits the benefit of adding more parallelism. (CSN-2.B.1, CSN-2.B.2, CSN-2.B.5)</li>
+<li>Distributed computing can solve problems too demanding for one computer in processing time or storage, and can solve much larger problems faster. (CSN-2.B.3, CSN-2.B.4)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>顺序计算（sequential computing）按顺序一次执行一个操作。并行计算（parallel computing）将程序分成较小的顺序操作，其中一些同时执行。分布式计算（distributed computing）使用多个设备运行程序。(CSN-2.A.1, CSN-2.A.2, CSN-2.A.3)</li>
+<li>比较完成同一任务所需的时间，可以比较解法的效率。顺序时间是所有步骤时间之和；并行时间是顺序部分的时间加上同时执行的任务中最长的时间。(CSN-2.A.4, CSN-2.A.5, CSN-2.A.6)</li>
+<li>加速比（speedup）等于顺序时间除以并行时间。(CSN-2.A.7)</li>
+<li>并行解法包含顺序部分和并行部分，通常比顺序解法更容易有效扩展。顺序部分限制了增加并行度带来的收益。(CSN-2.B.1, CSN-2.B.2, CSN-2.B.5)</li>
+<li>分布式计算可以解决单台计算机因处理时间或存储需求而无法解决的问题，也可以更快地解决规模大得多的问题。(CSN-2.B.3, CSN-2.B.4)</li>
+</ul>
+</div>
+<h3 data-lang="en">Compare the models</h3>
+<h3 data-lang="zh">比较计算模型</h3>
+<p data-lang="en">A sequential solution completes each operation before the next. A parallel solution can run independent operations at the same time, while each smaller operation is itself sequential. A distributed solution uses multiple devices; using multiple devices and performing operations simultaneously describe different aspects of a solution.</p>
+<p data-lang="zh">顺序解法在完成一个操作后才执行下一个操作。并行解法可以同时运行相互独立的操作，而每个较小操作本身仍按顺序执行。分布式解法使用多个设备；使用多个设备与同时执行操作描述的是解法的不同方面。</p>
+<p data-lang="en">To compare solutions, use the time each takes to complete the same task. For a parallel stage in which tasks start together, the stage finishes when its longest task finishes. Add that time to the time for the sequential stages.</p>
+<p data-lang="zh">比较解法时，要看各解法完成同一任务所需的时间。在任务同时开始的并行阶段，最长的任务完成时，该阶段才结束。将这段时间与各顺序阶段的时间相加。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Compare running times</span><span data-lang="zh">例题：比较运行时间</span></div>
+<p data-lang="en">A task requires 2 seconds of preparation, three independent operations taking 4, 6, and 8 seconds, and 2 seconds to finish. A sequential solution runs every operation one at a time. A parallel solution runs the three independent operations simultaneously after preparation, then finishes. What are the times and the speedup?</p>
+<p data-lang="zh">一项任务需要 2 秒准备，接着完成三个相互独立的操作，分别需要 4、6、8 秒，最后需要 2 秒收尾。顺序解法一次执行一个操作。并行解法在准备之后同时执行三个独立操作，然后收尾。两种解法分别需要多少时间，加速比是多少？</p>
+<ol data-lang="en">
+<li>Sequential time: 2 + 4 + 6 + 8 + 2 = 22 seconds.</li>
+<li>The parallel stage takes 8 seconds, because the solution must wait for its longest operation.</li>
+<li>Parallel time: 2 + 8 + 2 = 12 seconds. Speedup: 22 / 12 = 11 / 6, or about 1.83.</li>
+<li><strong>Answer:</strong> The parallel solution takes 12 seconds instead of 22 seconds and is about 1.83 times as fast for this task.</li>
+</ol>
+<ol data-lang="zh">
+<li>顺序时间：2 + 4 + 6 + 8 + 2 = 22 秒。</li>
+<li>并行阶段需要 8 秒，因为解法必须等待最长的操作完成。</li>
+<li>并行时间：2 + 8 + 2 = 12 秒。加速比：22 / 12 = 11 / 6，约为 1.83。</li>
+<li><strong>答案：</strong>并行解法需要 12 秒，而顺序解法需要 22 秒。对这项任务而言，前者的速度约为后者的 1.83 倍。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+Adding 4, 6, and 8 for the simultaneous stage gives the wrong parallel time: those operations overlap. Also, do not divide parallel time by sequential time for speedup. The order is sequential time divided by parallel time.
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+把同时执行阶段的 4、6、8 秒相加，会得到错误的并行时间：这些操作的执行时间相互重叠。另外，计算加速比时不要用并行时间除以顺序时间，正确顺序是顺序时间除以并行时间。
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+In the example, preparation and finishing still take 4 seconds in total. Even if the parallel stage could be reduced, those sequential steps would remain. Thus, increasing parallelism eventually stops meaningfully improving efficiency. For much larger problems, distributing work across devices can also address processing-time or storage needs that one computer cannot meet.
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+在例题中，准备和收尾总共仍需 4 秒。即使并行阶段的时间可以缩短，这些顺序步骤仍然存在。因此，不断提高并行度最终会不再显著提高效率。对于规模大得多的问题，将工作分配给多个设备，也可以应对单台计算机无法满足的处理时间或存储需求。
+</div>
+</section><hr class="sep"/><section class="section" id="mcq-patterns"><div class="section-label" data-lang="en">AP MCQ Preview</div><div class="section-label" data-lang="zh">AP 选择题预览</div><h2 data-lang="en">Unit 4 MCQ Patterns That Show Up Every Year</h2><h2 data-lang="zh">单元 4 每年都会出现的选择题套路</h2><p data-lang="en">Computer Systems and Networks accounts for 11–15% of the multiple-choice exam. Expect network scenarios, questions about reliability, and comparisons of computing time or speedup.</p><p data-lang="zh">计算机系统与网络（Computer Systems and Networks）占选择题考试的 11–15%。题目可能涉及网络场景、可靠性，以及计算时间或加速比的比较。</p><div class="concept-box" data-lang="en"><strong>Pattern 1: Trace packets and protocols</strong> Look for a message split across a network. Packets carry data and routing or reassembly metadata; they can take different routes and arrive out of order or not at all. Open protocols let devices follow shared rules. (See Topic 4.1.)</div><div class="concept-box" data-lang="zh"><strong>套路 1：分析数据包与协议</strong> 看到消息被拆分并通过网络发送时，注意数据包（packet）包含数据以及用于路由或重组的元数据。数据包可能走不同路径，乱序到达或根本未到达。开放协议（open protocol）让设备遵循共同规则。（参见 Topic 4.1。）</div><div class="concept-box" data-lang="en"><strong>Pattern 2: Separate the Internet from the Web</strong> When a question mentions websites or HTTP, distinguish the Web from the network it uses. The Internet connects networks; the Web is a system of linked pages, programs, and files. (See Topic 4.1.)</div><div class="concept-box" data-lang="zh"><strong>套路 2：区分互联网与万维网</strong> 题目提到网站或 HTTP 时，要区分万维网（World Wide Web）与它所使用的网络。互联网（Internet）连接多个网络；万维网是由相互链接的页面、程序和文件组成的系统。（参见 Topic 4.1。）</div><div class="concept-box" data-lang="en"><strong>Pattern 3: Find redundant paths and weak points</strong> For a network diagram, test whether an alternate path remains after the stated failure. Redundancy improves fault tolerance but requires extra resources, and a shared component can still be a single point of failure. (See Topic 4.2.)</div><div class="concept-box" data-lang="zh"><strong>套路 3：寻找冗余路径与薄弱点</strong> 面对网络图，检查指定故障发生后是否仍有替代路径。冗余（redundancy）能提高容错性（fault tolerance），但需要额外资源；共用组件仍可能成为单点故障。（参见 Topic 4.2。）</div><div class="concept-box" data-lang="en"><strong>Pattern 4: Compare computing times</strong> Add all task times for a sequential solution. For tasks that run simultaneously, add the longest parallel task to the sequential portions; speedup is sequential time divided by parallel time. More parallel resources cannot remove the sequential portion. (See Topic 4.3.)</div><div class="concept-box" data-lang="zh"><strong>套路 4：比较计算时间</strong> 顺序计算时，将所有任务时间相加。对于同时运行的任务，将最长的并行任务时间与顺序部分时间相加；加速比（speedup）等于顺序时间除以并行时间。增加并行资源不能消除顺序部分。（参见 Topic 4.3。）</div></section>
+<hr class="sep"/>
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<section class="section" id="flashcards">
+<div class="section-label" data-lang="en">Review</div>
+<div class="section-label" data-lang="zh">复习</div>
+<h2 data-lang="en">Flashcards, Click to Flip</h2>
+<h2 data-lang="zh">闪卡（点击翻面）</h2>
+<div class="flashcard-grid"><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How do a computing device, computing system, and computer network differ?</span><span data-lang="zh">计算设备、计算系统和计算机网络有何区别？</span></div><div class="flashcard-back"><span data-lang="en">A device is a physical artifact that can run a program. A system is devices and programs working toward a common purpose. A network is interconnected devices that can send or receive data.</span><span data-lang="zh">计算设备（computing device）是能运行程序的实体。计算系统（computing system）是为共同目标协作的设备和程序。计算机网络（computer network）是能够发送或接收数据的互连设备集合。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What are a network path and routing?</span><span data-lang="zh">什么是网络路径和路由？</span></div><div class="flashcard-back"><span data-lang="en">A path is a sequence of directly connected devices from sender to receiver. Routing finds such a path.</span><span data-lang="zh">路径（path）是从发送方到接收方的一系列直接相连的设备。路由（routing）是寻找此类路径的过程。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What does bandwidth measure?</span><span data-lang="zh">带宽衡量什么？</span></div><div class="flashcard-back"><span data-lang="en">The maximum data that can be sent in a fixed time, usually measured in bits per second.</span><span data-lang="zh">带宽（bandwidth）衡量固定时间内最多能发送的数据量，通常以比特每秒为单位。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is the Internet, and why do open protocols help it grow?</span><span data-lang="zh">互联网是什么？开放协议为何有助于它扩展？</span></div><div class="flashcard-back"><span data-lang="en">The Internet is a network of interconnected networks. Open protocols provide shared rules that make connecting additional devices easier.</span><span data-lang="zh">互联网（Internet）是由多个互连网络组成的网络。开放协议（open protocol）提供共同规则，使接入更多设备更容易。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is in a packet, and must packets arrive in order?</span><span data-lang="zh">数据包包含什么？数据包必须按顺序到达吗？</span></div><div class="flashcard-back"><span data-lang="en">A packet contains a chunk of data and metadata for routing and reassembly. Packets can arrive out of order or not at all.</span><span data-lang="zh">数据包（packet）包含一块数据，以及用于路由和重组的元数据（metadata）。数据包可能乱序到达，也可能未到达。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How are the Web and the Internet related?</span><span data-lang="zh">万维网与互联网有什么关系？</span></div><div class="flashcard-back"><span data-lang="en">The Web is a system of linked pages, programs, and files that uses the Internet. HTTP is a Web protocol.</span><span data-lang="zh">万维网（World Wide Web）是使用互联网、由相互链接的页面、程序和文件组成的系统。HTTP 是万维网使用的协议。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What are fault tolerance and redundancy?</span><span data-lang="zh">什么是容错性和冗余？</span></div><div class="flashcard-back"><span data-lang="en">Fault tolerance is the ability to keep functioning despite failures. Redundancy adds components that can help mitigate failures.</span><span data-lang="zh">容错性（fault tolerance）是系统在发生故障时仍能继续运行的能力。冗余（redundancy）是增加组件，以帮助减轻故障的影响。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How can multiple network paths improve reliability?</span><span data-lang="zh">多条网络路径如何提高可靠性？</span></div><div class="flashcard-back"><span data-lang="en">If one connection fails, data can use another path when one is available. Extra paths require resources and do not eliminate every possible failure.</span><span data-lang="zh">一条连接发生故障时，如果有其他路径，数据可以改走该路径。额外路径需要资源，也不能消除所有可能的故障。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How do sequential, parallel, and distributed computing differ?</span><span data-lang="zh">顺序计算、并行计算和分布式计算有何区别？</span></div><div class="flashcard-back"><span data-lang="en">Sequential computing performs operations one at a time. Parallel computing performs some operations simultaneously. Distributed computing uses multiple devices to run a program.</span><span data-lang="zh">顺序计算（sequential computing）每次执行一个操作。并行计算（parallel computing）同时执行某些操作。分布式计算（distributed computing）使用多台设备运行程序。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How do you calculate time for simultaneous parallel tasks?</span><span data-lang="zh">如何计算含同时运行的并行任务的总时间？</span></div><div class="flashcard-back"><span data-lang="en">Add the time of the sequential portions to the time of the longest simultaneous parallel task.</span><span data-lang="zh">将顺序部分的时间与同时运行的并行任务中最长的时间相加。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How is parallel speedup calculated?</span><span data-lang="zh">如何计算并行计算的加速比？</span></div><div class="flashcard-back"><span data-lang="en">Divide the sequential solution's time by the parallel solution's time for the same task.</span><span data-lang="zh">加速比（speedup）等于完成同一任务的顺序计算时间除以并行计算时间。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What are a benefit and a limit of parallel or distributed computing?</span><span data-lang="zh">并行或分布式计算有何优势和限制？</span></div><div class="flashcard-back"><span data-lang="en">Multiple devices can handle large processing or storage needs. In a parallel solution, the sequential portion limits further speedup.</span><span data-lang="zh">多台设备可以应对大量处理或存储需求。在并行方案中，顺序部分会限制进一步提速。</span></div></div></div></div>
+</section>
+<hr class="sep"/>
+<!-- ═══════════════ UNIT QUIZ ═══════════════ -->
+<section class="section" id="unit-quiz">
+<div class="section-label" data-lang="en">Assessment</div>
+<div class="section-label" data-lang="zh">测验</div>
+<h2 data-lang="en">Unit 4, Practice Quiz</h2>
+<h2 data-lang="zh">单元 4：练习小测</h2>
+
+
+
+
+
+<div class="quiz" data-answer="0"><div class="quiz-q"><span data-lang="en">1. Which statement about packets sent over the Internet is true?</span><span data-lang="zh">1. 关于通过互联网发送的数据包（packet），哪项说法正确？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Packets contain data and metadata, and may arrive out of order.</span><span data-lang="zh">数据包包含数据和元数据，可能乱序到达。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">Every packet must follow the same route and arrive in order.</span><span data-lang="zh">所有数据包必须走相同路径并按顺序到达。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Packets contain only routing information, not message data.</span><span data-lang="zh">数据包只包含路由信息，不包含消息数据。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Packets cannot be lost once they enter the Internet.</span><span data-lang="zh">数据包进入互联网后不可能丢失。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Metadata supports routing and reassembly, and packets may arrive out of order.</span><span data-lang="zh">正确！元数据有助于路由和重组，数据包可能乱序到达。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Packets carry both data and metadata. Routes and arrival order are not guaranteed, and packets may be lost.</span><span data-lang="zh">数据包同时包含数据和元数据。路径和到达顺序都不受保证，数据包也可能丢失。</span></div></div><div class="quiz" data-answer="1"><div class="quiz-q"><span data-lang="en">2. Which statement correctly describes the Internet and the World Wide Web?</span><span data-lang="zh">2. 哪项正确描述了互联网（Internet）和万维网（World Wide Web）？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">The Internet is a collection of web pages, while the Web connects physical networks.</span><span data-lang="zh">互联网是网页的集合，而万维网连接物理网络。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">The Web is a system of linked resources that uses the Internet.</span><span data-lang="zh">万维网是使用互联网的相互链接的资源系统。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">The Internet and the Web are two names for the same protocol.</span><span data-lang="zh">互联网和万维网是同一种协议的两个名称。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">The Internet can be accessed only through HTTP.</span><span data-lang="zh">互联网只能通过 HTTP 访问。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! The Web uses the Internet, and HTTP is a protocol used by the Web.</span><span data-lang="zh">正确！万维网使用互联网，HTTP 是万维网使用的协议。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">The Internet connects networks. The Web is a system of linked pages, programs, and files that runs using the Internet.</span><span data-lang="zh">互联网连接多个网络。万维网是利用互联网运行的系统，包含相互链接的页面、程序和文件。</span></div></div><div class="quiz" data-answer="3"><div class="quiz-q"><span data-lang="en">3. A network has these two-way connections: A–B, B–D, A–C, C–D, and D–E. Which single connection failure disconnects A from E?</span><span data-lang="zh">3. 某网络有以下双向连接：A–B、B–D、A–C、C–D 和 D–E。哪一条连接单独发生故障会使 A 与 E 断开？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0">A–B</div><div class="quiz-opt" data-idx="1">B–D</div><div class="quiz-opt" data-idx="2">C–D</div><div class="quiz-opt" data-idx="3">D–E</div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Every path from A to E uses D–E, so its failure disconnects E.</span><span data-lang="zh">正确！从 A 到 E 的每条路径都经过 D–E，因此该连接故障会使 E 断开。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">A can reach D through either B or C, but both routes depend on D–E to reach E. That shared connection is a single point of failure.</span><span data-lang="zh">A 可以通过 B 或 C 到达 D，但两条路径都依赖 D–E 才能到达 E。该共用连接是单点故障（single point of failure）。</span></div></div><div class="quiz" data-answer="0"><div class="quiz-q"><span data-lang="en">4. A school adds a second independent network connection between two buildings. What is the most likely tradeoff?</span><span data-lang="zh">4. 一所学校在两栋楼之间增加了第二条独立的网络连接。最可能的权衡是什么？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Greater fault tolerance at the cost of additional resources</span><span data-lang="zh">以额外资源为代价，提高容错性</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">Guaranteed prevention of every network failure without extra resources</span><span data-lang="zh">无需额外资源，就能保证防止所有网络故障</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Less reliability because data can never use an alternate path</span><span data-lang="zh">可靠性降低，因为数据永远不能使用替代路径</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Elimination of the need for routing</span><span data-lang="zh">不再需要路由</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! An independent path can help the network keep working after a connection fails, but it costs resources.</span><span data-lang="zh">正确！独立路径可以帮助网络在一条连接故障后继续运行，但需要资源。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Redundancy can provide an alternate path, not a guarantee against every failure. Adding and maintaining a connection requires resources.</span><span data-lang="zh">冗余（redundancy）可以提供替代路径，但不能保证防止所有故障。增加和维护连接需要资源。</span></div></div><div class="quiz" data-answer="1"><div class="quiz-q"><span data-lang="en">5. A task has a 4-second setup, three independent jobs taking 12, 8, and 4 seconds, and a 4-second finish. The jobs run one at a time in the sequential solution and all at once in the parallel solution. What is the parallel speedup?</span><span data-lang="zh">5. 一项任务包括 4 秒的准备、三个分别耗时 12、8、4 秒的独立作业，以及 4 秒的收尾。顺序方案逐个运行作业，并行方案同时运行所有作业。并行加速比（speedup）是多少？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0">1.2</div><div class="quiz-opt" data-idx="1">1.6</div><div class="quiz-opt" data-idx="2">2</div><div class="quiz-opt" data-idx="3">3.2</div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Sequential time is 32 seconds; parallel time is 4 + 12 + 4 = 20 seconds. Speedup is 32 / 20 = 1.6.</span><span data-lang="zh">正确！顺序时间为 32 秒；并行时间为 4 + 12 + 4 = 20 秒。加速比为 32 / 20 = 1.6。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Include setup and finish in both solutions. In the parallel solution, the simultaneous jobs take as long as the longest job, 12 seconds. Divide sequential time by parallel time.</span><span data-lang="zh">两个方案都要计入准备和收尾时间。并行方案中，同时运行的作业耗时等于最长作业的 12 秒。用顺序时间除以并行时间。</span></div></div><div class="quiz" data-answer="2"><div class="quiz-q"><span data-lang="en">6. A large data-processing task is divided among several computers, but part of the task must still run sequentially. Which statement is most accurate?</span><span data-lang="zh">6. 一项大型数据处理任务被分配到多台计算机，但其中一部分仍必须顺序执行。哪项说法最准确？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Adding devices always reduces total time in exact proportion to the number added.</span><span data-lang="zh">增加设备总能使总时间按增加的设备数量成比例减少。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">Using multiple devices means no part of the task can run sequentially.</span><span data-lang="zh">使用多台设备意味着任务的任何部分都不能顺序运行。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Multiple devices can help meet processing or storage needs, but the sequential portion limits speedup.</span><span data-lang="zh">多台设备有助于满足处理或存储需求，但顺序部分会限制提速。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Distributed computing can help only when the data fits on one computer.</span><span data-lang="zh">只有当数据能放在一台计算机上时，分布式计算才有帮助。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Distributed resources can handle larger demands, while the sequential portion limits gains from parallelism.</span><span data-lang="zh">正确！分布式资源可以应对更大的需求，而顺序部分会限制并行带来的提速。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Distributed computing uses multiple devices and can address large processing or storage needs. A sequential portion still takes time no matter how many parallel resources are added.</span><span data-lang="zh">分布式计算（distributed computing）使用多台设备，可以应对大量处理或存储需求。无论增加多少并行资源，顺序部分仍需要时间。</span></div></div></section>
+<!-- ═══════════════ AP-STYLE PRACTICE ═══════════════ -->
+<section class="section" id="ap-practice">
+<div class="section-label" data-lang="en">Next Step</div>
+<div class="section-label" data-lang="zh">下一步</div>
+<h2 data-lang="en">AP-Style Practice Problems</h2>
+<h2 data-lang="zh">AP 风格练习题</h2>
+<div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
+<p data-lang="en" style="margin-bottom:16px;">Try the 15-question practice set to test your understanding of networks, fault tolerance, and computing efficiency.</p>
+<p data-lang="zh" style="margin-bottom:16px;">完成 15 道题的练习，检验你对网络、容错性和计算效率的理解。</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap;">
+<a href="../Practice%20Questions/Unit_4_Computer_Systems_and_Networks_Practice_Problems.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">Practice Problems →</span><span data-lang="zh">练习题 →</span></a>
+</div>
+</div>
+</section>
+<div style="text-align: center; padding: 40px 0; color: var(--text-secondary); font-size: 0.85rem;">
+<p style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 4px; color: var(--text);">鼎睿学苑 · Dingrui Scholars</p>
+<p data-lang="en">AP Computer Science Principles, Unit 4: Computer Systems and Networks · 2026 Edition</p>
+<p data-lang="zh">AP 计算机科学原理，单元 4：计算机系统与网络 · 2026 版</p>
+</div>
+<!-- consult-cta: lead-gen conversion surface (Sprint A) -->
+<aside class="consult-cta">
+<p class="consult-cta__lead"><span data-lang="en">Want to go further, faster?</span><span data-lang="zh">想走得更远、更快？</span></p>
+<p class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor. We will help you master this unit and map your path into university.</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估。我们将帮助你掌握本单元，并规划通往大学的学习路径。</span></p>
+<a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_4_computer_systems_and_networks__sg_intro__en" rel="noopener" target="_blank">Book a free assessment →</a>
+<a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_4_computer_systems_and_networks__sg_intro__zh" rel="noopener" target="_blank">预约免费评估 →</a>
+</aside>
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav aria-label="Related materials" class="dr-related">
+<span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+<span aria-current="page" class="dr-related__cur"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+<a href="../Practice%20Questions/Unit_4_Computer_Systems_and_Networks_Practice_Problems.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> →</a>
+<a href="../Practice%20Questions/Solutions/Unit_4_Computer_Systems_and_Networks_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> →</a>
+</nav>
+<!-- BEGIN unit-nav -->
+<nav aria-label="Course navigation" class="unit-nav"><a class="unit-nav__link unit-nav__link--prev" href="Unit_3_Algorithms_and_Programming.html"><span aria-hidden="true" class="unit-nav__arrow">←</span><span class="unit-nav__body"><span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span><span class="unit-nav__title"><span data-lang="en">Unit 3: Algorithms and Programming</span><span data-lang="zh">第 3 单元：算法与编程</span></span></span></a><a class="unit-nav__link unit-nav__link--next" href="Unit_5_Impact_of_Computing.html"><span aria-hidden="true" class="unit-nav__arrow">→</span><span class="unit-nav__body"><span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span><span class="unit-nav__title"><span data-lang="en">Unit 5: Impact of Computing</span><span data-lang="zh">第 5 单元：计算的影响</span></span></span></a></nav>
+<!-- END unit-nav -->
+</main>
+<button aria-label="Back to top" class="backtotop" id="backtotop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+// ─── THEME ───
+function setThemeBtnLabel(toLight) {
+  const tt = document.getElementById('themeToggle');
+  if (!tt) return;
+  tt.innerHTML = toLight
+    ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>'
+    : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>';
+}
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  setThemeBtnLabel(!isDark);
+}
+// System preference
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  setThemeBtnLabel(true);
+}
+
+// ─── LANGUAGE ───
+function toggleLang() {
+  const isZh = document.body.classList.contains('lang-zh');
+  document.body.classList.toggle('lang-zh', !isZh);
+  try { localStorage.setItem('drs.lang', isZh ? 'en' : 'zh'); } catch(e) {}
+}
+try {
+  if (false) {
+    document.body.classList.add('lang-zh');
+  }
+} catch(e) {}
+
+// ─── SIDEBAR ───
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ─── PROGRESS BAR + BACK-TO-TOP ───
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  const btt = document.getElementById('backtotop');
+  if (btt) btt.classList.toggle('show', window.scrollY > 400);
+});
+
+// ─── ACTIVE TOC ───
+const sections = document.querySelectorAll('.section');
+const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// ─── QUIZZES ───
+document.querySelectorAll('.quiz').forEach(quiz => {
+  const answer = parseInt(quiz.dataset.answer);
+  const opts = quiz.querySelectorAll('.quiz-opt');
+  const expCorrect = quiz.querySelector('.quiz-explain.correct-exp');
+  const expWrong = quiz.querySelector('.quiz-explain.wrong-exp');
+
+  opts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const idx = parseInt(opt.dataset.idx);
+      opts.forEach(o => o.classList.add('disabled'));
+      if (idx === answer) {
+        opt.classList.add('correct');
+        if (expCorrect) expCorrect.classList.add('show');
+      } else {
+        opt.classList.add('wrong');
+        opts[answer].classList.add('correct');
+        if (expWrong) expWrong.classList.add('show');
+      }
+    });
+  });
+});
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"gated", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>

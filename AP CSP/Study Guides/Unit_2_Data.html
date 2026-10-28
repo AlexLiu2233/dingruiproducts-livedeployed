@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="free" name="dingrui:tier"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="AP Computer Science Principles, Unit 2: Data | Dingrui Scholars. Review binary representation, compression, data analysis, and programs that extract information from data." name="description"/>
+<meta content="#7A2E2E" name="theme-color"/>
+<meta content="light dark" name="color-scheme"/>
+<title>AP CSP — Unit 2: Data | Dingrui Scholars</title>
+<link href="https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_2_Data.html" rel="canonical"/>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SDVTGZ6RJ9"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SDVTGZ6RJ9');</script>
+<!-- OpenGraph / Twitter share cards -->
+<meta content="article" property="og:type"/>
+<meta content="Dingrui Scholars" property="og:site_name"/>
+<meta content="AP CSP — Unit 2: Data | Dingrui Scholars" property="og:title"/>
+<meta content="AP Computer Science Principles, Unit 2: Data | Dingrui Scholars. Review binary representation, compression, data analysis, and programs that extract information from data." property="og:description"/>
+<meta content="https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_2_Data.html" property="og:url"/>
+<meta content="https://notes.dingruischolars.com/og-cover.png" property="og:image"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="zh_CN" property="og:locale:alternate"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="AP CSP — Unit 2: Data | Dingrui Scholars" name="twitter:title"/>
+<meta content="AP Computer Science Principles, Unit 2: Data | Dingrui Scholars. Review binary representation, compression, data analysis, and programs that extract information from data." name="twitter:description"/>
+<meta content="https://notes.dingruischolars.com/og-cover.png" name="twitter:image"/>
+<link href="../../LOGO.png" rel="icon" type="image/png"/>
+<style>
+:root {
+  --bg: #FAFAFA;
+  --bg-card: #FFFFFF;
+  --bg-code: #0F0F0F;
+  --text: #0F0F0F;
+  --text-secondary: #585858;
+  --accent: #7A2E2E; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F;
+  --accent-light: #F2E4E4;
+  --accent-dark: #5C1E1E;
+  --green: #2E6B4F;
+  --green-light: #DFF0E8;
+  --orange: #A65E1A;
+  --orange-light: #FBF0E0;
+  --red: #B03030;
+  --red-light: #FCEAEA;
+  --purple: #5E3D7A;
+  --purple-light: #EDE4F5;
+  --border: #E6E6E6;
+  --shadow: 0 1px 3px rgba(60,30,30,0.06), 0 1px 2px rgba(60,30,30,0.04);
+  --shadow-lg: 0 4px 12px rgba(60,30,30,0.10);
+  --radius: 10px;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 860px;
+  --toc-w: 280px;
+}
+
+[data-theme="dark"] {
+  --bg: #0F0F0F;
+  --bg-card: #1A1A1A;
+  --bg-code: #000000;
+  --text: #FAFAFA;
+  --text-secondary: #A0A0A0;
+  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA;
+  --accent-light: #3A2020;
+  --accent-dark: #E89090;
+  --green: #5CB88A;
+  --green-light: #1A2E24;
+  --orange: #D4944A;
+  --orange-light: #2E2010;
+  --red: #E07070;
+  --red-light: #301515;
+  --purple: #A888C8;
+  --purple-light: #201828;
+  --border: #2A2A2A;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ─── SKIP LINK (A11Y) ─── */
+.skip-link {
+  position: absolute; left: 16px; top: -48px; z-index: 2000;
+  background: var(--accent); color: #fff; text-decoration: none;
+  padding: 10px 14px; border-radius: 10px; font-weight: 700;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 12px; }
+
+/* ─── BACK TO TOP ─── */
+.backtotop {
+  position: fixed; right: 18px; bottom: 18px; z-index: 120;
+  width: 46px; height: 46px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-card); color: var(--accent);
+  box-shadow: var(--shadow-lg); font-size: 1.05rem; font-weight: 700; cursor: pointer;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+.backtotop.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.backtotop:hover { background: var(--accent-light); }
+@media print { .backtotop { display: none !important; } }
+
+/* ─── TOP NAV ─── */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 56px;
+  transition: background 0.3s, border 0.3s;
+}
+.topnav-brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem; color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+}
+.topnav-brand .unit-badge {
+  background: var(--accent);
+  color: #fff; font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.topnav-actions { display: flex; align-items: center; gap: 8px; }
+.topnav-actions button {
+  background: none; border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 6px 12px; font-size: 0.82rem;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.topnav-actions button:hover { background: var(--accent-light); border-color: var(--accent); }
+.topnav-actions button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.topnav-actions .back-link {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 6px 12px; font-size: 0.82rem;
+  cursor: pointer; font-family: var(--font-body); font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.topnav-actions .back-link:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* ─── PROGRESS BAR ─── */
+.progress-track {
+  position: fixed; top: 56px; left: 0; right: 0;
+  height: 3px; background: var(--border); z-index: 99;
+}
+.progress-fill {
+  height: 100%; width: 0; background: var(--accent);
+  transition: width 0.15s;
+}
+
+/* ─── SIDEBAR TOC ─── */
+.sidebar {
+  position: fixed; top: 59px; left: 0; bottom: 0;
+  width: var(--toc-w); background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; padding: 20px 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, background 0.3s;
+  z-index: 90;
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem; padding: 0 20px 12px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.sidebar a {
+  display: block; padding: 7px 20px;
+  color: var(--text-secondary);
+  text-decoration: none; font-size: 0.85rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar a:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.sidebar a.sub { padding-left: 36px; font-size: 0.8rem; }
+
+/* ─── MAIN ─── */
+.main-wrap {
+  max-width: var(--max-w);
+  margin: 80px auto 120px;
+  padding: 0 24px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center; padding: 56px 24px 48px;
+  background: linear-gradient(180deg, #F4F4F4 0%, transparent 100%);
+  border-radius: var(--radius); margin-bottom: 40px;
+}
+[data-theme="dark"] .hero { background: linear-gradient(180deg, rgba(58,32,32,0.4) 0%, transparent 100%); }
+.hero-overline {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.15; margin-bottom: 16px;
+}
+.hero-meta {
+  display: flex; gap: 24px; justify-content: center;
+  flex-wrap: wrap; margin-top: 16px;
+}
+.hero-meta .chip {
+  font-size: 0.8rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 20px;
+}
+.chip-maroon { background: var(--accent-light); color: var(--accent); }
+.chip-green { background: var(--green-light); color: var(--green); }
+.chip-purple { background: var(--purple-light); color: var(--purple); }
+
+/* ─── SECTION ─── */
+.section {
+  margin-bottom: 48px;
+  scroll-margin-top: 80px;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: 1.65rem; margin-bottom: 16px;
+  line-height: 1.25;
+  border-bottom: 2px solid var(--accent-light);
+  padding-bottom: 8px; display: inline-block;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem; margin: 28px 0 10px;
+  line-height: 1.3;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border 0.3s;
+}
+.card-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.card-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.icon-blue { background: var(--accent-light); color: var(--accent); }
+.icon-green { background: var(--green-light); color: var(--green); }
+.icon-orange { background: var(--orange-light); color: var(--orange); }
+.icon-red { background: var(--red-light); color: var(--red); }
+.icon-purple { background: var(--purple-light); color: var(--purple); }
+.card-title { font-weight: 700; font-size: 0.95rem; }
+
+/* ─── CODE BLOCKS ─── */
+pre {
+  background: var(--bg-code);
+  color: #CDD6F4;
+  padding: 18px 22px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin: 12px 0;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+:not(pre) > code {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.kw { color: #CBA6F7; }
+.ty { color: #89B4FA; }
+.str { color: #A6E3A1; }
+.cm { color: #6C7086; font-style: italic; }
+.num { color: #FAB387; }
+.fn { color: #89DCEB; }
+
+/* ─── KEY CONCEPT BOX ─── */
+.concept-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-light);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+}
+.concept-box.green { border-left-color: var(--green); background: var(--green-light); }
+.concept-box.orange { border-left-color: var(--orange); background: var(--orange-light); }
+.concept-box.red { border-left-color: var(--red); background: var(--red-light); }
+.concept-box.purple { border-left-color: var(--purple); background: var(--purple-light); }
+.concept-box strong { display: block; margin-bottom: 4px; }
+
+/* ─── TABLES ─── */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--accent-light);
+  font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.3px;
+}
+tr:hover td { background: var(--accent-light); }
+
+/* ─── QUIZ ─── */
+.quiz { margin: 20px 0; }
+.quiz-q {
+  font-weight: 600; margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-opt {
+  padding: 10px 16px; border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  font-size: 0.9rem; transition: all 0.2s;
+  background: var(--bg-card);
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--accent-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); }
+.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); }
+.quiz-opt.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-explain {
+  margin-top: 10px; padding: 12px 16px;
+  border-radius: 8px; font-size: 0.88rem;
+  display: none;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain.correct-exp { background: var(--green-light); color: var(--green); }
+.quiz-explain.wrong-exp { background: var(--red-light); color: var(--red); }
+
+/* ─── ACCORDION / DETAILS ─── */
+details {
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  overflow: hidden;
+}
+summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  user-select: none;
+  list-style: none;
+  display: flex; align-items: center; gap: 8px;
+}
+summary::before {
+  content: '▸'; transition: transform 0.2s;
+  font-size: 0.8rem; color: var(--accent);
+}
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body { padding: 0 18px 16px; font-size: 0.92rem; }
+
+/* ─── QUICK REF ─── */
+.qref {
+  background: var(--bg-card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.qref-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--accent); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 10px;
+}
+
+/* ─── FLASHCARD ─── */
+.flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 16px 0; }
+.flashcard {
+  perspective: 600px; height: 160px; cursor: pointer;
+}
+.flashcard-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s; transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; text-align: center;
+  font-size: 0.88rem;
+}
+.flashcard-front {
+  background: var(--bg-card);
+  font-weight: 700;
+}
+.flashcard-back {
+  background: var(--accent-light);
+  transform: rotateY(180deg);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  padding: 20px;
+  overflow-y: auto;
+}
+.flashcard-front code, .flashcard-back code {
+  background: var(--bg-card);
+  font-size: 0.92em;
+}
+[data-theme="dark"] .flashcard-back code {
+  background: var(--bg);
+}
+
+/* ─── SEPARATOR ─── */
+.sep {
+  border: none; border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (min-width: 1100px) {
+  .sidebar { transform: translateX(0); box-shadow: none; }
+  .main-wrap {
+    max-width: none;
+    margin-left: calc(var(--toc-w) + 40px);
+    margin-right: 0;
+    padding: 0 48px;
+  }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.8rem; }
+  .main-wrap { padding: 0 16px; }
+  pre { font-size: 0.75rem; padding: 14px; }
+  .flashcard-grid { grid-template-columns: 1fr; }
+}
+
+/* Print */
+@media print {
+  .topnav, .progress-track, .sidebar, .topnav-actions { display: none !important; }
+  .main-wrap { margin: 0 auto; max-width: 100%; padding: 0; }
+  body { font-size: 11pt; background: white; color: black; }
+  pre { border: 1px solid #ccc; white-space: pre-wrap; }
+  .card, .concept-box, .quiz { break-inside: avoid; }
+}
+
+/* ─── FINAL POLISH ─── */
+:root { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+::selection { background: var(--accent-light); color: var(--accent-dark); }
+button:focus-visible, .quiz-opt:focus-visible, summary:focus-visible, a:focus-visible, .flashcard:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ─── BILINGUAL TOGGLE ─── */
+/* Default: English visible, Chinese hidden. Toggle by adding body.lang-zh.
+   body-scoped selectors raise specificity to (0,2,1) so they beat .section h2
+   (0,1,1) and similar class+element rules. */
+body:not(.lang-zh) [data-lang="zh"] { display: none; }
+body.lang-zh [data-lang="en"] { display: none; }
+
+/* consult-cta: lead-gen conversion surface (Sprint A) */
+.consult-cta { background: linear-gradient(180deg, var(--accent-light, #F2E4E4) 0%, var(--bg-card, #fff) 100%); border: 2px solid var(--accent); border-radius: var(--radius, 12px); padding: 22px 26px; margin: 30px 0 8px; text-align: center; }
+.consult-cta__lead { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); margin: 0 0 6px; }
+.consult-cta__body { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 auto 16px; max-width: 48ch; }
+.consult-cta__btn { display: inline-block; background: var(--ink); color: var(--bg-card); font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; text-decoration: none; padding: 12px 22px; border-radius: 12px; transition: transform 0.15s, opacity 0.2s; }
+.consult-cta__btn:hover { opacity: 0.88; transform: translateY(-1px); }
+/* design-refresh links */ .card a:not(.feeder-link), .concept-box a, .going-deeper a, .section > p a { color: var(--pop); text-underline-offset: 2px; }
+@media print { .consult-cta { border: 1px solid #999; background: #fff; } .consult-cta__btn { background: #fff !important; color: #000 !important; border: 1px solid #999; } .consult-cta__btn[data-lang="en"]::after { content: " (dingruischolars.com/signup)"; font-weight: 400; } .consult-cta__btn[data-lang="zh"]::after { content: " (dingruischolars.com/signup-ch)"; font-weight: 400; } }
+
+/* __sg_mobile_spacing__ tighten phone layout + fix top-nav clip (injected by declutter_sg.py) */
+@media (max-width: 600px){
+  .main-wrap{ margin: 64px auto 56px !important; padding: 0 14px !important; }
+  .hero{ padding: 40px 18px 32px !important; margin-bottom: 26px !important; }
+  .hero-sub{ font-size: 0.96rem !important; }
+  .section{ margin-bottom: 36px !important; }
+  .section h2{ font-size: 1.45rem !important; }
+  .section h3{ margin: 24px 0 10px !important; }
+  .card{ padding: 18px 16px !important; }
+  .concept-box{ padding: 16px 16px !important; }
+  .quiz{ padding: 18px 14px !important; }
+  .formula-box{ padding: 16px 12px !important; }
+  .worked-solution{ padding: 16px 16px !important; }
+  .sep{ margin: 28px 0 !important; }
+  .detail-body{ padding: 16px !important; }
+  .top-nav{ padding: 0 10px !important; }
+  .nav-left{ gap: 6px !important; min-width: 0; }
+  .nav-right{ gap: 4px !important; }
+  .nav-btn{ padding: 6px 9px !important; font-size: 0.78rem !important; }
+  .score-badge{ display: none !important; }
+}
+@media (max-width: 430px){
+  .nav-left .nav-badge:nth-child(2){ display: none !important; }
+}
+@media (max-width: 600px){
+  html{ scroll-padding-top: 120px; }
+  .topnav{ height: 104px; padding: 6px 8px; display: grid; grid-template-rows: 32px 44px; gap: 4px; }
+  .topnav-brand{ min-width: 0; justify-content: center; font-size: 0.95rem; }
+  .topnav-actions{ width: 100%; min-width: 0; display: grid; grid-template-columns: repeat(5, minmax(0, auto)); justify-content: space-between; gap: 3px; }
+  .topnav-actions button, .topnav-actions .back-link{ padding: 7px 5px; font-size: 0.7rem; white-space: nowrap; }
+  .progress-track{ top: 104px; }
+  .sidebar{ top: 107px; }
+  .main-wrap{ margin-top: 112px !important; }
+}
+/* __end_sg_mobile_spacing__ */
+
+  /* mobile-overflow-lock v1: lock to viewport width on phone/tablet, no horizontal pan (laptop sidebar layout >=1100px unaffected) */
+  @media (max-width: 1024px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .main-wrap, .hero, .hero-sub, .consult-cta, .sg-appendix { max-width: 100%; }
+    img, table, video, iframe, pre { max-width: 100%; }
+    .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+  }
+</style>
+<!-- BEGIN unit-nav-css -->
+<style data-section="unit-nav">
+.unit-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 980px;
+  margin: 64px auto 32px;
+  padding: 0 24px;
+}
+.unit-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 18px 20px;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #DDD0C8);
+  border-radius: 12px;
+  color: inherit;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.unit-nav__link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #7A2E2E);
+  box-shadow: 0 6px 16px -4px rgba(60, 20, 30, 0.12);
+}
+.unit-nav__link--next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.unit-nav__arrow {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent, #7A2E2E);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.unit-nav__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.unit-nav__hint {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6B5058);
+}
+.unit-nav__title {
+  font-family: var(--font-display, 'DM Serif Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--text, #2C1B1F);
+}
+.unit-nav__placeholder {
+  border: 1px dashed var(--border, #DDD0C8);
+  border-radius: 12px;
+  background: transparent;
+  opacity: 0.6;
+}
+@media (max-width: 640px) {
+  .unit-nav { grid-template-columns: 1fr; gap: 10px; margin-top: 48px; }
+  .unit-nav__link--next { flex-direction: row; text-align: left; }
+}
+@media print { .unit-nav { display: none; } }
+</style>
+<!-- END unit-nav-css -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "AP CSP — Unit 2: Data",
+  "description": "AP Computer Science Principles, Unit 2: Data | Dingrui Scholars. Review binary representation, compression, data analysis, and programs that extract information from data.",
+  "url": "https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_2_Data.html",
+  "inLanguage": [
+    "en",
+    "zh"
+  ],
+  "learningResourceType": "Study Guide",
+  "educationalLevel": "AP",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Dingrui Scholars",
+    "url": "https://www.dingruischolars.com"
+  }
+}
+</script>
+<style id="dr-e3lite-toc-overlay">/* dr-e3lite: TOC overlay (hidden until opened); reading column keeps full-width fill, matching AP Physics U1 */
+@media (min-width: 1100px){ #sidebar:not(.open){ transform: translateX(-100%) !important; box-shadow: none !important; } }
+#sidebar.open{ transform: translateX(0) !important; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,.22)) !important; }
+</style>
+<style id="dr-e3lite-fill">/* dr-e3lite: hero + CTA body fill the box (centered) */
+@media (min-width: 641px){
+ .hero-sub{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+ .consult-cta__body{ max-width:none!important; margin-left:0!important; margin-right:0!important; text-align:center!important; }
+}
+</style>
+<!-- BEGIN toc-course-nav-css -->
+<style data-section="toc-course-nav">
+.sidebar-course-nav { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 4px; }
+.sidebar-course-nav summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 20px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.sidebar-course-nav summary::-webkit-details-marker { display: none; }
+.sidebar-course-nav summary::marker { content: ""; }
+.sidebar-course-nav summary::after {
+  content: "\25BE"; font-size: 0.7rem; transition: transform 0.15s; flex: 0 0 auto;
+}
+.sidebar-course-nav details[open] summary::after { transform: rotate(180deg); }
+.sidebar-course-count {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary); opacity: 0.7;
+}
+.sidebar-course-list { padding-bottom: 4px; }
+.sidebar-course-link {
+  display: block; padding: 6px 20px 6px 32px;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar-course-link:hover { color: var(--accent); background: var(--accent-light); }
+.sidebar-course-link--current {
+  color: var(--accent); border-left-color: var(--accent);
+  font-weight: 600; background: var(--accent-light);
+}
+</style>
+<!-- END toc-course-nav-css -->
+<style id="csp-extra-css">.concept-box ul,.concept-box ol,.rationale ul,.rationale ol,.card ol,.card ul{margin:6px 0 6px 1.4em;padding-left:.4em}.concept-box li,.rationale li{margin:2px 0}</style></head>
+<body>
+<a class="skip-link" href="#main-content"><span data-lang="en">Skip to content</span><span data-lang="zh">跳到正文</span></a>
+<!-- TOP NAV -->
+<nav class="topnav">
+<div class="topnav-brand">
+<span class="unit-badge">UNIT 2</span>
+<span data-lang="en">Data</span><span data-lang="zh">数据</span>
+</div>
+<div class="topnav-actions">
+<a aria-label="Back to all units" class="back-link" href="../../index.html"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
+<a aria-label="Back to course hub" class="back-link" href="../index.html"><span data-lang="en">← Course Hub</span><span data-lang="zh">← 课程主页</span></a>
+<button id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
+<button id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+<button id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
+</div>
+</nav>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+<!-- BEGIN toc-mobile-default -->
+<script>(function(){var s=document.getElementById('sidebar');if(s&&window.innerWidth>=1100)s.classList.add('open');})();</script>
+<!-- END toc-mobile-default -->
+<div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div><a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">单元概览</span></a><a href="#s2-1"><span data-lang="en">2.1 Binary Numbers</span><span data-lang="zh">2.1 二进制数</span></a><a href="#s2-2"><span data-lang="en">2.2 Data Compression</span><span data-lang="zh">2.2 数据压缩</span></a><a href="#s2-3"><span data-lang="en">2.3 Extracting Information from Data</span><span data-lang="zh">2.3 从数据中提取信息</span></a><a href="#s2-4"><span data-lang="en">2.4 Using Programs with Data</span><span data-lang="zh">2.4 用程序处理数据</span></a><a href="#mcq-patterns"><span data-lang="en">MCQ Patterns</span><span data-lang="zh">选择题套路</span></a><a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a><a href="#unit-quiz"><span data-lang="en">Unit Quiz</span><span data-lang="zh">单元小测</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN toc-course-nav -->
+<div class="sidebar-course-nav">
+<details>
+<summary><span data-lang="en">This Course</span><span data-lang="zh">本课程</span> <span class="sidebar-course-count">5 <span data-lang="en">units</span><span data-lang="zh">个单元</span></span></summary>
+<div class="sidebar-course-list"><a class="sidebar-course-link" href="Unit_1_Creative_Development.html"><span data-lang="en">Unit 1: Creative Development</span><span data-lang="zh">第 1 单元：创造性开发</span></a><a aria-current="page" class="sidebar-course-link sidebar-course-link--current" href="Unit_2_Data.html"><span data-lang="en">Unit 2: Data</span><span data-lang="zh">第 2 单元：数据</span></a><a class="sidebar-course-link" href="Unit_3_Algorithms_and_Programming.html"><span data-lang="en">Unit 3: Algorithms and Programming</span><span data-lang="zh">第 3 单元：算法与编程</span></a><a class="sidebar-course-link" href="Unit_4_Computer_Systems_and_Networks.html"><span data-lang="en">Unit 4: Computer Systems and Networks</span><span data-lang="zh">第 4 单元：计算机系统与网络</span></a><a class="sidebar-course-link" href="Unit_5_Impact_of_Computing.html"><span data-lang="en">Unit 5: Impact of Computing</span><span data-lang="zh">第 5 单元：计算的影响</span></a></div>
+</details>
+</div>
+<!-- END toc-course-nav -->
+</aside>
+<!-- MAIN CONTENT -->
+<main class="main-wrap" id="main-content">
+<!-- HERO -->
+<section class="hero" id="hero">
+<div class="hero-overline">AP Computer Science Principles · 鼎睿学苑</div>
+<h1 data-lang="en">Unit 2: Data</h1>
+<h1 data-lang="zh">单元 2：数据</h1>
+<p data-lang="en" style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">Explore how computers represent and compress data, then use programs to turn data into information. Big Idea 2 accounts for 17–22% of the MCQ exam.</p>
+<p data-lang="zh" style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">学习计算机如何表示和压缩数据，再用程序从数据中提取信息。大概念 2 约占选择题考试的 17–22%。</p>
+<div class="hero-meta"><span class="chip chip-maroon" data-lang="en">17–22% of AP Exam MCQ</span><span class="chip chip-maroon" data-lang="zh">占 AP 选择题 17–22%</span><span class="chip chip-green" data-lang="en">Big Idea 2 · DAT</span><span class="chip chip-green" data-lang="zh">大概念 2 · DAT</span><span class="chip chip-purple" data-lang="en">4 Topics</span><span class="chip chip-purple" data-lang="zh">4 个小节</span></div>
+</section>
+<!-- consult-cta(intro): lead-gen conversion surface under read-me -->
+<aside class="consult-cta consult-cta--intro">
+<p class="consult-cta__lead"><span data-lang="en">Aiming for the top of the mark scheme?</span><span data-lang="zh">想冲刺满分？</span></p>
+<p class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor. We will help you master this unit and map your path forward.</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估。我们将帮助你掌握本单元，并规划下一步的学习路径。</span></p>
+<a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_2_data__sg_intro__en" rel="noopener" target="_blank">Book a free assessment →</a>
+<a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_2_data__sg_intro__zh" rel="noopener" target="_blank">预约免费评估 →</a>
+</aside><hr class="sep"/><!-- TOPIC 2.1 --><section class="section" id="s2-1">
+<div class="section-label" data-lang="en">Topic 2.1</div>
+<div class="section-label" data-lang="zh">小节 2.1</div>
+<h2 data-lang="en">Binary Numbers</h2>
+<h2 data-lang="zh">二进制数</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>Data values can be stored in variables, lists, or standalone constants and passed into or out of procedures. At the lowest level, digital data consists of bits, each 0 or 1; 8 bits make a byte. (DAT-1.A.1, DAT-1.A.2, DAT-1.A.3, DAT-1.A.4)</li>
+<li>Abstraction reduces complexity by hiding irrelevant details and grouping useful ones. Groups of bits can represent numbers, characters, or colors, and the same bits can mean different things in different contexts. (DAT-1.A.5, DAT-1.A.6, DAT-1.A.7)</li>
+<li>Analog data changes smoothly. Digital sampling measures it at regular intervals and stores an approximation using bits. (DAT-1.A.8, DAT-1.A.9, DAT-1.A.10)</li>
+<li>Fixed-bit integers have a limited range and can overflow. In the exam reference sheet language, integer size is limited by available memory rather than a fixed bit count. (DAT-1.B.1, DAT-1.B.2)</li>
+<li>Fixed-bit real number representations have limited range and precision, so calculations can produce round-off or other errors. (DAT-1.B.3)</li>
+<li>Binary uses 0 and 1; decimal uses 0 through 9. To convert or compare binary numbers, use place values: from right to left, the positions are powers of 2 starting with 2 to the power 0. (DAT-1.C.1, DAT-1.C.2, DAT-1.C.3, DAT-1.C.4, DAT-1.C.5)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>数据值可以存储在变量、列表或独立常量中，也可以作为输入传给过程，或从过程输出。数字数据在最底层由位（bit）组成，每位是 0 或 1；8 位组成一个字节（byte）。(DAT-1.A.1, DAT-1.A.2, DAT-1.A.3, DAT-1.A.4)</li>
+<li>抽象（abstraction）通过隐藏无关细节、组合有用细节来降低复杂度。位组可以表示数字、字符或颜色；相同的位在不同语境中可以有不同含义。(DAT-1.A.5, DAT-1.A.6, DAT-1.A.7)</li>
+<li>模拟数据（analog data）平滑变化。数字采样（sampling）按固定间隔测量它，并用位存储近似值。(DAT-1.A.8, DAT-1.A.9, DAT-1.A.10)</li>
+<li>固定位数的整数取值范围有限，可能发生溢出（overflow）。考试参考表语言中的整数大小则受可用内存限制，而非固定位数限制。(DAT-1.B.1, DAT-1.B.2)</li>
+<li>固定位数的实数表示，其范围和精度有限，因此计算可能产生舍入误差（round-off error）或其他错误。(DAT-1.B.3)</li>
+<li>二进制只用 0 和 1；十进制使用 0 到 9。转换或比较二进制数时要看位值（place value）：从右往左依次是 2 的幂，最右位从 2 的 0 次方开始。(DAT-1.C.1, DAT-1.C.2, DAT-1.C.3, DAT-1.C.4, DAT-1.C.5)</li>
+</ul>
+</div>
+<h3 data-lang="en">Bits, meaning, and abstraction</h3>
+<h3 data-lang="zh">位、含义与抽象</h3>
+<p data-lang="en">A bit is a binary digit. A program can work with a value in a variable, list, or constant, or pass it into or out of a procedure without dealing with its individual bits. This is abstraction: focus on the useful idea while hiding details that do not matter for the task.</p>
+<p data-lang="zh">位是二进制数字。程序可以使用变量、列表或常量中的值，也可以将值传入或传出过程，而不必处理其中的每一位。这就是抽象：关注有用的概念，隐藏与当前任务无关的细节。</p>
+<p data-lang="en">Computing devices group bits to represent data such as numbers, characters, and colors. The bit sequence alone does not determine its meaning. The context tells us how to interpret it, and a program can translate the internal representation into a form people understand.</p>
+<p data-lang="zh">计算设备将位组合起来表示数字、字符和颜色等数据。仅凭位序列本身无法确定其含义，需要根据语境解释；程序可以将内部表示转换成人们易于理解的形式。</p>
+<h3 data-lang="en">Analog and digital data</h3>
+<h3 data-lang="zh">模拟数据与数字数据</h3>
+<p data-lang="en">Analog values change smoothly over time rather than in discrete intervals. Examples include the pitch or volume of music and a sprinter's position during a race. Sampling measures an analog signal at regular intervals; each measurement is represented using bits. The resulting digital data approximates the analog data, which is an example of abstraction.</p>
+<p data-lang="zh">模拟值随时间平滑变化，而不是按离散间隔变化。例如，音乐的音高或音量，以及短跑运动员在比赛中的位置。采样按固定间隔测量模拟信号，并用位表示每次测量值。得到的数字数据是对模拟数据的近似，这也是抽象的例子。</p>
+<h3 data-lang="en">Number bases and place value</h3>
+<h3 data-lang="zh">数制与位值</h3>
+<p data-lang="en">Decimal is base 10 and uses digits 0 through 9. Binary is base 2 and uses only 0 and 1. In either base, number positions start at 0 on the right. A digit contributes its value multiplied by the base raised to that position. Binary place values from right to left are 1, 2, 4, 8, and so on.</p>
+<p data-lang="zh">十进制是以 10 为底的数制，使用数字 0 到 9。二进制是以 2 为底的数制，只使用 0 和 1。在这两种数制中，位置都从右边的 0 开始编号。每位对数值的贡献等于该位数字乘以底数的相应位置次幂。二进制从右到左的位值依次为 1、2、4、8，等等。</p>
+<p data-lang="en">For an exam conversion, multiply each binary digit by its place value and add. To convert a positive decimal integer to binary, select powers of 2 that add to the integer. To compare binary numbers, align their rightmost digits and compare from the left, or convert both to decimal.</p>
+<p data-lang="zh">考试中转换二进制数时，将每位数字乘以其位值再相加。将正十进制整数转换为二进制时，选择相加后等于该整数的 2 的幂。比较二进制数时，将最右位对齐后从左向右比较，或先把两数都转换为十进制。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Convert and compare</span><span data-lang="zh">例题：转换与比较</span></div>
+<p data-lang="en">Convert decimal 13 to binary. Then order binary 1011, 1101, and 01111 from least to greatest.</p>
+<p data-lang="zh">将十进制 13 转换为二进制。然后将二进制数 1011、1101 和 01111 从小到大排列。</p>
+<ol data-lang="en">
+<li>The powers 8, 4, and 1 add to 13. In the 8, 4, 2, and 1 places, the bits are 1, 1, 0, and 1. So decimal 13 is binary 1101.</li>
+<li>Convert 1011: 8 + 2 + 1 = 11. Convert 1101: 8 + 4 + 1 = 13.</li>
+<li>Convert 01111: its leading 0 contributes nothing, so 8 + 4 + 2 + 1 = 15.</li>
+<li>Answer: 1011 &lt; 1101 &lt; 01111.</li>
+</ol>
+<ol data-lang="zh">
+<li>8、4 和 1 相加得到 13。在 8、4、2、1 这几个位值上，数字依次是 1、1、0、1。因此十进制 13 是二进制 1101。</li>
+<li>转换 1011：8 + 2 + 1 = 11。转换 1101：8 + 4 + 1 = 13。</li>
+<li>转换 01111：开头的 0 不贡献数值，因此 8 + 4 + 2 + 1 = 15。</li>
+<li>答案：1011 &lt; 1101 &lt; 01111。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+<p>Do not read 1011 as decimal one thousand eleven, and do not assume the binary number with more written digits is always larger. Use binary place values; leading zeros do not change the value.</p>
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+<p>不要把二进制 1011 当作十进制的一千零一十一，也不要认为写出的位数更多的二进制数一定更大。要使用二进制位值；前导零不会改变数值。</p>
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+<p>In many languages, fixed-bit integers have a limited range, so an operation can overflow. The exam reference sheet language instead limits integer size by the computer's memory. Real numbers also have limits: some are stored only approximately, so even a valid calculation can have round-off error. Do not assume that every stored real value is exact.</p>
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+<p>在许多语言中，固定位数的整数取值范围有限，因此运算可能溢出。考试参考表语言中的整数大小则受计算机内存限制。实数也有表示限制：有些实数只能近似存储，因此即使运算本身有效，也可能产生舍入误差。不要假设存储的每个实数值都精确无误。</p>
+</div>
+</section><hr class="sep"/><!-- TOPIC 2.2 --><section class="section" id="s2-2">
+<div class="section-label" data-lang="en">Topic 2.2</div>
+<div class="section-label" data-lang="zh">小节 2.2</div>
+<h2 data-lang="en">Data Compression</h2>
+<h2 data-lang="zh">数据压缩</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>Compression can reduce the bits stored or transmitted; fewer bits do not necessarily mean less information. (DAT-1.D.1, DAT-1.D.2)</li>
+<li>The size reduction depends on redundancy in the original representation and on the algorithm used. (DAT-1.D.3)</li>
+<li>Lossless compression usually reduces the number of bits and guarantees exact reconstruction. Lossy compression can reduce bits significantly but reconstructs only an approximation. (DAT-1.D.4, DAT-1.D.5)</li>
+<li>Lossy compression usually reduces size more than lossless compression. (DAT-1.D.6)</li>
+<li>Choose lossless when exact reconstruction or quality is most important; choose lossy when minimizing size or transmission time is most important. (DAT-1.D.7, DAT-1.D.8)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>数据压缩（data compression）可以减少存储或传输的位数；位数更少不一定意味着信息更少。（DAT-1.D.1, DAT-1.D.2）</li>
+<li>压缩后缩小的程度取决于原始表示中的冗余（redundancy）和所用算法。（DAT-1.D.3）</li>
+<li>无损压缩（lossless compression）通常能减少位数，并保证精确还原原始数据。有损压缩（lossy compression）可以大幅减少位数，但只能还原出原始数据的近似版本。（DAT-1.D.4, DAT-1.D.5）</li>
+<li>有损压缩通常比无损压缩更能缩小数据大小。（DAT-1.D.6）</li>
+<li>最重视精确还原或质量时，选择无损压缩；最重视缩小数据大小或缩短传输时间时，选择有损压缩。（DAT-1.D.7, DAT-1.D.8）</li>
+</ul>
+</div>
+<h3 data-lang="en">How compression saves space</h3>
+<h3 data-lang="zh">压缩如何节省空间</h3>
+<p data-lang="en">A representation can contain redundancy, such as repeated data. A compression algorithm can use that redundancy to represent the data with fewer bits. The result depends on both the original data and the algorithm.</p>
+<p data-lang="zh">一种数据表示可能包含冗余，例如重复的数据。压缩算法可以利用这些冗余，用更少的位表示数据。压缩结果既取决于原始数据，也取决于算法。</p>
+<h3 data-lang="en">Compare the options</h3>
+<h3 data-lang="zh">比较压缩方案</h3>
+<p data-lang="en">Lossless compression preserves enough information to reconstruct the original exactly. Lossy compression gives up exact reconstruction to achieve a potentially greater reduction. On an exam, identify what the situation values most, then compare that need with the size and reconstruction offered by each option.</p>
+<p data-lang="zh">无损压缩保留足够的信息，能够精确还原原始数据。有损压缩放弃精确还原，以获得可能更大的压缩幅度。考试中，先确定题目最重视什么，再比较各方案的数据大小和还原能力是否符合需求。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Choosing a compression method</span><span data-lang="zh">例题：选择压缩方法</span></div>
+<p data-lang="en">An image contains 1,000 bits. For this image, a lossless method produces 700 bits and a lossy method produces 300 bits. An archive needs an exact copy. A preview needs the smallest transmission and can tolerate an approximation.</p>
+<p data-lang="zh">一张图像包含 1,000 位。对这张图像，无损方法生成 700 位，有损方法生成 300 位。一个存档需要精确副本；一个预览要求传输的数据尽可能小，且可以接受近似图像。</p>
+<ol data-lang="en">
+<li>For the archive, exact reconstruction is required. The lossless method guarantees it; the lossy method does not.</li>
+<li>For the preview, compare sizes: 300 bits is smaller than 700 bits. The preview can tolerate the lossy approximation.</li>
+<li>Answer: use lossless for the archive and lossy for the preview.</li>
+</ol>
+<ol data-lang="zh">
+<li>存档要求精确还原。无损方法能保证这一点，有损方法则不能。</li>
+<li>预览需要比较大小：300 位小于 700 位。预览可以接受有损压缩产生的近似结果。</li>
+<li>答案：存档使用无损压缩，预览使用有损压缩。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+<p>“The smallest result is always best” is wrong. A lossy result may be smaller, but it cannot guarantee exact reconstruction. Check whether the task requires the original data back.</p>
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+<p>“结果最小的方案总是最好”是错误的。有损结果可能更小，但不能保证精确还原。要检查任务是否要求找回原始数据。</p>
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+<p>Lossless does not mean “no compression.” It can use fewer bits while preserving all the information needed to reconstruct the original. Also, do not assume a fixed reduction: different data and algorithms can produce different results, and lossless compression does not always make data smaller.</p>
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+<p>无损不等于“没有压缩”。无损压缩可以减少位数，同时保留还原原始数据所需的全部信息。也不要假设压缩幅度固定：不同的数据和算法可能产生不同结果，而且无损压缩并非总能缩小数据。</p>
+</div>
+</section><hr class="sep"/><!-- TOPIC 2.3 --><section class="section" id="s2-3">
+<div class="section-label" data-lang="en">Topic 2.3</div>
+<div class="section-label" data-lang="zh">小节 2.3</div>
+<h2 data-lang="en">Extracting Information from Data</h2>
+<h2 data-lang="zh">从数据中提取信息</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>Information consists of facts and patterns extracted from data. Data can reveal trends and connections and help address problems. (DAT-2.A.1, DAT-2.A.2)</li>
+<li>Correlation does not necessarily mean causation. Further research may be needed, and a conclusion may require data from multiple sources. (DAT-2.A.3, DAT-2.A.4)</li>
+<li>Metadata are data about data, such as an image’s creation date or file size. Changing or deleting metadata does not change the primary data. Metadata help structure, organize, find, manage, and use data. (DAT-2.B.1, DAT-2.B.2, DAT-2.B.3, DAT-2.B.4, DAT-2.B.5)</li>
+<li>Processing depends on users and tools. Any size data set can have missing, invalid, or nonuniform data and may need cleaning or combining with other sources. Cleaning makes data uniform without changing meaning. (DAT-2.C.1, DAT-2.C.2, DAT-2.C.3, DAT-2.C.4)</li>
+<li>The type or source of data can introduce bias. Collecting more data alone does not eliminate it. (DAT-2.C.5)</li>
+<li>Data set size affects what information can be extracted. Large data sets may require parallel systems; scalability and computational capacity affect processing and storage. (DAT-2.C.6, DAT-2.C.7, DAT-2.C.8)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>信息（information）是从数据中提取的事实和模式。数据可以揭示趋势和联系，并帮助解决问题。(DAT-2.A.1, DAT-2.A.2)</li>
+<li>相关性（correlation）不一定意味着因果关系（causation）。可能需要进一步研究，得出结论也可能需要结合多个来源的数据。(DAT-2.A.3, DAT-2.A.4)</li>
+<li>元数据（metadata）是关于数据的数据，例如图像的创建日期或文件大小。修改或删除元数据不会改变原始数据（primary data）。元数据有助于构建数据结构，以及组织、查找、管理和使用数据。(DAT-2.B.1, DAT-2.B.2, DAT-2.B.3, DAT-2.B.4, DAT-2.B.5)</li>
+<li>处理数据的能力取决于使用者和工具。任何规模的数据集都可能存在缺失、无效或不统一的数据，也可能需要清洗或与其他来源的数据合并。数据清洗（cleaning）使数据统一，但不改变其含义。(DAT-2.C.1, DAT-2.C.2, DAT-2.C.3, DAT-2.C.4)</li>
+<li>数据的类型或来源可能引入偏差（bias）。仅增加数据量不能消除偏差。(DAT-2.C.5)</li>
+<li>数据集的大小会影响可提取的信息。大型数据集可能需要并行系统（parallel systems）；系统的可扩展性（scalability）和计算能力会影响数据的处理和存储。(DAT-2.C.6, DAT-2.C.7, DAT-2.C.8)</li>
+</ul>
+</div>
+<h3 data-lang="en">From data to information</h3>
+<h3 data-lang="zh">从数据到信息</h3>
+<p data-lang="en">Processing data can reveal facts and patterns that become information. People can use those patterns to identify trends, connect observations, address problems, and create new knowledge. A single source may not contain everything needed for a conclusion, so combining sources can help.</p>
+<p data-lang="zh">处理数据可以揭示事实和模式，从而形成信息。人们可以利用这些模式识别趋势、联系观察结果、解决问题并创造新知识。单一来源可能不包含得出结论所需的全部数据，因此合并多个来源可能有帮助。</p>
+<p data-lang="en">A correlation is a pattern in which variables are related. Even if digitally processed data show that two variables change together, the pattern alone does not establish that one causes the other. Further research is needed to understand the relationship.</p>
+<p data-lang="zh">相关性是变量之间存在联系的模式。即使数字化处理后的数据表明两个变量一起变化，这一模式本身也不能证明其中一个导致了另一个。需要进一步研究才能理解它们之间的关系。</p>
+<h3 data-lang="en">What metadata tell us</h3>
+<h3 data-lang="zh">元数据能告诉我们什么</h3>
+<p data-lang="en">For an image, the image itself is the primary data. Its creation date and file size are examples of metadata. Metadata provide context that can make a data set more useful: for example, creation dates can help organize and find images. Changing or deleting a creation date in the metadata does not change the image itself.</p>
+<p data-lang="zh">对于一张图像，图像本身是原始数据，创建日期和文件大小则是元数据的例子。元数据提供背景信息，使数据集更有效地被使用：例如，创建日期可以帮助组织和查找图像。修改或删除元数据中的创建日期不会改变图像本身。</p>
+<h3 data-lang="en">Processing challenges</h3>
+<h3 data-lang="zh">数据处理的挑战</h3>
+<p data-lang="en">Any data set can contain incomplete or invalid entries. Open fields can also produce different abbreviations, spellings, or capitalization for the same thing. Cleaning can replace equivalent forms with one consistent form without changing their meaning. Data from different sources may also need to be combined.</p>
+<p data-lang="zh">任何数据集都可能包含不完整或无效的条目。开放输入字段（open field）还可能让用户对同一事物使用不同的缩写、拼写或大小写。清洗时可以用统一形式替换含义相同的写法，而不改变其含义。来自不同来源的数据也可能需要合并。</p>
+<p data-lang="en">The size of a data set affects the information available, but more data alone cannot fix bias caused by the type or source of the data. What can be processed also depends on users and their tools. A large data set may be difficult for one computer to process and may require parallel systems. A scalable system must have enough computational capacity for the processing and storage needed as data demands change.</p>
+<p data-lang="zh">数据集的大小会影响可获得的信息，但仅增加数据量无法消除由数据类型或来源造成的偏差。能处理哪些数据也取决于使用者和工具。单台计算机可能难以处理大型数据集，因此可能需要并行系统。可扩展的系统需要有足够的计算能力，以应对数据需求变化时的处理和存储。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Connecting two data sources</span><span data-lang="zh">例题：连接两个数据来源</span></div>
+<p data-lang="en">A student wants to investigate whether temperature is related to cold-drink sales. A weather source records temperatures of 20, 25, and 30 degrees on three dates. A store source records sales of 10, 15, and 20 drinks on those same dates. The store’s location field uses both “North” and “NORTH” for the same location.</p>
+<p data-lang="zh">一名学生想研究气温是否与冷饮销量有关。天气数据源记录了三个日期的气温，分别为 20、25 和 30 度。商店数据源记录了相同日期的销量，分别为 10、15 和 20 杯。商店的位置字段用“North”和“NORTH”表示同一个地点。</p>
+<ol data-lang="en">
+<li>Combine the sources by date. The resulting pairs are (20, 10), (25, 15), and (30, 20).</li>
+<li>Make the equivalent location entries uniform, for example by replacing “NORTH” with “North.” This cleaning does not change their meaning.</li>
+<li>In these records, higher temperatures appear with higher sales. This is a correlation, not proof that temperature caused the sales changes.</li>
+<li><strong>Answer:</strong> The combined data show a relationship in these records. More research is needed before claiming a causal relationship.</li>
+</ol>
+<ol data-lang="zh">
+<li>按日期合并两个来源。得到的数据对为 (20, 10)、(25, 15) 和 (30, 20)。</li>
+<li>将含义相同的位置条目统一，例如把“NORTH”替换为“North”。这种清洗不会改变其含义。</li>
+<li>在这些记录中，较高的气温对应较高的销量。这是相关性，并不能证明气温导致了销量变化。</li>
+<li><strong>答案：</strong>合并后的数据表明这些记录中存在关联。要声称存在因果关系，还需要进一步研究。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+The wrong answer is “the correlation proves that temperature caused sales to rise.” The data show a pattern, but they do not establish cause. Also, adding more records from the same biased source does not automatically remove bias.
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+错误答案是“相关性证明气温导致销量上升”。数据展示了一个模式，但没有确立因果关系。另外，从同一个有偏差的来源增加记录，也不会自动消除偏差。
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+Check what a change actually affects. Standardizing equivalent location labels cleans data without changing their meaning. Deleting an image’s creation-date metadata leaves the image unchanged, but removes information that could help organize or find it. Neither action fills missing values or makes invalid entries valid.
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+要检查一项修改实际影响了什么。统一含义相同的地点标签是在不改变含义的情况下清洗数据。删除图像的创建日期元数据不会改变图像，却会移除有助于组织或查找图像的信息。这两种操作都不会填补缺失值，也不会使无效条目变为有效。
+</div>
+</section><hr class="sep"/><!-- TOPIC 2.4 --><section class="section" id="s2-4">
+<div class="section-label" data-lang="en">Topic 2.4</div>
+<div class="section-label" data-lang="zh">小节 2.4</div>
+<h2 data-lang="en">Using Programs with Data</h2>
+<h2 data-lang="zh">用程序处理数据</h2>
+<div class="concept-box green" data-lang="en">
+<strong>Must know</strong>
+<ul>
+<li>Programs process data to acquire information. Search tools efficiently find information; filtering helps find information and recognize patterns. (DAT-2.D.1, DAT-2.D.3, DAT-2.D.4)</li>
+<li>Spreadsheets help organize information and find trends. Tables, diagrams, text, and other visuals communicate insights from data. (DAT-2.D.2, DAT-2.D.5)</li>
+<li>Programs can transform every element, filter data, combine or compare values, and visualize a data set. (DAT-2.D.6)</li>
+<li>Users interact with programs and repeat processing to gain insight. Filtering and cleaning digital data can support this process. (DAT-2.E.1, DAT-2.E.2)</li>
+<li>Combining sources, clustering, and classifying data are parts of gaining knowledge. Translating or transforming digital information can reveal patterns. (DAT-2.E.3, DAT-2.E.4, DAT-2.E.5)</li>
+</ul>
+</div>
+<div class="concept-box green" data-lang="zh">
+<strong>必备知识</strong>
+<ul>
+<li>程序处理数据以获取信息。搜索工具（search tools）可高效查找信息；筛选（filtering）有助于查找信息和识别模式。 (DAT-2.D.1, DAT-2.D.3, DAT-2.D.4)</li>
+<li>电子表格（spreadsheet）有助于整理信息和发现趋势。表格、图示、文字及其他可视化工具可以传达从数据中获得的洞见。 (DAT-2.D.2, DAT-2.D.5)</li>
+<li>程序可以转换数据集中的每个元素、筛选数据、合并或比较数值，以及可视化数据集。 (DAT-2.D.6)</li>
+<li>用户与程序交互并反复处理数据，以获得洞见。筛选和清洗（cleaning）数字数据可以帮助这一过程。 (DAT-2.E.1, DAT-2.E.2)</li>
+<li>合并数据来源、聚类（clustering）和分类（classifying）是获取知识的过程中的一部分。转换数字化信息的表示形式或内容可以揭示模式。 (DAT-2.E.3, DAT-2.E.4, DAT-2.E.5)</li>
+</ul>
+</div>
+<h3 data-lang="en">From data to information</h3>
+<h3 data-lang="zh">从数据到信息</h3>
+<p data-lang="en">A program can process a data set to extract information. Search tools help find information efficiently. Filtering keeps data that meet a condition, making relevant information and patterns easier to find. A spreadsheet can organize information and help reveal trends.</p>
+<p data-lang="zh">程序可以处理数据集，从中提取信息。搜索工具有助于高效查找信息。筛选保留符合条件的数据，使相关信息和模式更容易被发现。电子表格可以整理信息并帮助发现趋势。</p>
+<p data-lang="en">On an exam, identify what each operation does to the data: transforming changes values, filtering selects values, and combining or comparing summarizes or contrasts them. A chart or graph displays results so people can communicate an insight.</p>
+<p data-lang="zh">考试时，要辨认每个操作对数据的作用：转换改变数值，筛选选出数值，合并或比较则汇总或对照数值。图表可以展示结果，帮助人们传达洞见。</p>
+<h3 data-lang="en">Refining an investigation</h3>
+<h3 data-lang="zh">逐步完善探究</h3>
+<p data-lang="en">Processing is often iterative and interactive: a user examines a result, changes a filter or transformation, and examines the new result. Cleaning data can make it more useful for the investigation. Combining data sources, clustering similar data, or classifying data into categories can also help users gain knowledge.</p>
+<p data-lang="zh">数据处理通常是迭代且交互的：用户查看结果，修改筛选条件或转换方式，再查看新结果。清洗数据可以使数据更适合当前探究。合并数据来源、将相似数据聚类，或将数据分入不同类别，也能帮助用户获得知识。</p>
+<p data-lang="en">Translating or transforming digitally represented information can reveal patterns that were not obvious in the original representation. A table, diagram, text, or another visual tool can communicate the resulting insight.</p>
+<p data-lang="zh">转换数字化信息的表示形式或内容，可以揭示原始表示中不明显的模式。表格、图示、文字或其他可视化工具可以传达由此获得的洞见。</p>
+<div class="card">
+<div class="card-header"><span data-lang="en">Worked Example: Filter and transform a list</span><span data-lang="zh">例题：筛选并转换列表</span></div>
+<p data-lang="en">A program keeps the positive numbers in a list, doubles each one, and adds the doubled values. What are the resulting list and total?</p>
+<p data-lang="zh">程序保留列表中的正数，将每个正数加倍，然后把加倍后的数相加。结果列表和总和分别是什么？</p>
+<pre class="csp-code">numbers ← [-<span class="num">2</span>, <span class="num">3</span>, <span class="num">0</span>, <span class="num">5</span>]
+doubled ← []
+total ← <span class="num">0</span>
+<span class="kw">FOR EACH</span> number <span class="kw">IN</span> numbers {
+  <span class="kw">IF</span> (number &gt; <span class="num">0</span>) {
+    value ← number * <span class="num">2</span>
+<span class="fn">APPEND</span>(doubled, value)
+    total ← total + value
+  }
+}
+<span class="fn">DISPLAY</span>(doubled)
+<span class="fn">DISPLAY</span>(total)</pre>
+<ol data-lang="en">
+<li>The condition keeps 3 and 5. It excludes -2 and 0 because neither is greater than 0.</li>
+<li>The program doubles the kept values and appends them in order, producing [6, 10].</li>
+<li>It adds 6 and 10. DISPLAY(doubled) shows the list contents 6 and 10, then DISPLAY(total) shows 16. A table or chart could communicate these results.</li>
+</ol>
+<ol data-lang="zh">
+<li>条件保留 3 和 5，排除 -2 和 0，因为它们都不大于 0。</li>
+<li>程序将保留的数加倍并按顺序添加，得到 [6, 10]。</li>
+<li>程序将 6 和 10 相加。DISPLAY(doubled) 显示列表内容 6 和 10，随后 DISPLAY(total) 显示 16。可以用表格或图表传达这些结果。</li>
+</ol>
+</div>
+<div class="concept-box red" data-lang="en">
+<strong>Exam trap</strong>
+<p>Do not say the filter keeps 0 or that doubling alone is filtering. The condition <code>number &gt; 0</code> excludes 0; multiplying a kept value changes it rather than deciding whether to keep it.</p>
+</div>
+<div class="concept-box red" data-lang="zh">
+<strong>考试陷阱</strong>
+<p>不要误认为筛选会保留 0，也不要把加倍本身当作筛选。条件 <code>number &gt; 0</code> 排除 0；对保留的数相乘是改变它，而不是决定是否保留它。</p>
+</div>
+<div class="concept-box purple" data-lang="en">
+<strong>Going deeper</strong>
+<p>If no number is positive, the example produces an empty list and a total of 0. A user can change the condition and rerun the program to investigate a different question. Any pattern in the result applies to the data selected by that condition, not automatically to the entire original list.</p>
+</div>
+<div class="concept-box purple" data-lang="zh">
+<strong>深入理解</strong>
+<p>如果没有正数，例题会得到空列表和总和 0。用户可以修改条件并重新运行程序，探究不同的问题。结果中的模式适用于该条件选出的数据，不能自动推广到整个原始列表。</p>
+</div>
+</section><hr class="sep"/><section class="section" id="mcq-patterns"><div class="section-label" data-lang="en">AP MCQ Preview</div><div class="section-label" data-lang="zh">AP 选择题预览</div><h2 data-lang="en">Unit 2 MCQ Patterns That Show Up Every Year</h2><h2 data-lang="zh">单元 2 每年都会出现的选择题套路</h2><p data-lang="en">Questions may ask you to convert binary numbers, choose a compression method, or evaluate a claim based on data. You may also trace a program that filters or combines values and identify what its results reveal.</p><p data-lang="zh">选择题可能要求你转换二进制数（binary number）、选择压缩方法，或评价基于数据的结论。你还可能需要追踪筛选或合并数据的程序，并判断结果能说明什么。</p><div class="concept-box" data-lang="en"><strong>Pattern 1: Interpret bits</strong> For a binary value, add the place values with a 1. For a representation question, check the context: the same bits can represent different kinds of data. (See Topic 2.1.)</div><div class="concept-box" data-lang="zh"><strong>套路 1：解释位</strong> 遇到二进制数时，把值为 1 的各位对应的位权相加。遇到数据表示问题时，先看上下文：相同的位序列可以表示不同类型的数据。（参见主题 2.1。）</div><div class="concept-box" data-lang="en"><strong>Pattern 2: Choose compression</strong> Identify the priority. If exact reconstruction is required, choose lossless compression; if a smaller file matters most and some detail can be lost, consider lossy compression. (See Topic 2.2.)</div><div class="concept-box" data-lang="zh"><strong>套路 2：选择压缩方式</strong> 先确定优先需求。如果必须完整还原原始数据，选择无损压缩（lossless compression）；如果文件尽量小更重要，且可以损失部分细节，可考虑有损压缩（lossy compression）。（参见主题 2.2。）</div><div class="concept-box" data-lang="en"><strong>Pattern 3: Check a data claim</strong> Look for a leap from correlation to causation or a biased source. More observations alone do not fix a biased collection method; check what additional data or research is needed. (See Topic 2.3.)</div><div class="concept-box" data-lang="zh"><strong>套路 3：检验数据结论</strong> 留意是否把相关关系（correlation）直接当成因果关系，或忽略了数据来源的偏差。单纯增加观测数量不能消除收集方法的偏差；应考虑还需要什么数据或研究。（参见主题 2.3。）</div><div class="concept-box" data-lang="en"><strong>Pattern 4: Trace data processing</strong> Track which values pass a filter and how each passing value changes an accumulator. Distinguish filtering from transforming every value, then connect the result to the question asked. (See Topic 2.4.)</div><div class="concept-box" data-lang="zh"><strong>套路 4：追踪数据处理</strong> 逐个检查哪些值通过筛选（filtering），以及这些值如何改变累加变量。区分筛选和对每个值进行转换（transformation），再把结果与题目要求联系起来。（参见主题 2.4。）</div></section>
+<hr class="sep"/>
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<section class="section" id="flashcards">
+<div class="section-label" data-lang="en">Review</div>
+<div class="section-label" data-lang="zh">复习</div>
+<h2 data-lang="en">Flashcards, Click to Flip</h2>
+<h2 data-lang="zh">闪卡（点击翻面）</h2>
+<div class="flashcard-grid"><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What are a bit and a byte?</span><span data-lang="zh">什么是位和字节？</span></div><div class="flashcard-back"><span data-lang="en">A bit is a 0 or 1; a byte is 8 bits. Groups of bits can represent numbers, characters, or colors.</span><span data-lang="zh">位（bit）是 0 或 1；字节（byte）由 8 位组成。位的组合可以表示数字、字符或颜色。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How do you interpret a binary number?</span><span data-lang="zh">如何解释一个二进制数？</span></div><div class="flashcard-back"><span data-lang="en">Add the powers of 2 corresponding to its 1 bits, starting with 1 at the rightmost position.</span><span data-lang="zh">把值为 1 的各位对应的 2 的幂相加；最右位的位权是 1。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Why can the same bits have different meanings?</span><span data-lang="zh">为什么相同的位序列可以有不同含义？</span></div><div class="flashcard-back"><span data-lang="en">Their interpretation depends on context, such as whether they encode a number, character, or color.</span><span data-lang="zh">位序列的解释取决于上下文，例如它编码的是数字、字符还是颜色。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How can analog data be represented digitally?</span><span data-lang="zh">如何用数字方式表示模拟数据？</span></div><div class="flashcard-back"><span data-lang="en">Sampling measures a smoothly changing signal at regular intervals, producing a digital approximation.</span><span data-lang="zh">采样（sampling）以固定时间间隔测量连续变化的信号，得到数字近似表示。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What errors can limited numeric representations cause?</span><span data-lang="zh">数值表示范围有限可能导致什么错误？</span></div><div class="flashcard-back"><span data-lang="en">Fixed-size integers can overflow; limited representations of real numbers can cause rounding errors. Exam reference sheet integers are limited by memory rather than a fixed bit count.</span><span data-lang="zh">固定位数的整数可能发生溢出（overflow）；实数表示精度有限可能导致舍入误差（rounding error）。考试参考表中的整数不受固定的位数限制，而受内存限制。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How do lossless and lossy compression differ?</span><span data-lang="zh">无损压缩和有损压缩有什么区别？</span></div><div class="flashcard-back"><span data-lang="en">Lossless compression permits exact reconstruction; lossy compression reconstructs an approximation and usually reduces size more.</span><span data-lang="zh">无损压缩（lossless compression）允许完整还原原始数据；有损压缩（lossy compression）只能还原近似数据，通常能更大幅度地减小文件。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What affects how much compression reduces data size?</span><span data-lang="zh">哪些因素影响压缩能减小多少数据量？</span></div><div class="flashcard-back"><span data-lang="en">The original representation's redundancy and the algorithm both matter. Fewer bits do not necessarily mean less information.</span><span data-lang="zh">原始表示中的冗余程度和所用算法都会影响压缩效果。位数更少不一定意味着信息更少。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Does correlation establish causation?</span><span data-lang="zh">相关关系能证明因果关系吗？</span></div><div class="flashcard-back"><span data-lang="en">No. A correlation identifies a relationship between variables, but further research is needed to investigate causation.</span><span data-lang="zh">不能。相关关系（correlation）表明变量之间存在联系，但需要进一步研究才能探究因果关系。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What is metadata used for?</span><span data-lang="zh">元数据有什么用途？</span></div><div class="flashcard-back"><span data-lang="en">Metadata are data about data, such as an image's creation date. They help find and organize data; changing them does not change the primary data.</span><span data-lang="zh">元数据（metadata）是关于数据的数据，例如图像的创建日期。它有助于查找和组织数据；修改元数据不会改变主要数据。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">What are common data-processing challenges?</span><span data-lang="zh">数据处理中有哪些常见挑战？</span></div><div class="flashcard-back"><span data-lang="en">Data can be incomplete, invalid, inconsistent, or biased. Cleaning makes equivalent entries uniform without changing their meaning, but more data alone do not remove bias.</span><span data-lang="zh">数据可能不完整、无效、不一致或存在偏差。数据清洗（data cleaning）会统一含义相同的记录而不改变其含义，但单纯增加数据不能消除偏差。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Why do scalability and multiple data sources matter?</span><span data-lang="zh">为什么可扩展性和多个数据源很重要？</span></div><div class="flashcard-back"><span data-lang="en">A conclusion may require combining sources. Large data sets may need scalable storage and processing, including parallel systems.</span><span data-lang="zh">得出结论可能需要合并多个数据源。大型数据集可能需要可扩展的存储和处理能力，包括并行系统（parallel systems）。</span></div></div></div><div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">How can programs reveal patterns in data?</span><span data-lang="zh">程序如何揭示数据中的规律？</span></div><div class="flashcard-back"><span data-lang="en">Programs can iteratively filter, transform, combine, cluster, classify, and visualize data. Spreadsheets and search tools also help users find information.</span><span data-lang="zh">程序可以反复筛选、转换、合并、聚类（clustering）、分类（classification）和可视化数据。电子表格和搜索工具也有助于查找信息。</span></div></div></div></div>
+</section>
+<hr class="sep"/>
+<!-- ═══════════════ UNIT QUIZ ═══════════════ -->
+<section class="section" id="unit-quiz">
+<div class="section-label" data-lang="en">Assessment</div>
+<div class="section-label" data-lang="zh">测验</div>
+<h2 data-lang="en">Unit 2, Practice Quiz</h2>
+<h2 data-lang="zh">单元 2：练习小测</h2>
+
+
+
+
+
+<div class="quiz" data-answer="2"><div class="quiz-q"><span data-lang="en">1. What decimal value is represented by the binary number 101101?</span><span data-lang="zh">1. 二进制数（binary number）101101 对应的十进制值是多少？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0">41</div><div class="quiz-opt" data-idx="1">53</div><div class="quiz-opt" data-idx="2">45</div><div class="quiz-opt" data-idx="3">37</div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! The 1 bits have place values 32, 8, 4, and 1, which add to 45.</span><span data-lang="zh">正确！值为 1 的各位对应的位权是 32、8、4 和 1，相加得到 45。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Start at the right with place value 1 and double each place as you move left. Add only the place values whose bits are 1.</span><span data-lang="zh">从最右位的位权 1 开始，每向左一位就翻倍。只将值为 1 的位对应的位权相加。</span></div></div><div class="quiz" data-answer="3"><div class="quiz-q"><span data-lang="en">2. A hospital must compress records and later reconstruct every original bit exactly. Which method should it choose?</span><span data-lang="zh">2. 医院需要压缩记录，并在之后精确还原原始数据的每一位。应选择哪种方法？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Lossy compression</span><span data-lang="zh">有损压缩（lossy compression）</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">Sampling at longer intervals</span><span data-lang="zh">以更长的时间间隔采样</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Deleting repeated records</span><span data-lang="zh">删除重复记录</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Lossless compression</span><span data-lang="zh">无损压缩（lossless compression）</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Lossless compression guarantees reconstruction of the original data.</span><span data-lang="zh">正确！无损压缩保证能够还原原始数据。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">The requirement is exact reconstruction, not just a smaller file. Lossy compression permits only an approximation, and deleting records does not preserve the original.</span><span data-lang="zh">题目的要求是精确还原，而不只是缩小文件。有损压缩只能还原近似数据，删除记录也无法保留原始数据。</span></div></div><div class="quiz" data-answer="0"><div class="quiz-q"><span data-lang="en">3. A study finds that students who sleep more tend to have higher grades. Which conclusion is supported by this finding alone?</span><span data-lang="zh">3. 一项研究发现，睡眠时间较长的学生往往成绩更高。仅凭这一发现，可以得出什么结论？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Sleep and grades are correlated in the study, but causation is not established.</span><span data-lang="zh">研究中的睡眠时间与成绩相关，但因果关系尚未得到证实。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">More sleep definitely causes higher grades.</span><span data-lang="zh">睡眠时间增加一定会导致成绩提高。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Higher grades definitely cause more sleep.</span><span data-lang="zh">成绩提高一定会导致睡眠时间增加。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Sleep and grades are unrelated.</span><span data-lang="zh">睡眠时间与成绩没有关系。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! The observed association is a correlation, not proof of a causal direction.</span><span data-lang="zh">正确！观察到的联系是相关关系（correlation），不能证明因果关系及其方向。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">An observed association does not by itself establish that either variable causes the other. Additional research is needed.</span><span data-lang="zh">观察到两个变量有关联，并不能单独证明任何一个变量导致了另一个变量的变化。还需要进一步研究。</span></div></div><div class="quiz" data-answer="1"><div class="quiz-q"><span data-lang="en">4. A school surveys only members of its chess club about which school club is most popular. What is the main concern if it wants to represent all students?</span><span data-lang="zh">4. 学校只调查国际象棋社团成员，以确定全校最受欢迎的社团。如果调查要代表全体学生，主要问题是什么？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">The survey must be unbiased if every club member responds.</span><span data-lang="zh">只要所有社团成员都回答，调查就一定没有偏差。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">The source is biased toward chess club members.</span><span data-lang="zh">数据来源偏向国际象棋社团成员。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Collecting more responses from the same club necessarily removes the bias.</span><span data-lang="zh">从同一社团收集更多回答必然能消除偏差。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Cleaning capitalization will make the sample representative.</span><span data-lang="zh">统一大小写就能使样本具有代表性。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Chess club members may not represent the preferences of all students.</span><span data-lang="zh">正确！国际象棋社团成员的偏好可能不能代表全体学生。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Consider who was excluded. More responses from the same biased source or cleaning the entries does not ensure a representative sample.</span><span data-lang="zh">要考虑哪些人被排除在调查之外。从同一个有偏差的数据来源收集更多回答，或清洗记录，都不能保证样本具有代表性。</span></div></div><div class="quiz" data-answer="1"><div class="quiz-q"><span data-lang="en">5. What value does the program display?</span><span data-lang="zh">5. 程序显示什么值？</span></div><pre class="csp-code">values ← [<span class="num">3</span>, -<span class="num">2</span>, <span class="num">6</span>, <span class="num">0</span>, <span class="num">5</span>]
+total ← <span class="num">0</span>
+<span class="kw">FOR EACH</span> value <span class="kw">IN</span> values {
+  <span class="kw">IF</span>(value &gt; <span class="num">0</span>) {
+    total ← total + value
+  }
+}
+<span class="fn">DISPLAY</span>(total)</pre><div class="quiz-options"><div class="quiz-opt" data-idx="0">12</div><div class="quiz-opt" data-idx="1">14</div><div class="quiz-opt" data-idx="2">15</div><div class="quiz-opt" data-idx="3">5</div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! The program adds the positive values 3, 6, and 5, giving 14.</span><span data-lang="zh">正确！程序将正数 3、6 和 5 相加，得到 14。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">Check the condition for each list item. The negative value and zero do not pass the filter, so neither is added.</span><span data-lang="zh">逐项检查条件。负数和 0 都不满足筛选条件，因此不会被加到总和中。</span></div></div><div class="quiz" data-answer="3"><div class="quiz-q"><span data-lang="en">6. A researcher wants to see how average daily temperature changes across months. Which approach best helps reveal the trend?</span><span data-lang="zh">6. 研究者想观察每日平均气温随月份的变化。哪种方法最有助于揭示趋势？</span></div><div class="quiz-options"><div class="quiz-opt" data-idx="0"><span data-lang="en">Delete the dates and display the temperatures in arbitrary order.</span><span data-lang="zh">删除日期，按任意顺序显示温度。</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">Keep only the highest temperature and discard the rest.</span><span data-lang="zh">只保留最高温度，丢弃其余数据。</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">Replace every reading with the same constant.</span><span data-lang="zh">将每个读数都替换成同一个常数。</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">Group the readings by month and graph each month's average.</span><span data-lang="zh">按月份分组，并绘制每个月平均值的图表。</span></div></div><div class="quiz-explain correct-exp"><span data-lang="en">Correct! Grouping and averaging by month, then graphing, makes changes over time easier to see.</span><span data-lang="zh">正确！按月份分组、计算平均值并绘图，可以更容易地看出随时间的变化。</span></div><div class="quiz-explain wrong-exp"><span data-lang="en">The result must retain the month and summarize temperatures for each month. Deleting dates or discarding most readings prevents that comparison.</span><span data-lang="zh">结果必须保留月份信息，并汇总每个月的温度。删除日期或丢弃大部分读数会妨碍这种比较。</span></div></div></section>
+<!-- ═══════════════ AP-STYLE PRACTICE ═══════════════ -->
+<section class="section" id="ap-practice">
+<div class="section-label" data-lang="en">Next Step</div>
+<div class="section-label" data-lang="zh">下一步</div>
+<h2 data-lang="en">AP-Style Practice Problems</h2>
+<h2 data-lang="zh">AP 风格练习题</h2>
+<div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
+<p data-lang="en" style="margin-bottom:16px;">Try the 15-question practice set to test binary reasoning, compression choices, and data analysis. Review each explanation before moving on.</p>
+<p data-lang="zh" style="margin-bottom:16px;">完成 15 道题的练习集，检验二进制推理、压缩方法选择和数据分析能力。继续下一题前，请先查看解析。</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap;">
+<a href="../Practice%20Questions/Unit_2_Data_Practice_Problems.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">Practice Problems →</span><span data-lang="zh">练习题 →</span></a>
+</div>
+</div>
+</section>
+<div style="text-align: center; padding: 40px 0; color: var(--text-secondary); font-size: 0.85rem;">
+<p style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 4px; color: var(--text);">鼎睿学苑 · Dingrui Scholars</p>
+<p data-lang="en">AP Computer Science Principles, Unit 2: Data · 2026 Edition</p>
+<p data-lang="zh">AP 计算机科学原理，单元 2：数据 · 2026 版</p>
+</div>
+<!-- consult-cta: lead-gen conversion surface (Sprint A) -->
+<aside class="consult-cta">
+<p class="consult-cta__lead"><span data-lang="en">Want to go further, faster?</span><span data-lang="zh">想走得更远、更快？</span></p>
+<p class="consult-cta__body"><span data-lang="en">Book a free 15-minute assessment with a Dingrui Scholars tutor. We will help you master this unit and map your path into university.</span><span data-lang="zh">预约 Dingrui Scholars 导师的 15 分钟免费评估。我们将帮助你掌握本单元，并规划通往大学的学习路径。</span></p>
+<a class="consult-cta__btn" data-lang="en" href="https://www.dingruischolars.com/signup?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_2_data__sg_intro__en" rel="noopener" target="_blank">Book a free assessment →</a>
+<a class="consult-cta__btn" data-lang="zh" href="https://www.dingruischolars.com/signup-ch?utm_source=notes&amp;utm_medium=cta&amp;utm_campaign=ap_csp&amp;utm_content=unit_2_data__sg_intro__zh" rel="noopener" target="_blank">预约免费评估 →</a>
+</aside>
+<style id="dr-related-css">
+.dr-related{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin:34px 0 8px;padding:16px 18px;border:1px solid var(--border,#E6E6E6);
+  border-radius:12px;background:var(--bg-card,#fff);
+  font-family:var(--font-body,'Source Sans 3',sans-serif);font-size:0.92rem;}
+.dr-related__label{font-family:var(--font-mono,monospace);font-size:0.72rem;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary,#585858);}
+.dr-related a{color:var(--pop,#0099FF);font-weight:600;text-decoration:none;}
+.dr-related a:hover{text-decoration:underline;}
+.dr-related__cur{color:var(--text-secondary,#585858);font-weight:600;}
+@media print{.dr-related{display:none;}}
+</style>
+<nav aria-label="Related materials" class="dr-related">
+<span class="dr-related__label"><span data-lang="en">This unit</span><span data-lang="zh">本单元</span></span>
+<span aria-current="page" class="dr-related__cur"><span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span></span>
+<a href="../Practice%20Questions/Unit_2_Data_Practice_Problems.html"><span data-lang="en">Practice</span><span data-lang="zh">练习</span> →</a>
+<a href="../Practice%20Questions/Solutions/Unit_2_Data_Solutions.html"><span data-lang="en">Solutions</span><span data-lang="zh">解答</span> →</a>
+</nav>
+<!-- BEGIN unit-nav -->
+<nav aria-label="Course navigation" class="unit-nav"><a class="unit-nav__link unit-nav__link--prev" href="Unit_1_Creative_Development.html"><span aria-hidden="true" class="unit-nav__arrow">←</span><span class="unit-nav__body"><span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span><span class="unit-nav__title"><span data-lang="en">Unit 1: Creative Development</span><span data-lang="zh">第 1 单元：创造性开发</span></span></span></a><a class="unit-nav__link unit-nav__link--next" href="Unit_3_Algorithms_and_Programming.html"><span aria-hidden="true" class="unit-nav__arrow">→</span><span class="unit-nav__body"><span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span><span class="unit-nav__title"><span data-lang="en">Unit 3: Algorithms and Programming</span><span data-lang="zh">第 3 单元：算法与编程</span></span></span></a></nav>
+<!-- END unit-nav -->
+</main>
+<button aria-label="Back to top" class="backtotop" id="backtotop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+<script>
+// ─── THEME ───
+function setThemeBtnLabel(toLight) {
+  const tt = document.getElementById('themeToggle');
+  if (!tt) return;
+  tt.innerHTML = toLight
+    ? '<span data-lang="en">Light</span><span data-lang="zh">浅色</span>'
+    : '<span data-lang="en">Dark</span><span data-lang="zh">深色</span>';
+}
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  setThemeBtnLabel(!isDark);
+}
+// System preference
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  setThemeBtnLabel(true);
+}
+
+// ─── LANGUAGE ───
+function toggleLang() {
+  const isZh = document.body.classList.contains('lang-zh');
+  document.body.classList.toggle('lang-zh', !isZh);
+  try { localStorage.setItem('drs.lang', isZh ? 'en' : 'zh'); } catch(e) {}
+}
+try {
+  if (false) {
+    document.body.classList.add('lang-zh');
+  }
+} catch(e) {}
+
+// ─── SIDEBAR ───
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ─── PROGRESS BAR + BACK-TO-TOP ───
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  const btt = document.getElementById('backtotop');
+  if (btt) btt.classList.toggle('show', window.scrollY > 400);
+});
+
+// ─── ACTIVE TOC ───
+const sections = document.querySelectorAll('.section');
+const tocLinks = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.sidebar a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-80px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// ─── QUIZZES ───
+document.querySelectorAll('.quiz').forEach(quiz => {
+  const answer = parseInt(quiz.dataset.answer);
+  const opts = quiz.querySelectorAll('.quiz-opt');
+  const expCorrect = quiz.querySelector('.quiz-explain.correct-exp');
+  const expWrong = quiz.querySelector('.quiz-explain.wrong-exp');
+
+  opts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const idx = parseInt(opt.dataset.idx);
+      opts.forEach(o => o.classList.add('disabled'));
+      if (idx === answer) {
+        opt.classList.add('correct');
+        if (expCorrect) expCorrect.classList.add('show');
+      } else {
+        opt.classList.add('wrong');
+        opts[answer].classList.add('correct');
+        if (expWrong) expWrong.classList.add('show');
+      }
+    });
+  });
+});
+</script>
+<script>/* dingrui-lang-link: cross-page language continuity via ?lang=zh; no persistence, direct visits default English */
+(function(){
+  try{
+    var q=new URLSearchParams(window.location.search).get('lang');
+    if(q==='zh'&&document.querySelector('[data-lang=zh]'))document.body.classList.add('lang-zh');
+    else if(q==='en')document.body.classList.remove('lang-zh');
+  }catch(e){}
+  document.addEventListener('click',function(ev){
+    if(!document.body.classList.contains('lang-zh'))return;
+    var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href)return;
+    if(/^(https?:)?\/\//i.test(href)||/^(#|mailto:|tel:|javascript:)/i.test(href))return;
+    if(/[?&]lang=/.test(href))return;
+    var hash='',i=href.indexOf('#');
+    if(i>=0){hash=href.slice(i);href=href.slice(0,i);}
+    a.setAttribute('href',href+(href.indexOf('?')>=0?'&':'?')+'lang=zh'+hash);
+  },true);
+})();</script>
+<!-- dr-mobile-readability (scripts/fit_mobile_readability.py) -->
+<style id="dr-mobile-readability">
+@media (max-width: 820px){
+  /* Nothing is ever wider than the screen. */
+  html, body { max-width: 100%; }
+  .main-wrap, .hero, .section, .concept-box, .formula-box, .quiz, .checklist,
+  .flashcard, .flashcard-grid, .syllabus-map, details, .footer-wrap { max-width: 100%; }
+  img, svg, iframe, .katex-display { max-width: 100%; }
+  /* Prose reflows; long words/URLs/inline code wrap instead of pushing width. */
+  body { overflow-wrap: break-word; word-wrap: break-word; }
+  .section p, .section li, .concept-box, .quiz-q, .quiz-opt, .flashcard-back,
+  .detail-body, blockquote { overflow-wrap: break-word; }
+  /* Code + tables keep an intentional scroll box (they cannot reflow). Many
+     tables are NOT wrapped in .table-wrap, so a wide one pushes the whole page
+     sideways; making the table itself a scrollable block contains it to the
+     viewport (it scrolls inside its own box instead of dragging the page). */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 600px){
+  body { font-size: 16px; }
+  .main-wrap { padding: 0 14px; }
+  .hero h1 { font-size: 1.85rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section h3 { font-size: 1.15rem; }
+  .formula-box { padding: 14px 12px; }
+  .concept-box { padding: 14px 14px; }
+  .quiz-opt { padding: 10px 12px; }
+  table { font-size: 0.88rem; }
+
+  /* Squish the top stack so the first topic is reachable on the first screen.
+     !important to win over the earlier injected declutter block. */
+  .main-wrap { margin-top: 54px !important; }
+  .hero { padding: 24px 16px 20px !important; margin-bottom: 16px !important; }
+  .hero h1 { font-size: 1.7rem !important; margin-bottom: 8px !important; }
+  .hero-overline { margin-bottom: 6px !important; }
+  .hero-sub { font-size: 0.9rem !important; line-height: 1.45 !important;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hero-meta { margin-top: 12px !important; gap: 8px !important; }
+  .hero-meta .chip { font-size: 0.76rem !important; padding: 4px 11px !important; }
+  .consult-cta { padding: 13px 15px !important; margin: 14px 0 6px !important; }
+  .consult-cta__lead { font-size: 1.05rem !important; margin-bottom: 4px !important; }
+  .consult-cta__body { font-size: 0.86rem !important; line-height: 1.4 !important; margin-bottom: 11px !important; }
+  .consult-cta__btn { padding: 10px 18px !important; }
+
+  /* Flashcards: a 2-up grid on phone reads as intentional (single column was a
+     long, mostly-empty scroll). Math on the back is shrunk to fit by fit-math. */
+  .flashcard-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; margin: 16px 0 !important; }
+  .flashcard-inner { min-height: 118px !important; }
+  .flashcard-front { padding: 14px 11px 22px !important; font-size: 0.9rem !important; }
+  .flashcard-back { padding: 14px 11px !important; }
+}
+@media (max-width: 430px){
+  body { font-size: 15.5px; }
+  .main-wrap { padding: 0 11px; }
+  .hero h1 { font-size: 1.5rem !important; }
+  .hero-sub { -webkit-line-clamp: 2 !important; }
+}
+</style>
+<script id="dr-fit-math-js">
+(function(){
+  var MIN_SCALE = 0.55;        // don't shrink below this; fall back to scroll
+  var MAX_W = 820;             // only adapt on phone/tablet; desktop untouched
+  function fitOne(el){
+    el.style.fontSize = "";                       // reset to re-measure honestly
+    var avail = el.clientWidth;
+    if(!avail) return;                            // hidden (collapsed details) -> skip
+    var w = el.scrollWidth;
+    if(w <= avail + 1) return;                    // already fits
+    var scale = Math.max(avail / w, MIN_SCALE);
+    var fs = parseFloat(getComputedStyle(el).fontSize) || 21;
+    el.style.fontSize = (fs * scale * 0.98) + "px";
+  }
+  function fitAll(){
+    if(window.innerWidth > MAX_W){
+      // back to desktop: clear any phone-era shrink
+      document.querySelectorAll(".katex-display").forEach(function(el){ el.style.fontSize=""; });
+      return;
+    }
+    document.querySelectorAll(".katex-display").forEach(fitOne);
+  }
+  var raf;
+  function schedule(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(fitAll); }
+  // KaTeX auto-render runs before DOMContentLoaded; fonts settle later, so fit
+  // again after fonts are ready and on full load.
+  if(document.readyState !== "loading") schedule();
+  else document.addEventListener("DOMContentLoaded", schedule);
+  window.addEventListener("load", schedule);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  var t; window.addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(fitAll,150); });
+  // <details> toggle doesn't bubble -> listen in capture phase, re-fit revealed math.
+  document.addEventListener("toggle", function(){ setTimeout(fitAll, 0); }, true);
+  // Theme/lang toggles can change layout width; re-fit shortly after any click.
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("[onclick],button,summary")) setTimeout(fitAll,120);
+  }, true);
+})();
+</script>
+<style id="dr-s3-nav-tap">
+/* S3-H2 (#6): >=40px tap targets for the sticky-nav toggles on phones. */
+@media (max-width: 640px) {
+  .nav-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+<style id="dr-s3-type">
+/* S3: the content fills the band (TOC -> window right) with minimal,
+   balanced gutters -- not a narrow centred column, not left-jammed against
+   the TOC. Screen only. */
+@media screen and (min-width: 1100px) {
+  .main-wrap { padding-left: 32px; padding-right: 32px; }
+  .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
+}
+</style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
+<!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
+<style id="dr-freemium-gate-css">
+.dr-hidden{display:none !important;}
+body.dr-locked{overflow:hidden;}
+#dr-wall{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;overflow-y:auto;background:rgba(12,10,10,.52);
+  -webkit-backdrop-filter:saturate(115%) blur(7px);backdrop-filter:saturate(115%) blur(7px);
+  animation:dr-fade .22s ease-out;}
+@keyframes dr-fade{from{opacity:0}to{opacity:1}}
+#dr-card{width:100%;max-width:430px;box-sizing:border-box;margin:auto;text-align:center;
+  background:var(--bg-card,#fff);color:var(--ink,#1a1a1a);
+  border:1px solid var(--border,#e6e6e6);border-radius:18px;padding:34px 30px 26px;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),0 3px 10px rgba(0,0,0,.14);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  animation:dr-rise .28s cubic-bezier(.2,.75,.3,1);}
+@keyframes dr-rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+#dr-card .dr-ico{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;
+  background:var(--accent-light,#f2e4e4);color:var(--accent,#7A2E2E);}
+#dr-card h3{font-family:'DM Serif Display',serif;font-weight:400;margin:0 0 10px;
+  color:var(--accent,#7A2E2E);font-size:1.62rem;line-height:1.22;}
+#dr-card .dr-sub{margin:0 0 22px;color:var(--ink,#2a2a2a);opacity:.82;font-size:1.02rem;line-height:1.55;}
+#dr-form{display:flex;flex-direction:column;gap:10px;}
+#dr-email{width:100%;box-sizing:border-box;padding:13px 15px;font-size:1rem;font-family:inherit;
+  color:var(--ink,#111);background:var(--bg,#fff);
+  border:1.5px solid var(--border,#d6d0d0);border-radius:12px;transition:border-color .15s,box-shadow .15s;}
+#dr-email::placeholder{color:var(--ink,#999);opacity:.4;}
+#dr-email:focus{outline:none;border-color:var(--accent,#7A2E2E);
+  box-shadow:0 0 0 3px var(--accent-light,rgba(122,46,46,.2));}
+#dr-btn{width:100%;padding:13px 18px;font-size:1.02rem;font-weight:600;font-family:inherit;cursor:pointer;
+  color:var(--bg-card,#fff);background:var(--ink,#161616);border:0;border-radius:12px;
+  transition:opacity .15s,transform .04s;}
+#dr-btn:hover{opacity:.88;}
+#dr-btn:active{transform:translateY(1px);}
+#dr-btn:disabled{opacity:.55;cursor:wait;}
+#dr-err{color:#d8382a;font-size:.9rem;margin-top:12px;min-height:1em;line-height:1.5;}
+#dr-consent{margin-top:20px;font-size:.82rem;line-height:1.5;color:var(--ink,#888);opacity:.62;}
+.dr-cta{color:var(--pop,#0099FF);text-decoration:none;font-weight:600;}
+.dr-cta:hover{text-decoration:underline;}
+@media (max-width:440px){#dr-card{padding:28px 22px 22px;}#dr-card h3{font-size:1.44rem;}}
+</style>
+<script id="dr-freemium-gate-js">
+(function(){
+  window.DINGRUI_GATE = {enabled:true, apiBase:"https://dingrui-backend.onrender.com/", tier:"free", freeUnits:3,
+                         signupEn:"https://www.dingruischolars.com/signup", signupZh:"https://www.dingruischolars.com/signup-ch"};
+  var G = window.DINGRUI_GATE;
+  var KEY = "dingrui_unlock";
+  function unlocked(){
+    try{ var t=JSON.parse(localStorage.getItem(KEY)||"null");
+      return t && t.token && (!t.expires_at || Date.parse(t.expires_at) > Date.now()); }
+    catch(e){ return false; }
+  }
+  // Local dev / authoring preview: never wall (localhost / private LAN / file://),
+  // so serve.sh shows every unit; only the real deployed host gates.
+  function isLocal(){
+    if(location.protocol==="file:") return true;
+    var h=location.hostname;
+    return h==="localhost"||h==="127.0.0.1"||h==="0.0.0.0"||h==="::1"||h==="[::1]"
+      ||h===""||/\.local$/.test(h)||/^192\.168\./.test(h)||/^10\./.test(h)
+      ||/^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  }
+  // QA preview: ?dr_force_gate=1 overrides the localhost bypass. No-op in prod.
+  function forced(){ try{ return /[?&]dr_force_gate=1(&|$)/.test(location.search); }catch(e){ return false; } }
+  if(!G.enabled || G.tier!=="gated" || unlocked() || (isLocal() && !forced())) return;
+  var REVEAL_PX = 1000;
+  // Bilingual: emit BOTH language spans and let the page's own body.lang-zh CSS
+  // reveal the active one, so the wall follows the language toggle live (rather
+  // than freezing to whichever language was active when it was built).
+  function bl(en,zh){ return '<span data-lang="en">'+en+'</span><span data-lang="zh">'+zh+'</span>'; }
+  function cta(medium){
+    var q="?utm_source=notes&utm_medium="+medium+"&utm_content="+encodeURIComponent(location.pathname);
+    return '<a class="dr-cta" data-lang="en" target="_blank" rel="noopener" href="'+G.signupEn+q+'">Book a free assessment &rarr;</a>'
+         + '<a class="dr-cta" data-lang="zh" target="_blank" rel="noopener" href="'+G.signupZh+q+'">预约免费评估 &rarr;</a>';
+  }
+  function root(){ return document.querySelector("main") || document.body; }
+  function applyGate(){
+    var r = root(), acc = 0, walled = false;
+    Array.prototype.forEach.call(r.children, function(el){
+      if(el.id==="dr-wall") return;
+      if(walled){ el.classList.add("dr-hidden"); return; }
+      acc += el.offsetHeight || 0;
+      if(acc > REVEAL_PX){ walled = true; }
+    });
+    document.body.classList.add("dr-locked");
+    var wall = document.createElement("div"); wall.id="dr-wall";
+    wall.innerHTML =
+      '<div id="dr-card" role="dialog" aria-modal="true" aria-labelledby="dr-title">'
+      + '<div class="dr-ico" aria-hidden="true">&#128274;</div>'
+      + '<h3 id="dr-title">'+bl("Unlock the full guide","解锁完整指南")+'</h3>'
+      + '<p class="dr-sub">'+bl(
+          "Full units are open to Dingrui students. Enter the email you enrolled with to unlock the study guide, practice, and full solutions.",
+          "完整单元向鼎睿学员开放。请输入您报名时使用的邮箱，解锁学习指南、练习题与完整解答。")+'</p>'
+      + '<form id="dr-form" novalidate>'
+      +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
+      +   '<button type="submit" id="dr-btn">'+bl("Unlock","解锁")+'</button>'
+      + '</form>'
+      + '<div id="dr-err" role="alert"></div>'
+      + '<div id="dr-consent">'+bl("We use your email only to verify access.","我们仅使用您的邮箱验证访问权限。")
+      +   ' '+bl("Not a Dingrui student yet?","还不是鼎睿学员？")+' '+cta("gate_wall_cta")+'</div>'
+      + '</div>';
+    document.body.appendChild(wall);
+    var em=document.getElementById("dr-email"); if(em){ try{ em.focus(); }catch(e){} }
+    document.getElementById("dr-form").addEventListener("submit", submit);
+  }
+  function reveal(){
+    document.querySelectorAll(".dr-hidden").forEach(function(el){el.classList.remove("dr-hidden");});
+    document.body.classList.remove("dr-locked");
+    var w=document.getElementById("dr-wall"); if(w) w.remove();
+  }
+  function submit(e){
+    e.preventDefault();
+    var email=document.getElementById("dr-email").value.trim();
+    var err=document.getElementById("dr-err"), btn=document.getElementById("dr-btn");
+    if(!email || email.indexOf("@")<1){ err.innerHTML=bl("Please enter a valid email.","请输入有效邮箱。"); return; }
+    btn.disabled=true; err.textContent="";
+    fetch(G.apiBase+"api/notes/token",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:email})})
+      .then(function(r){
+        if(r.status===403){ var e403=new Error("not_cleared"); e403.code=403; throw e403; }
+        if(!r.ok) throw new Error("http "+r.status);
+        return r.json();
+      })
+      .then(function(d){
+        var iso = d.expires_at ? new Date(d.expires_at*1000).toISOString() : null;
+        localStorage.setItem(KEY, JSON.stringify({token:d.token, expires_at:iso, email:email}));
+        if(window.gtag){ gtag("event","unlock",{method:"allowlist", source:location.pathname}); }
+        reveal();
+      })
+      .catch(function(e2){
+        btn.disabled=false;
+        if(e2 && e2.code===403){
+          err.innerHTML = bl("That email isn't on our student list yet.","该邮箱尚未在学员名单中。")+'<br>'+cta("gate_wall_not_cleared");
+        } else {
+          err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
+        }
+      });
+  }
+  if(document.readyState!=="loading") applyGate();
+  else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+</body>
+</html>
