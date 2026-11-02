@@ -11,7 +11,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Course | 🆓 Free preview pages | 🔒 Unlockable pages | Total pages |
 |---|---:|---:|---:|
 | AP CSA | 10 | 3 | 13 |
-| AP CSP | 9 | 6 | 15 |
+| AP CSP | 15 | 6 | 21 |
 | AP Calculus | 9 | 21 | 30 |
 | AP Physics | 9 | 12 | 21 |
 | AP Statistics | 12 | 8 | 20 |
@@ -21,10 +21,10 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | High School Math | 9 | 36 | 45 |
 | High School Physics | 9 | 27 | 36 |
 | IB Chemistry HL | 11 | 9 | 20 |
-| IB Math HL | 9 | 58 | 67 |
+| IB Math HL | 9 | 57 | 66 |
 | IB Physics HL | 9 | 63 | 72 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **159** | **393** | **552** |
+| **Grand total** | **165** | **392** | **557** |
 
 ## Legend
 
@@ -83,6 +83,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | [Unit 2: Data](https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_2_Data.html) | Study Guide | 🆓 Free preview |
 | [Unit 2: Data — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Unit_2_Data_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 2: Data — Solutions](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Solutions/Unit_2_Data_Solutions.html) | Solutions | 🆓 Free preview |
+| [Filter a list with FOR EACH](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u2-filter-list.html) | Code Runner | 🆓 Free preview |
 
 ### Unit 3: Algorithms and Programming
 
@@ -91,6 +92,11 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | [Unit 3: Algorithms and Programming](https://notes.dingruischolars.com/AP%20CSP/Study%20Guides/Unit_3_Algorithms_and_Programming.html) | Study Guide | 🆓 Free preview |
 | [Unit 3: Algorithms and Programming — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Unit_3_Algorithms_and_Programming_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 3: Algorithms and Programming — Solutions](https://notes.dingruischolars.com/AP%20CSP/Practice%20Questions/Solutions/Unit_3_Algorithms_and_Programming_Solutions.html) | Solutions | 🆓 Free preview |
+| [Trace binary search](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u3-binary-search.html) | Code Runner | 🆓 Free preview |
+| [Find a maximum with FOR EACH](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u3-for-each-max.html) | Code Runner | 🆓 Free preview |
+| [Traverse a list by index](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u3-list-index-traversal.html) | Code Runner | 🆓 Free preview |
+| [Trace a procedure with RETURN](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u3-procedure-return.html) | Code Runner | 🆓 Free preview |
+| [Trace a REPEAT UNTIL loop](https://notes.dingruischolars.com/AP%20CSP/Runners/csp-u3-repeat-until-sum.html) | Code Runner | 🆓 Free preview |
 
 ### Unit 4: Computer Systems and Networks
 
@@ -966,12 +972,6 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit B5: Transformations of Graphs and Functions | Study Guide | 🔒 Unlockable |
 | Unit B5: Transformations of Graphs and Functions — IB-Style Practice | Practice Questions | 🔒 Unlockable |
 | Unit B5: Transformations of Graphs and Functions — Solutions | Solutions | 🔒 Unlockable |
-
-### Unit C: Geometry
-
-| Product | Type | Tier |
-|---|---|---|
-| Unit C: Geometry | Study Guide | 🔒 Unlockable |
 
 ### Unit C1: Surface Areas, Volumes and Measurement in Circles
 
