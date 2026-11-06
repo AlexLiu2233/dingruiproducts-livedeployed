@@ -96,6 +96,11 @@
   .solution ul, .solution ol{margin:6px 0 6px 22px;line-height:1.7;}
   .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
   .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  /* v2: distractor diagnosis on every item, rubric on structured items (scripts/pq_enrich.py) */
+  .solution .distractors{margin-top:10px;background:#F7F1F1;border-left:2px solid #B08585;padding:8px 12px;font-size:10.5pt;color:#4A2626;border-radius:0 3px 3px 0;}
+  .solution .distractors strong{color:#7A2E2E;}
+  .solution .rubric{margin-top:10px;background:#EFE7F6;border-left:2px solid #A98BC7;padding:8px 12px;font-size:10.5pt;color:#3C2255;border-radius:0 3px 3px 0;font-family:'Source Sans 3',sans-serif;}
+  .solution .rubric strong{color:#4A2A6B;}
   .solution .insight strong{color:#7A4810;}
   .solution table{border-collapse:collapse;margin:6px auto;font-size:10pt;}
   .solution table th, .solution table td{border:1px solid #6b9555;padding:3px 10px;text-align:center;font-family:'Source Sans 3',sans-serif;}
@@ -216,6 +221,10 @@
       <p>就标准差而言，把（总体）方差写成 $\sigma^2 = \dfrac{\sum (x_i - \bar{x})^2}{n}$。新追加点的离差为 $19 - 19 = 0$，因此分子 $\sum (x_i - \bar{x})^2$ <em>不变</em>，而分母由 $n$ 增大到 $n+1$。固定的正分子除以更大的分母，方差变小，故<strong>标准差减小。</strong></p>
       <div class="insight"><strong>均值是"平衡点"。</strong>恰好在均值处加入数据，总会在不移动中心的前提下缩小离散程度。这与 Q10(c) 是同一机制 —— 遇到"未给原始数据、问对 SD 的影响"一类题时，把它记在心里。</div>
     </div>
+      <div class="distractors"><strong><span data-lang="en">Where this goes wrong.</span><span data-lang="zh">错在哪里。</span></strong> <span data-lang="en">(a) A common slip is to solve $50 = 3\bar{x} + 7$, which gives $\bar{x} = 43/3$ instead of $19$. Another is to divide the SD by $9$ rather than by $3$, which gives $\sigma_x = 1$.
+(b) Some students think adding one value equal to the mean changes the mean or leaves the SD unchanged. The mean is unchanged because the added value is exactly the balance point, while the SD decreases because the squared deviation sum stays the same but the denominator becomes larger.</span><span data-lang="zh">(a) 常见错误是把 $50 = 3\bar{x} - 7$ 误写成 $50 = 3\bar{x} + 7$，这样会得到 $\bar{x} = 43/3$，而不是 $19$。另一个错误是把标准差除以 $9$ 而不是除以 $3$，从而得到 $\sigma_x = 1$。
+(b) 有些学生认为，加上一个等于均值的数会改变均值，或者会让标准差不变。其实均值不变，因为新加入的值正好在平衡点上；标准差会减小，因为平方离差总和不变，但分母变大了。</span></div>
+    <div class="rubric"><strong><span data-lang="en">Markscheme, 6 marks.</span><span data-lang="zh">评分标准，共 6 分。</span></strong> <span data-lang="en">(a) 1: use the inverse linear transformation for the mean and the SD, with $50 = 3\bar{x} - 7$ and $\sigma_y = |a|\sigma_x$ (M1) &middot; 1: get $\bar{x} = 19$ from $50 = 3\bar{x} - 7$ (A1) &middot; 1: get $\sigma_x = 3$ from $\sigma_y = |a|\sigma_x$ (A1) &middot; (b) 1: state the new mean stays $19$ because the added value equals the mean (A1) &middot; 1: explain that the variance numerator is unchanged but the denominator increases, so the SD decreases (R1) &middot; 1: link the zero deviation at the mean to smaller spread, not just a memorised rule (R1)</span><span data-lang="zh">(a) 1 分：对均值和标准差使用逆线性变换，写出 $50 = 3\bar{x} - 7$ 和 $\sigma_y = |a|\sigma_x$ (M1) &middot; 1 分：由 $50 = 3\bar{x} - 7$ 得到 $\bar{x} = 19$ (A1) &middot; 1 分：由 $\sigma_y = |a|\sigma_x$ 得到 $\sigma_x = 3$ (A1) &middot; (b) 1 分：说明新均值仍是 $19$，因为加入的数等于均值 (A1) &middot; 1 分：说明方差分子不变但分母变大，所以标准差减小 (R1) &middot; 1 分：把均值处的零离差与更小的离散程度联系起来，而不是只背结论 (R1)</span></div>
   </div>
 </div>
 
@@ -246,6 +255,12 @@
       简单平均 $\tfrac{1}{2}(15 + 22.5) = 18.75$ <em>只有在两组大小相同时</em>才正确。这里 A 组个数更多（$12 > 8$），其均值 $15$ 被赋予更大权重，把合并均值从 $18.75$ 往下拉到恰好 $18$。合并均值是<em>按个数加权</em>的平均：$\bar{x} = \dfrac{n_A\bar{x}_A + n_B\bar{x}_B}{n_A + n_B}$。
       <div class="insight"><strong>加权平均陷阱。</strong>命题人很爱把"不加权的平均"作为干扰项。只要合并大小不同的组，就要按个数加权 —— 绝不能直接对均值取平均。</div>
     </div>
+      <div class="distractors"><strong><span data-lang="en">Where this goes wrong.</span><span data-lang="zh">错在哪里。</span></strong> <span data-lang="en">(a) A natural error is to take the simple average of $15$ and $m$, giving $\frac{15+m}{2} = 18$ and hence $m = 21$. That ignores the unequal group sizes, so the heavier Group A count is missed.
+(b) A common slip is to change the total correctly by $30$ but divide by $21$ instead of $20$, giving $390/21 \approx 18.57$. Another is to subtract $30$ from the total because the wrong value was smaller, which would give $330/20 = 16.5$.
+(c) The simple average $\frac{15+22.5}{2} = 18.75$ is the wrong idea here, because the two groups do not have equal sizes. You must weight by $12$ and $8$, not by one half each.</span><span data-lang="zh">(a) 一个自然错误是把 $15$ 和 $m$ 直接取简单平均，写成 $\frac{15+m}{2} = 18$，于是得到 $m = 21$。这样忽略了两组人数不同，因此没有体现 Group A 的更大权重。
+(b) 常见错误是把总和正确增加 $30$，却误用 $21$ 作分母，于是得到 $390/21 \approx 18.57$。另一个错误是因为原来的值较小，就把总和减去 $30$，这样会得到 $330/20 = 16.5$。
+(c) 直接平均 $15$ 和 $22.5$ 得到 $18.75$ 是错误思路，因为两组人数不相等。这里必须按 $12$ 和 $8$ 加权，而不是各占一半。</span></div>
+    <div class="rubric"><strong><span data-lang="en">Markscheme, 7 marks.</span><span data-lang="zh">评分标准，共 7 分。</span></strong> <span data-lang="en">(a) 1: set up the combined mean using total equals mean times count (M1) &middot; 1: substitute $12(15)$, $8m$, and $20$ correctly (M1) &middot; 1: solve to get $m = 22.5$ (A1) &middot; (b) 1: correct the grand total by adding $39 - 9 = 30$ (M1) &middot; 1: divide the corrected total by $20$ to get $19.5$ (A1) &middot; (c) 1: explain that the combined mean is weighted by group size, so the simple average of the two means is not valid (R1) &middot; 1: note that $12$ values count more than $8$ values, so the mean is pulled toward Group A (R1)</span><span data-lang="zh">(a) 1 分：用总和等于均值乘个数来建立方程 (M1) &middot; 1 分：正确代入 $12(15)$、$8m$ 和 $20$ (M1) &middot; 1 分：解得 $m = 22.5$ (A1) &middot; (b) 1 分：把总和改正为增加 $39 - 9 = 30$ (M1) &middot; 1 分：用修正后的总和除以 $20$，得到 $19.5$ (A1) &middot; (c) 1 分：说明合并均值要按人数加权，所以不能直接把两个均值简单平均 (R1) &middot; 1 分：指出 $12$ 个值比 $8$ 个值权重大，所以均值更靠近 Group A (R1)</span></div>
   </div>
 </div>
 
@@ -302,6 +317,10 @@
       任何符合条件的数据集都必有 $a \in \{1, 2, 3\}$（正整数、$a \le 3$、且 $2a \le 9$）。上表已检验全部三种情形，仅 $a=1$ 通过，且恰有一组允许的 $(b,d)$。三个 $3$ 的解也不可能：$\{a,3,3,3,e\}$ 迫使 $a + e = 11$ 且 $e = a+8$，得 $a = 1.5 \notin \mathbb{Z}$。故列表完整。
       <div class="insight"><strong>约束型谜题。</strong>先排序，把每条线索翻译成等式/不等式，再把某个变量（这里是 $a$）限制在很小的有限范围内逐一穷举。"求所有"本质上就是"先限界，再验证"。</div>
     </div>
+      <div class="distractors"><strong><span data-lang="en">Where this goes wrong.</span><span data-lang="zh">错在哪里。</span></strong> <span data-lang="en">(a) One slip is to ignore the unique mode condition and stop at a set like $\{1, 2, 3, 5, 9\}$, which has the right sum and range but no unique mode $3$. Another is to accept $\{2, 2, 3, 3, 10\}$ for $a = 2$, where $2$ and $3$ tie as modes.
+(b) A common incomplete proof is to state the final set without showing why $a$ can only be $1, 2, 3$. The completeness mark is also lost if you do not rule out the rejected cases and the impossible triple $3$ case.</span><span data-lang="zh">(a) 一个常见失误是忽略唯一众数条件，直接停在像 $\{1, 2, 3, 5, 9\}$ 这样的集合上。它的和与极差都对，但 $3$ 不是唯一众数。另一个失误是接受 $a = 2$ 时的 $\{2, 2, 3, 3, 10\}$，因为这里 $2$ 和 $3$ 并列众数。
+(b) 常见的不完整证明是只写出最后答案，却没有说明为什么 $a$ 只能是 $1, 2, 3$。如果没有排除被拒绝的情形，以及不可能的全是三个 $3$ 的情形，就拿不到完整性分数。</span></div>
+    <div class="rubric"><strong><span data-lang="en">Markscheme, 7 marks.</span><span data-lang="zh">评分标准，共 7 分。</span></strong> <span data-lang="en">(a) 1: sort the values and translate the clues into equations and inequalities (M1) &middot; 1: obtain $2a + b + d = 9$ and the bound $a \in \{1, 2, 3\}$ (A1) &middot; 1: test $a = 1$ and find the admissible pair $(b,d) = (3,4)$ giving $\{1, 3, 3, 4, 9\}$ (A1) &middot; 1: check that $3$ is the unique mode for that set and reject the other candidate pairs (A1) &middot; 1: state that the only dataset is $\{1, 3, 3, 4, 9\}$ and that it satisfies all conditions (A1) &middot; (b) 1: show that all possible values of $a$ have been exhausted, namely $1, 2, 3$ (R1) &middot; 1: explain why the rejected cases and the triple $3$ case cannot work (R1)</span><span data-lang="zh">(a) 1 分：先排序，并把条件翻译成方程和不等式 (M1) &middot; 1 分：得到 $2a + b + d = 9$，并确定 $a \in \{1, 2, 3\}$ (A1) &middot; 1 分：检查 $a = 1$，并找到可行的 $(b,d) = (3,4)$，得到 $\{1, 3, 3, 4, 9\}$ (A1) &middot; 1 分：检查该集合中 $3$ 是唯一众数，并排除其余候选配对 (A1) &middot; 1 分：说明唯一数据集就是 $\{1, 3, 3, 4, 9\}$，并满足所有条件 (A1) &middot; (b) 1 分：说明所有可能的 $a$ 值都已穷尽，即 $1, 2, 3$ (R1) &middot; 1 分：解释为什么被排除的情形和全是三个 $3$ 的情形都不成立 (R1)</span></div>
   </div>
 </div>
 

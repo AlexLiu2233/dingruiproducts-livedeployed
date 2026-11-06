@@ -91,6 +91,11 @@
   .solution ul, .solution ol{margin:6px 0 6px 22px;line-height:1.7;}
   .solution .marks-call{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:#E5EFD9;color:#41652C;border:1px solid #9BBD7A;padding:0 6px;border-radius:3px;letter-spacing:.04em;margin-left:6px;vertical-align:1px;}
   .solution .insight{margin-top:10px;background:var(--insight-bg);border-left:2px solid var(--insight-rule);padding:8px 12px;font-size:10.5pt;color:var(--insight-ink);border-radius:0 3px 3px 0;}
+  /* v2: distractor diagnosis on every item, rubric on structured items (scripts/pq_enrich.py) */
+  .solution .distractors{margin-top:10px;background:#F7F1F1;border-left:2px solid #B08585;padding:8px 12px;font-size:10.5pt;color:#4A2626;border-radius:0 3px 3px 0;}
+  .solution .distractors strong{color:#7A2E2E;}
+  .solution .rubric{margin-top:10px;background:#EFE7F6;border-left:2px solid #A98BC7;padding:8px 12px;font-size:10.5pt;color:#3C2255;border-radius:0 3px 3px 0;font-family:'Source Sans 3',sans-serif;}
+  .solution .rubric strong{color:#4A2A6B;}
   .solution .insight strong{color:#7A4810;}
   footer.page-foot{margin-top:28px;border-top:1px solid #aaa;padding-top:6px;font-family:'Source Sans 3',sans-serif;font-size:9pt;color:#666;display:flex;justify-content:space-between;}
   footer.page-foot .mark{color:var(--maroon);font-weight:700;letter-spacing:.1em;}
@@ -216,6 +221,8 @@
 
       <div class="insight"><strong>$(3, 4, 12)$ 的勾股四元组。</strong>如同 $(3, 4, 5)$ 是最小直角三角形整数三元组，$(3, 4, 12, 13)$ 是最小的勾股四元组之一（$3^{2} + 4^{2} + 12^{2} = 13^{2}$）。一眼识破能省 $20$ 秒：考官刻意挑选能得整数模长的分量（$(1, 2, 2) \to 3$；$(2, 3, 6) \to 7$；$(2, 6, 9) \to 11$）。考场上分量"很干净"时，先猜四元组再动计算器。另注：单位向量模恰为 $1$，故 $|\hat{\mathbf{a}}|^{2} = \tfrac{9 + 16 + 144}{169} = 1$&mdash;$5$ 秒自检捕错。</div>
     </div>
+      <div class="distractors"><strong><span data-lang="en">Where this goes wrong.</span><span data-lang="zh">错在哪里。</span></strong> <span data-lang="en">(a) A common slip is to add components, $3+4+12=19$, and then stop there; the magnitude needs squares first, so the wrong result $19$ comes from skipping the Pythagorean step. (b) Some students divide by $169$ or copy the vector unchanged, giving $\left(\tfrac{3}{169},\tfrac{4}{169},\tfrac{12}{169}\right)$ or $(3,4,12)$ instead of a unit vector of length $1$. (c) The opposite direction needs the minus sign; if you scale the original vector by $2$ but keep the same direction, you get $(6,8,24)$, while the correct opposite vector is $26\cdot(-\hat{\mathbf a})=-2\mathbf a$.</span><span data-lang="zh">(a) 常见失误是把分量直接相加，得到 $3+4+12=19$，但模长要先平方再开方，所以把 $|\mathbf{a}|$ 写成 $19$ 是漏了勾股步骤。 (b) 有些学生把分母除成 $169$，或者直接照抄原向量，得到 $\left(\tfrac{3}{169},\tfrac{4}{169},\tfrac{12}{169}\right)$ 或 $(3,4,12)$，这都不是长度为 $1$ 的单位向量。 (c) 反方向必须带负号；如果把原向量放大 $2$ 倍却仍保留同向，就会得到 $(6,8,24)$，而正确答案应是 $26\cdot(-\hat{\mathbf a})=-2\mathbf a$。</span></div>
+    <div class="rubric"><strong><span data-lang="en">Markscheme, 4 marks.</span><span data-lang="zh">评分标准，共 4 分。</span></strong> <span data-lang="en">(a) 1: squares the components and gets $3^2+4^2+12^2=169$ (M1) &middot; 1: takes the square root to obtain $13$ (A1) &middot; (b) 1: divides $\mathbf a$ by $13$ to get $\tfrac{1}{13}(3,4,12)$ or equivalent (A1) &middot; (c) 1: scales the opposite unit vector by $26=2\cdot13$ to get $-2\mathbf a=(-6,-8,-24)$ (A1)</span><span data-lang="zh">(a) 1 分：对分量平方并得到 $3^2+4^2+12^2=169$ (M1) &middot; 1 分：再开方得到 $13$ (A1) &middot; (b) 1 分：用 $13$ 去除向量 $\mathbf a$，得到 $\tfrac{1}{13}(3,4,12)$ 或等价形式 (A1) &middot; (c) 1 分：取反方向单位向量并乘以 $26=2\cdot13$，得到 $-2\mathbf a=(-6,-8,-24)$ (A1)</span></div>
   </div>
 </div>
 
@@ -338,6 +345,8 @@
 
       <div class="insight"><strong>中间分量的符号翻转。</strong>叉积里 $\mathbf{j}$ 项的代数余子式带负号。约三分之一同学忘了翻号、写成 $(-2, -7, 1)$，结果连同 (a) A1 与 (b) 验证都丢（错向量不再垂直于 $\mathbf{p}$、$\mathbf{q}$）。两条安全网：(i) 写完答案后必与某输入向量做点积&mdash;非零即符号错；(ii) 背循环公式：$(a_{1}, a_{2}, a_{3}) \times (b_{1}, b_{2}, b_{3}) = (a_{2}b_{3} - a_{3}b_{2},\; a_{3}b_{1} - a_{1}b_{3},\; a_{1}b_{2} - a_{2}b_{1})$&mdash;下标循环 $1 \to 2 \to 3 \to 1$，$\mathbf{j}$ 项里没有藏负号。</div>
     </div>
+      <div class="distractors"><strong><span data-lang="en">Where this goes wrong.</span><span data-lang="zh">错在哪里。</span></strong> <span data-lang="en">(a) The most common error is the sign in the $\mathbf j$ component: forgetting the minus in the determinant gives $(-2,-7,1)$ instead of $(-2,7,1)$. (b) If the cross product from (a) is wrong by that sign, one of the dot products becomes $-14$ rather than $0$, so the perpendicularity check fails even if the method is right. (c) Some students use $|\mathbf p\times\mathbf q|^2$ as the area, which gives $54$ instead of the parallelogram area $\sqrt{54}=3\sqrt6$.</span><span data-lang="zh">(a) 最常见的错误是 $\mathbf j$ 分量的符号：在行列式展开时漏掉负号，就会得到 $(-2,-7,1)$，而不是 $(-2,7,1)$。 (b) 如果 (a) 的叉积带了这个符号错误，那么其中一个点积会变成 $-14$ 而不是 $0$，即使方法对了，垂直性检验也会失败。 (c) 有些学生把 $|\mathbf p\times\mathbf q|^2$ 当成面积，得到 $54$，而不是平行四边形面积 $\sqrt{54}=3\sqrt6$。</span></div>
+    <div class="rubric"><strong><span data-lang="en">Markscheme, 5 marks.</span><span data-lang="zh">评分标准，共 5 分。</span></strong> <span data-lang="en">(a) 1: computes the determinant or component formula correctly (M1) &middot; 1: gets $(-2,7,1)$ (A1) &middot; (b) 1: shows $\mathbf p\cdot(\mathbf p\times\mathbf q)=0$ (A1) &middot; 1: shows $\mathbf q\cdot(\mathbf p\times\mathbf q)=0$ (A1) &middot; (c) 1: takes area as $|\mathbf p\times\mathbf q|=\sqrt{54}=3\sqrt6$ (A1)</span><span data-lang="zh">(a) 1 分：正确计算行列式或分量公式 (M1) &middot; 1 分：得到 $(-2,7,1)$ (A1) &middot; (b) 1 分：证明 $\mathbf p\cdot(\mathbf p\times\mathbf q)=0$ (A1) &middot; 1 分：证明 $\mathbf q\cdot(\mathbf p\times\mathbf q)=0$ (A1) &middot; (c) 1 分：取面积为 $|\mathbf p\times\mathbf q|=\sqrt{54}=3\sqrt6$ (A1)</span></div>
   </div>
 </div>
 
