@@ -465,6 +465,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     img, table, video, iframe, pre { max-width: 100%; }
     .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
   }
+  /* practice inputs + quiz retry (R2 quiz helpers) */
+  .quiz-retry { display: none; margin-top: 12px; padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .quiz-retry.show { display: inline-block; animation: fadeIn 0.3s ease; }
+  .quiz-retry:hover { background: var(--accent-light); border-color: var(--accent); }
+  .practice-input-group { margin: 20px 0; }
+  .practice-prompt { font-weight: 600; margin-bottom: 12px; font-size: 1.02rem; }
+  .practice-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .practice-row input[type="text"] { flex: 1; min-width: 160px; padding: 10px 16px; border: 2px solid var(--border); border-radius: 8px; font-family: var(--font-mono); font-size: 1rem; background: var(--bg); color: var(--text); transition: border-color 0.2s; }
+  .practice-row input[type="text"]:focus { outline: none; border-color: var(--accent); }
+  .practice-row input.is-correct { border-color: var(--green); }
+  .practice-row button { padding: 10px 24px; border: none; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700; font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+  .practice-row button:hover { background: var(--accent-dark); }
+  .practice-feedback { margin-top: 10px; padding: 10px 16px; border-radius: 8px; font-size: 0.92rem; display: none; }
+  .practice-feedback.show { display: block; animation: fadeIn 0.3s ease; }
+  .practice-feedback.correct { background: var(--green-light); color: var(--green); border: 1px solid var(--green); }
+  .practice-feedback.wrong { background: var(--red-light); color: var(--red); border: 1px solid var(--red); }
 </style>
 <!-- BEGIN unit-nav-css -->
 <style data-section="unit-nav">
@@ -2618,6 +2634,8 @@ document.querySelectorAll('.quiz').forEach(function(quiz) {
         opt.classList.add('wrong');
         opts[correctIdx].classList.add('correct');
         exps[1].classList.add('show');
+        var retry = quiz.querySelector('.quiz-retry');
+        if (retry) retry.classList.add('show');
       }
     });
   });
@@ -2626,7 +2644,7 @@ document.querySelectorAll('.quiz').forEach(function(quiz) {
 // ═══ ANIMATE IN ═══
 var animObs = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); animObs.unobserve(e.target); } });
-}, { threshold: 0.1 });
+}, { threshold: 0 });  /* any overlap: sections taller than 10 viewports never reach 10% */
 document.querySelectorAll('.animate-in').forEach(function(el) { animObs.observe(el); });
 
 // ═══ BACK TO TOP ═══
@@ -2651,6 +2669,49 @@ window.addEventListener('load', function() {
   if (typeof renderMathInElement !== 'undefined') {
     renderMathInElement(document.body, { delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError: false });
   }
+});
+
+// ═══ QUIZ RETRY ═══
+function retryQuiz(btn) {
+  var quiz = btn.closest('.quiz');
+  quiz.querySelectorAll('.quiz-opt').forEach(function(o) { o.classList.remove('disabled', 'correct', 'wrong'); });
+  quiz.querySelectorAll('.quiz-explain').forEach(function(e) { e.classList.remove('show'); });
+  btn.classList.remove('show');
+}
+
+// ═══ PRACTICE INPUTS ═══
+var PRACTICE_ALIASES = {
+  completion: ['completion', 'gotocompletion', 'goesnearlytocompletion', 'nearlytocompletion', 'nearcompletion', '完全反应', '接近完全反应', '接近完全']
+};
+function checkPractice(inputId, correct, feedbackId) {
+  var input = document.getElementById(inputId);
+  var fb = document.getElementById(feedbackId);
+  var val = input.value.trim().toLowerCase().replace(/[\s"'“”。.,，]/g, '');
+  var ok;
+  var num = parseFloat(correct);
+  if (!isNaN(num) && String(num) === correct) {
+    var got = parseFloat(val.replace(/^k[cp]?=/, ''));
+    ok = !isNaN(got) && Math.abs(got - num) <= Math.abs(num) * 0.02;
+  } else {
+    ok = (PRACTICE_ALIASES[correct] || [correct]).indexOf(val) !== -1;
+  }
+  fb.classList.remove('correct', 'wrong', 'show');
+  if (ok) {
+    fb.innerHTML = '<span data-lang="en">✓ Correct!</span><span data-lang="zh">✓ 正确！</span>';
+    fb.classList.add('correct', 'show');
+    input.classList.add('is-correct');
+  } else {
+    var zh = correct === 'completion' ? '接近完全反应' : correct;
+    fb.innerHTML = '<span data-lang="en">✗ Not quite. Try again; the answer is ' + correct + '.</span>' +
+                   '<span data-lang="zh">✗ 不对。再试一次；答案是 ' + zh + '。</span>';
+    fb.classList.add('wrong', 'show');
+    input.classList.remove('is-correct');
+  }
+}
+document.querySelectorAll('.practice-row input').forEach(function(inp) {
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { var b = inp.parentNode.querySelector('button'); if (b) b.click(); }
+  });
 });
 
 // ═══ QUIZ KEYBOARD ═══
