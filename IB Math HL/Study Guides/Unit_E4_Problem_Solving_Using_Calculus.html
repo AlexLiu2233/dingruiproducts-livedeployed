@@ -401,6 +401,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -415,6 +505,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -432,7 +523,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <a href="#s-e4-2"><span data-lang="en">E4.2 Kinematics (differentiation)</span><span data-lang="zh">E4.2 运动学（微分）</span></a>
   <a href="#s-e4-3"><span data-lang="en">E4.3 Kinematics (integration)</span><span data-lang="zh">E4.3 运动学（积分）</span></a>
   <a href="#s-e4-4"><span data-lang="en">E4.4 Area between curves</span><span data-lang="zh">E4.4 曲线之间的面积</span></a>
-  <a href="#s-e4-5"><span data-lang="en">E4.5 Volumes of revolution</span><span data-lang="zh">E4.5 旋转体的体积</span></a>
+  <a href="#s-e4-5"><span data-lang="en">E4.5 Volumes of revolution (HL)</span><span data-lang="zh">E4.5 旋转体的体积（HL）</span></a>
   <a href="#s-e4-6"><span data-lang="en">E4.6 Related rates (HL)</span><span data-lang="zh">E4.6 相关变化率（HL）</span></a>
   <a href="#exam-strategy"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></a>
   <a href="#flashcards"><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></a>
@@ -479,12 +570,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="hero-overline">IB Mathematics: Analysis &amp; Approaches HL · 鼎睿学苑</div>
   <h1><span data-lang="en">Unit E4: Problem-Solving<br>Using Calculus</span><span data-lang="zh">单元 E4：微积分的应用</span></h1>
   <p class="hero-sub">
-    <span data-lang="en">The application layer. Where E1, E2, and E3 build the differentiation and integration machinery, E4 deploys it on word problems: optimisation, kinematics, area, volumes of revolution, and related rates. Every section follows the same four-step pattern: read the geometric or physical setup, write the function or relation, differentiate or integrate, and translate the result back into the problem's language.</span><span data-lang="zh">本单元是应用层。E1、E2、E3 搭好了微分与积分的机器，E4 用它们解应用题：最优化、运动学、面积、旋转体体积、相关变化率。每节都遵循同一四步法：读懂几何或物理情境、写出函数或关系式、求导或积分、再把结果翻译回题目语言。</span>
+    <span data-lang="en">The application layer. Where E1, E2, and E3 build the differentiation and integration machinery, E4 deploys it on word problems: optimisation, kinematics<span data-course="sl"> and area</span><span data-course="hl">, area, volumes of revolution, and related rates</span>. Every section follows the same four-step pattern: read the geometric or physical setup, write the function or relation, differentiate or integrate, and translate the result back into the problem's language.</span><span data-lang="zh">本单元是应用层。E1、E2、E3 搭好了微分与积分的机器，E4 用它们解应用题：最优化、运动学<span data-course="sl">与面积</span><span data-course="hl">、面积、旋转体体积与相关变化率</span>。每节都遵循同一四步法：读懂几何或物理情境、写出函数或关系式、求导或积分、再把结果翻译回题目语言。</span>
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon">IB AA HL · Topic 5.4 / 5.8 / 5.9 / 5.11 / 5.13 / 5.16</span>
-    <span class="chip chip-green">Papers 1 · 2 · 3</span>
-    <span class="chip chip-purple"><span data-lang="en">6 Concepts · SL + HL mix</span><span data-lang="zh">6 个核心概念 · SL + HL 混合</span></span>
+    <span class="chip chip-maroon" data-course="hl">IB AA HL · Topic 5.8 / 5.9 / 5.11 / 5.14 / 5.17</span>
+    <span class="chip chip-purple" data-course="hl"><span data-lang="en">6 Concepts · SL + HL mix</span><span data-lang="zh">6 个核心概念 · SL + HL 混合</span></span>
+    <span class="chip chip-maroon" data-course="sl">IB AA SL · Topic 5.8 / 5.9 / 5.11</span>
+    <span class="chip chip-purple" data-course="sl"><span data-lang="en">4 Sections · SL</span><span data-lang="zh">4 个小节 · SL</span></span>
   </div>
 </section>
 
@@ -505,6 +597,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-e4-1">
   <div class="section-label"><span data-lang="en">Topic E4.1 · Optimisation</span><span data-lang="zh">Topic E4.1 · 最优化</span></div>
   <h2><span data-lang="en">Optimisation</span><span data-lang="zh">最优化</span> <span class="ib-ref">SL 5.8</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Identify the quantity to be maximised or minimised and the variable it depends on.</li>
+      <li>Use a constraint equation to write that quantity as a function of one variable, and state its domain.</li>
+      <li>Solve $Q'(x) = 0$ to find the critical points of the function.</li>
+      <li>Justify that a critical point is a maximum or a minimum, using the second derivative test or a sign diagram of $Q'$.</li>
+      <li>Compare with the endpoint values when the domain is a closed interval, and state the answer in context with units.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>识别（<code>identify</code>）要求最大化或最小化的量，以及它所依赖的变量。</li>
+      <li>用约束方程（<code>constraint</code>）把该量写成单变量函数，并写出（<code>state</code>）其定义域。</li>
+      <li>解（<code>solve</code>）$Q'(x) = 0$，求出函数的临界点。</li>
+      <li>用二阶导数检验或 $Q'$ 的符号图，论证（<code>justify</code>）临界点是最大值还是最小值。</li>
+      <li>定义域为闭区间时与端点值比较，并结合情境带单位作答。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Five steps for every optimisation problem.</strong>
@@ -529,8 +639,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     最易漏的一步是写约束方程。两个变量减一个约束等于一个自由度，正是求极值所需。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.1: box from a sheet</span><span data-lang="zh">E4.1 例题：纸板折盒</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.1 (box from a sheet)</span><span data-lang="zh">E4.1 例题（纸板折盒）</span></div>
     <p><span data-lang="en">A rectangular sheet of card measures $24 \text{ cm}$ by $24 \text{ cm}$. Equal squares of side $x$ are cut from each corner and the sides folded up to make an open-top box. Find the value of $x$ that maximises the volume of the box, and state the maximum volume.</span><span data-lang="zh">一张 $24 \text{ cm} \times 24 \text{ cm}$ 的方形纸板，四角各裁掉边长为 $x$ 的小正方形，再把四边折起作成无盖纸盒。求使体积最大的 $x$，并写出最大体积。</span></p>
   </div>
   <div class="worked-solution">
@@ -549,10 +659,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Result.</strong> $V(4) = 4 \cdot 16^{2} = 4 \cdot 256 = 1024 \text{ cm}^{3}$. The maximum volume is $1024 \text{ cm}^{3}$, achieved when $x = 4 \text{ cm}$.</p>
     <p data-lang="zh"><strong>结果。</strong>$V(4) = 4 \cdot 16^{2} = 4 \cdot 256 = 1024 \text{ cm}^{3}$。最大体积为 $1024 \text{ cm}^{3}$，对应 $x = 4 \text{ cm}$。</p>
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: the units and the domain</span><span data-lang="zh">陷阱：单位与定义域</span></strong>
-    <span data-lang="en">Always state the domain of the variable you are optimising over ($0 &lt; x &lt; 12$ in the example) and include units in the final answer. Marks are deducted for "unitless" final answers in applied problems, and for declaring a maximum at a value outside the feasible domain.</span><span data-lang="zh">必须写出优化变量的定义域（例题中是 $0 &lt; x &lt; 12$），最终答案要带单位。应用题中无单位的最终答案要扣分；在可行域之外宣布极值同样扣分。</span>
+    <span data-lang="en">Always state the domain of the variable you are optimising over ($0 &lt; x &lt; 12$ in the example) and include units in the final answer. An applied answer without units, or a maximum declared at a value outside the feasible domain, is an incomplete answer.</span><span data-lang="zh">必须写出优化变量的定义域（例题中是 $0 &lt; x &lt; 12$），最终答案要带单位。应用题的答案不带单位，或在可行域之外宣布极值，都是不完整的答案。</span>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -568,21 +679,45 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.1b: minimise cost/surface area, fixed volume</span><span data-lang="zh">E4.1b 例题：固定体积，最小化表面积/成本</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.1b (minimise cost/surface area, fixed volume)</span><span data-lang="zh">E4.1b 例题（固定体积，最小化表面积/成本）</span></div>
     <p><span data-lang="en">A closed cylindrical can must hold $500\pi\;\text{cm}^3$. Find the radius that minimises the total surface area.</span><span data-lang="zh">一封闭圆柱罐必须容纳 $500\pi\;\text{cm}^3$。求使总表面积最小的半径。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Step 1 — Constraint eliminates one variable.</strong> $V=\pi r^2 h = 500\pi \Rightarrow h = 500/r^2$.</p>
-    <p data-lang="zh"><strong>第 1 步 — 用约束消去一个变量。</strong>$V=\pi r^2 h = 500\pi \Rightarrow h = 500/r^2$。</p>
-    <p data-lang="en"><strong>Step 2 — Write S as a function of r alone.</strong></p>
-    <p data-lang="zh"><strong>第 2 步 — 把 S 写成只含 r 的函数。</strong></p>
+    <p data-lang="en"><strong>Step 1: Constraint eliminates one variable.</strong> $V=\pi r^2 h = 500\pi \Rightarrow h = 500/r^2$.</p>
+    <p data-lang="zh"><strong>第 1 步：用约束消去一个变量。</strong>$V=\pi r^2 h = 500\pi \Rightarrow h = 500/r^2$。</p>
+    <p data-lang="en"><strong>Step 2: Write S as a function of r alone.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：把 S 写成只含 r 的函数。</strong></p>
     $$ S = 2\pi r^2 + 2\pi r h = 2\pi r^2 + 2\pi r \cdot \frac{500}{r^2} = 2\pi r^2 + \frac{1000\pi}{r} $$
-    <p data-lang="en"><strong>Step 3 — Differentiate and solve $S'=0$.</strong></p>
-    <p data-lang="zh"><strong>第 3 步 — 求导并解 $S'=0$。</strong></p>
+    <p data-lang="en"><strong>Step 3: Differentiate and solve $S'=0$.</strong></p>
+    <p data-lang="zh"><strong>第 3 步：求导并解 $S'=0$。</strong></p>
     $$ S' = 4\pi r - \frac{1000\pi}{r^2} = 0 \;\Longrightarrow\; r^3 = 250 \;\Longrightarrow\; r = \sqrt[3]{250} \approx 6.30\;\text{cm} $$
-    <p data-lang="en"><strong>Step 4 — Verify with the second derivative.</strong> $S'' = 4\pi + \tfrac{2000\pi}{r^3} > 0$ always (for $r>0$), so this critical point is a minimum.</p>
-    <p data-lang="zh"><strong>第 4 步 — 用二阶导数验证。</strong>$S'' = 4\pi + \tfrac{2000\pi}{r^3} > 0$ 恒成立（$r>0$ 时），故该临界点为极小值。</p>
+    <p data-lang="en"><strong>Step 4: Verify with the second derivative.</strong> $S'' = 4\pi + \tfrac{2000\pi}{r^3} > 0$ always (for $r>0$), so this critical point is a minimum.</p>
+    <p data-lang="zh"><strong>第 4 步：用二阶导数验证。</strong>$S'' = 4\pi + \tfrac{2000\pi}{r^3} > 0$ 恒成立（$r>0$ 时），故该临界点为极小值。</p>
+    <p data-lang="en"><strong>Result.</strong> Since $r^{3} = 250$, $500 = 2r^{3}$, so $h = \dfrac{500}{r^{2}} = 2r \approx 12.6\;\text{cm}$ and $S = 2\pi r^{2} + 4\pi r^{2} = 6\pi r^{2} \approx 748\;\text{cm}^2$. The can with the least surface area has its height equal to its diameter.</p>
+    <p data-lang="zh"><strong>结果。</strong>由 $r^{3} = 250$ 得 $500 = 2r^{3}$，故 $h = \dfrac{500}{r^{2}} = 2r \approx 12.6\;\text{cm}$，$S = 2\pi r^{2} + 4\pi r^{2} = 6\pi r^{2} \approx 748\;\text{cm}^2$。表面积最小的罐，高等于直径。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the domain next to the function (for example $0 &lt; x &lt; 12$) and justify the nature of the critical point in writing: quote $Q''(x)$ and its sign, or show the sign of $Q'$ on each side. On Paper 1, taken without technology, solve $Q'(x) = 0$ by factorising, as in $(24 - 2x)(24 - 6x) = 0$. On Paper 2, technology is required and a graph of $Q$ can confirm where the maximum is, but the answer still needs the function, its derivative and the optimal value with units. Reject any critical point outside the domain and say why.</p>
+    <p data-lang="zh">把定义域写在函数旁边（例如 $0 &lt; x &lt; 12$），并用文字论证临界点的性质：写出 $Q''(x)$ 及其符号，或写出 $Q'$ 在两侧的符号。Paper 1 不允许使用技术工具，要靠因式分解解 $Q'(x) = 0$，如 $(24 - 2x)(24 - 6x) = 0$。Paper 2 必须使用技术工具，$Q$ 的图像可以确认最大值的位置，但答案仍要写出函数、导数和带单位的最优值。定义域之外的临界点要舍去并说明理由。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A rectangle has perimeter $36$ m. Find the maximum possible area and justify that it is a maximum.</span><span data-lang="zh">1. 一矩形周长为 $36$ m。求最大面积，并论证它是最大值。</span></summary>
+      <div class="sg-a"><p data-lang="en">Let one side be $x$; the other is $18 - x$, with $0 &lt; x &lt; 18$. Then $A = x(18 - x) = 18x - x^{2}$ and $A'(x) = 18 - 2x = 0$ gives $x = 9$. Since $A''(x) = -2 &lt; 0$, this is a maximum. The maximum area is $9 \times 9 = 81\;\text{m}^{2}$ (a square).</p><p data-lang="zh">设一边为 $x$，另一边为 $18 - x$，$0 &lt; x &lt; 18$。则 $A = x(18 - x) = 18x - x^{2}$，$A'(x) = 18 - 2x = 0$ 得 $x = 9$。因 $A''(x) = -2 &lt; 0$，为最大值。最大面积为 $9 \times 9 = 81\;\text{m}^{2}$（正方形）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the minimum value of $f(x) = x + \dfrac{9}{x}$ for $x &gt; 0$.</span><span data-lang="zh">2. 求 $f(x) = x + \dfrac{9}{x}$（$x &gt; 0$）的最小值。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f'(x) = 1 - \dfrac{9}{x^{2}} = 0$ gives $x^{2} = 9$, so $x = 3$ (the root $x = -3$ is outside the domain). $f''(x) = \dfrac{18}{x^{3}}$, and $f''(3) = \dfrac{2}{3} &gt; 0$, so it is a minimum. The minimum value is $f(3) = 3 + 3 = 6$.</p><p data-lang="zh">$f'(x) = 1 - \dfrac{9}{x^{2}} = 0$ 得 $x^{2} = 9$，故 $x = 3$（根 $x = -3$ 不在定义域内）。$f''(x) = \dfrac{18}{x^{3}}$，$f''(3) = \dfrac{2}{3} &gt; 0$，为最小值。最小值为 $f(3) = 3 + 3 = 6$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. An open-top box has a square base of side $x$ cm and a volume of $32\;\text{cm}^{3}$. Find the dimensions that minimise the surface area, and the minimum area.</span><span data-lang="zh">3. 一无盖盒子底面为边长 $x$ cm 的正方形，体积为 $32\;\text{cm}^{3}$。求使表面积最小的尺寸及最小表面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">Constraint: $x^{2} h = 32$, so $h = \dfrac{32}{x^{2}}$. Surface area (base plus four sides): $S = x^{2} + 4xh = x^{2} + \dfrac{128}{x}$, $x &gt; 0$. $S'(x) = 2x - \dfrac{128}{x^{2}} = 0$ gives $x^{3} = 64$, so $x = 4$ cm and $h = \dfrac{32}{16} = 2$ cm. $S''(x) = 2 + \dfrac{256}{x^{3}} &gt; 0$, so this is a minimum. Minimum area: $16 + 32 = 48\;\text{cm}^{2}$.</p><p data-lang="zh">约束：$x^{2} h = 32$，故 $h = \dfrac{32}{x^{2}}$。表面积（底面加四个侧面）：$S = x^{2} + 4xh = x^{2} + \dfrac{128}{x}$，$x &gt; 0$。$S'(x) = 2x - \dfrac{128}{x^{2}} = 0$ 得 $x^{3} = 64$，故 $x = 4$ cm，$h = \dfrac{32}{16} = 2$ cm。$S''(x) = 2 + \dfrac{256}{x^{3}} &gt; 0$，为最小值。最小表面积：$16 + 32 = 48\;\text{cm}^{2}$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -592,6 +727,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-e4-2">
   <div class="section-label"><span data-lang="en">Topic E4.2 · Kinematics (Differentiation)</span><span data-lang="zh">Topic E4.2 · 运动学（微分）</span></div>
   <h2><span data-lang="en">Kinematics by Differentiation</span><span data-lang="zh">运动学：由位置求速度与加速度</span> <span class="ib-ref">SL 5.9</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate velocity $v = \frac{ds}{dt}$ and acceleration $a = \frac{dv}{dt}$ from a displacement function $s(t)$.</li>
+      <li>State the difference between velocity, which is signed, and speed, which is $|v|$.</li>
+      <li>Find when a particle is at rest by solving $v(t) = 0$, and deduce whether it changes direction from the sign of $v$ on each side.</li>
+      <li>Determine whether a particle is speeding up or slowing down by comparing the signs of $v$ and $a$.</li>
+      <li>Interpret the signs of $s$, $v$ and $a$ in context, with units.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>由位移函数 $s(t)$ 计算（<code>calculate</code>）速度 $v = \frac{ds}{dt}$ 与加速度 $a = \frac{dv}{dt}$。</li>
+      <li>说明（<code>state</code>）速度（<code>velocity</code>，带符号）与速率（<code>speed</code>，即 $|v|$）的区别。</li>
+      <li>解 $v(t) = 0$ 求质点静止的时刻，并由两侧 $v$ 的符号推断（<code>deduce</code>）是否变向。</li>
+      <li>比较 $v$ 与 $a$ 的符号，判断（<code>determine</code>）质点在加速还是减速。</li>
+      <li>结合情境解释（<code>interpret</code>）$s$、$v$、$a$ 的符号，并带单位。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The kinematics chain.</strong> For a particle moving along a straight line with position $s(t)$ at time $t$:
@@ -616,8 +769,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ul>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.2: particle on a line</span><span data-lang="zh">E4.2 例题：直线运动质点</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.2 (particle on a line)</span><span data-lang="zh">E4.2 例题（直线运动质点）</span></div>
     <p><span data-lang="en">A particle moves along a straight line with position $s(t) = t^{3} - 6 t^{2} + 9 t + 1$ for $t \ge 0$, where $s$ is in metres and $t$ in seconds. Find the times at which the particle is at rest, and determine whether the particle changes direction at each such time.</span><span data-lang="zh">一质点沿直线运动，位置 $s(t) = t^{3} - 6 t^{2} + 9 t + 1$（$t \ge 0$，$s$ 以米计、$t$ 以秒计）。求质点瞬时静止的时刻，并判断每个时刻是否变向。</span></p>
   </div>
   <div class="worked-solution">
@@ -636,6 +789,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Acceleration.</strong> $a(t) = v'(t) = 6t - 12$, so $a(1) = -6 \text{ m/s}^{2}$ and $a(3) = +6 \text{ m/s}^{2}$ at the two turning points.</p>
     <p data-lang="zh"><strong>加速度。</strong>$a(t) = v'(t) = 6t - 12$，故 $a(1) = -6 \text{ m/s}^{2}$、$a(3) = +6 \text{ m/s}^{2}$。</p>
   </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A particle has velocity $v(t) = t^{2} - 4$ (m/s). Its acceleration at $t = 3$ s is:</span><span data-lang="zh">质点速度 $v(t) = t^{2} - 4$（m/s）。$t = 3$ s 时的加速度为：</span></div><div class="quiz-number">E4.2 · Q1</div></div>
@@ -650,8 +804,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.2b: speeding up or slowing down?</span><span data-lang="zh">E4.2b 例题：加速还是减速？</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.2b (speeding up or slowing down?)</span><span data-lang="zh">E4.2b 例题（加速还是减速？）</span></div>
     <p><span data-lang="en">A particle has $v(t) = t^2 - 5t + 6$. Is the particle speeding up or slowing down at $t=1$?</span><span data-lang="zh">质点 $v(t) = t^2 - 5t + 6$。在 $t=1$ 时质点是在加速还是减速？</span></p>
   </div>
   <div class="worked-solution">
@@ -661,8 +815,30 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>求 v(1)。</strong>$v(1) = 1 - 5 + 6 = 2 > 0$。</p>
     <p data-lang="en"><strong>Evaluate a(1).</strong> $a(t) = v'(t) = 2t-5$, so $a(1) = 2-5 = -3 < 0$.</p>
     <p data-lang="zh"><strong>求 a(1)。</strong>$a(t) = v'(t) = 2t-5$，故 $a(1) = 2-5 = -3 < 0$。</p>
-    <p data-lang="en"><strong>Conclusion.</strong> $v(1)>0$ and $a(1)<0$ — opposite signs, so the particle is <strong>slowing down</strong> at $t=1$ (even though it's still moving forward).</p>
-    <p data-lang="zh"><strong>结论。</strong>$v(1)>0$、$a(1)<0$——符号相反，故质点在 $t=1$ 时正在<strong>减速</strong>（尽管仍在向正方向运动）。</p>
+    <p data-lang="en"><strong>Conclusion.</strong> $v(1)>0$ and $a(1)<0$ have opposite signs, so the particle is <strong>slowing down</strong> at $t=1$ (even though it's still moving forward).</p>
+    <p data-lang="zh"><strong>结论。</strong>$v(1)>0$、$a(1)<0$，符号相反，故质点在 $t=1$ 时正在<strong>减速</strong>（尽管仍在向正方向运动）。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Speed is $|v|$, so "speeding up" is about $|v|$, not about the sign of $a$ alone. Quote both signs before concluding: "$v(1) = 2 &gt; 0$ and $a(1) = -3 &lt; 0$ have opposite signs, so the particle is slowing down." For a change of direction, show the sign of $v$ on each side of the zero; $v(t) = 0$ on its own shows only that the particle is momentarily at rest. Give every velocity in $\text{m/s}$ and every acceleration in $\text{m/s}^{2}$ when the question uses metres and seconds.</p>
+    <p data-lang="zh">速率是 $|v|$，所以"加速"（<code>speeding up</code>）指的是 $|v|$ 变大，不能只看 $a$ 的符号。下结论前写出两者的符号："$v(1) = 2 &gt; 0$ 与 $a(1) = -3 &lt; 0$ 异号，故质点在减速。"判断变向时，要写出 $v$ 在零点两侧的符号；仅有 $v(t) = 0$ 只说明质点瞬时静止。题目以米和秒为单位时，速度写 $\text{m/s}$，加速度写 $\text{m/s}^{2}$。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A particle has displacement $s(t) = t^{3} - 3t^{2}$ m. Find its velocity, speed and acceleration at $t = 1$ s.</span><span data-lang="zh">1. 质点位移 $s(t) = t^{3} - 3t^{2}$ m。求 $t = 1$ s 时的速度、速率与加速度。</span></summary>
+      <div class="sg-a"><p data-lang="en">$v(t) = 3t^{2} - 6t$, so $v(1) = -3\;\text{m/s}$ (moving in the negative direction). Speed $= |v(1)| = 3\;\text{m/s}$. $a(t) = 6t - 6$, so $a(1) = 0\;\text{m/s}^{2}$.</p><p data-lang="zh">$v(t) = 3t^{2} - 6t$，故 $v(1) = -3\;\text{m/s}$（向负方向运动）。速率 $= |v(1)| = 3\;\text{m/s}$。$a(t) = 6t - 6$，故 $a(1) = 0\;\text{m/s}^{2}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A particle has $s(t) = 2t^{3} - 9t^{2} + 12t$ for $t \ge 0$. Find when it is at rest and whether it changes direction each time.</span><span data-lang="zh">2. 质点 $s(t) = 2t^{3} - 9t^{2} + 12t$，$t \ge 0$。求其静止的时刻，并判断每次是否变向。</span></summary>
+      <div class="sg-a"><p data-lang="en">$v(t) = 6t^{2} - 18t + 12 = 6(t - 1)(t - 2)$, so the particle is at rest at $t = 1$ and $t = 2$. The sign of $v$ is $+$ for $0 \le t &lt; 1$, $-$ for $1 &lt; t &lt; 2$ and $+$ for $t &gt; 2$. It changes sign at both times, so the particle changes direction at $t = 1$ and at $t = 2$.</p><p data-lang="zh">$v(t) = 6t^{2} - 18t + 12 = 6(t - 1)(t - 2)$，故质点在 $t = 1$ 与 $t = 2$ 时静止。$v$ 的符号：$0 \le t &lt; 1$ 为 $+$，$1 &lt; t &lt; 2$ 为 $-$，$t &gt; 2$ 为 $+$。两个时刻都变号，故质点在 $t = 1$ 与 $t = 2$ 都变向。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A particle has $v(t) = t^{2} - 6t + 8$ m/s. Is it speeding up or slowing down at $t = 2.5$ s? Give its speed then.</span><span data-lang="zh">3. 质点 $v(t) = t^{2} - 6t + 8$ m/s。$t = 2.5$ s 时它在加速还是减速？求此时的速率。</span></summary>
+      <div class="sg-a"><p data-lang="en">$v(2.5) = 6.25 - 15 + 8 = -0.75\;\text{m/s}$ and $a(t) = 2t - 6$, so $a(2.5) = -1\;\text{m/s}^{2}$. Both are negative, so $v$ and $a$ have the same sign and the particle is speeding up, even though its acceleration is negative. Its speed is $|-0.75| = 0.75\;\text{m/s}$.</p><p data-lang="zh">$v(2.5) = 6.25 - 15 + 8 = -0.75\;\text{m/s}$，$a(t) = 2t - 6$，故 $a(2.5) = -1\;\text{m/s}^{2}$。两者都为负，$v$ 与 $a$ 同号，质点在加速，尽管加速度为负。速率为 $|-0.75| = 0.75\;\text{m/s}$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -672,6 +848,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-e4-3">
   <div class="section-label"><span data-lang="en">Topic E4.3 · Kinematics (Integration)</span><span data-lang="zh">Topic E4.3 · 运动学（积分）</span></div>
   <h2><span data-lang="en">Kinematics by Integration</span><span data-lang="zh">运动学：由速度积分求位置</span> <span class="ib-ref">SL 5.9</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Find $v(t)$ from $a(t)$ and $s(t)$ from $v(t)$ by integration, using an initial condition to fix each constant.</li>
+      <li>Calculate the displacement over $[t_{1}, t_{2}]$ as $\int_{t_{1}}^{t_{2}} v(t)\,dt$.</li>
+      <li>Calculate the total distance travelled as $\int_{t_{1}}^{t_{2}} |v(t)|\,dt$, splitting the integral wherever $v$ changes sign.</li>
+      <li>Explain why displacement and distance differ when the particle changes direction.</li>
+      <li>Interpret a velocity-time graph: area above the axis is motion in the positive direction, area below is motion in the negative direction.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>由 $a(t)$ 积分求 $v(t)$、由 $v(t)$ 积分求 $s(t)$，并用初始条件确定（<code>find</code>）每个常数。</li>
+      <li>计算（<code>calculate</code>）$[t_{1}, t_{2}]$ 上的位移 $\int_{t_{1}}^{t_{2}} v(t)\,dt$。</li>
+      <li>计算总路程 $\int_{t_{1}}^{t_{2}} |v(t)|\,dt$，在 $v$ 变号处分段积分。</li>
+      <li>解释（<code>explain</code>）质点变向时位移与路程为何不同。</li>
+      <li>解读（<code>interpret</code>）速度-时间图：轴上方的面积对应正方向运动，轴下方的面积对应负方向运动。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Run the kinematics chain backwards.</strong>
@@ -696,8 +890,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ul>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.3: displacement vs distance</span><span data-lang="zh">E4.3 例题：位移与路程的区别</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.3 (displacement vs distance)</span><span data-lang="zh">E4.3 例题（位移与路程的区别）</span></div>
     <p><span data-lang="en">A particle has velocity $v(t) = t^{2} - 4 t + 3$ (m/s) for $0 \le t \le 4$. Find (a) the displacement and (b) the total distance travelled over $[0, 4]$.</span><span data-lang="zh">质点速度 $v(t) = t^{2} - 4 t + 3$（m/s），$0 \le t \le 4$。求 (a) $[0, 4]$ 上的位移；(b) 总路程。</span></p>
   </div>
   <div class="worked-solution">
@@ -715,6 +909,59 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Cross-check.</strong> Displacement ($\tfrac{4}{3}$ m) does not equal distance ($4$ m), confirming the particle reversed direction on the way.</p>
     <p data-lang="zh"><strong>互相检验。</strong>位移（$\tfrac{4}{3}$ m）$\ne$ 路程（$4$ m），可知质点中途变向。</p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 460 290" role="img" aria-label="Velocity-time graph of v equals t squared minus 4 t plus 3 for t from 0 to 4. The area above the t-axis from 0 to 1 is 4/3, the area below the axis from 1 to 3 is 4/3, and the area above the axis from 3 to 4 is 4/3. Displacement is 4/3 metres; distance travelled is 4 metres.">
+      <path class="fill1" d="M 60.0 170.0 L 60.0 35.0 L 62.7 40.9 L 65.3 46.8 L 68.0 52.6 L 70.7 58.2 L 73.3 63.8 L 76.0 69.2 L 78.7 74.6 L 81.3 79.8 L 84.0 84.9 L 86.7 90.0 L 89.3 95.0 L 92.0 99.8 L 94.7 104.5 L 97.3 109.2 L 100.0 113.8 L 102.7 118.2 L 105.3 122.5 L 108.0 126.8 L 110.7 130.9 L 113.3 135.0 L 116.0 138.9 L 118.7 142.8 L 121.3 146.6 L 124.0 150.2 L 126.7 153.8 L 129.3 157.2 L 132.0 160.6 L 134.7 163.8 L 137.3 166.9 L 140.0 170.0 Z"/>
+      <path class="fill2" d="M 140.0 170.0 L 145.3 175.8 L 150.7 181.2 L 156.0 186.2 L 161.3 190.8 L 166.7 195.0 L 172.0 198.8 L 177.3 202.2 L 182.7 205.2 L 188.0 207.8 L 193.3 210.0 L 198.7 211.8 L 204.0 213.2 L 209.3 214.2 L 214.7 214.8 L 220.0 215.0 L 225.3 214.8 L 230.7 214.2 L 236.0 213.2 L 241.3 211.8 L 246.7 210.0 L 252.0 207.8 L 257.3 205.2 L 262.7 202.2 L 268.0 198.8 L 273.3 195.0 L 278.7 190.8 L 284.0 186.2 L 289.3 181.2 L 294.7 175.8 L 300.0 170.0 Z"/>
+      <path class="fill1" d="M 300.0 170.0 L 302.7 166.9 L 305.3 163.8 L 308.0 160.5 L 310.7 157.2 L 313.3 153.8 L 316.0 150.2 L 318.7 146.6 L 321.3 142.8 L 324.0 139.0 L 326.7 135.0 L 329.3 130.9 L 332.0 126.8 L 334.7 122.5 L 337.3 118.2 L 340.0 113.8 L 342.7 109.2 L 345.3 104.5 L 348.0 99.8 L 350.7 95.0 L 353.3 90.0 L 356.0 84.9 L 358.7 79.8 L 361.3 74.6 L 364.0 69.2 L 366.7 63.7 L 369.3 58.2 L 372.0 52.6 L 374.7 46.8 L 377.3 40.9 L 380.0 35.0 L 380.0 170.0 Z"/>
+      <line class="ax" x1="60.0" y1="170.0" x2="420.0" y2="170.0"/>
+      <line class="ax" x1="60.0" y1="235.0" x2="60.0" y2="24.0"/>
+      <line class="ax thin" x1="140.0" y1="166.0" x2="140.0" y2="174.0"/>
+      <line class="ax thin" x1="220.0" y1="166.0" x2="220.0" y2="174.0"/>
+      <line class="ax thin" x1="300.0" y1="166.0" x2="300.0" y2="174.0"/>
+      <line class="ax thin" x1="380.0" y1="166.0" x2="380.0" y2="174.0"/>
+      <line class="ax thin" x1="56.0" y1="125.0" x2="64.0" y2="125.0"/>
+      <line class="ax thin" x1="56.0" y1="80.0" x2="64.0" y2="80.0"/>
+      <line class="ax thin" x1="56.0" y1="35.0" x2="64.0" y2="35.0"/>
+      <line class="ax thin" x1="56.0" y1="215.0" x2="64.0" y2="215.0"/>
+      <path class="c1" d="M 60.0 35.0 L 64.0 43.9 L 68.0 52.6 L 72.0 61.0 L 76.0 69.2 L 80.0 77.2 L 84.0 84.9 L 88.0 92.5 L 92.0 99.8 L 96.0 106.9 L 100.0 113.8 L 104.0 120.4 L 108.0 126.8 L 112.0 133.0 L 116.0 138.9 L 120.0 144.7 L 124.0 150.2 L 128.0 155.5 L 132.0 160.6 L 136.0 165.4 L 140.0 170.0 L 144.0 174.4 L 148.0 178.6 L 152.0 182.5 L 156.0 186.2 L 160.0 189.7 L 164.0 192.9 L 168.0 196.0 L 172.0 198.8 L 176.0 201.4 L 180.0 203.8 L 184.0 205.9 L 188.0 207.8 L 192.0 209.5 L 196.0 210.9 L 200.0 212.2 L 204.0 213.2 L 208.0 214.0 L 212.0 214.5 L 216.0 214.9 L 220.0 215.0 L 224.0 214.9 L 228.0 214.6 L 232.0 214.0 L 236.0 213.2 L 240.0 212.2 L 244.0 210.9 L 248.0 209.5 L 252.0 207.8 L 256.0 205.9 L 260.0 203.8 L 264.0 201.4 L 268.0 198.8 L 272.0 196.0 L 276.0 192.9 L 280.0 189.7 L 284.0 186.2 L 288.0 182.5 L 292.0 178.5 L 296.0 174.4 L 300.0 170.0 L 304.0 165.4 L 308.0 160.5 L 312.0 155.5 L 316.0 150.2 L 320.0 144.7 L 324.0 139.0 L 328.0 133.0 L 332.0 126.8 L 336.0 120.4 L 340.0 113.8 L 344.0 106.9 L 348.0 99.8 L 352.0 92.5 L 356.0 84.9 L 360.0 77.2 L 364.0 69.2 L 368.0 61.0 L 372.0 52.6 L 376.0 43.9 L 380.0 35.0"/>
+      <text class="lbl" data-lang="en" x="424.0" y="174.0">t (s)</text>
+      <text class="lbl" data-lang="zh" x="424.0" y="174.0">t（秒）</text>
+      <text class="lbl" data-lang="en" x="66.0" y="20.0">v (m/s)</text>
+      <text class="lbl" data-lang="zh" x="66.0" y="20.0">v（米/秒）</text>
+      <text class="mut" data-lang="en" x="140.0" y="160.0" text-anchor="middle">1</text>
+      <text class="mut" data-lang="zh" x="140.0" y="160.0" text-anchor="middle">1</text>
+      <text class="mut" data-lang="en" x="220.0" y="160.0" text-anchor="middle">2</text>
+      <text class="mut" data-lang="zh" x="220.0" y="160.0" text-anchor="middle">2</text>
+      <text class="mut" data-lang="en" x="300.0" y="186.0" text-anchor="middle">3</text>
+      <text class="mut" data-lang="zh" x="300.0" y="186.0" text-anchor="middle">3</text>
+      <text class="mut" data-lang="en" x="380.0" y="186.0" text-anchor="middle">4</text>
+      <text class="mut" data-lang="zh" x="380.0" y="186.0" text-anchor="middle">4</text>
+      <text class="mut" data-lang="en" x="52.0" y="129.0" text-anchor="end">1</text>
+      <text class="mut" data-lang="zh" x="52.0" y="129.0" text-anchor="end">1</text>
+      <text class="mut" data-lang="en" x="52.0" y="84.0" text-anchor="end">2</text>
+      <text class="mut" data-lang="zh" x="52.0" y="84.0" text-anchor="end">2</text>
+      <text class="mut" data-lang="en" x="52.0" y="39.0" text-anchor="end">3</text>
+      <text class="mut" data-lang="zh" x="52.0" y="39.0" text-anchor="end">3</text>
+      <text class="mut" data-lang="en" x="52.0" y="219.0" text-anchor="end">−1</text>
+      <text class="mut" data-lang="zh" x="52.0" y="219.0" text-anchor="end">−1</text>
+      <text class="lbl" data-lang="en" x="66.0" y="158.0">+4/3</text>
+      <text class="lbl" data-lang="zh" x="66.0" y="158.0">+4/3</text>
+      <text class="lbl" data-lang="en" x="220.0" y="198.0" text-anchor="middle">−4/3</text>
+      <text class="lbl" data-lang="zh" x="220.0" y="198.0" text-anchor="middle">−4/3</text>
+      <text class="lbl" data-lang="en" x="342.0" y="158.0">+4/3</text>
+      <text class="lbl" data-lang="zh" x="342.0" y="158.0">+4/3</text>
+      <text class="c1t" data-lang="en" x="150.0" y="70.0">v = t² − 4t + 3</text>
+      <text class="c1t" data-lang="zh" x="150.0" y="70.0">v = t² − 4t + 3</text>
+      <text class="lbl" data-lang="en" x="60.0" y="258.0">displacement = 4/3 − 4/3 + 4/3 = 4/3 m</text>
+      <text class="lbl" data-lang="zh" x="60.0" y="258.0">位移 = 4/3 − 4/3 + 4/3 = 4/3 m</text>
+      <text class="lbl" data-lang="en" x="60.0" y="280.0">distance = 4/3 + 4/3 + 4/3 = 4 m</text>
+      <text class="lbl" data-lang="zh" x="60.0" y="280.0">路程 = 4/3 + 4/3 + 4/3 = 4 m</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. Velocity-time graph for Worked Example E4.3, $v(t) = t^{2} - 4t + 3$ on $0 \le t \le 4$, drawn to scale. Each shaded region has area $\tfrac{4}{3}$. The integral $\int_{0}^{4} v\,dt$ counts the region below the axis as negative, so the displacement is $\tfrac{4}{3}$ m; the distance travelled counts every region as positive, so it is $4$ m. The particle reverses direction where the graph crosses the axis, at $t = 1$ and $t = 3$.</span><span data-lang="zh">图 1. 例题 E4.3 的速度-时间图，$v(t) = t^{2} - 4t + 3$，$0 \le t \le 4$，按比例绘制。每块阴影面积都是 $\tfrac{4}{3}$。积分 $\int_{0}^{4} v\,dt$ 把轴下方的区域计为负，故位移（<code>displacement</code>）为 $\tfrac{4}{3}$ m；路程（<code>distance travelled</code>）把每块都计为正，为 $4$ m。图像穿过横轴处（$t = 1$ 与 $t = 3$）质点反向。</span></figcaption>
+  </figure>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A particle starts at the origin with velocity $v(t) = 2t + 1$ (m/s). Its position at $t = 3$ s is:</span><span data-lang="zh">质点从原点出发，速度 $v(t) = 2t + 1$（m/s）。$t = 3$ s 时位置为：</span></div><div class="quiz-number">E4.3 · Q1</div></div>
@@ -729,20 +976,42 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.3b: from acceleration to position, IVP</span><span data-lang="zh">E4.3b 例题：由加速度求位置，初值问题</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.3b (from acceleration to position, IVP)</span><span data-lang="zh">E4.3b 例题（由加速度求位置，初值问题）</span></div>
     <p><span data-lang="en">A particle has $a(t) = 6t$, with $v(0) = 2$ and $s(0) = 1$. Find $s(t)$.</span><span data-lang="zh">质点 $a(t) = 6t$，$v(0) = 2$，$s(0) = 1$。求 $s(t)$。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Step 1 — Integrate a(t) to get v(t), using v(0) to find the constant.</strong></p>
-    <p data-lang="zh"><strong>第 1 步 — 积分 a(t) 得 v(t)，用 v(0) 求常数。</strong></p>
+    <p data-lang="en"><strong>Step 1: Integrate a(t) to get v(t), using v(0) to find the constant.</strong></p>
+    <p data-lang="zh"><strong>第 1 步：积分 a(t) 得 v(t)，用 v(0) 求常数。</strong></p>
     $$ v(t) = \int 6t\,dt = 3t^2 + C_1, \quad v(0)=2 \Rightarrow C_1=2 \Rightarrow v(t)=3t^2+2 $$
-    <p data-lang="en"><strong>Step 2 — Integrate v(t) to get s(t), using s(0) to find the constant.</strong></p>
-    <p data-lang="zh"><strong>第 2 步 — 积分 v(t) 得 s(t)，用 s(0) 求常数。</strong></p>
+    <p data-lang="en"><strong>Step 2: Integrate v(t) to get s(t), using s(0) to find the constant.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：积分 v(t) 得 s(t)，用 s(0) 求常数。</strong></p>
     $$ s(t) = \int (3t^2+2)\,dt = t^3+2t+C_2, \quad s(0)=1 \Rightarrow C_2=1 $$
     $$ s(t) = t^3 + 2t + 1 $$
-    <p data-lang="en">Two separate integration constants must each be pinned down by their <em>own</em> initial condition — mixing $v(0)$ into the position constant (or vice versa) is a common slip.</p>
-    <p data-lang="zh">两个积分常数必须分别由<em>各自</em>的初始条件确定——把 $v(0)$ 错用到位置常数上（或反过来）是常见失误。</p>
+    <p data-lang="en">Two separate integration constants must each be pinned down by their <em>own</em> initial condition: mixing $v(0)$ into the position constant (or vice versa) gives the wrong constant.</p>
+    <p data-lang="zh">两个积分常数必须分别由<em>各自</em>的初始条件确定：把 $v(0)$ 错用到位置常数上（或反过来）会得到错误的常数。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Read whether the question asks for displacement, distance travelled or position. Position needs the starting value added: $s(t_{2}) = s(0) + \int_{0}^{t_{2}} v\,dt$. On Paper 1, taken without technology, find the zeros of $v$ and split the integral there, as in Figure 1. On Paper 2, technology is required and can evaluate $\int |v(t)|\,dt$ directly; write the integral you evaluated, with its limits, before the number.</p>
+    <p data-lang="zh">看清题目问的是位移、路程（<code>distance travelled</code>）还是位置。求位置要加上起点值：$s(t_{2}) = s(0) + \int_{0}^{t_{2}} v\,dt$。Paper 1 不允许使用技术工具，要先求 $v$ 的零点并在零点处分段积分，如图 1。Paper 2 必须使用技术工具，可直接计算 $\int |v(t)|\,dt$；在写数值之前，先写出所计算的积分及其上下限。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A particle has $v(t) = 6 - 2t$ m/s for $0 \le t \le 5$. Find its displacement and the total distance travelled.</span><span data-lang="zh">1. 质点 $v(t) = 6 - 2t$ m/s，$0 \le t \le 5$。求位移与总路程。</span></summary>
+      <div class="sg-a"><p data-lang="en">Displacement: $\int_{0}^{5} (6 - 2t)\,dt = [6t - t^{2}]_{0}^{5} = 30 - 25 = 5$ m. For distance, $v = 0$ at $t = 3$: $\int_{0}^{3} (6 - 2t)\,dt = 18 - 9 = 9$ and $\int_{3}^{5} (6 - 2t)\,dt = 5 - 9 = -4$. Distance $= 9 + 4 = 13$ m.</p><p data-lang="zh">位移：$\int_{0}^{5} (6 - 2t)\,dt = [6t - t^{2}]_{0}^{5} = 30 - 25 = 5$ m。求路程：$t = 3$ 时 $v = 0$；$\int_{0}^{3} (6 - 2t)\,dt = 18 - 9 = 9$，$\int_{3}^{5} (6 - 2t)\,dt = 5 - 9 = -4$。路程 $= 9 + 4 = 13$ m。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A particle has $a(t) = 2t - 4$ m/s², $v(0) = 3$ m/s and $s(0) = 0$. Find $s(t)$ and $s(3)$, and interpret $s(3)$.</span><span data-lang="zh">2. 质点 $a(t) = 2t - 4$ m/s²，$v(0) = 3$ m/s，$s(0) = 0$。求 $s(t)$ 与 $s(3)$，并解释 $s(3)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$v(t) = t^{2} - 4t + C_{1}$ with $v(0) = 3$, so $v(t) = t^{2} - 4t + 3$. Then $s(t) = \tfrac{t^{3}}{3} - 2t^{2} + 3t + C_{2}$ with $s(0) = 0$, so $C_{2} = 0$. $s(3) = 9 - 18 + 9 = 0$: after $3$ s the particle is back at its starting point, although it has travelled $\tfrac{4}{3} + \tfrac{4}{3} = \tfrac{8}{3}$ m (this is the velocity of Worked Example E4.3).</p><p data-lang="zh">$v(t) = t^{2} - 4t + C_{1}$，由 $v(0) = 3$ 得 $v(t) = t^{2} - 4t + 3$。于是 $s(t) = \tfrac{t^{3}}{3} - 2t^{2} + 3t + C_{2}$，由 $s(0) = 0$ 得 $C_{2} = 0$。$s(3) = 9 - 18 + 9 = 0$：$3$ s 后质点回到出发点，但已走过 $\tfrac{4}{3} + \tfrac{4}{3} = \tfrac{8}{3}$ m（这正是例题 E4.3 的速度函数）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A particle's displacement over $[0, 6]$ is $0$. Must the distance travelled be $0$? Explain.</span><span data-lang="zh">3. 质点在 $[0, 6]$ 上的位移为 $0$。路程一定为 $0$ 吗？说明理由。</span></summary>
+      <div class="sg-a"><p data-lang="en">No. Displacement $\int_{0}^{6} v\,dt = 0$ means the areas above and below the $t$-axis cancel: the particle went out and came back. Distance is $\int_{0}^{6} |v|\,dt$, which counts both parts as positive, so it is $0$ only if $v = 0$ for the whole interval.</p><p data-lang="zh">不一定。位移 $\int_{0}^{6} v\,dt = 0$ 表示 $t$ 轴上方与下方的面积相互抵消：质点出去又回来。路程是 $\int_{0}^{6} |v|\,dt$，两部分都计为正，只有整个区间内 $v = 0$ 时路程才为 $0$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -753,16 +1022,36 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Topic E4.4 · Area Between Curves</span><span data-lang="zh">Topic E4.4 · 曲线之间的面积</span></div>
   <h2><span data-lang="en">Area Between Curves</span><span data-lang="zh">曲线之间的面积</span> <span class="ib-ref">SL 5.11</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Find the intersection points of two curves by solving $f(x) = g(x)$, and use them as limits.</li>
+      <li>Decide which curve is on top on each interval by testing one point inside it.</li>
+      <li>Calculate the area between two curves as $\int_{a}^{b} [f(x) - g(x)]\,dx$ where $f(x) \ge g(x)$ on $[a, b]$.</li>
+      <li>Split the integral at every crossing point and add the separate areas.</li>
+      <li>Explain why a signed integral of $0$ does not mean the enclosed area is $0$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>解 $f(x) = g(x)$ 求（<code>find</code>）两曲线交点，并以之为积分限。</li>
+      <li>在每个区间内取一点检验，判断（<code>decide</code>）哪条曲线在上方。</li>
+      <li>当 $[a, b]$ 上 $f(x) \ge g(x)$ 时，计算（<code>calculate</code>）两曲线之间的面积 $\int_{a}^{b} [f(x) - g(x)]\,dx$。</li>
+      <li>在每个交点处分段积分，再把各部分面积相加。</li>
+      <li>解释（<code>explain</code>）带符号积分为 $0$ 为何不代表所围面积为 $0$。</li>
+    </ul>
+  </div>
+
   <div class="cram-cheat" data-lang="en">
     <strong>Area between $y = f(x)$ and $y = g(x)$ over $[a, b]$</strong> where $f(x) \ge g(x)$ throughout:
     $$ A \;=\; \int_{a}^{b} \bigl[ f(x) - g(x) \bigr] \, dx. $$
     "Upper minus lower." The integrand is always non-negative under that assumption, so the result equals geometric area.
     <br><br>
     <strong>If the two curves cross,</strong> find the crossing points (solve $f(x) = g(x)$) and split the integral. On each piece, identify which curve is on top and integrate "upper minus lower" for that piece. Sum (or sum the absolute values) to get total geometric area.
-    <br><br>
+    <div data-course="hl">
+    <br>
     <strong>Integration with respect to $y$</strong> (HL preview, used in E4.5 for volumes around the $y$-axis):
     $$ A \;=\; \int_{c}^{d} \bigl[ x_{\text{right}}(y) - x_{\text{left}}(y) \bigr] \, dy. $$
     Useful when the curves are easier to write as $x = $ function of $y$, or when the region is bounded by horizontal lines.
+    </div>
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>区间 $[a, b]$ 上 $y = f(x)$ 与 $y = g(x)$ 之间的面积</strong>（且 $f(x) \ge g(x)$ 全程成立）：
@@ -770,14 +1059,16 @@ body.lang-zh       [data-lang="en"] { display: none; }
     口诀："上减下"。被积函数非负，结果等于几何面积。
     <br><br>
     <strong>若两曲线相交，</strong>先求交点（解 $f(x) = g(x)$），再分段积分。每段判断哪条在上，逐段"上减下"。各段相加（或取绝对值再加）得总几何面积。
-    <br><br>
+    <div data-course="hl">
+    <br>
     <strong>对 $y$ 积分</strong>（HL 预习，E4.5 绕 $y$ 轴体积要用）：
     $$ A \;=\; \int_{c}^{d} \bigl[ x_{\text{right}}(y) - x_{\text{left}}(y) \bigr] \, dy. $$
     适用于曲线写为 $x = $（$y$ 的函数）更方便、或区域被水平直线界定时。
+    </div>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.4: parabola and line</span><span data-lang="zh">E4.4 例题：抛物线与直线</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.4 (parabola and line)</span><span data-lang="zh">E4.4 例题（抛物线与直线）</span></div>
     <p><span data-lang="en">Find the area enclosed between $y = x^{2}$ and $y = 2x$.</span><span data-lang="zh">求 $y = x^{2}$ 与 $y = 2x$ 所围成的面积。</span></p>
   </div>
   <div class="worked-solution">
@@ -789,6 +1080,59 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>"上减下"积分。</strong></p>
     $$ A \;=\; \int_{0}^{2} (2x - x^{2}) \, dx \;=\; \Bigl[ x^{2} - \tfrac{x^{3}}{3} \Bigr]_{0}^{2} \;=\; 4 - \tfrac{8}{3} \;=\; \tfrac{4}{3}. $$
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 400 340" role="img" aria-label="The parabola y equals x squared and the line y equals 2x, drawn to scale, meeting at the origin and at (2, 4). The region between them from x equals 0 to x equals 2 is shaded, with a thin vertical strip at x equals 1 whose height is 2x minus x squared.">
+      <path class="fill1" d="M 100.0 300.0 L 220.0 60.0 L 217.0 71.9 L 214.0 83.4 L 211.0 94.6 L 208.0 105.6 L 205.0 116.2 L 202.0 126.6 L 199.0 136.7 L 196.0 146.4 L 193.0 155.8 L 190.0 165.0 L 187.0 173.8 L 184.0 182.4 L 181.0 190.6 L 178.0 198.6 L 175.0 206.2 L 172.0 213.6 L 169.0 220.7 L 166.0 227.4 L 163.0 233.8 L 160.0 240.0 L 157.0 245.8 L 154.0 251.4 L 151.0 256.6 L 148.0 261.6 L 145.0 266.2 L 142.0 270.6 L 139.0 274.6 L 136.0 278.4 L 133.0 281.9 L 130.0 285.0 L 127.0 287.9 L 124.0 290.4 L 121.0 292.6 L 118.0 294.6 L 115.0 296.2 L 112.0 297.6 L 109.0 298.6 L 106.0 299.4 L 103.0 299.9 L 100.0 300.0 Z"/>
+      <rect class="fill3" x="157.0" y="180.0" width="6.0" height="60.0"/>
+      <line class="ax" x1="30.0" y1="300.0" x2="300.0" y2="300.0"/>
+      <line class="ax" x1="100.0" y1="330.0" x2="100.0" y2="15.0"/>
+      <line class="ax thin" x1="160.0" y1="296.0" x2="160.0" y2="304.0"/>
+      <line class="ax thin" x1="220.0" y1="296.0" x2="220.0" y2="304.0"/>
+      <line class="ax thin" x1="96.0" y1="240.0" x2="104.0" y2="240.0"/>
+      <line class="ax thin" x1="96.0" y1="180.0" x2="104.0" y2="180.0"/>
+      <line class="ax thin" x1="96.0" y1="120.0" x2="104.0" y2="120.0"/>
+      <line class="ax thin" x1="96.0" y1="60.0" x2="104.0" y2="60.0"/>
+      <line class="ax dash thin" x1="220.0" y1="60.0" x2="220.0" y2="300.0"/>
+      <path class="c1" d="M 70.0 285.0 L 73.0 287.9 L 76.0 290.4 L 79.0 292.6 L 82.0 294.6 L 85.0 296.2 L 88.0 297.6 L 91.0 298.6 L 94.0 299.4 L 97.0 299.9 L 100.0 300.0 L 103.0 299.9 L 106.0 299.4 L 109.0 298.6 L 112.0 297.6 L 115.0 296.2 L 118.0 294.6 L 121.0 292.6 L 124.0 290.4 L 127.0 287.9 L 130.0 285.0 L 133.0 281.9 L 136.0 278.4 L 139.0 274.6 L 142.0 270.6 L 145.0 266.2 L 148.0 261.6 L 151.0 256.6 L 154.0 251.4 L 157.0 245.8 L 160.0 240.0 L 163.0 233.8 L 166.0 227.4 L 169.0 220.7 L 172.0 213.6 L 175.0 206.2 L 178.0 198.6 L 181.0 190.6 L 184.0 182.4 L 187.0 173.8 L 190.0 165.0 L 193.0 155.8 L 196.0 146.4 L 199.0 136.6 L 202.0 126.6 L 205.0 116.2 L 208.0 105.6 L 211.0 94.6 L 214.0 83.4 L 217.0 71.8 L 220.0 60.0 L 223.0 47.9 L 226.0 35.4 L 229.0 22.6"/>
+      <line class="c2" x1="85.0" y1="330.0" x2="238.0" y2="24.0"/>
+      <circle class="dot" cx="100.0" cy="300.0" r="3.5"/>
+      <circle class="dot" cx="220.0" cy="60.0" r="3.5"/>
+      <line class="ax thin" x1="166.0" y1="212.0" x2="232.0" y2="218.0"/>
+      <text class="lbl" data-lang="en" x="304.0" y="304.0">x</text>
+      <text class="lbl" data-lang="zh" x="304.0" y="304.0">x</text>
+      <text class="lbl" data-lang="en" x="106.0" y="18.0">y</text>
+      <text class="lbl" data-lang="zh" x="106.0" y="18.0">y</text>
+      <text class="mut" data-lang="en" x="112.0" y="316.0">O</text>
+      <text class="mut" data-lang="zh" x="112.0" y="316.0">O</text>
+      <text class="mut" data-lang="en" x="160.0" y="318.0" text-anchor="middle">1</text>
+      <text class="mut" data-lang="zh" x="160.0" y="318.0" text-anchor="middle">1</text>
+      <text class="mut" data-lang="en" x="92.0" y="244.0" text-anchor="end">1</text>
+      <text class="mut" data-lang="zh" x="92.0" y="244.0" text-anchor="end">1</text>
+      <text class="mut" data-lang="en" x="92.0" y="184.0" text-anchor="end">2</text>
+      <text class="mut" data-lang="zh" x="92.0" y="184.0" text-anchor="end">2</text>
+      <text class="mut" data-lang="en" x="92.0" y="124.0" text-anchor="end">3</text>
+      <text class="mut" data-lang="zh" x="92.0" y="124.0" text-anchor="end">3</text>
+      <text class="mut" data-lang="en" x="92.0" y="64.0" text-anchor="end">4</text>
+      <text class="mut" data-lang="zh" x="92.0" y="64.0" text-anchor="end">4</text>
+      <text class="lbl" data-lang="en" x="220.0" y="318.0" text-anchor="middle">b = 2</text>
+      <text class="lbl" data-lang="zh" x="220.0" y="318.0" text-anchor="middle">b = 2</text>
+      <text class="lbl" data-lang="en" x="106.0" y="334.0">a = 0</text>
+      <text class="lbl" data-lang="zh" x="106.0" y="334.0">a = 0</text>
+      <text class="lbl" data-lang="en" x="228.0" y="64.0">(2, 4)</text>
+      <text class="lbl" data-lang="zh" x="228.0" y="64.0">(2, 4)</text>
+      <text class="c2t" data-lang="en" x="198.0" y="86.0" text-anchor="end">y = 2x (upper)</text>
+      <text class="c2t" data-lang="zh" x="198.0" y="86.0" text-anchor="end">y = 2x（上方）</text>
+      <text class="c1t" data-lang="en" x="236.0" y="150.0">y = x² (lower)</text>
+      <text class="c1t" data-lang="zh" x="236.0" y="150.0">y = x²（下方）</text>
+      <text class="lbl" data-lang="en" x="236.0" y="214.0">strip height</text>
+      <text class="lbl" data-lang="zh" x="236.0" y="214.0">窄条高度</text>
+      <text class="lbl" data-lang="en" x="236.0" y="232.0">= 2x − x²</text>
+      <text class="lbl" data-lang="zh" x="236.0" y="232.0">= 2x − x²</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. The region between $y = 2x$ and $y = x^{2}$ from Worked Example E4.4, drawn to scale (same unit on both axes). The curves meet at $x = 0$ and $x = 2$, which become the limits $a$ and $b$. A thin vertical strip at any $x$ in between has height upper minus lower, $2x - x^{2}$, so the area is $\int_{0}^{2} (2x - x^{2})\,dx = \tfrac{4}{3}$.</span><span data-lang="zh">图 2. 例题 E4.4 中 $y = 2x$ 与 $y = x^{2}$ 之间的区域，按比例绘制（两轴单位相同）。两曲线交于 $x = 0$ 与 $x = 2$，即积分限 $a$ 与 $b$。其间任一 $x$ 处的竖直窄条高为"上减下" $2x - x^{2}$，故面积为 $\int_{0}^{2} (2x - x^{2})\,dx = \tfrac{4}{3}$。</span></figcaption>
+  </figure>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Area enclosed between $y = \sin x$ and $y = 0$ on $[0, \pi]$:</span><span data-lang="zh">$[0, \pi]$ 上 $y = \sin x$ 与 $y = 0$ 所围面积：</span></div><div class="quiz-number">E4.4 · Q1</div></div>
@@ -803,55 +1147,99 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.4b: curves that cross, so split the integral</span><span data-lang="zh">E4.4b 例题：曲线相交，需分段积分</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.4b (curves that cross — split the integral)</span><span data-lang="zh">E4.4b 例题（曲线相交——需分段积分）</span></div>
     <p><span data-lang="en">Find the total area enclosed between $y = x^3$ and $y = x$ on $[-1, 1]$.</span><span data-lang="zh">求 $y = x^3$ 与 $y = x$ 在 $[-1, 1]$ 上所围的总面积。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Step 1 — Find all intersection points.</strong> $x^3=x \Rightarrow x^3-x=0 \Rightarrow x(x-1)(x+1)=0 \Rightarrow x=-1,0,1$.</p>
-    <p data-lang="zh"><strong>第 1 步 — 求所有交点。</strong>$x^3=x \Rightarrow x(x-1)(x+1)=0 \Rightarrow x=-1,0,1$。</p>
-    <p data-lang="en"><strong>Step 2 — Check which curve is on top on each sub-interval.</strong> At $x=-0.5$: $x=-0.5$ and $x^3=-0.125$, so $x < x^3$ on $[-1,0]$ (the cubic is on top there). At $x=0.5$: $x^3=0.125$ and $x=0.5$, so $x^3 < x$ on $[0,1]$ (the line is on top there). The two curves swap which one is "upper" at $x=0$ — this is exactly why the integral must be split there.</p>
-    <p data-lang="zh"><strong>第 2 步 — 检查每个子区间哪条曲线在上。</strong>$x=-0.5$ 时：$x=-0.5$，$x^3=-0.125$，故 $[-1,0]$ 上 $x < x^3$（此区间三次曲线在上）。$x=0.5$ 时：$x^3=0.125$，$x=0.5$，故 $[0,1]$ 上 $x^3 < x$（此区间直线在上）。两曲线在 $x=0$ 处互换"上下"关系——这正是必须在此分段的原因。</p>
-    <p data-lang="en"><strong>Step 3 — Integrate "upper $-$ lower" separately on each piece.</strong></p>
-    <p data-lang="zh"><strong>第 3 步 — 在每一段分别按"上减下"积分。</strong></p>
+    <p data-lang="en"><strong>Step 1: Find all intersection points.</strong> $x^3=x \Rightarrow x^3-x=0 \Rightarrow x(x-1)(x+1)=0 \Rightarrow x=-1,0,1$.</p>
+    <p data-lang="zh"><strong>第 1 步：求所有交点。</strong>$x^3=x \Rightarrow x^3-x=0 \Rightarrow x(x-1)(x+1)=0 \Rightarrow x=-1,0,1$。</p>
+    <p data-lang="en"><strong>Step 2: Check which curve is on top on each sub-interval.</strong> At $x=-0.5$: $x=-0.5$ and $x^3=-0.125$, so $x < x^3$ on $[-1,0]$ (the cubic is on top there). At $x=0.5$: $x^3=0.125$ and $x=0.5$, so $x^3 < x$ on $[0,1]$ (the line is on top there). The two curves swap which one is "upper" at $x=0$, which is exactly why the integral must be split there.</p>
+    <p data-lang="zh"><strong>第 2 步：检查每个子区间哪条曲线在上。</strong>$x=-0.5$ 时：$x=-0.5$，$x^3=-0.125$，故 $[-1,0]$ 上 $x < x^3$（此区间三次曲线在上）。$x=0.5$ 时：$x^3=0.125$，$x=0.5$，故 $[0,1]$ 上 $x^3 < x$（此区间直线在上）。两曲线在 $x=0$ 处互换"上下"关系，这正是必须在此分段的原因。</p>
+    <p data-lang="en"><strong>Step 3: Integrate "upper minus lower" separately on each piece.</strong></p>
+    <p data-lang="zh"><strong>第 3 步：在每一段分别按"上减下"积分。</strong></p>
     $$ \int_{-1}^{0}(x^3-x)\,dx = \left[\frac{x^4}{4}-\frac{x^2}{2}\right]_{-1}^{0} = 0 - \left(\frac14-\frac12\right) = \frac14 $$
     $$ \int_{0}^{1}(x-x^3)\,dx = \left[\frac{x^2}{2}-\frac{x^4}{4}\right]_{0}^{1} = \left(\frac12-\frac14\right) - 0 = \frac14 $$
-    <p data-lang="en"><strong>Step 4 — Sum the two pieces.</strong></p>
-    <p data-lang="zh"><strong>第 4 步 — 两段相加。</strong></p>
+    <p data-lang="en"><strong>Step 4: Sum the two pieces.</strong></p>
+    <p data-lang="zh"><strong>第 4 步：两段相加。</strong></p>
     $$ A = \frac14 + \frac14 = \frac12 $$
-    <p data-lang="en">Had you (incorrectly) integrated $(x - x^3)$ across the whole interval $[-1,1]$ without splitting, the two halves would cancel to give $0$ — a tell-tale sign that a split was needed but skipped, since a geometric area can never be zero.</p>
-    <p data-lang="zh">若（错误地）不分段、直接对整个 $[-1,1]$ 积分 $(x - x^3)$，两半会相互抵消得到 $0$——这正是"该分段却漏分段"的警示信号，因为几何面积永远不可能为零。</p>
+    <p data-lang="en">Had you (incorrectly) integrated $(x - x^3)$ across the whole interval $[-1,1]$ without splitting, the two halves would cancel to give $0$: a tell-tale sign that a split was needed but skipped, since a geometric area can never be zero.</p>
+    <p data-lang="zh">若（错误地）不分段、直接对整个 $[-1,1]$ 积分 $(x - x^3)$，两半会相互抵消得到 $0$：这正是"该分段却漏分段"的警示信号，因为几何面积永远不可能为零。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Sketch both curves first and mark the intersection points as the limits, as in Figure 2. Write the integral as upper minus lower before integrating. An area is positive, so a negative result means the order was reversed, and a total of $0$ for two curves that clearly enclose a region means a crossing point was missed. On Paper 1, taken without technology, find the intersections algebraically and leave the area exact. On Paper 2, technology is required: find the intersections with it and keep them unrounded in the later working.</p>
+    <p data-lang="zh">先画出两条曲线，把交点标为积分限，如图 2。积分之前写成"上减下"。面积是正的，所以结果为负说明上下颠倒了；两条明显围成区域的曲线算出总面积为 $0$，说明漏了一个交点。Paper 1 不允许使用技术工具，要用代数求交点，面积保留精确值。Paper 2 必须使用技术工具：用它求交点，并在后续计算中保留未经四舍五入的值。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the area enclosed between $y = 4 - x^{2}$ and the $x$-axis.</span><span data-lang="zh">1. 求 $y = 4 - x^{2}$ 与 $x$ 轴所围的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">The curve meets the $x$-axis where $4 - x^{2} = 0$, at $x = \pm 2$, and lies above it between them. $A = \int_{-2}^{2} (4 - x^{2})\,dx = \Bigl[4x - \tfrac{x^{3}}{3}\Bigr]_{-2}^{2} = \bigl(8 - \tfrac{8}{3}\bigr) - \bigl(-8 + \tfrac{8}{3}\bigr) = \tfrac{32}{3}$.</p><p data-lang="zh">曲线与 $x$ 轴交于 $4 - x^{2} = 0$，即 $x = \pm 2$，其间曲线在轴上方。$A = \int_{-2}^{2} (4 - x^{2})\,dx = \Bigl[4x - \tfrac{x^{3}}{3}\Bigr]_{-2}^{2} = \bigl(8 - \tfrac{8}{3}\bigr) - \bigl(-8 + \tfrac{8}{3}\bigr) = \tfrac{32}{3}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the area enclosed between $y = x^{2}$ and $y = x + 2$.</span><span data-lang="zh">2. 求 $y = x^{2}$ 与 $y = x + 2$ 所围的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">Intersections: $x^{2} = x + 2 \Rightarrow (x - 2)(x + 1) = 0$, so $x = -1$ and $x = 2$. At $x = 0$ the line gives $2$ and the parabola $0$, so the line is on top. $A = \int_{-1}^{2} (x + 2 - x^{2})\,dx = \Bigl[\tfrac{x^{2}}{2} + 2x - \tfrac{x^{3}}{3}\Bigr]_{-1}^{2} = \tfrac{10}{3} - \bigl(-\tfrac{7}{6}\bigr) = \tfrac{27}{6} = \tfrac{9}{2}$.</p><p data-lang="zh">交点：$x^{2} = x + 2 \Rightarrow (x - 2)(x + 1) = 0$，故 $x = -1$ 与 $x = 2$。$x = 0$ 时直线为 $2$、抛物线为 $0$，故直线在上方。$A = \int_{-1}^{2} (x + 2 - x^{2})\,dx = \Bigl[\tfrac{x^{2}}{2} + 2x - \tfrac{x^{3}}{3}\Bigr]_{-1}^{2} = \tfrac{10}{3} - \bigl(-\tfrac{7}{6}\bigr) = \tfrac{27}{6} = \tfrac{9}{2}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. $\int_{0}^{2\pi} \sin x\,dx = 0$. Find the area between $y = \sin x$ and the $x$-axis on $[0, 2\pi]$.</span><span data-lang="zh">3. $\int_{0}^{2\pi} \sin x\,dx = 0$。求 $[0, 2\pi]$ 上 $y = \sin x$ 与 $x$ 轴之间的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">The curve crosses the $x$-axis at $x = \pi$. $\int_{0}^{\pi} \sin x\,dx = 2$ and $\int_{\pi}^{2\pi} \sin x\,dx = -2$; the signed integral cancels to $0$. The area is $2 + |-2| = 4$.</p><p data-lang="zh">曲线在 $x = \pi$ 处穿过 $x$ 轴。$\int_{0}^{\pi} \sin x\,dx = 2$，$\int_{\pi}^{2\pi} \sin x\,dx = -2$，带符号积分相互抵消为 $0$。面积为 $2 + |-2| = 4$。</p></div>
+    </details>
   </div>
 </section>
 
 <hr class="sep">
 
 <!-- E4.5 VOLUMES OF REVOLUTION -->
-<section class="section" id="s-e4-5">
+<section class="section" id="s-e4-5" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E4.5 · Volumes of Revolution</span><span data-lang="zh">Topic E4.5 · 旋转体的体积</span></div>
-  <h2><span data-lang="en">Volumes of Revolution</span><span data-lang="zh">旋转体的体积</span> <span class="ib-ref">SL 5.11 · AHL 5.16</span></h2>
+  <h2><span data-lang="en">Volumes of Revolution</span><span data-lang="zh">旋转体的体积</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.17</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate the volume of the solid formed when the region under $y = f(x)$ from $x = a$ to $x = b$ is rotated $360^{\circ}$ about the $x$-axis, using $V = \pi\int_{a}^{b} y^{2}\,dx$.</li>
+      <li>Explain the formula as the sum of thin disks, each of volume about $\pi y^{2}\,\delta x$.</li>
+      <li>Calculate the volume formed by rotating the region between two curves about the $x$-axis, squaring each radius separately.</li>
+      <li>Check a volume against a known solid (cone, sphere or cylinder) where one applies.</li>
+      <li data-course="hl">(HL) Calculate the volume of rotation about the y-axis with $V = \pi\int_{c}^{d} x^{2}\,dy$, after rearranging the equation to give x in terms of y.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>区域 $y = f(x)$（$x = a$ 到 $x = b$）绕 $x$ 轴旋转 $360^{\circ}$ 时，用 $V = \pi\int_{a}^{b} y^{2}\,dx$ 计算（<code>calculate</code>）立体体积。</li>
+      <li>把公式解释（<code>explain</code>）为许多薄圆盘之和，每片体积约为 $\pi y^{2}\,\delta x$。</li>
+      <li>计算两曲线之间区域绕 $x$ 轴旋转的体积，两个半径分别平方。</li>
+      <li>适用时，用已知立体（圆锥、球、圆柱）核对（<code>check</code>）体积。</li>
+      <li data-course="hl">（HL）先整理方程，把 x 写成 y 的函数，再用 $V = \pi\int_{c}^{d} x^{2}\,dy$ 计算绕 y 轴旋转的体积。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
-    <strong>Rotation about the $x$-axis (SL).</strong> The region under $y = f(x)$ between $x = a$ and $x = b$, rotated $360^{\circ}$ about the $x$-axis, generates a solid of volume
+    <strong>Rotation about the $x$-axis.</strong> The region under $y = f(x)$ between $x = a$ and $x = b$, rotated $360^{\circ}$ about the $x$-axis, generates a solid of volume
     $$ V \;=\; \pi \int_{a}^{b} \bigl[ f(x) \bigr]^{2} \, dx \;=\; \pi \int_{a}^{b} y^{2} \, dx. $$
+    <div data-course="hl">
     <strong>Rotation about the $y$-axis (HL).</strong> The region between $y = f(x)$ and the $y$-axis between $y = c$ and $y = d$, rotated about the $y$-axis, has volume
     $$ V \;=\; \pi \int_{c}^{d} \bigl[ g(y) \bigr]^{2} \, dy \;=\; \pi \int_{c}^{d} x^{2} \, dy, $$
     where $x = g(y)$ is $y = f(x)$ solved for $x$.
-    <br><br>
+    </div>
+    <br>
     <strong>Geometric origin (the "disk method").</strong> Slice the solid into thin disks of thickness $dx$ (or $dy$), each disk approximately a cylinder of radius $y$ (or $x$). Volume of one disk $\approx \pi y^{2} \, dx$. Summing over all disks and taking the limit gives the integral.
   </div>
   <div class="cram-cheat" data-lang="zh">
-    <strong>绕 $x$ 轴旋转（SL）。</strong>$y = f(x)$ 下方、$x = a$ 到 $x = b$ 之间的区域绕 $x$ 轴旋转 $360^{\circ}$，生成立体的体积
+    <strong>绕 $x$ 轴旋转。</strong>$y = f(x)$ 下方、$x = a$ 到 $x = b$ 之间的区域绕 $x$ 轴旋转 $360^{\circ}$，生成立体的体积
     $$ V \;=\; \pi \int_{a}^{b} \bigl[ f(x) \bigr]^{2} \, dx \;=\; \pi \int_{a}^{b} y^{2} \, dx. $$
+    <div data-course="hl">
     <strong>绕 $y$ 轴旋转（HL）。</strong>$y = f(x)$ 与 $y$ 轴之间、$y = c$ 到 $y = d$ 之间的区域绕 $y$ 轴旋转，体积为
     $$ V \;=\; \pi \int_{c}^{d} \bigl[ g(y) \bigr]^{2} \, dy \;=\; \pi \int_{c}^{d} x^{2} \, dy, $$
     其中 $x = g(y)$ 是 $y = f(x)$ 对 $x$ 解出的形式。
-    <br><br>
+    </div>
+    <br>
     <strong>几何来源（"圆盘法"）。</strong>把立体切成厚度 $dx$（或 $dy$）的薄圆盘，每片近似为半径 $y$（或 $x$）的圆柱。单片体积 $\approx \pi y^{2} \, dx$。求和取极限即得积分。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.5a: $x$-axis rotation</span><span data-lang="zh">E4.5a 例题：绕 $x$ 轴</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.5a ($x$-axis rotation)</span><span data-lang="zh">E4.5a 例题（绕 $x$ 轴）</span></div>
     <p><span data-lang="en">The region bounded by $y = \sqrt{x}$, the $x$-axis, and the lines $x = 0$ and $x = 4$ is rotated $360^{\circ}$ about the $x$-axis. Find the volume of the resulting solid.</span><span data-lang="zh">由 $y = \sqrt{x}$、$x$ 轴及 $x = 0$、$x = 4$ 围成的区域绕 $x$ 轴旋转 $360^{\circ}$，求所得立体的体积。</span></p>
   </div>
   <div class="worked-solution">
@@ -861,9 +1249,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en">The volume is $8 \pi$ cubic units.</p>
     <p data-lang="zh">体积为 $8 \pi$ 立方单位。</p>
   </div>
+  </details>
 
+  <details class="sg-we" open data-course="hl"><summary><span data-lang="en">Worked Example E4.5b: $y$-axis rotation <span class="hl-flag">HL</span></span><span data-lang="zh">E4.5b 例题：绕 $y$ 轴<span class="hl-flag">HL</span></span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.5b ($y$-axis rotation) <span class="hl-flag">HL</span></span><span data-lang="zh">E4.5b 例题（绕 $y$ 轴）<span class="hl-flag">HL</span></span></div>
     <p><span data-lang="en">The region bounded by $y = x^{2}$, the $y$-axis, and the line $y = 4$ is rotated $360^{\circ}$ about the $y$-axis. Find the volume.</span><span data-lang="zh">由 $y = x^{2}$、$y$ 轴及 $y = 4$ 围成的区域绕 $y$ 轴旋转 $360^{\circ}$。求体积。</span></p>
   </div>
   <div class="worked-solution">
@@ -877,6 +1266,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en">The volume is $8 \pi$ cubic units. Note that this happens to equal the $x$-axis volume in E4.5a; this coincidence is not general.</p>
     <p data-lang="zh">体积为 $8 \pi$ 立方单位。本题数值恰巧与 E4.5a 绕 $x$ 轴的体积一致，纯属巧合，并非一般规律。</p>
   </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The region under $y = x$ from $x = 0$ to $x = 2$ is rotated about the $x$-axis. The volume is:</span><span data-lang="zh">$x = 0$ 到 $x = 2$ 之间 $y = x$ 下的区域绕 $x$ 轴旋转，体积为：</span></div><div class="quiz-number">E4.5 · Q1</div></div>
@@ -891,13 +1281,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.5c: Washer method for a region between two curves</span><span data-lang="zh">E4.5c 例题：两曲线之间区域的圆环法</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.5c (HL) — Washer method for a region between two curves</span><span data-lang="zh">E4.5c 例题（HL）—— 两曲线之间区域的圆环法</span></div>
     <p><span data-lang="en">The region between $y=x^2$ and $y=x$ (for $0\le x\le1$) is rotated about the $x$-axis. Find the volume.</span><span data-lang="zh">$y=x^2$ 与 $y=x$（$0\le x\le1$）之间的区域绕 $x$ 轴旋转，求体积。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Key idea — a washer, not a solid disk.</strong> Since the region is bounded above by $y=x$ (outer radius) and below by $y=x^2$ (inner radius), each slice is an annulus (ring), not a filled disk.</p>
-    <p data-lang="zh"><strong>关键思想 —— 是圆环，不是实心圆盘。</strong>区域上方以 $y=x$ 为界（外半径），下方以 $y=x^2$ 为界（内半径），每片是环形（圆环），而非实心圆盘。</p>
+    <p data-lang="en"><strong>Key idea: a washer, not a solid disk.</strong> Since the region is bounded above by $y=x$ (outer radius) and below by $y=x^2$ (inner radius), each slice is an annulus (ring), not a filled disk.</p>
+    <p data-lang="zh"><strong>关键思想：是圆环，不是实心圆盘。</strong>区域上方以 $y=x$ 为界（外半径），下方以 $y=x^2$ 为界（内半径），每片是环形（圆环），而非实心圆盘。</p>
     <p data-lang="en"><strong>Subtract inner disk from outer disk, inside the integral.</strong></p>
     <p data-lang="zh"><strong>在积分内部，外盘减内盘。</strong></p>
     $$ V = \pi\int_0^1 \left[x^2 - (x^2)^2\right]dx = \pi\int_0^1 (x^2 - x^4)\,dx $$
@@ -907,14 +1297,60 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en">This "outer squared minus inner squared" pattern generalizes E4.5a's single-curve formula the same way area-between-curves (E4.4) generalizes area-under-one-curve.</p>
     <p data-lang="zh">这种"外半径平方减内半径平方"的模式，正如两曲线间面积（E4.4）推广单曲线下面积一样，推广了 E4.5a 单曲线的体积公式。</p>
   </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write $\pi$ outside the integral and square the whole radius: for $y = \sqrt{x}$ the integrand is $x$, and for $y = e^{x}$ it is $e^{2x}$, not $e^{x^{2}}$. For a region between two curves, square each radius separately: $\pi\int_{0}^{1} (x^{2} - x^{4})\,dx$, not $\pi\int_{0}^{1} (x - x^{2})^{2}\,dx$. On Paper 1, taken without technology, give the volume as an exact multiple of $\pi$ unless the question asks for a decimal.</p>
+    <p data-lang="zh">$\pi$ 写在积分号外，并把整个半径平方：$y = \sqrt{x}$ 的被积函数是 $x$；$y = e^{x}$ 的被积函数是 $e^{2x}$，不是 $e^{x^{2}}$。两曲线之间的区域要把两个半径分别平方：$\pi\int_{0}^{1} (x^{2} - x^{4})\,dx$，而不是 $\pi\int_{0}^{1} (x - x^{2})^{2}\,dx$。Paper 1 不允许使用技术工具，除非题目要求小数，体积写成 $\pi$ 的精确倍数。</p>
+    <p data-lang="en" data-course="hl">HL: for rotation about the $y$-axis, rewrite the curve as $x = g(y)$ and use $y$-limits; the $x$-limits of the region are not the limits of a $dy$ integral.</p>
+    <p data-lang="zh" data-course="hl">HL：绕 $y$ 轴旋转时，先把曲线改写为 $x = g(y)$，并使用 $y$ 的积分限；区域的 $x$ 范围不是 $dy$ 积分的上下限。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The region under $y = x^{2}$ from $x = 0$ to $x = 2$ is rotated $360^{\circ}$ about the $x$-axis. Find the volume.</span><span data-lang="zh">1. $y = x^{2}$ 下方、$x = 0$ 到 $x = 2$ 的区域绕 $x$ 轴旋转 $360^{\circ}$。求体积。</span></summary>
+      <div class="sg-a"><p data-lang="en">$V = \pi\int_{0}^{2} (x^{2})^{2}\,dx = \pi\int_{0}^{2} x^{4}\,dx = \pi\Bigl[\tfrac{x^{5}}{5}\Bigr]_{0}^{2} = \tfrac{32\pi}{5}$ cubic units.</p><p data-lang="zh">$V = \pi\int_{0}^{2} (x^{2})^{2}\,dx = \pi\int_{0}^{2} x^{4}\,dx = \pi\Bigl[\tfrac{x^{5}}{5}\Bigr]_{0}^{2} = \tfrac{32\pi}{5}$ 立方单位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. The region under $y = \dfrac{1}{x}$ from $x = 1$ to $x = 3$ is rotated about the $x$-axis. Find the volume.</span><span data-lang="zh">2. $y = \dfrac{1}{x}$ 下方、$x = 1$ 到 $x = 3$ 的区域绕 $x$ 轴旋转。求体积。</span></summary>
+      <div class="sg-a"><p data-lang="en">$V = \pi\int_{1}^{3} x^{-2}\,dx = \pi\Bigl[-\tfrac{1}{x}\Bigr]_{1}^{3} = \pi\bigl(-\tfrac{1}{3} + 1\bigr) = \tfrac{2\pi}{3}$ cubic units.</p><p data-lang="zh">$V = \pi\int_{1}^{3} x^{-2}\,dx = \pi\Bigl[-\tfrac{1}{x}\Bigr]_{1}^{3} = \pi\bigl(-\tfrac{1}{3} + 1\bigr) = \tfrac{2\pi}{3}$ 立方单位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Rotate the semicircle $y = \sqrt{r^{2} - x^{2}}$, $-r \le x \le r$, about the $x$-axis to show that a sphere of radius $r$ has volume $\tfrac{4}{3}\pi r^{3}$.</span><span data-lang="zh">3. 把半圆 $y = \sqrt{r^{2} - x^{2}}$（$-r \le x \le r$）绕 $x$ 轴旋转，证明半径为 $r$ 的球体积为 $\tfrac{4}{3}\pi r^{3}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$V = \pi\int_{-r}^{r} (r^{2} - x^{2})\,dx = \pi\Bigl[r^{2}x - \tfrac{x^{3}}{3}\Bigr]_{-r}^{r} = \pi\Bigl[\bigl(r^{3} - \tfrac{r^{3}}{3}\bigr) - \bigl(-r^{3} + \tfrac{r^{3}}{3}\bigr)\Bigr] = \pi\bigl(2r^{3} - \tfrac{2r^{3}}{3}\bigr) = \tfrac{4}{3}\pi r^{3}$.</p><p data-lang="zh">$V = \pi\int_{-r}^{r} (r^{2} - x^{2})\,dx = \pi\Bigl[r^{2}x - \tfrac{x^{3}}{3}\Bigr]_{-r}^{r} = \pi\Bigl[\bigl(r^{3} - \tfrac{r^{3}}{3}\bigr) - \bigl(-r^{3} + \tfrac{r^{3}}{3}\bigr)\Bigr] = \pi\bigl(2r^{3} - \tfrac{2r^{3}}{3}\bigr) = \tfrac{4}{3}\pi r^{3}$。</p></div>
+    </details>
+    <details class="sg-q" data-course="hl">
+      <summary><span data-lang="en">4. (HL) The region bounded by $y = x^{3}$, the $y$-axis and the line $y = 8$ is rotated $360^{\circ}$ about the $y$-axis. Find the volume.</span><span data-lang="zh">4.（HL）由 $y = x^{3}$、$y$ 轴与直线 $y = 8$ 围成的区域绕 $y$ 轴旋转 $360^{\circ}$。求体积。</span></summary>
+      <div class="sg-a"><p data-lang="en">Write $x = y^{1/3}$, so $x^{2} = y^{2/3}$, with $y$ from $0$ to $8$. $V = \pi\int_{0}^{8} y^{2/3}\,dy = \pi\Bigl[\tfrac{3}{5}y^{5/3}\Bigr]_{0}^{8} = \pi \cdot \tfrac{3}{5} \cdot 32 = \tfrac{96\pi}{5}$ cubic units.</p><p data-lang="zh">写成 $x = y^{1/3}$，故 $x^{2} = y^{2/3}$，$y$ 从 $0$ 到 $8$。$V = \pi\int_{0}^{8} y^{2/3}\,dy = \pi\Bigl[\tfrac{3}{5}y^{5/3}\Bigr]_{0}^{8} = \pi \cdot \tfrac{3}{5} \cdot 32 = \tfrac{96\pi}{5}$ 立方单位。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <!-- E4.6 RELATED RATES -->
-<section class="section" id="s-e4-6">
+<section class="section" id="s-e4-6" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E4.6 · Related Rates</span><span data-lang="zh">Topic E4.6 · 相关变化率</span></div>
-  <h2><span data-lang="en">Related Rates</span><span data-lang="zh">相关变化率</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.13</span></h2>
+  <h2><span data-lang="en">Related Rates</span><span data-lang="zh">相关变化率</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.14</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Write an equation linking the changing quantities (a volume formula, Pythagoras, similar triangles).</li>
+      <li>Differentiate that equation with respect to $t$ using the chain rule, for example $\frac{d}{dt}(r^{3}) = 3r^{2}\frac{dr}{dt}$.</li>
+      <li>Use implicit differentiation to find $\frac{dy}{dx}$ for a relation such as $x^{2} + y^{2} = 25$.</li>
+      <li>Substitute the values at the given instant only after differentiating, and solve for the unknown rate, such as $dr/dt$.</li>
+      <li>Interpret the sign of a rate: a negative $dy/dt$ means $y$ is decreasing.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>write down</code>）联系各变化量的方程（体积公式、勾股定理、相似三角形）。</li>
+      <li>用链式法则（<code>chain rule</code>）把方程对 $t$ 求导，例如 $\frac{d}{dt}(r^{3}) = 3r^{2}\frac{dr}{dt}$。</li>
+      <li>对 $x^{2} + y^{2} = 25$ 这类关系用隐函数求导（<code>implicit differentiation</code>）求 $\frac{dy}{dx}$。</li>
+      <li>求导之后才代入给定时刻的数值，并解出未知变化率，如 $dr/dt$。</li>
+      <li>解释（<code>interpret</code>）变化率的符号：$dy/dt$ 为负表示 $y$ 在减小。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The setup.</strong> Two or more quantities depend on time $t$, and they are connected by a geometric or physical relation. Given the rate at which one quantity changes, find the rate at which another changes at a specific moment.
@@ -939,8 +1375,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ol>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.6: balloon inflating</span><span data-lang="zh">E4.6 例题：气球充气</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.6 (balloon inflating)</span><span data-lang="zh">E4.6 例题（气球充气）</span></div>
     <p><span data-lang="en">Air is pumped into a spherical balloon at a constant rate of $50 \text{ cm}^{3}/\text{s}$. Find the rate at which the radius is increasing at the moment when the radius is $5 \text{ cm}$.</span><span data-lang="zh">向球形气球以恒定速率 $50 \text{ cm}^{3}/\text{s}$ 充气。求气球半径为 $5 \text{ cm}$ 时半径的增长率。</span></p>
   </div>
   <div class="worked-solution">
@@ -958,14 +1394,15 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en">The radius is increasing at about $0.16 \text{ cm/s}$ when $r = 5 \text{ cm}$.</p>
     <p data-lang="zh">$r = 5 \text{ cm}$ 时半径约以 $0.16 \text{ cm/s}$ 增长。</p>
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: substituting too early</span><span data-lang="zh">陷阱：过早代入</span></strong>
-    <span data-lang="en">If you plug $r = 5$ into $V = \tfrac{4}{3} \pi r^{3}$ before differentiating, you get $V = \tfrac{500 \pi}{3}$, which is a number with no $r$ in sight. Differentiating a constant gives zero, so $\tfrac{dV}{dt} = 0$ and the chain rule link to $\tfrac{dr}{dt}$ is lost. The "specific instant" values can only be used <em>after</em> the relation is differentiated symbolically. This is the single most common error on related-rates problems.</span><span data-lang="zh">若在求导前把 $r = 5$ 代入 $V = \tfrac{4}{3} \pi r^{3}$，得到 $V = \tfrac{500 \pi}{3}$（一个常数），已经没有 $r$。对常数求导为零，故 $\tfrac{dV}{dt} = 0$，与 $\tfrac{dr}{dt}$ 的链式联系丢失。"某时刻"的数值只能在符号求导<em>之后</em>代入。这是相关变化率题最常见的错误。</span>
+    <span data-lang="en">If you plug $r = 5$ into $V = \tfrac{4}{3} \pi r^{3}$ before differentiating, you get $V = \tfrac{500 \pi}{3}$, which is a number with no $r$ in sight. Differentiating a constant gives zero, so $\tfrac{dV}{dt} = 0$ and the chain rule link to $\tfrac{dr}{dt}$ is lost. The "specific instant" values can only be used <em>after</em> the relation is differentiated symbolically. Every rate then comes out as zero, which shows the order was wrong.</span><span data-lang="zh">若在求导前把 $r = 5$ 代入 $V = \tfrac{4}{3} \pi r^{3}$，得到 $V = \tfrac{500 \pi}{3}$（一个常数），已经没有 $r$。对常数求导为零，故 $\tfrac{dV}{dt} = 0$，与 $\tfrac{dr}{dt}$ 的链式联系丢失。"某时刻"的数值只能在符号求导<em>之后</em>代入。此时所有变化率都会变成零，这说明顺序错了。</span>
   </div>
 
   <div class="quiz" data-answer="0">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A square's area is increasing at $8 \text{ cm}^{2}/\text{s}$. The rate at which the side length is increasing when the side is $4 \text{ cm}$ is:</span><span data-lang="zh">正方形面积以 $8 \text{ cm}^{2}/\text{s}$ 增长。边长为 $4 \text{ cm}$ 时边长的增长率为：</span></div><div class="quiz-number">E4.6 · Q1</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) A square's area is increasing at $8 \text{ cm}^{2}/\text{s}$. The rate at which the side length is increasing when the side is $4 \text{ cm}$ is:</span><span data-lang="zh">（HL）正方形面积以 $8 \text{ cm}^{2}/\text{s}$ 增长。边长为 $4 \text{ cm}$ 时边长的增长率为：</span></div><div class="quiz-number">E4.6 · Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$1 \text{ cm/s}$</div>
       <div class="quiz-opt" data-idx="1">$2 \text{ cm/s}$</div>
@@ -977,24 +1414,46 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E4.6b: the sliding ladder</span><span data-lang="zh">E4.6b 例题：滑落的梯子</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E4.6b (the sliding ladder)</span><span data-lang="zh">E4.6b 例题（滑落的梯子）</span></div>
     <p><span data-lang="en">A $5\;\text{m}$ ladder leans against a wall. The base slides away from the wall at $0.5\;\text{m/s}$. Find the rate at which the top slides down when the base is $3\;\text{m}$ from the wall.</span><span data-lang="zh">一架 $5\;\text{m}$ 长的梯子靠在墙上。梯脚以 $0.5\;\text{m/s}$ 的速度滑离墙面。求梯脚距墙 $3\;\text{m}$ 时梯顶下滑的速率。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Step 1 — Relation (Pythagoras, since the ladder length is fixed).</strong></p>
-    <p data-lang="zh"><strong>第 1 步 — 关系式（毕氏定理，梯长固定）。</strong></p>
+    <p data-lang="en"><strong>Step 1: Relation (Pythagoras, since the ladder length is fixed).</strong></p>
+    <p data-lang="zh"><strong>第 1 步：关系式（毕氏定理，梯长固定）。</strong></p>
     $$ x^2 + y^2 = 25 $$
-    <p data-lang="en"><strong>Step 2 — Differentiate with respect to t.</strong></p>
-    <p data-lang="zh"><strong>第 2 步 — 对 t 求导。</strong></p>
+    <p data-lang="en"><strong>Step 2: Differentiate with respect to t.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：对 t 求导。</strong></p>
     $$ 2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0 $$
-    <p data-lang="en"><strong>Step 3 — Find y when x=3 (needed before substituting).</strong> $y = \sqrt{25-9} = 4$.</p>
-    <p data-lang="zh"><strong>第 3 步 — 求 x=3 时的 y（代入前需要）。</strong>$y = \sqrt{25-9} = 4$。</p>
-    <p data-lang="en"><strong>Step 4 — Substitute all known values and solve.</strong></p>
-    <p data-lang="zh"><strong>第 4 步 — 代入所有已知值并求解。</strong></p>
+    <p data-lang="en"><strong>Step 3: Find y when x=3 (needed before substituting).</strong> $y = \sqrt{25-9} = 4$.</p>
+    <p data-lang="zh"><strong>第 3 步：求 x=3 时的 y（代入前需要）。</strong>$y = \sqrt{25-9} = 4$。</p>
+    <p data-lang="en"><strong>Step 4: Substitute all known values and solve.</strong></p>
+    <p data-lang="zh"><strong>第 4 步：代入所有已知值并求解。</strong></p>
     $$ 2(3)(0.5) + 2(4)\frac{dy}{dt} = 0 \;\Longrightarrow\; \frac{dy}{dt} = -\frac{3}{8} = -0.375\;\text{m/s} $$
-    <p data-lang="en">The negative sign confirms $y$ (height) is decreasing — the top is sliding <em>down</em>, consistent with the base sliding away. Reporting $0.375$ m/s without the sign, or without stating "downward," loses the interpretation mark.</p>
-    <p data-lang="zh">负号确认 $y$（高度）在减小——梯顶正在<em>下滑</em>，与梯脚滑离一致。若只报 $0.375$ m/s 而不带符号、不说明"向下"，会丢掉解释分。</p>
+    <p data-lang="en">The negative sign confirms $y$ (height) is decreasing: the top is sliding <em>down</em>, consistent with the base sliding away. Give the answer with its direction, "the top slides down at $0.375$ m/s"; a bare $0.375$ m/s with no sign or direction is an incomplete answer.</p>
+    <p data-lang="zh">负号确认 $y$（高度）在减小：梯顶正在<em>下滑</em>，与梯脚滑离一致。作答要连同方向，"梯顶以 $0.375$ m/s 的速率下滑"；只写 $0.375$ m/s 而无符号或方向，是不完整的答案。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Before any calculus, write the rate you are given and the rate you want in $\frac{d}{dt}$ notation, for example "$\frac{dV}{dt} = 50$; find $\frac{dr}{dt}$ when $r = 5$". Differentiate the relation with respect to $t$ first, then substitute. If the relation has three variables (a cone's $V$, $r$ and $h$), use a fixed ratio from the shape to remove one before differentiating. State the final rate with units and its direction: "the top of the ladder slides down at $0.375$ m/s".</p>
+    <p data-lang="zh">动笔求导之前，先用 $\frac{d}{dt}$ 记号写出已知变化率和所求变化率，例如"$\frac{dV}{dt} = 50$；求 $r = 5$ 时的 $\frac{dr}{dt}$"。先把关系式对 $t$ 求导，再代入数值。若关系式含三个变量（圆锥的 $V$、$r$、$h$），先用图形中的固定比例消去一个再求导。最终变化率要带单位并说明方向："梯顶以 $0.375$ m/s 的速率下滑"。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The radius of a circular ripple increases at $3$ cm/s. Find the rate of change of the area when the radius is $10$ cm.</span><span data-lang="zh">1. 圆形水波的半径以 $3$ cm/s 增大。求半径为 $10$ cm 时面积的变化率。</span></summary>
+      <div class="sg-a"><p data-lang="en">$A = \pi r^{2}$, so $\frac{dA}{dt} = 2\pi r\frac{dr}{dt} = 2\pi(10)(3) = 60\pi \approx 188\;\text{cm}^{2}/\text{s}$.</p><p data-lang="zh">$A = \pi r^{2}$，故 $\frac{dA}{dt} = 2\pi r\frac{dr}{dt} = 2\pi(10)(3) = 60\pi \approx 188\;\text{cm}^{2}/\text{s}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use implicit differentiation to find the gradient of $x^{2} + y^{2} = 25$ at the point $(3, 4)$.</span><span data-lang="zh">2. 用隐函数求导求 $x^{2} + y^{2} = 25$ 在点 $(3, 4)$ 处的斜率。</span></summary>
+      <div class="sg-a"><p data-lang="en">Differentiate with respect to $x$: $2x + 2y\frac{dy}{dx} = 0$, so $\frac{dy}{dx} = -\frac{x}{y}$. At $(3, 4)$, $\frac{dy}{dx} = -\frac{3}{4}$. This is the same step as the ladder example, with $x$ in place of $t$.</p><p data-lang="zh">对 $x$ 求导：$2x + 2y\frac{dy}{dx} = 0$，故 $\frac{dy}{dx} = -\frac{x}{y}$。在 $(3, 4)$ 处 $\frac{dy}{dx} = -\frac{3}{4}$。这与梯子例题的步骤相同，只是把 $t$ 换成了 $x$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. The volume of a cube increases at $12\;\text{cm}^{3}/\text{s}$. Find the rate of increase of the edge length, and of the surface area, when the edge is $2$ cm.</span><span data-lang="zh">3. 正方体体积以 $12\;\text{cm}^{3}/\text{s}$ 增大。求棱长为 $2$ cm 时棱长与表面积的增长率。</span></summary>
+      <div class="sg-a"><p data-lang="en">$V = x^{3}$, so $\frac{dV}{dt} = 3x^{2}\frac{dx}{dt}$: $12 = 3(4)\frac{dx}{dt}$, giving $\frac{dx}{dt} = 1$ cm/s. Surface area $S = 6x^{2}$, so $\frac{dS}{dt} = 12x\frac{dx}{dt} = 12(2)(1) = 24\;\text{cm}^{2}/\text{s}$.</p><p data-lang="zh">$V = x^{3}$，故 $\frac{dV}{dt} = 3x^{2}\frac{dx}{dt}$：$12 = 3(4)\frac{dx}{dt}$，得 $\frac{dx}{dt} = 1$ cm/s。表面积 $S = 6x^{2}$，故 $\frac{dS}{dt} = 12x\frac{dx}{dt} = 12(2)(1) = 24\;\text{cm}^{2}/\text{s}$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1006,35 +1465,55 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Optimisation (Paper 1 / Paper 2)</span><span data-lang="zh">最优化（Paper 1 / Paper 2）</span></strong>
-    <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Draw the figure.</strong> The geometric setup is often half the marks; a labelled diagram earns the M1 even before any calculus.</li>
-      <li data-lang="zh"><strong>画图。</strong>几何情境往往占一半分数；带标注的图能在动微积分之前就拿到 M1。</li>
-      <li data-lang="en"><strong>Justify the maximum or minimum.</strong> Either second-derivative test or first-derivative sign chart. Stating "this is the max" without justification costs the A1.</li>
-      <li data-lang="zh"><strong>正式验证极值。</strong>二阶导检验或一阶导符号表。光说"此为极大"无验证要丢 A1。</li>
+    <strong><span data-lang="en">Optimisation</span><span data-lang="zh">最优化</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>Draw and label the figure.</strong> Writing every length in terms of one variable on the diagram is usually the hardest step, so do it before any calculus.</li>
+      <li data-lang="zh"><strong>画图并标注。</strong>在图上把每个长度都用同一个变量表示，通常是最难的一步，所以要在动微积分之前完成。</li>
+      <li data-lang="en"><strong>Justify the maximum or minimum.</strong> Use the second derivative test or a sign diagram of $Q'$. A statement such as "this is the maximum" with no reason is an incomplete answer.</li>
+      <li data-lang="zh"><strong>论证极值。</strong>用二阶导数检验或 $Q'$ 的符号图。只写"此为最大值"而不给理由，是不完整的答案。</li>
     </ul>
   </div>
 
-  <div class="concept-box" style="border-left-color: var(--accent);">
-    <strong style="color: var(--accent);"><span data-lang="en">Kinematics (Paper 1 / Paper 2)</span><span data-lang="zh">运动学（Paper 1 / Paper 2）</span></strong>
-    <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Read the question for "displacement" vs "distance".</strong> The first wants the signed integral; the second wants the absolute-value integral with sign-change splitting.</li>
-      <li data-lang="zh"><strong>看题分清"位移"与"路程"。</strong>前者是带符号积分，后者要带绝对值并在变号处分段。</li>
+  <div class="concept-box">
+    <strong><span data-lang="en">Kinematics</span><span data-lang="zh">运动学</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>Read the question for "displacement" vs "distance".</strong> The first wants the signed integral $\int v\,dt$; the second wants $\int |v|\,dt$, split where $v$ changes sign.</li>
+      <li data-lang="zh"><strong>看题分清"位移"与"路程"。</strong>前者是带符号积分 $\int v\,dt$；后者是 $\int |v|\,dt$，在 $v$ 变号处分段。</li>
+      <li data-lang="en"><strong>Speed is $|v|$.</strong> A particle speeds up when $v$ and $a$ have the same sign and slows down when they have opposite signs.</li>
+      <li data-lang="zh"><strong>速率是 $|v|$。</strong>$v$ 与 $a$ 同号时质点加速，异号时减速。</li>
       <li data-lang="en"><strong>Initial conditions fix $C$.</strong> When integrating to find $s$ or $v$, write the $+ C$ explicitly and then use the initial value to solve for $C$.</li>
       <li data-lang="zh"><strong>初始条件定 $C$。</strong>积分求 $s$ 或 $v$ 时显式写 $+ C$，再用初值解出 $C$。</li>
     </ul>
   </div>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">Volumes and related rates (Paper 2 / Paper 3 HL)</span><span data-lang="zh">体积与相关变化率（Paper 2 / Paper 3 HL）</span></strong>
-    <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>$\pi$ goes outside the integral.</strong> $V = \pi \int y^{2} \, dx$. Forgetting the $\pi$ is the canonical volume-of-revolution slip.</li>
-      <li data-lang="zh"><strong>$\pi$ 写在积分号外。</strong>$V = \pi \int y^{2} \, dx$。漏写 $\pi$ 是绕轴体积题的标志性失误。</li>
+    <strong><span data-lang="en">Area between curves</span><span data-lang="zh">曲线间的面积</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>An area is positive.</strong> Integrate upper minus lower and split at every crossing point.</li>
+      <li data-lang="zh"><strong>面积为正。</strong>按"上减下"积分，并在每个交点处分段。</li>
+    </ul>
+  </div>
+
+  <div class="concept-box purple" data-course="hl">
+    <strong><span data-lang="en">HL: volumes of revolution and related rates</span><span data-lang="zh">HL：旋转体体积与相关变化率</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>$\pi$ goes outside the integral.</strong> $V = \pi \int y^{2} \, dx$. Forgetting the $\pi$, or squaring only part of the radius, gives a wrong volume.</li>
+      <li data-lang="zh"><strong>$\pi$ 写在积分号外。</strong>$V = \pi \int y^{2} \, dx$。漏写 $\pi$ 或只把半径的一部分平方，体积都会算错。</li>
       <li data-lang="en"><strong>For $y$-axis rotation, square the $x$-expression (the radius from the axis), not the $y$-expression.</strong> The radius is always perpendicular to the axis of rotation.</li>
       <li data-lang="zh"><strong>绕 $y$ 轴时平方的是 $x$ 表达式（到旋转轴的距离），不是 $y$ 表达式。</strong>"半径"总是与旋转轴垂直。</li>
       <li data-lang="en"><strong>For related rates, differentiate first, substitute second.</strong> Never the other way round.</li>
       <li data-lang="zh"><strong>相关变化率：先求导，再代值。</strong>顺序不可颠倒。</li>
     </ul>
+  </div>
+
+  <div class="concept-box" data-course="hl">
+    <strong><span data-lang="en">Exam format (HL)</span><span data-lang="zh">考试形式（HL）</span></strong>
+    <span data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 2 hours each and worth 30% each; both have a short-response Section A and an extended-response Section B, all compulsory. Paper 3, HL only, is 1 hour (20%) with two compulsory extended-response questions and technology required. The internal assessment exploration is the remaining 20%.</span><span data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（必须使用技术工具）各 2 小时，各占 30%；两卷均含短答题 Section A 与长答题 Section B，全部必答。Paper 3 仅限 HL，1 小时（20%），两道必答长答题，必须使用技术工具。内部评估探究（<code>exploration</code>）占其余 20%。</span>
+  </div>
+
+  <div class="concept-box" data-course="sl">
+    <strong><span data-lang="en">Exam format (SL)</span><span data-lang="zh">考试形式（SL）</span></strong>
+    <span data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 1 hour 30 minutes each and worth 40% each; both have a short-response Section A and an extended-response Section B, all compulsory. Paper 3 is HL only. The internal assessment exploration is the remaining 20%.</span><span data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（必须使用技术工具）各 1 小时 30 分钟，各占 40%；两卷均含短答题 Section A 与长答题 Section B，全部必答。Paper 3 仅限 HL。内部评估探究（<code>exploration</code>）占其余 20%。</span>
   </div>
 </section>
 
@@ -1058,10 +1537,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Displacement from velocity?</span><span data-lang="zh">由速度求位移？</span></div><div class="flashcard-back">$$\int_{t_{1}}^{t_{2}} v(t) \, dt$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Distance from velocity?</span><span data-lang="zh">由速度求路程？</span></div><div class="flashcard-back">$$\int_{t_{1}}^{t_{2}} |v(t)| \, dt$$<span data-lang="en">Split at sign changes.</span><span data-lang="zh">在变号处分段。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Area between $f$ (upper) and $g$ on $[a, b]$?</span><span data-lang="zh">$[a, b]$ 上 $f$（上方）与 $g$ 之间的面积？</span></div><div class="flashcard-back">$$\int_{a}^{b} [f(x) - g(x)] \, dx$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Volume rotating $y = f(x)$ about $x$-axis?</span><span data-lang="zh">$y = f(x)$ 绕 $x$ 轴旋转体积？</span></div><div class="flashcard-back">$$\pi \int_{a}^{b} y^{2} \, dx$$</div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Volume rotating $y = f(x)$ about $x$-axis?</span><span data-lang="zh">（HL）$y = f(x)$ 绕 $x$ 轴旋转体积？</span></div><div class="flashcard-back">$$\pi \int_{a}^{b} y^{2} \, dx$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Volume rotating about $y$-axis (HL)?</span><span data-lang="zh">绕 $y$ 轴旋转体积（HL）？</span></div><div class="flashcard-back">$$\pi \int_{c}^{d} x^{2} \, dy$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Sphere volume formula?</span><span data-lang="zh">球的体积公式？</span></div><div class="flashcard-back">$$V = \tfrac{4}{3} \pi r^{3}$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Related rates: first move?</span><span data-lang="zh">相关变化率：首要动作？</span></div><div class="flashcard-back"><span data-lang="en">Differentiate the relation with respect to $t$ <em>before</em> substituting numerical values.</span><span data-lang="zh">先对 $t$ 求导关系式，再代入数值。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Related rates: first move?</span><span data-lang="zh">（HL）相关变化率：首要动作？</span></div><div class="flashcard-back"><span data-lang="en">Differentiate the relation with respect to $t$ <em>before</em> substituting numerical values.</span><span data-lang="zh">先对 $t$ 求导关系式，再代入数值。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Justifying a maximum in optimisation?</span><span data-lang="zh">最优化中如何验证极大？</span></div><div class="flashcard-back"><span data-lang="en">Second-derivative test ($Q'' &lt; 0$) or sign chart of $Q'$.</span><span data-lang="zh">二阶导数检验（$Q'' &lt; 0$）或 $Q'$ 的符号表。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Particle changes direction at $t = t_{0}$ iff?</span><span data-lang="zh">质点在 $t = t_{0}$ 变向当且仅当？</span></div><div class="flashcard-back"><span data-lang="en">$v(t_{0}) = 0$ <em>and</em> $v$ changes sign at $t_{0}$.</span><span data-lang="zh">$v(t_{0}) = 0$ <em>且</em> $v$ 在 $t_{0}$ 变号。</span></div></div></div>
   </div>
@@ -1114,10 +1593,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="2">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The region under $y = e^{x}$ from $x = 0$ to $x = 1$ is rotated about the $x$-axis. The volume is:</span><span data-lang="zh">$x = 0$ 到 $x = 1$ 之间 $y = e^{x}$ 下的区域绕 $x$ 轴旋转，体积为：</span></div><div class="quiz-number">Q4</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) The region under $y = e^{x}$ from $x = 0$ to $x = 1$ is rotated about the $x$-axis. The volume is:</span><span data-lang="zh">（HL）$x = 0$ 到 $x = 1$ 之间 $y = e^{x}$ 下的区域绕 $x$ 轴旋转，体积为：</span></div><div class="quiz-number">Q4</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$\pi (e - 1)$</div>
-      <div class="quiz-opt" data-idx="1">$\dfrac{\pi (e^{2} - 1)}{2}$</div>
+      <div class="quiz-opt" data-idx="1">$\pi (e^{2} - 1)$</div>
       <div class="quiz-opt" data-idx="2">$\dfrac{\pi (e^{2} - 1)}{2}$</div>
       <div class="quiz-opt" data-idx="3">$\pi e^{2}$</div>
     </div>
@@ -1126,15 +1605,15 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
-  <div class="quiz" data-answer="1">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A conical tank has its vertex pointing down and is being filled with water at $2 \text{ m}^{3}/\text{min}$. The cone has height equal to twice its base radius ($h = 2 r$). Find $\tfrac{dh}{dt}$ when $h = 4 \text{ m}$.</span><span data-lang="zh">一倒置圆锥水箱以 $2 \text{ m}^{3}/\text{min}$ 注水。圆锥高为底半径的两倍（$h = 2 r$）。求 $h = 4 \text{ m}$ 时 $\tfrac{dh}{dt}$。</span></div><div class="quiz-number">Q5</div></div>
+  <div class="quiz" data-answer="2">
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) A conical tank has its vertex pointing down and is being filled with water at $2 \text{ m}^{3}/\text{min}$. The cone has height equal to twice its base radius ($h = 2 r$). Find $\tfrac{dh}{dt}$ when $h = 4 \text{ m}$.</span><span data-lang="zh">（HL）一倒置圆锥水箱以 $2 \text{ m}^{3}/\text{min}$ 注水。圆锥高为底半径的两倍（$h = 2 r$）。求 $h = 4 \text{ m}$ 时 $\tfrac{dh}{dt}$。</span></div><div class="quiz-number">Q5</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$\dfrac{1}{\pi}$ m/min</div>
       <div class="quiz-opt" data-idx="1">$\dfrac{2}{\pi}$ m/min</div>
       <div class="quiz-opt" data-idx="2">$\dfrac{1}{2 \pi}$ m/min</div>
       <div class="quiz-opt" data-idx="3">$\pi$ m/min</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Cone: $V = \tfrac{1}{3} \pi r^{2} h$. Substitute $r = h/2$: $V = \tfrac{1}{3} \pi (h/2)^{2} h = \tfrac{\pi h^{3}}{12}$. Differentiate: $\tfrac{dV}{dt} = \tfrac{\pi h^{2}}{4} \tfrac{dh}{dt}$. With $\tfrac{dV}{dt} = 2$, $h = 4$: $2 = \tfrac{\pi \cdot 16}{4} \tfrac{dh}{dt} = 4 \pi \tfrac{dh}{dt}$, so $\tfrac{dh}{dt} = \tfrac{1}{2 \pi}$. Wait, let me recompute. Actually: $\tfrac{\pi h^{2}}{4}$ at $h = 4$ gives $\tfrac{16 \pi}{4} = 4 \pi$. So $\tfrac{dh}{dt} = \tfrac{2}{4 \pi} = \tfrac{1}{2 \pi}$. Hmm, that matches option 2, not 1. Let me re-examine: $\tfrac{d}{dh}(\tfrac{\pi h^{3}}{12}) = \tfrac{\pi h^{2}}{4}$. Yes. So $\tfrac{dh}{dt} = \tfrac{2}{\pi h^{2}/4} = \tfrac{8}{\pi h^{2}}$. At $h = 4$: $\tfrac{8}{16 \pi} = \tfrac{1}{2\pi}$ m/min, which is option 2.</span><span data-lang="zh">圆锥：$V = \tfrac{1}{3} \pi r^{2} h$。代 $r = h/2$：$V = \tfrac{\pi h^{3}}{12}$。求导：$\tfrac{dV}{dt} = \tfrac{\pi h^{2}}{4} \tfrac{dh}{dt}$。$h = 4$ 时，$\tfrac{\pi \cdot 16}{4} = 4 \pi$，故 $\tfrac{dh}{dt} = \tfrac{2}{4 \pi} = \tfrac{1}{2 \pi}$ m/min。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Cone: $V = \tfrac{1}{3} \pi r^{2} h$. Substitute $r = h/2$: $V = \tfrac{1}{3} \pi (h/2)^{2} h = \tfrac{\pi h^{3}}{12}$. Differentiate with respect to $t$: $\tfrac{dV}{dt} = \tfrac{\pi h^{2}}{4} \tfrac{dh}{dt}$. With $\tfrac{dV}{dt} = 2$ and $h = 4$: $2 = \tfrac{16 \pi}{4} \tfrac{dh}{dt} = 4 \pi \tfrac{dh}{dt}$, so $\tfrac{dh}{dt} = \tfrac{2}{4 \pi} = \tfrac{1}{2 \pi}$ m/min.</span><span data-lang="zh">圆锥：$V = \tfrac{1}{3} \pi r^{2} h$。代入 $r = h/2$：$V = \tfrac{1}{3} \pi (h/2)^{2} h = \tfrac{\pi h^{3}}{12}$。对 $t$ 求导：$\tfrac{dV}{dt} = \tfrac{\pi h^{2}}{4} \tfrac{dh}{dt}$。由 $\tfrac{dV}{dt} = 2$、$h = 4$：$2 = \tfrac{16 \pi}{4} \tfrac{dh}{dt} = 4 \pi \tfrac{dh}{dt}$，故 $\tfrac{dh}{dt} = \tfrac{2}{4 \pi} = \tfrac{1}{2 \pi}$ m/min。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Express $V$ in $h$ alone using the constraint $r = h/2$. Differentiate implicitly with respect to $t$, then substitute. Be careful with the $h^{2}$ coefficient.</span><span data-lang="zh">用约束 $r = h/2$ 把 $V$ 表为单 $h$ 函数。对 $t$ 隐式求导，再代入。注意 $h^{2}$ 系数。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1161,10 +1640,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute displacement and distance, splitting at zeros of $v$ when computing distance</span><span data-lang="zh">算位移与路程，路程要在 $v$ 零点处分段</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute area between two curves using "upper minus lower" integration</span><span data-lang="zh">用"上减下"积分算两条曲线之间的面积</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Find crossing points of two curves and split the integration where needed</span><span data-lang="zh">求两曲线交点并在需要时分段积分</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply $V = \pi \int y^{2} \, dx$ for rotation about the $x$-axis</span><span data-lang="zh">绕 $x$ 轴旋转用 $V = \pi \int y^{2} \, dx$</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Apply $V = \pi \int x^{2} \, dy$ for rotation about the $y$-axis, solving $y = f(x)$ for $x$</span><span data-lang="zh">绕 $y$ 轴用 $V = \pi \int x^{2} \, dy$，先由 $y = f(x)$ 解出 $x$</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Solve a related-rates problem: write the relation, differentiate implicitly, then substitute</span><span data-lang="zh">解相关变化率题：写关系式、隐式求导、再代入数值</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Recognise that constants substituted before differentiation kill the rate; always differentiate first</span><span data-lang="zh">认清"先代值再求导"会丢掉变化率；务必先求导</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Apply $V = \pi \int y^{2} \, dx$ for rotation about the $x$-axis</span><span data-lang="zh">（HL）绕 $x$ 轴旋转用 $V = \pi \int y^{2} \, dx$</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Apply $V = \pi \int x^{2} \, dy$ for rotation about the $y$-axis, solving $y = f(x)$ for $x$</span><span data-lang="zh">（HL）绕 $y$ 轴用 $V = \pi \int x^{2} \, dy$，先由 $y = f(x)$ 解出 $x$</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Solve a related-rates problem: write the relation, differentiate implicitly, then substitute</span><span data-lang="zh">（HL）解相关变化率题：写关系式、隐式求导、再代入数值</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Recognise that constants substituted before differentiation kill the rate; always differentiate first</span><span data-lang="zh">（HL）认清"先代值再求导"会丢掉变化率；务必先求导</span></li>
   </ul>
 </section>
 
@@ -1205,19 +1684,32 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="two-col">
     <div class="card">
       <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
+      <div data-course="hl">
       <p style="font-size: 0.95rem;" data-lang="en">Memorise the kinematics chain: position $s(t)$, velocity $v = s'$, acceleration $a = v'$. Memorise the volume of revolution formula $V = \pi \int y^{2} \, dx$. Practise one optimisation problem (a box with maximum volume from a fixed sheet of card) end to end.</p>
       <p style="font-size: 0.95rem;" data-lang="zh">背熟运动学链：位置 $s(t)$、速度 $v = s'$、加速度 $a = v'$。背熟旋转体体积公式 $V = \pi \int y^{2} \, dx$。完整做一道最优化题（如固定面积纸板折盒求最大体积）。</p>
+      </div>
+      <div data-course="sl">
+      <p style="font-size: 0.95rem;" data-lang="en">Memorise the kinematics chain: position $s(t)$, velocity $v = s'$, acceleration $a = v'$. Memorise the area formula $\int_{a}^{b} (f - g) \, dx$ (upper minus lower). Practise one optimisation problem (a box with maximum volume from a fixed sheet of card) end to end.</p>
+      <p style="font-size: 0.95rem;" data-lang="zh">背熟运动学链：位置 $s(t)$、速度 $v = s'$、加速度 $a = v'$。背熟面积公式 $\int_{a}^{b} (f - g) \, dx$（上减下）。完整做一道最优化题（如固定面积纸板折盒求最大体积）。</p>
+      </div>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-icon icon-purple">★</div><div class="card-title"><span data-lang="en">If you are going for a 7</span><span data-lang="zh">如果你目标是 7 分</span></div></div>
-      <p style="font-size: 0.95rem;" data-lang="en">For optimisation, justify the maximum with the second-derivative test or a sign chart, not by inspection. For kinematics, master the distinction between displacement, distance, velocity, and speed. For volumes, do both $x$-axis ($\pi \int y^{2} dx$) and $y$-axis ($\pi \int x^{2} dy$) rotations.</p>
-      <p style="font-size: 0.95rem;" data-lang="zh">最优化：用二阶导数检验或符号表正式验证极值，不要凭直观。运动学：分清位移与路程、速度与速率。体积：掌握绕 $x$ 轴（$\pi \int y^{2} dx$）与绕 $y$ 轴（$\pi \int x^{2} dy$）两种。</p>
+      <p data-lang="en" data-course="sl">For optimisation, justify the maximum with the second-derivative test or a sign chart, not by inspection. For kinematics, master the distinction between displacement, distance, velocity, and speed. For area, sketch the curves, find every crossing point and integrate upper minus lower on each piece.</p>
+      <p data-lang="zh" data-course="sl">最优化：用二阶导数检验或符号表正式验证极值，不要凭直观。运动学：分清位移与路程、速度与速率。面积：先画草图，求出所有交点，再在每一段上按"上减下"积分。</p>
+      <p data-lang="en" data-course="hl">For optimisation, justify the maximum with the second-derivative test or a sign chart, not by inspection. For kinematics, master the distinction between displacement, distance, velocity, and speed. For volumes, do both $x$-axis ($\pi \int y^{2} dx$) and $y$-axis ($\pi \int x^{2} dy$) rotations.</p>
+      <p data-lang="zh" data-course="hl">最优化：用二阶导数检验或符号表正式验证极值，不要凭直观。运动学：分清位移与路程、速度与速率。体积：掌握绕 $x$ 轴（$\pi \int y^{2} dx$）与绕 $y$ 轴（$\pi \int x^{2} dy$）两种。</p>
     </div>
   </div>
 
-  <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
-    <span data-lang="en">Related rates (E4.6) and $y$-axis volume integration (the second half of E4.5) are <span class="hl-flag">HL</span> only. Optimisation, kinematics, area, and $x$-axis volumes are SL content that HL students inherit.</span><span data-lang="zh">相关变化率（E4.6）与绕 $y$ 轴的体积积分（E4.5 后半部分）为 <span class="hl-flag">HL</span> 专属。最优化、运动学、面积、绕 $x$ 轴体积是 SL 内容，HL 学生继承。</span>
+  <div class="concept-box purple" data-course="hl">
+    <strong><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
+    <span data-lang="en">Related rates (E4.6, AHL 5.14) and volumes of revolution about the $x$- and $y$-axes (E4.5, AHL 5.17) are <span class="hl-flag">HL</span> only. Optimisation, kinematics and area between curves are SL content that HL students also study.</span><span data-lang="zh">相关变化率（E4.6，AHL 5.14）与绕 $x$ 轴、$y$ 轴的旋转体体积（E4.5，AHL 5.17）为 <span class="hl-flag">HL</span> 专属。最优化、运动学与曲线间面积是 SL 内容，HL 学生同样要学。</span>
+  </div>
+
+  <div class="concept-box purple" data-course="sl">
+    <strong><span data-lang="en">SL view</span><span data-lang="zh">SL 视图</span></strong>
+    <span data-lang="en">You are reading the SL view: sections E4.1 to E4.4 (SL 5.8, 5.9 and 5.11). The HL-only sections, E4.5 (volumes of revolution, AHL 5.17) and E4.6 (related rates, AHL 5.14), are hidden; switch to HL with the course button at the top of the page. Flashcards, quiz questions and checklist items labelled (HL) belong to that content, and SL students can skip them.</span><span data-lang="zh">你正在阅读 SL 视图：E4.1 至 E4.4（SL 5.8、5.9 与 5.11）。HL 专属的 E4.5（旋转体体积，AHL 5.17）与 E4.6（相关变化率，AHL 5.14）两节已隐藏；可用页面顶部的课程按钮切换到 HL。标有（HL）的闪卡、测验题与清单条目属于这些内容，SL 学生可以跳过。</span>
   </div>
 </section>
   </div>
@@ -1535,6 +2027,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1678,21 +2186,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

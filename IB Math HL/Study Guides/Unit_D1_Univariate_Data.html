@@ -859,6 +859,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -873,6 +963,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -936,7 +1027,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-overline"><span data-lang="en">IB AA HL &middot; Topic 4 &mdash; Statistics &amp; Probability</span><span data-lang="zh">IB AA HL · 主题 4 — 统计与概率</span></div>
+  <div class="hero-overline"><span data-lang="en">IB AA HL &middot; Topic 4: Statistics &amp; Probability</span><span data-lang="zh">IB AA HL · 主题 4：统计与概率</span></div>
   <h1><span data-lang="en">Univariate Data</span><span data-lang="zh">单变量数据</span></h1>
   <p class="hero-sub" data-lang="en">
     Sub-topics 4.1 &ndash; 4.4 of IB AA HL Topic 4. Sampling, presentation of data, central tendency &amp; dispersion, linear correlation &amp; regression.
@@ -946,9 +1037,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </p>
   <div class="hero-meta">
     <span class="chip chip-maroon">IB AA HL &middot; SL 4.1&ndash;4.4</span>
-    <span class="chip chip-green"><span data-lang="en">Papers 1 &middot; 2</span><span data-lang="zh">试卷 1 · 2</span></span>
     <span class="chip chip-purple"><span data-lang="en">7 Concepts</span><span data-lang="zh">7 个核心概念</span></span>
-    <span class="chip chip-gold"><span data-lang="en">GDC-friendly</span><span data-lang="zh">适配图形计算器</span></span>
+    <span class="chip chip-gold"><span data-lang="en">Technology-friendly</span><span data-lang="zh">适配技术工具</span></span>
   </div>
 </section>
 
@@ -974,12 +1064,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <h4><span data-lang="en">Sampling &amp; data types</span><span data-lang="zh">抽样与数据类型</span> <span class="mini-ref">SL 4.1</span></h4>
     <ul data-lang="en">
       <li><strong>Population</strong> = every individual of interest; <strong>sample</strong> = a subset actually measured.</li>
-      <li><strong>Random sample</strong> &Rightarrow; every individual has equal chance of selection. Other methods: systematic, stratified, quota, convenience (biased).</li>
+      <li><strong>Random sample</strong> &Rightarrow; every possible sample of size $n$ is equally likely to be chosen. Other methods: systematic, stratified, quota, convenience (biased).</li>
       <li><strong>Discrete</strong> data = counts (integers). <strong>Continuous</strong> = measurements on a continuum.</li>
     </ul>
     <ul data-lang="zh">
       <li><strong>总体（<code>population</code>）</strong> = 所关注的全体个体；<strong>样本（<code>sample</code>）</strong> = 实际被测量的子集。</li>
-      <li><strong>随机样本（<code>random sample</code>）</strong> ⇒ 每个个体被抽到的概率相等。其他方法：系统抽样（<code>systematic</code>）、分层抽样（<code>stratified</code>）、配额抽样（<code>quota</code>）、便利抽样（<code>convenience</code>，有偏）。</li>
+      <li><strong>随机样本（<code>random sample</code>）</strong> ⇒ 每个容量为 $n$ 的可能样本被抽中的概率都相等。其他方法：系统抽样（<code>systematic</code>）、分层抽样（<code>stratified</code>）、配额抽样（<code>quota</code>）、便利抽样（<code>convenience</code>，有偏）。</li>
       <li><strong>离散（<code>discrete</code>）</strong>数据 = 计数（整数）。<strong>连续（<code>continuous</code>）</strong> = 在连续区间上的测量值。</li>
     </ul>
 
@@ -1012,14 +1102,14 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <h4><span data-lang="en">Dispersion</span><span data-lang="zh">离散程度</span> <span class="mini-ref">SL 4.3</span></h4>
     <ul data-lang="en">
       <li>Range = $\max - \min$. IQR $= Q_3 - Q_1$.</li>
-      <li><strong>IB defaults to the population SD</strong> (divide by $n$, not $n-1$):
+      <li><strong>This course uses the population SD</strong> (divide by $n$, not $n-1$):
         $$ \sigma = \sqrt{\frac{\sum (x_i - \mu)^2}{n}}, \qquad \sigma^2 = \frac{\sum (x_i - \mu)^2}{n}. $$
       </li>
       <li>For grouped data: $\sigma = \sqrt{\dfrac{\sum f_i (x_i - \bar{x})^2}{\sum f_i}}$.</li>
     </ul>
     <ul data-lang="zh">
       <li>极差（<code>range</code>） = $\max - \min$。四分位距（<code>interquartile range</code>，IQR）$= Q_3 - Q_1$。</li>
-      <li><strong>IB 默认使用总体标准差（<code>population standard deviation</code>）</strong>（除以 $n$，而非 $n-1$）：
+      <li><strong>本课程使用总体标准差（<code>population standard deviation</code>）</strong>（除以 $n$，而非 $n-1$）：
         $$ \sigma = \sqrt{\frac{\sum (x_i - \mu)^2}{n}}, \qquad \sigma^2 = \frac{\sum (x_i - \mu)^2}{n}. $$
       </li>
       <li>分组数据：$\sigma = \sqrt{\dfrac{\sum f_i (x_i - \bar{x})^2}{\sum f_i}}$。</li>
@@ -1038,12 +1128,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <h4><span data-lang="en">Bivariate &amp; regression</span><span data-lang="zh">双变量数据与回归</span> <span class="mini-ref">SL 4.4</span></h4>
     <ul data-lang="en">
       <li>PMCC: $r = \dfrac{S_{xy}}{\sqrt{S_{xx}\, S_{yy}}} \in [-1, 1]$. $|r|$ near $1$ &rArr; strong linear; near $0$ &rArr; weak.</li>
-      <li>Regression line of $y$ on $x$: $y - \bar{y} = b(x - \bar{x})$ with $b = S_{xy}/S_{xx}$. Equivalently $y = ax + b$. <em>Always passes through</em> $(\bar{x}, \bar{y})$.</li>
+      <li>Regression line of $y$ on $x$: $y - \bar{y} = a(x - \bar{x})$ with gradient $a = S_{xy}/S_{xx}$. Equivalently $y = ax + b$. <em>Always passes through</em> $(\bar{x}, \bar{y})$.</li>
       <li>Only predict <em>inside</em> the data range (interpolation). Extrapolation is unreliable.</li>
     </ul>
     <ul data-lang="zh">
       <li>皮尔逊积矩相关系数（<code>Pearson's product-moment correlation coefficient</code>，PMCC）：$r = \dfrac{S_{xy}}{\sqrt{S_{xx}\, S_{yy}}} \in [-1, 1]$。$|r|$ 接近 $1$ ⇒ 线性关系强；接近 $0$ ⇒ 弱。</li>
-      <li>$y$ 关于 $x$ 的回归直线（<code>regression line</code>）：$y - \bar{y} = b(x - \bar{x})$，其中 $b = S_{xy}/S_{xx}$。等价写为 $y = ax + b$。<em>恒过</em> $(\bar{x}, \bar{y})$。</li>
+      <li>$y$ 关于 $x$ 的回归直线（<code>regression line</code>）：$y - \bar{y} = a(x - \bar{x})$，其中斜率 $a = S_{xy}/S_{xx}$。等价写为 $y = ax + b$。<em>恒过</em> $(\bar{x}, \bar{y})$。</li>
       <li>只在数据范围<em>内</em>做预测（内插，<code>interpolation</code>）。外推（<code>extrapolation</code>）不可靠。</li>
     </ul>
   </div>
@@ -1056,89 +1146,115 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Topic 1.1 &middot; Foundations</span><span data-lang="zh">主题 1.1 · 基础</span></div>
   <h2><span data-lang="en">1.1 Populations and Samples</span><span data-lang="zh">1.1 总体与样本</span> <span class="ib-ref">SL 4.1</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Distinguish a population from a sample, and a population parameter ($\mu$, $\sigma$) from a sample statistic ($\bar{x}$).</li>
+      <li>Describe simple random, systematic, stratified, quota and convenience sampling.</li>
+      <li>Calculate how many to take from each stratum in a proportional stratified sample.</li>
+      <li>Identify sources of bias in a sampling design and explain how each one distorts the conclusions.</li>
+      <li>Classify a variable as discrete or continuous and justify the choice.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>区分（<code>distinguish</code>）总体与样本，以及总体参数（$\mu$、$\sigma$）与样本统计量（$\bar{x}$）。</li>
+      <li>描述（<code>describe</code>）简单随机、系统、分层、配额与便利抽样。</li>
+      <li>计算（<code>calculate</code>）按比例分层抽样中每一层应抽取的人数。</li>
+      <li>指出（<code>identify</code>）抽样设计中的偏差来源，并解释（<code>explain</code>）每种偏差如何扭曲结论。</li>
+      <li>判断变量是离散还是连续，并说明理由（<code>justify</code>）。</li>
+    </ul>
+  </div>
+
   <div class="cram-cheat">
     <strong data-lang="en">A population is the full set of individuals of interest; a sample is the subset you actually measure.</strong>
     <strong data-lang="zh">总体（<code>population</code>）是所关注的全体个体；样本（<code>sample</code>）是你实际测量的子集。</strong>
-    <span data-lang="en">A random sample gives every individual an equal chance of being chosen and is the only kind whose statistics are unbiased estimators of population parameters. Real data is <em>discrete</em> (countable, integer-valued like number of siblings) or <em>continuous</em> (measurable on a continuum like height). Bias arises from how you sample, what people choose to report, and which observations get excluded.</span><span data-lang="zh">随机样本（<code>random sample</code>）让每个个体被选中的概率相等，也是唯一一种统计量为总体参数无偏估计的样本。真实数据要么是<em>离散</em>（可数、取整数值，如兄弟姐妹数），要么是<em>连续</em>（在连续区间上可测，如身高）。抽样偏差（<code>sampling bias</code>）来源于抽样方式、受访者选择性报告与哪些观测被剔除。</span>
+    <span data-lang="en">A simple random sample makes every possible sample of size $n$ equally likely (so every individual also has an equal chance of being chosen), and this is what makes a statistic such as the sample mean an unbiased estimate of the population parameter. Real data is <em>discrete</em> (countable, integer-valued like number of siblings) or <em>continuous</em> (measurable on a continuum like height). Bias arises from how you sample, what people choose to report, and which observations get excluded.</span><span data-lang="zh">简单随机样本（<code>simple random sample</code>）使每个容量为 $n$ 的可能样本被抽中的概率都相等（因此每个个体被选中的概率也相等），正是随机性使样本均值等统计量成为相应总体参数的无偏估计。真实数据要么是<em>离散</em>（可数、取整数值，如兄弟姐妹数），要么是<em>连续</em>（在连续区间上可测，如身高）。抽样偏差（<code>sampling bias</code>）来源于抽样方式、受访者选择性报告与哪些观测被剔除。</span>
   </div>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Notation: parameter vs. statistic</span><span data-lang="zh">记号：参数 vs. 统计量</span></div>
-    $$ \mu, \sigma \;\;\text{(population, fixed)} \qquad \bar{x}, s \;\;\text{(sample, computed)} $$
-    <p data-lang="en">The IB uses $\mu$ for the population mean and $\sigma$ for the population SD. The sample mean is $\bar{x}$. Because IB defaults to the population formula, the sample SD it reports also divides by $n$ &mdash; some textbooks call this $\sigma_n$ on the calculator.</p>
-    <p data-lang="zh">IB 用 $\mu$ 表示总体均值（<code>population mean</code>），$\sigma$ 表示总体标准差（<code>population standard deviation</code>）。样本均值（<code>sample mean</code>）为 $\bar{x}$。由于 IB 默认采用总体公式，它报告的样本标准差也是除以 $n$ — 部分教材在计算器上称之为 $\sigma_n$。</p>
+    $$ \mu, \sigma \;\;\text{(population, fixed)} \qquad \bar{x}, \sigma_x \;\;\text{(sample, computed)} $$
+    <p data-lang="en">This course uses $\mu$ for the population mean and $\sigma$ for the population SD. The sample mean is $\bar{x}$. Because the population formula is used for a data set, the SD of a sample also divides by $n$ and is written $\sigma_x$ (some textbooks write $\sigma_n$).</p>
+    <p data-lang="zh">本课程用 $\mu$ 表示总体均值（<code>population mean</code>），$\sigma$ 表示总体标准差（<code>population standard deviation</code>）。样本均值（<code>sample mean</code>）为 $\bar{x}$。由于对数据集采用总体公式，样本的标准差也是除以 $n$，记作 $\sigma_x$（部分教材记作 $\sigma_n$）。</p>
   </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);"><span data-lang="en">Sampling methods you should be able to name</span><span data-lang="zh">必须能够说出名称的抽样方法</span></strong>
-    <span data-lang="en"><strong>Simple random sample.</strong> Every individual has equal probability of being selected, e.g. picking names from a hat or using a random-number generator.<br>
+    <span data-lang="en"><strong>Simple random sample.</strong> Every possible sample of size $n$ is equally likely to be selected, e.g. picking names from a hat or using a random-number generator.<br>
     <strong>Systematic sample.</strong> Choose every $k$-th individual from an ordered list. Cheap but biased if the list has periodicity.<br>
     <strong>Stratified sample.</strong> Split the population into groups (strata: e.g. Year 1, Year 2, Year 3), then sample randomly within each in proportion to its size. Best when strata differ.<br>
     <strong>Quota sample.</strong> Fill pre-set numbers from each group, but selection within each is non-random (e.g. street interviewer takes the first 10 women they see).<br>
-    <strong>Convenience sample.</strong> Whoever is easiest to reach. Almost always biased and the IB will call this out.</span>
-    <span data-lang="zh"><strong>简单随机抽样（<code>simple random sample</code>）。</strong>每个个体被选中的概率相同，例如从帽子里抽名字或用随机数发生器。<br>
+    <strong>Convenience sample.</strong> Whoever is easiest to reach. Almost always biased, so name the bias when you see it.</span>
+    <span data-lang="zh"><strong>简单随机抽样（<code>simple random sample</code>）。</strong>每个容量为 $n$ 的可能样本被选中的概率都相同，例如从帽子里抽名字或用随机数发生器。<br>
     <strong>系统抽样（<code>systematic sample</code>）。</strong>在有序名单上每隔 $k$ 个抽 1 个。成本低，但若名单存在周期性，则会产生偏差。<br>
     <strong>分层抽样（<code>stratified sample</code>）。</strong>将总体按特征划分为若干层（如 1 年级、2 年级、3 年级），再在每层内按其规模成比例地随机抽样。层间差异显著时最优。<br>
     <strong>配额抽样（<code>quota sample</code>）。</strong>各组配额事先确定，但组内选择并非随机（如街头访问员遇到前 10 名女性即停止）。<br>
-    <strong>便利抽样（<code>convenience sample</code>）。</strong>谁最容易接触就抽谁。几乎一定有偏，IB 也一定会指出。</span>
+    <strong>便利抽样（<code>convenience sample</code>）。</strong>谁最容易接触就抽谁。几乎一定有偏，遇到时要指出其偏差。</span>
   </div>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Sources of bias to flag in a 1- or 2-mark "comment on this sample" question</span><span data-lang="zh">在 1–2 分"评论此抽样"题中应指出的偏差来源</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Sources of bias to flag in a "comment on this sample" question</span><span data-lang="zh">在"评论此抽样"题中应指出的偏差来源</span></strong>
     <span data-lang="en"><strong>Selection bias.</strong> The sample isn't representative (e.g. a 6am gym survey skewed to early risers).<br>
     <strong>Non-response bias.</strong> Those who do not respond differ systematically from those who do.<br>
     <strong>Self-reported data.</strong> People misreport (income up, weight down).<br>
-    <strong>Volunteer bias.</strong> Volunteers tend to be more motivated &mdash; results don't generalize.<br>
+    <strong>Volunteer bias.</strong> Volunteers tend to be more motivated, so the results may not generalize.<br>
     <strong>Measurement bias.</strong> The instrument or wording skews answers (leading questions, faulty scale).</span>
     <span data-lang="zh"><strong>选择偏差（<code>selection bias</code>）。</strong>样本不具代表性（如清晨 6 点健身房调查偏向早起者）。<br>
     <strong>无回应偏差（<code>non-response bias</code>）。</strong>不回应者与回应者存在系统性差异。<br>
     <strong>自报数据（<code>self-reported data</code>）。</strong>人们会失真报告（收入虚报偏高、体重虚报偏低）。<br>
-    <strong>志愿者偏差（<code>volunteer bias</code>）。</strong>志愿者通常更具积极性 — 结论难以推广。<br>
+    <strong>志愿者偏差（<code>volunteer bias</code>）。</strong>志愿者通常更具积极性，因此结论难以推广。<br>
     <strong>测量偏差（<code>measurement bias</code>）。</strong>仪器或措辞使回答偏向（诱导性问题、刻度有误）。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; Identifying the right method</span><span data-lang="zh">例题 — 选对方法</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Identifying the right method</span><span data-lang="zh">例题：选对方法</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> A school has $400$ Year 12 students, $350$ Year 13 students. The principal wants a sample of $30$ for a survey on study habits. Suggest a sampling method and explain.</p>
     <p><strong>Best choice:</strong> stratified random sampling. The two year groups likely differ in study habits, so we want the sample to reflect both in proportion.</p>
-    <p>Proportion: $\frac{400}{750} \approx 0.533$, $\frac{350}{750} \approx 0.467$. Take $\lceil 30 \times 0.533 \rceil = 16$ from Year 12 and $30 - 16 = 14$ from Year 13. Within each stratum, choose randomly (random-number generator).</p>
+    <p>Proportion: $\frac{400}{750} \approx 0.533$, $\frac{350}{750} \approx 0.467$. Take $30 \times \frac{400}{750} = 16$ from Year 12 and $30 \times \frac{350}{750} = 14$ from Year 13 (check: $16 + 14 = 30$). Within each stratum, choose randomly (random-number generator).</p>
     <p>Convenience sampling (just asking 30 friends) would be biased. A simple random sample across all $750$ would also work but might under-represent the smaller stratum by chance.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>某校 12 年级有 $400$ 人，13 年级有 $350$ 人。校长想抽取 $30$ 人调查学习习惯。建议一种抽样方法并说明理由。</p>
     <p><strong>最佳选择：</strong>分层随机抽样（<code>stratified random sampling</code>）。两个年级的学习习惯很可能不同，因此样本应按比例反映两层。</p>
-    <p>比例：$\frac{400}{750} \approx 0.533$，$\frac{350}{750} \approx 0.467$。从 12 年级取 $\lceil 30 \times 0.533 \rceil = 16$ 人，从 13 年级取 $30 - 16 = 14$ 人。每层内用随机数发生器随机抽取。</p>
+    <p>比例：$\frac{400}{750} \approx 0.533$，$\frac{350}{750} \approx 0.467$。从 12 年级取 $30 \times \frac{400}{750} = 16$ 人，从 13 年级取 $30 \times \frac{350}{750} = 14$ 人（检验：$16 + 14 = 30$）。每层内用随机数发生器随机抽取。</p>
     <p>便利抽样（只问 30 位朋友）会产生偏差。在全部 $750$ 人中做简单随机抽样也可行，但可能偶然地使较小的那层代表不足。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Discrete vs. continuous</span><span data-lang="zh">例题 — 离散与连续之分</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Discrete vs. continuous</span><span data-lang="zh">例题：离散与连续之分</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Classify the following as discrete or continuous:</p>
     <p>(a) number of cars passing a sensor per hour, (b) time taken to run 100 m, (c) shoe size, (d) blood pressure.</p>
-    <p><strong>(a) Discrete</strong> &mdash; you can count $0, 1, 2, \ldots$ cars; no fractional cars.</p>
-    <p><strong>(b) Continuous</strong> &mdash; time can be any positive real number (resolution limited only by the clock).</p>
-    <p><strong>(c) Discrete</strong> &mdash; shoe sizes are quantized ($7, 7.5, 8, \ldots$). Half-sizes still make the sample space discrete, not continuous.</p>
-    <p><strong>(d) Continuous</strong> &mdash; blood pressure is measured on a continuum, though instruments report integers (mmHg). Treat as continuous unless the problem says otherwise.</p>
+    <p><strong>(a) Discrete</strong>: you can count $0, 1, 2, \ldots$ cars; no fractional cars.</p>
+    <p><strong>(b) Continuous</strong>: time can be any positive real number (resolution limited only by the clock).</p>
+    <p><strong>(c) Discrete</strong>: shoe sizes are quantized ($7, 7.5, 8, \ldots$). Half-sizes still make the sample space discrete, not continuous.</p>
+    <p><strong>(d) Continuous</strong>: blood pressure is measured on a continuum, though instruments report integers (mmHg). Treat as continuous unless the problem says otherwise.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>把下列变量分类为离散数据（<code>discrete data</code>）或连续数据（<code>continuous data</code>）：</p>
     <p>(a) 某传感器每小时通过的汽车数；(b) 跑 100 m 所用时间；(c) 鞋码；(d) 血压。</p>
-    <p><strong>(a) 离散</strong> — 汽车数只能是 $0, 1, 2, \ldots$，没有分数辆汽车。</p>
-    <p><strong>(b) 连续</strong> — 时间可以是任意正实数（分辨率仅受计时器限制）。</p>
-    <p><strong>(c) 离散</strong> — 鞋码是量化的（$7, 7.5, 8, \ldots$）。即使存在半码，样本空间仍是离散的，不是连续的。</p>
-    <p><strong>(d) 连续</strong> — 血压在连续区间上测量，尽管仪器只报告整数（mmHg）。除非题目特别说明，否则按连续处理。</p>
+    <p><strong>(a) 离散</strong>：汽车数只能是 $0, 1, 2, \ldots$，没有分数辆汽车。</p>
+    <p><strong>(b) 连续</strong>：时间可以是任意正实数（分辨率仅受计时器限制）。</p>
+    <p><strong>(c) 离散</strong>：鞋码是量化的（$7, 7.5, 8, \ldots$）。即使存在半码，样本空间仍是离散的，不是连续的。</p>
+    <p><strong>(d) 连续</strong>：血压在连续区间上测量，尽管仪器只报告整数（mmHg）。除非题目特别说明，否则按连续处理。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question asks you to suggest or comment on a sampling method, name the method <strong>and</strong> give a reason tied to the context ("the two year groups probably study differently, so stratify by year"). Writing only "it is random" is an incomplete answer: say how each individual is chosen. For a stratified sample, calculate each stratum's share as (sample size) $\times$ (stratum size) $\div$ (population size) and check that the shares add up to the sample size; if rounding makes the total one too many or too few, adjust one stratum and say which.</p>
+    <p data-lang="zh">题目要求建议或评论（<code>comment on</code>）一种抽样方法时，既要说出方法名称，<strong>也要</strong>给出与情境相关的理由（"两个年级的学习习惯可能不同，所以按年级分层"）。只写"这是随机的"是不完整的回答：要说明每个个体是如何被选出的。对分层抽样，每层人数 = 样本量 $\times$ 该层人数 $\div$ 总体人数，并检查各层人数之和等于样本量；若取整后总数多一或少一，就调整其中一层并说明调整了哪层。</p>
   </div>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why "random" matters mathematically</span><span data-lang="zh">▸ 深入探究 — 为何"随机"在数学上至关重要</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why "random" matters mathematically</span><span data-lang="zh">▸ 深入探究：为何"随机"在数学上至关重要</span></summary>
     <div class="detail-body">
       <p data-lang="en">The mean $\bar{X}$ of a simple random sample of size $n$ from a population with mean $\mu$ and SD $\sigma$ satisfies:</p>
       <p data-lang="zh">从均值为 $\mu$、标准差为 $\sigma$ 的总体中抽取大小为 $n$ 的简单随机样本，其样本均值 $\bar{X}$ 满足：</p>
       $$ \mathbb{E}[\bar{X}] = \mu, \qquad \text{Var}(\bar{X}) = \frac{\sigma^2}{n}. $$
       <p data-lang="en">The first equation is the <em>unbiasedness</em> property: the sample mean has no systematic error. The second is the <em>square-root law</em>: precision improves like $\sqrt{n}$. Both follow from linearity of expectation and independence of the draws.</p>
       <p data-lang="zh">第一个等式即<em>无偏性</em>：样本均值没有系统误差。第二个为<em>平方根定律</em>：精度按 $\sqrt{n}$ 改善。两者都来自期望的线性性与抽样的独立性。</p>
-      <p data-lang="en">If your sample is <em>not</em> random &mdash; say, a convenience sample &mdash; both properties can fail. $\mathbb{E}[\bar{X}]$ can differ from $\mu$ (bias), and the apparent precision $\sigma / \sqrt{n}$ over-states reality. The IB markscheme does not ask for this derivation in D1, but it explains why bias is fatal: more data does not fix it.</p>
-      <p data-lang="zh">若样本<em>不是</em>随机的（例如便利抽样），两条性质都可能失效：$\mathbb{E}[\bar{X}]$ 与 $\mu$ 出现偏差，名义精度 $\sigma / \sqrt{n}$ 也高估了真实情况。IB 评分标准在 D1 不要求做这段推导，但它解释了为什么偏差是致命的 — 单靠加大数据量解决不了。</p>
+      <p data-lang="en">If your sample is <em>not</em> random (say, a convenience sample), both properties can fail. $\mathbb{E}[\bar{X}]$ can differ from $\mu$ (bias), and the apparent precision $\sigma / \sqrt{n}$ over-states reality. You are not asked to derive this in D1, but it explains why bias is so damaging: more data does not fix it.</p>
+      <p data-lang="zh">若样本<em>不是</em>随机的（例如便利抽样），两条性质都可能失效：$\mathbb{E}[\bar{X}]$ 与 $\mu$ 出现偏差，名义精度 $\sigma / \sqrt{n}$ 也高估了真实情况。D1 不要求推导这一结论，但它解释了为什么偏差危害如此之大：单靠加大数据量解决不了。</p>
     </div>
   </details>
 
@@ -1148,13 +1264,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <span class="quiz-number">SL 4.1</span>
     </div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">Simple random &mdash; everyone in the gym had equal chance.</span><span data-lang="zh">简单随机 — 健身房里每个人机会均等。</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">Stratified &mdash; the gym splits people into age groups.</span><span data-lang="zh">分层 — 健身房按年龄段分组。</span></div>
-      <div class="quiz-opt" data-idx="2"><span data-lang="en">Convenience &mdash; only morning gym-goers, who are systematically more active.</span><span data-lang="zh">便利 — 只触达清晨健身的人，他们系统性地更活跃。</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Systematic &mdash; every $k$-th gym member.</span><span data-lang="zh">系统 — 每第 $k$ 位健身房会员。</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Simple random: everyone in the gym had equal chance.</span><span data-lang="zh">简单随机：健身房里每个人机会均等。</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Stratified: the gym splits people into age groups.</span><span data-lang="zh">分层：健身房按年龄段分组。</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Convenience: only morning gym-goers, who are systematically more active.</span><span data-lang="zh">便利：只触达清晨健身的人，他们系统性地更活跃。</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Systematic: every $k$-th gym member.</span><span data-lang="zh">系统：每第 $k$ 位健身房会员。</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The selection rule reaches only a particular sub-group (early-morning gym attendees), who are not representative of the general population. That's a convenience sample with selection bias.</span><span data-lang="zh">正确！选择规则只触及一个特定子群体（清晨健身者），并不代表一般总体。这是带有选择偏差的便利抽样。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">It's a convenience sample. The researcher only reaches people who choose to be at the gym at 6am &mdash; almost certainly more active and earlier-rising than average.</span><span data-lang="zh">这是便利抽样。研究者只触达自愿在清晨 6 点出现于健身房的人 — 他们几乎一定比平均水平更活跃、更早起。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">It's a convenience sample. The researcher only reaches people who choose to be at the gym at 6am, who are almost certainly more active and earlier-rising than average.</span><span data-lang="zh">这是便利抽样。研究者只触达自愿在清晨 6 点出现于健身房的人，他们几乎一定比平均水平更活跃、更早起。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
@@ -1169,9 +1285,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">The shoe size of a customer.</span><span data-lang="zh">某顾客的鞋码。</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">The number of children in a household.</span><span data-lang="zh">某户的子女数。</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Mass can take any positive real value (within instrument resolution). The other three are countable / quantized &mdash; discrete.</span><span data-lang="zh">正确！质量可取任意正实数（仅受仪器分辨率限制）。其余三项可计数或量化 — 都是离散的。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Continuous data are measurements on a continuum &mdash; mass, length, time. Counts (goals, children) are discrete; quantized scales (shoe size) are discrete too.</span><span data-lang="zh">连续数据是在连续区间上的测量值 — 质量、长度、时间。计数（进球、子女数）是离散的；量化刻度（鞋码）也是离散的。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Mass can take any positive real value (within instrument resolution). The other three are countable or quantized, so they are discrete.</span><span data-lang="zh">正确！质量可取任意正实数（仅受仪器分辨率限制）。其余三项可计数或量化，都是离散的。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Continuous data are measurements on a continuum: mass, length, time. Counts (goals, children) are discrete; quantized scales (shoe size) are discrete too.</span><span data-lang="zh">连续数据是在连续区间上的测量值：质量、长度、时间。计数（进球、子女数）是离散的；量化刻度（鞋码）也是离散的。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A gym has $1200$ members listed alphabetically. A manager picks a random starting number from $1$ to $40$, then takes every $40$th name. Name the method and state the sample size.</span><span data-lang="zh">1. 某健身房有 $1200$ 名会员，按字母顺序排列。经理从 $1$ 到 $40$ 中随机选一个起点，之后每隔 $40$ 个名字取一个。说出这种方法并求样本量。</span></summary>
+      <div class="sg-a"><p data-lang="en">Systematic sampling (every $k$th member after a random start, with $k = 40$). Sample size $= 1200 \div 40 = 30$.</p><p data-lang="zh">系统抽样（<code>systematic sampling</code>，随机起点后每隔 $k$ 个取一个，$k = 40$）。样本量 $= 1200 \div 40 = 30$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A club has $120$ juniors, $200$ adults and $80$ seniors. Find the number from each group in a proportional stratified sample of $50$.</span><span data-lang="zh">2. 某俱乐部有青少年 $120$ 人、成人 $200$ 人、老年 $80$ 人。按比例分层抽取 $50$ 人，求每组人数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Population $= 120 + 200 + 80 = 400$. Juniors: $50 \times \tfrac{120}{400} = 15$. Adults: $50 \times \tfrac{200}{400} = 25$. Seniors: $50 \times \tfrac{80}{400} = 10$. Check: $15 + 25 + 10 = 50$. Within each group, choose at random.</p><p data-lang="zh">总体 $= 120 + 200 + 80 = 400$。青少年：$50 \times \tfrac{120}{400} = 15$。成人：$50 \times \tfrac{200}{400} = 25$。老年：$50 \times \tfrac{80}{400} = 10$。检验：$15 + 25 + 10 = 50$。每组内随机抽取。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A news website asks readers to vote online on whether a local tax should rise, and $5000$ readers respond. Explain why the large number of responses does not make the result reliable.</span><span data-lang="zh">3. 某新闻网站请读者在线投票，表决当地某项税是否应上调，共 $5000$ 名读者参与。解释为什么回应人数多并不能使结果可靠。</span></summary>
+      <div class="sg-a"><p data-lang="en">This is a self-selected (volunteer) sample: only readers of that site who chose to vote are included, and people with strong opinions are more likely to respond. That is a systematic bias. A larger sample reduces random variation, but it does not remove a systematic bias, so the result may still misrepresent the population.</p><p data-lang="zh">这是自选（志愿者）样本：只包括该网站上主动投票的读者，而意见强烈的人更可能参与。这是系统性偏差。增大样本量能减少随机波动，却不能消除系统性偏差，因此结果仍可能无法代表总体。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1182,29 +1314,47 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Topic 1.2 &middot; Presenting data</span><span data-lang="zh">主题 1.2 · 数据呈现</span></div>
   <h2><span data-lang="en">1.2 Frequency Distributions &amp; Histograms</span><span data-lang="zh">1.2 频率分布与直方图</span> <span class="ib-ref">SL 4.2</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Construct a frequency table and a histogram from grouped data.</li>
+      <li>Calculate relative frequency and frequency density.</li>
+      <li>Explain why bar area, not bar height, represents frequency when class widths are unequal.</li>
+      <li>Identify the modal class and describe the shape of a distribution (symmetric, skewed, bimodal).</li>
+      <li>Compare two data sets of different sizes using relative frequency.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>由分组数据构建（<code>construct</code>）频率分布表与直方图。</li>
+      <li>计算（<code>calculate</code>）相对频率与频率密度。</li>
+      <li>解释（<code>explain</code>）组距不等时为何是柱子的面积而不是高度代表频数。</li>
+      <li>指出（<code>identify</code>）众数类，并描述（<code>describe</code>）分布形状（对称、偏态、双峰）。</li>
+      <li>用相对频率比较（<code>compare</code>）规模不同的两组数据。</li>
+    </ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong data-lang="en">Group raw data into classes &mdash; report frequencies in a table, then draw a histogram.</strong>
-    <strong data-lang="zh">将原始数据分组 — 在频率分布表（<code>frequency distribution</code>）里给出频数（<code>frequency</code>），再画直方图（<code>histogram</code>）。</strong>
-    <span data-lang="en">For a <em>discrete</em> variable, bars sit on integer values and the height is the frequency. For a <em>continuous</em> variable, bars touch and the <strong>area</strong> of each bar is proportional to its frequency. <strong>Relative frequency</strong> $=$ frequency $/$ total &mdash; lets you compare two datasets of different sizes.</span>
-    <span data-lang="zh">对<em>离散</em>变量，柱子立在整数刻度上，高度即频数。对<em>连续</em>变量，柱子相连，每个柱子的<strong>面积</strong>与其频数成正比。<strong>相对频率（<code>relative frequency</code>）</strong>$=$ 频数 $/$ 总数 — 用于比较规模不同的两组数据。</span>
+    <strong data-lang="en">Group raw data into classes, report the frequencies in a table, then draw a histogram.</strong>
+    <strong data-lang="zh">将原始数据分组，在频率分布表（<code>frequency distribution</code>）里给出频数（<code>frequency</code>），再画直方图（<code>histogram</code>）。</strong>
+    <span data-lang="en">For a <em>discrete</em> variable, bars sit on integer values and the height is the frequency. For a <em>continuous</em> variable, bars touch and the <strong>area</strong> of each bar is proportional to its frequency. <strong>Relative frequency</strong> $=$ frequency $/$ total, which lets you compare two datasets of different sizes.</span>
+    <span data-lang="zh">对<em>离散</em>变量，柱子立在整数刻度上，高度即频数。对<em>连续</em>变量，柱子相连，每个柱子的<strong>面积</strong>与其频数成正比。<strong>相对频率（<code>relative frequency</code>）</strong>$=$ 频数 $/$ 总数，用于比较规模不同的两组数据。</span>
   </div>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Frequency, relative frequency, frequency density</span><span data-lang="zh">频数、相对频率、频率密度</span></div>
     $$ \text{relative freq.} = \frac{f_i}{\sum f_i} \qquad \text{freq. density} = \frac{f_i}{\text{class width}} $$
-    <p data-lang="en">When classes have unequal widths, plot frequency <em>density</em> on the $y$-axis so that bar <em>area</em> still represents frequency. IB rarely uses unequal classes &mdash; but when it does, this is the only safe way to read the histogram.</p>
-    <p data-lang="zh">当各类组距不等时，在 $y$ 轴上画频率密度（<code>frequency density</code>），这样柱子的<em>面积</em>仍然代表频数。IB 很少出现不等组距 — 但一旦出现，这是读取直方图的唯一安全做法。</p>
+    <p data-lang="en">When classes have unequal widths, plot frequency <em>density</em> on the $y$-axis so that bar <em>area</em> still represents frequency. When the classes are unequal, this is the only safe way to read the histogram.</p>
+    <p data-lang="zh">当各类组距不等时，在 $y$ 轴上画频率密度（<code>frequency density</code>），这样柱子的<em>面积</em>仍然代表频数。组距不等时，这是读取直方图的唯一安全做法。</p>
   </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);"><span data-lang="en">Frequency-table conventions</span><span data-lang="zh">频率分布表的约定</span></strong>
-    <span data-lang="en">For continuous data, IB uses inclusive-lower / exclusive-upper class bounds, e.g. $10 \le x < 20$. The <strong>class midpoint</strong> $x_i = \tfrac{1}{2}(\text{lower} + \text{upper})$ is what you use to estimate the mean of grouped data &mdash; we'll see this in 1.4.<br>
-    A few classes (5&ndash;7) gives a smooth shape; too many gives a noisy one. The IB will tell you the classes.</span>
-    <span data-lang="zh">对连续数据，IB 采用左闭右开的组界，如 $10 \le x < 20$。<strong>组中值</strong> $x_i = \tfrac{1}{2}(\text{lower} + \text{upper})$ 即（下界 + 上界）的一半，用于估计分组数据的均值 — 详见 1.4。<br>
-    类数较少（5–7 组）时形状平滑；过多则噪声大。IB 通常会直接给出类。</span>
+    <span data-lang="en">For continuous data, classes are usually written with an inclusive lower and exclusive upper bound, e.g. $10 \le x < 20$. The <strong>class midpoint</strong> $x_i = \tfrac{1}{2}(\text{lower} + \text{upper})$ is what you use to estimate the mean of grouped data (see 1.4).<br>
+    A few classes (5&ndash;7) gives a smooth shape; too many gives a noisy one. When a question gives the classes, use them exactly as given.</span>
+    <span data-lang="zh">对连续数据，组界通常写成左闭右开，如 $10 \le x < 20$。<strong>组中值</strong> $x_i = \tfrac{1}{2}(\text{lower} + \text{upper})$ 即（下界 + 上界）的一半，用于估计分组数据的均值（详见 1.4）。<br>
+    类数较少（5–7 组）时形状平滑；过多则噪声大。题目给出分组时，严格按给定分组。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; Building a histogram</span><span data-lang="zh">例题 — 画一张直方图</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Building a histogram</span><span data-lang="zh">例题：画一张直方图</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> The masses (kg) of 40 students are grouped:</p>
     <div class="table-wrap">
@@ -1241,8 +1391,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
     <p>形状大致对称、单峰，峰值在 $60 \le m < 70$。<strong>众数类（<code>modal class</code>）</strong>为 $60 \le m < 70$。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Relative frequency to compare</span><span data-lang="zh">例题 — 用相对频率做比较</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Relative frequency to compare</span><span data-lang="zh">例题：用相对频率做比较</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Class A (25 students) and Class B (40 students) both have $8$ students scoring in $[70, 80)$. Which class has a <em>higher</em> proportion in that band?</p>
     <p>Compare relative frequencies:</p>
@@ -1255,29 +1406,36 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \text{A: } \frac{8}{25} = 0.32 = 32\%, \qquad \text{B: } \frac{8}{40} = 0.20 = 20\%. $$
     <p>A 班占比更高。两班的原始频数相同，但在样本量不同的情况下单看频数毫无意义。</p>
   </div>
+  </details>
 
   <div class="concept-box green">
-    <strong style="color: var(--green);"><span data-lang="en">Shape vocabulary IB rewards</span><span data-lang="zh">IB 看重的形状描述词</span></strong>
+    <strong style="color: var(--green);"><span data-lang="en">Shape vocabulary to use</span><span data-lang="zh">应使用的形状描述词</span></strong>
     <span data-lang="en">Describe a histogram in two beats: <strong>(1)</strong> shape (symmetric / skewed left / skewed right / bimodal / uniform), and <strong>(2)</strong> centre &amp; spread (where it peaks, how wide).<br>
-    <strong>Right-skewed</strong> $\Leftrightarrow$ long tail to the right $\Leftrightarrow$ mean $>$ median.<br>
-    <strong>Left-skewed</strong> $\Leftrightarrow$ long tail to the left $\Leftrightarrow$ mean $<$ median.<br>
+    <strong>Right-skewed</strong> $\Leftrightarrow$ long tail to the right; the mean is usually $>$ the median.<br>
+    <strong>Left-skewed</strong> $\Leftrightarrow$ long tail to the left; the mean is usually $<$ the median.<br>
     <strong>Symmetric</strong> $\Leftrightarrow$ mean $\approx$ median.</span>
     <span data-lang="zh">描述直方图分两步：<strong>(1)</strong> 形状（对称 / 左偏 / 右偏 / 双峰 / 均匀），<strong>(2)</strong> 中心与离散程度（峰值在哪、宽度多大）。<br>
-    <strong>右偏（<code>right-skewed</code>）</strong> $\Leftrightarrow$ 右尾长 $\Leftrightarrow$ 均值 $>$ 中位数。<br>
-    <strong>左偏（<code>left-skewed</code>）</strong> $\Leftrightarrow$ 左尾长 $\Leftrightarrow$ 均值 $<$ 中位数。<br>
+    <strong>右偏（<code>right-skewed</code>）</strong> $\Leftrightarrow$ 右尾长；均值通常 $>$ 中位数。<br>
+    <strong>左偏（<code>left-skewed</code>）</strong> $\Leftrightarrow$ 左尾长；均值通常 $<$ 中位数。<br>
     <strong>对称（<code>symmetric</code>）</strong> $\Leftrightarrow$ 均值 $\approx$ 中位数。</span>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For continuous data the bars touch and the horizontal axis is a continuous scale marked at the class boundaries (40, 50, 60, ...), not a list of labels under each bar. Label both axes, with units. If the class widths are unequal, add a frequency-density column to the table first and draw from that column. When asked to describe a distribution, give the shape <strong>and</strong> refer to the context with numbers ("unimodal and roughly symmetric, with modal class $60 \le m < 70$ kg").</p>
+    <p data-lang="zh">连续数据的柱子彼此相连，横轴是在组界（40, 50, 60, ...）处标刻度的连续数轴，而不是每根柱子下面写一个标签。两条坐标轴都要标注名称与单位。若组距不等，先在表中加一列频率密度，再按这一列作图。题目要求描述（<code>describe</code>）分布时，既要说出形状，<strong>也要</strong>结合情境给出数值（"单峰、大致对称，众数类为 $60 \le m < 70$ kg"）。</p>
+  </div>
+
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why area, not height, encodes frequency</span><span data-lang="zh">▸ 深入探究 — 为什么是面积而非高度表示频数</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why area, not height, encodes frequency</span><span data-lang="zh">▸ 深入探究：为什么是面积而非高度表示频数</span></summary>
     <div class="detail-body">
       <p data-lang="en">For continuous data the histogram is a discrete approximation to an unknown probability density. The defining property of a density is that <em>area</em> under it on an interval equals the probability of landing in that interval. So a histogram bar's area should equal the frequency (or relative frequency) of its interval, not its height.</p>
       <p data-lang="zh">对于连续数据，直方图是某个未知概率密度（<code>probability density</code>）的离散近似。密度的本质性质是：在某区间上其曲线下<em>面积</em>等于落入该区间的概率。所以直方图每根柱子的面积应当等于其区间的频数（或相对频率），而非高度。</p>
-      <p data-lang="en">With equal-width classes, height and area are proportional, and IB lets you plot either &mdash; just say "frequency" on the $y$-axis. With unequal classes, plotting height alone visually exaggerates wide classes and hides narrow ones. Frequency density restores the proportionality:</p>
-      <p data-lang="zh">组距相等时，高度与面积成正比，IB 允许直接画频数 — 只需在 $y$ 轴标注"frequency"。组距不等时，单画高度会在视觉上夸大宽类、压缩窄类。频率密度恢复了比例关系：</p>
+      <p data-lang="en">With equal-width classes, height and area are proportional, so you may plot frequency directly; just label the $y$-axis "frequency". With unequal classes, plotting height alone visually exaggerates wide classes and hides narrow ones. Frequency density restores the proportionality:</p>
+      <p data-lang="zh">组距相等时，高度与面积成正比，可以直接画频数；只需在 $y$ 轴标注"frequency"。组距不等时，单画高度会在视觉上夸大宽类、压缩窄类。频率密度恢复了比例关系：</p>
       $$ \text{area of bar} = \text{freq. density} \times \text{width} = \frac{f_i}{\text{width}} \times \text{width} = f_i. $$
-      <p data-lang="en">This is also why the limiting curve of relative-frequency histograms (as bins shrink, $n$ grows) is the probability <em>density</em> function &mdash; the link to Topics D2&ndash;D3.</p>
-      <p data-lang="zh">这也是为什么相对频率直方图在组距趋于零、$n$ 趋于无穷时的极限曲线就是概率<em>密度函数</em>（<code>probability density function</code>）— 即与主题 D2–D3 的连接点。</p>
+      <p data-lang="en">This is also why the limiting curve of relative-frequency histograms (as bins shrink, $n$ grows) is a probability <em>density</em> function, the link to Units D2&ndash;D3.</p>
+      <p data-lang="zh">这也是为什么相对频率直方图在组距趋于零、$n$ 趋于无穷时的极限曲线就是概率<em>密度函数</em>（<code>probability density function</code>），这正是与单元 D2–D3 的连接点。</p>
     </div>
   </details>
 
@@ -1296,6 +1454,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">Frequency density $=$ frequency $/$ class width. Then bar area $=$ width $\times$ density $=$ frequency, even with unequal widths.</span><span data-lang="zh">频率密度 $=$ 频数 $/$ 组距。此时柱面积 $=$ 组距 $\times$ 密度 $=$ 频数，即使组距不等也成立。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. In a sample of $20$ values, the class $5 \le x < 10$ has frequency $7$. Find its relative frequency as a decimal and a percentage.</span><span data-lang="zh">1. 在 $20$ 个数据中，组 $5 \le x < 10$ 的频数为 $7$。求它的相对频率（小数与百分数）。</span></summary>
+      <div class="sg-a"><p data-lang="en">Relative frequency $= \tfrac{7}{20} = 0.35 = 35\%$.</p><p data-lang="zh">相对频率 $= \tfrac{7}{20} = 0.35 = 35\%$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Waiting times (minutes) are grouped as $0 \le t < 10$ with frequency $12$ and $10 \le t < 30$ with frequency $18$. Find the frequency density of each class and say which bar is taller. A third bar, for $30 \le t < 35$, has height $2.4$ on the same frequency-density axis. How many people does it represent?</span><span data-lang="zh">2. 等待时间（分钟）分组为：$0 \le t < 10$ 频数 $12$，$10 \le t < 30$ 频数 $18$。求各组的频率密度，并说明哪根柱子更高。在同一频率密度轴上，第三根柱子 $30 \le t < 35$ 的高度为 $2.4$，它代表多少人？</span></summary>
+      <div class="sg-a"><p data-lang="en">Densities: $\tfrac{12}{10} = 1.2$ and $\tfrac{18}{20} = 0.9$, so the first bar is taller even though the second class holds more people. Third bar: frequency $=$ density $\times$ width $= 2.4 \times 5 = 12$ people.</p><p data-lang="zh">频率密度：$\tfrac{12}{10} = 1.2$，$\tfrac{18}{20} = 0.9$，所以第一根柱子更高，尽管第二组人数更多。第三根柱子：频数 $=$ 密度 $\times$ 组距 $= 2.4 \times 5 = 12$ 人。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A histogram of household incomes has a single peak near the left and a long tail to the right. Describe its shape and state how the mean and median usually compare.</span><span data-lang="zh">3. 某家庭收入直方图在左侧附近只有一个峰，右侧拖着长尾。描述其形状，并说明均值与中位数通常的大小关系。</span></summary>
+      <div class="sg-a"><p data-lang="en">Unimodal and skewed to the right (positively skewed). The few very large incomes pull the mean up but barely move the median, so the mean is usually greater than the median; the median is the better "typical" value here.</p><p data-lang="zh">单峰、右偏（正偏，<code>positively skewed</code>）。少数极高收入会把均值拉高，却几乎不影响中位数，所以均值通常大于中位数；此时中位数更能代表"典型"值。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1304,6 +1478,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-d1-3">
   <div class="section-label"><span data-lang="en">Topic 1.3 &middot; Quartiles &amp; box plots</span><span data-lang="zh">主题 1.3 · 四分位数与箱形图</span></div>
   <h2><span data-lang="en">1.3 Cumulative Frequency &amp; Box Plots</span><span data-lang="zh">1.3 累积频率与箱形图</span> <span class="ib-ref">SL 4.2</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Construct a cumulative frequency table and graph, plotting each total at the upper class boundary.</li>
+      <li>Estimate the median, quartiles, interquartile range and percentiles from a cumulative frequency graph.</li>
+      <li>Calculate the five-number summary of raw data by hand.</li>
+      <li>Apply the $1.5 \times \text{IQR}$ rule to decide whether a value is an outlier.</li>
+      <li>Construct a box plot with outliers marked, and interpret its spread and skew.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>构建（<code>construct</code>）累积频率表与累积频率图，把每个累计值画在该组的上界处。</li>
+      <li>由累积频率图估计（<code>estimate</code>）中位数、四分位数、四分位距与百分位数。</li>
+      <li>手算（<code>calculate</code>）原始数据的五数概括。</li>
+      <li>应用（<code>apply</code>）$1.5 \times \text{IQR}$ 规则判断某值是否为异常值。</li>
+      <li>画出（<code>construct</code>）标出异常值的箱形图，并解释（<code>interpret</code>）其离散程度与偏态。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat">
     <strong data-lang="en">A cumulative-frequency graph lets you read percentiles by eye; a box plot is the five-number summary in one picture.</strong>
@@ -1333,7 +1525,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="concept-box">
-    <strong style="color: var(--accent);"><span data-lang="en">Discrete quartiles &mdash; the position rule</span><span data-lang="zh">离散数据的四分位数 — 位置法则</span></strong>
+    <strong style="color: var(--accent);"><span data-lang="en">Discrete quartiles: the position rule</span><span data-lang="zh">离散数据的四分位数：位置法则</span></strong>
     <span data-lang="en">For a sorted dataset of size $n$:</span>
     <span data-lang="zh">对已排序、大小为 $n$ 的数据集：</span>
     <ul style="margin: 6px 0 0 22px;" data-lang="en">
@@ -1344,19 +1536,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <li><strong>中位数</strong> $= $ 位置 $\frac{n+1}{2}$ 处的值（位置为分数时做线性插值）。</li>
       <li><strong>$Q_1$</strong>（下四分位数，<code>quartile</code>）$= $ 数据下半部分的中位数；<strong>$Q_3$</strong>（上四分位数）$= $ 上半部分的中位数。</li>
     </ul>
-    <span data-lang="en">Different textbooks define $Q_1, Q_3$ slightly differently &mdash; the IB sticks with the "split-then-median" definition above. Calculators may give slightly different values; trust the by-hand version on Paper 1 and the GDC's value on Paper 2.</span>
-    <span data-lang="zh">不同教材对 $Q_1, Q_3$ 的定义略有出入 — IB 始终采用上述"先分半、再取中位数"的定义。不同计算器给出的值可能略有差异；试卷 1 信手算结果，试卷 2 信图形计算器（<code>GDC</code>）。</span>
+    <span data-lang="en">Quartile methods vary. Textbooks, calculators and software use slightly different rules (for example, whether the median is included in each half when $n$ is odd, or how to interpolate between two values), so a calculator's $Q_1$ and $Q_3$ can differ slightly from a by-hand answer. This guide uses the rule above, excluding the median from each half. Whichever method you use, show it, and expect small differences rather than an error.</span>
+    <span data-lang="zh">四分位数的算法并不统一。教材、计算器与软件采用的规则略有不同（例如 $n$ 为奇数时两半是否包含中位数，或如何在两个值之间插值），因此计算器给出的 $Q_1$、$Q_3$ 可能与手算结果略有差异。本指南采用上述规则，两半都不含中位数。无论用哪种方法，都要写出过程，出现微小差异是正常的，并非错误。</span>
   </div>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Outlier rule &mdash; the $1.5 \cdot \text{IQR}$ fences</span><span data-lang="zh">异常值规则 — $1.5 \cdot \text{IQR}$ 围栏</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Outlier rule: the $1.5 \cdot \text{IQR}$ fences</span><span data-lang="zh">异常值规则：$1.5 \cdot \text{IQR}$ 围栏</span></strong>
     <span data-lang="en">Compute:</span><span data-lang="zh">计算：</span>
     $$ L = Q_1 - 1.5 \cdot \text{IQR}, \qquad U = Q_3 + 1.5 \cdot \text{IQR}. $$
     <span data-lang="en">Any observation strictly below $L$ or above $U$ is an outlier and must be drawn as a separate dot on the box plot. <em>Whiskers extend to the most extreme non-outlier, not to the outlier itself.</em></span>
     <span data-lang="zh">任何严格小于 $L$ 或严格大于 $U$ 的观测都是异常值（<code>outlier</code>），在箱形图上必须单独画成一个点。<em>须延伸到最极端的非异常值，而不是延伸到异常值本身。</em></span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; Five-number summary by hand</span><span data-lang="zh">例题 — 手算五数概括</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Five-number summary by hand</span><span data-lang="zh">例题：手算五数概括</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Find the five-number summary of $\{3, 5, 7, 8, 9, 11, 12, 14, 16, 18, 25\}$, then identify any outliers.</p>
     <p>$n = 11$, already sorted.</p>
@@ -1377,20 +1569,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p>没有数据落在 $[-6.5, 29.5]$ 之外，故<strong>无异常值</strong>。（$25$ 虽大，但仍在 $U$ 之内。）</p>
     <p>五数概括：$\{3, 7, 11, 16, 25\}$。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Outlier check</span><span data-lang="zh">例题 — 异常值检验</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Outlier check</span><span data-lang="zh">例题：异常值检验</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Test scores have $Q_1 = 52$, median $= 64$, $Q_3 = 73$, and one student scored $100$. Is $100$ an outlier?</p>
     <p>$\text{IQR} = 73 - 52 = 21$. Upper fence $U = 73 + 1.5(21) = 73 + 31.5 = 104.5$.</p>
-    <p>Since $100 < 104.5$, the score is <strong>not</strong> an outlier under the IQR rule &mdash; though it is the maximum.</p>
+    <p>Since $100 < 104.5$, the score is <strong>not</strong> an outlier under the IQR rule, though it is the maximum.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>某次考试 $Q_1 = 52$，中位数 $= 64$，$Q_3 = 73$，有一位学生得了 $100$ 分。问 $100$ 是否为异常值？</p>
     <p>$\text{IQR} = 73 - 52 = 21$。上围栏 $U = 73 + 1.5(21) = 73 + 31.5 = 104.5$。</p>
-    <p>由于 $100 < 104.5$，按 IQR 规则它<strong>不是</strong>异常值 — 但它确实是最大值。</p>
+    <p>由于 $100 < 104.5$，按 IQR 规则它<strong>不是</strong>异常值，但它确实是最大值。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Reading the box plot</span><span data-lang="zh">例题 — 看懂箱形图</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Reading the box plot</span><span data-lang="zh">例题：看懂箱形图</span></summary>
   <div class="worked-solution" data-lang="en">
     <p>The five-number summary $\{3, 7, 11, 16, 25\}$ above becomes:</p>
     <div class="boxplot-mock" aria-label="Box-and-whisker plot for the five-number summary 3, 7, 11, 16, 25">
@@ -1406,7 +1600,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="lbl q3">16</div>
       <div class="lbl max">25</div>
     </div>
-    <p>The right whisker is longer than the left &mdash; suggests a mild right skew (mean would be slightly above the median of $11$). The IQR-box itself is centred near the median, which is the typical look.</p>
+    <p>The right whisker is longer than the left, which suggests a mild right skew (the mean, $128/11 \approx 11.6$, is slightly above the median of $11$). The IQR-box itself is centred near the median, which is the typical look.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p>上述五数概括 $\{3, 7, 11, 16, 25\}$ 对应的箱形图为：</p>
@@ -1423,16 +1617,160 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="lbl q3">16</div>
       <div class="lbl max">25</div>
     </div>
-    <p>右须比左须长 — 提示存在轻度右偏（均值略高于中位数 $11$）。IQR 箱子本身大致以中位数为中心，是常见形态。</p>
+    <p>右须比左须长，提示存在轻度右偏（均值 $128/11 \approx 11.6$ 略高于中位数 $11$）。IQR 箱子本身大致以中位数为中心，是常见形态。</p>
+  </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Box plot with an outlier</span><span data-lang="zh">例题：含异常值的箱形图</span></summary>
+  <div class="worked-solution" data-lang="en">
+    <p><strong>Problem:</strong> The scores of $11$ players are $4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 30$. Find the five-number summary, test for outliers, and draw the box plot.</p>
+    <p><strong>Step 1: median.</strong> $n = 11$, so the median is the $\tfrac{11 + 1}{2} = 6$th value: $10$.</p>
+    <p><strong>Step 2: quartiles.</strong> Lower half $\{4, 6, 7, 8, 9\}$ gives $Q_1 = 7$; upper half $\{11, 12, 13, 15, 30\}$ gives $Q_3 = 13$. So $\text{IQR} = 13 - 7 = 6$.</p>
+    <p><strong>Step 3: fences.</strong> $L = 7 - 1.5(6) = -2$ and $U = 13 + 1.5(6) = 22$. The value $30 > 22$, so $30$ is an outlier; nothing is below $-2$.</p>
+    <p><strong>Step 4: draw.</strong> The box runs from $7$ to $13$ with the median at $10$. The left whisker goes to the minimum, $4$. The right whisker stops at $15$, the largest value that is not an outlier, and $30$ is plotted as a separate point (Figure 1). The five-number summary of the data is $\{4, 7, 10, 13, 30\}$; the plot shows the same box, with the right whisker ending at $15$ because the maximum, $30$, is an outlier.</p>
+    <p>Quartile methods vary: a rule that includes the median in each half gives $Q_1 = 7.5$, $Q_3 = 12.5$, $\text{IQR} = 5$ and $U = 12.5 + 7.5 = 20$. The conclusion is the same here, since $30 > 20$.</p>
+    <p><em>Why this works:</em> the fences measure distance from the quartiles in units of the spread of the middle half, so a value far outside them is unusual compared with the bulk of the data.</p>
+  </div>
+  <div class="worked-solution" data-lang="zh">
+    <p><strong>题目：</strong>$11$ 名选手的得分为 $4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 30$。求五数概括，检验异常值，并画出箱形图。</p>
+    <p><strong>第 1 步：中位数。</strong>$n = 11$，中位数是第 $\tfrac{11 + 1}{2} = 6$ 个值：$10$。</p>
+    <p><strong>第 2 步：四分位数。</strong>下半部分 $\{4, 6, 7, 8, 9\}$ 得 $Q_1 = 7$；上半部分 $\{11, 12, 13, 15, 30\}$ 得 $Q_3 = 13$。故 $\text{IQR} = 13 - 7 = 6$。</p>
+    <p><strong>第 3 步：围栏。</strong>$L = 7 - 1.5(6) = -2$，$U = 13 + 1.5(6) = 22$。由于 $30 > 22$，$30$ 是异常值；没有低于 $-2$ 的值。</p>
+    <p><strong>第 4 步：作图。</strong>箱子从 $7$ 到 $13$，中位数在 $10$。左须延伸到最小值 $4$。右须止于 $15$，即不是异常值的最大值，而 $30$ 单独画成一个点（图 1）。数据的五数概括为 $\{4, 7, 10, 13, 30\}$；图中的箱子与之相同，但右须止于 $15$，因为最大值 $30$ 是异常值。</p>
+    <p>四分位数算法并不统一：若两半都包含中位数，则得 $Q_1 = 7.5$，$Q_3 = 12.5$，$\text{IQR} = 5$，$U = 12.5 + 7.5 = 20$。本题结论不变，因为 $30 > 20$。</p>
+    <p><em>原理：</em>围栏以中间一半数据的离散程度为单位，衡量到四分位数的距离，所以远在围栏外的值相对于大部分数据而言是不寻常的。</p>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 172" role="img" aria-label="Box plot drawn to scale on a number line from 0 to 32: box from 7 to 13, median 10, whiskers to 4 and 15, upper fence at 22 dashed, outlier at 30 marked as a separate circle">
+      <line class="ax" x1="30" y1="120" x2="414" y2="120"/>
+      <line class="ax thin" x1="30" y1="116" x2="30" y2="124"/>
+      <line class="ax thin" x1="78" y1="116" x2="78" y2="124"/>
+      <line class="ax thin" x1="126" y1="116" x2="126" y2="124"/>
+      <line class="ax thin" x1="174" y1="116" x2="174" y2="124"/>
+      <line class="ax thin" x1="222" y1="116" x2="222" y2="124"/>
+      <line class="ax thin" x1="270" y1="116" x2="270" y2="124"/>
+      <line class="ax thin" x1="318" y1="116" x2="318" y2="124"/>
+      <line class="ax thin" x1="366" y1="116" x2="366" y2="124"/>
+      <line class="ax thin" x1="414" y1="116" x2="414" y2="124"/>
+      <text class="mut" data-lang="en" x="30" y="138" text-anchor="middle">0</text><text class="mut" data-lang="zh" x="30" y="138" text-anchor="middle">0</text>
+      <text class="mut" data-lang="en" x="78" y="138" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="78" y="138" text-anchor="middle">4</text>
+      <text class="mut" data-lang="en" x="126" y="138" text-anchor="middle">8</text><text class="mut" data-lang="zh" x="126" y="138" text-anchor="middle">8</text>
+      <text class="mut" data-lang="en" x="174" y="138" text-anchor="middle">12</text><text class="mut" data-lang="zh" x="174" y="138" text-anchor="middle">12</text>
+      <text class="mut" data-lang="en" x="222" y="138" text-anchor="middle">16</text><text class="mut" data-lang="zh" x="222" y="138" text-anchor="middle">16</text>
+      <text class="mut" data-lang="en" x="270" y="138" text-anchor="middle">20</text><text class="mut" data-lang="zh" x="270" y="138" text-anchor="middle">20</text>
+      <text class="mut" data-lang="en" x="318" y="138" text-anchor="middle">24</text><text class="mut" data-lang="zh" x="318" y="138" text-anchor="middle">24</text>
+      <text class="mut" data-lang="en" x="366" y="138" text-anchor="middle">28</text><text class="mut" data-lang="zh" x="366" y="138" text-anchor="middle">28</text>
+      <text class="mut" data-lang="en" x="414" y="138" text-anchor="middle">32</text><text class="mut" data-lang="zh" x="414" y="138" text-anchor="middle">32</text>
+      <text class="mut" data-lang="en" x="222" y="164" text-anchor="middle">score</text><text class="mut" data-lang="zh" x="222" y="164" text-anchor="middle">得分</text>
+      <line class="c1" x1="78" y1="70" x2="114" y2="70"/>
+      <line class="c1" x1="78" y1="60" x2="78" y2="80"/>
+      <line class="c1" x1="186" y1="70" x2="210" y2="70"/>
+      <line class="c1" x1="210" y1="60" x2="210" y2="80"/>
+      <rect class="box" x="114" y="50" width="72" height="40"/>
+      <rect class="fill1" x="114" y="50" width="72" height="40"/>
+      <line class="c1" x1="150" y1="50" x2="150" y2="90"/>
+      <line class="c4 dash thin" x1="294" y1="40" x2="294" y2="112"/>
+      <circle class="c4" cx="390" cy="70" r="5"/>
+      <text class="lbl" data-lang="en" x="114" y="42" text-anchor="middle">Q₁ = 7</text><text class="lbl" data-lang="zh" x="114" y="42" text-anchor="middle">Q₁ = 7</text>
+      <text class="lbl" data-lang="en" x="186" y="42" text-anchor="middle">Q₃ = 13</text><text class="lbl" data-lang="zh" x="186" y="42" text-anchor="middle">Q₃ = 13</text>
+      <text class="mut" data-lang="en" x="78" y="106" text-anchor="middle">min 4</text><text class="mut" data-lang="zh" x="78" y="106" text-anchor="middle">最小值 4</text>
+      <text class="mut" data-lang="en" x="150" y="106" text-anchor="middle">median 10</text><text class="mut" data-lang="zh" x="150" y="106" text-anchor="middle">中位数 10</text>
+      <text class="mut" data-lang="en" x="226" y="106" text-anchor="middle">whisker 15</text><text class="mut" data-lang="zh" x="226" y="106" text-anchor="middle">须端 15</text>
+      <text class="lbl c4t" data-lang="en" x="294" y="30" text-anchor="middle">upper fence 22</text><text class="lbl c4t" data-lang="zh" x="294" y="30" text-anchor="middle">上围栏 22</text>
+      <text class="lbl c4t" data-lang="en" x="390" y="56" text-anchor="middle">outlier 30</text><text class="lbl c4t" data-lang="zh" x="390" y="56" text-anchor="middle">异常值 30</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. The box plot of the worked example, drawn to scale. Read off the minimum $4$, $Q_1 = 7$, the median $10$ and $Q_3 = 13$, the right whisker ending at $15$ (the largest non-outlier), the IQR as the box width ($13 - 7 = 6$), and the upper fence $Q_3 + 1.5\,\text{IQR} = 22$. The value $30$, the maximum, lies beyond the fence, so it is plotted as the outlier. The lower fence, $-2$, is off the left of the scale.</span><span data-lang="zh">图 1. 上例的箱形图，按比例绘制。从图中读出最小值 $4$、$Q_1 = 7$、中位数 $10$、$Q_3 = 13$，右须止于 $15$（最大的非异常值），箱子宽度即 IQR（$13 - 7 = 6$），以及上围栏 $Q_3 + 1.5\,\text{IQR} = 22$。最大值 $30$ 落在围栏之外，所以作为异常值单独画出。下围栏 $-2$ 在数轴左端之外。</span></figcaption>
+  </figure>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Reading a cumulative frequency graph</span><span data-lang="zh">例题：读累积频率图</span></summary>
+  <div class="worked-solution" data-lang="en">
+    <p><strong>Problem:</strong> The times $t$ (minutes) that $80$ students took to finish a puzzle are grouped below. Draw the cumulative frequency graph and estimate the median, the quartiles, the IQR, and the number of students who took more than $35$ minutes.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Time (min)</th><th>$0 \le t < 10$</th><th>$10 \le t < 20$</th><th>$20 \le t < 30$</th><th>$30 \le t < 40$</th><th>$40 \le t < 50$</th></tr></thead>
+      <tbody><tr><td>Frequency</td><td>6</td><td>14</td><td>28</td><td>20</td><td>12</td></tr>
+      <tr><td>Cumulative frequency</td><td>6</td><td>20</td><td>48</td><td>68</td><td>80</td></tr></tbody>
+    </table>
+    </div>
+    <p><strong>Step 1: plot.</strong> Plot each cumulative total at the <em>upper</em> class boundary: $(10, 6)$, $(20, 20)$, $(30, 48)$, $(40, 68)$, $(50, 80)$, and start the graph at $(0, 0)$. Figure 2 joins the points with straight segments.</p>
+    <p><strong>Step 2: read the quartiles.</strong> Median at $0.5 \times 80 = 40$: between $(20, 20)$ and $(30, 48)$, so $t \approx 20 + 10 \times \tfrac{40 - 20}{28} \approx 27.1$ min. $Q_1$ at $0.25 \times 80 = 20$: $t = 20$ min. $Q_3$ at $0.75 \times 80 = 60$: $t \approx 30 + 10 \times \tfrac{60 - 48}{20} = 36$ min. So $\text{IQR} \approx 36 - 20 = 16$ min.</p>
+    <p><strong>Step 3: more than 35 minutes.</strong> At $t = 35$ the graph gives $48 + \tfrac{1}{2}(20) = 58$ students, so about $80 - 58 = 22$ students took more than $35$ minutes.</p>
+    <p><em>Why this works:</em> a cumulative total counts everyone who finished <em>before</em> the class's upper boundary, so that is where it belongs on the time axis. Every value read off the graph is an estimate, because it assumes the times are spread evenly within each class; a smooth curve through the same points gives slightly different estimates.</p>
+  </div>
+  <div class="worked-solution" data-lang="zh">
+    <p><strong>题目：</strong>$80$ 名学生完成一道谜题所用时间 $t$（分钟）分组如下。画出累积频率图，并估计中位数、四分位数、IQR，以及用时超过 $35$ 分钟的学生人数。</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>时间 (min)</th><th>$0 \le t < 10$</th><th>$10 \le t < 20$</th><th>$20 \le t < 30$</th><th>$30 \le t < 40$</th><th>$40 \le t < 50$</th></tr></thead>
+      <tbody><tr><td>频数</td><td>6</td><td>14</td><td>28</td><td>20</td><td>12</td></tr>
+      <tr><td>累积频数</td><td>6</td><td>20</td><td>48</td><td>68</td><td>80</td></tr></tbody>
+    </table>
+    </div>
+    <p><strong>第 1 步：描点。</strong>把每个累计值画在该组的<em>上界</em>处：$(10, 6)$、$(20, 20)$、$(30, 48)$、$(40, 68)$、$(50, 80)$，并从 $(0, 0)$ 开始。图 2 用线段连接各点。</p>
+    <p><strong>第 2 步：读四分位数。</strong>中位数对应 $0.5 \times 80 = 40$：位于 $(20, 20)$ 与 $(30, 48)$ 之间，故 $t \approx 20 + 10 \times \tfrac{40 - 20}{28} \approx 27.1$ 分钟。$Q_1$ 对应 $0.25 \times 80 = 20$：$t = 20$ 分钟。$Q_3$ 对应 $0.75 \times 80 = 60$：$t \approx 30 + 10 \times \tfrac{60 - 48}{20} = 36$ 分钟。故 $\text{IQR} \approx 36 - 20 = 16$ 分钟。</p>
+    <p><strong>第 3 步：超过 35 分钟。</strong>在 $t = 35$ 处，图上读得 $48 + \tfrac{1}{2}(20) = 58$ 人，所以约有 $80 - 58 = 22$ 名学生用时超过 $35$ 分钟。</p>
+    <p><em>原理：</em>累计值统计的是在该组上界<em>之前</em>完成的全部人数，所以应画在时间轴的上界处。图上读出的每个值都是估计值，因为它假设每组内的时间分布均匀；用光滑曲线连接同样的点，得到的估计会略有不同。</p>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 300" role="img" aria-label="Cumulative frequency graph to scale: time 0 to 50 minutes against cumulative frequency 0 to 80, points at 10,6 then 20,20 then 30,48 then 40,68 then 50,80, with dashed reading lines at 20, 40 and 60 giving Q1 = 20, median about 27.1 and Q3 = 36">
+      <line class="grid" x1="50" y1="200" x2="400" y2="200"/>
+      <line class="grid" x1="50" y1="140" x2="400" y2="140"/>
+      <line class="grid" x1="50" y1="80" x2="400" y2="80"/>
+      <line class="grid" x1="50" y1="20" x2="400" y2="20"/>
+      <line class="grid" x1="120" y1="20" x2="120" y2="260"/>
+      <line class="grid" x1="190" y1="20" x2="190" y2="260"/>
+      <line class="grid" x1="260" y1="20" x2="260" y2="260"/>
+      <line class="grid" x1="330" y1="20" x2="330" y2="260"/>
+      <line class="grid" x1="400" y1="20" x2="400" y2="260"/>
+      <line class="ax" x1="50" y1="260" x2="410" y2="260"/>
+      <line class="ax" x1="50" y1="260" x2="50" y2="12"/>
+      <text class="mut" data-lang="en" x="50" y="276" text-anchor="middle">0</text><text class="mut" data-lang="zh" x="50" y="276" text-anchor="middle">0</text>
+      <text class="mut" data-lang="en" x="120" y="276" text-anchor="middle">10</text><text class="mut" data-lang="zh" x="120" y="276" text-anchor="middle">10</text>
+      <text class="mut" data-lang="en" x="190" y="276" text-anchor="middle">20</text><text class="mut" data-lang="zh" x="190" y="276" text-anchor="middle">20</text>
+      <text class="mut" data-lang="en" x="260" y="276" text-anchor="middle">30</text><text class="mut" data-lang="zh" x="260" y="276" text-anchor="middle">30</text>
+      <text class="mut" data-lang="en" x="330" y="276" text-anchor="middle">40</text><text class="mut" data-lang="zh" x="330" y="276" text-anchor="middle">40</text>
+      <text class="mut" data-lang="en" x="400" y="276" text-anchor="middle">50</text><text class="mut" data-lang="zh" x="400" y="276" text-anchor="middle">50</text>
+      <text class="mut" data-lang="en" x="44" y="264" text-anchor="end">0</text><text class="mut" data-lang="zh" x="44" y="264" text-anchor="end">0</text>
+      <text class="mut" data-lang="en" x="44" y="204" text-anchor="end">20</text><text class="mut" data-lang="zh" x="44" y="204" text-anchor="end">20</text>
+      <text class="mut" data-lang="en" x="44" y="144" text-anchor="end">40</text><text class="mut" data-lang="zh" x="44" y="144" text-anchor="end">40</text>
+      <text class="mut" data-lang="en" x="44" y="84" text-anchor="end">60</text><text class="mut" data-lang="zh" x="44" y="84" text-anchor="end">60</text>
+      <text class="mut" data-lang="en" x="44" y="24" text-anchor="end">80</text><text class="mut" data-lang="zh" x="44" y="24" text-anchor="end">80</text>
+      <text class="mut" data-lang="en" x="225" y="296" text-anchor="middle">time t (minutes)</text><text class="mut" data-lang="zh" x="225" y="296" text-anchor="middle">时间 t（分钟）</text>
+      <text class="mut" data-lang="en" x="14" y="140" text-anchor="middle" transform="rotate(-90 14 140)">cumulative frequency</text><text class="mut vt" data-lang="zh" x="14" y="140" text-anchor="middle">累积频数</text>
+      <polyline class="c2 dash thin" points="50,200 190,200 190,260"/>
+      <polyline class="c2 dash thin" points="50,140 240,140 240,260"/>
+      <polyline class="c2 dash thin" points="50,80 302,80 302,260"/>
+      <polyline class="c1" points="50,260 120,242 190,200 260,116 330,56 400,20"/>
+      <circle class="dot" cx="50" cy="260" r="3"/>
+      <circle class="dot" cx="120" cy="242" r="3"/>
+      <circle class="dot" cx="190" cy="200" r="3"/>
+      <circle class="dot" cx="260" cy="116" r="3"/>
+      <circle class="dot" cx="330" cy="56" r="3"/>
+      <circle class="dot" cx="400" cy="20" r="3"/>
+      <text class="lbl c2t" data-lang="en" x="184" y="194" text-anchor="end">Q₁ = 20</text><text class="lbl c2t" data-lang="zh" x="184" y="194" text-anchor="end">Q₁ = 20</text>
+      <text class="lbl c2t" data-lang="en" x="234" y="134" text-anchor="end">median ≈ 27.1</text><text class="lbl c2t" data-lang="zh" x="234" y="134" text-anchor="end">中位数 ≈ 27.1</text>
+      <text class="lbl c2t" data-lang="en" x="296" y="74" text-anchor="end">Q₃ = 36</text><text class="lbl c2t" data-lang="zh" x="296" y="74" text-anchor="end">Q₃ = 36</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. The cumulative frequency graph of the puzzle times ($n = 80$), drawn to scale with each total plotted at its upper class boundary. Read across from $20$, $40$ and $60$ (that is $n/4$, $n/2$ and $3n/4$) to the graph, then down: $Q_1 = 20$ min, median $\approx 27.1$ min and $Q_3 = 36$ min, so $\text{IQR} \approx 16$ min. These are estimates from grouped data.</span><span data-lang="zh">图 2. 谜题用时（$n = 80$）的累积频率图，按比例绘制，每个累计值画在该组上界处。从纵轴 $20$、$40$、$60$（即 $n/4$、$n/2$、$3n/4$）水平读到图线，再竖直向下读：$Q_1 = 20$ 分钟，中位数 $\approx 27.1$ 分钟，$Q_3 = 36$ 分钟，故 $\text{IQR} \approx 16$ 分钟。这些都是由分组数据得到的估计值。</span></figcaption>
+  </figure>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">On a cumulative frequency graph, plot each total at the upper class boundary (not the midpoint) and start at the lower boundary of the first class with frequency $0$. Read the median at $n/2$ and the quartiles at $n/4$ and $3n/4$, and draw the reading lines on the graph so your method is visible. When you test for an outlier, write the fence calculation and the comparison ("$U = 13 + 1.5 \times 6 = 22$ and $30 > 22$"), not just the word "outlier". If a calculator's quartiles differ slightly from yours, that is a difference of method, not a mistake.</p>
+    <p data-lang="zh">在累积频率图上，把每个累计值画在该组的上界处（不是组中值），并从第一组的下界、频数 $0$ 处开始。在 $n/2$ 处读中位数，在 $n/4$ 和 $3n/4$ 处读四分位数，并把读数辅助线画在图上，使方法清晰可见。检验异常值时，要写出围栏计算与比较（"$U = 13 + 1.5 \times 6 = 22$ 且 $30 > 22$"），而不是只写"异常值"一词。若计算器给出的四分位数与你的略有不同，那是方法差异，不是错误。</p>
   </div>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why $1.5 \cdot \text{IQR}$?</span><span data-lang="zh">▸ 深入探究 — 为何选择 $1.5 \cdot \text{IQR}$？</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why $1.5 \cdot \text{IQR}$?</span><span data-lang="zh">▸ 深入探究：为何选择 $1.5 \cdot \text{IQR}$？</span></summary>
     <div class="detail-body">
-      <p data-lang="en">The cutoff is conventional, not derived from a deep theorem &mdash; but it isn't arbitrary. John Tukey, who introduced the box plot, chose $1.5$ as a compromise: large enough that normal data rarely produces "outliers" (about $0.7\%$ on each tail), small enough that genuine outliers in skewed data still get flagged.</p>
-      <p data-lang="zh">这是约定俗成的阈值，并非源自某条深奥定理 — 但也并非随意。提出箱形图的 John Tukey 选取 $1.5$ 作为折中：足够大，使得正态数据极少产生"异常值"（每侧约 $0.7\%$）；又足够小，能保证偏态数据中的真异常值仍被标出。</p>
-      <p data-lang="en">Some texts also use a $3 \cdot \text{IQR}$ "extreme outlier" fence. The IB does not require it &mdash; just the $1.5 \cdot \text{IQR}$ rule above. When you flag an outlier in a written answer, name the rule explicitly: <em>"$x = 25$ lies above $Q_3 + 1.5\, \text{IQR}$, so it is an outlier."</em></p>
-      <p data-lang="zh">部分教材另外采用 $3 \cdot \text{IQR}$ 的"极端异常值"围栏。IB 不要求 — 只需上述 $1.5 \cdot \text{IQR}$ 规则。在书面答题时标出异常值，要明确写出规则：<em>"$x = 25$ 高于 $Q_3 + 1.5\, \text{IQR}$，故为异常值。"</em></p>
+      <p data-lang="en">The cutoff is conventional, not derived from a deep theorem, but it isn't arbitrary. John Tukey, who introduced the box plot, chose $1.5$ as a compromise: large enough that normal data rarely produces "outliers" (about $0.35\%$ in each tail, $0.7\%$ in total), small enough that genuine outliers in skewed data still get flagged.</p>
+      <p data-lang="zh">这是约定俗成的阈值，并非源自某条深奥定理，但也并非随意。提出箱形图的 John Tukey 选取 $1.5$ 作为折中：足够大，使得正态数据极少产生"异常值"（每侧约 $0.35\%$，合计约 $0.7\%$）；又足够小，能保证偏态数据中的真异常值仍被标出。</p>
+      <p data-lang="en">Some texts also use a $3 \cdot \text{IQR}$ "extreme outlier" fence. In this course an outlier is a value more than $1.5 \cdot \text{IQR}$ beyond the nearer quartile, so use the rule above. When you flag an outlier in a written answer, name the rule explicitly: <em>"$x = 31$ would lie above $Q_3 + 1.5\, \text{IQR} = 29.5$, so it would be an outlier."</em> (In that example $25 < 29.5$, so $25$ is not an outlier.)</p>
+      <p data-lang="zh">部分教材另外采用 $3 \cdot \text{IQR}$ 的"极端异常值"围栏。本课程中，异常值指距较近四分位数超过 $1.5 \cdot \text{IQR}$ 的值，因此用上述规则即可。在书面答题时标出异常值，要明确写出规则：<em>"$x = 31$ 将高于 $Q_3 + 1.5\, \text{IQR} = 29.5$，故为异常值。"</em>（在那道例题中 $25 < 29.5$，所以 $25$ 不是异常值。）</p>
     </div>
   </details>
 
@@ -1467,6 +1805,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">The median is at $0.5 n = 0.5 \cdot 80 = 40$ on the cumulative-frequency $y$-axis.</span><span data-lang="zh">中位数在累积频率图的 $y$ 轴上对应 $0.5 n = 0.5 \cdot 80 = 40$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the median, quartiles and IQR of $2, 4, 5, 7, 8, 10, 13$.</span><span data-lang="zh">1. 求 $2, 4, 5, 7, 8, 10, 13$ 的中位数、四分位数与 IQR。</span></summary>
+      <div class="sg-a"><p data-lang="en">$n = 7$, so the median is the $4$th value, $7$. Lower half $\{2, 4, 5\}$: $Q_1 = 4$. Upper half $\{8, 10, 13\}$: $Q_3 = 10$. $\text{IQR} = 10 - 4 = 6$. (A method that includes the median in each half gives $Q_1 = 4.5$ and $Q_3 = 9$.)</p><p data-lang="zh">$n = 7$，中位数是第 $4$ 个值 $7$。下半部分 $\{2, 4, 5\}$：$Q_1 = 4$。上半部分 $\{8, 10, 13\}$：$Q_3 = 10$。$\text{IQR} = 10 - 4 = 6$。（若两半都包含中位数，则得 $Q_1 = 4.5$，$Q_3 = 9$。）</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A data set has $Q_1 = 40$ and $Q_3 = 55$. Decide whether $80$ and $15$ are outliers.</span><span data-lang="zh">2. 某数据集 $Q_1 = 40$，$Q_3 = 55$。判断 $80$ 与 $15$ 是否为异常值。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\text{IQR} = 15$, so $1.5 \times \text{IQR} = 22.5$. Upper fence $55 + 22.5 = 77.5$: since $80 > 77.5$, $80$ is an outlier. Lower fence $40 - 22.5 = 17.5$: since $15 < 17.5$, $15$ is an outlier too.</p><p data-lang="zh">$\text{IQR} = 15$，所以 $1.5 \times \text{IQR} = 22.5$。上围栏 $55 + 22.5 = 77.5$：因 $80 > 77.5$，$80$ 是异常值。下围栏 $40 - 22.5 = 17.5$：因 $15 < 17.5$，$15$ 也是异常值。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Use Figure 2 (straight segments) to estimate (a) how many students took less than $15$ minutes and (b) the $90$th percentile of the times.</span><span data-lang="zh">3. 利用图 2（线段连接）估计：(a) 用时少于 $15$ 分钟的学生人数；(b) 用时的第 $90$ 百分位数。</span></summary>
+      <div class="sg-a"><p data-lang="en">(a) Halfway between $(10, 6)$ and $(20, 20)$: $6 + \tfrac{1}{2}(14) = 13$ students. (b) The $90$th percentile is at $0.9 \times 80 = 72$, between $(40, 68)$ and $(50, 80)$: $t \approx 40 + 10 \times \tfrac{72 - 68}{12} \approx 43.3$ minutes.</p><p data-lang="zh">(a) 位于 $(10, 6)$ 与 $(20, 20)$ 的正中间：$6 + \tfrac{1}{2}(14) = 13$ 人。(b) 第 $90$ 百分位数对应 $0.9 \times 80 = 72$，位于 $(40, 68)$ 与 $(50, 80)$ 之间：$t \approx 40 + 10 \times \tfrac{72 - 68}{12} \approx 43.3$ 分钟。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1476,18 +1830,36 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Topic 1.4 &middot; Where the data sits</span><span data-lang="zh">主题 1.4 · 数据位于何处</span></div>
   <h2><span data-lang="en">1.4 Measures of Central Tendency</span><span data-lang="zh">1.4 集中趋势的度量</span> <span class="ib-ref">SL 4.3</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate the mean, median and mode of raw data.</li>
+      <li>Estimate the mean of grouped data from mid-interval values, and identify the modal class.</li>
+      <li>Explain why a mean found from grouped data is only an estimate.</li>
+      <li>Deduce a missing value from a given mean.</li>
+      <li>Choose between the mean and the median for a data set and justify the choice using skew or outliers.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>计算（<code>calculate</code>）原始数据的均值、中位数与众数。</li>
+      <li>用组中值（<code>mid-interval value</code>）估计（<code>estimate</code>）分组数据的均值，并指出众数类。</li>
+      <li>解释（<code>explain</code>）为何由分组数据求得的均值只是估计值。</li>
+      <li>由已知均值推出（<code>deduce</code>）缺失的数据值。</li>
+      <li>在均值与中位数之间作出选择，并结合偏态或异常值说明理由（<code>justify</code>）。</li>
+    </ul>
+  </div>
+
   <div class="cram-cheat">
     <strong data-lang="en">Three summaries of "where the data is": mean, median, mode.</strong>
     <strong data-lang="zh">"数据在哪里"的三种概括：均值、中位数、众数（<code>mean</code>、<code>median</code>、<code>mode</code>）。</strong>
-    <span data-lang="en">The <strong>mean</strong> $\bar{x} = \tfrac{1}{n}\sum x_i$ is the centre of mass &mdash; sensitive to outliers. The <strong>median</strong> is the middle value when ordered &mdash; robust to outliers, the right choice for skewed data. The <strong>mode</strong> is the most frequent value (the <strong>modal class</strong> for grouped data). On grouped data the mean is <em>estimated</em> using class midpoints.</span>
-    <span data-lang="zh"><strong>均值</strong> $\bar{x} = \tfrac{1}{n}\sum x_i$ 是数据的质心 — 对异常值敏感。<strong>中位数</strong>是排序后的中间值 — 对异常值稳健，是偏态数据的恰当选择。<strong>众数</strong>是最常出现的值（分组数据则报告<strong>众数类（<code>modal class</code>）</strong>）。分组数据的均值用组中值<em>估计</em>。</span>
+    <span data-lang="en">The <strong>mean</strong> $\bar{x} = \tfrac{1}{n}\sum x_i$ is the centre of mass and is sensitive to outliers. The <strong>median</strong> is the middle value when ordered; it is robust to outliers and the right choice for skewed data. The <strong>mode</strong> is the most frequent value (the <strong>modal class</strong> for grouped data). On grouped data the mean is <em>estimated</em> using class midpoints.</span>
+    <span data-lang="zh"><strong>均值</strong> $\bar{x} = \tfrac{1}{n}\sum x_i$ 是数据的质心，对异常值敏感。<strong>中位数</strong>是排序后的中间值，对异常值稳健，是偏态数据的恰当选择。<strong>众数</strong>是最常出现的值（分组数据则报告<strong>众数类（<code>modal class</code>）</strong>）。分组数据的均值用组中值<em>估计</em>。</span>
   </div>
 
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Mean &mdash; raw vs. grouped data</span><span data-lang="zh">均值 — 原始数据 vs. 分组数据</span></div>
+    <div class="formula-label"><span data-lang="en">Mean: raw vs. grouped data</span><span data-lang="zh">均值：原始数据 vs. 分组数据</span></div>
     $$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}, \qquad \bar{x} \approx \frac{\sum_i f_i \, x_i}{\sum_i f_i} $$
-    <p data-lang="en">Left: the exact sample mean for raw data. Right: an <em>estimate</em> for grouped data, where $x_i$ is the midpoint of class $i$ and $f_i$ its frequency. The estimate is only as good as the assumption that within-class values cluster near the midpoint &mdash; on Paper 1 the IB expects you to write this approximation explicitly.</p>
-    <p data-lang="zh">左：原始数据的精确样本均值。右：分组数据的<em>估计值</em>，其中 $x_i$ 为第 $i$ 类的组中值，$f_i$ 为对应频数。该估计仅在"类内数据聚集于组中值附近"的假设下才好 — 在试卷 1 中，IB 期望你显式写出这是近似而非等号。</p>
+    <p data-lang="en">Left: the exact sample mean for raw data. Right: an <em>estimate</em> for grouped data, where $x_i$ is the midpoint of class $i$ and $f_i$ its frequency. The estimate is only as good as the assumption that within-class values balance around the midpoint, so write "$\approx$" (or "estimate") rather than "$=$".</p>
+    <p data-lang="zh">左：原始数据的精确样本均值。右：分组数据的<em>估计值</em>，其中 $x_i$ 为第 $i$ 类的组中值，$f_i$ 为对应频数。该估计仅在"类内数据聚集于组中值附近"的假设下才好，所以要写 "$\approx$"（或注明"估计值"），而不是 "$=$"。</p>
   </div>
 
   <div class="concept-box">
@@ -1500,7 +1872,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>众数（<code>mode</code>，或众数类 <code>modal class</code>）。</strong>当问题问"最常见"时用（如该备货哪一种鞋码）。连续数据应报告众数类，而不是单一众数。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; Raw data mean and median</span><span data-lang="zh">例题 — 原始数据的均值与中位数</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Raw data mean and median</span><span data-lang="zh">例题：原始数据的均值与中位数</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> $\{4, 6, 7, 7, 9, 12, 15\}$. Find the mean, median, and mode.</p>
     <p>$n = 7$. Sum $= 4 + 6 + 7 + 7 + 9 + 12 + 15 = 60$.</p>
@@ -1515,8 +1887,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p>中位数（数据已排序）位于位置 $\tfrac{7+1}{2} = 4$：第 4 个值为 $7$。</p>
     <p>众数：$7$ 出现两次，其余均只出现一次。<strong>众数 $= 7$。</strong></p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Estimating the mean from grouped data</span><span data-lang="zh">例题 — 由分组数据估计均值</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Estimating the mean from grouped data</span><span data-lang="zh">例题：由分组数据估计均值</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Using the masses table from 1.2:</p>
     <div class="table-wrap">
@@ -1549,23 +1922,31 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \bar{x} \approx \frac{2550}{40} = 63.75 \text{ kg}. $$
     <p><strong>众数类（<code>modal class</code>）：</strong>$60 \le m < 70$（频数最高，$14$）。数据连续，因此报告的是类，而不是单一值。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Mean is fragile, median is not</span><span data-lang="zh">例题 — 均值脆弱，中位数稳健</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Mean is fragile, median is not</span><span data-lang="zh">例题：均值脆弱，中位数稳健</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Salaries (in thousands): $\{32, 34, 35, 36, 38, 40, 250\}$. Find the mean and median, and comment.</p>
     <p>$\bar{x} = \frac{32 + 34 + 35 + 36 + 38 + 40 + 250}{7} = \frac{465}{7} \approx 66.4$ thousand.</p>
     <p>Median (sorted, $n = 7$, position 4): $36$ thousand.</p>
-    <p><strong>Comment.</strong> The mean ($\approx 66.4$k) is dragged upward by the single high earner ($250$k). The median ($36$k) represents the typical employee much better. With outliers present, IB usually rewards naming the median as the "more appropriate measure".</p>
+    <p><strong>Comment.</strong> The mean ($\approx 66.4$k) is dragged upward by the single high earner ($250$k). The median ($36$k) represents the typical employee much better. With an outlier present, the median is the more appropriate measure of a typical salary, and the reason to give is the outlier.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>工资（单位：千元）：$\{32, 34, 35, 36, 38, 40, 250\}$。求均值与中位数，并加以评论。</p>
     <p>$\bar{x} = \frac{32 + 34 + 35 + 36 + 38 + 40 + 250}{7} = \frac{465}{7} \approx 66.4$ 千元。</p>
     <p>中位数（排序后 $n = 7$，第 4 位）：$36$ 千元。</p>
-    <p><strong>评论。</strong>均值（$\approx 66.4$ 千元）被那位高收入者（$250$ 千元）单方面拉高。中位数（$36$ 千元）更能代表典型员工。当存在异常值（<code>outlier</code>）时，IB 通常奖励将中位数判为"更合适的度量"。</p>
+    <p><strong>评论。</strong>均值（$\approx 66.4$ 千元）被那位高收入者（$250$ 千元）单方面拉高。中位数（$36$ 千元）更能代表典型员工。当存在异常值（<code>outlier</code>）时，中位数是描述典型工资更合适的度量，给出的理由就是该异常值。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For grouped data, write the mid-interval values in a column, show $\sum f_i x_i$ and $\sum f_i$, and use "$\approx$" or the word "estimate" for the answer: the true mean of the raw data is unknown. With technology, enter the midpoints and the frequencies as two lists and check that the total frequency the calculator reports matches the table. When a question asks which measure is more appropriate, name it <strong>and</strong> give the reason in context ("the median, because the salary of $250$ thousand is an outlier that pulls the mean up").</p>
+    <p data-lang="zh">对分组数据，把组中值列成一列，写出 $\sum f_i x_i$ 与 $\sum f_i$，答案用 "$\approx$" 或注明"估计值"：原始数据的真实均值是未知的。使用技术工具时，把组中值与频数输入为两个列表，并检查计算器报告的总频数与表格一致。题目问哪种度量更合适时，既要说出名称，<strong>也要</strong>结合情境给出理由（"中位数，因为 $250$ 千元的工资是异常值，会把均值拉高"）。</p>
   </div>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; The mean as a minimizer</span><span data-lang="zh">▸ 深入探究 — 均值作为最小化解</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: The mean as a minimizer</span><span data-lang="zh">▸ 深入探究：均值作为最小化解</span></summary>
     <div class="detail-body">
       <p data-lang="en">The mean is the unique value $c$ that minimizes the sum of <em>squared</em> deviations:</p>
       <p data-lang="zh">均值是使<em>偏差平方和</em>最小的唯一常数 $c$：</p>
@@ -1573,8 +1954,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="en">Quick proof: differentiate with respect to $c$, set to zero:</p>
       <p data-lang="zh">简证：对 $c$ 求导，并令导数为零：</p>
       $$ \frac{d}{dc}\sum (x_i - c)^2 = -2 \sum (x_i - c) = 0 \;\;\Longrightarrow\;\; c = \frac{\sum x_i}{n} = \bar{x}. $$
-      <p data-lang="en">The median, by contrast, minimises the sum of <em>absolute</em> deviations $\sum |x_i - c|$. Squaring penalises a single big deviation a lot more than absolute value does &mdash; that's exactly why the mean is sensitive to outliers and the median isn't. This is the deep reason behind variance / SD using squares: they pair naturally with the mean.</p>
-      <p data-lang="zh">相对地，中位数（<code>median</code>）使<em>绝对偏差之和</em> $\sum |x_i - c|$ 最小。平方对单个大偏差的惩罚远高于绝对值 — 这正是均值对异常值敏感、而中位数稳健的根源。这也是方差（<code>variance</code>）/ 标准差（<code>standard deviation</code>）必须用平方的深层理由：它们与均值天然配对。</p>
+      <p data-lang="en">The median, by contrast, minimises the sum of <em>absolute</em> deviations $\sum |x_i - c|$. Squaring penalises a single big deviation a lot more than absolute value does, and that is exactly why the mean is sensitive to outliers and the median isn't. This is the deep reason behind variance / SD using squares: they pair naturally with the mean.</p>
+      <p data-lang="zh">相对地，中位数（<code>median</code>）使<em>绝对偏差之和</em> $\sum |x_i - c|$ 最小。平方对单个大偏差的惩罚远高于绝对值，这正是均值对异常值敏感、而中位数稳健的根源。这也是方差（<code>variance</code>）/ 标准差（<code>standard deviation</code>）必须用平方的深层理由：它们与均值天然配对。</p>
     </div>
   </details>
 
@@ -1590,7 +1971,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$22.5$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\sum f_i x_i = 2(5) + 5(15) + 3(25) = 10 + 75 + 75 = 160$. $\sum f_i = 10$. Mean $\approx 160/10 = 16$.</span><span data-lang="zh">正确！$\sum f_i x_i = 2(5) + 5(15) + 3(25) = 10 + 75 + 75 = 160$。$\sum f_i = 10$。均值 $\approx 160/10 = 16$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Use $\bar{x} \approx \frac{\sum f_i x_i}{\sum f_i} = \frac{160}{10} = 16$. Don't average the midpoints alone &mdash; weight by frequency.</span><span data-lang="zh">用 $\bar{x} \approx \frac{\sum f_i x_i}{\sum f_i} = \frac{160}{10} = 16$。不要只对组中值取平均 — 必须按频数加权。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Use $\bar{x} \approx \frac{\sum f_i x_i}{\sum f_i} = \frac{160}{10} = 16$. Don't average the midpoints alone; weight them by frequency.</span><span data-lang="zh">用 $\bar{x} \approx \frac{\sum f_i x_i}{\sum f_i} = \frac{160}{10} = 16$。不要只对组中值取平均，必须按频数加权。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
@@ -1609,6 +1990,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">With an outlier and skew, use median + IQR. Mean + SD are distorted; mode and range alone don't summarise spread well.</span><span data-lang="zh">存在异常值与偏态时，请用 中位数 + IQR。均值 + 标准差被扭曲；仅众数或极差不足以描述离散程度。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The mean of five numbers is $12$. Four of them are $10$, $11$, $13$ and $15$. Find the fifth.</span><span data-lang="zh">1. 五个数的均值为 $12$，其中四个是 $10$、$11$、$13$、$15$。求第五个数。</span></summary>
+      <div class="sg-a"><p data-lang="en">The total is $5 \times 12 = 60$. The four known values add to $10 + 11 + 13 + 15 = 49$, so the fifth is $60 - 49 = 11$.</p><p data-lang="zh">总和为 $5 \times 12 = 60$。已知四个数之和为 $10 + 11 + 13 + 15 = 49$，所以第五个数为 $60 - 49 = 11$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Classes $0 \le x < 4$, $4 \le x < 8$ and $8 \le x < 12$ have frequencies $3$, $5$ and $2$. Estimate the mean and state the modal class.</span><span data-lang="zh">2. 组 $0 \le x < 4$、$4 \le x < 8$、$8 \le x < 12$ 的频数分别为 $3$、$5$、$2$。估计均值并写出众数类。</span></summary>
+      <div class="sg-a"><p data-lang="en">Midpoints $2$, $6$, $10$. $\sum f_i x_i = 3(2) + 5(6) + 2(10) = 6 + 30 + 20 = 56$ and $\sum f_i = 10$, so $\bar{x} \approx 5.6$. Modal class: $4 \le x < 8$.</p><p data-lang="zh">组中值为 $2$、$6$、$10$。$\sum f_i x_i = 3(2) + 5(6) + 2(10) = 6 + 30 + 20 = 56$，$\sum f_i = 10$，故 $\bar{x} \approx 5.6$。众数类：$4 \le x < 8$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $2, 3, 3, 4, 5, 6, 30$, find the mean and the median, and say which better describes a typical value.</span><span data-lang="zh">3. 对 $2, 3, 3, 4, 5, 6, 30$，求均值与中位数，并说明哪一个更能描述典型值。</span></summary>
+      <div class="sg-a"><p data-lang="en">Sum $= 53$, so $\bar{x} = \tfrac{53}{7} \approx 7.57$. Median: the $4$th value, $4$. The median is better: six of the seven values are $6$ or less, and the mean is pulled above all of them by the single value $30$.</p><p data-lang="zh">总和 $= 53$，故 $\bar{x} = \tfrac{53}{7} \approx 7.57$。中位数：第 $4$ 个值 $4$。中位数更好：七个值中有六个不超过 $6$，而均值被单个值 $30$ 拉到了它们全部之上。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1616,19 +2013,37 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- 1.5 DISPERSION -->
 <section class="section" id="s-d1-5">
   <div class="section-label"><span data-lang="en">Topic 1.5 &middot; How spread out</span><span data-lang="zh">主题 1.5 · 离散程度</span></div>
-  <h2><span data-lang="en">1.5 Measures of Dispersion &mdash; Variance &amp; Standard Deviation</span><span data-lang="zh">1.5 离散程度的度量 — 方差与标准差</span> <span class="ib-ref">SL 4.3</span></h2>
+  <h2><span data-lang="en">1.5 Measures of Dispersion: Variance &amp; Standard Deviation</span><span data-lang="zh">1.5 离散程度的度量：方差与标准差</span> <span class="ib-ref">SL 4.3</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate the range and the interquartile range of a data set.</li>
+      <li>Calculate the variance and standard deviation of raw data by the deviation form and by the computational form.</li>
+      <li>Estimate the standard deviation of grouped data from mid-interval values.</li>
+      <li>Explain why deviations are squared and why $\sigma$ divides by $n$.</li>
+      <li>Interpret a standard deviation in context and compare the spread of two data sets.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>计算（<code>calculate</code>）数据集的极差与四分位距。</li>
+      <li>分别用偏差形式与计算式计算（<code>calculate</code>）原始数据的方差与标准差。</li>
+      <li>用组中值估计（<code>estimate</code>）分组数据的标准差。</li>
+      <li>解释（<code>explain</code>）为何要把偏差平方，以及为何 $\sigma$ 除以 $n$。</li>
+      <li>结合情境解释（<code>interpret</code>）标准差，并比较（<code>compare</code>）两组数据的离散程度。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat">
     <strong data-lang="en">Dispersion measures how spread the data is around its centre.</strong>
     <strong data-lang="zh">离散程度衡量数据围绕中心的分散程度。</strong>
     <span data-lang="en"><strong>Range</strong> $= \max - \min$ (very fragile). <strong>IQR</strong> $= Q_3 - Q_1$ (robust). <strong>Variance</strong> $\sigma^2$ averages squared deviations from the mean; <strong>SD</strong> $\sigma$ is its square root and is in the same units as the data.<br>
-    <strong>IB defaults to dividing by $n$, not $n - 1$.</strong> Always use $\sigma$, $\sigma^2$ (calculator displays this as $\sigma_n$ or $\sigma_x$ &mdash; <em>not</em> $s_x$).</span>
+    <strong>This course divides by $n$, not $n - 1$.</strong> Always use $\sigma$, $\sigma^2$ (technology often labels it $\sigma_x$; it is <em>not</em> $s_x$, which divides by $n - 1$).</span>
     <span data-lang="zh"><strong>极差（<code>range</code>）</strong> $= \max - \min$（非常脆弱）。<strong>四分位距（<code>interquartile range</code>，IQR）</strong> $= Q_3 - Q_1$（稳健）。<strong>方差（<code>variance</code>）</strong> $\sigma^2$ 是与均值偏差平方的平均；<strong>标准差（<code>standard deviation</code>，SD）</strong> $\sigma$ 是方差的平方根，单位与原始数据相同。<br>
-    <strong>IB 默认除以 $n$，而非 $n - 1$。</strong>始终使用 $\sigma$、$\sigma^2$（计算器显示为 $\sigma_n$ 或 $\sigma_x$ — <em>不是</em> $s_x$）。</span>
+    <strong>本课程除以 $n$，而非 $n - 1$。</strong>始终使用 $\sigma$、$\sigma^2$（技术工具常标为 $\sigma_x$；<em>不是</em>除以 $n - 1$ 的 $s_x$）。</span>
   </div>
 
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Population standard deviation &amp; variance (IB convention)</span><span data-lang="zh">总体标准差与方差（IB 约定）</span></div>
+    <div class="formula-label"><span data-lang="en">Population standard deviation &amp; variance (this course)</span><span data-lang="zh">总体标准差与方差（本课程约定）</span></div>
     $$ \sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2, \qquad \sigma = \sqrt{\sigma^2}. $$
     <p data-lang="en">For grouped data with class midpoints $x_i$, frequencies $f_i$, and $n = \sum f_i$:</p>
     <p data-lang="zh">对分组数据：组中值为 $x_i$，频数为 $f_i$，$n = \sum f_i$：</p>
@@ -1638,8 +2053,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Computational form (no need to compute deviations first)</span><span data-lang="zh">计算式（无需先逐个算偏差）</span></div>
     $$ \sigma^2 = \overline{x^2} - \bar{x}^2 = \frac{\sum x_i^2}{n} - \bar{x}^2. $$
-    <p data-lang="en">This is the by-hand-friendly version: compute $\sum x_i$ and $\sum x_i^2$ once, subtract. Avoids round-off from subtracting many small deviations.</p>
-    <p data-lang="zh">这是适合手算的形式：只算一次 $\sum x_i$ 与 $\sum x_i^2$，再做减法。避免对许多小偏差逐个相减带来的舍入误差。</p>
+    <p data-lang="en">This is the by-hand-friendly version: compute $\sum x_i$ and $\sum x_i^2$ once, then subtract. It is quickest when the mean is not a whole number, because you never square awkward decimal deviations.</p>
+    <p data-lang="zh">这是适合手算的形式：只算一次 $\sum x_i$ 与 $\sum x_i^2$，再做减法。均值不是整数时它最快，因为不必对不整齐的小数偏差逐个平方。</p>
   </div>
 
   <div class="concept-box">
@@ -1647,8 +2062,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">Deviations $x_i - \bar{x}$ sum to zero by construction:</span>
     <span data-lang="zh">由构造可知，偏差 $x_i - \bar{x}$ 之和必为零：</span>
     $$ \sum (x_i - \bar{x}) = \sum x_i - n\bar{x} = n\bar{x} - n\bar{x} = 0. $$
-    <span data-lang="en">So you can't just average raw deviations. Squaring removes the sign; the SD then "un-squares" to get back to the original units. (Averaging $|x_i - \bar{x}|$ also works mathematically, but the squared version pairs with the mean &mdash; see the "Going deeper" in 1.4.)</span>
-    <span data-lang="zh">所以不能直接对原始偏差取平均。平方去掉符号；标准差再开方回到原始单位。（数学上对 $|x_i - \bar{x}|$ 取平均也可行，但平方版本与均值天然配对 — 详见 1.4 的"深入探究"。）</span>
+    <span data-lang="en">So you can't just average raw deviations. Squaring removes the sign; the SD then "un-squares" to get back to the original units. (Averaging $|x_i - \bar{x}|$ also works mathematically, but the squared version pairs with the mean; see the "Going deeper" in 1.4.)</span>
+    <span data-lang="zh">所以不能直接对原始偏差取平均。平方去掉符号；标准差再开方回到原始单位。（数学上对 $|x_i - \bar{x}|$ 取平均也可行，但平方版本与均值天然配对，详见 1.4 的"深入探究"。）</span>
   </div>
 
   <div class="concept-box orange">
@@ -1657,7 +2072,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="zh">报告中心时务必同时报告离散程度。对称数据最好用 <strong>(均值, 标准差)</strong>；偏态数据最好用 <strong>(中位数, IQR)</strong>。只报告中心丢掉一半信息；只报告离散程度则没有定位点。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; SD from raw data</span><span data-lang="zh">例题 — 由原始数据求标准差</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: SD from raw data</span><span data-lang="zh">例题：由原始数据求标准差</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Find the standard deviation of $\{4, 6, 7, 9, 14\}$.</p>
     <p>$n = 5$. $\sum x_i = 40$, so $\bar{x} = 8$.</p>
@@ -1672,39 +2087,48 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \begin{aligned} (4 - 8)^2 &amp;= 16 \\ (6 - 8)^2 &amp;= 4 \\ (7 - 8)^2 &amp;= 1 \\ (9 - 8)^2 &amp;= 1 \\ (14 - 8)^2 &amp;= 36 \end{aligned} \qquad \sum = 58. $$
     $$ \sigma^2 = \frac{58}{5} = 11.6, \qquad \sigma = \sqrt{11.6} \approx 3.41. $$
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; SD by the computational form</span><span data-lang="zh">例题 — 用计算式求标准差</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: SD by the computational form</span><span data-lang="zh">例题：用计算式求标准差</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Same data $\{4, 6, 7, 9, 14\}$, using $\sigma^2 = \overline{x^2} - \bar{x}^2$.</p>
     <p>$\sum x_i^2 = 16 + 36 + 49 + 81 + 196 = 378$. $\overline{x^2} = 378/5 = 75.6$. $\bar{x}^2 = 64$.</p>
     $$ \sigma^2 = 75.6 - 64 = 11.6, \qquad \sigma \approx 3.41. $$
-    <p>Same answer, faster &mdash; especially useful on Paper 1 when the data is small but the deviations would be messy.</p>
+    <p>Same answer, and often faster by hand, especially when the deviations would be messy decimals.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>同一数据 $\{4, 6, 7, 9, 14\}$，改用 $\sigma^2 = \overline{x^2} - \bar{x}^2$。</p>
     <p>$\sum x_i^2 = 16 + 36 + 49 + 81 + 196 = 378$。$\overline{x^2} = 378/5 = 75.6$。$\bar{x}^2 = 64$。</p>
     $$ \sigma^2 = 75.6 - 64 = 11.6, \qquad \sigma \approx 3.41. $$
-    <p>结果相同，速度更快 — 在试卷 1（<code>Paper 1</code>）数据量小但偏差不整齐时尤为好用。</p>
+    <p>结果相同，手算往往更快，尤其当偏差是不整齐的小数时。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Grouped-data SD</span><span data-lang="zh">例题 — 分组数据标准差</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Grouped-data SD</span><span data-lang="zh">例题：分组数据标准差</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> For the masses table (1.4), with $\bar{x} = 63.75$, find $\sigma$.</p>
     <p>Deviations from $\bar{x}$, weighted:</p>
     $$ \begin{aligned} 4(45 - 63.75)^2 &amp;= 4(351.5625) = 1406.25 \\ 11(55 - 63.75)^2 &amp;= 11(76.5625) = 842.1875 \\ 14(65 - 63.75)^2 &amp;= 14(1.5625) = 21.875 \\ 8(75 - 63.75)^2 &amp;= 8(126.5625) = 1012.5 \\ 3(85 - 63.75)^2 &amp;= 3(451.5625) = 1354.6875 \end{aligned} $$
     $$ \sum f_i (x_i - \bar{x})^2 = 4637.5, \qquad \sigma = \sqrt{\frac{4637.5}{40}} = \sqrt{115.9375} \approx 10.77 \text{ kg}. $$
-    <p>(On Paper 2 you would put midpoints in L1, frequencies in L2, and read $\sigma_x$ directly from 1-Var Stats.)</p>
+    <p>(With technology, enter the midpoints and the frequencies as two lists and read $\sigma_x$ from the one-variable statistics output.)</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>用 1.4 节的体重分组表，已知 $\bar{x} = 63.75$，求 $\sigma$。</p>
     <p>对 $\bar{x}$ 的加权偏差：</p>
     $$ \begin{aligned} 4(45 - 63.75)^2 &amp;= 4(351.5625) = 1406.25 \\ 11(55 - 63.75)^2 &amp;= 11(76.5625) = 842.1875 \\ 14(65 - 63.75)^2 &amp;= 14(1.5625) = 21.875 \\ 8(75 - 63.75)^2 &amp;= 8(126.5625) = 1012.5 \\ 3(85 - 63.75)^2 &amp;= 3(451.5625) = 1354.6875 \end{aligned} $$
     $$ \sum f_i (x_i - \bar{x})^2 = 4637.5, \qquad \sigma = \sqrt{\frac{4637.5}{40}} = \sqrt{115.9375} \approx 10.77 \text{ kg}. $$
-    <p>（在试卷 2 上你会把组中值放入 L1、频数放入 L2，然后从 1-Var Stats 直接读出 $\sigma_x$。）</p>
+    <p>（使用技术工具时，把组中值与频数输入为两个列表，从单变量统计结果中读出 $\sigma_x$。）</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When technology gives you two standard deviations, the one this course uses is $\sigma$ (divide by $n$), often labelled $\sigma_x$; $s_x$ divides by $n - 1$ and gives a larger value. Give a standard deviation with the units of the data. When asked to compare two data sets, make two comparisons in context, one of centre and one of spread: "Class A scored higher on average (mean $72$ against $65$) and more consistently (standard deviation $4.1$ against $8.3$)". A bigger standard deviation means the data are more spread out about the mean, not that the values are bigger.</p>
+    <p data-lang="zh">技术工具给出两个标准差时，本课程使用的是 $\sigma$（除以 $n$），常标为 $\sigma_x$；$s_x$ 除以 $n - 1$，数值更大。标准差要带上数据的单位。题目要求比较两组数据时，要结合情境作两项比较，一项比较中心，一项比较离散程度："A 班平均分更高（均值 $72$ 对 $65$），且更稳定（标准差 $4.1$ 对 $8.3$）"。标准差更大表示数据围绕均值更分散，而不是数值更大。</p>
   </div>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Equivalence of the two SD formulas</span><span data-lang="zh">▸ 深入探究 — 两个标准差公式等价</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Equivalence of the two SD formulas</span><span data-lang="zh">▸ 深入探究：两个标准差公式等价</span></summary>
     <div class="detail-body">
       <p data-lang="en">Both forms compute the same quantity. Expand $(x_i - \bar{x})^2$:</p>
       <p data-lang="zh">两种形式计算同一个量。展开 $(x_i - \bar{x})^2$：</p>
@@ -1712,20 +2136,20 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="en">Divide by $n$:</p>
       <p data-lang="zh">两边除以 $n$：</p>
       $$ \sigma^2 = \frac{\sum (x_i - \bar{x})^2}{n} = \frac{\sum x_i^2}{n} - \bar{x}^2 = \overline{x^2} - \bar{x}^2. $$
-      <p data-lang="en">The computational form is preferred on Paper 1 because it avoids subtracting potentially close-in-value deviations &mdash; that's a source of catastrophic cancellation if you compute by calculator with limited precision.</p>
-      <p data-lang="zh">试卷 1 优先用计算式：它避免了对若干数值相近的偏差逐个相减 — 在精度有限的计算器上，这会造成灾难性的有效数字抵消。</p>
+      <p data-lang="en">The computational form is handy by hand when $\bar{x}$ is awkward. With rounded intermediate values it can lose accuracy, because it subtracts two large, nearly equal numbers; that is why statistical software works with the deviations instead.</p>
+      <p data-lang="zh">当 $\bar{x}$ 不整齐时，计算式便于手算。但若中间值经过舍入，它可能损失精度，因为它要把两个很大且几乎相等的数相减；这正是统计软件改用偏差形式计算的原因。</p>
     </div>
   </details>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why the IB uses $n$, not $n - 1$</span><span data-lang="zh">▸ 深入探究 — 为何 IB 用 $n$ 而非 $n - 1$</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why this course uses $n$, not $n - 1$</span><span data-lang="zh">▸ 深入探究：为何本课程用 $n$ 而非 $n - 1$</span></summary>
     <div class="detail-body">
-      <p data-lang="en">For a <em>sample</em> of size $n$ drawn from a larger population, the unbiased estimator of the population variance divides by $n - 1$ (the "Bessel correction"). The $-1$ accounts for using $\bar{x}$ in place of the unknown $\mu$ &mdash; one degree of freedom is "spent" estimating the mean.</p>
-      <p data-lang="zh">从更大总体（<code>population</code>）中抽取容量为 $n$ 的<em>样本</em>（<code>sample</code>）时，总体方差的无偏估计应除以 $n - 1$（"贝塞尔校正"）。这个 $-1$ 用来补偿用 $\bar{x}$ 代替未知 $\mu$ — 一个自由度"花"在了估计均值上。</p>
-      <p data-lang="en">However, the IB syllabus treats the data given in the question as the entire population of interest, so $\mu$ is known (it equals $\bar{x}$ when you have everyone). With $\mu$ known, dividing by $n$ gives an unbiased estimator of the true variance &mdash; no correction needed.</p>
-      <p data-lang="zh">不过，IB 教学大纲把题目给定的数据当作所关注的整个总体，因此 $\mu$ 已知（涵盖全部个体时它就等于 $\bar{x}$）。$\mu$ 已知后，除以 $n$ 已是真实方差的无偏估计 — 无需校正。</p>
-      <p data-lang="en">Practically: <strong>use $\sigma_x$ on your calculator, never $s_x$.</strong> If your final answer uses $s_x$ where the markscheme used $\sigma_x$, you'll lose accuracy marks. For $n$ large, the two differ negligibly &mdash; but on Paper 1 with tiny $n$, the gap is noticeable.</p>
-      <p data-lang="zh">实务上：<strong>计算器上始终用 $\sigma_x$，绝不用 $s_x$。</strong>评分标准用 $\sigma_x$ 而你用 $s_x$，会丢失精确度分。$n$ 很大时两者差异可忽略 — 但试卷 1 上 $n$ 很小，差距很明显。</p>
+      <p data-lang="en">For a <em>sample</em> of size $n$ drawn from a larger population, the unbiased estimator of the population variance divides by $n - 1$ (the "Bessel correction"). The $-1$ accounts for using $\bar{x}$ in place of the unknown $\mu$: one degree of freedom is "spent" estimating the mean.</p>
+      <p data-lang="zh">从更大总体（<code>population</code>）中抽取容量为 $n$ 的<em>样本</em>（<code>sample</code>）时，总体方差的无偏估计应除以 $n - 1$（"贝塞尔校正"）。这个 $-1$ 用来补偿用 $\bar{x}$ 代替未知 $\mu$：一个自由度"花"在了估计均值上。</p>
+      <p data-lang="en">In this course, the standard deviation of a data set is $\sigma$, which divides by $n$: the data are treated as the whole group being described. With every value present, $\bar{x}$ is the actual mean of that group and nothing is being estimated, so no correction is needed.</p>
+      <p data-lang="zh">本课程中，数据集的标准差是除以 $n$ 的 $\sigma$：数据被视为所描述的整个群体。全部数值都在手时，$\bar{x}$ 就是该群体的实际均值，并不存在估计，因此无需校正。</p>
+      <p data-lang="en">Practically: <strong>read $\sigma_x$ from your technology, not $s_x$.</strong> For large $n$ the two differ very little, but for small $n$ the gap is noticeable: for $3, 5, 5, 7$, $\sigma = \sqrt{2} \approx 1.41$ while $s = \sqrt{8/3} \approx 1.63$.</p>
+      <p data-lang="zh">实务上：<strong>从技术工具读取 $\sigma_x$，而不是 $s_x$。</strong>$n$ 很大时两者相差很小，但 $n$ 很小时差距明显：对 $3, 5, 5, 7$，$\sigma = \sqrt{2} \approx 1.41$，而 $s = \sqrt{8/3} \approx 1.63$。</p>
     </div>
   </details>
 
@@ -1740,7 +2164,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$2$</div>
       <div class="quiz-opt" data-idx="3">$\sqrt{8} \approx 2.83$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Squared deviations: $(3-5)^2 = 4$, $(5-5)^2 = 0$, $(5-5)^2 = 0$, $(7-5)^2 = 4$, sum $= 8$. $\sigma^2 = 8/4 = 2$, $\sigma = \sqrt{2}$. (Option B would use $n - 1 = 3$, the sample formula &mdash; not the IB convention.)</span><span data-lang="zh">正确！偏差平方：$(3-5)^2 = 4$、$(5-5)^2 = 0$、$(5-5)^2 = 0$、$(7-5)^2 = 4$，和 $= 8$。$\sigma^2 = 8/4 = 2$，$\sigma = \sqrt{2}$。（选项 B 使用 $n - 1 = 3$，是样本公式 — 非 IB 约定。）</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Squared deviations: $(3-5)^2 = 4$, $(5-5)^2 = 0$, $(5-5)^2 = 0$, $(7-5)^2 = 4$, sum $= 8$. $\sigma^2 = 8/4 = 2$, $\sigma = \sqrt{2}$. (Option B divides by $n - 1 = 3$, the formula for $s$; this course uses $\sigma$, which divides by $n$.)</span><span data-lang="zh">正确！偏差平方：$(3-5)^2 = 4$、$(5-5)^2 = 0$、$(5-5)^2 = 0$、$(7-5)^2 = 4$，和 $= 8$。$\sigma^2 = 8/4 = 2$，$\sigma = \sqrt{2}$。（选项 B 除以 $n - 1 = 3$，是 $s$ 的公式；本课程使用除以 $n$ 的 $\sigma$。）</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">$\sum (x_i - \bar{x})^2 = 4 + 0 + 0 + 4 = 8$. $\sigma^2 = 8/n = 8/4 = 2$, so $\sigma = \sqrt{2}$. Use the population formula (divide by $n$, not $n - 1$).</span><span data-lang="zh">$\sum (x_i - \bar{x})^2 = 4 + 0 + 0 + 4 = 8$。$\sigma^2 = 8/n = 8/4 = 2$，所以 $\sigma = \sqrt{2}$。使用总体公式（除以 $n$，而非 $n - 1$）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
@@ -1757,8 +2181,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Mode.</span><span data-lang="zh">众数。</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The range uses both extremes directly, so one large outlier inflates it immediately. SD is also sensitive (it's the runner-up). IQR, median, and mode are robust.</span><span data-lang="zh">正确！极差直接使用两端的极值，因此单个大异常值会立刻把它推高。标准差也敏感（仅次于极差）。IQR、中位数、众数都是稳健的。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Range $= \max - \min$ &mdash; a single extreme can shift it dramatically. IQR, median, mode are robust because they ignore the tails.</span><span data-lang="zh">极差 $= \max - \min$ — 一个极值就能让它剧烈变化。IQR、中位数、众数则因为忽略尾部而稳健。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Range $= \max - \min$, so a single extreme can shift it dramatically. IQR, median, mode are robust because they ignore the tails.</span><span data-lang="zh">极差 $= \max - \min$，一个极值就能让它剧烈变化。IQR、中位数、众数则因为忽略尾部而稳健。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the range and the interquartile range of $3, 8, 9, 12, 15, 21, 30$.</span><span data-lang="zh">1. 求 $3, 8, 9, 12, 15, 21, 30$ 的极差与四分位距。</span></summary>
+      <div class="sg-a"><p data-lang="en">Range $= 30 - 3 = 27$. The median is the $4$th value, $12$; lower half $\{3, 8, 9\}$ gives $Q_1 = 8$ and upper half $\{15, 21, 30\}$ gives $Q_3 = 21$, so $\text{IQR} = 21 - 8 = 13$.</p><p data-lang="zh">极差 $= 30 - 3 = 27$。中位数是第 $4$ 个值 $12$；下半部分 $\{3, 8, 9\}$ 得 $Q_1 = 8$，上半部分 $\{15, 21, 30\}$ 得 $Q_3 = 21$，故 $\text{IQR} = 21 - 8 = 13$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use $\sigma^2 = \overline{x^2} - \bar{x}^2$ to find the standard deviation of $2, 4, 4, 4, 5, 5, 7, 9$.</span><span data-lang="zh">2. 用 $\sigma^2 = \overline{x^2} - \bar{x}^2$ 求 $2, 4, 4, 4, 5, 5, 7, 9$ 的标准差。</span></summary>
+      <div class="sg-a"><p data-lang="en">$n = 8$, $\sum x_i = 40$, so $\bar{x} = 5$. $\sum x_i^2 = 4 + 16 + 16 + 16 + 25 + 25 + 49 + 81 = 232$, so $\overline{x^2} = 29$. Then $\sigma^2 = 29 - 25 = 4$ and $\sigma = 2$.</p><p data-lang="zh">$n = 8$，$\sum x_i = 40$，故 $\bar{x} = 5$。$\sum x_i^2 = 4 + 16 + 16 + 16 + 25 + 25 + 49 + 81 = 232$，故 $\overline{x^2} = 29$。于是 $\sigma^2 = 29 - 25 = 4$，$\sigma = 2$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Two classes both have a mean test score of $68$. Class A has standard deviation $4$ and class B has standard deviation $12$. Compare the two classes.</span><span data-lang="zh">3. 两个班的测验平均分都是 $68$。A 班标准差为 $4$，B 班标准差为 $12$。比较这两个班。</span></summary>
+      <div class="sg-a"><p data-lang="en">The classes performed the same on average, but class B's scores are much more spread out about the mean: class A is more consistent, while class B has more very high and very low scores.</p><p data-lang="zh">两个班的平均表现相同，但 B 班的分数围绕均值分散得多：A 班更稳定，而 B 班的极高分与极低分更多。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1769,6 +2209,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Topic 1.6 &middot; How summaries change</span><span data-lang="zh">主题 1.6 · 统计量如何变化</span></div>
   <h2><span data-lang="en">1.6 Effect of Linear Transformations on Data</span><span data-lang="zh">1.6 数据线性变换的影响</span> <span class="ib-ref">SL 4.3</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the effect of adding a constant, and of multiplying by a constant, on the mean, the median and the standard deviation.</li>
+      <li>Calculate the mean and standard deviation of data after a linear transformation $y = ax + b$.</li>
+      <li>Explain why adding a constant moves the centre but leaves every measure of spread unchanged.</li>
+      <li>Deduce the original mean and standard deviation from the transformed ones.</li>
+      <li>Apply the rules to unit conversions.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）加上一个常数、乘以一个常数分别对均值、中位数与标准差的影响。</li>
+      <li>计算（<code>calculate</code>）线性变换 $y = ax + b$ 之后数据的均值与标准差。</li>
+      <li>解释（<code>explain</code>）为何加常数会移动中心，却不改变任何离散程度的度量。</li>
+      <li>由变换后的均值与标准差推出（<code>deduce</code>）原始的均值与标准差。</li>
+      <li>把这些规则应用（<code>apply</code>）于单位换算。</li>
+    </ul>
+  </div>
+
   <div class="cram-cheat">
     <strong data-lang="en">Transform every observation by $y_i = a x_i + b$. Then:</strong>
     <strong data-lang="zh">对每个观测做线性变换（<code>linear transformation</code>）$y_i = a x_i + b$。则：</strong>
@@ -1776,12 +2234,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <ul style="margin: 6px 0 0 22px;" data-lang="en">
       <li><strong>Adding $b$</strong> shifts mean by $b$; SD unchanged.</li>
       <li><strong>Multiplying by $a$</strong> multiplies mean by $a$; multiplies SD by $|a|$.</li>
-      <li>Median, $Q_1$, $Q_3$, IQR all transform the same way as the mean (subject to sign of $a$ for ordering).</li>
+      <li>Median, $Q_1$ and $Q_3$ transform like the mean (if $a < 0$ the order reverses, so the new $Q_1$ comes from the old $Q_3$). The IQR and the range transform like the SD: multiplied by $|a|$, unaffected by $b$.</li>
     </ul>
     <ul style="margin: 6px 0 0 22px;" data-lang="zh">
       <li><strong>加 $b$</strong>使均值平移 $b$；标准差不变。</li>
       <li><strong>乘以 $a$</strong>使均值乘以 $a$；标准差乘以 $|a|$。</li>
-      <li>中位数、$Q_1$、$Q_3$、IQR 全部按均值同样的方式变换（在 $a$ 的符号影响下注意顺序）。</li>
+      <li>中位数、$Q_1$、$Q_3$ 按均值的方式变换（若 $a < 0$ 则顺序反转，新的 $Q_1$ 来自原来的 $Q_3$）。IQR 与极差按标准差的方式变换：乘以 $|a|$，不受 $b$ 影响。</li>
     </ul>
   </div>
 
@@ -1797,34 +2255,35 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="zh"><strong>均值。</strong>$\bar{y} = \tfrac{1}{n}\sum (a x_i + b) = a \tfrac{1}{n}\sum x_i + b = a\bar{x} + b$。<br>
     <strong>方差。</strong>$y_i - \bar{y} = (a x_i + b) - (a\bar{x} + b) = a(x_i - \bar{x})$。平方再求平均：</span>
     $$ \sigma_y^2 = \frac{1}{n}\sum a^2 (x_i - \bar{x})^2 = a^2 \sigma_x^2 \quad\Longrightarrow\quad \sigma_y = |a|\sigma_x. $$
-    <span data-lang="en">The shift $b$ vanishes from variance &mdash; spread is translation-invariant. The scale $a$ comes out squared in variance and as $|a|$ in SD.</span>
-    <span data-lang="zh">平移 $b$ 在方差中消失 — 离散程度对平移不变。比例因子 $a$ 在方差中以平方出现，在标准差中以 $|a|$ 出现。</span>
+    <span data-lang="en">The shift $b$ vanishes from the variance: spread is unchanged by a translation. The scale $a$ comes out squared in variance and as $|a|$ in SD.</span>
+    <span data-lang="zh">平移 $b$ 在方差中消失：离散程度不受平移影响。比例因子 $a$ 在方差中以平方出现，在标准差中以 $|a|$ 出现。</span>
   </div>
 
   <div class="concept-box green">
-    <strong style="color: var(--green);"><span data-lang="en">Use case &mdash; unit conversion</span><span data-lang="zh">应用场景 — 单位换算</span></strong>
+    <strong style="color: var(--green);"><span data-lang="en">Use case: unit conversion</span><span data-lang="zh">应用场景：单位换算</span></strong>
     <span data-lang="en">Temperatures in Celsius: mean $20{}^\circ$C, SD $3{}^\circ$C. Convert to Fahrenheit using $F = \tfrac{9}{5} C + 32$.</span>
     <span data-lang="zh">摄氏温度：均值 $20{}^\circ$C，标准差 $3{}^\circ$C。用 $F = \tfrac{9}{5} C + 32$ 换算为华氏。</span>
     $$ \bar{F} = \tfrac{9}{5}(20) + 32 = 68\,{}^\circ\text{F}, \qquad \sigma_F = \tfrac{9}{5}(3) = 5.4\,{}^\circ\text{F}. $$
-    <span data-lang="en">The $+32$ doesn't affect SD &mdash; only the scale factor does. This is a classic IB hook.</span>
-    <span data-lang="zh">$+32$ 不影响标准差 — 只有比例因子影响。这是 IB 的经典考点。</span>
+    <span data-lang="en">The $+32$ doesn't affect the SD; only the scale factor does.</span>
+    <span data-lang="zh">$+32$ 不影响标准差，只有比例因子影响。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; Marks scaled and shifted</span><span data-lang="zh">例题 — 分数的伸缩与平移</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Marks scaled and shifted</span><span data-lang="zh">例题：分数的伸缩与平移</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> A class's raw marks have $\bar{x} = 56$, $\sigma_x = 12$. The teacher scales each mark by $y = 1.2 x + 10$ to produce final marks. Find $\bar{y}$ and $\sigma_y$.</p>
     $$ \bar{y} = 1.2(56) + 10 = 67.2 + 10 = 77.2. $$
     $$ \sigma_y = |1.2|(12) = 14.4. $$
-    <p>The shift by $10$ moves the mean only. The scale by $1.2$ inflates both. The IB markscheme awards one mark for each of the two transformed values.</p>
+    <p>The shift by $10$ moves the mean only. The scale by $1.2$ inflates both.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>某班原始分数有 $\bar{x} = 56$，$\sigma_x = 12$。老师按 $y = 1.2 x + 10$ 调整每个分数生成最终成绩。求 $\bar{y}$ 与 $\sigma_y$。</p>
     $$ \bar{y} = 1.2(56) + 10 = 67.2 + 10 = 77.2. $$
     $$ \sigma_y = |1.2|(12) = 14.4. $$
-    <p>$+10$ 仅平移均值；$\times 1.2$ 让两者都放大。IB 评分标准对两个变换后的值各给 1 分。</p>
+    <p>平移 $10$ 只移动均值；乘以 $1.2$ 让均值与标准差都放大。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Reverse direction</span><span data-lang="zh">例题 — 反向</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Reverse direction</span><span data-lang="zh">例题：反向</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Three measurements have variance $25$. Each is then halved. What is the new variance and SD?</p>
     <p>Transformation: $y = 0.5 x$ (no shift). Variance multiplies by $a^2 = 0.25$:</p>
@@ -1837,17 +2296,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \sigma_y^2 = (0.5)^2 (25) = 6.25, \qquad \sigma_y = \sqrt{6.25} = 2.5. $$
     <p>等价地，$\sigma_y = 0.5 \cdot \sigma_x = 0.5 \cdot 5 = 2.5$。</p>
   </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Before calculating, write the change as $y = ax + b$ and name $a$ and $b$ ("add $10$ then multiply by $1.2$" is $y = 1.2(x + 10) = 1.2x + 12$, not $1.2x + 10$). The shift $b$ applies only to measures of position (mean, median, quartiles); measures of spread (standard deviation, IQR, range) are multiplied by $|a|$ and ignore $b$, and the variance is multiplied by $a^{2}$. A standard deviation can never be negative. In a reverse question, undo the steps: $\bar{x} = \tfrac{\bar{y} - b}{a}$ and $\sigma_x = \tfrac{\sigma_y}{|a|}$.</p>
+    <p data-lang="zh">计算前先把变化写成 $y = ax + b$，并指明 $a$ 与 $b$（"先加 $10$ 再乘以 $1.2$" 是 $y = 1.2(x + 10) = 1.2x + 12$，不是 $1.2x + 10$）。平移 $b$ 只作用于位置度量（均值、中位数、四分位数）；离散程度的度量（标准差、IQR、极差）乘以 $|a|$ 且与 $b$ 无关，方差则乘以 $a^{2}$。标准差永远不会是负数。逆向题要倒推：$\bar{x} = \tfrac{\bar{y} - b}{a}$，$\sigma_x = \tfrac{\sigma_y}{|a|}$。</p>
+  </div>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Standardization and the $z$-score</span><span data-lang="zh">▸ 深入探究 — 标准化与 $z$ 分数</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Standardization and the $z$-score</span><span data-lang="zh">▸ 深入探究：标准化与 $z$ 分数</span></summary>
     <div class="detail-body">
       <p data-lang="en">The transformation $z = \dfrac{x - \mu}{\sigma}$ centres and scales the data so that $\bar{z} = 0$ and $\sigma_z = 1$.</p>
       <p data-lang="zh">变换 $z = \dfrac{x - \mu}{\sigma}$ 把数据居中、归一化为 $\bar{z} = 0$、$\sigma_z = 1$。</p>
       <p data-lang="en">Plug into the linear-transformation rules with $a = 1/\sigma$ and $b = -\mu/\sigma$:</p>
       <p data-lang="zh">在线性变换规则中代入 $a = 1/\sigma$、$b = -\mu/\sigma$：</p>
       $$ \bar{z} = \frac{1}{\sigma}\,\mu - \frac{\mu}{\sigma} = 0, \qquad \sigma_z = \left|\frac{1}{\sigma}\right|\,\sigma = 1. $$
-      <p data-lang="en">The $z$-score answers "how many standard deviations is this observation from the mean?" &mdash; the foundation for the normal-distribution work in D3 and for outlier-flagging in real-world statistics. It's also the cleanest demonstration that linear transformations are <em>information-preserving</em>: shape, skewness, and PMCC are all invariant under them.</p>
-      <p data-lang="zh">$z$ 分数回答"这个观测距均值有多少个标准差"— 它是 D3 正态分布工作的基础，也是现实统计中标记异常值的工具。这也是线性变换<em>信息守恒</em>最简洁的演示：形状、偏态、PMCC 在变换下都保持不变。</p>
+      <p data-lang="en">The $z$-score answers "how many standard deviations is this observation from the mean?". It is the foundation for the normal-distribution work in D3 and is used to flag unusual values in real-world statistics. It also shows that a linear transformation with $a > 0$ is <em>information-preserving</em>: the shape of the distribution and the PMCC with another variable are unchanged (with $a < 0$ the shape is mirrored and the PMCC changes sign).</p>
+      <p data-lang="zh">$z$ 分数回答"这个观测距均值有多少个标准差"。它是 D3 正态分布工作的基础，也是现实统计中标记异常值的工具。它还说明 $a > 0$ 的线性变换是<em>信息守恒</em>的：分布形状以及与另一变量的 PMCC 都保持不变（若 $a < 0$，形状左右翻转，PMCC 变号）。</p>
     </div>
   </details>
 
@@ -1862,9 +2328,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$\bar{y} = -15$, $\sigma_y = 8$.</div>
       <div class="quiz-opt" data-idx="3">$\bar{y} = -25$, $\sigma_y = 8$.</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\bar{y} = -2(10) + 5 = -15$. $\sigma_y = |-2| \cdot 4 = 8$. SD is always non-negative &mdash; the absolute value is the safety net for the $a < 0$ case.</span><span data-lang="zh">正确！$\bar{y} = -2(10) + 5 = -15$。$\sigma_y = |-2| \cdot 4 = 8$。标准差恒非负 — 当 $a < 0$ 时绝对值就是安全网。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\bar{y} = -2(10) + 5 = -15$. $\sigma_y = |-2| \cdot 4 = 8$. SD is always non-negative; the absolute value is the safety net for the $a < 0$ case.</span><span data-lang="zh">正确！$\bar{y} = -2(10) + 5 = -15$。$\sigma_y = |-2| \cdot 4 = 8$。标准差恒非负，当 $a < 0$ 时绝对值就是安全网。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">$\bar{y} = a\bar{x} + b = -2(10) + 5 = -15$. $\sigma_y = |a|\sigma_x = 2 \cdot 4 = 8$ (SD is non-negative).</span><span data-lang="zh">$\bar{y} = a\bar{x} + b = -2(10) + 5 = -15$。$\sigma_y = |a|\sigma_x = 2 \cdot 4 = 8$（标准差非负）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A data set has mean $15$ and standard deviation $3$. Every value is increased by $7$. State the new mean and standard deviation.</span><span data-lang="zh">1. 某数据集均值为 $15$，标准差为 $3$。每个值都加上 $7$。写出新的均值与标准差。</span></summary>
+      <div class="sg-a"><p data-lang="en">Mean $= 15 + 7 = 22$. Standard deviation unchanged: $3$, because every value moves by the same amount, so the distances from the mean do not change.</p><p data-lang="zh">均值 $= 15 + 7 = 22$。标准差不变，仍为 $3$，因为每个值移动相同的量，到均值的距离不变。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Heights have mean $150$ cm, standard deviation $8$ cm and variance $64\ \text{cm}^2$. Convert all three to metres.</span><span data-lang="zh">2. 身高的均值为 $150$ cm，标准差为 $8$ cm，方差为 $64\ \text{cm}^2$。把三者都换算成米。</span></summary>
+      <div class="sg-a"><p data-lang="en">Here $y = 0.01x$. Mean $= 1.5$ m, standard deviation $= 0.08$ m, variance $= (0.01)^2 \times 64 = 0.0064\ \text{m}^2$.</p><p data-lang="zh">这里 $y = 0.01x$。均值 $= 1.5$ m，标准差 $= 0.08$ m，方差 $= (0.01)^2 \times 64 = 0.0064\ \text{m}^2$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. After the transformation $y = 3x - 4$, a data set has mean $26$ and standard deviation $9$. Find the original mean and standard deviation.</span><span data-lang="zh">3. 经变换 $y = 3x - 4$ 后，某数据集的均值为 $26$，标准差为 $9$。求原始的均值与标准差。</span></summary>
+      <div class="sg-a"><p data-lang="en">$26 = 3\bar{x} - 4$, so $\bar{x} = \tfrac{30}{3} = 10$. $9 = |3| \sigma_x$, so $\sigma_x = 3$. Check: $3(10) - 4 = 26$.</p><p data-lang="zh">$26 = 3\bar{x} - 4$，故 $\bar{x} = \tfrac{30}{3} = 10$。$9 = |3| \sigma_x$，故 $\sigma_x = 3$。检验：$3(10) - 4 = 26$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1874,6 +2356,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-d1-7">
   <div class="section-label"><span data-lang="en">Topic 1.7 &middot; Two variables at once</span><span data-lang="zh">主题 1.7 · 同时考察两个变量</span></div>
   <h2><span data-lang="en">1.7 Bivariate Data: Scatter, Correlation, Regression</span><span data-lang="zh">1.7 双变量数据：散点图、相关与回归</span> <span class="ib-ref">SL 4.4</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Describe a scatter diagram by direction, form, strength and any unusual points.</li>
+      <li>Interpret Pearson's product-moment correlation coefficient $r$, including the fact that it measures only linear association.</li>
+      <li>Find the regression line of $y$ on $x$ and use the fact that it passes through the mean point $(\bar{x}, \bar{y})$.</li>
+      <li>Use the regression line to predict $y$ from $x$, and distinguish interpolation from extrapolation.</li>
+      <li>Interpret the gradient and intercept in context, and explain why correlation does not imply causation.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>从方向、形态、强弱与异常点描述（<code>describe</code>）散点图。</li>
+      <li>解释（<code>interpret</code>）皮尔逊积矩相关系数 $r$，包括它只衡量线性关联这一点。</li>
+      <li>求出（<code>find</code>）$y$ 关于 $x$ 的回归直线，并利用它恒过均值点 $(\bar{x}, \bar{y})$ 这一事实。</li>
+      <li>用回归直线由 $x$ 预测（<code>predict</code>）$y$，并区分内插与外推。</li>
+      <li>结合情境解释斜率与截距，并解释（<code>explain</code>）为何相关不意味着因果。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat">
     <strong data-lang="en">Bivariate data $(x_i, y_i)$ is shown on a scatter plot. Three questions follow.</strong>
@@ -1904,17 +2404,17 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Least-squares regression line of $y$ on $x$</span><span data-lang="zh">$y$ 关于 $x$ 的最小二乘回归直线</span></div>
-    $$ y - \bar{y} = b(x - \bar{x}), \qquad b = \frac{S_{xy}}{S_{xx}}. $$
-    <p data-lang="en">Equivalently $y = a + bx$ in the IB's notation (slope $= b$, intercept $= a$) &mdash; this matches the GDC's <em>LinReg(a + bx)</em> output. The line always passes through $(\bar{x}, \bar{y})$.</p>
-    <p data-lang="zh">在 IB 记号下等价写为 $y = a + bx$（斜率 $= b$，截距 $= a$）— 与图形计算器（<code>GDC</code>）的 <em>LinReg(a + bx)</em> 输出一致。直线恒过 $(\bar{x}, \bar{y})$。</p>
+    $$ y - \bar{y} = a(x - \bar{x}), \qquad a = \frac{S_{xy}}{S_{xx}}. $$
+    <p data-lang="en">This guide writes the line as $y = ax + b$, with gradient $a$ and intercept $b$. Some calculators and texts write $y = a + bx$ instead, with the letters swapped, so check which letter is the gradient before you copy it. In practice you obtain $r$ and the line from technology. The line always passes through $(\bar{x}, \bar{y})$.</p>
+    <p data-lang="zh">本指南把直线写成 $y = ax + b$，斜率为 $a$，截距为 $b$。有些计算器和教材写成 $y = a + bx$，字母互换，所以抄写前先确认哪个字母是斜率。实际中 $r$ 与直线都由技术工具求出。直线恒过 $(\bar{x}, \bar{y})$。</p>
   </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);"><span data-lang="en">Interpreting $r$</span><span data-lang="zh">如何解读 $r$</span></strong>
     <span data-lang="en"><strong>Sign.</strong> $r > 0$: $y$ tends to increase with $x$. $r < 0$: $y$ tends to decrease with $x$.<br>
-    <strong>Strength.</strong> Rough thresholds (vary by source &mdash; the IB accepts a sensible verbal description):</span>
+    <strong>Strength.</strong> Rough thresholds (they vary by source, so describe the strength in words and quote $r$):</span>
     <span data-lang="zh"><strong>符号。</strong>$r > 0$：$y$ 随 $x$ 倾向增加。$r < 0$：$y$ 随 $x$ 倾向减少。<br>
-    <strong>强弱。</strong>常见阈值（不同教材略有出入 — IB 接受合理的文字描述）：</span>
+    <strong>强弱。</strong>常见阈值（不同教材略有出入，所以要用文字描述强弱并给出 $r$）：</span>
     <ul style="margin: 6px 0 0 22px;" data-lang="en">
       <li>$|r| \ge 0.9$ very strong</li>
       <li>$0.7 \le |r| < 0.9$ strong</li>
@@ -1934,14 +2434,14 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Two non-negotiable cautions</span><span data-lang="zh">两条不可商量的告诫</span></strong>
     <span data-lang="en"><strong>Correlation is not causation.</strong> A strong $r$ says only that the variables move together, not that one causes the other. Lurking variables and reverse causation routinely explain strong $r$.<br>
-    <strong>$r$ measures <em>linear</em> association.</strong> Data that follows $y = x^2$ on $[-1, 1]$ has $r = 0$ but a perfect non-linear pattern. Always look at the scatter plot before quoting $r$.<br>
-    <strong>Don't extrapolate.</strong> The regression line is only reliable inside the $x$-range of the data. Predictions outside (extrapolation) assume the linear pattern continues &mdash; usually it doesn't.</span>
+    <strong>$r$ measures <em>linear</em> association.</strong> Data that follow $y = x^2$ on $[-1, 1]$, with $x$-values placed symmetrically about $0$, have $r = 0$ but a perfect non-linear pattern. Always look at the scatter plot before quoting $r$.<br>
+    <strong>Don't extrapolate.</strong> The regression line is only reliable inside the $x$-range of the data. Predictions outside (extrapolation) assume the linear pattern continues, which it often does not.</span>
     <span data-lang="zh"><strong>相关（<code>correlation</code>）不等于因果。</strong>$r$ 很强只说明两变量同步变化，并不证明一个引起另一个。潜在变量与反向因果都能造成强 $r$。<br>
-    <strong>$r$ 只衡量<em>线性</em>关联。</strong>数据若在 $[-1, 1]$ 上满足 $y = x^2$，则 $r = 0$，但却是完美的非线性模式。引用 $r$ 之前务必看散点图。<br>
-    <strong>不要外推（<code>extrapolation</code>）。</strong>回归直线只在数据的 $x$ 区间内可靠。区间外的预测假设线性模式继续延伸 — 通常并不成立。</span>
+    <strong>$r$ 只衡量<em>线性</em>关联。</strong>数据若在 $[-1, 1]$ 上满足 $y = x^2$，且 $x$ 值关于 $0$ 对称分布，则 $r = 0$，但却是完美的非线性模式。引用 $r$ 之前务必看散点图。<br>
+    <strong>不要外推（<code>extrapolation</code>）。</strong>回归直线只在数据的 $x$ 区间内可靠。区间外的预测假设线性模式继续延伸，而这往往并不成立。</span>
   </div>
 
-  <h3><span data-lang="en">Worked Example &mdash; PMCC and regression line by hand</span><span data-lang="zh">例题 — 手算 PMCC 与回归直线</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: PMCC and regression line by hand</span><span data-lang="zh">例题：手算 PMCC 与回归直线</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> Five $(x, y)$ pairs:</p>
     <div class="table-wrap">
@@ -1958,9 +2458,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p><strong>PMCC.</strong></p>
     $$ r = \frac{34}{\sqrt{26 \cdot 45.2}} = \frac{34}{\sqrt{1175.2}} \approx \frac{34}{34.281} \approx 0.992. $$
     <p>Very strong positive linear association.</p>
-    <p><strong>Regression line.</strong> $b = 34/26 \approx 1.308$. Passing through $(\bar{x}, \bar{y}) = (5, 7.6)$:</p>
+    <p><strong>Regression line.</strong> $a = 34/26 \approx 1.308$. Passing through $(\bar{x}, \bar{y}) = (5, 7.6)$:</p>
     $$ y - 7.6 = 1.308(x - 5) \;\Longrightarrow\; y \approx 1.31 x + 1.06. $$
-    <p>Read this off the GDC on Paper 2 (<em>LinReg(a + bx)</em>); the by-hand version above is what you'd write on Paper 1.</p>
+    <p>In practice technology gives $r$ and the line directly; the by-hand version shows where those numbers come from.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>5 组 $(x, y)$：</p>
@@ -1978,72 +2478,107 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p><strong>PMCC。</strong></p>
     $$ r = \frac{34}{\sqrt{26 \cdot 45.2}} = \frac{34}{\sqrt{1175.2}} \approx \frac{34}{34.281} \approx 0.992. $$
     <p>极强的正向线性关联。</p>
-    <p><strong>回归直线。</strong>$b = 34/26 \approx 1.308$。过 $(\bar{x}, \bar{y}) = (5, 7.6)$：</p>
+    <p><strong>回归直线。</strong>$a = 34/26 \approx 1.308$。过 $(\bar{x}, \bar{y}) = (5, 7.6)$：</p>
     $$ y - 7.6 = 1.308(x - 5) \;\Longrightarrow\; y \approx 1.31 x + 1.06. $$
-    <p>在试卷 2 直接从 GDC（<em>LinReg(a + bx)</em>）读出；上面这种手算写法是试卷 1 上要写的。</p>
+    <p>实际中技术工具会直接给出 $r$ 与直线；上面的手算过程说明这些数从何而来。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Using the line for prediction</span><span data-lang="zh">例题 — 用回归直线做预测</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Using the line for prediction</span><span data-lang="zh">例题：用回归直线做预测</span></summary>
   <div class="worked-solution" data-lang="en">
     <p><strong>Problem:</strong> For the data above, predict $y$ when $x = 6$. Comment on the reliability.</p>
     $$ \hat{y} = 1.308(6) + 1.06 \approx 8.91. $$
-    <p>$x = 6$ lies inside the observed range $[2, 8]$, so the prediction is <strong>interpolation</strong> &mdash; reliable given the very strong $r \approx 0.99$.</p>
+    <p>$x = 6$ lies inside the observed range $[2, 8]$, so the prediction is <strong>interpolation</strong>, and it is reliable given the very strong $r \approx 0.99$.</p>
     <p>By contrast, predicting at $x = 20$ would be extrapolation: the linear pattern is not guaranteed beyond the data.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
     <p><strong>题目：</strong>用上题数据预测 $x = 6$ 时的 $y$。评估其可靠性。</p>
     $$ \hat{y} = 1.308(6) + 1.06 \approx 8.91. $$
-    <p>$x = 6$ 位于观测范围 $[2, 8]$ 内，预测属<strong>内插（<code>interpolation</code>）</strong> — 鉴于 $r \approx 0.99$ 极强，结果可靠。</p>
+    <p>$x = 6$ 位于观测范围 $[2, 8]$ 内，预测属<strong>内插（<code>interpolation</code>）</strong>，鉴于 $r \approx 0.99$ 极强，结果可靠。</p>
     <p>反之，预测 $x = 20$ 即外推（<code>extrapolation</code>）：数据范围外不能保证线性模式仍然成立。</p>
   </div>
+  </details>
 
-  <h3><span data-lang="en">Worked Example &mdash; Interpreting parameters</span><span data-lang="zh">例题 — 解释回归参数</span></h3>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Interpreting parameters</span><span data-lang="zh">例题：解释回归参数</span></summary>
   <div class="worked-solution" data-lang="en">
-    <p><strong>Problem:</strong> A regression of weekly sales $y$ ($\${,}000$) on advertising spend $x$ ($\${,}000$) gives $y = 4.2 x + 15$. Interpret the slope and intercept.</p>
-    <p><strong>Slope $a = 4.2$.</strong> For every $\$1{,}000$ extra spent on advertising, weekly sales increase by $\$4{,}200$ on average.</p>
-    <p><strong>Intercept $b = 15$.</strong> When advertising spend is $\$0$, the model predicts weekly sales of $\$15{,}000$. <em>Caveat:</em> $x = 0$ may lie outside the observed range, in which case the intercept's interpretation is shaky &mdash; flag this in a written answer.</p>
+    <p><strong>Problem:</strong> A regression of weekly sales $y$ (thousands of dollars) on advertising spend $x$ (thousands of dollars) gives $y = 4.2 x + 15$. Interpret the slope and intercept.</p>
+    <p><strong>Slope $a = 4.2$.</strong> For every extra 1000 dollars spent on advertising, weekly sales are higher by about 4200 dollars on average.</p>
+    <p><strong>Intercept $b = 15$.</strong> With no advertising spend, the model predicts weekly sales of 15000 dollars. <em>Caveat:</em> $x = 0$ may lie outside the observed range, in which case this is extrapolation and the interpretation is unreliable; say so in a written answer.</p>
   </div>
   <div class="worked-solution" data-lang="zh">
-    <p><strong>题目：</strong>用每周销售额 $y$（单位 $\${,}000$）对广告投入 $x$（单位 $\${,}000$）作回归，得到 $y = 4.2 x + 15$。请解释斜率与截距。</p>
-    <p><strong>斜率 $a = 4.2$。</strong>广告每多投入 $\$1{,}000$，每周销售额平均增加 $\$4{,}200$。</p>
-    <p><strong>截距 $b = 15$。</strong>广告投入为 $\$0$ 时，模型预测每周销售额为 $\$15{,}000$。<em>注意：</em>$x = 0$ 可能在观测范围之外，此时截距的解释并不可靠 — 在书面答题中要标注这一点。</p>
+    <p><strong>题目：</strong>用每周销售额 $y$（单位：千美元）对广告投入 $x$（单位：千美元）作回归，得到 $y = 4.2 x + 15$。请解释斜率与截距。</p>
+    <p><strong>斜率 $a = 4.2$。</strong>广告每多投入 1000 美元，每周销售额平均约高 4200 美元。</p>
+    <p><strong>截距 $b = 15$。</strong>没有广告投入时，模型预测每周销售额为 15000 美元。<em>注意：</em>$x = 0$ 可能在观测范围之外，此时属于外推，解释并不可靠；书面作答时要写明这一点。</p>
   </div>
+  </details>
 
   <h3><span data-lang="en">Visualizing the fit</span><span data-lang="zh">将拟合可视化</span></h3>
-  <div class="scatter-mock" aria-label="Scatter plot with five points and a best-fit line through the mean point">
-    <svg viewBox="0 0 320 200" preserveAspectRatio="none">
-      <line x1="30" y1="180" x2="310" y2="180" stroke="var(--text-secondary)" stroke-width="1"/>
-      <line x1="30" y1="180" x2="30" y2="10"  stroke="var(--text-secondary)" stroke-width="1"/>
-      <line x1="30" y1="170" x2="310" y2="40" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="5 4"/>
-      <circle cx="65"  cy="155" r="4.5" fill="var(--accent)"/>
-      <circle cx="100" cy="138" r="4.5" fill="var(--accent)"/>
-      <circle cx="170" cy="106" r="4.5" fill="var(--accent)"/>
-      <circle cx="240" cy="63"  r="4.5" fill="var(--accent)"/>
-      <circle cx="275" cy="48"  r="4.5" fill="var(--accent)"/>
-      <circle cx="170" cy="106" r="9" fill="none" stroke="var(--purple)" stroke-width="2"/>
-      <text x="180" y="120" font-family="JetBrains Mono" font-size="11" fill="var(--purple)">(&#x305;x, &#x305;y)</text>
-      <text x="160" y="195" font-family="JetBrains Mono" font-size="11" fill="var(--text-secondary)">x</text>
-      <text x="12"  y="100" font-family="JetBrains Mono" font-size="11" fill="var(--text-secondary)">y</text>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 280" role="img" aria-label="Scatter diagram to scale of the five points (2,4), (3,5), (5,7), (7,10), (8,12) with the regression line y = 1.31x + 1.06, solid from x = 2 to 8 and dashed beyond, passing through the mean point (5, 7.6), and the prediction at x = 6 of about 8.91">
+      <line class="grid" x1="50" y1="218" x2="390" y2="218"/>
+      <line class="grid" x1="50" y1="186" x2="390" y2="186"/>
+      <line class="grid" x1="50" y1="154" x2="390" y2="154"/>
+      <line class="grid" x1="50" y1="122" x2="390" y2="122"/>
+      <line class="grid" x1="50" y1="90" x2="390" y2="90"/>
+      <line class="grid" x1="50" y1="58" x2="390" y2="58"/>
+      <line class="grid" x1="50" y1="26" x2="390" y2="26"/>
+      <line class="grid" x1="118" y1="26" x2="118" y2="250"/>
+      <line class="grid" x1="186" y1="26" x2="186" y2="250"/>
+      <line class="grid" x1="254" y1="26" x2="254" y2="250"/>
+      <line class="grid" x1="322" y1="26" x2="322" y2="250"/>
+      <line class="grid" x1="390" y1="26" x2="390" y2="250"/>
+      <line class="ax" x1="50" y1="250" x2="400" y2="250"/>
+      <line class="ax" x1="50" y1="250" x2="50" y2="18"/>
+      <text class="mut" data-lang="en" x="50" y="266" text-anchor="middle">0</text><text class="mut" data-lang="zh" x="50" y="266" text-anchor="middle">0</text>
+      <text class="mut" data-lang="en" x="118" y="266" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="118" y="266" text-anchor="middle">2</text>
+      <text class="mut" data-lang="en" x="186" y="266" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="186" y="266" text-anchor="middle">4</text>
+      <text class="mut" data-lang="en" x="254" y="266" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="254" y="266" text-anchor="middle">6</text>
+      <text class="mut" data-lang="en" x="322" y="266" text-anchor="middle">8</text><text class="mut" data-lang="zh" x="322" y="266" text-anchor="middle">8</text>
+      <text class="mut" data-lang="en" x="390" y="266" text-anchor="middle">10</text><text class="mut" data-lang="zh" x="390" y="266" text-anchor="middle">10</text>
+      <text class="mut" data-lang="en" x="44" y="222" text-anchor="end">2</text><text class="mut" data-lang="zh" x="44" y="222" text-anchor="end">2</text>
+      <text class="mut" data-lang="en" x="44" y="158" text-anchor="end">6</text><text class="mut" data-lang="zh" x="44" y="158" text-anchor="end">6</text>
+      <text class="mut" data-lang="en" x="44" y="94" text-anchor="end">10</text><text class="mut" data-lang="zh" x="44" y="94" text-anchor="end">10</text>
+      <text class="mut" data-lang="en" x="44" y="30" text-anchor="end">14</text><text class="mut" data-lang="zh" x="44" y="30" text-anchor="end">14</text>
+      <text class="mut" data-lang="en" x="408" y="254">x</text><text class="mut" data-lang="zh" x="408" y="254">x</text>
+      <text class="mut" data-lang="en" x="50" y="12" text-anchor="middle">y</text><text class="mut" data-lang="zh" x="50" y="12" text-anchor="middle">y</text>
+      <line class="c1" x1="118" y1="191.2" x2="322" y2="65.6"/>
+      <line class="c1 dash" x1="322" y1="65.6" x2="373" y2="34.2"/>
+      <line class="c1 dash" x1="84" y1="212.1" x2="118" y2="191.2"/>
+      <polyline class="c3 dash thin" points="254,250 254,107.5 50,107.5"/>
+      <circle class="dot" cx="118" cy="186" r="4"/>
+      <circle class="dot" cx="152" cy="170" r="4"/>
+      <circle class="dot" cx="220" cy="138" r="4"/>
+      <circle class="dot" cx="288" cy="90" r="4"/>
+      <circle class="dot" cx="322" cy="58" r="4"/>
+      <circle class="c4" cx="220" cy="128.4" r="5"/>
+      <text class="lbl c1t" data-lang="en" x="296" y="40" text-anchor="end">y ≈ 1.31x + 1.06</text><text class="lbl c1t" data-lang="zh" x="296" y="40" text-anchor="end">y ≈ 1.31x + 1.06</text>
+      <text class="lbl c4t" data-lang="en" x="208" y="124" text-anchor="end">mean point (5, 7.6)</text><text class="lbl c4t" data-lang="zh" x="208" y="124" text-anchor="end">均值点 (5, 7.6)</text>
+      <text class="lbl c3t" data-lang="en" x="262" y="126">x = 6: ŷ ≈ 8.91</text><text class="lbl c3t" data-lang="zh" x="262" y="126">x = 6：ŷ ≈ 8.91</text>
     </svg>
+    <figcaption><span data-lang="en">Figure 3. The five points of the worked example drawn to scale, with the regression line of $y$ on $x$. The line is solid across the data range $2 \le x \le 8$, where predictions are interpolation, and dashed outside it, where they are extrapolation. It passes through the mean point $(\bar{x}, \bar{y}) = (5, 7.6)$, ringed, which is also the anchor for a line of best fit drawn by eye. Read the prediction at $x = 6$: up to the line, then across, $\hat{y} \approx 8.91$.</span><span data-lang="zh">图 3. 按比例绘制的例题五个数据点，以及 $y$ 关于 $x$ 的回归直线。直线在数据范围 $2 \le x \le 8$ 内画成实线（此处预测为内插），范围外画成虚线（此处预测为外推）。它经过圈出的均值点 $(\bar{x}, \bar{y}) = (5, 7.6)$，目测画最佳拟合直线时也以此点为依据。读出 $x = 6$ 处的预测：竖直向上到直线，再水平读数，$\hat{y} \approx 8.91$。</span></figcaption>
+  </figure>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Describe a correlation in words with both direction and strength ("strong positive linear correlation, $r = 0.92$"), never by the number alone. Before you use a regression line, check that the given $x$ lies inside the data range and say so: inside is interpolation and reasonable when $|r|$ is close to $1$; outside is extrapolation and unreliable. The line of $y$ on $x$ predicts $y$ from $x$ only. Interpret the gradient with units and "on average" ("each extra hour of study is associated with about $4.2$ more marks on average"), and never write that $x$ causes $y$ from a correlation alone.</p>
+    <p data-lang="zh">用文字描述相关性，既说方向也说强弱（"强正线性相关，$r = 0.92$"），不要只给数字。使用回归直线之前，先检查给定的 $x$ 是否在数据范围之内并写明：范围内是内插，当 $|r|$ 接近 $1$ 时较为合理；范围外是外推，不可靠。$y$ 关于 $x$ 的回归直线只能由 $x$ 预测 $y$。解释斜率时要带单位并写"平均"（"每多学习一小时，平均约多 $4.2$ 分"），并且绝不能仅凭相关就写出 $x$ 导致 $y$。</p>
   </div>
-  <p style="font-size: 0.92rem; color: var(--text-secondary);" data-lang="en">The dashed line is the best fit. It must pass through the highlighted mean point $(\bar{x}, \bar{y})$ &mdash; that's the easy way to sketch the line "by eye" if asked.</p>
-  <p style="font-size: 0.92rem; color: var(--text-secondary);" data-lang="zh">虚线即最佳拟合直线。它必须过高亮的均值点 $(\bar{x}, \bar{y})$ — 这也是题目要求"目测"作图时最方便的画法。</p>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why the regression line passes through $(\bar{x}, \bar{y})$</span><span data-lang="zh">▸ 深入探究 — 为何回归直线恒过 $(\bar{x}, \bar{y})$</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why the regression line passes through $(\bar{x}, \bar{y})$</span><span data-lang="zh">▸ 深入探究：为何回归直线恒过 $(\bar{x}, \bar{y})$</span></summary>
     <div class="detail-body">
-      <p data-lang="en">Take the slope-form equation $y - \bar{y} = b(x - \bar{x})$ and substitute $x = \bar{x}$:</p>
-      <p data-lang="zh">取点斜式方程 $y - \bar{y} = b(x - \bar{x})$，代入 $x = \bar{x}$：</p>
-      $$ y - \bar{y} = b(\bar{x} - \bar{x}) = 0 \;\;\Longrightarrow\;\; y = \bar{y}. $$
+      <p data-lang="en">Take the point-gradient equation $y - \bar{y} = a(x - \bar{x})$ and substitute $x = \bar{x}$:</p>
+      <p data-lang="zh">取点斜式方程 $y - \bar{y} = a(x - \bar{x})$，代入 $x = \bar{x}$：</p>
+      $$ y - \bar{y} = a(\bar{x} - \bar{x}) = 0 \;\;\Longrightarrow\;\; y = \bar{y}. $$
       <p data-lang="en">So the point $(\bar{x}, \bar{y})$ lies on the line by construction. The reason this happens is that the least-squares method minimises $\sum (y_i - (ax_i + b))^2$; differentiating with respect to $b$ and setting to zero gives $\sum (y_i - ax_i - b) = 0$, equivalently $\bar{y} = a\bar{x} + b$.</p>
       <p data-lang="zh">因此 $(\bar{x}, \bar{y})$ 按构造就落在直线上。背后原因是：最小二乘（<code>least squares</code>）方法极小化 $\sum (y_i - (ax_i + b))^2$；对 $b$ 求导并令导数为零，得到 $\sum (y_i - ax_i - b) = 0$，等价于 $\bar{y} = a\bar{x} + b$。</p>
-      <p data-lang="en">Practical use: in a Paper 1 question with no calculator, if you're given $\bar{x}, \bar{y}$ and the slope $b$, write the line in slope-form immediately &mdash; no extra arithmetic.</p>
-      <p data-lang="zh">实用法：试卷 1 不允许使用计算器时，若题目给出 $\bar{x}, \bar{y}$ 与斜率 $b$，直接用点斜式写出方程 — 无需额外运算。</p>
+      <p data-lang="en">Practical use: if a question gives $\bar{x}, \bar{y}$ and the gradient $a$, write the line in point-gradient form $y - \bar{y} = a(x - \bar{x})$ at once, with no extra arithmetic.</p>
+      <p data-lang="zh">实用法：若题目给出 $\bar{x}, \bar{y}$ 与斜率 $a$，直接用点斜式 $y - \bar{y} = a(x - \bar{x})$ 写出方程，无需额外运算。</p>
     </div>
   </details>
 
   <details>
-    <summary><span data-lang="en">&#9656; Going deeper &mdash; Why PMCC is invariant under linear transformations</span><span data-lang="zh">▸ 深入探究 — 为何 PMCC 在线性变换下不变</span></summary>
+    <summary><span data-lang="en">&#9656; Going deeper: Why the size of the PMCC is unchanged by linear transformations</span><span data-lang="zh">▸ 深入探究：为何线性变换不改变 PMCC 的大小</span></summary>
     <div class="detail-body">
       <p data-lang="en">Apply $u = a x + b$, $v = c y + d$ with $a, c \ne 0$. Then $\bar{u} = a\bar{x} + b$, $\bar{v} = c\bar{y} + d$, and</p>
       <p data-lang="zh">应用 $u = a x + b$，$v = c y + d$，其中 $a, c \ne 0$。则 $\bar{u} = a\bar{x} + b$，$\bar{v} = c\bar{y} + d$，且</p>
@@ -2067,7 +2602,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">There is a strong negative linear association; $y$ tends to decrease as $x$ increases.</span><span data-lang="zh">存在强负向线性关联；$y$ 随 $x$ 增加而倾向减少。</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">The data lie exactly on a line of negative slope.</span><span data-lang="zh">数据精确落在一条负斜率的直线上。</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $|r| = 0.95$ is strong (close to $1$). Negative sign means $y$ falls as $x$ rises. "Causes" overstates &mdash; correlation alone never proves causation. "Exactly on a line" would require $r = -1$.</span><span data-lang="zh">正确！$|r| = 0.95$ 很强（接近 $1$）。负号表示 $y$ 随 $x$ 上升而下降。"导致"用力过猛 — 仅凭相关绝不能证明因果。"精确落在一条直线上"则要求 $r = -1$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $|r| = 0.95$ is strong (close to $1$). Negative sign means $y$ falls as $x$ rises. "Causes" overstates it: correlation alone never proves causation. "Exactly on a line" would require $r = -1$.</span><span data-lang="zh">正确！$|r| = 0.95$ 很强（接近 $1$）。负号表示 $y$ 随 $x$ 上升而下降。"导致"言过其实：仅凭相关绝不能证明因果。"精确落在一条直线上"则要求 $r = -1$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">$r = -0.95$ &Rightarrow; strong <em>negative</em> linear association ($y$ falls as $x$ rises). Correlation is not causation, and "exactly on a line" requires $r = \pm 1$ exactly.</span><span data-lang="zh">$r = -0.95$ ⇒ 强<em>负向</em>线性关联（$y$ 随 $x$ 上升而下降）。相关不等于因果，"精确落在一条直线上"严格要求 $r = \pm 1$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
@@ -2086,6 +2621,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The line passes through $(\bar{x}, \bar{y})$, so $\bar{y} = 2.4 (\bar{x}) + 7 = 2.4(5) + 7 = 19$.</span><span data-lang="zh">正确！直线过 $(\bar{x}, \bar{y})$，所以 $\bar{y} = 2.4 (\bar{x}) + 7 = 2.4(5) + 7 = 19$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The line always passes through $(\bar{x}, \bar{y})$. Plug $\bar{x} = 5$ into the line: $\bar{y} = 2.4(5) + 7 = 19$.</span><span data-lang="zh">直线恒过 $(\bar{x}, \bar{y})$。把 $\bar{x} = 5$ 代入：$\bar{y} = 2.4(5) + 7 = 19$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The regression line of $y$ on $x$ is $y = 0.8x + 12$, and $\bar{x} = 20$. Find $\bar{y}$.</span><span data-lang="zh">1. $y$ 关于 $x$ 的回归直线为 $y = 0.8x + 12$，且 $\bar{x} = 20$。求 $\bar{y}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">The line passes through $(\bar{x}, \bar{y})$, so $\bar{y} = 0.8(20) + 12 = 28$.</p><p data-lang="zh">直线恒过 $(\bar{x}, \bar{y})$，所以 $\bar{y} = 0.8(20) + 12 = 28$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Data with $x$ from $10$ to $40$ give $r = 0.93$ and the line $y = 2.5x - 3$. Predict $y$ at $x = 30$ and at $x = 70$, and comment on each prediction.</span><span data-lang="zh">2. 某数据的 $x$ 取值从 $10$ 到 $40$，$r = 0.93$，回归直线为 $y = 2.5x - 3$。分别预测 $x = 30$ 与 $x = 70$ 时的 $y$，并评价每个预测。</span></summary>
+      <div class="sg-a"><p data-lang="en">At $x = 30$: $y = 2.5(30) - 3 = 72$. This is interpolation with a strong correlation, so it is reasonably reliable. At $x = 70$: $y = 2.5(70) - 3 = 172$. This is extrapolation far beyond the data, so it is unreliable: the linear pattern may not continue.</p><p data-lang="zh">$x = 30$ 时：$y = 2.5(30) - 3 = 72$。这是内插，且相关性强，因此较为可靠。$x = 70$ 时：$y = 2.5(70) - 3 = 172$。这是远超数据范围的外推，不可靠：线性模式未必延续。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Over a summer, daily ice-cream sales and the number of beach rescues have $r = 0.85$. Does buying ice cream cause rescues? Explain.</span><span data-lang="zh">3. 某个夏天，每日冰淇淋销量与海滩救援次数的 $r = 0.85$。买冰淇淋会导致救援吗？请解释。</span></summary>
+      <div class="sg-a"><p data-lang="en">No. The strong positive correlation shows only that the two rise and fall together. A third variable, hot weather, increases both ice-cream sales and the number of swimmers. Correlation alone cannot establish causation.</p><p data-lang="zh">不会。强正相关只说明两者同升同降。第三个变量（炎热天气）同时增加了冰淇淋销量和游泳人数。仅凭相关不能确立因果关系。</p></div>
+    </details>
   </div>
 </section>
 
@@ -2127,21 +2678,21 @@ body.lang-zh       [data-lang="en"] { display: none; }
         <div class="card-title"><span data-lang="en">Understand</span><span data-lang="zh">需要理解</span></div>
       </div>
       <ul style="margin-left: 18px; line-height: 2;" data-lang="en">
-        <li>Why a random sample matters &mdash; bias is fatal even with large $n$.</li>
+        <li>Why a random sample matters: bias is not fixed by a large $n$.</li>
         <li>Why bar <em>area</em> (not height) encodes frequency on a continuous histogram.</li>
         <li>Why mean is sensitive to outliers and median isn't (squared vs. absolute).</li>
-        <li>Why SD divides by $n$ in the IB, not $n - 1$ (population convention).</li>
+        <li>Why $\sigma$ divides by $n$ in this course, not $n - 1$ (the data are treated as the whole group).</li>
         <li>Why $\sigma_y = |a|\sigma_x$: shift vanishes, scale comes out squared then rooted.</li>
-        <li>Why $r$ is invariant under linear transformations of $x$ or $y$.</li>
+        <li>Why $|r|$ is unchanged by linear transformations of $x$ or $y$ (and $r$ keeps its sign when the scale factor is positive).</li>
         <li>Why the regression line passes through $(\bar{x}, \bar{y})$ (least-squares condition).</li>
       </ul>
       <ul style="margin-left: 18px; line-height: 2;" data-lang="zh">
-        <li>为什么随机样本（<code>random sample</code>）至关重要 — 抽样偏差（<code>sampling bias</code>）无法通过加大 $n$ 修复。</li>
+        <li>为什么随机样本（<code>random sample</code>）至关重要：抽样偏差（<code>sampling bias</code>）无法通过加大 $n$ 修复。</li>
         <li>为什么连续直方图（<code>histogram</code>）用柱子的<em>面积</em>而非高度表示频数。</li>
         <li>为什么均值对异常值敏感、中位数不敏感（平方 vs. 绝对值）。</li>
-        <li>为什么 IB 的标准差除以 $n$ 而非 $n - 1$（总体约定）。</li>
+        <li>为什么本课程中 $\sigma$ 除以 $n$ 而非 $n - 1$（数据被视为整个群体）。</li>
         <li>为什么 $\sigma_y = |a|\sigma_x$：平移消失，比例因子先平方再开方。</li>
-        <li>为什么 PMCC $r$ 在 $x$ 或 $y$ 的线性变换下保持不变。</li>
+        <li>为什么 $x$ 或 $y$ 做线性变换时 $|r|$ 不变（比例因子为正时 $r$ 的符号也不变）。</li>
         <li>为什么回归直线恒过 $(\bar{x}, \bar{y})$（最小二乘条件的副产物）。</li>
       </ul>
     </div>
@@ -2150,21 +2701,21 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <h3><span data-lang="en">Common Pitfalls</span><span data-lang="zh">常见陷阱</span></h3>
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Top student errors</span><span data-lang="zh">学生最常见的错误</span></strong>
-    <span data-lang="en"><strong>1.</strong> Using $s_x$ (sample SD, divide by $n - 1$) instead of $\sigma_x$ (divide by $n$). The IB defaults to the latter.<br>
+    <span data-lang="en"><strong>1.</strong> Using $s_x$ (sample SD, divide by $n - 1$) instead of $\sigma_x$ (divide by $n$). This course uses the latter.<br>
     <strong>2.</strong> Saying "$r = 0.6$ means $x$ causes $y$." Correlation $\ne$ causation; always hedge in writing.<br>
-    <strong>3.</strong> Computing PMCC and quoting it without ever looking at the scatter plot &mdash; $r$ doesn't detect curvature.<br>
+    <strong>3.</strong> Computing PMCC and quoting it without ever looking at the scatter plot: $r$ doesn't detect curvature.<br>
     <strong>4.</strong> Extrapolating: using the regression line to predict $y$ for $x$ far outside the data range.<br>
-    <strong>5.</strong> Forgetting that the regression line passes through $(\bar{x}, \bar{y})$. This is the fastest way to recover the intercept on Paper 1.<br>
+    <strong>5.</strong> Forgetting that the regression line passes through $(\bar{x}, \bar{y})$. It is the fastest way to recover the intercept.<br>
     <strong>6.</strong> On grouped-data mean, averaging midpoints without weighting by frequency.<br>
     <strong>7.</strong> Outlier rule: forgetting the factor $1.5$, or applying the rule to $\bar{x} \pm 1.5\sigma$ instead of $Q_1, Q_3 \pm 1.5\,\text{IQR}$.<br>
     <strong>8.</strong> Linear transformations: adding $b$ to the SD (it doesn't change), or forgetting the absolute value on $|a|$ when $a < 0$.<br>
     <strong>9.</strong> Reporting just one of (centre, spread) instead of both.<br>
     <strong>10.</strong> Reading the median off a cumulative-frequency graph at $0.5$ on the $y$-axis instead of $0.5 n$.</span>
-    <span data-lang="zh"><strong>1.</strong> 用 $s_x$（样本标准差，除以 $n - 1$）代替 $\sigma_x$（除以 $n$）。IB 默认后者。<br>
+    <span data-lang="zh"><strong>1.</strong> 用 $s_x$（样本标准差，除以 $n - 1$）代替 $\sigma_x$（除以 $n$）。本课程使用后者。<br>
     <strong>2.</strong> 说"$r = 0.6$ 意味着 $x$ 导致 $y$"。相关 $\ne$ 因果；书面回答必须留有余地。<br>
-    <strong>3.</strong> 算出 PMCC 就直接引用，根本没看散点图 — $r$ 检测不到曲率。<br>
+    <strong>3.</strong> 算出 PMCC 就直接引用，根本没看散点图：$r$ 检测不到曲率。<br>
     <strong>4.</strong> 外推：用回归直线在数据范围之外的 $x$ 处预测 $y$。<br>
-    <strong>5.</strong> 忘记回归直线恒过 $(\bar{x}, \bar{y})$。这在试卷 1 上是最快恢复截距的方法。<br>
+    <strong>5.</strong> 忘记回归直线恒过 $(\bar{x}, \bar{y})$。这是求回归直线截距最快的方法。<br>
     <strong>6.</strong> 分组数据求均值时，对组中值取算术平均，忘了按频数加权。<br>
     <strong>7.</strong> 异常值规则：漏掉系数 $1.5$，或错用为 $\bar{x} \pm 1.5\sigma$ 而非 $Q_1, Q_3 \pm 1.5\,\text{IQR}$。<br>
     <strong>8.</strong> 线性变换：把 $b$ 加到标准差上（标准差不变），或当 $a < 0$ 时忘了取 $|a|$。<br>
@@ -2172,12 +2723,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>10.</strong> 在累积频率图上把中位数读到 $y$ 轴的 $0.5$ 而不是 $0.5 n$。</span>
   </div>
 
+  <div class="concept-box" data-course="hl">
+    <strong><span data-lang="en">HL exam format</span><span data-lang="zh">HL 考试形式</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 2 hours each and are each worth 30%; both have a Section A of short-response questions and a Section B of extended-response questions, all compulsory. Paper 3 (HL only, technology required) is 1 hour, worth 20%, with two compulsory extended-response questions. The external papers total 5 hours (80%); the internal assessment, a mathematical exploration, is the other 20%.</p>
+    <p data-lang="zh">Paper 1（不允许技术工具）与 Paper 2（必须使用技术工具）各 2 小时，各占 30%；两卷均有 Section A 短答题与 Section B 长答题，全部必答。Paper 3（仅 HL，必须使用技术工具）1 小时，占 20%，含两道必答长答题。外部考试共 5 小时（80%）；内部评估（<code>internal assessment</code>，数学探究 <code>exploration</code>）占其余 20%。</p>
+  </div>
+
+  <div class="concept-box" data-course="sl">
+    <strong><span data-lang="en">SL exam format</span><span data-lang="zh">SL 考试形式</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 1 hour 30 minutes each and are each worth 40%; both have a Section A of short-response questions and a Section B of extended-response questions, all compulsory. There is no Paper 3 at SL. The external papers total 3 hours (80%); the internal assessment, a mathematical exploration, is the other 20%.</p>
+    <p data-lang="zh">Paper 1（不允许技术工具）与 Paper 2（必须使用技术工具）各 1 小时 30 分钟，各占 40%；两卷均有 Section A 短答题与 Section B 长答题，全部必答。SL 没有 Paper 3。外部考试共 3 小时（80%）；内部评估（<code>internal assessment</code>，数学探究 <code>exploration</code>）占其余 20%。</p>
+  </div>
+
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Paper-specific notes</span><span data-lang="zh">各试卷专题提示</span></strong>
-    <span data-lang="en"><strong>Paper 1 (no calc).</strong> Small datasets with clean numbers. Expect by-hand mean, median, quartiles, SD via the computational form $\overline{x^2} - \bar{x}^2$, and a regression line where they give you $\bar{x}, \bar{y}$, and one of $b$ or $r$. Outlier-rule applications. Interpreting a given $r$ in words.<br>
-    <strong>Paper 2 (calc).</strong> Larger datasets entered as L1 / L2 lists. Read 1-Var Stats for mean and SD; 2-Var Stats and LinReg for $r$, regression line, and predictions. Histograms and box plots already drawn &mdash; you describe shape and read off summary statistics. Often a final-mark question on whether a prediction is reliable (inside vs. outside data range).</span>
-    <span data-lang="zh"><strong>试卷 1（不可使用计算器）。</strong>数据量小、数字干净。可能要求手算均值、中位数、四分位数（<code>quartile</code>）；用计算式 $\overline{x^2} - \bar{x}^2$ 算标准差；给出 $\bar{x}, \bar{y}$ 以及 $b$ 或 $r$ 之一，要求写出回归直线。考异常值规则的应用。要用文字解读给定的 $r$。<br>
-    <strong>试卷 2（可使用计算器）。</strong>数据量较大，作为 L1 / L2 列表录入。用 1-Var Stats 读出均值与标准差；用 2-Var Stats 与 LinReg 读出 $r$、回归直线与预测值。直方图与箱形图通常已经画好 — 你只需描述形状并读出概括统计量。结尾一道分数题常问预测是否可靠（在数据范围内还是外）。</span>
+    <strong><span data-lang="en">With and without technology</span><span data-lang="zh">有无技术工具时的做法</span></strong>
+    <span data-lang="en"><strong>Without technology (Paper 1).</strong> Any statistics must be done by hand, so practise the small calculations: mean and median of a short list, quartiles by the split-in-half rule, $\sigma^2 = \overline{x^2} - \bar{x}^2$, the outlier fences, the linear-transformation rules, and writing a regression line from $(\bar{x}, \bar{y})$ and a given gradient.<br>
+    <strong>With technology (Paper 2).</strong> Enter data once as lists (midpoints and frequencies for grouped data, $x$ and $y$ for bivariate data) and read the mean, $\sigma$ (not $s$), quartiles, $r$ and the regression line from the output. Write down the values you read, with the method in words, and keep full accuracy until the final answer. Quartiles from technology may differ slightly from a by-hand rule. Whatever the paper, say whether a prediction is interpolation or extrapolation.</span>
+    <span data-lang="zh"><strong>不使用技术工具（Paper 1）。</strong>所有统计计算都要手算，所以要练熟小计算：短列表的均值与中位数、按"分半"规则求四分位数、$\sigma^2 = \overline{x^2} - \bar{x}^2$、异常值围栏、线性变换规则，以及由 $(\bar{x}, \bar{y})$ 和给定斜率写出回归直线。<br>
+    <strong>使用技术工具（Paper 2）。</strong>把数据一次性输入为列表（分组数据输入组中值与频数，双变量数据输入 $x$ 与 $y$），从结果中读出均值、$\sigma$（不是 $s$）、四分位数、$r$ 与回归直线。写下读到的数值，并用文字说明方法，最终答案之前保留全部精度。技术工具给出的四分位数可能与手算规则略有差异。无论哪张试卷，都要说明预测属于内插还是外推。</span>
   </div>
 </section>
 
@@ -2217,7 +2780,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
     <div class="flashcard" onclick="flipCard(this)">
       <div class="flashcard-inner">
-        <div class="flashcard-front"><span data-lang="en">Population variance (IB convention)?</span><span data-lang="zh">总体方差（IB 约定）？</span></div>
+        <div class="flashcard-front"><span data-lang="en">Variance $\sigma^2$ (divide by $n$)?</span><span data-lang="zh">方差 $\sigma^2$（除以 $n$）？</span></div>
         <div class="flashcard-back">$$\sigma^2 = \frac{\sum (x_i - \mu)^2}{n}$$</div>
       </div>
     </div>
@@ -2260,7 +2823,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)">
       <div class="flashcard-inner">
         <div class="flashcard-front"><span data-lang="en">Regression line of $y$ on $x$?</span><span data-lang="zh">$y$ 关于 $x$ 的回归直线？</span></div>
-        <div class="flashcard-back">$$y - \bar{y} = b(x - \bar{x}),\quad b = \frac{S_{xy}}{S_{xx}}$$</div>
+        <div class="flashcard-back">$$y - \bar{y} = a(x - \bar{x}),\quad a = \frac{S_{xy}}{S_{xx}}$$</div>
       </div>
     </div>
     <div class="flashcard" onclick="flipCard(this)">
@@ -2289,7 +2852,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- UNIT QUIZ -->
 <section class="section" id="unit-quiz">
   <div class="section-label"><span data-lang="en">Assessment</span><span data-lang="zh">测评</span></div>
-  <h2><span data-lang="en">Unit D1 &mdash; Practice Quiz</span><span data-lang="zh">Unit D1 — 练习测验</span></h2>
+  <h2><span data-lang="en">Unit D1: Practice Quiz</span><span data-lang="zh">Unit D1: 练习测验</span></h2>
   <p style="color: var(--text-secondary); margin-bottom: 20px;" data-lang="en">Ten mixed-difficulty items. Your score updates in real time at the top of the page. Aim for 8/10 before exam day.</p>
   <p style="color: var(--text-secondary); margin-bottom: 20px;" data-lang="zh">10 道难度混合的题目。得分会在页面顶部实时更新。考试前争取达到 8/10。</p>
 
@@ -2321,7 +2884,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$10$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $n = 8$, so the median is the mean of the 4th and 5th values: $(8 + 11)/2 = 9.5$.</span><span data-lang="zh">正确！$n = 8$，中位数为第 4 与第 5 个值的平均：$(8 + 11)/2 = 9.5$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">$n = 8$ &mdash; even &mdash; median is the mean of positions 4 and 5: $(8 + 11)/2 = 9.5$.</span><span data-lang="zh">$n = 8$（偶数），中位数为第 4、5 位的均值：$(8 + 11)/2 = 9.5$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">$n = 8$ is even, so the median is the mean of positions 4 and 5: $(8 + 11)/2 = 9.5$.</span><span data-lang="zh">$n = 8$（偶数），中位数为第 4、5 位的均值：$(8 + 11)/2 = 9.5$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
@@ -2352,8 +2915,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$\sqrt{5} \approx 2.24$</div>
       <div class="quiz-opt" data-idx="3">$2$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\bar{x} = 7$. Squared deviations: $9, 1, 1, 9$, sum $= 20$. $\sigma^2 = 20/4 = 5$, $\sigma = \sqrt{5} \approx 2.24$. (Option B uses $n - 1 = 3$ &mdash; not IB convention.)</span><span data-lang="zh">正确！$\bar{x} = 7$。偏差平方：$9, 1, 1, 9$，和 $= 20$。$\sigma^2 = 20/4 = 5$，$\sigma = \sqrt{5} \approx 2.24$。（选项 B 用 $n - 1 = 3$ — 非 IB 约定。）</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">IB uses $\sigma^2 = \sum (x_i - \bar{x})^2 / n$. Here sum $= 20$, $n = 4$, so $\sigma^2 = 5$ and $\sigma = \sqrt{5}$.</span><span data-lang="zh">IB 用 $\sigma^2 = \sum (x_i - \bar{x})^2 / n$。这里和 $= 20$，$n = 4$，所以 $\sigma^2 = 5$，$\sigma = \sqrt{5}$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\bar{x} = 7$. Squared deviations: $9, 1, 1, 9$, sum $= 20$. $\sigma^2 = 20/4 = 5$, $\sigma = \sqrt{5} \approx 2.24$. (Option B divides by $n - 1 = 3$; this course uses $\sigma$, dividing by $n$.)</span><span data-lang="zh">正确！$\bar{x} = 7$。偏差平方：$9, 1, 1, 9$，和 $= 20$。$\sigma^2 = 20/4 = 5$，$\sigma = \sqrt{5} \approx 2.24$。（选项 B 除以 $n - 1 = 3$；本课程使用除以 $n$ 的 $\sigma$。）</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">This course uses $\sigma^2 = \sum (x_i - \bar{x})^2 / n$. Here sum $= 20$, $n = 4$, so $\sigma^2 = 5$ and $\sigma = \sqrt{5}$.</span><span data-lang="zh">本课程用 $\sigma^2 = \sum (x_i - \bar{x})^2 / n$。这里和 $= 20$，$n = 4$，所以 $\sigma^2 = 5$，$\sigma = \sqrt{5}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
@@ -2385,7 +2948,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$\bar{y} = 1.70$, $\sigma_y = 0.08$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\bar{y} = 0.01 \cdot 170 = 1.70$ m. $\sigma_y = |0.01| \cdot 8 = 0.08$ m. Scale factor applies to both.</span><span data-lang="zh">正确！$\bar{y} = 0.01 \cdot 170 = 1.70$ m。$\sigma_y = |0.01| \cdot 8 = 0.08$ m。比例因子同时作用于两者。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Under $y = 0.01 x$: $\bar{y} = 0.01 \cdot 170 = 1.70$, $\sigma_y = 0.01 \cdot 8 = 0.08$ &mdash; same factor scales both.</span><span data-lang="zh">在 $y = 0.01 x$ 下：$\bar{y} = 0.01 \cdot 170 = 1.70$，$\sigma_y = 0.01 \cdot 8 = 0.08$ — 同一因子同时缩放两者。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Under $y = 0.01 x$: $\bar{y} = 0.01 \cdot 170 = 1.70$, $\sigma_y = 0.01 \cdot 8 = 0.08$: the same factor scales both.</span><span data-lang="zh">在 $y = 0.01 x$ 下：$\bar{y} = 0.01 \cdot 170 = 1.70$，$\sigma_y = 0.01 \cdot 8 = 0.08$：同一因子同时缩放两者。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
@@ -2423,7 +2986,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header">
-      <div class="quiz-q"><span data-lang="en">9. A scatter plot shows points lying on a curve $y = x^2$ for $x \in [-1, 1]$. The PMCC $r$ is:</span><span data-lang="zh">9. 散点图上各点在 $x \in [-1, 1]$ 区间内落在曲线 $y = x^2$ 上。则 PMCC $r$：</span></div>
+      <div class="quiz-q"><span data-lang="en">9. A scatter plot shows points lying on a curve $y = x^2$ for $x \in [-1, 1]$, with the $x$-values spread symmetrically about $0$. The PMCC $r$ is:</span><span data-lang="zh">9. 散点图上各点在 $x \in [-1, 1]$ 区间内落在曲线 $y = x^2$ 上，且 $x$ 值关于 $0$ 对称分布。则 PMCC $r$：</span></div>
       <span class="quiz-number">Q9 &middot; SL 4.4</span>
     </div>
     <div class="quiz-options">
@@ -2432,24 +2995,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Exactly $+1$.</span><span data-lang="zh">恰为 $+1$。</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Close to $0$.</span><span data-lang="zh">接近 $0$。</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $y = x^2$ is symmetric in $x$ on $[-1, 1]$: for every point $(x_0, x_0^2)$, the mirror point $(-x_0, x_0^2)$ has the same $y$. The covariance $S_{xy}$ averages to zero, so $r \approx 0$. The relationship is strong &mdash; just not <em>linear</em>.</span><span data-lang="zh">正确！$y = x^2$ 在 $[-1, 1]$ 上关于 $x$ 对称：每个点 $(x_0, x_0^2)$ 都有镜像点 $(-x_0, x_0^2)$，$y$ 相同。协方差 $S_{xy}$ 平均到零，因此 $r \approx 0$。关系本身很强 — 只是不是<em>线性</em>。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">PMCC measures <em>linear</em> association only. A symmetric $y = x^2$ has $r \approx 0$ &mdash; lesson: always look at the scatter plot, not just $r$.</span><span data-lang="zh">PMCC 只衡量<em>线性</em>关联。对称的 $y = x^2$ 有 $r \approx 0$ — 教训：永远要看散点图，而不是只看 $r$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $y = x^2$ is symmetric in $x$ on $[-1, 1]$: for every point $(x_0, x_0^2)$, the mirror point $(-x_0, x_0^2)$ has the same $y$. With $x$ symmetric about $0$, $S_{xy} = 0$, so $r = 0$. The relationship is strong, just not <em>linear</em>.</span><span data-lang="zh">正确！$y = x^2$ 在 $[-1, 1]$ 上关于 $x$ 对称：每个点 $(x_0, x_0^2)$ 都有镜像点 $(-x_0, x_0^2)$，$y$ 相同。由于 $x$ 关于 $0$ 对称，$S_{xy} = 0$，因此 $r = 0$。关系本身很强，只是不是<em>线性</em>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">PMCC measures <em>linear</em> association only. A symmetric $y = x^2$ has $r = 0$. Lesson: always look at the scatter plot, not just $r$.</span><span data-lang="zh">PMCC 只衡量<em>线性</em>关联。对称的 $y = x^2$ 有 $r = 0$。教训：永远要看散点图，而不是只看 $r$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header">
-      <div class="quiz-q"><span data-lang="en">10. A regression of ice-cream sales $y$ on temperature $x$ ($^\circ$C), based on data with $10 \le x \le 28$, gives $y = 4.2 x - 18$. Using the line to predict sales at $x = 5\,^\circ$C is:</span><span data-lang="zh">10. 冰淇淋销售额 $y$ 对气温 $x$（$^\circ$C）的回归基于 $10 \le x \le 28$ 的数据，得到 $y = 4.2 x - 18$。用此直线在 $x = 5\,^\circ$C 预测销售额：</span></div>
+      <div class="quiz-q"><span data-lang="en">10. A regression of ice-cream sales $y$ on temperature $x$ ($^\circ$C), based on data with $10 \le x \le 28$, gives $y = 4.2 x - 18$. Using the line to predict sales at $x = 5\,{}^{\circ}$C is:</span><span data-lang="zh">10. 冰淇淋销售额 $y$ 对气温 $x$（$^\circ$C）的回归基于 $10 \le x \le 28$ 的数据，得到 $y = 4.2 x - 18$。用此直线在 $x = 5\,{}^{\circ}$C 预测销售额：</span></div>
       <span class="quiz-number">Q10 &middot; SL 4.4</span>
     </div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">Reliable &mdash; the line was computed from the data.</span><span data-lang="zh">可靠 — 直线由数据算得。</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">Reliable &mdash; PMCC is presumably high.</span><span data-lang="zh">可靠 — PMCC 想必很高。</span></div>
-      <div class="quiz-opt" data-idx="2"><span data-lang="en">Unreliable &mdash; $x = 5$ is outside the observed data range (extrapolation).</span><span data-lang="zh">不可靠 — $x = 5$ 在观测数据范围之外（外推）。</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Unreliable &mdash; the slope is positive.</span><span data-lang="zh">不可靠 — 斜率为正。</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Reliable: the line was computed from the data.</span><span data-lang="zh">可靠：直线由数据算得。</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Reliable: PMCC is presumably high.</span><span data-lang="zh">可靠：PMCC 想必很高。</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Unreliable: $x = 5$ is outside the observed data range (extrapolation).</span><span data-lang="zh">不可靠：$x = 5$ 在观测数据范围之外（外推）。</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Unreliable: the slope is positive.</span><span data-lang="zh">不可靠：斜率为正。</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $x = 5$ lies below the minimum observed $x = 10$. Any prediction outside the data range relies on extrapolation: we have no evidence the linear pattern continues there.</span><span data-lang="zh">正确！$x = 5$ 低于观测的最小值 $x = 10$。在数据范围之外的预测必然是外推：没有证据表明线性模式在那里仍然成立。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">$x = 5$ is outside the observed range $[10, 28]$ &mdash; that's extrapolation. The regression line is only safe to use for interpolation.</span><span data-lang="zh">$x = 5$ 在观测范围 $[10, 28]$ 之外 — 这就是外推。回归直线只在内插（<code>interpolation</code>）时安全可用。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">$x = 5$ is outside the observed range $[10, 28]$, so that's extrapolation. The regression line is only safe to use for interpolation.</span><span data-lang="zh">$x = 5$ 在观测范围 $[10, 28]$ 之外，这就是外推。回归直线只在内插（<code>interpolation</code>）时安全可用。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)">&#8635; <span data-lang="en">Try Again</span><span data-lang="zh">再试一次</span></button>
   </div>
 </section>
@@ -2473,10 +3036,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.2</span> <span data-lang="en">I can apply the $1.5 \cdot \text{IQR}$ outlier rule and report outliers on a box plot.</span><span data-lang="zh">我能应用 $1.5 \cdot \text{IQR}$ 异常值规则，并在箱形图上标注异常值。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.3</span> <span data-lang="en">I can compute mean, median, and mode of raw data and estimate the mean from grouped data via $\sum f_i x_i / \sum f_i$.</span><span data-lang="zh">我能计算原始数据的均值、中位数与众数，并用 $\sum f_i x_i / \sum f_i$ 估计分组数据的均值。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.3</span> <span data-lang="en">I can compute the population variance and SD by both the deviations form and $\overline{x^2} - \bar{x}^2$.</span><span data-lang="zh">我能分别用偏差形式与 $\overline{x^2} - \bar{x}^2$ 计算总体方差与标准差。</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.3</span> <span data-lang="en">I know the IB uses $n$ (not $n - 1$) in the SD and can read $\sigma_x$ on the GDC.</span><span data-lang="zh">我知道 IB 的标准差除以 $n$（而非 $n - 1$），并能在图形计算器（<code>GDC</code>）上读出 $\sigma_x$。</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.3</span> <span data-lang="en">I know this course's $\sigma$ divides by $n$ (not $n - 1$) and can read $\sigma_x$ from technology.</span><span data-lang="zh">我知道本课程的 $\sigma$ 除以 $n$（而非 $n - 1$），并能从技术工具读出 $\sigma_x$。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.3</span> <span data-lang="en">I can apply the linear transformation rules $\bar{y} = a\bar{x} + b$ and $\sigma_y = |a|\sigma_x$, including the unit-conversion use case.</span><span data-lang="zh">我能应用线性变换规则 $\bar{y} = a\bar{x} + b$、$\sigma_y = |a|\sigma_x$，并能处理单位换算这种典型情形。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.4</span> <span data-lang="en">I can interpret the sign and magnitude of $r$, and avoid the correlation-vs-causation trap in writing.</span><span data-lang="zh">我能解读 $r$ 的符号与大小，并在书面回答中避开"相关即因果"的陷阱。</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.4</span> <span data-lang="en">I can fit a regression line by hand using $(\bar{x}, \bar{y})$ and $b = S_{xy}/S_{xx}$, or read it from the GDC.</span><span data-lang="zh">我能用 $(\bar{x}, \bar{y})$ 与 $b = S_{xy}/S_{xx}$ 手算回归直线，或直接从 GDC 读出。</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.4</span> <span data-lang="en">I can fit a regression line by hand using $(\bar{x}, \bar{y})$ and the gradient $a = S_{xy}/S_{xx}$, or read it from technology.</span><span data-lang="zh">我能用 $(\bar{x}, \bar{y})$ 与斜率 $a = S_{xy}/S_{xx}$ 手算回归直线，或直接从技术工具读出。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.4</span> <span data-lang="en">I can use the regression line to predict, and decide when a prediction is interpolation vs. extrapolation.</span><span data-lang="zh">我能用回归直线做预测，并判断这是内插还是外推（<code>extrapolation</code>）。</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#10003;</span> <span class="ib-ref">SL 4.4</span> <span data-lang="en">I can interpret the slope and intercept of a regression line in context, with appropriate caveats.</span><span data-lang="zh">我能结合背景解释回归直线的斜率与截距，并给出适当的限制条件。</span></li>
   </ul>
@@ -2488,8 +3051,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label" data-lang="zh">下一步</div>
   <h2><span data-lang="en">IB Paper-Style Practice</span><span data-lang="zh">IB 试卷风格练习</span></h2>
   <div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
-    <p data-lang="en" style="margin-bottom:16px;">IB exam-style questions across Paper 1A (short response, no calc), Paper 1B (extended response, no calc), and Paper 2 (calculator). D1 is SL-only — no Paper 3. EMH difficulty mix. Use this after the in-page quiz and flashcards.</p>
-    <p data-lang="zh" style="margin-bottom:16px;">IB 考试风格题，涵盖 Paper 1A（短答，无计算器）、Paper 1B（长答，无计算器）、Paper 2（可用计算器）。D1 仅 SL，无 Paper 3。难度按 EMH 分级。建议在做完本页测验与闪卡后再来。</p>
+    <p data-lang="en" style="margin-bottom:16px;">IB exam-style questions, with and without technology, in short-response and extended-response form, at mixed difficulty (easy, medium, hard). Use this after the in-page quiz and flashcards.</p>
+    <p data-lang="zh" style="margin-bottom:16px;">IB 考试风格题，包括允许与不允许使用技术工具的题目、短答与长答两种形式，难度混合（易、中、难）。建议在做完本页测验与闪卡后再来。</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <a href="../Practice%20Questions/Unit_D1_Univariate_Data_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">Practice Questions →</span><span data-lang="zh">练习题 →</span></a>
     </div>
@@ -2528,19 +3091,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
         <div class="card-icon icon-purple">&#9733;</div>
         <div class="card-title"><span data-lang="en">If you're going for a 7</span><span data-lang="zh">如果你要冲 7 分</span></div>
       </div>
-      <p style="font-size: 0.95rem;" data-lang="en">Open every <code>&#9656; Going deeper</code>. Univariate data is the topic where IB rewards <em>interpretation</em> over arithmetic. Owning <em>why</em> mean shifts under $y = ax + b$ but SD only scales by $|a|$, and why $r$ is invariant under linear transformations of either variable, is what separates a 5 from a 7 on the data-handling paper.</p>
-      <p style="font-size: 0.95rem;" data-lang="zh">展开每一个 <code>▸ Going deeper</code>（深入探究）小节。单变量数据是 IB 更看重<em>解释</em>而非计算的主题。真正搞懂：<em>为什么</em>在 $y = ax + b$ 下均值随之平移但标准差只按 $|a|$ 缩放；<em>为什么</em>相关系数（<code>correlation coefficient</code>）$r$ 在任一变量做线性变换（<code>linear transformation</code>）时保持不变。这就是数据处理卷上 5 分与 7 分的分水岭。</p>
+      <p style="font-size: 0.95rem;" data-lang="en">Open every <code>&#9656; Going deeper</code>. In this unit, <em>interpretation</em> matters as much as arithmetic. Knowing <em>why</em> the mean shifts under $y = ax + b$ but the SD only scales by $|a|$, and why $|r|$ is unchanged by linear transformations of either variable, lets you explain results in context instead of only computing them.</p>
+      <p style="font-size: 0.95rem;" data-lang="zh">展开每一个 <code>▸ Going deeper</code>（深入探究）小节。本单元中，<em>解释</em>与计算同样重要。真正搞懂：<em>为什么</em>在 $y = ax + b$ 下均值随之平移但标准差只按 $|a|$ 缩放；<em>为什么</em>相关系数（<code>correlation coefficient</code>）的大小 $|r|$ 在任一变量做线性变换（<code>linear transformation</code>）时保持不变。这样你就能结合情境解释结果，而不只是算出结果。</p>
     </div>
   </div>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">SL only &mdash; no HL extension</span><span data-lang="zh">仅 SL — 无 HL 拓展</span></strong>
-    <span data-lang="en">Every section in this unit is core SL content (sub-topics SL 4.1&ndash;4.4). The HL-only sub-topics on conditional probability, Bayes, and continuous random variables live in <em>Unit D2 &amp; D3</em>. No <code>HL</code> chips appear here.</span><span data-lang="zh">本单元每一节都是 SL 核心内容（子主题 SL 4.1–4.4）。HL 独有的条件概率（<code>conditional probability</code>）、贝叶斯（<code>Bayes</code>）和连续随机变量等子主题在 <em>Unit D2 与 D3</em>。此处不出现 <code>HL</code> 标签。</span>
+    <strong style="color: var(--purple);"><span data-lang="en">SL only: no HL extension</span><span data-lang="zh">仅 SL：无 HL 拓展</span></strong>
+    <span data-lang="en">Every section in this unit is core SL content (sub-topics SL 4.1&ndash;4.4). The HL-only sub-topics of Topic 4, Bayes' theorem and continuous random variables, are in <em>Units D2 &amp; D3</em>. No <code>HL</code> chips appear here.</span><span data-lang="zh">本单元每一节都是 SL 核心内容（子主题 SL 4.1–4.4）。主题 4 中 HL 独有的子主题，即贝叶斯定理（<code>Bayes' theorem</code>）与连续随机变量，在 <em>Unit D2 与 D3</em>。此处不出现 <code>HL</code> 标签。</span>
   </div>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">GDC convention</span><span data-lang="zh">图形计算器（GDC）约定</span></strong>
-    <span data-lang="en">On Paper 2, your graphing calculator is the primary tool. Whenever you see "find the mean", "find $r$", or "find the regression line", the IB markscheme expects you to enter the data once and read off the answer. We don't model specific TI / Casio keystrokes &mdash; just know the menu names: <em>1-Var Stats</em>, <em>2-Var Stats</em>, <em>LinReg(a + bx)</em>. Paper 1 stats questions, by contrast, use clean numbers that work by hand.</span><span data-lang="zh">在试卷 2（<code>Paper 2</code>）上，图形计算器（<code>GDC</code>）是主要工具。凡是题面写"求均值"、"求 $r$"或"求回归直线"，IB 评分标准期望你录入数据一次后直接读出答案。我们不演示具体 TI / Casio 按键 — 你只需要记住菜单名：<em>1-Var Stats</em>、<em>2-Var Stats</em>、<em>LinReg(a + bx)</em>。试卷 1（<code>Paper 1</code>）的统计题则使用干净的数字，可手算解决。</span>
+    <strong style="color: var(--orange);"><span data-lang="en">Technology convention</span><span data-lang="zh">技术工具约定</span></strong>
+    <span data-lang="en">Paper 2 requires technology. When a question asks you to find a mean, $r$ or a regression line from data, enter the data once, read the values from the statistics output, and write down what you read. This guide does not teach model-specific keystrokes. On Paper 1 (no technology), any statistics must be done by hand.</span><span data-lang="zh">Paper 2 必须使用技术工具。题目要求由数据求均值、$r$ 或回归直线时，把数据录入一次，从统计结果中读出数值，并写下读到的数。本指南不演示具体型号的按键。在 Paper 1（不允许技术工具）上，所有统计计算都要手算。</span>
   </div>
 </section>
   </div>
@@ -2570,8 +3133,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 <div class="footer-wrap">
   <div class="footer-brand">Dingrui Scholars</div>
-  <p data-lang="en">IB Math Analysis &amp; Approaches HL &mdash; Unit D1: Univariate Data &middot; Topic SL 4.1&ndash;4.4</p>
-  <p data-lang="zh">IB Math Analysis &amp; Approaches HL — Unit D1：单变量数据 · 主题 SL 4.1–4.4</p>
+  <p data-lang="en">IB Math Analysis &amp; Approaches HL: Unit D1: Univariate Data &middot; Topic SL 4.1&ndash;4.4</p>
+  <p data-lang="zh">IB Math Analysis &amp; Approaches HL：Unit D1：单变量数据 · 主题 SL 4.1–4.4</p>
 </div>
 
 <style id="dr-related-css">
@@ -2905,6 +3468,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -3048,21 +3627,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

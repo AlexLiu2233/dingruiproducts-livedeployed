@@ -401,6 +401,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -415,6 +505,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -482,8 +573,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">The applied geometry unit. Trigonometry takes the three angle ratios and the two general triangle rules (sine and cosine) and turns them into a complete toolkit for solving any triangle, planar or three-dimensional, given enough information. Bearings translate compass directions into interior angles; the ambiguous case warns when the data leaves the triangle underdetermined. Every section follows the same diagnostic question: what information is given, and which rule does that information unlock?</span><span data-lang="zh">本单元是应用几何。三角学把三种角比与两条通用三角形定理（正弦与余弦）整合成完整工具箱：只要信息足够，平面或三维任何三角形都能求解。方位角把罗盘方向翻译成内角；模糊情形则警示数据可能不足以唯一确定三角形。每节都围绕同一诊断问题：给定的是什么信息，这些信息触发哪条定理？</span>
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon">IB AA HL · Topic 3.3</span>
-    <span class="chip chip-green">Papers 1 · 2</span>
+    <span class="chip chip-maroon">IB AA HL · Topic 3.2 / 3.3</span>
     <span class="chip chip-purple"><span data-lang="en">6 Concepts · SL only</span><span data-lang="zh">6 个核心概念 · 仅 SL</span></span>
   </div>
 </section>
@@ -504,25 +594,43 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- C2.1 RIGHT-ANGLED TRIGONOMETRY -->
 <section class="section" id="s-c2-1">
   <div class="section-label"><span data-lang="en">Topic C2.1 · Right-Angled Trigonometry</span><span data-lang="zh">Topic C2.1 · 直角三角形三角学</span></div>
-  <h2><span data-lang="en">Right-Angled Trigonometry (SOHCAHTOA)</span><span data-lang="zh">直角三角形三角学（SOHCAHTOA）</span> <span class="ib-ref">SL 3.3</span></h2>
+  <h2><span data-lang="en">Right-Angled Trigonometry (SOHCAHTOA)</span><span data-lang="zh">直角三角形三角学（SOHCAHTOA）</span> <span class="ib-ref">SL 3.2</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Label the opposite, adjacent and hypotenuse relative to a chosen acute angle.</li>
+      <li>State the definitions of $\sin \theta$, $\cos \theta$ and $\tan \theta$ in a right-angled triangle.</li>
+      <li>Calculate an unknown side or angle using the correct ratio and the inverse functions $\sin^{-1}$, $\cos^{-1}$, $\tan^{-1}$.</li>
+      <li>Identify angles of elevation and depression, measured from the horizontal, and explain why they are equal for two points that see each other.</li>
+      <li>Solve a two-step height or distance problem by chaining right-angled triangles.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>相对所选锐角标出（<code>label</code>）对边、邻边与斜边。</li>
+      <li>写出（<code>state</code>）直角三角形中 $\sin \theta$、$\cos \theta$、$\tan \theta$ 的定义。</li>
+      <li>用正确的比值与反函数 $\sin^{-1}$、$\cos^{-1}$、$\tan^{-1}$ 计算（<code>calculate</code>）未知边或角。</li>
+      <li>识别（<code>identify</code>）自水平线量起的仰角（<code>angle of elevation</code>）与俯角（<code>angle of depression</code>），并解释（<code>explain</code>）两点互望时二者为何相等。</li>
+      <li>把直角三角形串联起来，求解（<code>solve</code>）两步的高度或距离问题。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The three ratios.</strong> In a right-angled triangle with one acute angle $\theta$, label the sides relative to $\theta$: <em>opposite</em> (the side facing $\theta$), <em>adjacent</em> (the side next to $\theta$ that is not the hypotenuse), and <em>hypotenuse</em> (the side opposite the right angle, always the longest).
     $$ \sin \theta \;=\; \frac{\text{opposite}}{\text{hypotenuse}}, \qquad \cos \theta \;=\; \frac{\text{adjacent}}{\text{hypotenuse}}, \qquad \tan \theta \;=\; \frac{\text{opposite}}{\text{adjacent}}. $$
     <strong>SOHCAHTOA</strong> is the mnemonic: <em>S</em>ine = <em>O</em>pposite / <em>H</em>ypotenuse, <em>C</em>osine = <em>A</em>djacent / <em>H</em>ypotenuse, <em>T</em>angent = <em>O</em>pposite / <em>A</em>djacent.
     <br><br>
-    <strong>Inverse ratios.</strong> To recover an angle from a known ratio, use $\arcsin$, $\arccos$, or $\arctan$ (calculator buttons $\sin^{-1}$, $\cos^{-1}$, $\tan^{-1}$). The output is the acute angle in degrees or radians depending on calculator mode.
+    <strong>Inverse ratios.</strong> To recover an angle from a known ratio, use the inverse functions $\sin^{-1}$, $\cos^{-1}$, $\tan^{-1}$ (the calculator buttons of the same name). For a ratio between $0$ and $1$ the output is an acute angle, in degrees or radians depending on calculator mode.
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>三种角比。</strong>直角三角形中一锐角 $\theta$，相对 $\theta$ 标边：<em>对边（opposite）</em>是 $\theta$ 正对的边；<em>邻边（adjacent）</em>是 $\theta$ 旁边且非斜边的那条；<em>斜边（hypotenuse）</em>是直角对面的边（恒为最长边）。
-    $$ \sin \theta \;=\; \frac{\text{对边}}{\text{斜边}}, \qquad \cos \theta \;=\; \frac{\text{邻边}}{\text{斜边}}, \qquad \tan \theta \;=\; \frac{\text{对边}}{\text{邻边}}. $$
+    $$ \sin \theta \;=\; \frac{\text{opposite}}{\text{hypotenuse}}, \qquad \cos \theta \;=\; \frac{\text{adjacent}}{\text{hypotenuse}}, \qquad \tan \theta \;=\; \frac{\text{opposite}}{\text{adjacent}}. $$
     <strong>SOHCAHTOA</strong> 是助记口诀：<em>S</em>ine = <em>O</em>pposite / <em>H</em>ypotenuse，<em>C</em>osine = <em>A</em>djacent / <em>H</em>ypotenuse，<em>T</em>angent = <em>O</em>pposite / <em>A</em>djacent。
     <br><br>
-    <strong>反三角。</strong>已知比值求角时，用 $\arcsin$、$\arccos$、$\arctan$（计算器按键 $\sin^{-1}$、$\cos^{-1}$、$\tan^{-1}$）。输出为锐角，单位取决于计算器是度数还是弧度模式。
+    <strong>反三角。</strong>已知比值求角时，用反函数 $\sin^{-1}$、$\cos^{-1}$、$\tan^{-1}$（计算器上同名按键）。比值在 $0$ 与 $1$ 之间时输出为锐角，单位取决于计算器是度数还是弧度模式。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.1: find an angle from a leg and the hypotenuse</span><span data-lang="zh">C2.1 例题：由一直角边与斜边求角</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.1 (find an angle from a leg and the hypotenuse)</span><span data-lang="zh">C2.1 例题（由一直角边与斜边求角）</span></div>
     <p><span data-lang="en">A right-angled triangle has hypotenuse $13$ and one leg of length $5$. Find the angle opposite the leg of length $5$.</span><span data-lang="zh">一直角三角形斜边为 $13$，一直角边为 $5$。求该直角边所对的角。</span></p>
   </div>
   <div class="worked-solution">
@@ -533,10 +641,68 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \sin \theta \;=\; \frac{\text{opposite}}{\text{hypotenuse}} \;=\; \frac{5}{13}. $$
     <p data-lang="en"><strong>Step 3. Invert.</strong></p>
     <p data-lang="zh"><strong>第 3 步：反向求角。</strong></p>
-    $$ \theta \;=\; \arcsin \!\left( \frac{5}{13} \right) \;\approx\; 22.6^{\circ}. $$
+    $$ \theta \;=\; \sin^{-1} \!\left( \frac{5}{13} \right) \;\approx\; 22.6^{\circ}. $$
     <p data-lang="en"><strong>Cross-check.</strong> The leg of length $5$ is shorter than the leg of length $\sqrt{13^{2} - 5^{2}} = 12$, so the angle opposite the shorter leg should be smaller than $45^{\circ}$. $22.6^{\circ}$ confirms.</p>
     <p data-lang="zh"><strong>互相检验。</strong>长度 $5$ 的直角边短于另一直角边 $\sqrt{13^{2} - 5^{2}} = 12$，故对应角应小于 $45^{\circ}$。$22.6^{\circ}$ 符合。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.1b: angles of elevation and depression</span><span data-lang="zh">C2.1b 例题：仰角与俯角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">From a point $P$ on level ground, $40$ m from the foot $F$ of a vertical tower $FT$, the angle of elevation of the top $T$ is $32^{\circ}$. (a) Find the height of the tower. (b) A point $Q$ lies on the same line, $60$ m from $F$. Find the angle of depression of $Q$ from $T$.</span><span data-lang="zh">在水平地面上的点 $P$，距竖直塔 $FT$ 的塔脚 $F$ 为 $40$ m，测得塔顶 $T$ 的仰角为 $32^{\circ}$。(a) 求塔高。(b) 点 $Q$ 在同一直线上，距 $F$ 为 $60$ m。求从 $T$ 看 $Q$ 的俯角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Name the right angle and the ratio.</strong> The tower is vertical and the ground is level, so angle $TFP = 90^{\circ}$. Relative to the $32^{\circ}$ angle at $P$, $FT$ is opposite and $PF = 40$ m is adjacent, so use tangent.</p>
+    <p data-lang="zh"><strong>第 1 步：确定直角与比值。</strong>塔竖直、地面水平，故角 $TFP = 90^{\circ}$。相对 $P$ 处的 $32^{\circ}$ 角，$FT$ 是对边，$PF = 40$ m 是邻边，用正切。</p>
+    $$ FT \;=\; 40 \tan 32^{\circ} \;=\; 40 \times 0.6249 \;\approx\; 25.0 \text{ m}. $$
+    <p data-lang="en"><strong>Step 2. Turn the depression into an elevation.</strong> The horizontal through $T$ is parallel to the ground, so the angle of depression of $Q$ from $T$ equals the angle of elevation of $T$ from $Q$ (alternate angles). In triangle $TFQ$, $FT$ is opposite and $QF = 60$ m is adjacent.</p>
+    <p data-lang="zh"><strong>第 2 步：把俯角化为仰角。</strong>过 $T$ 的水平线平行于地面，故从 $T$ 看 $Q$ 的俯角等于从 $Q$ 看 $T$ 的仰角（内错角）。在三角形 $TFQ$ 中，$FT$ 是对边，$QF = 60$ m 是邻边。</p>
+    $$ \theta \;=\; \tan^{-1} \!\left( \frac{24.99}{60} \right) \;\approx\; 22.6^{\circ}. $$
+    <p data-lang="en"><strong>Why this works.</strong> Each part uses one right-angled triangle that contains the unknown and two known quantities. In part (b) the unrounded height $24.99$ m is used, so the rounding of part (a) does not spread into part (b).</p>
+    <p data-lang="zh"><strong>原理。</strong>每一问都只用一个直角三角形，其中含未知量和两个已知量。(b) 使用未经四舍五入的高度 $24.99$ m，这样 (a) 的舍入误差不会带入 (b)。</p>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 244" role="img" aria-label="A vertical tower 25 m tall drawn to scale, observers at P 40 m and Q 60 m from its foot, with the angles of elevation 32 and 22.6 degrees and the equal angle of depression from the top">
+      <line class="ax" x1="30" y1="200.0" x2="395" y2="200.0"/>
+      <line class="c3" x1="360.0" y1="200.0" x2="360.0" y2="75.0"/>
+      <polyline class="ax thin" points="350.0,200.0 350.0,190.0 360.0,190.0"/>
+      <line class="c1" x1="160.0" y1="200.0" x2="360.0" y2="75.0"/>
+      <line class="c2" x1="60.0" y1="200.0" x2="360.0" y2="75.0"/>
+      <line class="ax dash thin" x1="40" y1="75.0" x2="360.0" y2="75.0"/>
+      <path class="c1 thin" d="M 190.0 200.0 A 30 30 0 0 0 185.4 184.1"/>
+      <path class="c2 thin" d="M 90.0 200.0 A 30 30 0 0 0 87.7 188.5"/>
+      <path class="c2 thin" d="M 330.0 75.0 A 30 30 0 0 0 332.3 86.6"/>
+      <circle class="dot" cx="160.0" cy="200.0" r="3"/>
+      <circle class="dot" cx="60.0" cy="200.0" r="3"/>
+      <circle class="dot" cx="360.0" cy="200.0" r="3"/>
+      <circle class="dot" cx="360.0" cy="75.0" r="3"/>
+      <text class="lbl" data-lang="en" x="160.0" y="216.0" text-anchor="middle">P</text>
+      <text class="lbl" data-lang="zh" x="160.0" y="216.0" text-anchor="middle">P</text>
+      <text class="lbl" data-lang="en" x="60.0" y="216.0" text-anchor="middle">Q</text>
+      <text class="lbl" data-lang="zh" x="60.0" y="216.0" text-anchor="middle">Q</text>
+      <text class="lbl" data-lang="en" x="366.0" y="216.0">F</text>
+      <text class="lbl" data-lang="zh" x="366.0" y="216.0">F</text>
+      <text class="lbl" data-lang="en" x="366.0" y="71.0">T</text>
+      <text class="lbl" data-lang="zh" x="366.0" y="71.0">T</text>
+      <text class="mut" data-lang="en" x="368.0" y="137.5">25.0 m</text>
+      <text class="mut" data-lang="zh" x="368.0" y="137.5">25.0 m</text>
+      <text class="mut" data-lang="en" x="110.0" y="234.0" text-anchor="middle">20 m</text>
+      <text class="mut" data-lang="zh" x="110.0" y="234.0" text-anchor="middle">20 m</text>
+      <text class="mut" data-lang="en" x="260.0" y="234.0" text-anchor="middle">40 m</text>
+      <text class="mut" data-lang="zh" x="260.0" y="234.0" text-anchor="middle">40 m</text>
+      <text class="mut c1t" data-lang="en" x="196.0" y="195.0">32°</text>
+      <text class="mut c1t" data-lang="zh" x="196.0" y="195.0">32°</text>
+      <text class="mut c2t" data-lang="en" x="96.0" y="197.0">22.6°</text>
+      <text class="mut c2t" data-lang="zh" x="96.0" y="197.0">22.6°</text>
+      <text class="mut c2t" data-lang="en" x="310.0" y="90.0" text-anchor="end">22.6°</text>
+      <text class="mut c2t" data-lang="zh" x="310.0" y="90.0" text-anchor="end">22.6°</text>
+      <text class="mut" data-lang="en" x="44.0" y="69.0">horizontal</text>
+      <text class="mut" data-lang="zh" x="44.0" y="69.0">水平线</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. Drawn to scale ($1$ m $= 5$ px). The tower $FT$ is $25.0$ m tall. From $P$, $40$ m from the foot, the angle of elevation of $T$ is $32^{\circ}$; from $Q$, $60$ m from the foot, it is $22.6^{\circ}$. The angle of depression of $Q$ from $T$ is measured down from the dashed horizontal through $T$ and equals the angle of elevation of $T$ from $Q$ (alternate angles).</span><span data-lang="zh">图 1. 按比例绘制（$1$ m $= 5$ px）。塔 $FT$ 高 $25.0$ m。从距塔脚 $40$ m 的 $P$ 看 $T$ 的仰角为 $32^{\circ}$；从距塔脚 $60$ m 的 $Q$ 看则为 $22.6^{\circ}$。从 $T$ 看 $Q$ 的俯角自过 $T$ 的水平虚线向下量起，等于从 $Q$ 看 $T$ 的仰角（内错角）。</span></figcaption>
+  </figure>
 
   <details>
     <summary><span data-lang="en">Going deeper: why the ratios depend only on the angle</span><span data-lang="zh">深入：为何角比仅由角度决定</span></summary>
@@ -548,7 +714,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: calculator mode</span><span data-lang="zh">陷阱：计算器模式</span></strong>
-    <span data-lang="en">A calculator in radian mode evaluating $\arcsin(5/13)$ returns approximately $0.395$, not $22.6$. The IB allows both degrees and radians, but answers must be given in the unit the question asks for. Set the mode before pressing $\sin^{-1}$.</span><span data-lang="zh">计算器处于弧度模式下计算 $\arcsin(5/13)$ 得约 $0.395$，而非 $22.6$。IB 度与弧度都接受，但答案单位必须与题目要求一致。按 $\sin^{-1}$ 前先确认模式。</span>
+    <span data-lang="en">A calculator in radian mode evaluating $\sin^{-1}(5/13)$ returns approximately $0.395$ (radians), not $22.6$. Give the answer in the unit the question uses: if the data are in degrees, set degree mode before pressing $\sin^{-1}$.</span><span data-lang="zh">计算器处于弧度模式下计算 $\sin^{-1}(5/13)$ 得约 $0.395$（弧度），而非 $22.6$。答案单位与题目一致：题目数据用度时，按 $\sin^{-1}$ 前先切到度数模式。</span>
   </div>
 
   <div class="quiz" data-answer="2">
@@ -559,9 +725,30 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$8$</div>
       <div class="quiz-opt" data-idx="3">$\dfrac{4}{\sqrt{3}}$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">$\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}} = \tfrac{4}{h}$. Since $\sin 30^{\circ} = \tfrac{1}{2}$, we have $\tfrac{1}{2} = \tfrac{4}{h}$, so $h = 8$.</span><span data-lang="zh">$\sin 30^{\circ} = \tfrac{\text{对边}}{\text{斜边}} = \tfrac{4}{h}$。又 $\sin 30^{\circ} = \tfrac{1}{2}$，故 $\tfrac{1}{2} = \tfrac{4}{h}$，得 $h = 8$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Use $\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}}$. With opposite $= 4$ and $\sin 30^{\circ} = \tfrac{1}{2}$, the hypotenuse is $8$.</span><span data-lang="zh">用 $\sin 30^{\circ} = \tfrac{\text{对边}}{\text{斜边}}$。对边 $4$，$\sin 30^{\circ} = \tfrac{1}{2}$，斜边为 $8$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">$\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}} = \tfrac{4}{h}$. Since $\sin 30^{\circ} = \tfrac{1}{2}$, we have $\tfrac{1}{2} = \tfrac{4}{h}$, so $h = 8$.</span><span data-lang="zh">$\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}} = \tfrac{4}{h}$。又 $\sin 30^{\circ} = \tfrac{1}{2}$，故 $\tfrac{1}{2} = \tfrac{4}{h}$，得 $h = 8$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Use $\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}}$. With opposite $= 4$ and $\sin 30^{\circ} = \tfrac{1}{2}$, the hypotenuse is $8$.</span><span data-lang="zh">用 $\sin 30^{\circ} = \tfrac{\text{opp}}{\text{hyp}}$。对边 $4$，$\sin 30^{\circ} = \tfrac{1}{2}$，斜边为 $8$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>On a paper without technology</strong>, a ratio can only be evaluated by hand for the special angles, so know $\sin 30^{\circ} = \tfrac{1}{2}$, $\cos 30^{\circ} = \tfrac{\sqrt{3}}{2}$, $\tan 45^{\circ} = 1$ and the rest of the $30^{\circ}$, $45^{\circ}$, $60^{\circ}$ table. On a paper with technology, check degree mode first. In both, write the ratio as a fraction of named sides (for example $\tan 32^{\circ} = \tfrac{FT}{40}$) before solving, keep unrounded values in the calculator, and round only the final answer to the accuracy the question asks for.</p>
+    <p data-lang="zh"><strong>在不允许使用技术工具的试卷上</strong>（<code>no technology</code>），只有特殊角的比值能手算，所以要熟记 $\sin 30^{\circ} = \tfrac{1}{2}$、$\cos 30^{\circ} = \tfrac{\sqrt{3}}{2}$、$\tan 45^{\circ} = 1$ 以及 $30^{\circ}$、$45^{\circ}$、$60^{\circ}$ 表中的其余值。在允许使用技术工具的试卷上，先确认处于度数模式。两种情况下都先把比值写成具名边之比（例如 $\tan 32^{\circ} = \tfrac{FT}{40}$）再求解，计算器中保留未舍入的值，只对最终答案按题目要求的精度取舍。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A right-angled triangle has hypotenuse $10$ cm and an acute angle of $25^{\circ}$. Find the side opposite that angle.</span><span data-lang="zh">1. 直角三角形斜边 $10$ cm，一锐角为 $25^{\circ}$。求该角的对边。</span></summary>
+      <div class="sg-a"><p data-lang="en">Opposite and hypotenuse go with sine: $x = 10 \sin 25^{\circ} \approx 10 \times 0.4226 \approx 4.23$ cm.</p><p data-lang="zh">对边与斜边对应正弦：$x = 10 \sin 25^{\circ} \approx 10 \times 0.4226 \approx 4.23$ cm。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Explain why the angle of depression of a boat seen from a cliff top equals the angle of elevation of the cliff top seen from the boat.</span><span data-lang="zh">2. 解释为何从崖顶看船的俯角等于从船看崖顶的仰角。</span></summary>
+      <div class="sg-a"><p data-lang="en">Both angles are measured from a horizontal line to the same line of sight. The horizontal through the cliff top and the horizontal through the boat are parallel, so the two angles are alternate angles and are equal.</p><p data-lang="zh">两角都是从水平线量到同一条视线。过崖顶的水平线与过船的水平线平行，因此两角是内错角，相等。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A ramp rises $1.2$ m over a horizontal distance of $9$ m. Find the angle of the ramp to the horizontal and the length of the ramp.</span><span data-lang="zh">3. 一坡道在水平距离 $9$ m 内升高 $1.2$ m。求坡道与水平面的夹角及坡道长度。</span></summary>
+      <div class="sg-a"><p data-lang="en">Angle: $\tan \theta = \tfrac{1.2}{9}$, so $\theta = \tan^{-1}(0.1333) \approx 7.59^{\circ}$. Length by Pythagoras: $\sqrt{9^{2} + 1.2^{2}} = \sqrt{82.44} \approx 9.08$ m.</p><p data-lang="zh">夹角：$\tan \theta = \tfrac{1.2}{9}$，故 $\theta = \tan^{-1}(0.1333) \approx 7.59^{\circ}$。长度由勾股定理：$\sqrt{9^{2} + 1.2^{2}} = \sqrt{82.44} \approx 9.08$ m。</p></div>
+    </details>
   </div>
 </section>
 
@@ -570,7 +757,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- C2.2 SINE RULE -->
 <section class="section" id="s-c2-2">
   <div class="section-label"><span data-lang="en">Topic C2.2 · Sine Rule</span><span data-lang="zh">Topic C2.2 · 正弦定理</span></div>
-  <h2><span data-lang="en">The Sine Rule</span><span data-lang="zh">正弦定理</span> <span class="ib-ref">SL 3.3</span></h2>
+  <h2><span data-lang="en">The Sine Rule</span><span data-lang="zh">正弦定理</span> <span class="ib-ref">SL 3.2</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the sine rule $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C}$ and the side-angle labelling it uses.</li>
+      <li>Identify AAS, ASA and SSA data as the cases that contain a complete side-angle pair.</li>
+      <li>Calculate an unknown side, writing the rule with sides on top.</li>
+      <li>Calculate an unknown angle, writing the rule with sines on top, and decide whether a second (obtuse) answer is possible.</li>
+      <li>Explain why every ratio in the sine rule equals the circumcircle diameter $2R$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）正弦定理 $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C}$ 及其边角标记方式。</li>
+      <li>识别（<code>identify</code>）AAS、ASA、SSA 是含完整“边-对角”对的数据情形。</li>
+      <li>计算（<code>calculate</code>）未知边：把定理写成边在分子的形式。</li>
+      <li>计算（<code>calculate</code>）未知角：把定理写成正弦在分子的形式，并判断（<code>decide</code>）是否可能有第二个（钝角）答案。</li>
+      <li>解释（<code>explain</code>）为何正弦定理中每个比值都等于外接圆直径 $2R$。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The sine rule.</strong> In any triangle with sides $a$, $b$, $c$ opposite angles $A$, $B$, $C$:
@@ -597,8 +802,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     余弦定理（C2.3）处理 SAS 与 SSS 等没有"边-对角"对的情形。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.2: AAS configuration</span><span data-lang="zh">C2.2 例题：AAS 配置</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.2 (AAS configuration)</span><span data-lang="zh">C2.2 例题（AAS 配置）</span></div>
     <p><span data-lang="en">In triangle $ABC$, angle $A = 40^{\circ}$, angle $B = 60^{\circ}$, and side $a = 8$. Find side $b$.</span><span data-lang="zh">在三角形 $ABC$ 中，角 $A = 40^{\circ}$、角 $B = 60^{\circ}$、边 $a = 8$。求边 $b$。</span></p>
   </div>
   <div class="worked-solution">
@@ -613,6 +818,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Cross-check.</strong> Angle $B = 60^{\circ}$ is larger than angle $A = 40^{\circ}$, so the side opposite $B$ should be larger than the side opposite $A$. We have $b \approx 10.78 > 8 = a$. Consistent.</p>
     <p data-lang="zh"><strong>互相检验。</strong>角 $B = 60^{\circ}$ 大于角 $A = 40^{\circ}$，故 $B$ 的对边应大于 $A$ 的对边。$b \approx 10.78 > 8 = a$，一致。</p>
   </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In triangle $ABC$, $A = 30^{\circ}$, $C = 45^{\circ}$, and $c = 10$. Side $a$ is:</span><span data-lang="zh">三角形 $ABC$ 中 $A = 30^{\circ}$、$C = 45^{\circ}$、$c = 10$。边 $a$ 为：</span></div><div class="quiz-number">C2.2 · Q1</div></div>
@@ -622,23 +828,45 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$10 \sqrt{2}$</div>
       <div class="quiz-opt" data-idx="3">$5$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">$\dfrac{a}{\sin A} = \dfrac{c}{\sin C} \Rightarrow a = \dfrac{c \sin A}{\sin C} = \dfrac{10 \sin 30^{\circ}}{\sin 45^{\circ}} = \dfrac{10 \cdot \tfrac{1}{2}}{\tfrac{\sqrt{2}}{2}} = \dfrac{5}{\tfrac{\sqrt{2}}{2}} = \dfrac{10}{\sqrt{2}} = 5 \sqrt{2}$.</span><span data-lang="zh">$\dfrac{a}{\sin A} = \dfrac{c}{\sin C} \Rightarrow a = \dfrac{c \sin A}{\sin C} = \dfrac{10 \sin 30^{\circ}}{\sin 45^{\circ}} = \dfrac{10 \cdot \tfrac{1}{2}}{\tfrac{\sqrt{2}}{2}} = \dfrac{10}{\sqrt{2}} = 5 \sqrt{2}$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Apply $\dfrac{a}{\sin A} = \dfrac{c}{\sin C}$ with $A = 30^{\circ}$, $C = 45^{\circ}$, $c = 10$ to get $a = \tfrac{10}{\sqrt{2}}$ (equivalently $5\sqrt{2}$). Dividing by an extra factor of $2$ along the way — as in option 0 — is the most common slip.</span><span data-lang="zh">用 $\dfrac{a}{\sin A} = \dfrac{c}{\sin C}$，代入 $A = 30^{\circ}$、$C = 45^{\circ}$、$c = 10$，得 $a = \tfrac{10}{\sqrt{2}}$（等价于 $5\sqrt{2}$）。像选项 0 那样中途多除了一次 $2$，是最常见的失误。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">$\dfrac{a}{\sin A} = \dfrac{c}{\sin C} \Rightarrow a = \dfrac{c \sin A}{\sin C} = \dfrac{10 \sin 30^{\circ}}{\sin 45^{\circ}} = \dfrac{10 \cdot \tfrac{1}{2}}{\tfrac{\sqrt{2}}{2}} = \dfrac{10}{\sqrt{2}} = 5 \sqrt{2}$.</span><span data-lang="zh">$\dfrac{a}{\sin A} = \dfrac{c}{\sin C} \Rightarrow a = \dfrac{c \sin A}{\sin C} = \dfrac{10 \sin 30^{\circ}}{\sin 45^{\circ}} = \dfrac{10 \cdot \tfrac{1}{2}}{\tfrac{\sqrt{2}}{2}} = \dfrac{10}{\sqrt{2}} = 5 \sqrt{2}$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Apply $\dfrac{a}{\sin A} = \dfrac{c}{\sin C}$ with $A = 30^{\circ}$, $C = 45^{\circ}$, $c = 10$ to get $a = \tfrac{10}{\sqrt{2}}$ (equivalently $5\sqrt{2}$). Option 0 halves the answer: it divides by an extra factor of $2$ along the way.</span><span data-lang="zh">用 $\dfrac{a}{\sin A} = \dfrac{c}{\sin C}$，代入 $A = 30^{\circ}$、$C = 45^{\circ}$、$c = 10$，得 $a = \tfrac{10}{\sqrt{2}}$（等价于 $5\sqrt{2}$）。选项 0 把答案减半了：中途多除了一次 $2$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.2b: circumradius</span><span data-lang="zh">C2.2b 例题：外接圆半径</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.2b (circumradius)</span><span data-lang="zh">C2.2b 例题（外接圆半径）</span></div>
-    <p><span data-lang="en">Using the same triangle as above ($a = 8$, $A = 40^{\circ}$), find the radius $R$ of the circumscribed circle.</span><span data-lang="zh">沿用上例的三角形（$a = 8$，$A = 40^{\circ}$），求外接圆半径 $R$。</span></p>
+    <p><span data-lang="en">Using the triangle of Worked Example C2.2 ($a = 8$, $A = 40^{\circ}$), find the radius $R$ of the circumscribed circle.</span><span data-lang="zh">沿用例题 C2.2 的三角形（$a = 8$，$A = 40^{\circ}$），求外接圆半径 $R$。</span></p>
   </div>
   <div class="worked-solution">
     <p data-lang="en"><strong>Recall the circumradius identity.</strong> Each ratio in the sine rule equals the diameter of the circumscribed circle: $\dfrac{a}{\sin A} = 2R$.</p>
     <p data-lang="zh"><strong>回忆外接圆恒等式。</strong>正弦定理中每个比值都等于外接圆的直径：$\dfrac{a}{\sin A} = 2R$。</p>
     <p data-lang="en"><strong>Substitute.</strong></p>
     <p data-lang="zh"><strong>代入。</strong></p>
-    $$ 2R \;=\; \frac{8}{\sin 40^{\circ}} \;=\; \frac{8}{0.6428} \;\approx\; 12.45 \quad\Longrightarrow\quad R \;\approx\; 6.23. $$
-    <p data-lang="en"><strong>Why this works regardless of which side-angle pair you pick.</strong> Since $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$, you would get the same circumradius using $b$ and $B$, or $c$ and $C$ — it's a property of the whole triangle, not of any one side.</p>
-    <p data-lang="zh"><strong>为何用哪一组边角对都行。</strong>因为 $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$，用 $b$ 与 $B$，或 $c$ 与 $C$ 计算都会得到同一个外接圆半径——这是整个三角形的性质，而非某条边独有。</p>
+    $$ 2R \;=\; \frac{8}{\sin 40^{\circ}} \;=\; \frac{8}{0.6428} \;\approx\; 12.45 \quad\Longrightarrow\quad R \;\approx\; 6.22. $$
+    <p data-lang="en"><strong>Why this works regardless of which side-angle pair you pick.</strong> Since $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$, you would get the same circumradius using $b$ and $B$, or $c$ and $C$: it is a property of the whole triangle, not of any one side.</p>
+    <p data-lang="zh"><strong>为何用哪一组边角对都行。</strong>因为 $\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$，用 $b$ 与 $B$，或 $c$ 与 $C$ 计算都会得到同一个外接圆半径：这是整个三角形的性质，而非某条边独有。</p>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>Finding an angle with the sine rule:</strong> write it with the sines on top, $\dfrac{\sin B}{b} = \dfrac{\sin A}{a}$, so the unknown is in a numerator. Then decide about the obtuse answer before you move on: if the known angle sits opposite the longer of the two known sides, the acute answer is the only one; otherwise test $180^{\circ} - B$ as in C2.6. Show the substituted rule as a line of working, not only the final value.</p>
+    <p data-lang="zh"><strong>用正弦定理求角时</strong>，写成正弦在分子的形式 $\dfrac{\sin B}{b} = \dfrac{\sin A}{a}$，使未知量在分子上。然后先判断是否有钝角答案再往下做：若已知角的对边是两已知边中较长者，只有锐角答案；否则按 C2.6 检验 $180^{\circ} - B$。把代入后的定理写成一行过程，而不是只写最终数值。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. In triangle $ABC$, $A = 52^{\circ}$, $B = 71^{\circ}$ and $c = 15$. Find $a$.</span><span data-lang="zh">1. 三角形 $ABC$ 中 $A = 52^{\circ}$、$B = 71^{\circ}$、$c = 15$。求 $a$。</span></summary>
+      <div class="sg-a"><p data-lang="en">First $C = 180^{\circ} - 52^{\circ} - 71^{\circ} = 57^{\circ}$, which completes the pair $(c, C)$. Then $a = \dfrac{15 \sin 52^{\circ}}{\sin 57^{\circ}} = \dfrac{15 \times 0.7880}{0.8387} \approx 14.1$.</p><p data-lang="zh">先求 $C = 180^{\circ} - 52^{\circ} - 71^{\circ} = 57^{\circ}$，凑成边角对 $(c, C)$。再得 $a = \dfrac{15 \sin 52^{\circ}}{\sin 57^{\circ}} = \dfrac{15 \times 0.7880}{0.8387} \approx 14.1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Why can the sine rule not start an SAS problem?</span><span data-lang="zh">2. 为何正弦定理无法直接处理 SAS 问题？</span></summary>
+      <div class="sg-a"><p data-lang="en">Every ratio $\dfrac{a}{\sin A}$ needs a side and its opposite angle. SAS gives two sides and the angle between them, so no side is paired with its opposite angle; each equation would have two unknowns. Use the cosine rule first.</p><p data-lang="zh">每个比值 $\dfrac{a}{\sin A}$ 都需要一条边及其对角。SAS 给的是两边及其夹角，没有任何一条边与其对角配对，每个方程都会有两个未知量。应先用余弦定理。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. In triangle $ABC$, $a = 9$, $b = 7$ and $A = 48^{\circ}$. Find $B$ and explain why there is only one answer.</span><span data-lang="zh">3. 三角形 $ABC$ 中 $a = 9$、$b = 7$、$A = 48^{\circ}$。求 $B$，并解释为何只有一个答案。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\sin B = \dfrac{7 \sin 48^{\circ}}{9} \approx 0.5780$, so $B \approx 35.3^{\circ}$. The other candidate $180^{\circ} - 35.3^{\circ} = 144.7^{\circ}$ fails, because $48^{\circ} + 144.7^{\circ} = 192.7^{\circ} > 180^{\circ}$. This had to happen: $b < a$, so $B < A$ and $B$ is acute.</p><p data-lang="zh">$\sin B = \dfrac{7 \sin 48^{\circ}}{9} \approx 0.5780$，故 $B \approx 35.3^{\circ}$。另一候选 $180^{\circ} - 35.3^{\circ} = 144.7^{\circ}$ 不成立，因为 $48^{\circ} + 144.7^{\circ} = 192.7^{\circ} > 180^{\circ}$。这是必然的：$b < a$，故 $B < A$，$B$ 为锐角。</p></div>
+    </details>
   </div>
 </section>
 
@@ -647,7 +875,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- C2.3 COSINE RULE -->
 <section class="section" id="s-c2-3">
   <div class="section-label"><span data-lang="en">Topic C2.3 · Cosine Rule</span><span data-lang="zh">Topic C2.3 · 余弦定理</span></div>
-  <h2><span data-lang="en">The Cosine Rule</span><span data-lang="zh">余弦定理</span> <span class="ib-ref">SL 3.3</span></h2>
+  <h2><span data-lang="en">The Cosine Rule</span><span data-lang="zh">余弦定理</span> <span class="ib-ref">SL 3.2</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the cosine rule $a^{2} = b^{2} + c^{2} - 2bc \cos A$ and its two relabelled forms.</li>
+      <li>Identify SAS and SSS as the cases that need the cosine rule.</li>
+      <li>Calculate the third side from SAS data, including an obtuse included angle.</li>
+      <li>Calculate any angle from SSS data using $\cos A = \dfrac{b^{2} + c^{2} - a^{2}}{2bc}$.</li>
+      <li>Explain why a negative cosine shows an obtuse angle and why the cosine rule never gives an ambiguous angle.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）余弦定理 $a^{2} = b^{2} + c^{2} - 2bc \cos A$ 及其两个改名形式。</li>
+      <li>识别（<code>identify</code>）SAS 与 SSS 是需要余弦定理的情形。</li>
+      <li>由 SAS 数据计算（<code>calculate</code>）第三边，包括夹角为钝角的情形。</li>
+      <li>由 SSS 数据用 $\cos A = \dfrac{b^{2} + c^{2} - a^{2}}{2bc}$ 计算（<code>calculate</code>）任一角。</li>
+      <li>解释（<code>explain</code>）为何余弦为负说明角为钝角，以及为何余弦定理求角不会出现模糊情形。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The cosine rule.</strong> In any triangle with sides $a$, $b$, $c$ opposite angles $A$, $B$, $C$:
@@ -676,8 +922,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ul>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.3: SAS configuration</span><span data-lang="zh">C2.3 例题：SAS 配置</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.3 (SAS configuration)</span><span data-lang="zh">C2.3 例题（SAS 配置）</span></div>
     <p><span data-lang="en">In triangle $ABC$, sides $b = 5$ and $c = 7$ enclose the angle $A = 60^{\circ}$. Find side $a$.</span><span data-lang="zh">三角形 $ABC$ 中，边 $b = 5$、$c = 7$ 夹角 $A = 60^{\circ}$。求边 $a$。</span></p>
   </div>
   <div class="worked-solution">
@@ -686,11 +932,29 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Step 2. Apply the cosine rule.</strong> Recall $\cos 60^{\circ} = \tfrac{1}{2}$.</p>
     <p data-lang="zh"><strong>第 2 步：套用余弦定理。</strong>记 $\cos 60^{\circ} = \tfrac{1}{2}$。</p>
     $$ a^{2} \;=\; b^{2} + c^{2} - 2 b c \cos A \;=\; 25 + 49 - 2 \cdot 5 \cdot 7 \cdot \tfrac{1}{2} \;=\; 74 - 35 \;=\; 39. $$
-    <p data-lang="en"><strong>Wait, re-examine the arithmetic.</strong> $b^{2} + c^{2} = 25 + 49 = 74$, and $2 b c \cos A = 2 \cdot 5 \cdot 7 \cdot \tfrac{1}{2} = 35$. So $a^{2} = 74 - 35 = 39$, giving $a = \sqrt{39} \approx 6.24$. Note: if the problem instead read $b = 5$, $c = 8$, $A = 60^{\circ}$, the arithmetic would be $25 + 64 - 40 = 49$, yielding $a = 7$. The textbook check for $b = 5$, $c = 7$ gives $a = \sqrt{39}$.</p>
-    <p data-lang="zh"><strong>复核算术。</strong>$b^{2} + c^{2} = 25 + 49 = 74$，$2 b c \cos A = 2 \cdot 5 \cdot 7 \cdot \tfrac{1}{2} = 35$。故 $a^{2} = 74 - 35 = 39$，$a = \sqrt{39} \approx 6.24$。若题目改为 $b = 5$、$c = 8$、$A = 60^{\circ}$，则 $25 + 64 - 40 = 49$，给 $a = 7$（整数答案的版本）。$b = 5$、$c = 7$ 的版本给 $a = \sqrt{39}$。</p>
+    <p data-lang="en"><strong>Step 3. Take the square root.</strong> $a = \sqrt{39} \approx 6.24$. Keep $\sqrt{39}$ as the exact value if the question asks for one.</p>
+    <p data-lang="zh"><strong>第 3 步：开平方。</strong>$a = \sqrt{39} \approx 6.24$。若题目要求精确值，保留 $\sqrt{39}$。</p>
     <p data-lang="en"><strong>Cross-check via triangle inequality.</strong> The other two sides are $5$ and $7$, so $a$ must satisfy $|7 - 5| < a < 7 + 5$, i.e. $2 < a < 12$. $\sqrt{39} \approx 6.24$ lies in this range.</p>
     <p data-lang="zh"><strong>由三角不等式互相检验。</strong>另两边为 $5$、$7$，故 $a$ 须满足 $|7 - 5| < a < 7 + 5$，即 $2 < a < 12$。$\sqrt{39} \approx 6.24$ 在此范围内。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.3b: SSS, the largest angle</span><span data-lang="zh">C2.3b 例题：SSS：求最大角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A triangle has sides $5$, $6$ and $9$. Find its largest angle.</span><span data-lang="zh">三角形三边为 $5$、$6$、$9$。求其最大角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Locate the largest angle.</strong> The largest angle is opposite the longest side, so call the side of length $9$ $c$ and find $C$, with $a = 5$, $b = 6$.</p>
+    <p data-lang="zh"><strong>第 1 步：确定最大角的位置。</strong>最大角对最长边，故令长度 $9$ 的边为 $c$，求 $C$，其中 $a = 5$、$b = 6$。</p>
+    <p data-lang="en"><strong>Step 2. Rearrange the cosine rule.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：变形余弦定理。</strong></p>
+    $$ \cos C \;=\; \frac{a^{2} + b^{2} - c^{2}}{2ab} \;=\; \frac{25 + 36 - 81}{2 \cdot 5 \cdot 6} \;=\; \frac{-20}{60} \;=\; -\frac{1}{3}. $$
+    <p data-lang="en"><strong>Step 3. Invert.</strong> $C = \cos^{-1}\!\left(-\tfrac{1}{3}\right) \approx 109.5^{\circ}$. The negative cosine already told us $C$ is obtuse.</p>
+    <p data-lang="zh"><strong>第 3 步：反求角。</strong>$C = \cos^{-1}\!\left(-\tfrac{1}{3}\right) \approx 109.5^{\circ}$。余弦为负已说明 $C$ 是钝角。</p>
+    <p data-lang="en"><strong>Why this works.</strong> $\cos^{-1}$ gives exactly one angle between $0^{\circ}$ and $180^{\circ}$ for each value between $-1$ and $1$, so an angle found by the cosine rule is never ambiguous. Once the largest angle is known, the other two are acute, and the sine rule can find them safely.</p>
+    <p data-lang="zh"><strong>原理。</strong>对 $-1$ 与 $1$ 之间的每个值，$\cos^{-1}$ 在 $0^{\circ}$ 到 $180^{\circ}$ 之间恰好给出一个角，所以余弦定理求出的角不会模糊。最大角求出后，另两角必为锐角，可放心用正弦定理求出。</p>
+  </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: cosine rule as the law of cosines vector identity</span><span data-lang="zh">深入：余弦定理与向量恒等式</span></summary>
@@ -716,6 +980,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">For SSS, solve the cosine rule for $\cos C$: $\cos C = \tfrac{a^{2} + b^{2} - c^{2}}{2 a b} = \tfrac{32}{112} = \tfrac{2}{7}$.</span><span data-lang="zh">SSS 时把余弦定理解出 $\cos C$：$\cos C = \tfrac{a^{2} + b^{2} - c^{2}}{2 a b} = \tfrac{32}{112} = \tfrac{2}{7}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>Write the rule before substituting</strong>, with the letters matched to the diagram: the side on the left must be opposite the angle inside the cosine. With an obtuse angle the cosine is negative, so $-2bc\cos A$ adds to $b^{2} + c^{2}$; a third side shorter than both given sides is the sign that this was missed. With SSS data, find the largest angle first by the cosine rule.</p>
+    <p data-lang="zh"><strong>代入前先写出定理</strong>，字母与图对应：等号左边的边必须是余弦里那个角的对边。角为钝角时余弦为负，$-2bc\cos A$ 会使 $b^{2} + c^{2}$ 变大；若算出的第三边比两已知边都短，说明符号处理错了。SSS 数据先用余弦定理求最大角。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. In triangle $ABC$, $b = 6$, $c = 10$ and $A = 120^{\circ}$. Find $a$.</span><span data-lang="zh">1. 三角形 $ABC$ 中 $b = 6$、$c = 10$、$A = 120^{\circ}$。求 $a$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$a^{2} = 36 + 100 - 2 \cdot 6 \cdot 10 \cos 120^{\circ} = 136 - 120 \cdot \left(-\tfrac{1}{2}\right) = 136 + 60 = 196$, so $a = 14$.</p><p data-lang="zh">$a^{2} = 36 + 100 - 2 \cdot 6 \cdot 10 \cos 120^{\circ} = 136 - 120 \cdot \left(-\tfrac{1}{2}\right) = 136 + 60 = 196$，故 $a = 14$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Explain why an angle found with the cosine rule needs no ambiguous-case check.</span><span data-lang="zh">2. 解释为何用余弦定理求出的角无需做模糊情形检验。</span></summary>
+      <div class="sg-a"><p data-lang="en">Cosine is negative for obtuse angles and positive for acute ones, so each value of $\cos A$ between $-1$ and $1$ matches exactly one angle between $0^{\circ}$ and $180^{\circ}$. Sine, by contrast, gives the same value for $\theta$ and $180^{\circ} - \theta$.</p><p data-lang="zh">钝角的余弦为负、锐角的余弦为正，因此 $-1$ 到 $1$ 之间的每个 $\cos A$ 值恰好对应 $0^{\circ}$ 到 $180^{\circ}$ 之间的一个角。正弦则不同，$\theta$ 与 $180^{\circ} - \theta$ 的正弦相同。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A triangle has sides $4$, $5$ and $6$. Find its smallest angle.</span><span data-lang="zh">3. 三角形三边为 $4$、$5$、$6$。求其最小角。</span></summary>
+      <div class="sg-a"><p data-lang="en">The smallest angle is opposite the side $4$: $\cos \theta = \dfrac{5^{2} + 6^{2} - 4^{2}}{2 \cdot 5 \cdot 6} = \dfrac{45}{60} = 0.75$, so $\theta = \cos^{-1}(0.75) \approx 41.4^{\circ}$.</p><p data-lang="zh">最小角对边长 $4$：$\cos \theta = \dfrac{5^{2} + 6^{2} - 4^{2}}{2 \cdot 5 \cdot 6} = \dfrac{45}{60} = 0.75$，故 $\theta = \cos^{-1}(0.75) \approx 41.4^{\circ}$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -723,7 +1008,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- C2.4 AREA OF A TRIANGLE -->
 <section class="section" id="s-c2-4">
   <div class="section-label"><span data-lang="en">Topic C2.4 · Area of a Triangle</span><span data-lang="zh">Topic C2.4 · 三角形面积</span></div>
-  <h2><span data-lang="en">Area of a Triangle</span><span data-lang="zh">三角形面积</span> <span class="ib-ref">SL 3.3</span></h2>
+  <h2><span data-lang="en">Area of a Triangle</span><span data-lang="zh">三角形面积</span> <span class="ib-ref">SL 3.2</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the area of a triangle as $\tfrac{1}{2}ab\sin C$, where $C$ is the angle included between sides $a$ and $b$.</li>
+      <li>Calculate the area from two sides and their included angle.</li>
+      <li>Calculate an unknown angle or side when the area is given, giving both angles $C$ and $180^{\circ} - C$ where both are possible.</li>
+      <li>Combine the cosine rule with the area formula when only three sides are known.</li>
+      <li>Explain why the area is largest when the included angle is $90^{\circ}$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）三角形面积 $\tfrac{1}{2}ab\sin C$，其中 $C$ 是边 $a$、$b$ 的夹角。</li>
+      <li>由两边及其夹角计算（<code>calculate</code>）面积。</li>
+      <li>已知面积时计算（<code>calculate</code>）未知角或边，在两者都可能时给出 $C$ 与 $180^{\circ} - C$。</li>
+      <li>只知三边时，把余弦定理与面积公式结合使用（<code>combine</code>）。</li>
+      <li>解释（<code>explain</code>）为何夹角为 $90^{\circ}$ 时面积最大。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The SAS area formula.</strong> Two sides and their included angle determine the area of a triangle:
@@ -732,20 +1035,20 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <br><br>
     <strong>Heron's formula (optional).</strong> When three sides $a$, $b$, $c$ are given but no angle, define the semi-perimeter $s = \tfrac{a + b + c}{2}$. Then
     $$ \text{Area} \;=\; \sqrt{s(s - a)(s - b)(s - c)}. $$
-    The IB does not require Heron's formula, but it is a quick alternative to "use the cosine rule to find an angle, then use $\tfrac{1}{2} a b \sin C$".
+    Heron's formula is an optional extra, not needed for this unit: it is a quick check on "use the cosine rule to find an angle, then use $\tfrac{1}{2} a b \sin C$".
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>SAS 面积公式。</strong>两边及夹角决定三角形面积：
-    $$ \text{面积} \;=\; \tfrac{1}{2} \, a \, b \, \sin C. $$
+    $$ \text{Area} \;=\; \tfrac{1}{2} \, a \, b \, \sin C. $$
     经过改名，等价形式 $\tfrac{1}{2} b c \sin A$ 与 $\tfrac{1}{2} a c \sin B$ 也成立。约定：两边加它们<em>之间</em>的角。务必先确认是夹角再代入。
     <br><br>
     <strong>海伦公式（选读）。</strong>仅给三边 $a$、$b$、$c$ 而无角时，记半周长 $s = \tfrac{a + b + c}{2}$，则
-    $$ \text{面积} \;=\; \sqrt{s(s - a)(s - b)(s - c)}. $$
-    IB 不强制要求，但比"先用余弦定理求角、再用 $\tfrac{1}{2} a b \sin C$"更省力。
+    $$ \text{Area} \;=\; \sqrt{s(s - a)(s - b)(s - c)}. $$
+    海伦公式是选读内容，本单元并不需要；可用来快速核对"先用余弦定理求角、再用 $\tfrac{1}{2} a b \sin C$"的结果。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.4: area from SAS</span><span data-lang="zh">C2.4 例题：由 SAS 求面积</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.4 (area from SAS)</span><span data-lang="zh">C2.4 例题（由 SAS 求面积）</span></div>
     <p><span data-lang="en">Find the area of a triangle with sides of length $5$ and $7$ meeting at an included angle of $60^{\circ}$.</span><span data-lang="zh">求边长 $5$ 和 $7$、夹角 $60^{\circ}$ 的三角形面积。</span></p>
   </div>
   <div class="worked-solution">
@@ -757,10 +1060,28 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en">The area is $\tfrac{35 \sqrt{3}}{4} \approx 15.16$ square units.</p>
     <p data-lang="zh">面积为 $\tfrac{35 \sqrt{3}}{4} \approx 15.16$ 平方单位。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.4b: an angle from the area</span><span data-lang="zh">C2.4b 例题：由面积求角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A triangle has sides $8$ cm and $10$ cm and area $20 \text{ cm}^{2}$. Find the possible sizes of the angle between these two sides.</span><span data-lang="zh">三角形两边为 $8$ cm 与 $10$ cm，面积为 $20 \text{ cm}^{2}$。求这两边夹角的可能大小。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Substitute into the area formula.</strong></p>
+    <p data-lang="zh"><strong>第 1 步：代入面积公式。</strong></p>
+    $$ 20 \;=\; \tfrac{1}{2} \cdot 8 \cdot 10 \cdot \sin C \;=\; 40 \sin C \;\Longrightarrow\; \sin C \;=\; \tfrac{1}{2}. $$
+    <p data-lang="en"><strong>Step 2. List both angles.</strong> $C = \sin^{-1}\!\left(\tfrac{1}{2}\right) = 30^{\circ}$, or $C = 180^{\circ} - 30^{\circ} = 150^{\circ}$.</p>
+    <p data-lang="zh"><strong>第 2 步：列出两个角。</strong>$C = \sin^{-1}\!\left(\tfrac{1}{2}\right) = 30^{\circ}$，或 $C = 180^{\circ} - 30^{\circ} = 150^{\circ}$。</p>
+    <p data-lang="en"><strong>Step 3. Check both.</strong> Any angle strictly between $0^{\circ}$ and $180^{\circ}$ placed between sides $8$ and $10$ closes a triangle, so both are valid: $C = 30^{\circ}$ or $C = 150^{\circ}$.</p>
+    <p data-lang="zh"><strong>第 3 步：逐一检验。</strong>夹在边 $8$ 与 $10$ 之间、严格介于 $0^{\circ}$ 与 $180^{\circ}$ 的任何角都能围成三角形，因此两者都成立：$C = 30^{\circ}$ 或 $C = 150^{\circ}$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> $\sin C = \sin(180^{\circ} - C)$, so two triangles with the same two sides and supplementary included angles have the same area. Report both unless the question says the angle is acute or obtuse.</p>
+    <p data-lang="zh"><strong>原理。</strong>$\sin C = \sin(180^{\circ} - C)$，因此两边相同、夹角互补的两个三角形面积相同。除非题目说明该角为锐角或钝角，否则两个答案都要写出。</p>
+  </div>
+  </details>
 
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Remark: the angle must be included</span><span data-lang="zh">备注：角必须是夹角</span></strong>
-    <span data-lang="en">If the problem gives two sides and a non-included angle (SSA), the SAS area formula does not apply directly. Either find the third angle (via the sine rule, watching for the ambiguous case) or compute the third side first (also via the sine rule), and only then use $\tfrac{1}{2} a b \sin C$ with a confirmed pair of sides and their included angle.</span><span data-lang="zh">若题目给两边及一非夹角（SSA），不能直接用 SAS 面积公式。须先求第三角（用正弦定理，注意模糊情形）或第三边（亦用正弦定理），确认得到一组"两边加夹角"后再用 $\tfrac{1}{2} a b \sin C$。</span>
+    <span data-lang="en">If the problem gives two sides and a non-included angle (SSA), the SAS area formula does not apply directly. First find the missing angle opposite the other given side by the sine rule (watching for the ambiguous case), then the included angle from the angle sum of $180^{\circ}$, and only then use $\tfrac{1}{2} a b \sin C$ with the two given sides and their included angle.</span><span data-lang="zh">若题目给两边及一非夹角（SSA），不能直接用 SAS 面积公式。先用正弦定理求另一已知边所对的角（注意模糊情形），再由内角和 $180^{\circ}$ 求出夹角，最后用两已知边及其夹角代入 $\tfrac{1}{2} a b \sin C$。</span>
   </div>
 
   <div class="quiz" data-answer="0">
@@ -775,6 +1096,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">$\tfrac{1}{2} a b \sin C$ with $a = 6$, $b = 10$, $C = 30^{\circ}$ gives $30 \cdot \tfrac{1}{2} = 15$.</span><span data-lang="zh">$\tfrac{1}{2} a b \sin C$，代 $a = 6$、$b = 10$、$C = 30^{\circ}$ 得 $30 \cdot \tfrac{1}{2} = 15$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>Before substituting, mark the angle on the diagram and check it sits between the two sides you are using.</strong> If the diagram gives a non-included angle, first find the included one (angle sum, sine rule or cosine rule). When the area is given and an angle is asked for, solve $\sin C = \dfrac{2 \times \text{Area}}{ab}$ and write both $C$ and $180^{\circ} - C$ unless the question rules one out. State units: area in square units.</p>
+    <p data-lang="zh"><strong>代入前先在图上标出角，确认它夹在所用的两边之间。</strong>若图中给的是非夹角，先求出夹角（内角和、正弦定理或余弦定理）。已知面积求角时，解 $\sin C = \dfrac{2 \times \text{Area}}{ab}$，除非题目排除其中之一，否则写出 $C$ 与 $180^{\circ} - C$ 两个答案。注明单位：面积用平方单位。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the area of triangle $ABC$ with $a = 9$, $b = 12$ and $C = 40^{\circ}$.</span><span data-lang="zh">1. 求三角形 $ABC$ 的面积，其中 $a = 9$、$b = 12$、$C = 40^{\circ}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">Area $= \tfrac{1}{2} \cdot 9 \cdot 12 \cdot \sin 40^{\circ} = 54 \times 0.6428 \approx 34.7$ square units.</p><p data-lang="zh">面积 $= \tfrac{1}{2} \cdot 9 \cdot 12 \cdot \sin 40^{\circ} = 54 \times 0.6428 \approx 34.7$ 平方单位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Two sides of a triangle are fixed at $a$ and $b$. Explain which included angle gives the greatest area.</span><span data-lang="zh">2. 三角形两边固定为 $a$ 与 $b$。解释哪个夹角使面积最大。</span></summary>
+      <div class="sg-a"><p data-lang="en">Area $= \tfrac{1}{2}ab\sin C$ and $\sin C \le 1$, with equality only at $C = 90^{\circ}$. So the greatest area is $\tfrac{1}{2}ab$, when the two sides are perpendicular.</p><p data-lang="zh">面积 $= \tfrac{1}{2}ab\sin C$，且 $\sin C \le 1$，仅当 $C = 90^{\circ}$ 时取等号。所以两边垂直时面积最大，为 $\tfrac{1}{2}ab$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A triangle has sides $7$, $8$ and $9$. Find its exact area.</span><span data-lang="zh">3. 三角形三边为 $7$、$8$、$9$。求其面积的精确值。</span></summary>
+      <div class="sg-a"><p data-lang="en">Cosine rule for the angle $C$ opposite $9$: $\cos C = \dfrac{49 + 64 - 81}{2 \cdot 7 \cdot 8} = \dfrac{2}{7}$. Then $\sin C = \sqrt{1 - \tfrac{4}{49}} = \dfrac{3\sqrt{5}}{7}$, so Area $= \tfrac{1}{2} \cdot 7 \cdot 8 \cdot \dfrac{3\sqrt{5}}{7} = 12\sqrt{5} \approx 26.8$. Heron's formula agrees: $s = 12$ and $\sqrt{12 \cdot 5 \cdot 4 \cdot 3} = \sqrt{720} = 12\sqrt{5}$.</p><p data-lang="zh">先用余弦定理求边 $9$ 所对的角 $C$：$\cos C = \dfrac{49 + 64 - 81}{2 \cdot 7 \cdot 8} = \dfrac{2}{7}$。于是 $\sin C = \sqrt{1 - \tfrac{4}{49}} = \dfrac{3\sqrt{5}}{7}$，面积 $= \tfrac{1}{2} \cdot 7 \cdot 8 \cdot \dfrac{3\sqrt{5}}{7} = 12\sqrt{5} \approx 26.8$。海伦公式验证一致：$s = 12$，$\sqrt{12 \cdot 5 \cdot 4 \cdot 3} = \sqrt{720} = 12\sqrt{5}$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -783,6 +1125,24 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-c2-5">
   <div class="section-label"><span data-lang="en">Topic C2.5 · Bearings and 2D Applications</span><span data-lang="zh">Topic C2.5 · 方位角与二维应用</span></div>
   <h2><span data-lang="en">Bearings and 2D Applications</span><span data-lang="zh">方位角与二维应用</span> <span class="ib-ref">SL 3.3</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the bearing convention: measured clockwise from north, written with three figures.</li>
+      <li>Calculate a back bearing as $\beta \pm 180^{\circ}$, staying between $000^{\circ}$ and $360^{\circ}$.</li>
+      <li>Deduce the interior angles of a triangle from a diagram with a north line at each point.</li>
+      <li>Calculate a distance with the cosine rule and then a bearing with the sine rule.</li>
+      <li>Interpret the answer as the distance or the bearing the question asks for.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）方位角约定：自正北顺时针量起，写成三位数。</li>
+      <li>计算（<code>calculate</code>）反方位角 $\beta \pm 180^{\circ}$，结果保持在 $000^{\circ}$ 与 $360^{\circ}$ 之间。</li>
+      <li>在每点画北向线的图中推出（<code>deduce</code>）三角形内角。</li>
+      <li>先用余弦定理计算（<code>calculate</code>）距离，再用正弦定理计算方位角。</li>
+      <li>把结果解读（<code>interpret</code>）为题目要求的距离或方位角。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Bearing convention.</strong> A bearing is the direction of one point as seen from another, measured <em>clockwise from north</em>, in degrees, written as a three-digit number. Examples: due north is $000^{\circ}$, due east is $090^{\circ}$, due south is $180^{\circ}$, due west is $270^{\circ}$, and a direction $30^{\circ}$ east of north is $030^{\circ}$.
@@ -809,8 +1169,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     多数方位角题在画好图、标好内角后就变成例行公事。几何换算是核心工作，后续三角学只是机械步骤。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.5: ship navigation</span><span data-lang="zh">C2.5 例题：船舶导航</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.5 (ship navigation)</span><span data-lang="zh">C2.5 例题（船舶导航）</span></div>
     <p><span data-lang="en">Ship $P$ sails from a port on a bearing of $060^{\circ}$ for $12$ km, then turns and sails on a bearing of $150^{\circ}$ for $8$ km to reach a point $Q$. Find the straight-line distance from the port to $Q$.</span><span data-lang="zh">船 $P$ 从港口出发，以方位角 $060^{\circ}$ 航行 $12$ km，然后转向以方位角 $150^{\circ}$ 航行 $8$ km，抵达 $Q$ 点。求港口到 $Q$ 的直线距离。</span></p>
   </div>
   <div class="worked-solution">
@@ -826,10 +1186,74 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Result.</strong> The straight-line distance from the port to $Q$ is approximately $14.4$ km.</p>
     <p data-lang="zh"><strong>结果。</strong>港口到 $Q$ 的直线距离约 $14.4$ km。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.5b: a distance and a bearing</span><span data-lang="zh">C2.5b 例题：求距离与方位角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A boat leaves harbour $O$ and sails $10$ km on a bearing of $040^{\circ}$ to $A$, then $15$ km on a bearing of $120^{\circ}$ to $B$. Find (a) the distance $OB$ and (b) the bearing of $B$ from $O$.</span><span data-lang="zh">一艘船从港口 $O$ 出发，沿方位角 $040^{\circ}$ 航行 $10$ km 到 $A$，再沿方位角 $120^{\circ}$ 航行 $15$ km 到 $B$。求 (a) 距离 $OB$；(b) 从 $O$ 看 $B$ 的方位角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Interior angle at $A$.</strong> The bearing of $O$ from $A$ is $040^{\circ} + 180^{\circ} = 220^{\circ}$ and the bearing of $B$ from $A$ is $120^{\circ}$, so angle $OAB = 220^{\circ} - 120^{\circ} = 100^{\circ}$ (Figure 2).</p>
+    <p data-lang="zh"><strong>第 1 步：$A$ 处内角。</strong>从 $A$ 看 $O$ 的方位角为 $040^{\circ} + 180^{\circ} = 220^{\circ}$，从 $A$ 看 $B$ 的方位角为 $120^{\circ}$，故角 $OAB = 220^{\circ} - 120^{\circ} = 100^{\circ}$（图 2）。</p>
+    <p data-lang="en"><strong>Step 2. Cosine rule (SAS) for $OB$.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：用余弦定理（SAS）求 $OB$。</strong></p>
+    $$ OB^{2} \;=\; 10^{2} + 15^{2} - 2 \cdot 10 \cdot 15 \cos 100^{\circ} \;=\; 325 + 52.09 \;=\; 377.09, \qquad OB \;\approx\; 19.4 \text{ km}. $$
+    <p data-lang="en"><strong>Step 3. Sine rule for angle $AOB$.</strong> $\sin AOB = \dfrac{15 \sin 100^{\circ}}{19.42} \approx 0.7607$, so angle $AOB \approx 49.5^{\circ}$. It is acute because the $100^{\circ}$ angle at $A$ is already the largest angle of the triangle.</p>
+    <p data-lang="zh"><strong>第 3 步：用正弦定理求角 $AOB$。</strong>$\sin AOB = \dfrac{15 \sin 100^{\circ}}{19.42} \approx 0.7607$，故角 $AOB \approx 49.5^{\circ}$。它是锐角，因为 $A$ 处的 $100^{\circ}$ 已是三角形的最大角。</p>
+    <p data-lang="en"><strong>Step 4. Back to a bearing.</strong> $B$ lies clockwise from $A$ as seen from $O$, so the bearing of $B$ from $O$ is $040^{\circ} + 49.5^{\circ} = 089.5^{\circ}$.</p>
+    <p data-lang="zh"><strong>第 4 步：换回方位角。</strong>从 $O$ 看，$B$ 在 $A$ 的顺时针一侧，因此从 $O$ 看 $B$ 的方位角为 $040^{\circ} + 49.5^{\circ} = 089.5^{\circ}$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Bearings only give directions; the triangle needs interior angles. Reversing the incoming bearing at each turning point converts one into the other, and the answer is converted back by adding the angle at $O$ to the bearing of the first leg.</p>
+    <p data-lang="zh"><strong>原理。</strong>方位角只给方向，三角形需要的是内角。在每个转向点把入向方位反转，即可在两者间转换；最后把 $O$ 处的角加到第一段的方位角上，换回方位角。</p>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 222" role="img" aria-label="Bearings diagram drawn to scale: O to A 10 km on bearing 040 degrees, A to B 15 km on bearing 120 degrees, north lines at O and A, interior angle 100 degrees at A">
+      <line class="arrow" x1="40.0" y1="190.0" x2="40.0" y2="112.0"/>
+      <path class="arrow" d="M 35.0 120.0 L 40.0 112.0 L 45.0 120.0"/>
+      <text class="lbl" data-lang="en" x="40.0" y="108.0" text-anchor="middle">N</text>
+      <text class="lbl" data-lang="zh" x="40.0" y="108.0" text-anchor="middle">N</text>
+      <line class="arrow" x1="136.4" y1="75.1" x2="136.4" y2="18.0"/>
+      <path class="arrow" d="M 131.4 26.0 L 136.4 18.0 L 141.4 26.0"/>
+      <text class="lbl" data-lang="en" x="136.4" y="14.0" text-anchor="middle">N</text>
+      <text class="lbl" data-lang="zh" x="136.4" y="14.0" text-anchor="middle">N</text>
+      <line class="c1" x1="40.0" y1="190.0" x2="136.4" y2="75.1"/>
+      <line class="c2" x1="136.4" y1="75.1" x2="331.3" y2="187.6"/>
+      <line class="c3 dash" x1="40.0" y1="190.0" x2="331.3" y2="187.6"/>
+      <path class="c1 thin" d="M 40.0 160.0 A 30 30 0 0 1 59.3 167.0"/>
+      <path class="c2 thin" d="M 136.4 53.1 A 22 22 0 0 1 155.5 86.1"/>
+      <path class="c4 thin" d="M 126.1 87.4 A 16 16 0 0 0 150.3 83.1"/>
+      <path class="c3 thin" d="M 70.9 153.2 A 48 48 0 0 1 88.0 189.6"/>
+      <circle class="dot" cx="40.0" cy="190.0" r="3"/>
+      <circle class="dot" cx="136.4" cy="75.1" r="3"/>
+      <circle class="dot" cx="331.3" cy="187.6" r="3"/>
+      <text class="lbl" data-lang="en" x="34.0" y="206.0" text-anchor="middle">O</text>
+      <text class="lbl" data-lang="zh" x="34.0" y="206.0" text-anchor="middle">O</text>
+      <text class="lbl" data-lang="en" x="128.4" y="79.1" text-anchor="end">A</text>
+      <text class="lbl" data-lang="zh" x="128.4" y="79.1" text-anchor="end">A</text>
+      <text class="lbl" data-lang="en" x="337.3" y="203.6">B</text>
+      <text class="lbl" data-lang="zh" x="337.3" y="203.6">B</text>
+      <text class="mut c1t" data-lang="en" x="57.0" y="134.0" text-anchor="middle">040°</text>
+      <text class="mut c1t" data-lang="zh" x="57.0" y="134.0" text-anchor="middle">040°</text>
+      <text class="mut c2t" data-lang="en" x="166.4" y="57.1">120°</text>
+      <text class="mut c2t" data-lang="zh" x="166.4" y="57.1">120°</text>
+      <text class="mut c4t" data-lang="en" x="142.4" y="109.1" text-anchor="middle">100°</text>
+      <text class="mut c4t" data-lang="zh" x="142.4" y="109.1" text-anchor="middle">100°</text>
+      <text class="mut c3t" data-lang="en" x="96.0" y="172.0">49.5°</text>
+      <text class="mut c3t" data-lang="zh" x="96.0" y="172.0">49.5°</text>
+      <text class="mut" data-lang="en" x="100.0" y="104.0" text-anchor="end">10 km</text>
+      <text class="mut" data-lang="zh" x="100.0" y="104.0" text-anchor="end">10 km</text>
+      <text class="mut" data-lang="en" x="242.0" y="124.0">15 km</text>
+      <text class="mut" data-lang="zh" x="242.0" y="124.0">15 km</text>
+      <text class="mut" data-lang="en" x="185.6" y="214.0" text-anchor="middle">19.4 km</text>
+      <text class="mut" data-lang="zh" x="185.6" y="214.0" text-anchor="middle">19.4 km</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. Drawn to scale ($1$ km $= 15$ px), with a north line at $O$ and at $A$. The bearing of $A$ from $O$ is $040^{\circ}$ and the bearing of $B$ from $A$ is $120^{\circ}$. The interior angle at $A$ is $220^{\circ} - 120^{\circ} = 100^{\circ}$, because the bearing of $O$ from $A$ is $040^{\circ} + 180^{\circ} = 220^{\circ}$. The dashed side $OB \approx 19.4$ km, and angle $AOB \approx 49.5^{\circ}$ gives the bearing of $B$ from $O$.</span><span data-lang="zh">图 2. 按比例绘制（$1$ km $= 15$ px），在 $O$ 与 $A$ 处各画北向线。从 $O$ 看 $A$ 的方位角为 $040^{\circ}$，从 $A$ 看 $B$ 的方位角为 $120^{\circ}$。$A$ 处内角为 $220^{\circ} - 120^{\circ} = 100^{\circ}$，因为从 $A$ 看 $O$ 的方位角为 $040^{\circ} + 180^{\circ} = 220^{\circ}$。虚线边 $OB \approx 19.4$ km，角 $AOB \approx 49.5^{\circ}$ 给出从 $O$ 看 $B$ 的方位角。</span></figcaption>
+  </figure>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: the bearing of the return leg</span><span data-lang="zh">陷阱：反向方位角</span></strong>
-    <span data-lang="en">If the bearing of $T$ from $O$ is $\beta$, the bearing of $O$ from $T$ is $\beta + 180^{\circ}$ (mod $360^{\circ}$). This is the single most common bearing-problem slip: students compute the interior angle as the difference of the two outgoing bearings, forgetting that the angle at $T$ involves the <em>incoming</em> direction reversed.</span><span data-lang="zh">若从 $O$ 看 $T$ 的方位角为 $\beta$，则从 $T$ 看 $O$ 的方位角为 $\beta + 180^{\circ}$（模 $360^{\circ}$）。这是方位角题的头号失误：学生常把两个出向方位差当作内角，忘了 $T$ 处的内角涉及<em>入向</em>的反方向。</span>
+    <span data-lang="en">If the bearing of $T$ from $O$ is $\beta$, the bearing of $O$ from $T$ is $\beta + 180^{\circ}$ (mod $360^{\circ}$). A typical bearing-problem slip: students compute the interior angle as the difference of the two outgoing bearings, forgetting that the angle at $T$ involves the <em>incoming</em> direction reversed.</span><span data-lang="zh">若从 $O$ 看 $T$ 的方位角为 $\beta$，则从 $T$ 看 $O$ 的方位角为 $\beta + 180^{\circ}$（模 $360^{\circ}$）。这是方位角题的典型失误：学生常把两个出向方位差当作内角，忘了 $T$ 处的内角涉及<em>入向</em>的反方向。</span>
   </div>
 
   <div class="quiz" data-answer="2">
@@ -844,6 +1268,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">When both bearings are taken from the same point, the angle between the two directions is the difference of the bearings: $140^{\circ} - 50^{\circ} = 90^{\circ}$.</span><span data-lang="zh">两方位角自同一点测时，两方向之间的角即方位差：$140^{\circ} - 50^{\circ} = 90^{\circ}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>Draw a north line at every point where the direction changes</strong> and mark each bearing as a clockwise angle from it; the interior angles then follow from back bearings and angles on a straight line. Give a bearing answer with three figures (for example $089.5^{\circ}$ or $083^{\circ}$), and when asked for the bearing of $X$ from $Y$, measure at $Y$.</p>
+    <p data-lang="zh"><strong>在每个改变方向的点都画北向线</strong>，把每个方位角标为自北顺时针的角；内角随后可由反方位角和平角关系推出。方位角答案写成三位数（例如 $089.5^{\circ}$ 或 $083^{\circ}$）；题目问“从 $Y$ 看 $X$ 的方位角”时，在 $Y$ 处量。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The bearing of $A$ from $B$ is $245^{\circ}$. Find the bearing of $B$ from $A$.</span><span data-lang="zh">1. 从 $B$ 看 $A$ 的方位角为 $245^{\circ}$。求从 $A$ 看 $B$ 的方位角。</span></summary>
+      <div class="sg-a"><p data-lang="en">Reverse the direction: $245^{\circ} - 180^{\circ} = 065^{\circ}$ (subtract because adding would pass $360^{\circ}$).</p><p data-lang="zh">方向反转：$245^{\circ} - 180^{\circ} = 065^{\circ}$（相加会超过 $360^{\circ}$，所以相减）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. From a lighthouse $L$, buoy $X$ is $8$ km away on a bearing of $030^{\circ}$ and buoy $Y$ is $6$ km away on a bearing of $120^{\circ}$. Find $XY$.</span><span data-lang="zh">2. 从灯塔 $L$ 看，浮标 $X$ 在方位角 $030^{\circ}$、距离 $8$ km 处，浮标 $Y$ 在方位角 $120^{\circ}$、距离 $6$ km 处。求 $XY$。</span></summary>
+      <div class="sg-a"><p data-lang="en">Both bearings are measured at $L$, so angle $XLY = 120^{\circ} - 30^{\circ} = 90^{\circ}$. Then $XY = \sqrt{8^{2} + 6^{2}} = 10$ km.</p><p data-lang="zh">两方位角都在 $L$ 处量，故角 $XLY = 120^{\circ} - 30^{\circ} = 90^{\circ}$。于是 $XY = \sqrt{8^{2} + 6^{2}} = 10$ km。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A ship is $12$ km from port $P$ on a bearing of $300^{\circ}$. How far north and how far west of $P$ is it?</span><span data-lang="zh">3. 一艘船位于港口 $P$ 方位角 $300^{\circ}$、距离 $12$ km 处。它在 $P$ 以北多远、以西多远？</span></summary>
+      <div class="sg-a"><p data-lang="en">A bearing of $300^{\circ}$ is $60^{\circ}$ west of north. North: $12 \cos 60^{\circ} = 6$ km. West: $12 \sin 60^{\circ} = 6\sqrt{3} \approx 10.4$ km.</p><p data-lang="zh">方位角 $300^{\circ}$ 即北偏西 $60^{\circ}$。向北：$12 \cos 60^{\circ} = 6$ km。向西：$12 \sin 60^{\circ} = 6\sqrt{3} \approx 10.4$ km。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -851,37 +1296,55 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- C2.6 AMBIGUOUS CASE AND 3D -->
 <section class="section" id="s-c2-6">
   <div class="section-label"><span data-lang="en">Topic C2.6 · Ambiguous Case and 3D Applications</span><span data-lang="zh">Topic C2.6 · 模糊情形与三维应用</span></div>
-  <h2><span data-lang="en">Ambiguous Case (SSA) and 3D Applications</span><span data-lang="zh">模糊情形（SSA）与三维应用</span> <span class="ib-ref">SL 3.3</span></h2>
+  <h2><span data-lang="en">Ambiguous Case (SSA) and 3D Applications</span><span data-lang="zh">模糊情形（SSA）与三维应用</span> <span class="ib-ref">SL 3.2 / 3.3</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Explain why SSA data can give two triangles, using $\sin \theta = \sin(180^{\circ} - \theta)$.</li>
+      <li>Determine whether SSA data give zero, one or two triangles, and find every valid angle.</li>
+      <li>Sketch both possible triangles for given SSA data.</li>
+      <li>Identify a right-angled or general triangle inside a 3D solid that contains the unknown.</li>
+      <li>Calculate lengths and the angle between a line and a plane in a cuboid or pyramid.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>用 $\sin \theta = \sin(180^{\circ} - \theta)$ 解释（<code>explain</code>）为何 SSA 数据可能给出两个三角形。</li>
+      <li>判定（<code>determine</code>）SSA 数据给出零个、一个还是两个三角形，并求出所有有效角。</li>
+      <li>对给定的 SSA 数据画出（<code>sketch</code>）两个可能的三角形。</li>
+      <li>在三维立体中识别（<code>identify</code>）含未知量的直角三角形或一般三角形。</li>
+      <li>计算（<code>calculate</code>）长方体或棱锥中的长度以及直线与平面的夹角。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
-    <strong>The ambiguous SSA case.</strong> When two sides and a non-included angle are given (SSA), the sine rule yields $\sin \theta = $ (some value). Because $\sin \theta = \sin (180^{\circ} - \theta)$, there are potentially two angles satisfying the equation: the acute candidate $\theta_{1} = \arcsin(\cdot)$ and the obtuse candidate $\theta_{2} = 180^{\circ} - \theta_{1}$.
+    <strong>The ambiguous SSA case.</strong> When two sides and a non-included angle are given (SSA), the sine rule yields $\sin \theta = $ (some value). Because $\sin \theta = \sin (180^{\circ} - \theta)$, there are potentially two angles satisfying the equation: the acute candidate $\theta_{1} = \sin^{-1}(\cdot)$ and the obtuse candidate $\theta_{2} = 180^{\circ} - \theta_{1}$. A candidate is valid exactly when it leaves a positive third angle: $A + \theta < 180^{\circ}$, where $A$ is the given angle.
     <br><br>
     <strong>How many valid triangles?</strong>
     <ul style="margin: 6px 0 0 22px; font-size: 0.94rem;">
-      <li><strong>0 triangles</strong> if $\sin \theta > 1$, which is impossible. The data is inconsistent.</li>
-      <li><strong>1 triangle</strong> if $\theta_{2}$ together with the given angle exceeds (or equals) $180^{\circ}$, so only $\theta_{1}$ leaves room for the third angle.</li>
-      <li><strong>2 triangles</strong> if both $\theta_{1}$ and $\theta_{2}$ leave a positive third angle (i.e. their sum with the given angle is less than $180^{\circ}$).</li>
+      <li><strong>0 triangles</strong> if the sine rule gives $\sin \theta > 1$ (no angle has that sine), or if no candidate passes the test. With $a$ the side opposite the given angle $A$ and $b$ the other given side, the second case is exactly: $A \ge 90^{\circ}$ and $a \le b$. It includes $\sin \theta = 1$ with $A \ge 90^{\circ}$, because then $A + 90^{\circ} \ge 180^{\circ}$.</li>
+      <li><strong>1 triangle</strong> if exactly one candidate passes: $a > b$ (any $A$), or $A < 90^{\circ}$ and $a \ge b$, or $A < 90^{\circ}$ and $\sin \theta = 1$. In the last case $\theta_{1} = \theta_{2} = 90^{\circ}$ and the one triangle is right-angled; $\sin \theta = 1$ gives a triangle only when $A$ is acute.</li>
+      <li><strong>2 triangles</strong> if both candidates pass. Since $\theta_{1} < \theta_{2}$, this is the same as: $\theta_{2} + A < 180^{\circ}$ with $\sin \theta < 1$, which happens exactly when $A < 90^{\circ}$ and $b \sin A < a < b$.</li>
     </ul>
-    <strong>The diagnostic.</strong> Check: does $\theta_{2} + (\text{given angle}) < 180^{\circ}$? If yes, both triangles are valid and you must report both. If no, only $\theta_{1}$ is valid.
+    <strong>The diagnostic.</strong> Check: does $\theta_{2} + A < 180^{\circ}$? If yes (and $\sin \theta < 1$), both triangles are valid and you must report both. If no, test $\theta_{1}$ alone the same way. Side check for an acute given angle $A$ with $h = b \sin A$: $a < h$ gives none, $a = h$ one (right-angled), $h < a < b$ two, $a \ge b$ one. For $A \ge 90^{\circ}$: $a > b$ gives one, $a \le b$ none.
     <br><br>
     <strong>3D applications.</strong> In a three-dimensional figure (prism, pyramid, cube), identify a planar triangle inside the solid that contains the unknown. Apply the planar trigonometry rules within that triangle. Common situations: the diagonal of a cuboid, the slant height of a pyramid, the angle between a line and a face. Often the work is "two right triangles in a row": one in the base plane to get a baseline, then a second perpendicular triangle to get the slant length or angle.
   </div>
   <div class="cram-cheat" data-lang="zh">
-    <strong>模糊 SSA 情形。</strong>给两边加一非夹角（SSA）时，正弦定理给出 $\sin \theta = $（某数值）。由于 $\sin \theta = \sin (180^{\circ} - \theta)$，可能有两个角满足：锐角候选 $\theta_{1} = \arcsin(\cdot)$ 与钝角候选 $\theta_{2} = 180^{\circ} - \theta_{1}$。
+    <strong>模糊 SSA 情形。</strong>给两边加一非夹角（SSA）时，正弦定理给出 $\sin \theta = $（某数值）。由于 $\sin \theta = \sin (180^{\circ} - \theta)$，可能有两个角满足：锐角候选 $\theta_{1} = \sin^{-1}(\cdot)$ 与钝角候选 $\theta_{2} = 180^{\circ} - \theta_{1}$。候选有效当且仅当它留出正的第三角：$A + \theta < 180^{\circ}$，其中 $A$ 为给定角。
     <br><br>
     <strong>有几个有效三角形？</strong>
     <ul style="margin: 6px 0 0 22px; font-size: 0.94rem;">
-      <li><strong>0 个</strong>：若 $\sin \theta > 1$，不可能，数据自相矛盾。</li>
-      <li><strong>1 个</strong>：若 $\theta_{2}$ 加上给定角超过（或等于）$180^{\circ}$，只剩 $\theta_{1}$ 给第三角留出空间。</li>
-      <li><strong>2 个</strong>：若 $\theta_{1}$ 与 $\theta_{2}$ 各与给定角之和均小于 $180^{\circ}$，两三角形都成立。</li>
+      <li><strong>0 个</strong>：若正弦定理给出 $\sin \theta > 1$（没有角的正弦等于它），或没有候选通过检验。记 $a$ 为给定角 $A$ 的对边、$b$ 为另一已知边，后者恰为：$A \ge 90^{\circ}$ 且 $a \le b$。其中包括 $A \ge 90^{\circ}$ 时 $\sin \theta = 1$ 的情形，因为此时 $A + 90^{\circ} \ge 180^{\circ}$。</li>
+      <li><strong>1 个</strong>：恰有一个候选通过：$a > b$（$A$ 任意），或 $A < 90^{\circ}$ 且 $a \ge b$，或 $A < 90^{\circ}$ 且 $\sin \theta = 1$。最后一种情形 $\theta_{1} = \theta_{2} = 90^{\circ}$，唯一的三角形是直角三角形；只有 $A$ 为锐角时 $\sin \theta = 1$ 才给出三角形。</li>
+      <li><strong>2 个</strong>：两个候选都通过。由于 $\theta_{1} < \theta_{2}$，这等价于：$\theta_{2} + A < 180^{\circ}$ 且 $\sin \theta < 1$，恰好发生在 $A < 90^{\circ}$ 且 $b \sin A < a < b$ 时。</li>
     </ul>
-    <strong>判定要点。</strong>检查：$\theta_{2} + (\text{给定角}) < 180^{\circ}$ 否？是则两三角形都成立，须同时报出；否则只 $\theta_{1}$ 有效。
+    <strong>判定要点。</strong>检查：$\theta_{2} + A < 180^{\circ}$ 否？是（且 $\sin \theta < 1$）则两三角形都成立，须同时报出；否则再用同样方法单独检验 $\theta_{1}$。给定角 $A$ 为锐角时的边长判别（记 $h = b \sin A$）：$a < h$ 无解，$a = h$ 一个（直角），$h < a < b$ 两个，$a \ge b$ 一个。$A \ge 90^{\circ}$ 时：$a > b$ 一个，$a \le b$ 无解。
     <br><br>
     <strong>三维应用。</strong>在三维图形（棱柱、棱锥、立方体）中，找出包含未知量的某一平面三角形，在其内套用平面三角学定理。常见情境：长方体对角线、棱锥斜高、直线与面所成角。通常分两步走"连接两个直角三角形"：先在底面三角形中求出基线，再在与之垂直的三角形中求斜长或夹角。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.6a: ambiguous case</span><span data-lang="zh">C2.6a 例题：模糊情形</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.6a (ambiguous case)</span><span data-lang="zh">C2.6a 例题（模糊情形）</span></div>
     <p><span data-lang="en">In triangle $ABC$, side $a = 7$, side $b = 9$, and angle $A = 35^{\circ}$. Find the possible values of angle $B$.</span><span data-lang="zh">三角形 $ABC$ 中 $a = 7$、$b = 9$、$A = 35^{\circ}$。求角 $B$ 的所有可能值。</span></p>
   </div>
   <div class="worked-solution">
@@ -890,31 +1353,69 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \frac{\sin B}{b} \;=\; \frac{\sin A}{a} \;\Longrightarrow\; \sin B \;=\; \frac{b \sin A}{a} \;=\; \frac{9 \sin 35^{\circ}}{7} \;=\; \frac{9 \cdot 0.5736}{7} \;\approx\; 0.7375. $$
     <p data-lang="en"><strong>Step 2. List both candidates.</strong></p>
     <p data-lang="zh"><strong>第 2 步：列出两个候选。</strong></p>
-    $$ B_{1} \;=\; \arcsin(0.7375) \;\approx\; 47.5^{\circ}, \qquad B_{2} \;=\; 180^{\circ} - 47.5^{\circ} \;=\; 132.5^{\circ}. $$
+    $$ B_{1} \;=\; \sin^{-1}(0.7375) \;\approx\; 47.5^{\circ}, \qquad B_{2} \;=\; 180^{\circ} - 47.5^{\circ} \;=\; 132.5^{\circ}. $$
     <p data-lang="en"><strong>Step 3. Check feasibility.</strong> Each candidate must leave a positive third angle. $A + B_{1} = 35^{\circ} + 47.5^{\circ} = 82.5^{\circ}$, so $C = 97.5^{\circ}$. Valid. $A + B_{2} = 35^{\circ} + 132.5^{\circ} = 167.5^{\circ}$, so $C = 12.5^{\circ}$. Also valid.</p>
     <p data-lang="zh"><strong>第 3 步：检验可行性。</strong>每个候选都需留出正的第三角。$A + B_{1} = 35^{\circ} + 47.5^{\circ} = 82.5^{\circ}$，故 $C = 97.5^{\circ}$，有效。$A + B_{2} = 35^{\circ} + 132.5^{\circ} = 167.5^{\circ}$，故 $C = 12.5^{\circ}$，亦有效。</p>
     <p data-lang="en"><strong>Result.</strong> Both $B \approx 47.5^{\circ}$ and $B \approx 132.5^{\circ}$ produce a valid triangle. The data SSA leaves the triangle ambiguous; both answers must be reported.</p>
     <p data-lang="zh"><strong>结果。</strong>$B \approx 47.5^{\circ}$ 与 $B \approx 132.5^{\circ}$ 都给出有效三角形。SSA 数据使三角形模糊，两答案须并列报出。</p>
   </div>
+  </details>
 
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 240" role="img" aria-label="Ambiguous case drawn to scale: angle A 35 degrees, AC 9, and an arc of radius 7 about C cutting the base line at two points B1 and B2, giving two triangles">
+      <line class="ax" x1="40.0" y1="180.0" x2="400" y2="180.0"/>
+      <path class="c4 dash thin" d="M 108.8 180.0 A 182.0 182.0 0 0 0 354.6 180.0"/>
+      <line class="ax" x1="40.0" y1="180.0" x2="231.7" y2="45.8"/>
+      <line class="c1" x1="231.7" y1="45.8" x2="354.6" y2="180.0"/>
+      <line class="c2" x1="231.7" y1="45.8" x2="108.8" y2="180.0"/>
+      <path class="ax thin" d="M 68.0 180.0 A 28 28 0 0 0 62.9 163.9"/>
+      <circle class="dot" cx="40.0" cy="180.0" r="3"/>
+      <circle class="dot" cx="231.7" cy="45.8" r="3"/>
+      <circle class="dot" cx="354.6" cy="180.0" r="3"/>
+      <circle class="dot" cx="108.8" cy="180.0" r="3"/>
+      <text class="lbl" data-lang="en" x="34.0" y="184.0" text-anchor="end">A</text>
+      <text class="lbl" data-lang="zh" x="34.0" y="184.0" text-anchor="end">A</text>
+      <text class="lbl" data-lang="en" x="231.7" y="37.8" text-anchor="middle">C</text>
+      <text class="lbl" data-lang="zh" x="231.7" y="37.8" text-anchor="middle">C</text>
+      <text class="lbl" data-lang="en" x="354.6" y="198.0" text-anchor="middle">B<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+      <text class="lbl" data-lang="zh" x="354.6" y="198.0" text-anchor="middle">B<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+      <text class="lbl" data-lang="en" x="108.8" y="198.0" text-anchor="middle">B<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+      <text class="lbl" data-lang="zh" x="108.8" y="198.0" text-anchor="middle">B<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+      <text class="mut" data-lang="en" x="72.0" y="176.0">35°</text>
+      <text class="mut" data-lang="zh" x="72.0" y="176.0">35°</text>
+      <text class="mut c2t" data-lang="en" x="120.0" y="162.0" text-anchor="end">132.5°</text>
+      <text class="mut c2t" data-lang="zh" x="120.0" y="162.0" text-anchor="end">132.5°</text>
+      <text class="mut c1t" data-lang="en" x="330.0" y="174.0" text-anchor="end">47.5°</text>
+      <text class="mut c1t" data-lang="zh" x="330.0" y="174.0" text-anchor="end">47.5°</text>
+      <text class="mut" data-lang="en" x="124.0" y="104.0" text-anchor="end">9</text>
+      <text class="mut" data-lang="zh" x="124.0" y="104.0" text-anchor="end">9</text>
+      <text class="mut c2t" data-lang="en" x="150.0" y="118.0">7</text>
+      <text class="mut c2t" data-lang="zh" x="150.0" y="118.0">7</text>
+      <text class="mut c1t" data-lang="en" x="300.0" y="108.0">7</text>
+      <text class="mut c1t" data-lang="zh" x="300.0" y="108.0">7</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 3. Worked Example C2.6a drawn to scale ($1$ unit $= 26$ px). With $A = 35^{\circ}$ and $AC = b = 9$, the arc of radius $a = 7$ about $C$ meets the base line twice, at $B_{1}$ and $B_{2}$. Triangle $AB_{1}C$ has $B \approx 47.5^{\circ}$ and triangle $AB_{2}C$ has $B \approx 132.5^{\circ}$. Two crossings appear exactly when $b \sin A < a < b$, here $5.16 < 7 < 9$.</span><span data-lang="zh">图 3. 按比例绘制的例题 C2.6a（$1$ 单位 $= 26$ px）。$A = 35^{\circ}$、$AC = b = 9$，以 $C$ 为圆心、半径 $a = 7$ 的圆弧与底线交于两点 $B_{1}$、$B_{2}$。三角形 $AB_{1}C$ 中 $B \approx 47.5^{\circ}$，三角形 $AB_{2}C$ 中 $B \approx 132.5^{\circ}$。恰在 $b \sin A < a < b$ 时出现两个交点，此处 $5.16 < 7 < 9$。</span></figcaption>
+  </figure>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C2.6b: 3D, diagonal of a cuboid</span><span data-lang="zh">C2.6b 例题：三维：长方体对角线</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C2.6b (3D, diagonal of a cuboid)</span><span data-lang="zh">C2.6b 例题（三维：长方体对角线）</span></div>
     <p><span data-lang="en">A rectangular box (cuboid) has edges of length $3$, $4$, and $12$. Find (a) the length of the space diagonal and (b) the angle the space diagonal makes with the base.</span><span data-lang="zh">一长方体棱长为 $3$、$4$、$12$。求 (a) 体对角线长度；(b) 体对角线与底面所成的角。</span></p>
   </div>
   <div class="worked-solution">
     <p data-lang="en"><strong>(a) Length via two perpendicular triangles.</strong> First, the diagonal of the base rectangle (a $3 \times 4$ rectangle): by Pythagoras, $d_{\text{base}} = \sqrt{3^{2} + 4^{2}} = 5$. Now the space diagonal is the hypotenuse of a right triangle whose legs are this base diagonal $5$ and the vertical edge $12$:</p>
-    <p data-lang="zh"><strong>(a) 利用两个垂直三角形求长度。</strong>先求底面（$3 \times 4$ 矩形）对角线：由勾股 $d_{\text{底}} = \sqrt{3^{2} + 4^{2}} = 5$。再将体对角线视为以底面对角线 $5$ 与竖直棱 $12$ 为直角边的直角三角形的斜边：</p>
+    <p data-lang="zh"><strong>(a) 利用两个垂直三角形求长度。</strong>先求底面（$3 \times 4$ 矩形）对角线：由勾股 $d_{\text{base}} = \sqrt{3^{2} + 4^{2}} = 5$。再将体对角线视为以底面对角线 $5$ 与竖直棱 $12$ 为直角边的直角三角形的斜边：</p>
     $$ D \;=\; \sqrt{d_{\text{base}}^{2} + 12^{2}} \;=\; \sqrt{25 + 144} \;=\; \sqrt{169} \;=\; 13. $$
     <p data-lang="en"><strong>(b) Angle with the base.</strong> In the second (vertical) right triangle, the angle $\alpha$ between the space diagonal and its projection (the base diagonal) satisfies</p>
     <p data-lang="zh"><strong>(b) 与底面的夹角。</strong>在第二个（竖直方向的）直角三角形中，体对角线与其在底面的投影（即底面对角线）所成角 $\alpha$ 满足</p>
-    $$ \tan \alpha \;=\; \frac{\text{opposite (vertical edge)}}{\text{adjacent (base diagonal)}} \;=\; \frac{12}{5}, \qquad \alpha \;=\; \arctan \!\left( \frac{12}{5} \right) \;\approx\; 67.4^{\circ}. $$
+    $$ \tan \alpha \;=\; \frac{\text{opposite (vertical edge)}}{\text{adjacent (base diagonal)}} \;=\; \frac{12}{5}, \qquad \alpha \;=\; \tan^{-1} \!\left( \frac{12}{5} \right) \;\approx\; 67.4^{\circ}. $$
     <p data-lang="en"><strong>Method note.</strong> The two-step approach (base triangle, then vertical triangle) is the canonical 3D trigonometry pattern. Always isolate one planar triangle at a time.</p>
     <p data-lang="zh"><strong>方法注解。</strong>"先底面三角形，再竖直三角形"的两步法是三维三角学的经典模式。每一步只在一个平面三角形内操作。</p>
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: ignoring the obtuse candidate</span><span data-lang="zh">陷阱：忽略钝角候选</span></strong>
-    <span data-lang="en">In SSA configurations, students routinely report only $\theta_{1} = \arcsin(\cdot)$ and miss $\theta_{2} = 180^{\circ} - \theta_{1}$. The calculator's $\sin^{-1}$ button returns only the acute candidate by convention. Always test the obtuse candidate against the constraint that the three interior angles sum to $180^{\circ}$ before discarding it.</span><span data-lang="zh">SSA 情形下，学生常只报出 $\theta_{1} = \arcsin(\cdot)$ 而漏掉 $\theta_{2} = 180^{\circ} - \theta_{1}$。计算器 $\sin^{-1}$ 按惯例只返回锐角候选。舍弃钝角候选前，须用"内角和 $= 180^{\circ}$"约束检验。</span>
+    <span data-lang="en">In SSA configurations, students routinely report only $\theta_{1} = \sin^{-1}(\cdot)$ and miss $\theta_{2} = 180^{\circ} - \theta_{1}$. The calculator's $\sin^{-1}$ button returns only the acute candidate by convention. Always test the obtuse candidate against the constraint that the three interior angles sum to $180^{\circ}$ before discarding it.</span><span data-lang="zh">SSA 情形下，学生常只报出 $\theta_{1} = \sin^{-1}(\cdot)$ 而漏掉 $\theta_{2} = 180^{\circ} - \theta_{1}$。计算器 $\sin^{-1}$ 按惯例只返回锐角候选。舍弃钝角候选前，须用"三内角之和为 $180^{\circ}$"约束检验。</span>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -929,6 +1430,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">Compute both SSA candidates for $B$. The obtuse candidate $B_{2} \approx 147.6^{\circ}$ added to $A = 50^{\circ}$ exceeds $180^{\circ}$, so it is rejected. Exactly one triangle works.</span><span data-lang="zh">算出两 SSA 候选。钝角候选 $B_{2} \approx 147.6^{\circ}$ 与 $A = 50^{\circ}$ 之和超过 $180^{\circ}$，舍。仅一个三角形成立。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><strong>With SSA data, show the test, not only the answer:</strong> write both candidates $B_{1}$ and $B_{2} = 180^{\circ} - B_{1}$, add each to the given angle, and state which are rejected and why. Wording such as “find the possible values” points to two answers; if a diagram or the question says the angle is obtuse, keep only $B_{2}$. In 3D, sketch the chosen triangle flat beside the solid, with its right angle marked, before calculating.</p>
+    <p data-lang="zh"><strong>SSA 数据要写出检验过程，而不只写答案：</strong>写出两个候选 $B_{1}$ 与 $B_{2} = 180^{\circ} - B_{1}$，分别与给定角相加，说明舍弃哪个及原因。题目用“求所有可能的值”（<code>find the possible values</code>）这类措辞时提示有两个答案；若图或题目说明该角为钝角，只保留 $B_{2}$。三维题在计算前，把选定的三角形单独平放画在立体旁边，并标出直角。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. In triangle $ABC$, $a = 5$, $b = 8$ and $A = 30^{\circ}$. How many triangles are possible? Find each value of $B$.</span><span data-lang="zh">1. 三角形 $ABC$ 中 $a = 5$、$b = 8$、$A = 30^{\circ}$。可能有几个三角形？求 $B$ 的每个值。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\sin B = \dfrac{8 \sin 30^{\circ}}{5} = 0.8$, so $B_{1} \approx 53.1^{\circ}$ and $B_{2} \approx 126.9^{\circ}$. Both pass: $30^{\circ} + 53.1^{\circ} = 83.1^{\circ}$ and $30^{\circ} + 126.9^{\circ} = 156.9^{\circ}$ are less than $180^{\circ}$. Two triangles, matching the side check $b \sin A = 4 < 5 < 8$.</p><p data-lang="zh">$\sin B = \dfrac{8 \sin 30^{\circ}}{5} = 0.8$，故 $B_{1} \approx 53.1^{\circ}$，$B_{2} \approx 126.9^{\circ}$。两者都通过：$30^{\circ} + 53.1^{\circ} = 83.1^{\circ}$ 与 $30^{\circ} + 126.9^{\circ} = 156.9^{\circ}$ 都小于 $180^{\circ}$。共两个三角形，与边长判别 $b \sin A = 4 < 5 < 8$ 一致。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. In triangle $ABC$, $a = 4$, $b = 10$ and $A = 30^{\circ}$. Show that no triangle exists.</span><span data-lang="zh">2. 三角形 $ABC$ 中 $a = 4$、$b = 10$、$A = 30^{\circ}$。证明不存在这样的三角形。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\sin B = \dfrac{10 \sin 30^{\circ}}{4} = 1.25 > 1$, and no angle has a sine greater than $1$. Geometrically, side $a = 4$ is shorter than the perpendicular $b \sin A = 5$ from $C$ to the base line, so it cannot reach that line.</p><p data-lang="zh">$\sin B = \dfrac{10 \sin 30^{\circ}}{4} = 1.25 > 1$，而没有角的正弦大于 $1$。几何上，边 $a = 4$ 短于从 $C$ 到底线的垂线 $b \sin A = 5$，够不到底线。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A pyramid has a square base of side $6$ cm and its apex is $4$ cm vertically above the centre of the base. Find the length of a slant edge and the angle it makes with the base.</span><span data-lang="zh">3. 一棱锥底面为边长 $6$ cm 的正方形，顶点位于底面中心正上方 $4$ cm 处。求侧棱长及侧棱与底面的夹角。</span></summary>
+      <div class="sg-a"><p data-lang="en">Half the base diagonal is $\tfrac{1}{2}\sqrt{6^{2} + 6^{2}} = 3\sqrt{2} \approx 4.243$ cm. The slant edge is the hypotenuse of a right-angled triangle with legs $3\sqrt{2}$ and $4$: $\sqrt{18 + 16} = \sqrt{34} \approx 5.83$ cm. The angle with the base is $\tan^{-1}\!\left(\dfrac{4}{3\sqrt{2}}\right) \approx 43.3^{\circ}$.</p><p data-lang="zh">底面对角线的一半为 $\tfrac{1}{2}\sqrt{6^{2} + 6^{2}} = 3\sqrt{2} \approx 4.243$ cm。侧棱是两直角边为 $3\sqrt{2}$ 与 $4$ 的直角三角形的斜边：$\sqrt{18 + 16} = \sqrt{34} \approx 5.83$ cm。与底面的夹角为 $\tan^{-1}\!\left(\dfrac{4}{3\sqrt{2}}\right) \approx 43.3^{\circ}$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -938,8 +1460,20 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试技巧</span></div>
   <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
 
+  <div class="concept-box" data-course="hl">
+    <strong><span data-lang="en">HL exam format</span><span data-lang="zh">HL 考试形式</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 2 hours each and are each worth 30%; both have a Section A of short-response questions and a Section B of extended-response questions, all compulsory. Paper 3 (HL only, technology required) is 1 hour, worth 20%, with two compulsory extended-response questions. The external papers total 5 hours (80%); the internal assessment, a mathematical exploration, is the other 20%.</p>
+    <p data-lang="zh">Paper 1（不允许技术工具）与 Paper 2（必须使用技术工具）各 2 小时，各占 30%；两卷均有 Section A 短答题与 Section B 长答题，全部必答。Paper 3（仅 HL，必须使用技术工具）1 小时，占 20%，含两道必答长答题。外部考试共 5 小时（80%）；内部评估（<code>internal assessment</code>，数学探究 <code>exploration</code>）占其余 20%。</p>
+  </div>
+
+  <div class="concept-box" data-course="sl">
+    <strong><span data-lang="en">SL exam format</span><span data-lang="zh">SL 考试形式</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) are 1 hour 30 minutes each and are each worth 40%; both have a Section A of short-response questions and a Section B of extended-response questions, all compulsory. There is no Paper 3 at SL. The external papers total 3 hours (80%); the internal assessment, a mathematical exploration, is the other 20%.</p>
+    <p data-lang="zh">Paper 1（不允许技术工具）与 Paper 2（必须使用技术工具）各 1 小时 30 分钟，各占 40%；两卷均有 Section A 短答题与 Section B 长答题，全部必答。SL 没有 Paper 3。外部考试共 3 小时（80%）；内部评估（<code>internal assessment</code>，数学探究 <code>exploration</code>）占其余 20%。</p>
+  </div>
+
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Choosing the right rule (Paper 1 / Paper 2)</span><span data-lang="zh">如何选对定理（Paper 1 / Paper 2）</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Choosing the right rule</span><span data-lang="zh">如何选对定理</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>Right angle present?</strong> Use SOHCAHTOA. Faster than the general rules.</li>
       <li data-lang="zh"><strong>有直角？</strong>用 SOHCAHTOA，比通用定理快。</li>
@@ -951,7 +1485,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="concept-box" style="border-left-color: var(--accent);">
-    <strong style="color: var(--accent);"><span data-lang="en">Bearings (Paper 2 mostly)</span><span data-lang="zh">方位角（多见于 Paper 2）</span></strong>
+    <strong style="color: var(--accent);"><span data-lang="en">Bearings</span><span data-lang="zh">方位角</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>Draw the figure with north arrows.</strong> Without a figure, the conversion from bearings to interior angles is error-prone. With one, it is almost mechanical.</li>
       <li data-lang="zh"><strong>画图并在每点标北。</strong>无图时方位角换内角极易出错；有图后几近机械。</li>
@@ -961,7 +1495,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="concept-box red">
-    <strong style="color: var(--red);"><span data-lang="en">Ambiguous case and 3D (Paper 2 most often)</span><span data-lang="zh">模糊情形与三维（多见于 Paper 2）</span></strong>
+    <strong style="color: var(--red);"><span data-lang="en">Ambiguous case and 3D</span><span data-lang="zh">模糊情形与三维</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>SSA $\Rightarrow$ always check the supplement.</strong> Compute both $\theta_{1}$ and $\theta_{2} = 180^{\circ} - \theta_{1}$; reject the candidate whose sum with the given angle exceeds $180^{\circ}$.</li>
       <li data-lang="zh"><strong>SSA $\Rightarrow$ 必查补角。</strong>同时算 $\theta_{1}$ 与 $\theta_{2} = 180^{\circ} - \theta_{1}$；舍弃与给定角之和超过 $180^{\circ}$ 的候选。</li>
@@ -998,7 +1532,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">When to use the cosine rule?</span><span data-lang="zh">何时用余弦定理？</span></div><div class="flashcard-back"><span data-lang="en">SAS or SSS: when no side-angle pair is given.</span><span data-lang="zh">SAS 或 SSS：无"边-对角"对时。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Bearing convention?</span><span data-lang="zh">方位角约定？</span></div><div class="flashcard-back"><span data-lang="en">Clockwise from north, three-digit. E.g. $060^{\circ}$.</span><span data-lang="zh">自北顺时针、三位数。例：$060^{\circ}$。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Return-leg bearing rule?</span><span data-lang="zh">反向方位规则？</span></div><div class="flashcard-back">$$\beta_{\text{return}} = \beta + 180^{\circ} \pmod{360^{\circ}}$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SSA ambiguous candidates?</span><span data-lang="zh">SSA 模糊候选？</span></div><div class="flashcard-back">$$\theta_{1} = \arcsin(\cdot), \;\; \theta_{2} = 180^{\circ} - \theta_{1}$$<span data-lang="en">Test each against $A + \theta < 180^{\circ}$.</span><span data-lang="zh">分别检验 $A + \theta < 180^{\circ}$。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SSA ambiguous candidates?</span><span data-lang="zh">SSA 模糊候选？</span></div><div class="flashcard-back">$$\theta_{1} = \sin^{-1}(\cdot), \;\; \theta_{2} = 180^{\circ} - \theta_{1}$$<span data-lang="en">Test each against $A + \theta < 180^{\circ}$.</span><span data-lang="zh">分别检验 $A + \theta < 180^{\circ}$。</span></div></div></div>
   </div>
 </section>
 
@@ -1017,7 +1551,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2">$53.1^{\circ}$</div>
       <div class="quiz-opt" data-idx="3">$60^{\circ}$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">The ladder is the hypotenuse ($5$); the $3$ m segment along the ground is adjacent to the angle. $\cos \theta = \tfrac{3}{5} = 0.6$, so $\theta = \arccos(0.6) \approx 53.1^{\circ}$.</span><span data-lang="zh">梯子为斜边（$5$），地面上的 $3$ m 段是该角的邻边。$\cos \theta = \tfrac{3}{5} = 0.6$，故 $\theta = \arccos(0.6) \approx 53.1^{\circ}$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The ladder is the hypotenuse ($5$); the $3$ m segment along the ground is adjacent to the angle. $\cos \theta = \tfrac{3}{5} = 0.6$, so $\theta = \cos^{-1}(0.6) \approx 53.1^{\circ}$.</span><span data-lang="zh">梯子为斜边（$5$），地面上的 $3$ m 段是该角的邻边。$\cos \theta = \tfrac{3}{5} = 0.6$，故 $\theta = \cos^{-1}(0.6) \approx 53.1^{\circ}$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Adjacent over hypotenuse: $\cos \theta = \tfrac{3}{5}$. Inverse cosine gives $\theta \approx 53.1^{\circ}$.</span><span data-lang="zh">邻边比斜边：$\cos \theta = \tfrac{3}{5}$。反余弦得 $\theta \approx 53.1^{\circ}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1070,7 +1604,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">no valid triangle</span><span data-lang="zh">无有效三角形</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">$\sin B = \tfrac{b \sin A}{a} = \tfrac{9 \sin 40^{\circ}}{6} = \tfrac{9 \cdot 0.6428}{6} \approx 0.9642$. Candidates: $B_{1} \approx 74.6^{\circ}$, $B_{2} = 180^{\circ} - 74.6^{\circ} \approx 105.4^{\circ}$. Test each: $A + B_{1} = 40^{\circ} + 74.6^{\circ} = 114.6^{\circ} < 180^{\circ}$ (valid); $A + B_{2} = 40^{\circ} + 105.4^{\circ} = 145.4^{\circ} < 180^{\circ}$ (also valid). Both triangles exist.</span><span data-lang="zh">$\sin B = \tfrac{b \sin A}{a} = \tfrac{9 \sin 40^{\circ}}{6} \approx 0.9642$。候选 $B_{1} \approx 74.6^{\circ}$、$B_{2} \approx 105.4^{\circ}$。检验：$A + B_{1} = 114.6^{\circ} < 180^{\circ}$（有效）；$A + B_{2} = 145.4^{\circ} < 180^{\circ}$（亦有效）。两三角形都存在。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">SSA: get $\sin B \approx 0.9642$ via the sine rule. Both $B_{1} = \arcsin(\cdot) \approx 74.6^{\circ}$ and $B_{2} = 180^{\circ} - B_{1} \approx 105.4^{\circ}$ satisfy $A + B < 180^{\circ}$, so both are valid.</span><span data-lang="zh">SSA：用正弦定理得 $\sin B \approx 0.9642$。$B_{1} \approx 74.6^{\circ}$ 与 $B_{2} \approx 105.4^{\circ}$ 都满足 $A + B < 180^{\circ}$，均有效。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">SSA: get $\sin B \approx 0.9642$ via the sine rule. Both $B_{1} \approx 74.6^{\circ}$ and $B_{2} = 180^{\circ} - B_{1} \approx 105.4^{\circ}$ satisfy $A + B < 180^{\circ}$, so both are valid.</span><span data-lang="zh">SSA：用正弦定理得 $\sin B \approx 0.9642$。$B_{1} \approx 74.6^{\circ}$ 与 $B_{2} = 180^{\circ} - B_{1} \approx 105.4^{\circ}$ 都满足 $A + B < 180^{\circ}$，均有效。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 </section>
@@ -1097,7 +1631,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply the area formula $\tfrac{1}{2} a b \sin C$ in SAS configurations</span><span data-lang="zh">在 SAS 中用面积公式 $\tfrac{1}{2} a b \sin C$</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Read and write bearings as three-digit clockwise-from-north angles</span><span data-lang="zh">把方位角读写为"自北顺时针、三位数"的角度</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Convert a sequence of bearings into the interior angles of the resulting triangle</span><span data-lang="zh">把一连串方位角换算为所得三角形的内角</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">In an SSA configuration, test both $\theta_{1} = \arcsin(\cdot)$ and $\theta_{2} = 180^{\circ} - \theta_{1}$ for validity</span><span data-lang="zh">在 SSA 中同时检验 $\theta_{1} = \arcsin(\cdot)$ 与 $\theta_{2} = 180^{\circ} - \theta_{1}$ 的有效性</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">In an SSA configuration, test both $\theta_{1} = \sin^{-1}(\cdot)$ and $\theta_{2} = 180^{\circ} - \theta_{1}$ for validity</span><span data-lang="zh">在 SSA 中同时检验 $\theta_{1} = \sin^{-1}(\cdot)$ 与 $\theta_{2} = 180^{\circ} - \theta_{1}$ 的有效性</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">In a 3D figure, isolate one planar triangle at a time and apply planar trigonometry within it</span><span data-lang="zh">在三维图中，每次只取一个平面三角形，在该平面内套用平面三角学</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Find the angle between a line and a plane by projecting the line onto the plane and using the right triangle formed</span><span data-lang="zh">将直线投影到平面上，用所得直角三角形求直线与平面的夹角</span></li>
   </ul>
@@ -1150,9 +1684,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
   </div>
 
-  <div class="concept-box">
-    <strong style="color: var(--accent);"><span data-lang="en">SL coverage</span><span data-lang="zh">SL 覆盖范围</span></strong>
-    <span data-lang="en">Unit C2 is SL content in its entirety (syllabus code 3.3). HL students inherit the same six sections without extension. Mastery here feeds directly into B4 (trigonometric functions) and the geometry-flavoured questions in Papers 1 and 2.</span><span data-lang="zh">C2 单元整体为 SL 内容（教学大纲编码 3.3），无 HL 扩展，HL 学生原样继承。本单元的熟练度直接服务于 B4（三角函数）及 Paper 1、Paper 2 中的几何类题目。</span>
+  <div class="concept-box" data-course="hl">
+    <strong><span data-lang="en">HL coverage</span><span data-lang="zh">HL 覆盖范围</span></strong>
+    <span data-lang="en">Unit C2 is SL content in its entirety (syllabus rows 3.2 and 3.3). HL students study the same six sections with no HL extension in this unit. The triangle work here is used again in B4 (trigonometric functions) and C3 (vectors).</span><span data-lang="zh">C2 单元整体为 SL 内容（教学大纲第 3.2 与 3.3 行）。HL 学生学习同样的六节，本单元没有 HL 扩展。这里的三角形方法会在 B4（三角函数）与 C3（向量）中再次用到。</span>
+  </div>
+  <div class="concept-box" data-course="sl">
+    <strong><span data-lang="en">SL coverage</span><span data-lang="zh">SL 覆盖范围</span></strong>
+    <span data-lang="en">Every section of Unit C2 is in the SL syllabus (rows 3.2 and 3.3), so the SL view shows the whole unit. The triangle work here is used again in B4 (trigonometric functions).</span><span data-lang="zh">C2 单元的每一节都属于 SL 教学大纲（第 3.2 与 3.3 行），因此 SL 视图显示整个单元。这里的三角形方法会在 B4（三角函数）中再次用到。</span>
   </div>
 </section>
   </div>
@@ -1470,6 +2008,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1613,21 +2167,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

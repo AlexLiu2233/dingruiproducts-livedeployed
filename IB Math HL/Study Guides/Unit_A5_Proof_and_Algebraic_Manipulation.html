@@ -406,21 +406,26 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- END toc-course-nav-css -->
 <style id="sg-textbook-css">
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, none)); --sg-gold: var(--gold, #b8860b); }
 .sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
-  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
-.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--radius) var(--radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.sg-examtip .sg-label { color: var(--gold); }
+.sg-examtip .sg-label { color: var(--sg-gold); }
 .sg-check .sg-label { color: var(--green); }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
-.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
    a concept-box title takes its box's colour; a formula-box variant colours its top border;
@@ -430,12 +435,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .concept-box.green > strong:first-child { color: var(--green); }
 .concept-box.orange > strong:first-child { color: var(--orange); }
 .concept-box.purple > strong:first-child { color: var(--purple); }
-.concept-box.gold > strong:first-child { color: var(--gold); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
 .formula-box.red { border-top-color: var(--red); }
 .formula-box.green { border-top-color: var(--green); }
 .formula-box.orange { border-top-color: var(--orange); }
 .formula-box.purple { border-top-color: var(--purple); }
-.formula-box.gold { border-top-color: var(--gold); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
 @media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
@@ -454,11 +459,16 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
 </style>
 <style id="sg-figure-css">
 /* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, none)); --sg-gold: var(--gold, #b8860b); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-.sg-fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
-.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
 .sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
 .sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
@@ -469,10 +479,10 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
 .sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
 .sg-fig .dash { stroke-dasharray: 6 4; }
 .sg-fig .thin { stroke-width: 1.2; }
-.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
-.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
-.sg-fig .dot { fill: var(--text); stroke: none; }
-.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
 .sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
@@ -508,7 +518,7 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
   <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">概览</span></a>
   <a href="#how-to-use"><span data-lang="en">How to use this guide</span><span data-lang="zh">使用指南</span></a>
-  <a href="#s-a5-1"><span data-lang="en">A5.1 Direct Proof &amp; Counter-Example</span><span data-lang="zh">A5.1 直接证明与反例</span></a>
+  <a href="#s-a5-1"><span data-lang="en">A5.1 Direct Proof</span><span data-lang="zh">A5.1 直接证明</span></a>
   <a href="#s-a5-2"><span data-lang="en">A5.2 Proof by Contradiction (HL)</span><span data-lang="zh">A5.2 反证法（HL）</span></a>
   <a href="#s-a5-3"><span data-lang="en">A5.3 Mathematical Induction (HL)</span><span data-lang="zh">A5.3 数学归纳法（HL）</span></a>
   <a href="#s-a5-4"><span data-lang="en">A5.4 Partial Fractions (HL)</span><span data-lang="zh">A5.4 部分分式（HL）</span></a>
@@ -559,7 +569,7 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   <div class="hero-overline">IB Mathematics: Analysis &amp; Approaches HL · 鼎睿学苑</div>
   <h1><span data-lang="en">Unit A5: Proof<br>&amp; Algebraic Manipulation</span><span data-lang="zh">单元 A5：证明与代数运算</span></h1>
   <p class="hero-sub">
-    <span data-lang="en">The closing sub-unit of Topic 1 (Number &amp; Algebra). Master four proof techniques (direct, counter-example, contradiction, induction), the partial-fraction decomposition that prepares the integration toolkit, and the Gaussian elimination + RREF machinery that solves $3\times 3$ linear systems. The contradiction, induction, partial fractions, and linear-systems pieces are HL only: use the HL/SL button in the header to hide them.</span><span data-lang="zh">Topic 1（数与代数）的收官子单元。掌握四种证明（<code>proof</code>）方法：直接证明、反例、反证法、数学归纳法；掌握部分分式（<code>partial fractions</code>）分解（积分工具箱的入门）；掌握 Gauss 消元（<code>Gaussian elimination</code>）与 RREF 解 $3\times 3$ 线性方程组的全套机制。反证法、归纳法、部分分式、线性方程组都是 HL 专属内容：可用页首的 HL/SL 按钮隐藏它们。</span>
+    <span data-lang="en">The closing sub-unit of Topic 1 (Number &amp; Algebra). Master four proof techniques (direct, counter-example, contradiction, induction), the partial-fraction decomposition that prepares the integration toolkit, and the Gaussian elimination + RREF machinery that solves $3\times 3$ linear systems. Only direct proof (SL 1.6) is common to SL and HL. The counter-example, contradiction and induction pieces (AHL 1.15), partial fractions and linear systems are HL only: use the HL/SL button in the header to hide them.</span><span data-lang="zh">Topic 1（数与代数）的收官子单元。掌握四种证明（<code>proof</code>）方法：直接证明、反例、反证法、数学归纳法；掌握部分分式（<code>partial fractions</code>）分解（积分工具箱的入门）；掌握 Gauss 消元（<code>Gaussian elimination</code>）与 RREF 解 $3\times 3$ 线性方程组的全套机制。只有直接证明（SL 1.6）是 SL 与 HL 共同内容。反例、反证法、归纳法（AHL 1.15）以及部分分式、线性方程组都是 HL 专属内容：可用页首的 HL/SL 按钮隐藏它们。</span>
   </p>
   <div class="hero-meta">
     <span class="chip chip-maroon">IB AA HL · Topic 1.6 / 1.11 / 1.15 / 1.16</span>
@@ -584,7 +594,7 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
 <!-- A5.1 DIRECT PROOF -->
 <section class="section" id="s-a5-1">
   <div class="section-label"><span data-lang="en">Topic A5.1 · Direct Proof</span><span data-lang="zh">Topic A5.1 · 直接证明</span></div>
-  <h2><span data-lang="en">Direct Proof &amp; Counter-Example</span><span data-lang="zh">直接证明与反例</span> <span class="ib-ref">SL 1.6</span></h2>
+  <h2><span data-lang="en">Direct Proof</span><span data-lang="zh">直接证明</span> <span class="ib-ref">SL 1.6</span></h2>
 
   <div class="sg-objectives">
     <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
@@ -592,33 +602,33 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
       <li>State the structure of a direct (deductive) proof: start from what is given, apply definitions and algebra, and end at the statement to be proved.</li>
       <li>Prove an identity by working from the left-hand side to the right-hand side, using $\equiv$ for "is identically equal to".</li>
       <li>Use the definitions $n = 2m$ (even) and $n = 2m + 1$ (odd), with $m \in \mathbb{Z}$, to prove results about integers.</li>
-      <li>Show that a universal statement is false by giving one counter-example and checking it.</li>
+      <li data-course="hl">(HL) Show that a universal statement is false by giving one counter-example and checking it (AHL 1.15).</li>
       <li>Prove a simple inequality by rearranging it to a perfect square, which is never negative.</li>
     </ul>
     <ul data-lang="zh">
       <li>写出（<code>state</code>）直接证明（演绎证明，<code>deductive proof</code>）的结构：从已知条件出发，运用定义与代数，推出要证的结论。</li>
       <li>从左边（LHS）推到右边（RHS）来证明（<code>prove</code>）恒等式，用 $\equiv$ 表示"恒等于"（<code>identically equal to</code>）。</li>
       <li>用定义 $n = 2m$（偶数）与 $n = 2m + 1$（奇数）（$m \in \mathbb{Z}$）证明关于整数的结论。</li>
-      <li>举出一个反例并加以检验，以说明（<code>show</code>）全称命题不成立。</li>
+      <li data-course="hl">（HL）举出一个反例并加以检验，以说明（<code>show</code>）全称命题不成立（AHL 1.15）。</li>
       <li>把简单不等式整理成完全平方（平方永不为负）来证明它。</li>
     </ul>
   </div>
 
   <div class="cram-cheat" data-lang="en">
-    <strong>Two reciprocal techniques.</strong>
+    <strong>Direct proof<span data-course="hl"> and counter-example (HL)</span>.</strong>
     <ul style="margin: 6px 0 0 22px; font-size: 0.94rem;">
       <li><strong>Direct proof of "if $P$ then $Q$":</strong> assume $P$, apply algebra/definitions, conclude $Q$. Layout: <em>Assume… Then… Therefore $Q$.</em> $\square$</li>
-      <li><strong>Counter-example to "for all $x$, $P(x)$":</strong> find one specific $x_{0}$ where $P(x_{0})$ fails. A single value is enough.</li>
+      <li data-course="hl"><strong>(HL) Counter-example to "for all $x$, $P(x)$":</strong> find one specific $x_{0}$ where $P(x_{0})$ fails. A single value is enough.</li>
     </ul>
-    Use direct proof to <em>verify</em> universal statements; use counter-example to <em>refute</em> them.
+    <span data-course="hl">(HL) Use direct proof to <em>verify</em> universal statements; use a counter-example to <em>refute</em> them.</span>
   </div>
   <div class="cram-cheat" data-lang="zh">
-    <strong>两种互逆技巧。</strong>
+    <strong>直接证明<span data-course="hl">与反例（HL）</span>。</strong>
     <ul style="margin: 6px 0 0 22px; font-size: 0.94rem;">
       <li><strong>直接证明"若 $P$ 则 $Q$"：</strong>假设 $P$ 成立，应用代数与定义，推出 $Q$。书写模板：<em>设…故…所以 $Q$。</em> $\square$</li>
-      <li><strong>反例（<code>counter-example</code>）反驳"对所有 $x$，$P(x)$ 成立"：</strong>找一个具体的 $x_{0}$ 使 $P(x_{0})$ 不成立即可。一个反例就够。</li>
+      <li data-course="hl"><strong>（HL）反例（<code>counter-example</code>）反驳"对所有 $x$，$P(x)$ 成立"：</strong>找一个具体的 $x_{0}$ 使 $P(x_{0})$ 不成立即可。一个反例就够。</li>
     </ul>
-    用直接证明<em>验证</em>全称命题；用反例<em>反驳</em>。
+    <span data-course="hl">（HL）用直接证明<em>验证</em>全称命题；用反例<em>反驳</em>。</span>
   </div>
 
   <h3><span data-lang="en">LHS to RHS proofs and the identity sign</span><span data-lang="zh">从左边到右边的证明与恒等号</span></h3>
@@ -627,8 +637,8 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   <p data-lang="en">For example, to prove $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$:</p>
   <p data-lang="zh">例如，证明 $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$：</p>
   $$ \text{LHS} = (n^{2} + 2n + 1) - (n^{2} - 2n + 1) = 4n = \text{RHS}. \quad \square $$
-  <p data-lang="en">Two further methods, proof by contradiction and proof by mathematical induction, are HL content (AHL 1.15) and are taught in A5.2 and A5.3.</p>
-  <p data-lang="zh">另外两种方法，反证法（<code>proof by contradiction</code>）与数学归纳法（<code>mathematical induction</code>），属于 HL 内容（AHL 1.15），分别在 A5.2 与 A5.3 讲解。</p>
+  <p data-lang="en">Three further methods are HL content (AHL 1.15): disproof by counter-example (later in this section, in the HL view), proof by contradiction (A5.2) and proof by mathematical induction (A5.3).</p>
+  <p data-lang="zh">另外三种方法属于 HL 内容（AHL 1.15）：用反例（<code>counter-example</code>）反驳（见本节后文，仅 HL 视图显示）、反证法（<code>proof by contradiction</code>，A5.2）与数学归纳法（<code>mathematical induction</code>，A5.3）。</p>
 
   <details class="sg-we" open><summary><span data-lang="en">Worked Example A5.1a: Direct proof</span><span data-lang="zh">A5.1a 例题：直接证明</span></summary>
   <div class="formula-box">
@@ -645,7 +655,11 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   </div>
   </details>
 
-  <details class="sg-we" open><summary><span data-lang="en">Worked Example A5.1b: Counter-example</span><span data-lang="zh">A5.1b 例题：反例</span></summary>
+  <div data-course="hl">
+  <h3><span data-lang="en">Counter-examples (HL)</span><span data-lang="zh">反例（HL）</span> <span class="ib-ref">AHL 1.15</span></h3>
+  <p data-lang="en">A statement of the form "for all $x$, $P(x)$" is false as soon as one value fails. To disprove it, give one specific value $x_{0}$, substitute it, and show the calculation that makes $P(x_{0})$ false. One checked value is a complete disproof, while values that work prove nothing, however many you try.</p>
+  <p data-lang="zh">形如"对所有 $x$，$P(x)$ 成立"的命题，只要有一个值不成立就是假命题。反驳时，给出一个具体的值 $x_{0}$，代入并写出使 $P(x_{0})$ 不成立的计算。一个经过检验的值就是完整的反驳；而成立的值无论试多少个，都证明不了什么。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example A5.1b: Counter-example (HL)</span><span data-lang="zh">A5.1b 例题：反例（HL）</span></summary>
   <div class="formula-box">
     <p><span data-lang="en">Disprove: for all $n \in \mathbb{Z}^{+}$, $n^{2} - n + 41$ is prime.</span><span data-lang="zh">反驳："对所有正整数 $n$，$n^{2} - n + 41$ 均为质数（<code>prime</code>）"。</span></p>
   </div>
@@ -659,9 +673,10 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
     <p data-lang="zh"><strong>为什么"看结构"很有用。</strong>$n^{2} - n + 41 = n(n-1) + 41$。代入 $n = 41$ 得 $41 \cdot 40 + 41 = 41(40 + 1) = 41^{2}$，复合因子立即暴露。</p>
   </div>
   </details>
+  </div>
 
   <div class="quiz" data-answer="2">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is a valid <em>counter-example</em> to "for all positive integers $n$, $n^{2} + n$ is even"?</span><span data-lang="zh">下列哪个是对"对所有正整数 $n$，$n^{2} + n$ 为偶数"的有效<em>反例</em>？</span></div><div class="quiz-number">A5.1 · Q1</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) Which of the following is a valid <em>counter-example</em> to "for all positive integers $n$, $n^{2} + n$ is even"?</span><span data-lang="zh">（HL）下列哪个是对"对所有正整数 $n$，$n^{2} + n$ 为偶数"的有效<em>反例</em>？</span></div><div class="quiz-number">A5.1 · Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$n = 2$ (gives $6$)</div>
       <div class="quiz-opt" data-idx="1">$n = 3$ (gives $12$)</div>
@@ -740,8 +755,12 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en"><strong>Layout is part of the proof.</strong> Begin by stating the definitions you use ("let $a = 2m + 1$ and $b = 2n + 1$ for integers $m$ and $n$"), move in one direction from LHS to RHS, and end with a sentence that repeats what has been proved. Checking a few values such as $n = 1, 2, 3$ supports a claim but never proves a "for all" statement; one checked counter-example, on the other hand, is a complete disproof. When technology is not allowed, as on Paper 1, no calculator can check a step for you, so write every algebraic line.</p>
-    <p data-lang="zh"><strong>书写格式本身就是证明的一部分。</strong>先写明所用的定义（"设 $a = 2m + 1$、$b = 2n + 1$，其中 $m$、$n$ 为整数"），从 LHS 单向推到 RHS，最后用一句话重述已证明的结论。验证 $n = 1, 2, 3$ 等几个值只能支持猜想，永远不能证明"对所有"型命题；反过来，一个经过检验的反例（<code>counter-example</code>）就是完整的反驳。在不允许使用技术工具的试卷上（如 Paper 1），没有计算器替你检查，所以每一步代数都要写出来。</p>
+    <p data-lang="en"><strong>Layout is part of the proof.</strong> Begin by stating the definitions you use ("let $a = 2m + 1$ and $b = 2n + 1$ for integers $m$ and $n$"), move in one direction from LHS to RHS, and end with a sentence that repeats what has been proved. Checking a few values such as $n = 1, 2, 3$ supports a claim but never proves a "for all" statement. When technology is not allowed, as on Paper 1, no calculator can check a step for you, so write every algebraic line.</p>
+    <p data-lang="zh"><strong>书写格式本身就是证明的一部分。</strong>先写明所用的定义（"设 $a = 2m + 1$、$b = 2n + 1$，其中 $m$、$n$ 为整数"），从 LHS 单向推到 RHS，最后用一句话重述已证明的结论。验证 $n = 1, 2, 3$ 等几个值只能支持猜想，永远不能证明"对所有"型命题。在不允许使用技术工具的试卷上（如 Paper 1），没有计算器替你检查，所以每一步代数都要写出来。</p>
+    <div data-course="hl">
+    <p data-lang="en">(HL) One checked counter-example, on the other hand, is a complete disproof: state the value and show the calculation that makes the statement fail.</p>
+    <p data-lang="zh">（HL）反过来，一个经过检验的反例（<code>counter-example</code>）就是完整的反驳：写出该值，并给出使命题不成立的计算。</p>
+    </div>
   </div>
 
   <div class="sg-check">
@@ -751,12 +770,16 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
       <div class="sg-a"><p data-lang="en">Let the odd integers be $a = 2m + 1$ and $b = 2n + 1$ with $m, n \in \mathbb{Z}$. Then $a + b = 2m + 2n + 2 = 2(m + n + 1)$. Since $m + n + 1 \in \mathbb{Z}$, $a + b$ is a multiple of $2$, so it is even. $\square$ Using two different letters $m$ and $n$ matters: writing both as $2m + 1$ would only prove the result when the two odd numbers are equal.</p><p data-lang="zh">设两个奇数为 $a = 2m + 1$、$b = 2n + 1$，$m, n \in \mathbb{Z}$。则 $a + b = 2m + 2n + 2 = 2(m + n + 1)$。因为 $m + n + 1 \in \mathbb{Z}$，$a + b$ 是 $2$ 的倍数，故为偶数。 $\square$ 必须用两个不同的字母 $m$、$n$：若都写成 $2m + 1$，只证明了两个奇数相等的情形。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Show that the statement "$n^{2} + n + 1$ is prime for every positive integer $n$" is false.</span><span data-lang="zh">2. 说明命题"对每个正整数 $n$，$n^{2} + n + 1$ 都是质数"不成立。</span></summary>
-      <div class="sg-a"><p data-lang="en">Test values in order: $n = 1$ gives $3$, $n = 2$ gives $7$, $n = 3$ gives $13$ (all prime), but $n = 4$ gives $16 + 4 + 1 = 21 = 3 \times 7$, which is not prime. So $n = 4$ is a counter-example and the statement is false. The first three values show why checking examples can never prove a "for all" claim.</p><p data-lang="zh">依次试值：$n = 1$ 得 $3$，$n = 2$ 得 $7$，$n = 3$ 得 $13$（都是质数），但 $n = 4$ 得 $16 + 4 + 1 = 21 = 3 \times 7$，不是质数。所以 $n = 4$ 是一个反例，命题不成立。前三个值也说明了：举例验证永远不能证明"对所有"型命题。</p></div>
+      <summary><span data-lang="en">2. Prove that the square of any odd integer is odd.</span><span data-lang="zh">2. 证明任意奇数的平方是奇数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Let the odd integer be $n = 2m + 1$ with $m \in \mathbb{Z}$. Then $n^{2} = 4m^{2} + 4m + 1 = 2(2m^{2} + 2m) + 1$. Since $2m^{2} + 2m \in \mathbb{Z}$, $n^{2}$ is a multiple of $2$ plus $1$, so it is odd. $\square$ Check with $n = 7$ ($m = 3$): $49 = 2 \times 24 + 1$.</p><p data-lang="zh">设该奇数为 $n = 2m + 1$，$m \in \mathbb{Z}$。则 $n^{2} = 4m^{2} + 4m + 1 = 2(2m^{2} + 2m) + 1$。因为 $2m^{2} + 2m \in \mathbb{Z}$，$n^{2}$ 等于 $2$ 的倍数加 $1$，故为奇数。 $\square$ 用 $n = 7$（$m = 3$）检验：$49 = 2 \times 24 + 1$。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">3. Prove that $(2n + 1)^{2} - (2n - 1)^{2} \equiv 8n$. Hence show that the difference of the squares of two consecutive odd numbers is a multiple of $8$.</span><span data-lang="zh">3. 证明 $(2n + 1)^{2} - (2n - 1)^{2} \equiv 8n$。由此说明两个相邻奇数的平方差是 $8$ 的倍数。</span></summary>
       <div class="sg-a"><p data-lang="en">LHS $= (4n^{2} + 4n + 1) - (4n^{2} - 4n + 1) = 8n =$ RHS. $\square$ Any two consecutive odd numbers can be written as $2n - 1$ and $2n + 1$ for some integer $n$, so the difference of their squares is $8n$, a multiple of $8$. Check with $5$ and $3$ ($n = 2$): $25 - 9 = 16 = 8 \times 2$.</p><p data-lang="zh">LHS $= (4n^{2} + 4n + 1) - (4n^{2} - 4n + 1) = 8n =$ RHS。 $\square$ 任意两个相邻奇数都可写成 $2n - 1$ 与 $2n + 1$（$n$ 为整数），所以它们的平方差为 $8n$，是 $8$ 的倍数。用 $5$ 和 $3$（$n = 2$）检验：$25 - 9 = 16 = 8 \times 2$。</p></div>
+    </details>
+    <details class="sg-q" data-course="hl">
+      <summary><span data-lang="en">4. (HL) Show that the statement "$n^{2} + n + 1$ is prime for every positive integer $n$" is false.</span><span data-lang="zh">4. （HL）说明命题"对每个正整数 $n$，$n^{2} + n + 1$ 都是质数"不成立。</span></summary>
+      <div class="sg-a"><p data-lang="en">Test values in order: $n = 1$ gives $3$, $n = 2$ gives $7$, $n = 3$ gives $13$ (all prime), but $n = 4$ gives $16 + 4 + 1 = 21 = 3 \times 7$, which is not prime. So $n = 4$ is a counter-example and the statement is false. The first three values show why checking examples can never prove a "for all" claim.</p><p data-lang="zh">依次试值：$n = 1$ 得 $3$，$n = 2$ 得 $7$，$n = 3$ 得 $13$（都是质数），但 $n = 4$ 得 $16 + 4 + 1 = 21 = 3 \times 7$，不是质数。所以 $n = 4$ 是一个反例，命题不成立。前三个值也说明了：举例验证永远不能证明"对所有"型命题。</p></div>
     </details>
   </div>
 </section>
@@ -1522,14 +1545,14 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   </div>
 
   <div class="concept-box orange">
-    <strong><span data-lang="en">Direct proof and counter-examples</span><span data-lang="zh">直接证明与反例</span></strong>
+    <strong><span data-lang="en">Direct proof<span data-course="hl"> and counter-examples (HL)</span></span><span data-lang="zh">直接证明<span data-course="hl">与反例（HL）</span></span></strong>
     <ul class="sg-list">
       <li data-lang="en"><strong>Define before you calculate.</strong> Write "let $n = 2m + 1$, $m \in \mathbb{Z}$" (or the definition you need) on the first line, with a different letter for each independent integer.</li>
       <li data-lang="zh"><strong>先定义，再计算。</strong>第一行写"设 $n = 2m + 1$，$m \in \mathbb{Z}$"（或所需的定义），每个相互独立的整数用不同字母。</li>
       <li data-lang="en"><strong>One direction only.</strong> For an identity, go from LHS to RHS; never start from the statement you are asked to prove.</li>
       <li data-lang="zh"><strong>只朝一个方向推。</strong>证明恒等式时从 LHS 推到 RHS；不要从待证的结论出发。</li>
-      <li data-lang="en"><strong>A counter-example must be checked.</strong> Give the specific value and show the calculation that makes the statement fail.</li>
-      <li data-lang="zh"><strong>反例必须经过检验。</strong>写出具体的值，并给出使命题不成立的计算。</li>
+      <li data-lang="en" data-course="hl"><strong>(HL) A counter-example must be checked.</strong> Give the specific value and show the calculation that makes the statement fail.</li>
+      <li data-lang="zh" data-course="hl"><strong>（HL）反例必须经过检验。</strong>写出具体的值，并给出使命题不成立的计算。</li>
     </ul>
   </div>
 
@@ -1575,7 +1598,7 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
   </div>
   <div class="flashcard-grid" id="flashcardGrid">
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Direct proof structure?</span><span data-lang="zh">直接证明结构？</span></div><div class="flashcard-back"><span data-lang="en">Assume $P$. Then ... Therefore $Q$. $\square$</span><span data-lang="zh">设 $P$ 成立。则 ... 故 $Q$ 成立。 $\square$</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">To disprove "for all $x$, $P(x)$"?</span><span data-lang="zh">反驳"对所有 $x$, $P(x)$"？</span></div><div class="flashcard-back"><span data-lang="en">One counter-example $x_{0}$ with $P(x_{0})$ false.</span><span data-lang="zh">一个反例 $x_{0}$，使 $P(x_{0})$ 不成立。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) To disprove "for all $x$, $P(x)$"?</span><span data-lang="zh">（HL）反驳"对所有 $x$, $P(x)$"？</span></div><div class="flashcard-back"><span data-lang="en">One counter-example $x_{0}$ with $P(x_{0})$ false.</span><span data-lang="zh">一个反例 $x_{0}$，使 $P(x_{0})$ 不成立。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Proof by contradiction setup?</span><span data-lang="zh">（HL）反证法的开头？</span></div><div class="flashcard-back"><span data-lang="en">"Suppose, for contradiction, that $\neg P$."</span><span data-lang="zh">"反设 $\neg P$ 成立。"</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Induction: the four parts?</span><span data-lang="zh">（HL）归纳法的四个部分？</span></div><div class="flashcard-back"><span data-lang="en">(1) Base $P(n_{0})$. (2) IH: assume $P(k)$. (3) IS: show $P(k) \Rightarrow P(k+1)$. (4) Conclusion citing induction.</span><span data-lang="zh">(1) 基础 $P(n_{0})$。(2) IH：设 $P(k)$。(3) IS：证 $P(k) \Rightarrow P(k+1)$。(4) 引用归纳法的结论。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$1 + 2 + \cdots + n = ?$</span><span data-lang="zh">$1 + 2 + \cdots + n = ?$</span></div><div class="flashcard-back">$$\tfrac{n(n+1)}{2}$$</div></div></div>
@@ -1676,7 +1699,7 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
 
   <ul class="checklist" id="checklistUl">
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Lay out a direct proof using the "Assume ... Then ... Therefore" template</span><span data-lang="zh">用"设…则…故"模板写出一个直接证明</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Construct a counter-example to disprove a universal statement</span><span data-lang="zh">构造反例反驳全称命题</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Construct a counter-example to disprove a universal statement</span><span data-lang="zh">（HL）构造反例反驳全称命题</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Reproduce the proof that $\sqrt{2}$ is irrational (the lowest-terms contradiction)</span><span data-lang="zh">（HL）复现 $\sqrt{2}$ 无理的反证（最简分数矛盾）</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Write a complete induction proof: base case, inductive hypothesis (IH) stated, inductive step for $n = k + 1$ using the IH, conclusion citing the principle</span><span data-lang="zh">（HL）写出完整归纳证明：基础步骤、明确陈述归纳假设（IH）、在 $n = k + 1$ 的归纳步骤中显式使用 IH、结论引用归纳法原理</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Apply induction to sum formulas, divisibility, and inequalities</span><span data-lang="zh">（HL）将归纳法用于求和公式、整除性、不等式</span></li>
@@ -1732,8 +1755,8 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
       <p data-lang="zh">背熟<strong>归纳法四部分模板</strong>（基础步骤、归纳假设、归纳步骤、结论）和<strong>部分分式列式</strong>。每节挑一道例题扫一眼，跳过"深入"部分。对线性方程组，端到端做<em>一道</em>$3\times 3$ 题目：手算一遍，再用技术工具的矩阵（RREF）功能做一遍。</p>
       </div>
       <div data-course="sl">
-      <p data-lang="en">Learn the <strong>direct-proof layout</strong> (state the definitions, work from LHS to RHS, end with a concluding sentence) and the definitions $n = 2m$ (even) and $n = 2m + 1$ (odd). Work through Worked Examples A5.1a to A5.1c and the three check questions in A5.1. Remember that one checked counter-example disproves a "for all" statement.</p>
-      <p data-lang="zh">掌握<strong>直接证明的书写格式</strong>（写明定义、从 LHS 推到 RHS、以结论句收尾）以及定义 $n = 2m$（偶数）与 $n = 2m + 1$（奇数）。做完例题 A5.1a 至 A5.1c 以及 A5.1 的三道自测题。记住：一个经过检验的反例就能反驳"对所有"型命题。</p>
+      <p data-lang="en">Learn the <strong>direct-proof layout</strong> (state the definitions, work from LHS to RHS, end with a concluding sentence) and the definitions $n = 2m$ (even) and $n = 2m + 1$ (odd). Work through Worked Examples A5.1a and A5.1c and check questions 1 to 3 in A5.1. Remember that checking a few values never proves a "for all" statement.</p>
+      <p data-lang="zh">掌握<strong>直接证明的书写格式</strong>（写明定义、从 LHS 推到 RHS、以结论句收尾）以及定义 $n = 2m$（偶数）与 $n = 2m + 1$（奇数）。做完例题 A5.1a 与 A5.1c 以及 A5.1 的自测题 1 至 3。记住：验证几个值永远不能证明"对所有"型命题。</p>
       </div>
     </div>
     <div class="card">
@@ -1743,15 +1766,15 @@ html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !i
       <p data-lang="zh">每道归纳题都<em>动手手写</em>，把四个部分都写清。把部分分式练到能一遍处理不可约二次因式与重复线性因式。$3\times 3$ 方程组用消元和技术工具的矩阵（RREF）功能两种方法都做，验证一致。</p>
       </div>
       <div data-course="sl">
-      <p data-lang="en">Write every proof in A5.1 out <em>by hand</em> without looking, then make up your own: prove an identity such as $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$ from LHS to RHS, prove a parity result using a different letter for each integer, and disprove a "for all" claim by testing values until one fails. Check that each line follows from the line before.</p>
-      <p data-lang="zh">不看书<em>动手手写</em> A5.1 的每个证明，再自己出题：从 LHS 到 RHS 证明 $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$ 这类恒等式；每个整数用不同字母，证明一个奇偶性结论；逐个试值直到命题不成立，以反驳一个"对所有"型命题。检查每一行都由上一行推出。</p>
+      <p data-lang="en">Write every proof in A5.1 out <em>by hand</em> without looking, then make up your own: prove an identity such as $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$ from LHS to RHS, prove a parity result using a different letter for each integer, and prove an inequality by rearranging it to a perfect square. Check that each line follows from the line before.</p>
+      <p data-lang="zh">不看书<em>动手手写</em> A5.1 的每个证明，再自己出题：从 LHS 到 RHS 证明 $(n + 1)^{2} - (n - 1)^{2} \equiv 4n$ 这类恒等式；每个整数用不同字母，证明一个奇偶性结论；把一个不等式整理成完全平方来证明它。检查每一行都由上一行推出。</p>
       </div>
     </div>
   </div>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
-    <span data-lang="en">Simple deductive proof (direct proof, LHS to RHS proofs and counter-examples, SL 1.6, section A5.1) is common to SL and HL. Proof by contradiction and mathematical induction (AHL 1.15), partial fractions (AHL 1.11) and systems of linear equations (AHL 1.16), sections A5.2 to A5.6, are HL only. The HL/SL button in the header hides the HL-only sections.</span><span data-lang="zh">简单演绎证明（直接证明、从 LHS 到 RHS 的证明与反例，SL 1.6，A5.1 节）是 SL 与 HL 共同内容。反证法与数学归纳法（AHL 1.15）、部分分式（AHL 1.11）与线性方程组（AHL 1.16），即 A5.2 至 A5.6 节，仅属 HL。页首的 HL/SL 按钮可隐藏 HL 专属各节。</span>
+    <span data-lang="en">Simple deductive proof (direct proof and LHS to RHS proofs, SL 1.6, section A5.1) is common to SL and HL. Disproof by counter-example (the HL part of A5.1), proof by contradiction and mathematical induction (all AHL 1.15), partial fractions (AHL 1.11) and systems of linear equations (AHL 1.16), sections A5.2 to A5.6, are HL only. The HL/SL button in the header hides the HL-only content.</span><span data-lang="zh">简单演绎证明（直接证明与从 LHS 到 RHS 的证明，SL 1.6，A5.1 节）是 SL 与 HL 共同内容。用反例反驳（A5.1 中的 HL 部分）、反证法与数学归纳法（均为 AHL 1.15）、部分分式（AHL 1.11）与线性方程组（AHL 1.16），即 A5.2 至 A5.6 节，仅属 HL。页首的 HL/SL 按钮可隐藏 HL 专属内容。</span>
   </div>
 </section>
   </div>

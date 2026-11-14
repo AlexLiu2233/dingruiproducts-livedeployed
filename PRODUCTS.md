@@ -14,7 +14,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | AP CSA | 11 | 5 | 16 |
 | AP CSP | 15 | 6 | 21 |
 | AP Calculus | 9 | 21 | 30 |
-| AP Physics | 9 | 12 | 21 |
+| AP Physics | 9 | 13 | 22 |
 | AP Statistics | 21 | 15 | 36 |
 | High School Biology | 9 | 27 | 36 |
 | High School Chemistry | 9 | 33 | 42 |
@@ -26,7 +26,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | IB Physics HL | 9 | 63 | 72 |
 | SAT Math | 3 | 1 | 4 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **181** | **403** | **584** |
+| **Grand total** | **181** | **404** | **585** |
 
 ## Legend
 
@@ -284,6 +284,12 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit 7: Oscillations | Study Guide | 🔒 Unlockable |
 | Chapter 7: Oscillations, AP-Style Practice | Practice Questions | 🔒 Unlockable |
 | C: Mechanics, Unit 7: Oscillations, Solutions | Solutions | 🔒 Unlockable |
+
+### Unit 8: Fluids
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 8: Fluids | Study Guide | 🔒 Unlockable |
 
 ## AP Statistics
 

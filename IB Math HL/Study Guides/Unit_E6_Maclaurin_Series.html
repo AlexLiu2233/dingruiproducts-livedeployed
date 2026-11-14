@@ -401,6 +401,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -415,6 +505,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -479,14 +570,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="hero-overline">IB Mathematics: Analysis &amp; Approaches HL · 鼎睿学苑</div>
   <h1><span data-lang="en">Unit E6: Maclaurin<br>Series</span><span data-lang="zh">单元 E6：麦克劳林级数</span></h1>
   <p class="hero-sub">
-    <span data-lang="en">The capstone of HL calculus. A Maclaurin series is the polynomial that a smooth function would be if its derivatives at zero were Taylor coefficients. The unit is built on five memorised series ($e^x$, $\sin x$, $\cos x$, $\ln(1+x)$, $(1+x)^n$) and three ways to extend them: substitution, term-by-term differentiation and integration, and combination with L'Hopital's rule for $0/0$ limits.</span><span data-lang="zh">本单元是 HL 微积分的收束。麦克劳林级数把光滑函数展成多项式，零点处的各阶导数即为泰勒系数。建立在五个必背级数（$e^x$、$\sin x$、$\cos x$、$\ln(1+x)$、$(1+x)^n$）之上，再用三条扩展线索：代换、逐项求导与积分，以及与洛必达法则配合处理 $0/0$ 极限。</span>
+    <span data-lang="en">The capstone of HL calculus. A Maclaurin series writes a smooth function as an infinite polynomial whose coefficients come from its derivatives at zero, $a_{n} = f^{(n)}(0)/n!$. The unit is built on five memorised series ($e^x$, $\sin x$, $\cos x$, $\ln(1+x)$, $(1+x)^n$) and three ways to extend them: substitution, term-by-term differentiation and integration, and combination with L'Hopital's rule for $0/0$ limits.</span><span data-lang="zh">本单元是 HL 微积分的收束。麦克劳林级数把光滑函数写成一个无穷次多项式，其系数来自零点处的各阶导数：$a_{n} = f^{(n)}(0)/n!$。建立在五个必背级数（$e^x$、$\sin x$、$\cos x$、$\ln(1+x)$、$(1+x)^n$）之上，再用三条扩展线索：代换、逐项求导与积分，以及与洛必达法则配合处理 $0/0$ 极限。</span>
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon">IB AA HL · Topic AHL 5.18</span>
-    <span class="chip chip-green">Papers 1 · 2 · 3</span>
+    <span class="chip chip-maroon">IB AA HL · Topic AHL 5.13 / 5.19</span>
     <span class="chip chip-purple"><span data-lang="en">6 Concepts · HL only</span><span data-lang="zh">6 个核心概念 · HL 专属</span></span>
   </div>
 </section>
+
+<div class="concept-box orange" data-course="sl">
+  <strong><span data-lang="en">This unit is HL only</span><span data-lang="zh">本单元仅限 HL</span></strong>
+  <p data-lang="en">This unit is HL only; SL students can skip it. Maclaurin series (AHL 5.19) are additional higher level content in IB Mathematics: Analysis and Approaches, so they are not part of the SL course. Switch the course button at the top of the page to HL to read the full unit.</p>
+  <p data-lang="zh">本单元仅限 HL；SL 学生可以跳过。麦克劳林级数（<code>Maclaurin series</code>，AHL 5.19）属于 IB 数学：分析与方法的高级附加内容（<code>additional higher level</code>），不在 SL 课程中。如需阅读完整单元，请把页面顶部的课程按钮切换到 HL。</p>
+</div>
 
 
 
@@ -502,35 +598,55 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- E6.1 STANDARD MACLAURIN SERIES -->
-<section class="section" id="s-e6-1">
+<section class="section" id="s-e6-1" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.1 · Standard Maclaurin Series</span><span data-lang="zh">Topic E6.1 · 标准麦克劳林级数</span></div>
-  <h2><span data-lang="en">Standard Maclaurin Series</span><span data-lang="zh">标准麦克劳林级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">Standard Maclaurin Series</span><span data-lang="zh">标准麦克劳林级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.19</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the Maclaurin series of $e^{x}$, $\sin x$, $\cos x$, $\ln(1+x)$ and $(1+x)^{n}$ together with their intervals of validity.</li>
+      <li>Calculate Maclaurin coefficients from derivatives using $a_{n} = \dfrac{f^{(n)}(0)}{n!}$.</li>
+      <li>Derive the first non-zero terms of a series such as $\tan x$ directly from the general formula.</li>
+      <li>Explain why $\sin x$ contains only odd powers of $x$ and $\cos x$ only even powers.</li>
+      <li>Deduce a single coefficient, such as that of $x^{7}$ in $\sin x$, from the general term.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出 $e^{x}$、$\sin x$、$\cos x$、$\ln(1+x)$ 与 $(1+x)^{n}$ 的麦克劳林级数及其有效区间（<code>interval of validity</code>）。</li>
+      <li>用 $a_{n} = \dfrac{f^{(n)}(0)}{n!}$ 由各阶导数计算麦克劳林系数。</li>
+      <li>直接用通项公式推导 $\tan x$ 等函数级数的前几个非零项。</li>
+      <li>解释为何 $\sin x$ 只含 $x$ 的奇次幂，而 $\cos x$ 只含偶次幂。</li>
+      <li>由通项直接推出单个系数，例如 $\sin x$ 中 $x^{7}$ 的系数。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The five standard series (memorise cold).</strong>
-    $$ e^{x} \;=\; \sum_{n=0}^{\infty} \frac{x^{n}}{n!} \;=\; 1 + x + \tfrac{x^{2}}{2!} + \tfrac{x^{3}}{3!} + \cdots, \qquad \text{all real } x. $$
-    $$ \sin x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n+1}}{(2n+1)!} \;=\; x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots, \qquad \text{all real } x. $$
-    $$ \cos x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{(2n)!} \;=\; 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots, \qquad \text{all real } x. $$
+    $$ e^{x} \;=\; \sum_{n=0}^{\infty} \frac{x^{n}}{n!} \;=\; 1 + x + \tfrac{x^{2}}{2!} + \tfrac{x^{3}}{3!} + \cdots, \qquad x \in \mathbb{R}. $$
+    $$ \sin x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n+1}}{(2n+1)!} \;=\; x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots, \qquad x \in \mathbb{R}. $$
+    $$ \cos x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{(2n)!} \;=\; 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots, \qquad x \in \mathbb{R}. $$
     $$ \ln(1 + x) \;=\; \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^{n}}{n} \;=\; x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots, \qquad -1 &lt; x \le 1. $$
-    $$ (1 + x)^{n} \;=\; \sum_{k=0}^{\infty} \binom{n}{k} x^{k} \;=\; 1 + n x + \tfrac{n (n - 1)}{2!} x^{2} + \cdots, \qquad |x| &lt; 1 \text{ if } n \text{ is non-integer}. $$
+    $$ (1 + x)^{n} \;=\; \sum_{k=0}^{\infty} \binom{n}{k} x^{k} \;=\; 1 + n x + \tfrac{n (n - 1)}{2!} x^{2} + \cdots, \qquad |x| &lt; 1. $$
+    The binomial series needs $|x| &lt; 1$ unless $n \in \mathbb{N}$; then it stops after $n + 1$ terms and holds for every $x$.
     <br>
     <strong>The general Maclaurin formula.</strong> If $f$ has derivatives of all orders at $0$ and the series converges to $f(x)$ on some interval around $0$, then
     $$ f(x) \;=\; \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^{n} \;=\; f(0) + f'(0) x + \tfrac{f''(0)}{2!} x^{2} + \tfrac{f'''(0)}{3!} x^{3} + \cdots. $$
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>五个标准级数（必须背熟）。</strong>
-    $$ e^{x} \;=\; \sum_{n=0}^{\infty} \frac{x^{n}}{n!} \;=\; 1 + x + \tfrac{x^{2}}{2!} + \tfrac{x^{3}}{3!} + \cdots, \qquad \text{全体实 } x。 $$
-    $$ \sin x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n+1}}{(2n+1)!} \;=\; x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots, \qquad \text{全体实 } x。 $$
-    $$ \cos x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{(2n)!} \;=\; 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots, \qquad \text{全体实 } x。 $$
-    $$ \ln(1 + x) \;=\; \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^{n}}{n} \;=\; x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots, \qquad -1 &lt; x \le 1。 $$
-    $$ (1 + x)^{n} \;=\; \sum_{k=0}^{\infty} \binom{n}{k} x^{k} \;=\; 1 + n x + \tfrac{n (n - 1)}{2!} x^{2} + \cdots, \qquad |x| &lt; 1 \text{（$n$ 非整数时）}。 $$
+    $$ e^{x} \;=\; \sum_{n=0}^{\infty} \frac{x^{n}}{n!} \;=\; 1 + x + \tfrac{x^{2}}{2!} + \tfrac{x^{3}}{3!} + \cdots, \qquad x \in \mathbb{R}. $$
+    $$ \sin x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n+1}}{(2n+1)!} \;=\; x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots, \qquad x \in \mathbb{R}. $$
+    $$ \cos x \;=\; \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{(2n)!} \;=\; 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots, \qquad x \in \mathbb{R}. $$
+    $$ \ln(1 + x) \;=\; \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^{n}}{n} \;=\; x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots, \qquad -1 &lt; x \le 1. $$
+    $$ (1 + x)^{n} \;=\; \sum_{k=0}^{\infty} \binom{n}{k} x^{k} \;=\; 1 + n x + \tfrac{n (n - 1)}{2!} x^{2} + \cdots, \qquad |x| &lt; 1. $$
+    二项级数要求 $|x| &lt; 1$，除非 $n \in \mathbb{N}$；此时级数在 $n + 1$ 项后终止，对任意 $x$ 成立。
     <br>
     <strong>通项公式（麦克劳林公式）。</strong>若 $f$ 在 $0$ 处各阶可导，且级数在 $0$ 的某邻域内收敛于 $f(x)$，则
-    $$ f(x) \;=\; \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^{n} \;=\; f(0) + f'(0) x + \tfrac{f''(0)}{2!} x^{2} + \tfrac{f'''(0)}{3!} x^{3} + \cdots。 $$
+    $$ f(x) \;=\; \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^{n} \;=\; f(0) + f'(0) x + \tfrac{f''(0)}{2!} x^{2} + \tfrac{f'''(0)}{3!} x^{3} + \cdots. $$
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.1: derive $e^{x}$ from the formula</span><span data-lang="zh">E6.1 例题：用通项公式推导 $e^{x}$</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.1 (derive $e^{x}$ from the formula)</span><span data-lang="zh">E6.1 例题（用通项公式推导 $e^{x}$）</span></div>
     <p><span data-lang="en">Derive the first four terms of the Maclaurin series for $f(x) = e^{x}$ directly from the general formula.</span><span data-lang="zh">用通项公式直接推导 $f(x) = e^{x}$ 麦克劳林级数的前四项。</span></p>
   </div>
   <div class="worked-solution">
@@ -545,6 +661,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Remark.</strong> The series converges for all real $x$ because the ratio of successive terms $|x|/(n+1) \to 0$, regardless of $x$.</p>
     <p data-lang="zh"><strong>注。</strong>该级数对全体实 $x$ 收敛，因为相邻两项之比 $|x|/(n+1) \to 0$（与 $x$ 无关）。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.1b: $\tan x$ from its derivatives</span><span data-lang="zh">E6.1b 例题：由各阶导数求 $\tan x$ 的级数</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Use the general Maclaurin formula to find the first two non-zero terms of the Maclaurin series for $f(x) = \tan x$.</span><span data-lang="zh">用麦克劳林通项公式求 $f(x) = \tan x$ 麦克劳林级数的前两个非零项。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Differentiate three times.</strong> Using $\tfrac{d}{dx} \tan x = \sec^{2} x$ and the chain rule:</p>
+    <p data-lang="zh"><strong>求三阶导数。</strong>利用 $\tfrac{d}{dx} \tan x = \sec^{2} x$ 与链式法则：</p>
+    $$ f'(x) = \sec^{2} x, \qquad f''(x) = 2 \sec^{2} x \tan x, \qquad f'''(x) = 2 \sec^{4} x + 4 \sec^{2} x \tan^{2} x. $$
+    <p data-lang="en"><strong>Evaluate at $0$.</strong> Since $\sec 0 = 1$ and $\tan 0 = 0$: $f(0) = 0$, $f'(0) = 1$, $f''(0) = 0$, $f'''(0) = 2$.</p>
+    <p data-lang="zh"><strong>在 $0$ 处求值。</strong>由 $\sec 0 = 1$、$\tan 0 = 0$：$f(0) = 0$，$f'(0) = 1$，$f''(0) = 0$，$f'''(0) = 2$。</p>
+    <p data-lang="en"><strong>Substitute into the formula.</strong></p>
+    <p data-lang="zh"><strong>代入通项公式。</strong></p>
+    $$ \tan x \;=\; 0 + 1 \cdot x + \frac{0}{2!} x^{2} + \frac{2}{3!} x^{3} + \cdots \;=\; x + \frac{x^{3}}{3} + \cdots. $$
+    <p data-lang="en"><strong>Check.</strong> $\tan x$ is odd, so only odd powers can appear, which matches $f(0) = f''(0) = 0$. Numerically, $x + \tfrac{x^{3}}{3}$ at $x = 0.1$ gives $0.100\,333$, and $\tan 0.1 = 0.100\,335$ (6 d.p.). The series converges only for $|x| &lt; \tfrac{\pi}{2}$, where $\tan x$ is defined around $0$.</p>
+    <p data-lang="zh"><strong>检验。</strong>$\tan x$ 是奇函数，只能出现奇次幂，与 $f(0) = f''(0) = 0$ 一致。数值上，$x + \tfrac{x^{3}}{3}$ 在 $x = 0.1$ 处为 $0.100\,333$，而 $\tan 0.1 = 0.100\,335$（6 位小数）。该级数只在 $|x| &lt; \tfrac{\pi}{2}$ 上收敛，即 $\tan x$ 在 $0$ 附近有定义的范围。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Each coefficient is $f^{(n)}(0)/n!$, so three derivatives at one point fix the series up to $x^{3}$.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>每个系数都是 $f^{(n)}(0)/n!$，所以一点处的三阶导数就确定了到 $x^{3}$ 为止的级数。</p>
+  </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: why the formula has this shape</span><span data-lang="zh">深入探讨：为何公式呈此形式</span></summary>
@@ -561,18 +698,40 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: the radius of convergence</span><span data-lang="zh">陷阱：收敛半径</span></strong>
-    <span data-lang="en">$e^{x}$, $\sin x$, $\cos x$ converge for all real $x$. The series for $\ln(1 + x)$ is valid only on $-1 &lt; x \le 1$ (the endpoint $x = 1$ converges conditionally; $x = -1$ diverges). The binomial series for $(1 + x)^{n}$ with non-integer $n$ requires $|x| &lt; 1$. State the radius whenever a question asks you to write the series.</span><span data-lang="zh">$e^{x}$、$\sin x$、$\cos x$ 对全体实 $x$ 收敛。$\ln(1 + x)$ 的级数仅在 $-1 &lt; x \le 1$ 上成立（端点 $x = 1$ 条件收敛，$x = -1$ 发散）。$n$ 非整数的 $(1 + x)^{n}$ 二项级数要求 $|x| &lt; 1$。题目要写级数时务必同时写出收敛半径。</span>
+    <span data-lang="en">$e^{x}$, $\sin x$, $\cos x$ converge for all real $x$. The series for $\ln(1 + x)$ is valid only on $-1 &lt; x \le 1$ (the endpoint $x = 1$ converges conditionally; $x = -1$ diverges). The binomial series for $(1 + x)^{n}$ requires $|x| &lt; 1$ unless $n \in \mathbb{N}$, when it stops after $n + 1$ terms and holds for every $x$. State the interval of validity whenever a question asks you to write the series.</span><span data-lang="zh">$e^{x}$、$\sin x$、$\cos x$ 对全体实 $x$ 收敛。$\ln(1 + x)$ 的级数仅在 $-1 &lt; x \le 1$ 上成立（端点 $x = 1$ 条件收敛，$x = -1$ 发散）。二项级数 $(1 + x)^{n}$ 要求 $|x| &lt; 1$，除非 $n \in \mathbb{N}$，此时级数在 $n + 1$ 项后终止，对任意 $x$ 成立。题目要写级数时务必同时写出有效区间。</span>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">If a question asks you to use the general formula, show each derivative $f^{(n)}(0)$ before you substitute; quoting a standard series skips the method the question asked for. Write the interval of validity beside every series, and keep factorials such as $3!$ and $5!$ visible until the last line so the pattern of the terms stays clear.</p>
+    <p data-lang="zh">若题目要求用通项公式，代入前要写出每个导数值 $f^{(n)}(0)$；直接引用标准级数等于跳过了题目要求的方法。每写一个级数都要在旁边写出有效区间；$3!$、$5!$ 等阶乘保留到最后一行，各项规律才一目了然。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write the first three non-zero terms of the Maclaurin series for $\cos x$ and state where it is valid.</span><span data-lang="zh">1. 写出 $\cos x$ 麦克劳林级数的前三个非零项，并说明其有效范围。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\cos x = 1 - \tfrac{x^{2}}{2} + \tfrac{x^{4}}{24} - \cdots$, valid for all real $x$. The coefficients are $\tfrac{1}{0!}$, $-\tfrac{1}{2!}$ and $\tfrac{1}{4!}$.</p><p data-lang="zh">$\cos x = 1 - \tfrac{x^{2}}{2} + \tfrac{x^{4}}{24} - \cdots$，对全体实数 $x$ 成立。系数分别为 $\tfrac{1}{0!}$、$-\tfrac{1}{2!}$、$\tfrac{1}{4!}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use the general formula to find the Maclaurin series of $f(x) = \sqrt{1 + x}$ up to the term in $x^{2}$.</span><span data-lang="zh">2. 用通项公式求 $f(x) = \sqrt{1 + x}$ 的麦克劳林级数，写到 $x^{2}$ 项。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f(x) = (1 + x)^{1/2}$ gives $f(0) = 1$; $f'(x) = \tfrac{1}{2}(1 + x)^{-1/2}$ gives $f'(0) = \tfrac{1}{2}$; $f''(x) = -\tfrac{1}{4}(1 + x)^{-3/2}$ gives $f''(0) = -\tfrac{1}{4}$. So $\sqrt{1 + x} = 1 + \tfrac{x}{2} - \tfrac{x^{2}}{8} + \cdots$ for $|x| &lt; 1$, matching the binomial series with $n = \tfrac{1}{2}$.</p><p data-lang="zh">$f(x) = (1 + x)^{1/2}$ 给出 $f(0) = 1$；$f'(x) = \tfrac{1}{2}(1 + x)^{-1/2}$ 给出 $f'(0) = \tfrac{1}{2}$；$f''(x) = -\tfrac{1}{4}(1 + x)^{-3/2}$ 给出 $f''(0) = -\tfrac{1}{4}$。故 $\sqrt{1 + x} = 1 + \tfrac{x}{2} - \tfrac{x^{2}}{8} + \cdots$（$|x| &lt; 1$），与 $n = \tfrac{1}{2}$ 的二项级数一致。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the coefficient of $x^{7}$ in the Maclaurin series for $\sin x$.</span><span data-lang="zh">3. 求 $\sin x$ 麦克劳林级数中 $x^{7}$ 的系数。</span></summary>
+      <div class="sg-a"><p data-lang="en">In $\sum \tfrac{(-1)^{n} x^{2n+1}}{(2n+1)!}$ the power $x^{7}$ needs $n = 3$, so the coefficient is $\tfrac{(-1)^{3}}{7!} = -\tfrac{1}{5040}$.</p><p data-lang="zh">在 $\sum \tfrac{(-1)^{n} x^{2n+1}}{(2n+1)!}$ 中，$x^{7}$ 对应 $n = 3$，故系数为 $\tfrac{(-1)^{3}}{7!} = -\tfrac{1}{5040}$。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The coefficient of $x^{4}$ in the Maclaurin series for $\cos x$ is:</span><span data-lang="zh">$\cos x$ 麦克劳林级数中 $x^{4}$ 的系数为：</span></div><div class="quiz-number">E6.1 · Q1</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0">$\dfrac{1}{4!}$</div>
+      <div class="quiz-opt" data-idx="0">$\dfrac{1}{4}$</div>
       <div class="quiz-opt" data-idx="1">$-\dfrac{1}{4!}$</div>
       <div class="quiz-opt" data-idx="2">$\dfrac{1}{24}$</div>
       <div class="quiz-opt" data-idx="3">$-\dfrac{1}{24}$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">$\cos x = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$. The $x^{4}$ coefficient is $\tfrac{1}{4!} = \tfrac{1}{24}$. Options A and C are equal; option C is the simplified numerical form.</span><span data-lang="zh">$\cos x = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$。$x^{4}$ 系数为 $\tfrac{1}{4!} = \tfrac{1}{24}$。选项 A 与 C 相等，选项 C 为化简后的数值形式。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">$\cos x = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$. The $x^{4}$ coefficient is $\tfrac{1}{4!} = \tfrac{1}{24}$. Option A drops the factorial and options B and D have the wrong sign.</span><span data-lang="zh">$\cos x = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$。$x^{4}$ 系数为 $\tfrac{1}{4!} = \tfrac{1}{24}$。选项 A 漏了阶乘，选项 B 与 D 符号错误。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">In $\cos x = \sum (-1)^{n} x^{2n} / (2n)!$, the $x^{4}$ term corresponds to $n = 2$, giving sign $(-1)^{2} = +1$ and denominator $4! = 24$. Coefficient $= +1/24$.</span><span data-lang="zh">$\cos x = \sum (-1)^{n} x^{2n} / (2n)!$ 中，$x^{4}$ 对应 $n = 2$，符号为 $(-1)^{2} = +1$，分母 $4! = 24$。系数为 $+1/24$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -581,9 +740,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- E6.2 BY SUBSTITUTION -->
-<section class="section" id="s-e6-2">
+<section class="section" id="s-e6-2" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.2 · By Substitution</span><span data-lang="zh">Topic E6.2 · 代换法</span></div>
-  <h2><span data-lang="en">Series by Substitution into Known Series</span><span data-lang="zh">用代换法导出新级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">Series by Substitution into Known Series</span><span data-lang="zh">用代换法导出新级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.19</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Derive a new series by substituting $kx$, $-x$, $x^{2}$ or $-x^{2}$ into a standard series.</li>
+      <li>Translate the interval of validity through the substitution, for example $|-x^{2}| &lt; 1 \Rightarrow |x| &lt; 1$.</li>
+      <li>Write the general term of a substituted series in sigma notation.</li>
+      <li>Calculate the terms of a product of two series up to a stated power of $x$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>把 $kx$、$-x$、$x^{2}$ 或 $-x^{2}$ 代入标准级数，导出新级数。</li>
+      <li>把有效区间随代换一起翻译，例如 $|-x^{2}| &lt; 1 \Rightarrow |x| &lt; 1$。</li>
+      <li>用求和符号（<code>sigma notation</code>）写出代换后级数的通项。</li>
+      <li>计算两个级数之积到指定 $x$ 次幂的各项（<code>product of series</code>）。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The substitution principle.</strong> If $f(u) = \sum_{n=0}^{\infty} a_{n} u^{n}$ is a known series valid for $|u| &lt; R$, then for any well-defined expression $g(x)$ the composed function has Maclaurin series
@@ -612,8 +787,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     收敛区间也随代换而变。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.2: the Gaussian series for $e^{-x^{2}}$</span><span data-lang="zh">E6.2 例题：高斯函数 $e^{-x^{2}}$ 的级数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.2 (the Gaussian series for $e^{-x^{2}}$)</span><span data-lang="zh">E6.2 例题（高斯函数 $e^{-x^{2}}$ 的级数）</span></div>
     <p><span data-lang="en">Find the Maclaurin series for $e^{-x^{2}}$. Write out the first four non-zero terms and the general term.</span><span data-lang="zh">求 $e^{-x^{2}}$ 的麦克劳林级数。写出前四个非零项与通项。</span></p>
   </div>
   <div class="worked-solution">
@@ -626,9 +801,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>First four non-zero terms.</strong></p>
     <p data-lang="zh"><strong>前四个非零项。</strong></p>
     $$ e^{-x^{2}} \;=\; 1 - x^{2} + \frac{x^{4}}{2!} - \frac{x^{6}}{3!} + \cdots \;=\; 1 - x^{2} + \frac{x^{4}}{2} - \frac{x^{6}}{6} + \cdots. $$
-    <p data-lang="en"><strong>Remark.</strong> The function $e^{-x^{2}}$ has no elementary antiderivative; the series form is precisely how the error function $\operatorname{erf}(x) = \tfrac{2}{\sqrt{\pi}} \int_{0}^{x} e^{-t^{2}} \, dt$ is computed.</p>
-    <p data-lang="zh"><strong>注。</strong>$e^{-x^{2}}$ 没有初等原函数；误差函数 $\operatorname{erf}(x) = \tfrac{2}{\sqrt{\pi}} \int_{0}^{x} e^{-t^{2}} \, dt$ 正是通过此级数计算的。</p>
+    <p data-lang="en"><strong>Remark.</strong> The function $e^{-x^{2}}$ has no elementary antiderivative; integrating this series term by term is one way to compute the error function $\operatorname{erf}(x) = \tfrac{2}{\sqrt{\pi}} \int_{0}^{x} e^{-t^{2}} \, dt$ (see Worked Example E6.4b).</p>
+    <p data-lang="zh"><strong>注。</strong>$e^{-x^{2}}$ 没有初等原函数；逐项积分此级数是计算误差函数 $\operatorname{erf}(x) = \tfrac{2}{\sqrt{\pi}} \int_{0}^{x} e^{-t^{2}} \, dt$ 的一种方法（见例题 E6.4b）。</p>
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: substituting before checking convergence</span><span data-lang="zh">陷阱：未先检查收敛性就代换</span></strong>
@@ -644,12 +820,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$x - \dfrac{x^{3}}{3} + \dfrac{x^{5}}{15}$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Substitute $u = 2x$ into $\sin u = u - \tfrac{u^{3}}{6} + \tfrac{u^{5}}{120} - \cdots$. Get $\sin (2x) = 2x - \tfrac{(2x)^{3}}{6} + \tfrac{(2x)^{5}}{120} - \cdots = 2 x - \tfrac{8 x^{3}}{6} + \tfrac{32 x^{5}}{120} - \cdots = 2 x - \tfrac{4 x^{3}}{3} + \tfrac{4 x^{5}}{15} - \cdots$, which is option B.</span><span data-lang="zh">把 $u = 2x$ 代入 $\sin u = u - \tfrac{u^{3}}{6} + \tfrac{u^{5}}{120} - \cdots$，得 $\sin (2x) = 2x - \tfrac{(2x)^{3}}{6} + \tfrac{(2x)^{5}}{120} - \cdots = 2 x - \tfrac{8 x^{3}}{6} + \tfrac{32 x^{5}}{120} - \cdots = 2 x - \tfrac{4 x^{3}}{3} + \tfrac{4 x^{5}}{15} - \cdots$，即选项 B。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">The substitution $u = 2x$ in $\sin u$ raises <em>every</em> power $u^{k}$ to $(2x)^{k} = 2^{k} x^{k}$ — not just some of them. Option C applies the substitution to the cubic term but forgets it on the quintic term, a common partial-substitution slip.</span><span data-lang="zh">在 $\sin u$ 中代 $u = 2x$，<em>每一个</em>幂次 $u^{k}$ 都要变成 $(2x)^{k} = 2^{k} x^{k}$——不能只代一部分。选项 C 在三次项上正确代换，却在五次项上漏代，这是常见的"部分代换"失误。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The substitution $u = 2x$ in $\sin u$ turns <em>every</em> power $u^{k}$ into $(2x)^{k} = 2^{k} x^{k}$, not just some of them. Option C applies the substitution to the cubic term but forgets it on the quintic term, a common partial-substitution slip.</span><span data-lang="zh">在 $\sin u$ 中代 $u = 2x$，<em>每一个</em>幂次 $u^{k}$ 都要变成 $(2x)^{k} = 2^{k} x^{k}$，不能只代一部分。选项 C 在三次项上正确代换，却在五次项上漏代，这是常见的"部分代换"失误。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.2b: $\dfrac{1}{1+x^{2}}$ from the geometric series</span><span data-lang="zh">E6.2b 例题：由几何级数导出 $\dfrac{1}{1+x^{2}}$</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.2b ($\dfrac{1}{1+x^{2}}$ from the geometric series)</span><span data-lang="zh">E6.2b 例题（由几何级数导出 $\dfrac{1}{1+x^{2}}$）</span></div>
     <p><span data-lang="en">Find the Maclaurin series for $\dfrac{1}{1+x^{2}}$ and state its interval of validity.</span><span data-lang="zh">求 $\dfrac{1}{1+x^{2}}$ 的麦克劳林级数，并写出其有效区间。</span></p>
   </div>
   <div class="worked-solution">
@@ -664,14 +840,77 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Remark.</strong> This is exactly the derivative of $\arctan x$, so term-by-term integration of this series (Topic E6.3) is how the Maclaurin series for $\arctan x$ is derived.</p>
     <p data-lang="zh"><strong>注。</strong>这恰是 $\arctan x$ 的导数，逐项积分该级数（主题 E6.3）正是推导 $\arctan x$ 麦克劳林级数的方法。</p>
   </div>
+  </details>
+
+  <h3><span data-lang="en">Products of series</span><span data-lang="zh">级数相乘</span></h3>
+  <p data-lang="en">If $f$ and $g$ both have Maclaurin series near $0$, the series of $f(x)g(x)$ is the product of the two series with equal powers collected. Decide first which power you need; every term that would multiply out above it can be dropped at once. The product is valid wherever both series are valid.</p>
+  <p data-lang="zh">若 $f$ 与 $g$ 在 $0$ 附近都有麦克劳林级数，则 $f(x)g(x)$ 的级数就是两级数之积，再合并同次幂。先确定需要到哪一次幂；乘出来高于该次幂的项可以直接舍去。乘积级数在两个级数都有效处成立。</p>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.2c: the product $e^{x} \sin x$</span><span data-lang="zh">E6.2c 例题：乘积 $e^{x} \sin x$</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Find the Maclaurin series for $e^{x} \sin x$ up to and including the term in $x^{3}$.</span><span data-lang="zh">求 $e^{x} \sin x$ 的麦克劳林级数，写到 $x^{3}$ 项（含）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Write each series to $x^{3}$.</strong> Terms beyond $x^{3}$ cannot contribute to the answer.</p>
+    <p data-lang="zh"><strong>两个级数各写到 $x^{3}$。</strong>高于 $x^{3}$ 的项不会影响答案。</p>
+    $$ e^{x} \sin x \;=\; \Bigl(1 + x + \frac{x^{2}}{2} + \frac{x^{3}}{6} + \cdots\Bigr)\Bigl(x - \frac{x^{3}}{6} + \cdots\Bigr). $$
+    <p data-lang="en"><strong>Collect power by power.</strong> $x$: $1 \cdot x = x$. $x^{2}$: $x \cdot x = x^{2}$. $x^{3}$: $\tfrac{x^{2}}{2} \cdot x + 1 \cdot \left(-\tfrac{x^{3}}{6}\right) = \tfrac{x^{3}}{2} - \tfrac{x^{3}}{6} = \tfrac{x^{3}}{3}$.</p>
+    <p data-lang="zh"><strong>按幂次合并。</strong>$x$：$1 \cdot x = x$。$x^{2}$：$x \cdot x = x^{2}$。$x^{3}$：$\tfrac{x^{2}}{2} \cdot x + 1 \cdot \left(-\tfrac{x^{3}}{6}\right) = \tfrac{x^{3}}{2} - \tfrac{x^{3}}{6} = \tfrac{x^{3}}{3}$。</p>
+    $$ e^{x} \sin x \;=\; x + x^{2} + \frac{x^{3}}{3} + \cdots, \qquad x \in \mathbb{R}. $$
+    <p data-lang="en"><strong>Check.</strong> At $x = 0.1$: $0.1 + 0.01 + 0.000\,333 = 0.110\,333$, and $e^{0.1} \sin 0.1 = 0.110\,333$ (6 d.p.). Both factor series hold for every real $x$, so the product does too.</p>
+    <p data-lang="zh"><strong>检验。</strong>$x = 0.1$ 时：$0.1 + 0.01 + 0.000\,333 = 0.110\,333$，而 $e^{0.1} \sin 0.1 = 0.110\,333$（6 位小数）。两个因子级数对全体实数 $x$ 成立，所以乘积级数也成立。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Multiplying two convergent power series and collecting equal powers gives the series of the product wherever both are valid.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>两个收敛幂级数相乘并合并同次幂，就得到乘积在两者都有效处的级数。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Put brackets round the substituted expression before you expand: $(2x)^{3} = 8x^{3}$, not $2x^{3}$. Give the final interval in terms of $x$, not $u$. In a product, list the pairs of terms whose powers add to each target power, so no cross term is missed.</p>
+    <p data-lang="zh">展开前先给代入的式子加括号：$(2x)^{3} = 8x^{3}$，而不是 $2x^{3}$。最终区间要用 $x$ 表示，不能用 $u$。做乘积时，列出幂次相加等于目标次数的所有项对，就不会漏掉交叉项。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the first three terms of the Maclaurin series for $e^{3x}$ and state its interval of validity.</span><span data-lang="zh">1. 求 $e^{3x}$ 麦克劳林级数的前三项，并写出有效区间。</span></summary>
+      <div class="sg-a"><p data-lang="en">Put $u = 3x$ in $e^{u} = 1 + u + \tfrac{u^{2}}{2} + \cdots$: $e^{3x} = 1 + 3x + \tfrac{9x^{2}}{2} + \cdots$, valid for all real $x$.</p><p data-lang="zh">在 $e^{u} = 1 + u + \tfrac{u^{2}}{2} + \cdots$ 中令 $u = 3x$：$e^{3x} = 1 + 3x + \tfrac{9x^{2}}{2} + \cdots$，对全体实数 $x$ 成立。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the first three non-zero terms of the series for $\ln(1 - x^{2})$ and its interval of validity.</span><span data-lang="zh">2. 求 $\ln(1 - x^{2})$ 级数的前三个非零项及其有效区间。</span></summary>
+      <div class="sg-a"><p data-lang="en">Put $u = -x^{2}$ in $\ln(1 + u) = u - \tfrac{u^{2}}{2} + \tfrac{u^{3}}{3} - \cdots$: $\ln(1 - x^{2}) = -x^{2} - \tfrac{x^{4}}{2} - \tfrac{x^{6}}{3} - \cdots$. The condition $-1 &lt; -x^{2} \le 1$ reduces to $x^{2} &lt; 1$, so $|x| &lt; 1$.</p><p data-lang="zh">在 $\ln(1 + u) = u - \tfrac{u^{2}}{2} + \tfrac{u^{3}}{3} - \cdots$ 中令 $u = -x^{2}$：$\ln(1 - x^{2}) = -x^{2} - \tfrac{x^{4}}{2} - \tfrac{x^{6}}{3} - \cdots$。条件 $-1 &lt; -x^{2} \le 1$ 化为 $x^{2} &lt; 1$，即 $|x| &lt; 1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the Maclaurin series for $e^{x} \cos x$ up to the term in $x^{3}$.</span><span data-lang="zh">3. 求 $e^{x} \cos x$ 的麦克劳林级数，写到 $x^{3}$ 项。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\left(1 + x + \tfrac{x^{2}}{2} + \tfrac{x^{3}}{6}\right)\left(1 - \tfrac{x^{2}}{2}\right)$: the $x^{2}$ terms give $\tfrac{1}{2} - \tfrac{1}{2} = 0$ and the $x^{3}$ terms give $\tfrac{1}{6} - \tfrac{1}{2} = -\tfrac{1}{3}$. So $e^{x} \cos x = 1 + x - \tfrac{x^{3}}{3} + \cdots$. Check: at $x = 0.1$ this gives $1.099\,667$ and $e^{0.1} \cos 0.1 = 1.099\,650$ (6 d.p.); the difference is the $x^{4}$ term, $-\tfrac{x^{4}}{6} \approx -0.000\,017$.</p><p data-lang="zh">$\left(1 + x + \tfrac{x^{2}}{2} + \tfrac{x^{3}}{6}\right)\left(1 - \tfrac{x^{2}}{2}\right)$：$x^{2}$ 项系数为 $\tfrac{1}{2} - \tfrac{1}{2} = 0$，$x^{3}$ 项系数为 $\tfrac{1}{6} - \tfrac{1}{2} = -\tfrac{1}{3}$。故 $e^{x} \cos x = 1 + x - \tfrac{x^{3}}{3} + \cdots$。检验：$x = 0.1$ 时得 $1.099\,667$，而 $e^{0.1} \cos 0.1 = 1.099\,650$（6 位小数）；差值就是 $x^{4}$ 项 $-\tfrac{x^{4}}{6} \approx -0.000\,017$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <!-- E6.3 BY DIFFERENTIATION AND INTEGRATION -->
-<section class="section" id="s-e6-3">
+<section class="section" id="s-e6-3" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.3 · By Differentiation and Integration</span><span data-lang="zh">Topic E6.3 · 求导与积分</span></div>
-  <h2><span data-lang="en">Series by Differentiation and Integration</span><span data-lang="zh">用求导与积分导出级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">Series by Differentiation and Integration</span><span data-lang="zh">用求导与积分导出级数</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.19</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State that a power series may be differentiated or integrated term by term inside its interval of convergence.</li>
+      <li>Derive the series for $-\ln(1 - x)$ and $\arctan x$ from the geometric series.</li>
+      <li>Find the constant of integration by evaluating both sides at $x = 0$.</li>
+      <li>Calculate the Maclaurin series of the solution of a differential equation from $y(0)$ by repeated differentiation.</li>
+      <li>Verify a series solution by substituting it back into the differential equation.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>说明幂级数在收敛区间内可以逐项求导或逐项积分（<code>term by term</code>）。</li>
+      <li>由几何级数导出 $-\ln(1 - x)$ 与 $\arctan x$ 的级数。</li>
+      <li>在 $x = 0$ 处对两边求值，确定积分常数。</li>
+      <li>由 $y(0)$ 出发反复求导，算出微分方程解的麦克劳林级数。</li>
+      <li>把级数解代回微分方程进行验证。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The term-by-term theorem.</strong> Inside the radius of convergence, a power series can be differentiated and integrated one term at a time:
@@ -681,21 +920,21 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <br><br>
     <strong>The geometric series anchor.</strong>
     $$ \frac{1}{1 - x} \;=\; \sum_{n=0}^{\infty} x^{n} \;=\; 1 + x + x^{2} + x^{3} + \cdots, \qquad |x| &lt; 1. $$
-    Differentiating or integrating this anchor (and its substitution variants) produces a whole family of series: $\dfrac{1}{(1-x)^{2}}$, $-\ln(1-x)$, $\arctan x$, $\arcsin x$.
+    Differentiating or integrating this anchor (and its substitution variants) produces a whole family of series: $\dfrac{1}{(1-x)^{2}}$, $-\ln(1-x)$, $\ln(1+x)$, $\arctan x$.
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>逐项定理。</strong>在收敛半径内，幂级数可以逐项求导与积分：
     $$ \frac{d}{dx} \sum_{n=0}^{\infty} a_{n} x^{n} \;=\; \sum_{n=1}^{\infty} n \, a_{n} x^{n - 1}, $$
-    $$ \int \sum_{n=0}^{\infty} a_{n} x^{n} \, dx \;=\; C + \sum_{n=0}^{\infty} \frac{a_{n}}{n + 1} x^{n + 1}。 $$
+    $$ \int \sum_{n=0}^{\infty} a_{n} x^{n} \, dx \;=\; C + \sum_{n=0}^{\infty} \frac{a_{n}}{n + 1} x^{n + 1}. $$
     收敛半径保持不变（端点对积分而言可能改变）。
     <br><br>
     <strong>几何级数为根基。</strong>
-    $$ \frac{1}{1 - x} \;=\; \sum_{n=0}^{\infty} x^{n} \;=\; 1 + x + x^{2} + x^{3} + \cdots, \qquad |x| &lt; 1。 $$
-    对此根基（及其代换变体）求导或积分可产生一整族级数：$\dfrac{1}{(1-x)^{2}}$、$-\ln(1-x)$、$\arctan x$、$\arcsin x$。
+    $$ \frac{1}{1 - x} \;=\; \sum_{n=0}^{\infty} x^{n} \;=\; 1 + x + x^{2} + x^{3} + \cdots, \qquad |x| &lt; 1. $$
+    对此根基（及其代换变体）求导或积分可产生一整族级数：$\dfrac{1}{(1-x)^{2}}$、$-\ln(1-x)$、$\ln(1+x)$、$\arctan x$。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.3: integrate the geometric series</span><span data-lang="zh">E6.3 例题：积分几何级数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.3 (integrate the geometric series)</span><span data-lang="zh">E6.3 例题（积分几何级数）</span></div>
     <p><span data-lang="en">Use the geometric series for $1/(1 - x)$ to derive the Maclaurin series for $-\ln(1 - x)$, and state the interval of validity.</span><span data-lang="zh">用 $1/(1 - x)$ 的几何级数推导 $-\ln(1 - x)$ 的麦克劳林级数，并指出有效区间。</span></p>
   </div>
   <div class="worked-solution">
@@ -713,6 +952,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Consistency check.</strong> Replacing $x$ with $-x$ recovers the standard series $\ln(1 + x) = \sum (-1)^{n+1} x^{n} / n$ on $-1 &lt; x \le 1$, exactly as listed in E6.1.</p>
     <p data-lang="zh"><strong>一致性检验。</strong>把 $x$ 换为 $-x$ 即可还原 E6.1 列出的标准级数 $\ln(1 + x) = \sum (-1)^{n+1} x^{n} / n$（$-1 &lt; x \le 1$）。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: $\arctan x$ from $1/(1 + x^{2})$</span><span data-lang="zh">深入探讨：由 $1/(1 + x^{2})$ 推 $\arctan x$</span></summary>
@@ -727,6 +967,55 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="zh">$x = 1$ 时即著名的格雷戈里-莱布尼茨公式 $\pi/4 = 1 - 1/3 + 1/5 - \cdots$。端点 $x = 1$ 可纳入，因交错级数在该处收敛（阿贝尔定理）。</p>
     </div>
   </details>
+
+  <h3><span data-lang="en">Series from a differential equation</span><span data-lang="zh">由微分方程求级数</span></h3>
+  <p data-lang="en">A differential equation with an initial condition fixes $y(0)$ and, through the equation itself, $y'(0)$. Differentiating the equation gives $y''$ in terms of $x$, $y$ and $y'$, so $y''(0)$ follows, and so on. These values go straight into $y = y(0) + y'(0)x + \tfrac{y''(0)}{2!}x^{2} + \cdots$, which gives an approximation to $y$ near $x = 0$ even when the equation cannot be solved exactly.</p>
+  <p data-lang="zh">带初始条件的微分方程确定了 $y(0)$，并通过方程本身确定 $y'(0)$。对方程求导可把 $y''$ 用 $x$、$y$、$y'$ 表示，从而得到 $y''(0)$，依此类推。把这些值直接代入 $y = y(0) + y'(0)x + \tfrac{y''(0)}{2!}x^{2} + \cdots$，即使方程无法精确求解，也能得到 $y$ 在 $x = 0$ 附近的近似。</p>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.3b: a series solution of $\dfrac{dy}{dx} = x + y^{2}$</span><span data-lang="zh">E6.3b 例题：$\dfrac{dy}{dx} = x + y^{2}$ 的级数解</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">The function $y = f(x)$ satisfies $\dfrac{dy}{dx} = x + y^{2}$ with $y(0) = 1$. Find the Maclaurin series for $y$ up to and including the term in $x^{3}$.</span><span data-lang="zh">函数 $y = f(x)$ 满足 $\dfrac{dy}{dx} = x + y^{2}$，且 $y(0) = 1$。求 $y$ 的麦克劳林级数，写到 $x^{3}$ 项（含）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>First derivative from the equation.</strong> At $x = 0$: $y'(0) = 0 + 1^{2} = 1$.</p>
+    <p data-lang="zh"><strong>由方程得一阶导数。</strong>在 $x = 0$ 处：$y'(0) = 0 + 1^{2} = 1$。</p>
+    <p data-lang="en"><strong>Differentiate the equation.</strong> By the chain rule $\tfrac{d}{dx}(y^{2}) = 2y\,y'$, so</p>
+    <p data-lang="zh"><strong>对方程求导。</strong>由链式法则 $\tfrac{d}{dx}(y^{2}) = 2y\,y'$，故</p>
+    $$ y'' = 1 + 2y\,y', \qquad y''(0) = 1 + 2(1)(1) = 3. $$
+    <p data-lang="en"><strong>Differentiate again</strong> (product rule on $2y\,y'$):</p>
+    <p data-lang="zh"><strong>再求导</strong>（对 $2y\,y'$ 用乘积法则）：</p>
+    $$ y''' = 2(y')^{2} + 2y\,y'', \qquad y'''(0) = 2(1)^{2} + 2(1)(3) = 8. $$
+    <p data-lang="en"><strong>Substitute into the Maclaurin formula.</strong></p>
+    <p data-lang="zh"><strong>代入麦克劳林公式。</strong></p>
+    $$ y \;=\; 1 + x + \frac{3}{2!} x^{2} + \frac{8}{3!} x^{3} + \cdots \;=\; 1 + x + \frac{3}{2} x^{2} + \frac{4}{3} x^{3} + \cdots. $$
+    <p data-lang="en"><strong>Check by substitution.</strong> With $y = 1 + x + \tfrac{3}{2}x^{2} + \cdots$, $y^{2} = 1 + 2x + 4x^{2} + \cdots$, so $x + y^{2} = 1 + 3x + 4x^{2} + \cdots$. Differentiating the series gives $y' = 1 + 3x + 4x^{2} + \cdots$, the same.</p>
+    <p data-lang="zh"><strong>代回检验。</strong>取 $y = 1 + x + \tfrac{3}{2}x^{2} + \cdots$，则 $y^{2} = 1 + 2x + 4x^{2} + \cdots$，所以 $x + y^{2} = 1 + 3x + 4x^{2} + \cdots$。对级数求导得 $y' = 1 + 3x + 4x^{2} + \cdots$，两者相同。</p>
+    <p data-lang="en"><strong>Why this works.</strong> The equation is neither separable nor linear, but it gives each higher derivative at $0$ in terms of lower ones, and those values are all the Maclaurin formula needs.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>该方程既不可分离变量也不是线性方程，但它能用低阶导数表示 $0$ 处的每个高阶导数，而麦克劳林公式只需要这些值。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">After integrating a series, write $+\,C$ and find $C$ from $x = 0$ before you simplify; a missing constant changes every later value. For a differential equation, differentiate the equation itself (implicitly, with $\tfrac{d}{dx}(y^{2}) = 2y\,y'$) rather than trying to solve it, and evaluate each derivative at $x = 0$ as soon as you have it.</p>
+    <p data-lang="zh">对级数积分后先写 $+\,C$，并在化简前用 $x = 0$ 求出 $C$；漏掉常数会让后面每个值都出错。处理微分方程时，直接对方程本身求导（隐函数求导，$\tfrac{d}{dx}(y^{2}) = 2y\,y'$），不必先解方程，每求出一阶导数就立刻代入 $x = 0$。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate the series for $\sin x$ term by term. Which series do you get, and why is that expected?</span><span data-lang="zh">1. 对 $\sin x$ 的级数逐项求导。得到哪个级数？为什么在意料之中？</span></summary>
+      <div class="sg-a"><p data-lang="en">$\tfrac{d}{dx}\left(x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots\right) = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$, which is the series for $\cos x$, as expected because $\tfrac{d}{dx} \sin x = \cos x$.</p><p data-lang="zh">$\tfrac{d}{dx}\left(x - \tfrac{x^{3}}{3!} + \tfrac{x^{5}}{5!} - \cdots\right) = 1 - \tfrac{x^{2}}{2!} + \tfrac{x^{4}}{4!} - \cdots$，正是 $\cos x$ 的级数，与 $\tfrac{d}{dx} \sin x = \cos x$ 一致。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use $\dfrac{1}{1 + x} = 1 - x + x^{2} - x^{3} + \cdots$ for $|x| &lt; 1$ to derive the series for $\ln(1 + x)$.</span><span data-lang="zh">2. 利用 $\dfrac{1}{1 + x} = 1 - x + x^{2} - x^{3} + \cdots$（$|x| &lt; 1$）推导 $\ln(1 + x)$ 的级数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Integrate term by term: $\ln(1 + x) = C + x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$. At $x = 0$, $\ln 1 = 0$ gives $C = 0$. So $\ln(1 + x) = x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$, the standard series.</p><p data-lang="zh">逐项积分：$\ln(1 + x) = C + x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$。在 $x = 0$ 处 $\ln 1 = 0$，得 $C = 0$。故 $\ln(1 + x) = x - \tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$，即标准级数。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. $y$ satisfies $\dfrac{dy}{dx} = 2y + x$ with $y(0) = 1$. Find the Maclaurin series for $y$ up to the term in $x^{3}$.</span><span data-lang="zh">3. $y$ 满足 $\dfrac{dy}{dx} = 2y + x$，且 $y(0) = 1$。求 $y$ 的麦克劳林级数，写到 $x^{3}$ 项。</span></summary>
+      <div class="sg-a"><p data-lang="en">$y'(0) = 2(1) + 0 = 2$. Differentiating, $y'' = 2y' + 1$, so $y''(0) = 5$; then $y''' = 2y''$, so $y'''(0) = 10$. Hence $y = 1 + 2x + \tfrac{5}{2}x^{2} + \tfrac{10}{6}x^{3} + \cdots = 1 + 2x + \tfrac{5}{2}x^{2} + \tfrac{5}{3}x^{3} + \cdots$. This agrees with the exact solution $y = \tfrac{5}{4}e^{2x} - \tfrac{x}{2} - \tfrac{1}{4}$.</p><p data-lang="zh">$y'(0) = 2(1) + 0 = 2$。求导得 $y'' = 2y' + 1$，故 $y''(0) = 5$；再求导 $y''' = 2y''$，故 $y'''(0) = 10$。因此 $y = 1 + 2x + \tfrac{5}{2}x^{2} + \tfrac{10}{6}x^{3} + \cdots = 1 + 2x + \tfrac{5}{2}x^{2} + \tfrac{5}{3}x^{3} + \cdots$。这与精确解 $y = \tfrac{5}{4}e^{2x} - \tfrac{x}{2} - \tfrac{1}{4}$ 一致。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Differentiating $\sum_{n=0}^{\infty} x^{n} = 1/(1 - x)$ term by term gives:</span><span data-lang="zh">逐项求导 $\sum_{n=0}^{\infty} x^{n} = 1/(1 - x)$ 得：</span></div><div class="quiz-number">E6.3 · Q1</div></div>
@@ -745,9 +1034,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- E6.4 APPROXIMATION AND TRUNCATION ERROR -->
-<section class="section" id="s-e6-4">
+<section class="section" id="s-e6-4" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.4 · Approximation and Truncation Error</span><span data-lang="zh">Topic E6.4 · 逼近与截断误差</span></div>
-  <h2><span data-lang="en">Approximation and Truncation Error</span><span data-lang="zh">逼近与截断误差</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">Approximation and Truncation Error</span><span data-lang="zh">逼近与截断误差</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.19</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Write the degree-$N$ Maclaurin polynomial $P_{N}(x)$ of a function.</li>
+      <li>Calculate an approximation such as $e^{0.1}$ or $\sin 0.5$ from a truncated series, to a stated number of decimal places.</li>
+      <li>Estimate the truncation error from the first omitted term and compare it with the true error.</li>
+      <li>Explain, using a graph, why a polynomial of fixed degree is accurate only near $x = 0$.</li>
+      <li>Approximate a definite integral by integrating a truncated series.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出函数的 $N$ 次麦克劳林多项式 $P_{N}(x)$。</li>
+      <li>用截断级数计算 $e^{0.1}$、$\sin 0.5$ 等近似值，并保留指定的小数位数。</li>
+      <li>用首个被舍弃项估计截断误差（<code>truncation error</code>），并与真实误差比较。</li>
+      <li>借助图像解释为何固定次数的多项式只在 $x = 0$ 附近准确。</li>
+      <li>对截断级数积分，近似计算定积分。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Truncate to approximate.</strong> Keeping the first $N + 1$ terms of a Maclaurin series gives the degree-$N$ Maclaurin polynomial:
@@ -756,20 +1063,64 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <br><br>
     <strong>The dominant-term rule.</strong> For $|x|$ small, the error is dominated by the first omitted term, $\tfrac{f^{(N+1)}(0)}{(N+1)!} x^{N+1}$. As $|x|$ grows you need more terms to keep the error small. As $N$ grows (at fixed $x$ inside the radius of convergence) the error tends to zero.
     <br><br>
-    <strong>Alternating series bound.</strong> If the series is alternating with decreasing absolute terms, the truncation error is at most the absolute value of the first omitted term. This applies cleanly to $\sin x$, $\cos x$, $\ln(1 + x)$ on their convergence intervals.
+    <strong>Alternating series bound.</strong> If the series is alternating with decreasing absolute terms, the truncation error is at most the absolute value of the first omitted term. This applies to $\sin x$ and $\cos x$ when $|x| \le 1$, and to $\ln(1 + x)$ when $0 &lt; x \le 1$ (for negative $x$ its terms all have the same sign).
   </div>
   <div class="cram-cheat" data-lang="zh">
     <strong>截断即近似。</strong>保留麦克劳林级数前 $N + 1$ 项得到 $N$ 次麦克劳林多项式：
-    $$ P_{N}(x) \;=\; \sum_{n=0}^{N} \frac{f^{(n)}(0)}{n!} x^{n}。 $$
+    $$ P_{N}(x) \;=\; \sum_{n=0}^{N} \frac{f^{(n)}(0)}{n!} x^{n}. $$
     截断误差 $R_{N}(x) = f(x) - P_{N}(x)$ 是被舍弃项的总和。
     <br><br>
     <strong>主导项原则。</strong>$|x|$ 较小时，误差由首个被舍去的项 $\tfrac{f^{(N+1)}(0)}{(N+1)!} x^{N+1}$ 主导。$|x|$ 越大，需保留项数越多。固定 $x$（在收敛半径内）时，$N$ 越大误差越小。
     <br><br>
-    <strong>交错级数界。</strong>若级数为绝对值递减的交错级数，截断误差不超过首个被舍弃项的绝对值。$\sin x$、$\cos x$、$\ln(1 + x)$ 在其收敛区间上正满足该条件。
+    <strong>交错级数界。</strong>若级数为绝对值递减的交错级数，截断误差不超过首个被舍弃项的绝对值。$\sin x$ 与 $\cos x$ 在 $|x| \le 1$ 时满足该条件，$\ln(1 + x)$ 在 $0 &lt; x \le 1$ 时满足（$x$ 为负时其各项同号）。
   </div>
 
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 460 300" role="img" aria-label="To-scale graph of y = sin x for x from minus 3.2 to 3.2 with its Maclaurin polynomials of degree 1, 3 and 5. All four curves agree near x = 0; the degree-1 line leaves the curve first, the degree-3 cubic turns down past x = 2, and the degree-5 polynomial stays close to sin x until about x = 2.5.">
+      <line class="ax" x1="30" y1="150" x2="440" y2="150"/>
+      <line class="ax" x1="230" y1="22" x2="230" y2="278"/>
+      <text x="446" y="154">x</text>
+      <text x="238" y="20">y</text>
+      <line class="ax thin" x1="50" y1="146" x2="50" y2="154"/>
+      <text class="mut" x="50" y="142" text-anchor="middle">−3</text>
+      <line class="ax thin" x1="110" y1="146" x2="110" y2="154"/>
+      <text class="mut" x="110" y="168" text-anchor="middle">−2</text>
+      <line class="ax thin" x1="170" y1="146" x2="170" y2="154"/>
+      <text class="mut" x="170" y="168" text-anchor="middle">−1</text>
+      <line class="ax thin" x1="290" y1="146" x2="290" y2="154"/>
+      <text class="mut" x="290" y="168" text-anchor="middle">1</text>
+      <line class="ax thin" x1="350" y1="146" x2="350" y2="154"/>
+      <text class="mut" x="350" y="168" text-anchor="middle">2</text>
+      <line class="ax thin" x1="410" y1="146" x2="410" y2="154"/>
+      <text class="mut" x="410" y="168" text-anchor="middle">3</text>
+      <line class="ax thin" x1="226" y1="270" x2="234" y2="270"/>
+      <text class="mut" x="222" y="274" text-anchor="end">−2</text>
+      <line class="ax thin" x1="226" y1="210" x2="234" y2="210"/>
+      <text class="mut" x="222" y="214" text-anchor="end">−1</text>
+      <line class="ax thin" x1="226" y1="90" x2="234" y2="90"/>
+      <text class="mut" x="222" y="94" text-anchor="end">1</text>
+      <line class="ax thin" x1="226" y1="30" x2="234" y2="30"/>
+      <text class="mut" x="222" y="34" text-anchor="end">2</text>
+      <path class="c2 dash" d="M 110.0 270.0 L 114.8 265.2 L 119.6 260.4 L 124.4 255.6 L 129.2 250.8 L 134.0 246.0 L 138.8 241.2 L 143.6 236.4 L 148.4 231.6 L 153.2 226.8 L 158.0 222.0 L 162.8 217.2 L 167.6 212.4 L 172.4 207.6 L 177.2 202.8 L 182.0 198.0 L 186.8 193.2 L 191.6 188.4 L 196.4 183.6 L 201.2 178.8 L 206.0 174.0 L 210.8 169.2 L 215.6 164.4 L 220.4 159.6 L 225.2 154.8 L 230.0 150.0 L 234.8 145.2 L 239.6 140.4 L 244.4 135.6 L 249.2 130.8 L 254.0 126.0 L 258.8 121.2 L 263.6 116.4 L 268.4 111.6 L 273.2 106.8 L 278.0 102.0 L 282.8 97.2 L 287.6 92.4 L 292.4 87.6 L 297.2 82.8 L 302.0 78.0 L 306.8 73.2 L 311.6 68.4 L 316.4 63.6 L 321.2 58.8 L 326.0 54.0 L 330.8 49.2 L 335.6 44.4 L 340.4 39.6 L 345.2 34.8 L 350.0 30.0"/>
+      <path class="c3 dash" d="M 42.8 33.5 L 47.6 51.5 L 52.4 68.3 L 57.2 83.9 L 62.0 98.5 L 66.8 112.0 L 71.6 124.4 L 76.4 135.8 L 81.2 146.3 L 86.0 155.8 L 90.8 164.3 L 95.6 172.0 L 100.4 178.8 L 105.2 184.8 L 110.0 190.0 L 114.8 194.4 L 119.6 198.1 L 124.4 201.1 L 129.2 203.4 L 134.0 205.0 L 138.8 206.1 L 143.6 206.5 L 148.4 206.4 L 153.2 205.8 L 158.0 204.7 L 162.8 203.2 L 167.6 201.2 L 172.4 198.8 L 177.2 196.0 L 182.0 192.9 L 186.8 189.5 L 191.6 185.8 L 196.4 181.8 L 201.2 177.7 L 206.0 173.4 L 210.8 168.9 L 215.6 164.3 L 220.4 159.6 L 225.2 154.8 L 230.0 150.0 L 234.8 145.2 L 239.6 140.4 L 244.4 135.7 L 249.2 131.1 L 254.0 126.6 L 258.8 122.3 L 263.6 118.2 L 268.4 114.2 L 273.2 110.5 L 278.0 107.1 L 282.8 104.0 L 287.6 101.2 L 292.4 98.8 L 297.2 96.8 L 302.0 95.3 L 306.8 94.2 L 311.6 93.6 L 316.4 93.5 L 321.2 93.9 L 326.0 95.0 L 330.8 96.6 L 335.6 98.9 L 340.4 101.9 L 345.2 105.6 L 350.0 110.0 L 354.8 115.2 L 359.6 121.2 L 364.4 128.0 L 369.2 135.7 L 374.0 144.2 L 378.8 153.7 L 383.6 164.2 L 388.4 175.6 L 393.2 188.0 L 398.0 201.5 L 402.8 216.1 L 407.6 231.7 L 412.4 248.5 L 417.2 266.5"/>
+      <path class="c4 dash" d="M 38.0 182.1 L 42.8 181.3 L 47.6 181.3 L 52.4 181.9 L 57.2 183.0 L 62.0 184.5 L 66.8 186.4 L 71.6 188.5 L 76.4 190.8 L 81.2 193.2 L 86.0 195.6 L 90.8 197.9 L 95.6 200.2 L 100.4 202.3 L 105.2 204.3 L 110.0 206.0 L 114.8 207.5 L 119.6 208.7 L 124.4 209.5 L 129.2 210.1 L 134.0 210.3 L 138.8 210.1 L 143.6 209.6 L 148.4 208.8 L 153.2 207.5 L 158.0 206.0 L 162.8 204.0 L 167.6 201.8 L 172.4 199.2 L 177.2 196.2 L 182.0 193.0 L 186.8 189.6 L 191.6 185.8 L 196.4 181.9 L 201.2 177.7 L 206.0 173.4 L 210.8 168.9 L 215.6 164.3 L 220.4 159.6 L 225.2 154.8 L 230.0 150.0 L 234.8 145.2 L 239.6 140.4 L 244.4 135.7 L 249.2 131.1 L 254.0 126.6 L 258.8 122.3 L 263.6 118.1 L 268.4 114.2 L 273.2 110.4 L 278.0 107.0 L 282.8 103.8 L 287.6 100.8 L 292.4 98.2 L 297.2 96.0 L 302.0 94.0 L 306.8 92.5 L 311.6 91.2 L 316.4 90.4 L 321.2 89.9 L 326.0 89.7 L 330.8 89.9 L 335.6 90.5 L 340.4 91.3 L 345.2 92.5 L 350.0 94.0 L 354.8 95.7 L 359.6 97.7 L 364.4 99.8 L 369.2 102.1 L 374.0 104.4 L 378.8 106.8 L 383.6 109.2 L 388.4 111.5 L 393.2 113.6 L 398.0 115.5 L 402.8 117.0 L 407.6 118.1 L 412.4 118.7 L 417.2 118.7 L 422.0 117.9"/>
+      <path class="c1" d="M 38.0 146.5 L 40.4 148.9 L 42.8 151.3 L 45.2 153.7 L 47.6 156.1 L 50.0 158.5 L 52.4 160.8 L 54.8 163.2 L 57.2 165.5 L 59.6 167.8 L 62.0 170.1 L 64.4 172.3 L 66.8 174.6 L 69.2 176.7 L 71.6 178.8 L 74.0 180.9 L 76.4 183.0 L 78.8 184.9 L 81.2 186.9 L 83.6 188.7 L 86.0 190.5 L 88.4 192.3 L 90.8 193.9 L 93.2 195.5 L 95.6 197.1 L 98.0 198.5 L 100.4 199.9 L 102.8 201.2 L 105.2 202.4 L 107.6 203.5 L 110.0 204.6 L 112.4 205.5 L 114.8 206.4 L 117.2 207.2 L 119.6 207.8 L 122.0 208.4 L 124.4 208.9 L 126.8 209.3 L 129.2 209.6 L 131.6 209.9 L 134.0 210.0 L 136.4 210.0 L 138.8 209.9 L 141.2 209.8 L 143.6 209.5 L 146.0 209.1 L 148.4 208.7 L 150.8 208.1 L 153.2 207.5 L 155.6 206.7 L 158.0 205.9 L 160.4 205.0 L 162.8 204.0 L 165.2 202.9 L 167.6 201.7 L 170.0 200.5 L 172.4 199.2 L 174.8 197.7 L 177.2 196.2 L 179.6 194.7 L 182.0 193.0 L 184.4 191.3 L 186.8 189.6 L 189.2 187.7 L 191.6 185.8 L 194.0 183.9 L 196.4 181.9 L 198.8 179.8 L 201.2 177.7 L 203.6 175.6 L 206.0 173.4 L 208.4 171.1 L 210.8 168.9 L 213.2 166.6 L 215.6 164.3 L 218.0 161.9 L 220.4 159.6 L 222.8 157.2 L 225.2 154.8 L 227.6 152.4 L 230.0 150.0 L 232.4 147.6 L 234.8 145.2 L 237.2 142.8 L 239.6 140.4 L 242.0 138.1 L 244.4 135.7 L 246.8 133.4 L 249.2 131.1 L 251.6 128.9 L 254.0 126.6 L 256.4 124.4 L 258.8 122.3 L 261.2 120.2 L 263.6 118.1 L 266.0 116.1 L 268.4 114.2 L 270.8 112.3 L 273.2 110.4 L 275.6 108.7 L 278.0 107.0 L 280.4 105.3 L 282.8 103.8 L 285.2 102.3 L 287.6 100.8 L 290.0 99.5 L 292.4 98.3 L 294.8 97.1 L 297.2 96.0 L 299.6 95.0 L 302.0 94.1 L 304.4 93.3 L 306.8 92.5 L 309.2 91.9 L 311.6 91.3 L 314.0 90.9 L 316.4 90.5 L 318.8 90.2 L 321.2 90.1 L 323.6 90.0 L 326.0 90.0 L 328.4 90.1 L 330.8 90.4 L 333.2 90.7 L 335.6 91.1 L 338.0 91.6 L 340.4 92.2 L 342.8 92.8 L 345.2 93.6 L 347.6 94.5 L 350.0 95.4 L 352.4 96.5 L 354.8 97.6 L 357.2 98.8 L 359.6 100.1 L 362.0 101.5 L 364.4 102.9 L 366.8 104.5 L 369.2 106.1 L 371.6 107.7 L 374.0 109.5 L 376.4 111.3 L 378.8 113.1 L 381.2 115.1 L 383.6 117.0 L 386.0 119.1 L 388.4 121.2 L 390.8 123.3 L 393.2 125.4 L 395.6 127.7 L 398.0 129.9 L 400.4 132.2 L 402.8 134.5 L 405.2 136.8 L 407.6 139.2 L 410.0 141.5 L 412.4 143.9 L 414.8 146.3 L 417.2 148.7 L 419.6 151.1 L 422.0 153.5"/>
+      <line class="c1" x1="250" y1="192" x2="276" y2="192"/>
+      <text class="c1t" x="284" y="196">y = sin x</text>
+      <line class="c2 dash" x1="250" y1="212" x2="276" y2="212"/>
+      <text class="c2t" x="284" y="216">P₁(x)</text>
+      <line class="c3 dash" x1="250" y1="232" x2="276" y2="232"/>
+      <text class="c3t" x="284" y="236">P₃(x)</text>
+      <line class="c4 dash" x1="250" y1="252" x2="276" y2="252"/>
+      <text class="c4t" x="284" y="256">P₅(x)</text>
+      <text class="mut" data-lang="en" x="34" y="294">same scale on both axes</text>
+      <text class="mut" data-lang="zh" x="34" y="294">两轴单位长度相同</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. $y = \sin x$ with its Maclaurin polynomials $P_{1}(x) = x$, $P_{3}(x) = x - \tfrac{x^{3}}{6}$ and $P_{5}(x) = x - \tfrac{x^{3}}{6} + \tfrac{x^{5}}{120}$, drawn to scale. Read off that all three hug the curve near $x = 0$ and that each extra term widens the region of good agreement: at $x = 2$, $\sin 2 \approx 0.909$, while $P_{1}(2) = 2$, $P_{3}(2) \approx 0.667$ and $P_{5}(2) \approx 0.933$.</span><span data-lang="zh">图 1. $y = \sin x$ 及其麦克劳林多项式 $P_{1}(x) = x$、$P_{3}(x) = x - \tfrac{x^{3}}{6}$、$P_{5}(x) = x - \tfrac{x^{3}}{6} + \tfrac{x^{5}}{120}$，按比例绘制。可以读出：三者在 $x = 0$ 附近都紧贴曲线，每多一项，吻合良好的范围就更宽：在 $x = 2$ 处，$\sin 2 \approx 0.909$，而 $P_{1}(2) = 2$，$P_{3}(2) \approx 0.667$，$P_{5}(2) \approx 0.933$。</span></figcaption>
+  </figure>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.4: approximate $e^{0.1}$</span><span data-lang="zh">E6.4 例题：近似 $e^{0.1}$</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.4 (approximate $e^{0.1}$)</span><span data-lang="zh">E6.4 例题（近似 $e^{0.1}$）</span></div>
     <p><span data-lang="en">Approximate $e^{0.1}$ using the first four terms of the Maclaurin series for $e^{x}$. Compare with the true value.</span><span data-lang="zh">用 $e^{x}$ 麦克劳林级数的前四项近似 $e^{0.1}$，并与真值比较。</span></p>
   </div>
   <div class="worked-solution">
@@ -781,13 +1132,59 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ P_{3}(0.1) \;=\; 1 + 0.1 + \frac{0.01}{2} + \frac{0.001}{6} \;=\; 1 + 0.1 + 0.005 + 0.000\,166\,6\overline{6}\ldots \;\approx\; 1.105\,167. $$
     <p data-lang="en"><strong>True value (calculator).</strong> $e^{0.1} = 1.105\,170\,918\ldots$. The approximation matches to five decimal places.</p>
     <p data-lang="zh"><strong>真值（计算器）。</strong>$e^{0.1} = 1.105\,170\,918\ldots$。近似值与真值前五位小数完全吻合。</p>
-    <p data-lang="en"><strong>Error estimate via the next term.</strong> The first omitted term is $\tfrac{x^{4}}{4!} = \tfrac{(0.1)^{4}}{24} = \tfrac{10^{-4}}{24} \approx 4.17 \times 10^{-6}$. This matches the observed error $1.105\,170\,918 - 1.105\,166\,667 \approx 4.25 \times 10^{-6}$ to a fraction of a percent. The dominant-term rule works exactly as advertised.</p>
-    <p data-lang="zh"><strong>用下一项估计误差。</strong>首个被舍弃项为 $\tfrac{x^{4}}{4!} = \tfrac{(0.1)^{4}}{24} = \tfrac{10^{-4}}{24} \approx 4.17 \times 10^{-6}$。与实际误差 $1.105\,170\,918 - 1.105\,166\,667 \approx 4.25 \times 10^{-6}$ 差不到一个百分点。主导项规则名副其实。</p>
+    <p data-lang="en"><strong>Error estimate via the next term.</strong> The first omitted term is $\tfrac{x^{4}}{4!} = \tfrac{(0.1)^{4}}{24} = \tfrac{10^{-4}}{24} \approx 4.17 \times 10^{-6}$. The observed error is $1.105\,170\,918 - 1.105\,166\,667 \approx 4.25 \times 10^{-6}$, within about $2\%$ of that estimate, so the first omitted term is a good guide to the error here.</p>
+    <p data-lang="zh"><strong>用下一项估计误差。</strong>首个被舍弃项为 $\tfrac{x^{4}}{4!} = \tfrac{(0.1)^{4}}{24} = \tfrac{10^{-4}}{24} \approx 4.17 \times 10^{-6}$。实际误差为 $1.105\,170\,918 - 1.105\,166\,667 \approx 4.25 \times 10^{-6}$，与该估计相差约 $2\%$，所以此处首个被舍弃项是误差的良好估计。</p>
   </div>
+  </details>
 
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Approximation grows with $|x|$</span><span data-lang="zh">$|x|$ 越大，所需项数越多</span></strong>
-    <span data-lang="en">The four-term polynomial $P_{3}(x)$ for $e^{x}$ has error $\sim x^{4} / 24$. At $x = 0.1$ this is $4 \times 10^{-6}$, excellent. At $x = 1$ it is $1/24 \approx 0.042$, less than $2\%$. At $x = 2$ it is $16/24 \approx 0.67$, useless (the true value $e^{2} \approx 7.389$ versus $P_{3}(2) = 1 + 2 + 2 + 4/3 \approx 6.333$). Polynomials of fixed degree are local approximations; for large $|x|$ either keep more terms or use a series centred elsewhere.</span><span data-lang="zh">$e^{x}$ 的四项多项式 $P_{3}(x)$ 误差为 $\sim x^{4} / 24$。$x = 0.1$ 时为 $4 \times 10^{-6}$，极佳。$x = 1$ 时为 $1/24 \approx 0.042$，约 $2\%$。$x = 2$ 时为 $16/24 \approx 0.67$，已不可用（真值 $e^{2} \approx 7.389$，$P_{3}(2) = 1 + 2 + 2 + 4/3 \approx 6.333$）。固定次数的多项式是局部近似；$|x|$ 大时要么多保留项，要么改用别处展开的级数。</span>
+    <span data-lang="en">The four-term polynomial $P_{3}(x)$ for $e^{x}$ has error $\sim x^{4} / 24$. At $x = 0.1$ this is $4 \times 10^{-6}$, excellent. At $x = 1$ the estimate is $1/24 \approx 0.042$; the true error $e - \tfrac{8}{3} \approx 0.052$ is about $2\%$ of $e$. At $x = 2$ the estimate is $16/24 \approx 0.67$ and the true error is about $1.06$ (the true value $e^{2} \approx 7.389$ versus $P_{3}(2) = 1 + 2 + 2 + 4/3 \approx 6.333$), so the approximation is poor. Polynomials of fixed degree are local approximations; for large $|x|$ either keep more terms or use a series centred elsewhere.</span><span data-lang="zh">$e^{x}$ 的四项多项式 $P_{3}(x)$ 误差为 $\sim x^{4} / 24$。$x = 0.1$ 时为 $4 \times 10^{-6}$，极佳。$x = 1$ 时估计为 $1/24 \approx 0.042$；真实误差 $e - \tfrac{8}{3} \approx 0.052$，约为 $e$ 的 $2\%$。$x = 2$ 时估计为 $16/24 \approx 0.67$，真实误差约 $1.06$（真值 $e^{2} \approx 7.389$，$P_{3}(2) = 1 + 2 + 2 + 4/3 \approx 6.333$），近似已经很差。固定次数的多项式是局部近似；$|x|$ 大时要么多保留项，要么改用别处展开的级数。</span>
+  </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.4b: approximate $\displaystyle\int_{0}^{0.5} e^{-x^{2}} \, dx$</span><span data-lang="zh">E6.4b 例题：近似计算 $\displaystyle\int_{0}^{0.5} e^{-x^{2}} \, dx$</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Use the first three terms of the Maclaurin series for $e^{-x^{2}}$ to find $\displaystyle\int_{0}^{0.5} e^{-x^{2}} \, dx$ correct to 3 decimal places, and justify the accuracy.</span><span data-lang="zh">用 $e^{-x^{2}}$ 麦克劳林级数的前三项求 $\displaystyle\int_{0}^{0.5} e^{-x^{2}} \, dx$，精确到 3 位小数，并说明精度的依据。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Series (from E6.2).</strong></p>
+    <p data-lang="zh"><strong>级数（见 E6.2）。</strong></p>
+    $$ e^{-x^{2}} \;=\; 1 - x^{2} + \frac{x^{4}}{2} - \frac{x^{6}}{6} + \cdots, \qquad x \in \mathbb{R}. $$
+    <p data-lang="en"><strong>Integrate term by term.</strong></p>
+    <p data-lang="zh"><strong>逐项积分。</strong></p>
+    $$ \int_{0}^{0.5} e^{-x^{2}} \, dx \;=\; \Bigl[\, x - \frac{x^{3}}{3} + \frac{x^{5}}{10} - \frac{x^{7}}{42} + \cdots \Bigr]_{0}^{0.5}. $$
+    <p data-lang="en"><strong>Three terms.</strong> $0.5 - \tfrac{0.125}{3} + \tfrac{0.031\,25}{10} = 0.5 - 0.041\,667 + 0.003\,125 = 0.461\,458$.</p>
+    <p data-lang="zh"><strong>取三项。</strong>$0.5 - \tfrac{0.125}{3} + \tfrac{0.031\,25}{10} = 0.5 - 0.041\,667 + 0.003\,125 = 0.461\,458$。</p>
+    <p data-lang="en"><strong>Error bound.</strong> The terms alternate in sign and decrease in size, so the error is less than the first omitted term, $\tfrac{0.5^{7}}{42} = \tfrac{0.007\,812\,5}{42} \approx 0.000\,186$. The integral therefore lies between $0.461\,458 - 0.000\,186 = 0.461\,272$ and $0.461\,458$, and both round to $0.461$.</p>
+    <p data-lang="zh"><strong>误差界。</strong>各项符号交替且绝对值递减，所以误差小于首个被舍弃项 $\tfrac{0.5^{7}}{42} = \tfrac{0.007\,812\,5}{42} \approx 0.000\,186$。因此积分值介于 $0.461\,458 - 0.000\,186 = 0.461\,272$ 与 $0.461\,458$ 之间，两者四舍五入都是 $0.461$。</p>
+    $$ \int_{0}^{0.5} e^{-x^{2}} \, dx \;\approx\; 0.461 \quad \text{(3 d.p.)} $$
+    <p data-lang="en"><strong>Compare with the true value.</strong> Technology gives $0.461\,281$ (6 d.p.). The actual error, $0.461\,458 - 0.461\,281 = 0.000\,177$, is indeed below the bound $0.000\,186$.</p>
+    <p data-lang="zh"><strong>与真值比较。</strong>技术工具给出 $0.461\,281$（6 位小数）。实际误差 $0.461\,458 - 0.461\,281 = 0.000\,177$，确实小于误差界 $0.000\,186$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> A function with no elementary antiderivative can still be integrated as a polynomial, and the alternating-series bound turns the truncation into a guaranteed accuracy.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>没有初等原函数的函数仍可当作多项式来积分，而交错级数界把截断变成有保证的精度。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Say how many terms you used and give the answer to the accuracy the question asks for. To justify that accuracy for an alternating series, quote the first omitted term as the error bound, for example "error $&lt; 0.000\,186$, so $0.461$ is correct to 3 d.p.". Keep at least two more decimal places in your working than in the final answer.</p>
+    <p data-lang="zh">写明用了几项，并按题目要求的精度作答。对交错级数，引用首个被舍弃项作为误差界来说明精度，例如"误差 $&lt; 0.000\,186$，所以 $0.461$ 精确到 3 位小数"。中间计算至少比最终答案多保留两位小数。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Use $\sqrt{1 + x} \approx 1 + \tfrac{x}{2} - \tfrac{x^{2}}{8}$ to estimate $\sqrt{1.1}$, and compare with the true value.</span><span data-lang="zh">1. 用 $\sqrt{1 + x} \approx 1 + \tfrac{x}{2} - \tfrac{x^{2}}{8}$ 估计 $\sqrt{1.1}$，并与真值比较。</span></summary>
+      <div class="sg-a"><p data-lang="en">At $x = 0.1$: $1 + 0.05 - 0.001\,25 = 1.048\,75$. The true value is $\sqrt{1.1} = 1.048\,809$ (6 d.p.), so the error is about $5.9 \times 10^{-5}$, close to the next term $\tfrac{x^{3}}{16} = 6.25 \times 10^{-5}$.</p><p data-lang="zh">$x = 0.1$ 时：$1 + 0.05 - 0.001\,25 = 1.048\,75$。真值 $\sqrt{1.1} = 1.048\,809$（6 位小数），误差约 $5.9 \times 10^{-5}$，与下一项 $\tfrac{x^{3}}{16} = 6.25 \times 10^{-5}$ 接近。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Approximate $\cos 0.2$ using $1 - \tfrac{x^{2}}{2} + \tfrac{x^{4}}{24}$. To how many decimal places is the result guaranteed?</span><span data-lang="zh">2. 用 $1 - \tfrac{x^{2}}{2} + \tfrac{x^{4}}{24}$ 近似 $\cos 0.2$。结果能保证几位小数？</span></summary>
+      <div class="sg-a"><p data-lang="en">$1 - 0.02 + \tfrac{0.0016}{24} = 0.980\,066\,7$. The first omitted term is $\tfrac{0.2^{6}}{720} \approx 8.9 \times 10^{-8}$, so the true value lies between $0.980\,066\,58$ and $0.980\,066\,67$, giving $0.980\,067$ to 6 d.p. (true value $0.980\,066\,58$).</p><p data-lang="zh">$1 - 0.02 + \tfrac{0.0016}{24} = 0.980\,066\,7$。首个被舍弃项为 $\tfrac{0.2^{6}}{720} \approx 8.9 \times 10^{-8}$，所以真值介于 $0.980\,066\,58$ 与 $0.980\,066\,67$ 之间，保证 6 位小数为 $0.980\,067$（真值 $0.980\,066\,58$）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Why does $P_{3}(x) = x - \tfrac{x^{3}}{6}$ give a good value of $\sin 0.3$ but a poor value of $\sin 2$?</span><span data-lang="zh">3. 为何 $P_{3}(x) = x - \tfrac{x^{3}}{6}$ 给出的 $\sin 0.3$ 很准，而 $\sin 2$ 却很差？</span></summary>
+      <div class="sg-a"><p data-lang="en">The error is about the first omitted term $\tfrac{x^{5}}{120}$. At $x = 0.3$ that is $2.0 \times 10^{-5}$ ($P_{3} = 0.2955$, $\sin 0.3 = 0.295\,520$); at $x = 2$ it is $0.267$ ($P_{3} \approx 0.667$, $\sin 2 \approx 0.909$). The error grows like $x^{5}$, as Figure 1 shows.</p><p data-lang="zh">误差约等于首个被舍弃项 $\tfrac{x^{5}}{120}$。$x = 0.3$ 时为 $2.0 \times 10^{-5}$（$P_{3} = 0.2955$，$\sin 0.3 = 0.295\,520$）；$x = 2$ 时为 $0.267$（$P_{3} \approx 0.667$，$\sin 2 \approx 0.909$）。误差随 $x^{5}$ 增长，如图 1 所示。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="2">
@@ -807,9 +1204,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- E6.5 L'HOPITAL'S RULE -->
-<section class="section" id="s-e6-5">
+<section class="section" id="s-e6-5" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.5 · L'Hopital's Rule</span><span data-lang="zh">Topic E6.5 · 洛必达法则</span></div>
-  <h2><span data-lang="en">L'Hopital's Rule</span><span data-lang="zh">洛必达法则</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">L'Hopital's Rule</span><span data-lang="zh">洛必达法则</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.13</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State L'Hopital's rule and the indeterminate forms $\tfrac{0}{0}$ and $\tfrac{\infty}{\infty}$ to which it applies.</li>
+      <li>Verify the indeterminate form before each application of the rule.</li>
+      <li>Apply the rule repeatedly when the new quotient is still indeterminate.</li>
+      <li>Evaluate limits as $x \to \infty$ of the form $\tfrac{\infty}{\infty}$.</li>
+      <li>Explain why the rule gives a wrong answer when the form is not indeterminate.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>陈述洛必达法则（<code>L'Hopital's rule</code>）及其适用的不定型 $\tfrac{0}{0}$ 与 $\tfrac{\infty}{\infty}$。</li>
+      <li>每次使用法则前都先验证不定型（<code>indeterminate form</code>）。</li>
+      <li>当新的商仍为不定型时，反复使用该法则。</li>
+      <li>求 $x \to \infty$ 时 $\tfrac{\infty}{\infty}$ 型的极限。</li>
+      <li>解释形式不是不定型时为何法则会给出错误答案。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Statement of the rule.</strong> Suppose $f$ and $g$ are differentiable on an open interval around $x = a$ (except possibly at $a$ itself), and $g'(x) \ne 0$ near $a$. If $\lim_{x \to a} f(x) / g(x)$ has the indeterminate form $0/0$ or $\infty / \infty$, then
@@ -840,8 +1255,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>其他不定型。</strong>$0 \cdot \infty$ 改写为 $0/0$ 或 $\infty / \infty$；$\infty - \infty$ 合并为单一分式；$1^{\infty}$、$0^{0}$、$\infty^{0}$ 先取对数。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.5: the classic $\sin x / x$ limit</span><span data-lang="zh">E6.5 例题：经典 $\sin x / x$ 极限</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.5 (the classic $\sin x / x$ limit)</span><span data-lang="zh">E6.5 例题（经典 $\sin x / x$ 极限）</span></div>
     <p><span data-lang="en">Evaluate $\lim_{x \to 0} \dfrac{\sin x}{x}$ using L'Hopital's rule.</span><span data-lang="zh">用洛必达法则求 $\lim_{x \to 0} \dfrac{\sin x}{x}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -855,6 +1270,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Caveat.</strong> Strictly, L'Hopital's rule presupposes the derivative of $\sin x$ is $\cos x$, whose standard proof uses precisely $\lim \sin x / x = 1$. So this is a circular argument as a foundational proof; treat it instead as a quick recheck once the derivative is known. The series approach in E6.6 avoids the circularity.</p>
     <p data-lang="zh"><strong>警告。</strong>严格来说，洛必达需要 $\sin x$ 的导数 $\cos x$，而该导数的标准证明恰用 $\lim \sin x / x = 1$。故此论证作为基础证明是循环的；只能视为已知导数后的快速复核。E6.6 的级数法可避免循环。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: a repeated-application example</span><span data-lang="zh">深入探讨：反复使用的例子</span></summary>
@@ -870,9 +1286,49 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
   </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.5b: an $\infty/\infty$ limit, $\lim_{x \to \infty} x^{2} e^{-x}$</span><span data-lang="zh">E6.5b 例题：$\infty/\infty$ 型极限 $\lim_{x \to \infty} x^{2} e^{-x}$</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Evaluate $\lim_{x \to \infty} \dfrac{x^{2}}{e^{x}}$.</span><span data-lang="zh">求 $\lim_{x \to \infty} \dfrac{x^{2}}{e^{x}}$。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Check the form.</strong> As $x \to \infty$, $x^{2} \to \infty$ and $e^{x} \to \infty$: form $\tfrac{\infty}{\infty}$.</p>
+    <p data-lang="zh"><strong>检查形式。</strong>$x \to \infty$ 时 $x^{2} \to \infty$，$e^{x} \to \infty$：为 $\tfrac{\infty}{\infty}$ 型。</p>
+    $$ \lim_{x \to \infty} \frac{x^{2}}{e^{x}} \;=\; \lim_{x \to \infty} \frac{2x}{e^{x}}. $$
+    <p data-lang="en"><strong>Still $\tfrac{\infty}{\infty}$, so apply the rule again.</strong></p>
+    <p data-lang="zh"><strong>仍为 $\tfrac{\infty}{\infty}$，再用一次法则。</strong></p>
+    $$ \lim_{x \to \infty} \frac{2x}{e^{x}} \;=\; \lim_{x \to \infty} \frac{2}{e^{x}} \;=\; 0. $$
+    <p data-lang="en"><strong>Numerical check.</strong> At $x = 10$, $\tfrac{100}{e^{10}} \approx 0.004\,54$; at $x = 20$, $\tfrac{400}{e^{20}} \approx 8.2 \times 10^{-7}$. The values fall towards $0$.</p>
+    <p data-lang="zh"><strong>数值检验。</strong>$x = 10$ 时 $\tfrac{100}{e^{10}} \approx 0.004\,54$；$x = 20$ 时 $\tfrac{400}{e^{20}} \approx 8.2 \times 10^{-7}$。数值趋向 $0$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Each application lowers the power of $x$ by one while $e^{x}$ stays the same, so after two steps the numerator is a constant: $e^{x}$ grows faster than any power of $x$.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>每用一次法则，$x$ 的次数降一，而 $e^{x}$ 不变，所以两步后分子成为常数：$e^{x}$ 比 $x$ 的任何次幂增长得都快。</p>
+  </div>
+  </details>
+
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: applying L'Hopital to a non-indeterminate form</span><span data-lang="zh">陷阱：对非不定型使用洛必达</span></strong>
     <span data-lang="en">L'Hopital's rule requires $0/0$ or $\infty/\infty$. Applying it to, say, $\lim_{x \to 0} (\cos x)/(1 + x)$ would give $\lim (-\sin x)/(1) = 0$, which is wrong: direct substitution gives $\cos 0 / (1 + 0) = 1$. <strong>Always check the form first.</strong> The same trap appears when a problem reduces partway through and the limit ceases to be indeterminate; stop applying the rule the moment substitution gives a finite, defined value.</span><span data-lang="zh">洛必达需要 $0/0$ 或 $\infty/\infty$。若对 $\lim_{x \to 0} (\cos x)/(1 + x)$ 套用，得 $\lim (-\sin x)/(1) = 0$，错。直接代入得 $\cos 0 / (1 + 0) = 1$。<strong>必须先检查形式。</strong>同陷阱发生在问题做到一半时极限已变为可代入：此时立即停手。</span>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the form, $\tfrac{0}{0}$ or $\tfrac{\infty}{\infty}$, every time before you use the rule, and differentiate the numerator and the denominator separately; the quotient rule has no place here. Stop as soon as direct substitution gives a defined value.</p>
+    <p data-lang="zh">每次用法则前都写出形式 $\tfrac{0}{0}$ 或 $\tfrac{\infty}{\infty}$，并对分子、分母分别求导；这里不用商的求导法则。一旦直接代入得到确定的值就立即停止。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Evaluate $\lim_{x \to 0} \dfrac{\ln(1 + x)}{x}$.</span><span data-lang="zh">1. 求 $\lim_{x \to 0} \dfrac{\ln(1 + x)}{x}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">Form $\tfrac{0}{0}$. Differentiating gives $\lim_{x \to 0} \dfrac{1/(1 + x)}{1} = 1$.</p><p data-lang="zh">$\tfrac{0}{0}$ 型。求导得 $\lim_{x \to 0} \dfrac{1/(1 + x)}{1} = 1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Evaluate $\lim_{x \to \infty} \dfrac{\ln x}{x}$.</span><span data-lang="zh">2. 求 $\lim_{x \to \infty} \dfrac{\ln x}{x}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">Form $\tfrac{\infty}{\infty}$. Differentiating gives $\lim_{x \to \infty} \dfrac{1/x}{1} = 0$.</p><p data-lang="zh">$\tfrac{\infty}{\infty}$ 型。求导得 $\lim_{x \to \infty} \dfrac{1/x}{1} = 0$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Evaluate $\lim_{x \to 0} \dfrac{e^{x} - 1 - x}{x^{2}}$.</span><span data-lang="zh">3. 求 $\lim_{x \to 0} \dfrac{e^{x} - 1 - x}{x^{2}}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">Form $\tfrac{0}{0}$: the rule gives $\lim \dfrac{e^{x} - 1}{2x}$, still $\tfrac{0}{0}$; again gives $\lim \dfrac{e^{x}}{2} = \tfrac{1}{2}$.</p><p data-lang="zh">$\tfrac{0}{0}$ 型：用法则得 $\lim \dfrac{e^{x} - 1}{2x}$，仍为 $\tfrac{0}{0}$；再用一次得 $\lim \dfrac{e^{x}}{2} = \tfrac{1}{2}$。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -892,9 +1348,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- E6.6 LIMITS VIA MACLAURIN SERIES -->
-<section class="section" id="s-e6-6">
+<section class="section" id="s-e6-6" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E6.6 · Limits via Maclaurin Series</span><span data-lang="zh">Topic E6.6 · 用级数求极限</span></div>
-  <h2><span data-lang="en">Limits via Maclaurin Series</span><span data-lang="zh">用麦克劳林级数求极限</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.18</span></h2>
+  <h2><span data-lang="en">Limits via Maclaurin Series</span><span data-lang="zh">用麦克劳林级数求极限</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.13 / 5.19</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Substitute Maclaurin series into the numerator and denominator of a $\tfrac{0}{0}$ limit at $x = 0$.</li>
+      <li>Identify the lowest non-zero power of $x$ in each part and divide through by it.</li>
+      <li>Decide how many terms of each series to keep so that the leading behaviour survives cancellation.</li>
+      <li>Compare the series method with L'Hopital's rule and choose the quicker one.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>把麦克劳林级数代入 $x = 0$ 处 $\tfrac{0}{0}$ 型极限的分子与分母。</li>
+      <li>找出各部分中 $x$ 的最低非零次幂，并同除以它。</li>
+      <li>判断每个级数要保留几项，使主导行为在抵消后仍然存在。</li>
+      <li>比较级数法与洛必达法则，选择更快捷的一种。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>The method.</strong> For an indeterminate $0/0$ limit at $x = 0$:
@@ -904,7 +1376,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <li>Divide numerator and denominator by the lowest common power of $x$ (so the leading term in each becomes a constant).</li>
       <li>Take $x \to 0$. Only the constant terms survive.</li>
     </ol>
-    <strong>How many terms to keep.</strong> Keep enough so that the leading non-zero term in numerator and denominator both survive after cancellation. For most exam-level problems, three or four terms suffice.
+    <strong>How many terms to keep.</strong> Keep enough so that the leading non-zero term in numerator and denominator both survive after cancellation. Two or three terms of each series are usually enough.
     <br><br>
     <strong>When the series method beats L'Hopital.</strong> Series shine when L'Hopital requires multiple applications (e.g. $\lim (1 - \cos x)/x^{2}$ needs two L'Hopital passes; one series substitution gives the answer immediately).
   </div>
@@ -916,13 +1388,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <li>分子分母同除以最低公共 $x$ 次方，使各自首项化为常数。</li>
       <li>令 $x \to 0$，只剩常数项。</li>
     </ol>
-    <strong>该保留多少项。</strong>要保留到分子分母中首个非零项在抵消后仍存在为止。考试题保留三、四项通常够用。
+    <strong>该保留多少项。</strong>要保留到分子分母中首个非零项在抵消后仍存在为止。每个级数保留两三项通常就够了。
     <br><br>
     <strong>级数法何时胜过洛必达。</strong>洛必达需多次重复时级数法显优。例如 $\lim (1 - \cos x)/x^{2}$ 需洛必达两次，而代入级数一次即得。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.6: $(1 - \cos x)/x^{2}$ by series</span><span data-lang="zh">E6.6 例题：用级数求 $(1 - \cos x)/x^{2}$</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E6.6 ($(1 - \cos x)/x^{2}$ by series)</span><span data-lang="zh">E6.6 例题（用级数求 $(1 - \cos x)/x^{2}$）</span></div>
     <p><span data-lang="en">Evaluate $\lim_{x \to 0} \dfrac{1 - \cos x}{x^{2}}$ by substituting the Maclaurin series for $\cos x$.</span><span data-lang="zh">用 $\cos x$ 的麦克劳林级数代入求 $\lim_{x \to 0} \dfrac{1 - \cos x}{x^{2}}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -938,9 +1410,31 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Take the limit.</strong> As $x \to 0$, every term with a positive power of $x$ vanishes:</p>
     <p data-lang="zh"><strong>取极限。</strong>$x \to 0$ 时，含正幂的项全部消失：</p>
     $$ \lim_{x \to 0} \frac{1 - \cos x}{x^{2}} \;=\; \frac{1}{2}. $$
-    <p data-lang="en"><strong>Comparison.</strong> The same answer comes from L'Hopital after two applications (see the "Going deeper" block in E6.5). The series method gets there in one substitution, which is why it dominates in HL exam problems with iterated indeterminacy.</p>
-    <p data-lang="zh"><strong>对照。</strong>洛必达两次也得同一答案（见 E6.5 的"深入探讨"）。级数法一次代入即可，因此在多次不定型反复出现的 HL 试题中更占优。</p>
+    <p data-lang="en"><strong>Comparison.</strong> The same answer comes from L'Hopital after two applications (see the "Going deeper" block in E6.5). The series method gets there in one substitution, which is why it is often the quicker route when the indeterminacy repeats.</p>
+    <p data-lang="zh"><strong>对照。</strong>洛必达两次也得同一答案（见 E6.5 的"深入探讨"）。级数法一次代入即可，因此当不定型反复出现时，它往往更快捷。</p>
   </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E6.6b: $\dfrac{e^{2x} - 1 - 2x}{1 - \cos x}$ by series</span><span data-lang="zh">E6.6b 例题：用级数求 $\dfrac{e^{2x} - 1 - 2x}{1 - \cos x}$</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Use Maclaurin series to evaluate $\lim_{x \to 0} \dfrac{e^{2x} - 1 - 2x}{1 - \cos x}$.</span><span data-lang="zh">用麦克劳林级数求 $\lim_{x \to 0} \dfrac{e^{2x} - 1 - 2x}{1 - \cos x}$。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Numerator.</strong> Put $u = 2x$ in $e^{u}$: $e^{2x} = 1 + 2x + 2x^{2} + \tfrac{4}{3}x^{3} + \cdots$, so</p>
+    <p data-lang="zh"><strong>分子。</strong>在 $e^{u}$ 中令 $u = 2x$：$e^{2x} = 1 + 2x + 2x^{2} + \tfrac{4}{3}x^{3} + \cdots$，故</p>
+    $$ e^{2x} - 1 - 2x \;=\; 2x^{2} + \frac{4}{3}x^{3} + \cdots. $$
+    <p data-lang="en"><strong>Denominator.</strong></p>
+    <p data-lang="zh"><strong>分母。</strong></p>
+    $$ 1 - \cos x \;=\; \frac{x^{2}}{2} - \frac{x^{4}}{24} + \cdots. $$
+    <p data-lang="en"><strong>Divide top and bottom by $x^{2}$</strong>, the lowest power in both, and let $x \to 0$:</p>
+    <p data-lang="zh"><strong>分子分母同除以 $x^{2}$</strong>（两者的最低次幂），再令 $x \to 0$：</p>
+    $$ \lim_{x \to 0} \frac{2 + \frac{4}{3}x + \cdots}{\frac{1}{2} - \frac{x^{2}}{24} + \cdots} \;=\; \frac{2}{1/2} \;=\; 4. $$
+    <p data-lang="en"><strong>Check with L'Hopital.</strong> Twice: $\dfrac{2e^{2x} - 2}{\sin x}$ is still $\tfrac{0}{0}$, then $\dfrac{4e^{2x}}{\cos x} \to 4$. Numerically, at $x = 0.01$ the quotient is $4.027$.</p>
+    <p data-lang="zh"><strong>用洛必达检验。</strong>两次：$\dfrac{2e^{2x} - 2}{\sin x}$ 仍为 $\tfrac{0}{0}$，再得 $\dfrac{4e^{2x}}{\cos x} \to 4$。数值上，$x = 0.01$ 时该商为 $4.027$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Near $0$ each side behaves like its lowest-power term, so the limit is the ratio of the two leading coefficients, $2 \div \tfrac{1}{2}$.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>在 $0$ 附近，分子分母都表现得像各自的最低次项，所以极限就是两个首项系数之比 $2 \div \tfrac{1}{2}$。</p>
+  </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: how many terms is enough?</span><span data-lang="zh">深入探讨：保留多少项才够？</span></summary>
@@ -951,6 +1445,28 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="zh"><strong>一般原则。</strong>保留到分子分母首个非零行为都能体现为止。若问 $\lim (\sin x - x)/x^{3}$：$\sin x = x - x^{3}/6 + \cdots$ 保留三项给 $\sin x - x \approx -x^{3}/6$，极限为 $-1/6$。只保留两项则 $\sin x - x \approx 0$，太粗。</p>
     </div>
   </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Keep "$+ \cdots$" on every truncated series so that your working never claims an approximation is exact. Before dividing, write the numerator and the denominator each as (lowest power of $x$) times (constant plus higher powers); when the lowest powers are equal, the limit is the ratio of the constants.</p>
+    <p data-lang="zh">每个截断级数后都保留"$+ \cdots$"，免得你的过程把近似写成精确等式。相除前，把分子、分母各写成（$x$ 的最低次幂）乘以（常数加更高次项）；最低次幂相同时，极限就是两个常数之比。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Use series to evaluate $\lim_{x \to 0} \dfrac{\ln(1 + x) - x}{x^{2}}$.</span><span data-lang="zh">1. 用级数求 $\lim_{x \to 0} \dfrac{\ln(1 + x) - x}{x^{2}}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\ln(1 + x) - x = -\tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$. Dividing by $x^{2}$ gives $-\tfrac{1}{2} + \tfrac{x}{3} - \cdots \to -\tfrac{1}{2}$.</p><p data-lang="zh">$\ln(1 + x) - x = -\tfrac{x^{2}}{2} + \tfrac{x^{3}}{3} - \cdots$。除以 $x^{2}$ 得 $-\tfrac{1}{2} + \tfrac{x}{3} - \cdots \to -\tfrac{1}{2}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use series to evaluate $\lim_{x \to 0} \dfrac{x - \arctan x}{x^{3}}$.</span><span data-lang="zh">2. 用级数求 $\lim_{x \to 0} \dfrac{x - \arctan x}{x^{3}}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\arctan x = x - \tfrac{x^{3}}{3} + \tfrac{x^{5}}{5} - \cdots$, so $x - \arctan x = \tfrac{x^{3}}{3} - \tfrac{x^{5}}{5} + \cdots$. Dividing by $x^{3}$ and letting $x \to 0$ gives $\tfrac{1}{3}$.</p><p data-lang="zh">$\arctan x = x - \tfrac{x^{3}}{3} + \tfrac{x^{5}}{5} - \cdots$，故 $x - \arctan x = \tfrac{x^{3}}{3} - \tfrac{x^{5}}{5} + \cdots$。除以 $x^{3}$ 并令 $x \to 0$，得 $\tfrac{1}{3}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Explain why using only $\sin x \approx x$ fails for $\lim_{x \to 0} \dfrac{\sin x - x}{x^{3}}$, and give the correct value.</span><span data-lang="zh">3. 解释为何只用 $\sin x \approx x$ 求 $\lim_{x \to 0} \dfrac{\sin x - x}{x^{3}}$ 会失败，并给出正确值。</span></summary>
+      <div class="sg-a"><p data-lang="en">With $\sin x \approx x$ the numerator becomes exactly $0$, which hides the $x^{3}$ behaviour and wrongly suggests the limit is $0$. Keeping $-\tfrac{x^{3}}{6}$ gives $\sin x - x = -\tfrac{x^{3}}{6} + \cdots$, so the limit is $-\tfrac{1}{6}$.</p><p data-lang="zh">若取 $\sin x \approx x$，分子恰好为 $0$，掩盖了 $x^{3}$ 级的行为，会错误地得出极限为 $0$。保留 $-\tfrac{x^{3}}{6}$ 后 $\sin x - x = -\tfrac{x^{3}}{6} + \cdots$，极限为 $-\tfrac{1}{6}$。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Using Maclaurin series, $\lim_{x \to 0} \dfrac{\sin x - x}{x^{3}}$ equals:</span><span data-lang="zh">用麦克劳林级数，$\lim_{x \to 0} \dfrac{\sin x - x}{x^{3}}$ 等于：</span></div><div class="quiz-number">E6.6 · Q1</div></div>
@@ -969,22 +1485,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- EXAM STRATEGY -->
-<section class="section" id="exam-strategy">
+<section class="section" id="exam-strategy" data-course="hl">
   <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试技巧</span></div>
   <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Memorising the five (Paper 1)</span><span data-lang="zh">背熟五式（Paper 1）</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Knowing the standard series</span><span data-lang="zh">掌握标准级数</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Write the series, then the validity.</strong> Examiners reward both. "$\sin x = x - x^{3}/3! + \cdots$ for all real $x$" earns the full A1, whereas only the formula loses the validity mark.</li>
-      <li data-lang="zh"><strong>写级数，也写收敛区间。</strong>两者都给分。"$\sin x = x - x^{3}/3! + \cdots$（全体实 $x$）"得满 A1；只写公式漏掉区间要扣分。</li>
+      <li data-lang="en"><strong>Write the series, then the validity.</strong> A series without its interval of validity is an incomplete answer: write "$\sin x = x - x^{3}/3! + \cdots$ for all real $x$", not the formula alone.</li>
+      <li data-lang="zh"><strong>写级数，也写收敛区间。</strong>只写级数不写有效区间是不完整的答案：要写"$\sin x = x - x^{3}/3! + \cdots$（全体实 $x$）"，而不是只写公式。</li>
       <li data-lang="en"><strong>The signs in $\sin x$ and $\cos x$ alternate; check parity.</strong> $\sin$ is odd (only odd powers) and $\cos$ is even (only even powers). A series with both odd and even powers cannot be $\sin x$ or $\cos x$.</li>
       <li data-lang="zh"><strong>$\sin x$ 与 $\cos x$ 符号交替；检查奇偶性。</strong>$\sin$ 为奇函数（只含奇次幂）、$\cos$ 为偶函数（只含偶次幂）。同时含奇偶次幂的级数不可能是 $\sin x$ 或 $\cos x$。</li>
     </ul>
   </div>
 
   <div class="concept-box" style="border-left-color: var(--accent);">
-    <strong style="color: var(--accent);"><span data-lang="en">Substitution and integration (Paper 2)</span><span data-lang="zh">代换与积分（Paper 2）</span></strong>
+    <strong style="color: var(--accent);"><span data-lang="en">Substitution and integration</span><span data-lang="zh">代换与积分</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>Translate the validity interval through the substitution.</strong> $\ln(1 + u)$ valid on $-1 &lt; u \le 1$ becomes $\ln(1 + 2x)$ valid on $-1/2 &lt; x \le 1/2$, not $-1 &lt; x \le 1$.</li>
       <li data-lang="zh"><strong>把收敛区间同步翻译。</strong>$\ln(1 + u)$ 在 $-1 &lt; u \le 1$ 有效，故 $\ln(1 + 2x)$ 在 $-1/2 &lt; x \le 1/2$ 有效，不是 $-1 &lt; x \le 1$。</li>
@@ -994,15 +1510,21 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">Limits and L'Hopital (Paper 3 HL)</span><span data-lang="zh">极限与洛必达（Paper 3 HL）</span></strong>
+    <strong style="color: var(--purple);"><span data-lang="en">Limits and L'Hopital</span><span data-lang="zh">极限与洛必达</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Verify the indeterminate form first.</strong> L'Hopital applies only to $0/0$ or $\infty/\infty$. State the form before differentiating; the M1 is awarded for the verification step.</li>
-      <li data-lang="zh"><strong>必须先验不定型。</strong>洛必达只用于 $0/0$ 或 $\infty/\infty$。求导前先写出形式；M1 即给在该验证步骤。</li>
-      <li data-lang="en"><strong>Pick the right tool.</strong> One-step indeterminacies favour L'Hopital; multi-step indeterminacies favour Maclaurin series. For exam answers worth both methods, write the series approach when iterating L'Hopital looks tedious.</li>
+      <li data-lang="en"><strong>Verify the indeterminate form first.</strong> L'Hopital applies only to $0/0$ or $\infty/\infty$. State the form before differentiating; without it the method is not justified.</li>
+      <li data-lang="zh"><strong>必须先验不定型。</strong>洛必达只用于 $0/0$ 或 $\infty/\infty$。求导前先写出形式；不写则方法缺乏依据。</li>
+      <li data-lang="en"><strong>Pick the right tool.</strong> One-step indeterminacies favour L'Hopital; multi-step indeterminacies favour Maclaurin series. When iterating L'Hopital looks tedious, switch to the series method.</li>
       <li data-lang="zh"><strong>选对工具。</strong>单次不定型用洛必达；多次反复用级数。当洛必达需多次而显繁琐时，改用级数法作答。</li>
       <li data-lang="en"><strong>Keep enough terms in the series.</strong> Underkeeping gives $0/0$ again; overkeeping wastes algebra. The rule is "the lowest power that survives cancellation".</li>
       <li data-lang="zh"><strong>级数保留足够项。</strong>少了得 $0/0$，多了浪费代数。规则：保留至抵消后仍存在的最低幂为止。</li>
     </ul>
+  </div>
+
+  <div class="concept-box orange">
+    <strong><span data-lang="en">Exam format (HL)</span><span data-lang="zh">考试形式（HL）</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) each last 2 hours and are each worth 30%; each has a compulsory Section A (short response) and Section B (extended response). Paper 3 (technology required, 1 hour, 20%) has two compulsory extended-response questions. The internal assessment, a mathematical exploration, is the remaining 20%. Practise the standard series, substitutions and series limits by hand with exact fractions, since Paper 1 allows no technology.</p>
+    <p data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（要求使用技术工具）各 2 小时，各占 30%；两份试卷都有必答的 Section A（短答）和 Section B（长答）。Paper 3（要求使用技术工具，1 小时，占 20%）有两道必答的长答题。其余 20% 是内部评估（<code>internal assessment</code>），即数学探究（<code>mathematical exploration</code>）。由于 Paper 1 不允许使用技术工具，标准级数、代换以及用级数求极限都要练到能用精确分数手算。</p>
   </div>
 </section>
 
@@ -1011,7 +1533,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- FLASHCARDS -->
 <section class="section" id="flashcards">
   <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动回忆</span></div>
-  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <h2><span data-lang="en">Flashcards (HL unit)</span><span data-lang="zh">闪卡（HL 单元）</span></h2>
   <div class="flashcard-toolbar">
     <div id="fcCount"><span data-lang="en">0 / 12 flipped</span><span data-lang="zh">已翻 0 / 12</span></div>
     <div>
@@ -1024,7 +1546,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\sin x$ Maclaurin series?</span><span data-lang="zh">$\sin x$ 的麦克劳林级数？</span></div><div class="flashcard-back">$$\sin x = \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n+1}}{(2n+1)!}$$<span data-lang="en">All real $x$.</span><span data-lang="zh">全体实 $x$。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\cos x$ Maclaurin series?</span><span data-lang="zh">$\cos x$ 的麦克劳林级数？</span></div><div class="flashcard-back">$$\cos x = \sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{(2n)!}$$<span data-lang="en">All real $x$.</span><span data-lang="zh">全体实 $x$。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\ln(1+x)$ Maclaurin series?</span><span data-lang="zh">$\ln(1+x)$ 的麦克劳林级数？</span></div><div class="flashcard-back">$$\ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^{n}}{n}$$$$-1 &lt; x \le 1$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binomial $(1+x)^{n}$ series?</span><span data-lang="zh">二项 $(1+x)^{n}$ 级数？</span></div><div class="flashcard-back">$$(1+x)^{n} = \sum_{k=0}^{\infty} \binom{n}{k} x^{k}$$<span data-lang="en">$|x| &lt; 1$ if $n$ non-integer.</span><span data-lang="zh">$n$ 非整数时 $|x| &lt; 1$。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binomial $(1+x)^{n}$ series?</span><span data-lang="zh">二项 $(1+x)^{n}$ 级数？</span></div><div class="flashcard-back">$$(1+x)^{n} = \sum_{k=0}^{\infty} \binom{n}{k} x^{k}$$<span data-lang="en">Valid for $|x| &lt; 1$ unless $n \in \mathbb{N}$, when the sum is finite.</span><span data-lang="zh">$|x| &lt; 1$ 时成立；若 $n \in \mathbb{N}$，则为有限和。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">General Maclaurin formula?</span><span data-lang="zh">麦克劳林通项公式？</span></div><div class="flashcard-back">$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^{n}$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Series for $e^{-x^{2}}$?</span><span data-lang="zh">$e^{-x^{2}}$ 的级数？</span></div><div class="flashcard-back">$$\sum_{n=0}^{\infty} \frac{(-1)^{n} x^{2n}}{n!}$$<span data-lang="en">Substitute $u = -x^{2}$ in $e^{u}$.</span><span data-lang="zh">在 $e^{u}$ 中代 $u = -x^{2}$。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Geometric series for $1/(1-x)$?</span><span data-lang="zh">$1/(1-x)$ 的几何级数？</span></div><div class="flashcard-back">$$\frac{1}{1-x} = \sum_{n=0}^{\infty} x^{n}$$$$|x| &lt; 1$$</div></div></div>
@@ -1040,7 +1562,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- UNIT QUIZ -->
 <section class="section" id="unit-quiz">
   <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
-  <h2><span data-lang="en">Unit E6 Practice Quiz</span><span data-lang="zh">单元 E6 练习测验</span></h2>
+  <h2><span data-lang="en">Unit E6 Practice Quiz (HL unit)</span><span data-lang="zh">单元 E6 练习测验（HL 单元）</span></h2>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The coefficient of $x^{3}$ in the Maclaurin series for $\sin (2x)$ is:</span><span data-lang="zh">$\sin (2x)$ 麦克劳林级数中 $x^{3}$ 的系数为：</span></div><div class="quiz-number">Q1</div></div>
@@ -1095,7 +1617,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Using L'Hopital's rule, $\lim_{x \to 0} \dfrac{x - \sin x}{x \sin x \cdot x}$ (that is, $\lim (x - \sin x)/(x^{2} \sin x)$) equals:</span><span data-lang="zh">用洛必达，$\lim_{x \to 0} \dfrac{x - \sin x}{x \sin x \cdot x}$（即 $\lim (x - \sin x)/(x^{2} \sin x)$）等于：</span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">$\lim_{x \to 0} \dfrac{x - \sin x}{x^{2} \sin x}$ equals:</span><span data-lang="zh">$\lim_{x \to 0} \dfrac{x - \sin x}{x^{2} \sin x}$ 等于：</span></div><div class="quiz-number">Q5</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$\dfrac{1}{3}$</div>
       <div class="quiz-opt" data-idx="1">$\dfrac{1}{6}$</div>
@@ -1113,41 +1635,43 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- CHECKLIST -->
 <section class="section" id="checklist">
   <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
-  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">备考清单</span></h2>
+  <h2><span data-lang="en">Readiness Checklist (HL unit)</span><span data-lang="zh">备考清单（HL 单元）</span></h2>
 
-  <p data-lang="en">Tick each item when you can do it cold, without notes, on your first attempt.</p>
-  <p data-lang="zh">每一条都要"裸做"做对（不看笔记、一次过）才打勾。</p>
+  <p data-lang="en">Tick each item when you can do it cold, without notes, on your first attempt. The entire unit is HL only, so every item below is HL content.</p>
+  <p data-lang="zh">每一条都要"裸做"做对（不看笔记、一次过）才打勾。本单元为纯 HL，所以下面每一条都是 HL 内容。</p>
 
-  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 13 mastered</span><span data-lang="zh">已掌握 0 / 13</span></div>
+  <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 15 mastered</span><span data-lang="zh">已掌握 0 / 15</span></div>
 
   <ul class="checklist" id="checklistUl">
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Write the Maclaurin series for $e^{x}$, $\sin x$, $\cos x$ with the correct general term and validity (all real $x$)</span><span data-lang="zh">写出 $e^{x}$、$\sin x$、$\cos x$ 的麦克劳林级数，含正确通项与收敛域（全体实 $x$）</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Write the Maclaurin series for $\ln(1 + x)$ with validity $-1 &lt; x \le 1$</span><span data-lang="zh">写出 $\ln(1 + x)$ 的麦克劳林级数，含 $-1 &lt; x \le 1$ 收敛域</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Write the binomial series for $(1 + x)^{n}$ with validity $|x| &lt; 1$ when $n$ is non-integer</span><span data-lang="zh">写出 $(1 + x)^{n}$ 的二项级数，$n$ 非整数时 $|x| &lt; 1$</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Apply the general Maclaurin formula $f(x) = \sum f^{(n)}(0) x^{n}/n!$ to derive a series from scratch</span><span data-lang="zh">用通项公式 $f(x) = \sum f^{(n)}(0) x^{n}/n!$ 从零推导级数</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Derive a series by substitution (e.g. $e^{-x^{2}}$, $\sin (2x)$), with validity translated through the substitution</span><span data-lang="zh">用代换法导出级数（如 $e^{-x^{2}}$、$\sin (2x)$），收敛域同步翻译</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Differentiate a power series term by term inside its radius of convergence</span><span data-lang="zh">在收敛半径内逐项求导幂级数</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Integrate a power series term by term, fixing the constant of integration by evaluating at $x = 0$</span><span data-lang="zh">逐项积分幂级数，用 $x = 0$ 定积分常数</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Truncate a Maclaurin series to compute a numerical approximation and estimate the error from the first omitted term</span><span data-lang="zh">截断麦克劳林级数算数值近似，并用首个被舍弃项估计误差</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">State and apply L'Hopital's rule, verifying the indeterminate form first</span><span data-lang="zh">陈述并应用洛必达法则，事先验证不定型</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Apply L'Hopital's rule repeatedly when the new ratio is still indeterminate</span><span data-lang="zh">当新比仍为不定型时反复使用洛必达</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Evaluate a $0/0$ limit by substituting Maclaurin series for numerator and denominator</span><span data-lang="zh">通过代入分子分母的麦克劳林级数算 $0/0$ 极限</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Decide when the series method beats L'Hopital (multi-step indeterminacies)</span><span data-lang="zh">判断何时级数法胜过洛必达（多次不定型）</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Keep enough series terms so the leading non-zero behaviour survives cancellation in the limit</span><span data-lang="zh">保留足够级数项使主导非零行为在极限中存留</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Write the Maclaurin series for $e^{x}$, $\sin x$, $\cos x$ with the correct general term and validity (all real $x$)</span><span data-lang="zh">写出 $e^{x}$、$\sin x$、$\cos x$ 的麦克劳林级数，含正确通项与收敛域（全体实 $x$）</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Write the Maclaurin series for $\ln(1 + x)$ with validity $-1 &lt; x \le 1$</span><span data-lang="zh">写出 $\ln(1 + x)$ 的麦克劳林级数，含 $-1 &lt; x \le 1$ 收敛域</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Write the binomial series for $(1 + x)^{n}$ with validity $|x| &lt; 1$ unless $n \in \mathbb{N}$</span><span data-lang="zh">写出 $(1 + x)^{n}$ 的二项级数，有效区间 $|x| &lt; 1$（除非 $n \in \mathbb{N}$）</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply the general Maclaurin formula $f(x) = \sum f^{(n)}(0) x^{n}/n!$ to derive a series from scratch</span><span data-lang="zh">用通项公式 $f(x) = \sum f^{(n)}(0) x^{n}/n!$ 从零推导级数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Derive a series by substitution (e.g. $e^{-x^{2}}$, $\sin (2x)$), with validity translated through the substitution</span><span data-lang="zh">用代换法导出级数（如 $e^{-x^{2}}$、$\sin (2x)$），收敛域同步翻译</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Differentiate a power series term by term inside its radius of convergence</span><span data-lang="zh">在收敛半径内逐项求导幂级数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Multiply two series and collect the terms up to a stated power of $x$</span><span data-lang="zh">把两个级数相乘，并合并到指定的 $x$ 次幂</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Integrate a power series term by term, fixing the constant of integration by evaluating at $x = 0$</span><span data-lang="zh">逐项积分幂级数，用 $x = 0$ 定积分常数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Find the Maclaurin series of the solution of a differential equation by repeated differentiation</span><span data-lang="zh">通过反复求导求微分方程解的麦克劳林级数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Truncate a Maclaurin series to compute a numerical approximation and estimate the error from the first omitted term</span><span data-lang="zh">截断麦克劳林级数算数值近似，并用首个被舍弃项估计误差</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">State and apply L'Hopital's rule, verifying the indeterminate form first</span><span data-lang="zh">陈述并应用洛必达法则，事先验证不定型</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply L'Hopital's rule repeatedly when the new ratio is still indeterminate</span><span data-lang="zh">当新比仍为不定型时反复使用洛必达</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Evaluate a $0/0$ limit by substituting Maclaurin series for numerator and denominator</span><span data-lang="zh">通过代入分子分母的麦克劳林级数算 $0/0$ 极限</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Decide when the series method beats L'Hopital (multi-step indeterminacies)</span><span data-lang="zh">判断何时级数法胜过洛必达（多次不定型）</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Keep enough series terms so the leading non-zero behaviour survives cancellation in the limit</span><span data-lang="zh">保留足够级数项使主导非零行为在极限中存留</span></li>
   </ul>
 </section>
 
 <!-- IB PRACTICE -->
-<section class="section" id="ib-practice">
+<section class="section" id="ib-practice" data-course="hl">
   <div class="section-label" data-lang="en">Next Step</div>
   <div class="section-label" data-lang="zh">下一步</div>
   <h2><span data-lang="en">IB Paper-Style Practice</span><span data-lang="zh">IB 试卷风格练习</span></h2>
   <div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
-    <p data-lang="en" style="margin-bottom:16px;">E6 Practice and Solutions are on the roadmap. They will ship under <code>Practice Questions/Unit_E6_*.html</code> with the bilingual built-in pattern.</p>
-    <p data-lang="zh" style="margin-bottom:16px;">E6 配套的 Practice 与 Solutions 已在排期，上线后位于 <code>Practice Questions/Unit_E6_*.html</code>，采用双语内嵌格式。</p>
+    <p data-lang="en" style="margin-bottom:16px;">Work the E6 practice set next, then mark it against the fully worked solutions.</p>
+    <p data-lang="zh" style="margin-bottom:16px;">接下来完成 E6 练习题，再对照完整的解答批改。</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="../Practice%20Questions/Unit_A2_Exponents_and_Logarithms_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">A2 Practice (template) →</span><span data-lang="zh">A2 练习题（模板）→</span></a>
-      <a href="../Practice%20Questions/Unit_A5_Proof_and_Algebraic_Manipulation_Practice.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">A5 Practice (most recent) →</span><span data-lang="zh">A5 练习题（最新）→</span></a>
+      <a href="../Practice%20Questions/Unit_E6_Maclaurin_Series_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">E6 Practice →</span><span data-lang="zh">E6 练习题 →</span></a>
+      <a href="../Practice%20Questions/Solutions/Unit_E6_Maclaurin_Series_Solutions.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">E6 Solutions →</span><span data-lang="zh">E6 解答 →</span></a>
     </div>
   </div>
 </section>
@@ -1163,10 +1687,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 
 <!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
-<details class="sg-appendix" id="sg-appendix">
+<details class="sg-appendix" id="sg-appendix" data-course="hl">
   <summary><span data-lang="en">How to use this guide</span><span data-lang="zh">本指南使用说明</span></summary>
   <div class="detail-body">
-      <section class="section" id="how-to-use">
+      <section class="section" id="how-to-use" data-course="hl">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">本指南使用说明</span></h2>
   <p><span data-lang="en">Every section in Unit E6 carries the <span class="hl-flag">HL</span> flag. Maclaurin series is an HL-only super-topic; SL students do not see it. The unit reads in two passes: first memorise the five standard series in E6.1, then learn the three derivation techniques (E6.2, E6.3) and the two application techniques (E6.4, E6.6) that build on them. L'Hopital's rule (E6.5) is the classical alternative to E6.6 and is treated in parallel.</span><span data-lang="zh">E6 全单元都带 <span class="hl-flag">HL</span> 标记。麦克劳林级数为 HL 专属，SL 不涉及。本单元按两遍阅读：先把 E6.1 的五个标准级数背熟，再掌握三种推导技巧（E6.2、E6.3）和两种应用技巧（E6.4、E6.6）。洛必达法则（E6.5）作为 E6.6 的经典替代，并列处理。</span></p>
@@ -1186,7 +1710,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
-    <span data-lang="en">All six sections (E6.1 through E6.6) are <span class="hl-flag">HL</span> only. The entire super-topic falls under AHL 5.18 in the 2029 IB Subject Brief.</span><span data-lang="zh">六个小节（E6.1 至 E6.6）全部为 <span class="hl-flag">HL</span> 专属。整个超级主题在 2029 IB Subject Brief 中归 AHL 5.18。</span>
+    <span data-lang="en">All six sections (E6.1 through E6.6) are <span class="hl-flag">HL</span> only. The entire unit is additional higher level (AHL) content.</span><span data-lang="zh">六个小节（E6.1 至 E6.6）全部为 <span class="hl-flag">HL</span> 专属。整个单元都属于高级附加内容（<code>AHL</code>）。</span>
   </div>
 </section>
   </div>
@@ -1498,6 +2022,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1641,21 +2181,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

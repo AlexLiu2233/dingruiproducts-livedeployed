@@ -401,6 +401,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -415,6 +505,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -479,12 +570,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="hero-overline">IB Mathematics: Analysis &amp; Approaches HL · 鼎睿学苑</div>
   <h1><span data-lang="en">Unit E2: Techniques<br>of Differential Calculus</span><span data-lang="zh">单元 E2：微分技巧</span></h1>
   <p class="hero-sub">
-    <span data-lang="en">The toolkit unit. Where E1 builds the derivative from a limit, E2 supplies the four rules that let you differentiate every elementary function in the AA syllabus: the chain rule for composites, the product and quotient rules for combinations, and the standard derivatives of $\sin x$, $\cos x$, $\tan x$, $e^{x}$, and $\ln x$. The HL sections add implicit differentiation (for curves where $y$ cannot be isolated) and logarithmic differentiation (for awkward products of powers).</span><span data-lang="zh">本单元是工具箱。E1 由极限建立导数，E2 给出可对 AA 大纲中每个初等函数求导的四条规则：复合函数的链式法则（<code>chain rule</code>），组合函数的乘积与商法则（<code>product / quotient rules</code>），以及 $\sin x$、$\cos x$、$\tan x$、$e^{x}$、$\ln x$ 的标准导数。HL 部分增补隐函数求导（适用于 $y$ 无法显式解出的曲线）和对数求导法（适用于幂次组合复杂的函数）。</span>
+    <span data-lang="en">The toolkit unit. Where E1 builds the derivative from a limit, E2 supplies the four rules that let you differentiate every elementary function in the AA syllabus: the chain rule for composites, the product and quotient rules for combinations, and the standard derivatives of $\sin x$, $\cos x$, $e^{x}$, and $\ln x$ (HL adds $\tan x$ and the reciprocal, inverse trig and base-$a$ derivatives). The HL sections add implicit differentiation (for curves where $y$ cannot be isolated) and logarithmic differentiation (for awkward products of powers).</span><span data-lang="zh">本单元是工具箱。E1 由极限建立导数，E2 给出可对 AA 大纲中每个初等函数求导的四条规则：复合函数的链式法则（<code>chain rule</code>），组合函数的乘积与商法则（<code>product / quotient rules</code>），以及 $\sin x$、$\cos x$、$e^{x}$、$\ln x$ 的标准导数（HL 另加 $\tan x$ 及倒数三角、反三角与以 $a$ 为底的导数）。HL 部分增补隐函数求导（适用于 $y$ 无法显式解出的曲线）和对数求导法（适用于幂次组合复杂的函数）。</span>
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon">IB AA HL · Topic 5.3 / 5.7 / 5.13</span>
-    <span class="chip chip-green">Papers 1 · 2 · 3</span>
-    <span class="chip chip-purple"><span data-lang="en">6 Concepts · SL + HL mix</span><span data-lang="zh">6 个核心概念 · SL + HL 混合</span></span>
+    <span class="chip chip-maroon" data-course="hl">IB AA HL · Topic 5.3 / 5.6 / 5.7 / 5.14 / 5.15</span>
+    <span class="chip chip-purple" data-course="hl"><span data-lang="en">6 Concepts · SL + HL mix</span><span data-lang="zh">6 个核心概念 · SL + HL 混合</span></span>
+    <span class="chip chip-maroon" data-course="sl">IB AA SL · Topic 5.3 / 5.6 / 5.7</span>
+    <span class="chip chip-purple" data-course="sl"><span data-lang="en">4 Sections · SL</span><span data-lang="zh">4 个小节 · SL</span></span>
   </div>
 </section>
 
@@ -504,7 +596,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- E2.1 POWER RULE RECAP -->
 <section class="section" id="s-e2-1">
   <div class="section-label"><span data-lang="en">Topic E2.1 · Power Rule (recap)</span><span data-lang="zh">Topic E2.1 · 幂法则（回顾）</span></div>
-  <h2><span data-lang="en">Power Rule and Linearity</span><span data-lang="zh">幂法则与线性性</span> <span class="ib-ref">SL 5.3</span></h2>
+  <h2><span data-lang="en">Power Rule and Linearity</span><span data-lang="zh">幂法则与线性性</span> <span class="ib-ref">SL 5.3 / 5.6</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the power rule $\dfrac{d}{dx}(x^{n}) = n x^{n-1}$ for any real $n$, and the constant-multiple and sum rules.</li>
+      <li>Rewrite roots and reciprocals as powers before differentiating, e.g. $\sqrt{x} = x^{1/2}$ and $\dfrac{3}{x^{2}} = 3x^{-2}$.</li>
+      <li>Differentiate a sum of power terms term by term, including negative and fractional exponents.</li>
+      <li>Calculate the gradient $f'(a)$ of a curve at a given point.</li>
+      <li>Find where $f'(x) = 0$ and relate these points to the turning points on the graph of $f$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）对任意实数 $n$ 成立的幂法则 $\dfrac{d}{dx}(x^{n}) = n x^{n-1}$，以及常数倍法则与和差法则。</li>
+      <li>求导前先把根式与倒数改写为幂（<code>rewrite as a power</code>），如 $\sqrt{x} = x^{1/2}$、$\dfrac{3}{x^{2}} = 3x^{-2}$。</li>
+      <li>对幂函数之和逐项（<code>term by term</code>）求导，包括负指数与分数指数。</li>
+      <li>计算（<code>calculate</code>）曲线在给定点处的斜率 $f'(a)$（<code>gradient</code>）。</li>
+      <li>求出 $f'(x) = 0$ 的点，并把它们与 $f$ 图像上的驻点（<code>turning point</code>）联系起来。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Three rules cover all polynomial differentiation:</strong>
@@ -525,8 +635,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     单独的常数导数为零：$\dfrac{d}{dx}(c) = 0$。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.1: recap from E1</span><span data-lang="zh">E2.1 例题：E1 回顾</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.1 (recap from E1)</span><span data-lang="zh">E2.1 例题（E1 回顾）</span></div>
     <p><span data-lang="en">Differentiate $h(x) = 5x^{4} - \dfrac{3}{x^{2}} + 7\sqrt{x} - 11$.</span><span data-lang="zh">求 $h(x) = 5x^{4} - \dfrac{3}{x^{2}} + 7\sqrt{x} - 11$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -540,11 +650,109 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>第 3 步。</strong>按题目要求改写。</p>
     $$ h'(x) \;=\; 20 x^{3} \;+\; \dfrac{6}{x^{3}} \;+\; \dfrac{7}{2\sqrt{x}}. $$
   </div>
+  </details>
 
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Common slip</span><span data-lang="zh">常见失误</span></strong>
     <span data-lang="en">A negative exponent stays negative under the power rule. The derivative of $x^{-2}$ is $-2 x^{-3}$, not $-2 x^{-1}$. The exponent decreases by one regardless of sign.</span><span data-lang="zh">负指数在幂法则下仍为负。$x^{-2}$ 的导数是 $-2 x^{-3}$，不是 $-2 x^{-1}$。无论符号如何，指数都减 $1$。</span>
   </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.1b: gradient and turning points of a cubic</span><span data-lang="zh">E2.1b 例题：三次函数的斜率与驻点</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Let $f(x) = x^{3} - 3x$. (a) Find $f'(x)$. (b) Find the gradient of the curve at $x = 2$. (c) Find the points where $f'(x) = 0$.</span><span data-lang="zh">设 $f(x) = x^{3} - 3x$。(a) 求 $f'(x)$。(b) 求曲线在 $x = 2$ 处的斜率。(c) 求 $f'(x) = 0$ 的点。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>(a) Power rule, term by term.</strong></p>
+    <p data-lang="zh"><strong>(a) 逐项使用幂法则。</strong></p>
+    $$ f'(x) \;=\; 3x^{2} - 3. $$
+    <p data-lang="en"><strong>(b) Substitute $x = 2$ into $f'$, not into $f$.</strong> $f'(2) = 3(4) - 3 = 9$, so the gradient at $x = 2$ is $9$.</p>
+    <p data-lang="zh"><strong>(b) 把 $x = 2$ 代入 $f'$，而不是 $f$。</strong>$f'(2) = 3(4) - 3 = 9$，故 $x = 2$ 处的斜率为 $9$。</p>
+    <p data-lang="en"><strong>(c) Solve $f'(x) = 0$.</strong> $3x^{2} - 3 = 0$ gives $x^{2} = 1$, so $x = -1$ or $x = 1$. Then $f(-1) = -1 + 3 = 2$ and $f(1) = 1 - 3 = -2$, so the points are $(-1, 2)$ and $(1, -2)$.</p>
+    <p data-lang="zh"><strong>(c) 解 $f'(x) = 0$。</strong>由 $3x^{2} - 3 = 0$ 得 $x^{2} = 1$，故 $x = -1$ 或 $x = 1$。且 $f(-1) = -1 + 3 = 2$，$f(1) = 1 - 3 = -2$，故两点为 $(-1, 2)$ 与 $(1, -2)$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> $f'(x)$ is the gradient of the tangent at $x$, so $f'(x) = 0$ marks a horizontal tangent. Figure 1 shows these are the maximum and minimum of $f$, directly above the zeros of $f'$.</p>
+    <p data-lang="zh"><strong>原理。</strong>$f'(x)$ 是 $x$ 处切线的斜率，故 $f'(x) = 0$ 表示切线水平。图 1 显示这两点正是 $f$ 的极大值与极小值，位于 $f'$ 零点的正上方。</p>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 442" role="img" aria-label="Two panels on aligned x-axes from -2 to 2. Top: f(x) = x cubed minus 3x with a local maximum at (-1, 2) and a local minimum at (1, -2). Bottom: f prime of x = 3x squared minus 3, a parabola crossing the x-axis at x = -1 and x = 1, directly below the turning points of f.">
+      <line class="ax" x1="36.0" y1="110.0" x2="408.0" y2="110.0"/>
+      <line class="ax" x1="220.0" y1="29.0" x2="220.0" y2="183.5"/>
+      <line class="ax" x1="36.0" y1="357.5" x2="408.0" y2="357.5"/>
+      <line class="ax" x1="220.0" y1="209.0" x2="220.0" y2="414.5"/>
+      <line class="ax dash thin" x1="140.0" y1="38.0" x2="140.0" y2="411.5"/>
+      <line class="ax dash thin" x1="300.0" y1="38.0" x2="300.0" y2="411.5"/>
+      <line class="ax" x1="60.0" y1="106.0" x2="60.0" y2="114.0"/>
+      <text class="mut" data-lang="en" x="60.0" y="126.0" text-anchor="middle">−2</text>
+      <text class="mut" data-lang="zh" x="60.0" y="126.0" text-anchor="middle">−2</text>
+      <line class="ax" x1="140.0" y1="106.0" x2="140.0" y2="114.0"/>
+      <text class="mut" data-lang="en" x="131.0" y="126.0" text-anchor="middle">−1</text>
+      <text class="mut" data-lang="zh" x="131.0" y="126.0" text-anchor="middle">−1</text>
+      <line class="ax" x1="300.0" y1="106.0" x2="300.0" y2="114.0"/>
+      <text class="mut" data-lang="en" x="291.0" y="126.0" text-anchor="middle">1</text>
+      <text class="mut" data-lang="zh" x="291.0" y="126.0" text-anchor="middle">1</text>
+      <line class="ax" x1="380.0" y1="106.0" x2="380.0" y2="114.0"/>
+      <text class="mut" data-lang="en" x="380.0" y="126.0" text-anchor="middle">2</text>
+      <text class="mut" data-lang="zh" x="380.0" y="126.0" text-anchor="middle">2</text>
+      <line class="ax" x1="60.0" y1="353.5" x2="60.0" y2="361.5"/>
+      <text class="mut" data-lang="en" x="60.0" y="373.5" text-anchor="middle">−2</text>
+      <text class="mut" data-lang="zh" x="60.0" y="373.5" text-anchor="middle">−2</text>
+      <line class="ax" x1="140.0" y1="353.5" x2="140.0" y2="361.5"/>
+      <text class="mut" data-lang="en" x="131.0" y="373.5" text-anchor="middle">−1</text>
+      <text class="mut" data-lang="zh" x="131.0" y="373.5" text-anchor="middle">−1</text>
+      <line class="ax" x1="300.0" y1="353.5" x2="300.0" y2="361.5"/>
+      <text class="mut" data-lang="en" x="291.0" y="373.5" text-anchor="middle">1</text>
+      <text class="mut" data-lang="zh" x="291.0" y="373.5" text-anchor="middle">1</text>
+      <line class="ax" x1="380.0" y1="353.5" x2="380.0" y2="361.5"/>
+      <text class="mut" data-lang="en" x="380.0" y="373.5" text-anchor="middle">2</text>
+      <text class="mut" data-lang="zh" x="380.0" y="373.5" text-anchor="middle">2</text>
+      <line class="ax" x1="216.0" y1="50.0" x2="224.0" y2="50.0"/>
+      <text class="mut" data-lang="en" x="228.0" y="54.0">2</text>
+      <text class="mut" data-lang="zh" x="228.0" y="54.0">2</text>
+      <line class="ax" x1="216.0" y1="170.0" x2="224.0" y2="170.0"/>
+      <text class="mut" data-lang="en" x="228.0" y="174.0">−2</text>
+      <text class="mut" data-lang="zh" x="228.0" y="174.0">−2</text>
+      <line class="ax" x1="216.0" y1="312.5" x2="224.0" y2="312.5"/>
+      <text class="mut" data-lang="en" x="228.0" y="316.5">3</text>
+      <text class="mut" data-lang="zh" x="228.0" y="316.5">3</text>
+      <line class="ax" x1="216.0" y1="267.5" x2="224.0" y2="267.5"/>
+      <text class="mut" data-lang="en" x="228.0" y="271.5">6</text>
+      <text class="mut" data-lang="zh" x="228.0" y="271.5">6</text>
+      <line class="ax" x1="216.0" y1="222.5" x2="224.0" y2="222.5"/>
+      <text class="mut" data-lang="en" x="228.0" y="226.5">9</text>
+      <text class="mut" data-lang="zh" x="228.0" y="226.5">9</text>
+      <line class="ax" x1="216.0" y1="402.5" x2="224.0" y2="402.5"/>
+      <text class="mut" data-lang="en" x="214.0" y="417.5" text-anchor="end">−3</text>
+      <text class="mut" data-lang="zh" x="214.0" y="417.5" text-anchor="end">−3</text>
+      <text class="lbl" data-lang="en" x="414.0" y="114.0">x</text>
+      <text class="lbl" data-lang="zh" x="414.0" y="114.0">x</text>
+      <text class="lbl" data-lang="en" x="414.0" y="361.5">x</text>
+      <text class="lbl" data-lang="zh" x="414.0" y="361.5">x</text>
+      <path class="c1" d="M 60.0 170.0 L 64.0 156.9 L 68.0 144.8 L 72.0 133.4 L 76.0 123.0 L 80.0 113.3 L 84.0 104.4 L 88.0 96.3 L 92.0 88.9 L 96.0 82.2 L 100.0 76.2 L 104.0 71.0 L 108.0 66.3 L 112.0 62.3 L 116.0 58.9 L 120.0 56.1 L 124.0 53.8 L 128.0 52.1 L 132.0 50.9 L 136.0 50.2 L 140.0 50.0 L 144.0 50.2 L 148.0 50.9 L 152.0 51.9 L 156.0 53.4 L 160.0 55.2 L 164.0 57.3 L 168.0 59.7 L 172.0 62.5 L 176.0 65.5 L 180.0 68.8 L 184.0 72.2 L 188.0 75.9 L 192.0 79.8 L 196.0 83.8 L 200.0 88.0 L 204.0 92.2 L 208.0 96.6 L 212.0 101.0 L 216.0 105.5 L 220.0 110.0 L 224.0 114.5 L 228.0 119.0 L 232.0 123.4 L 236.0 127.8 L 240.0 132.0 L 244.0 136.2 L 248.0 140.2 L 252.0 144.1 L 256.0 147.8 L 260.0 151.2 L 264.0 154.5 L 268.0 157.5 L 272.0 160.3 L 276.0 162.7 L 280.0 164.8 L 284.0 166.6 L 288.0 168.1 L 292.0 169.1 L 296.0 169.8 L 300.0 170.0 L 304.0 169.8 L 308.0 169.1 L 312.0 167.9 L 316.0 166.2 L 320.0 163.9 L 324.0 161.1 L 328.0 157.7 L 332.0 153.7 L 336.0 149.0 L 340.0 143.8 L 344.0 137.8 L 348.0 131.1 L 352.0 123.7 L 356.0 115.6 L 360.0 106.7 L 364.0 97.0 L 368.0 86.6 L 372.0 75.2 L 376.0 63.1 L 380.0 50.0"/>
+      <path class="c2" d="M 60.0 222.5 L 64.0 231.4 L 68.0 240.1 L 72.0 248.5 L 76.0 256.7 L 80.0 264.7 L 84.0 272.5 L 88.0 280.0 L 92.0 287.3 L 96.0 294.4 L 100.0 301.2 L 104.0 307.9 L 108.0 314.3 L 112.0 320.5 L 116.0 326.4 L 120.0 332.2 L 124.0 337.7 L 128.0 343.0 L 132.0 348.1 L 136.0 352.9 L 140.0 357.5 L 144.0 361.9 L 148.0 366.1 L 152.0 370.0 L 156.0 373.7 L 160.0 377.2 L 164.0 380.4 L 168.0 383.5 L 172.0 386.3 L 176.0 388.9 L 180.0 391.2 L 184.0 393.4 L 188.0 395.3 L 192.0 397.0 L 196.0 398.4 L 200.0 399.7 L 204.0 400.7 L 208.0 401.5 L 212.0 402.1 L 216.0 402.4 L 220.0 402.5 L 224.0 402.4 L 228.0 402.1 L 232.0 401.5 L 236.0 400.7 L 240.0 399.7 L 244.0 398.4 L 248.0 397.0 L 252.0 395.3 L 256.0 393.4 L 260.0 391.2 L 264.0 388.9 L 268.0 386.3 L 272.0 383.5 L 276.0 380.4 L 280.0 377.2 L 284.0 373.7 L 288.0 370.0 L 292.0 366.1 L 296.0 361.9 L 300.0 357.5 L 304.0 352.9 L 308.0 348.1 L 312.0 343.0 L 316.0 337.7 L 320.0 332.2 L 324.0 326.5 L 328.0 320.5 L 332.0 314.3 L 336.0 307.9 L 340.0 301.2 L 344.0 294.4 L 348.0 287.3 L 352.0 280.0 L 356.0 272.4 L 360.0 264.7 L 364.0 256.7 L 368.0 248.5 L 372.0 240.1 L 376.0 231.4 L 380.0 222.5"/>
+      <circle class="dot" cx="140.0" cy="50.0" r="3.5"/>
+      <circle class="dot" cx="300.0" cy="170.0" r="3.5"/>
+      <circle class="dot" cx="140.0" cy="357.5" r="3.5"/>
+      <circle class="dot" cx="300.0" cy="357.5" r="3.5"/>
+      <text class="c1t" data-lang="en" x="404.0" y="27.5" text-anchor="end">y = f(x) = x³ − 3x</text>
+      <text class="c1t" data-lang="zh" x="404.0" y="27.5" text-anchor="end">y = f(x) = x³ − 3x</text>
+      <text class="c2t" data-lang="en" x="220.0" y="198.5" text-anchor="middle">y = f′(x) = 3x² − 3</text>
+      <text class="c2t" data-lang="zh" x="220.0" y="198.5" text-anchor="middle">y = f′(x) = 3x² − 3</text>
+      <text class="c1t" data-lang="en" x="134.0" y="42.0" text-anchor="end">max (−1, 2)</text>
+      <text class="c1t" data-lang="zh" x="134.0" y="42.0" text-anchor="end">极大值 (−1, 2)</text>
+      <text class="c1t" data-lang="en" x="308.0" y="188.0">min (1, −2)</text>
+      <text class="c1t" data-lang="zh" x="308.0" y="188.0">极小值 (1, −2)</text>
+      <text class="c2t" data-lang="en" x="220.0" y="432.5" text-anchor="middle">f′(x) = 0 at x = ±1</text>
+      <text class="c2t" data-lang="zh" x="220.0" y="432.5" text-anchor="middle">x = ±1 处 f′(x) = 0</text>
+      <text class="mut" data-lang="en" x="360.0" y="327.5" text-anchor="middle">f′ &gt; 0</text>
+      <text class="mut" data-lang="zh" x="360.0" y="327.5" text-anchor="middle">f′ &gt; 0</text>
+      <text class="mut" data-lang="en" x="80.0" y="327.5" text-anchor="middle">f′ &gt; 0</text>
+      <text class="mut" data-lang="zh" x="80.0" y="327.5" text-anchor="middle">f′ &gt; 0</text>
+      <text class="mut" data-lang="en" x="252.0" y="376.5" text-anchor="middle">f′ &lt; 0</text>
+      <text class="mut" data-lang="zh" x="252.0" y="376.5" text-anchor="middle">f′ &lt; 0</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. The graph of $f(x) = x^{3} - 3x$ (top) and of its derivative $f'(x) = 3x^{2} - 3$ (bottom), drawn on aligned $x$-axes; each panel is to scale, with different vertical scales. Read down the dashed lines: at the maximum $(-1, 2)$ and the minimum $(1, -2)$ of $f$, the graph of $f'$ crosses the $x$-axis. Where $f$ rises ($x &lt; -1$ and $x &gt; 1$) the graph of $f'$ lies above the axis; where $f$ falls ($-1 &lt; x &lt; 1$) it lies below. These two points are the turning points of $f$.</span><span data-lang="zh">图 1. $f(x) = x^{3} - 3x$（上）与其导数 $f'(x) = 3x^{2} - 3$（下）画在对齐的 $x$ 轴上；每幅图各自按比例绘制，纵向比例不同。沿虚线向下读：在 $f$ 的极大值点 $(-1, 2)$ 与极小值点 $(1, -2)$ 处，$f'$ 的图像与 $x$ 轴相交。$f$ 上升处（$x &lt; -1$ 与 $x &gt; 1$），$f'$ 位于轴上方；$f$ 下降处（$-1 &lt; x &lt; 1$），则位于轴下方。这两个点是 $f$ 的驻点（<code>turning points</code>）。</span></figcaption>
+  </figure>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Differentiate $f(x) = 4 x^{5} - 2 x^{-3} + \sqrt[3]{x}$.</span><span data-lang="zh">求 $f(x) = 4 x^{5} - 2 x^{-3} + \sqrt[3]{x}$ 的导数。</span></div><div class="quiz-number">E2.1 · Q1</div></div>
@@ -558,6 +766,28 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">The negative exponent in $-2 x^{-3}$ produces $-2 \cdot (-3) x^{-4} = +6 x^{-4}$ under the power rule. The cube root term becomes $\tfrac{1}{3} x^{-2/3}$.</span><span data-lang="zh">$-2 x^{-3}$ 经幂法则得 $-2 \cdot (-3) x^{-4} = +6 x^{-4}$。立方根项化为 $\tfrac{1}{3} x^{-2/3}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Show the rewriting step ($x^{-2}$, $x^{1/2}$) on its own line before you differentiate: that is where sign and exponent slips happen. Paper 1 is taken without technology, so an answer such as $\dfrac{7}{2\sqrt{x}}$ has to be produced by hand. When a question asks for the gradient at a point, substitute into $f'(x)$ and give the exact value.</p>
+    <p data-lang="zh">求导前把改写步骤（$x^{-2}$、$x^{1/2}$）单独写一行：符号与指数的失误多出在这里。Paper 1 不允许使用技术工具，所以 $\dfrac{7}{2\sqrt{x}}$ 这类答案必须手算得到。题目要求某点处的斜率（<code>gradient</code>）时，代入 $f'(x)$ 并给出精确值。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate $f(x) = 6x^{2/3}$.</span><span data-lang="zh">1. 求 $f(x) = 6x^{2/3}$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Power rule: $f'(x) = 6 \cdot \tfrac{2}{3} x^{2/3 - 1} = 4x^{-1/3} = \dfrac{4}{\sqrt[3]{x}}$.</p><p data-lang="zh">幂法则：$f'(x) = 6 \cdot \tfrac{2}{3} x^{2/3 - 1} = 4x^{-1/3} = \dfrac{4}{\sqrt[3]{x}}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the gradient of $y = x^{2} + \dfrac{8}{x}$ at $x = 2$.</span><span data-lang="zh">2. 求 $y = x^{2} + \dfrac{8}{x}$ 在 $x = 2$ 处的斜率。</span></summary>
+      <div class="sg-a"><p data-lang="en">Rewrite $y = x^{2} + 8x^{-1}$, so $\dfrac{dy}{dx} = 2x - 8x^{-2}$. At $x = 2$: $4 - \dfrac{8}{4} = 2$.</p><p data-lang="zh">改写为 $y = x^{2} + 8x^{-1}$，故 $\dfrac{dy}{dx} = 2x - 8x^{-2}$。在 $x = 2$ 处：$4 - \dfrac{8}{4} = 2$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $f(x) = 2x^{3} - 6x^{2} + 1$, find the coordinates of the points where $f'(x) = 0$.</span><span data-lang="zh">3. 对 $f(x) = 2x^{3} - 6x^{2} + 1$，求满足 $f'(x) = 0$ 的点的坐标。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f'(x) = 6x^{2} - 12x = 6x(x - 2)$, which is zero at $x = 0$ and $x = 2$. Then $f(0) = 1$ and $f(2) = 16 - 24 + 1 = -7$, so the points are $(0, 1)$ and $(2, -7)$.</p><p data-lang="zh">$f'(x) = 6x^{2} - 12x = 6x(x - 2)$，在 $x = 0$ 与 $x = 2$ 处为零。又 $f(0) = 1$，$f(2) = 16 - 24 + 1 = -7$，故两点为 $(0, 1)$ 与 $(2, -7)$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -565,7 +795,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- E2.2 CHAIN RULE -->
 <section class="section" id="s-e2-2">
   <div class="section-label"><span data-lang="en">Topic E2.2 · Chain Rule</span><span data-lang="zh">Topic E2.2 · 链式法则</span></div>
-  <h2><span data-lang="en">The Chain Rule</span><span data-lang="zh">链式法则</span> <span class="ib-ref">SL 5.7</span></h2>
+  <h2><span data-lang="en">The Chain Rule</span><span data-lang="zh">链式法则</span> <span class="ib-ref">SL 5.6</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the chain rule in both forms: $\dfrac{dy}{dx} = \dfrac{dy}{du} \cdot \dfrac{du}{dx}$ and $\bigl(f(g(x))\bigr)' = f'(g(x)) \cdot g'(x)$.</li>
+      <li>Identify the outer and inner functions of a composite.</li>
+      <li>Apply the chain rule to powers of brackets, roots, $e^{g(x)}$, $\ln g(x)$ and $\sin g(x)$.</li>
+      <li>Apply the chain rule repeatedly to a composite with three layers.</li>
+      <li>Calculate the rate of change of a composite at a given point, differentiating before substituting.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>用两种形式写出链式法则（<code>chain rule</code>）：$\dfrac{dy}{dx} = \dfrac{dy}{du} \cdot \dfrac{du}{dx}$ 与 $\bigl(f(g(x))\bigr)' = f'(g(x)) \cdot g'(x)$。</li>
+      <li>识别（<code>identify</code>）复合函数的外层函数与内层函数。</li>
+      <li>对括号的幂、根式、$e^{g(x)}$、$\ln g(x)$、$\sin g(x)$ 使用链式法则。</li>
+      <li>对三层复合函数反复使用链式法则。</li>
+      <li>计算复合函数在给定点处的变化率：先求导，再代值。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Theorem (Chain rule).</strong> If $y = f(u)$ and $u = g(x)$ are both differentiable, then
@@ -582,8 +830,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     口诀："先对外层求导（仍以内层为自变量），再乘以内层的导数。"
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.2a: single nesting</span><span data-lang="zh">E2.2a 例题：单层嵌套</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.2a (single nesting)</span><span data-lang="zh">E2.2a 例题（单层嵌套）</span></div>
     <p><span data-lang="en">Differentiate $y = (3 x^{2} + 1)^{5}$.</span><span data-lang="zh">求 $y = (3 x^{2} + 1)^{5}$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -595,9 +843,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>相乘。</strong></p>
     $$ \frac{dy}{dx} \;=\; 5 (3 x^{2} + 1)^{4} \cdot 6x \;=\; 30 x (3 x^{2} + 1)^{4}. $$
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.2b: double nesting</span><span data-lang="zh">E2.2b 例题：双层嵌套</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.2b (double nesting)</span><span data-lang="zh">E2.2b 例题（双层嵌套）</span></div>
     <p><span data-lang="en">Differentiate $y = \sin\!\bigl( \ln(x^{2} + 1) \bigr)$.</span><span data-lang="zh">求 $y = \sin\!\bigl( \ln(x^{2} + 1) \bigr)$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -617,6 +866,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>三者相乘。</strong></p>
     $$ \frac{dy}{dx} \;=\; \cos\!\bigl(\ln(x^{2} + 1)\bigr) \cdot \frac{1}{x^{2} + 1} \cdot 2x \;=\; \frac{2x \,\cos\!\bigl(\ln(x^{2} + 1)\bigr)}{x^{2} + 1}. $$
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">▸ Going deeper: why the chain rule has this shape</span><span data-lang="zh">▸ 深入：链式法则为何呈此形态</span></summary>
@@ -642,17 +892,40 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.2c: chain rule evaluated at a point</span><span data-lang="zh">E2.2c 例题：在一点处求链式导数值</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.2c (chain rule evaluated at a point)</span><span data-lang="zh">E2.2c 例题（在一点处求链式导数值）</span></div>
     <p><span data-lang="en">If $y = (2x - 1)^{3}$, find the rate of change of $y$ at $x = 2$.</span><span data-lang="zh">若 $y = (2x - 1)^{3}$，求 $y$ 在 $x = 2$ 处的变化率。</span></p>
   </div>
   <div class="worked-solution">
-    <p data-lang="en"><strong>Differentiate first, evaluate second — never the other way round.</strong></p>
-    <p data-lang="zh"><strong>先求导，再代值——顺序不能颠倒。</strong></p>
+    <p data-lang="en"><strong>Differentiate first, evaluate second, never the other way round.</strong></p>
+    <p data-lang="zh"><strong>先求导，再代值，顺序不能颠倒。</strong></p>
     $$ \frac{dy}{dx} = 3(2x-1)^2 \cdot 2 = 6(2x-1)^2 $$
     <p data-lang="en"><strong>Now substitute $x=2$.</strong></p>
     <p data-lang="zh"><strong>现在代入 $x=2$。</strong></p>
     $$ \left.\frac{dy}{dx}\right|_{x=2} = 6(3)^2 = 54 $$
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the inner function $u$ and $\dfrac{du}{dx}$ on a separate line before combining. A typical wrong answer drops the inner derivative: $\dfrac{d}{dx}(2x - 1)^{3} = 3(2x - 1)^{2}$ is missing the factor $2$. When a question asks for the rate of change at a point, differentiate first, then substitute, and keep the answer exact unless a decimal is asked for.</p>
+    <p data-lang="zh">合并之前先把内层函数 $u$ 与 $\dfrac{du}{dx}$ 单独写一行。典型错误是漏掉内层导数：$\dfrac{d}{dx}(2x - 1)^{3} = 3(2x - 1)^{2}$ 少了因子 $2$。题目要求某点处的变化率（<code>rate of change</code>）时，先求导再代值；除非要求小数，否则保留精确值。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate $y = (5 - 2x)^{4}$.</span><span data-lang="zh">1. 求 $y = (5 - 2x)^{4}$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Outer $u^{4}$, inner $u = 5 - 2x$ with $u' = -2$. So $\dfrac{dy}{dx} = 4(5 - 2x)^{3} \cdot (-2) = -8(5 - 2x)^{3}$.</p><p data-lang="zh">外层 $u^{4}$，内层 $u = 5 - 2x$，$u' = -2$。故 $\dfrac{dy}{dx} = 4(5 - 2x)^{3} \cdot (-2) = -8(5 - 2x)^{3}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Differentiate $y = e^{3x^{2}}$ and $y = \ln(4x + 1)$.</span><span data-lang="zh">2. 求 $y = e^{3x^{2}}$ 与 $y = \ln(4x + 1)$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{d}{dx}e^{3x^{2}} = e^{3x^{2}} \cdot 6x = 6x e^{3x^{2}}$, and $\dfrac{d}{dx}\ln(4x + 1) = \dfrac{4}{4x + 1}$ (inner derivative over inner function).</p><p data-lang="zh">$\dfrac{d}{dx}e^{3x^{2}} = e^{3x^{2}} \cdot 6x = 6x e^{3x^{2}}$；$\dfrac{d}{dx}\ln(4x + 1) = \dfrac{4}{4x + 1}$（内层导数除以内层函数）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Given $y = \sqrt{2x^{2} + 1}$, find the exact value of $\dfrac{dy}{dx}$ at $x = 2$.</span><span data-lang="zh">3. 已知 $y = \sqrt{2x^{2} + 1}$，求 $x = 2$ 处 $\dfrac{dy}{dx}$ 的精确值。</span></summary>
+      <div class="sg-a"><p data-lang="en">$y = (2x^{2} + 1)^{1/2}$, so $\dfrac{dy}{dx} = \tfrac{1}{2}(2x^{2} + 1)^{-1/2} \cdot 4x = \dfrac{2x}{\sqrt{2x^{2} + 1}}$. At $x = 2$: $\dfrac{4}{\sqrt{9}} = \dfrac{4}{3}$.</p><p data-lang="zh">$y = (2x^{2} + 1)^{1/2}$，故 $\dfrac{dy}{dx} = \tfrac{1}{2}(2x^{2} + 1)^{-1/2} \cdot 4x = \dfrac{2x}{\sqrt{2x^{2} + 1}}$。在 $x = 2$ 处：$\dfrac{4}{\sqrt{9}} = \dfrac{4}{3}$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -661,7 +934,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- E2.3 PRODUCT & QUOTIENT -->
 <section class="section" id="s-e2-3">
   <div class="section-label"><span data-lang="en">Topic E2.3 · Product &amp; Quotient</span><span data-lang="zh">Topic E2.3 · 乘积与商</span></div>
-  <h2><span data-lang="en">Product Rule and Quotient Rule</span><span data-lang="zh">乘积法则与商法则</span> <span class="ib-ref">SL 5.7</span></h2>
+  <h2><span data-lang="en">Product Rule and Quotient Rule</span><span data-lang="zh">乘积法则与商法则</span> <span class="ib-ref">SL 5.6</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the product rule $(uv)' = u'v + uv'$ and the quotient rule $\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}$.</li>
+      <li>Decide whether a function needs the product rule, the quotient rule, or can be rewritten as a sum of powers instead.</li>
+      <li>Apply the product rule when one factor is itself a composite, using the chain rule inside.</li>
+      <li>Apply the quotient rule with the numerator in the order $u'v - uv'$, and simplify by factorising.</li>
+      <li>Deduce $\dfrac{d}{dx}\tan x = \dfrac{1}{\cos^{2} x}$ from the quotient rule.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出乘积法则 $(uv)' = u'v + uv'$ 与商法则 $\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}$（<code>product rule / quotient rule</code>）。</li>
+      <li>判断函数需要乘积法则、商法则，还是可改写为幂之和而无需二者。</li>
+      <li>当某一因子本身是复合函数时使用乘积法则，并在内部使用链式法则。</li>
+      <li>使用商法则时保持分子次序 $u'v - uv'$，并通过因式分解化简。</li>
+      <li>由商法则推导（<code>deduce</code>）$\dfrac{d}{dx}\tan x = \dfrac{1}{\cos^{2} x}$。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Product rule.</strong> If $y = u(x) \cdot v(x)$ with $u, v$ differentiable, then
@@ -678,8 +969,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     商法则口诀："分母乘分子的导数，减分子乘分母的导数，再除以分母的平方。"顺序很重要（由减号决定）。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.3a: product</span><span data-lang="zh">E2.3a 例题：乘积</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.3a (product)</span><span data-lang="zh">E2.3a 例题（乘积）</span></div>
     <p><span data-lang="en">Differentiate $y = (x^{2} + 1)(x^{3} - 2x)$.</span><span data-lang="zh">求 $y = (x^{2} + 1)(x^{3} - 2x)$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -694,9 +985,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Sanity check.</strong> Expand $y$ first: $y = x^{5} - 2 x^{3} + x^{3} - 2x = x^{5} - x^{3} - 2x$. Power rule gives $y' = 5 x^{4} - 3 x^{2} - 2$. The two answers agree.</p>
     <p data-lang="zh"><strong>验证。</strong>先展开 $y$：$y = x^{5} - 2 x^{3} + x^{3} - 2x = x^{5} - x^{3} - 2x$。幂法则给出 $y' = 5 x^{4} - 3 x^{2} - 2$。两种方法结果一致。</p>
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.3b: quotient</span><span data-lang="zh">E2.3b 例题：商</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.3b (quotient)</span><span data-lang="zh">E2.3b 例题（商）</span></div>
     <p><span data-lang="en">Differentiate $y = \dfrac{x}{x^{2} + 1}$.</span><span data-lang="zh">求 $y = \dfrac{x}{x^{2} + 1}$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -706,6 +998,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>使用商法则。</strong></p>
     $$ \frac{dy}{dx} \;=\; \frac{1 \cdot (x^{2} + 1) \;-\; x \cdot 2x}{(x^{2} + 1)^{2}} \;=\; \frac{x^{2} + 1 \;-\; 2 x^{2}}{(x^{2} + 1)^{2}} \;=\; \frac{1 - x^{2}}{(x^{2} + 1)^{2}}. $$
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: minus-sign order in the quotient rule</span><span data-lang="zh">陷阱：商法则中减号的位置</span></strong>
@@ -721,8 +1014,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="en">Divide by $v$ and clear fractions:</p>
       <p data-lang="zh">两边除以 $v$ 并通分：</p>
       $$ y' \;=\; \frac{u' v - u v'}{v^{2}}. $$
-      <p data-lang="en">So the quotient rule is not an independent axiom; it is a consequence of the product rule plus implicit differentiation. Memorising the product rule alone is enough if you can do this derivation under exam time pressure.</p>
-      <p data-lang="zh">商法则并非独立公理，而是乘积法则加隐函数求导的推论。若考试时能临场推导，只背乘积法则也够用。</p>
+      <p data-lang="en">So the quotient rule is not an independent axiom; it is a consequence of the product rule applied to $y v = u$. Memorising the product rule alone is enough if you can do this derivation under exam time pressure.</p>
+      <p data-lang="zh">商法则并非独立公理，而是对 $y v = u$ 使用乘积法则的推论。若考试时能临场推导，只背乘积法则也够用。</p>
     </div>
   </details>
 
@@ -739,9 +1032,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.3c: deriving tan x from sin/cos</span><span data-lang="zh">E2.3c 例题：由 sin/cos 推导 tan 的导数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.3c (deriving tan x from sin/cos)</span><span data-lang="zh">E2.3c 例题（由 sin/cos 推导 tan 的导数）</span></div>
-    <p><span data-lang="en">Use the quotient rule on $\tan x = \dfrac{\sin x}{\cos x}$ to derive $\dfrac{d}{dx}\tan x = \sec^2 x$.</span><span data-lang="zh">对 $\tan x = \dfrac{\sin x}{\cos x}$ 使用商法则，推导 $\dfrac{d}{dx}\tan x = \sec^2 x$。</span></p>
+    <p><span data-lang="en">Use the quotient rule on $\tan x = \dfrac{\sin x}{\cos x}$ to derive $\dfrac{d}{dx}\tan x = \dfrac{1}{\cos^2 x}$.</span><span data-lang="zh">对 $\tan x = \dfrac{\sin x}{\cos x}$ 使用商法则，推导 $\dfrac{d}{dx}\tan x = \dfrac{1}{\cos^2 x}$。</span></p>
   </div>
   <div class="worked-solution">
     <p data-lang="en"><strong>Apply the quotient rule with $u=\sin x$, $v=\cos x$.</strong></p>
@@ -749,9 +1042,36 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \frac{d}{dx}\tan x = \frac{\cos x \cdot \cos x - \sin x \cdot(-\sin x)}{\cos^2 x} = \frac{\cos^2 x + \sin^2 x}{\cos^2 x} $$
     <p data-lang="en"><strong>Use the Pythagorean identity on the numerator.</strong></p>
     <p data-lang="zh"><strong>对分子用毕氏恒等式。</strong></p>
-    $$ = \frac{1}{\cos^2 x} = \sec^2 x $$
-    <p data-lang="en">This shows the "memorize this table" entry for $\tan x$ in E2.4 is not an independent fact — it falls straight out of the quotient rule plus the Pythagorean identity.</p>
-    <p data-lang="zh">这说明 E2.4 表格中 $\tan x$ 那一行并非独立事实——它直接由商法则加毕氏恒等式得出。</p>
+    $$ = \frac{1}{\cos^2 x} $$
+    <div data-course="hl">
+      <p data-lang="en">(HL) Since $\sec x = \dfrac{1}{\cos x}$, the same result is written $\dfrac{d}{dx}\tan x = \sec^{2} x$.</p>
+      <p data-lang="zh">（HL）由于 $\sec x = \dfrac{1}{\cos x}$，同一结果写作 $\dfrac{d}{dx}\tan x = \sec^{2} x$。</p>
+    </div>
+    <p data-lang="en">This shows the derivative of $\tan x$ is not an independent fact: it falls straight out of the quotient rule plus the Pythagorean identity.</p>
+    <p data-lang="zh">这说明 $\tan x$ 的导数并非独立事实：它直接由商法则加毕氏恒等式得出。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Before reaching for the quotient rule, check whether the function can be rewritten as a sum of powers, e.g. $\dfrac{x^{2} + 1}{x} = x + x^{-1}$; that route is shorter and safer. When you do use it, write $u$, $v$, $u'$ and $v'$ explicitly and keep the numerator in the order $u'v - uv'$. Simplify by factorising the numerator and leave the denominator as $(v)^{2}$ rather than expanding it.</p>
+    <p data-lang="zh">使用商法则之前，先看能否把函数改写为幂之和，如 $\dfrac{x^{2} + 1}{x} = x + x^{-1}$；这样更短也更稳。确需使用时，明确写出 $u$、$v$、$u'$、$v'$，分子保持 $u'v - uv'$ 的次序。化简时对分子因式分解，分母保留 $(v)^{2}$ 的形式，不必展开。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate $y = x e^{2x}$.</span><span data-lang="zh">1. 求 $y = x e^{2x}$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Product rule with $u = x$, $v = e^{2x}$ (so $v' = 2e^{2x}$ by the chain rule): $\dfrac{dy}{dx} = e^{2x} + 2x e^{2x} = e^{2x}(1 + 2x)$.</p><p data-lang="zh">乘积法则，$u = x$，$v = e^{2x}$（由链式法则 $v' = 2e^{2x}$）：$\dfrac{dy}{dx} = e^{2x} + 2x e^{2x} = e^{2x}(1 + 2x)$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Differentiate $y = \dfrac{2x + 3}{x - 1}$.</span><span data-lang="zh">2. 求 $y = \dfrac{2x + 3}{x - 1}$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Quotient rule with $u = 2x + 3$, $v = x - 1$: $\dfrac{dy}{dx} = \dfrac{2(x - 1) - (2x + 3)(1)}{(x - 1)^{2}} = \dfrac{-5}{(x - 1)^{2}}$.</p><p data-lang="zh">商法则，$u = 2x + 3$，$v = x - 1$：$\dfrac{dy}{dx} = \dfrac{2(x - 1) - (2x + 3)(1)}{(x - 1)^{2}} = \dfrac{-5}{(x - 1)^{2}}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $f(x) = \dfrac{x^{2}}{x + 1}$, find the coordinates of the points where $f'(x) = 0$.</span><span data-lang="zh">3. 对 $f(x) = \dfrac{x^{2}}{x + 1}$，求满足 $f'(x) = 0$ 的点的坐标。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f'(x) = \dfrac{2x(x + 1) - x^{2}}{(x + 1)^{2}} = \dfrac{x(x + 2)}{(x + 1)^{2}}$. The numerator is zero at $x = 0$ and $x = -2$ (the denominator is non-zero there). $f(0) = 0$ and $f(-2) = \dfrac{4}{-1} = -4$, so the points are $(0, 0)$ and $(-2, -4)$.</p><p data-lang="zh">$f'(x) = \dfrac{2x(x + 1) - x^{2}}{(x + 1)^{2}} = \dfrac{x(x + 2)}{(x + 1)^{2}}$。分子在 $x = 0$ 与 $x = -2$ 处为零（此时分母不为零）。$f(0) = 0$，$f(-2) = \dfrac{4}{-1} = -4$，故两点为 $(0, 0)$ 与 $(-2, -4)$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -760,49 +1080,87 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- E2.4 STANDARD DERIVATIVES -->
 <section class="section" id="s-e2-4">
   <div class="section-label"><span data-lang="en">Topic E2.4 · Standard Derivatives</span><span data-lang="zh">Topic E2.4 · 标准导数</span></div>
-  <h2><span data-lang="en">Derivatives of Trigonometric, Exponential, and Logarithmic Functions</span><span data-lang="zh">三角、指数、对数函数的导数</span> <span class="ib-ref">SL 5.7</span></h2>
+  <h2><span data-lang="en">Derivatives of Trigonometric, Exponential, and Logarithmic Functions</span><span data-lang="zh">三角、指数、对数函数的导数</span> <span class="ib-ref">SL 5.6 / 5.7</span> <span class="ib-ref" data-course="hl">AHL 5.15</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the derivatives of $\sin x$, $\cos x$, $e^{x}$ and $\ln x$.</li>
+      <li>Use radians: $\dfrac{d}{dx}\sin x = \cos x$ and $\dfrac{d}{dx}\cos x = -\sin x$ hold only for $x$ in radians.</li>
+      <li>Apply the chain rule to $e^{g(x)}$, $\ln g(x)$ and trigonometric functions of $g(x)$, e.g. $\dfrac{d}{dx}\ln g(x) = \dfrac{g'(x)}{g(x)}$.</li>
+      <li>Combine the standard derivatives with the product and quotient rules.</li>
+      <li>Calculate the second derivative $f''(x)$ by differentiating $f'(x)$.</li>
+      <li data-course="hl">(HL) State the derivatives of $\tan x$, $\sec x$, $\csc x$, $\cot x$, $a^{x}$, $\log_{a} x$, $\arcsin x$, $\arccos x$ and $\arctan x$, and combine them with the chain rule.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出 $\sin x$、$\cos x$、$e^{x}$、$\ln x$ 的导数。</li>
+      <li>使用弧度（<code>radians</code>）：$\dfrac{d}{dx}\sin x = \cos x$ 与 $\dfrac{d}{dx}\cos x = -\sin x$ 仅在 $x$ 以弧度为单位时成立。</li>
+      <li>对 $e^{g(x)}$、$\ln g(x)$ 及 $g(x)$ 的三角函数使用链式法则，如 $\dfrac{d}{dx}\ln g(x) = \dfrac{g'(x)}{g(x)}$。</li>
+      <li>把标准导数与乘积法则、商法则结合使用。</li>
+      <li>对 $f'(x)$ 再求导，计算二阶导数（<code>second derivative</code>）$f''(x)$。</li>
+      <li data-course="hl">（HL）写出 $\tan x$、$\sec x$、$\csc x$、$\cot x$、$a^{x}$、$\log_{a} x$、$\arcsin x$、$\arccos x$、$\arctan x$ 的导数，并与链式法则结合使用。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
-    <strong>Memorise this table.</strong> Every Paper 1 question that touches calculus assumes you know it cold.
-    <table style="margin-top: 8px;">
+    <strong>Memorise this table.</strong> Angles are in radians.
+    <table class="sg-list">
       <tr><th>Function</th><th>Derivative</th></tr>
       <tr><td>$\sin x$</td><td>$\cos x$</td></tr>
       <tr><td>$\cos x$</td><td>$-\sin x$</td></tr>
-      <tr><td>$\tan x$</td><td>$\sec^{2} x$</td></tr>
       <tr><td>$e^{x}$</td><td>$e^{x}$</td></tr>
       <tr><td>$\ln x$</td><td>$\dfrac{1}{x}$</td></tr>
-      <tr><td>$a^{x}$</td><td>$a^{x} \ln a$</td></tr>
-      <tr><td>$\log_{a} x$</td><td>$\dfrac{1}{x \ln a}$</td></tr>
     </table>
-    <strong>HL extension (inverse trig).</strong>
-    $\dfrac{d}{dx}\arcsin x = \dfrac{1}{\sqrt{1 - x^{2}}}$,
-    $\dfrac{d}{dx}\arccos x = -\dfrac{1}{\sqrt{1 - x^{2}}}$,
-    $\dfrac{d}{dx}\arctan x = \dfrac{1}{1 + x^{2}}$.
-    <br><br>
     Combine with the chain rule whenever the argument is more complex than $x$ alone: $\dfrac{d}{dx} \sin(g(x)) = \cos(g(x)) \cdot g'(x)$, and so on.
   </div>
   <div class="cram-cheat" data-lang="zh">
-    <strong>背熟此表。</strong>Paper 1 凡涉及微积分的题目都默认你能直接调用。
-    <table style="margin-top: 8px;">
+    <strong>背熟此表。</strong>角以弧度为单位。
+    <table class="sg-list">
       <tr><th>函数</th><th>导数</th></tr>
       <tr><td>$\sin x$</td><td>$\cos x$</td></tr>
       <tr><td>$\cos x$</td><td>$-\sin x$</td></tr>
-      <tr><td>$\tan x$</td><td>$\sec^{2} x$</td></tr>
       <tr><td>$e^{x}$</td><td>$e^{x}$</td></tr>
       <tr><td>$\ln x$</td><td>$\dfrac{1}{x}$</td></tr>
-      <tr><td>$a^{x}$</td><td>$a^{x} \ln a$</td></tr>
-      <tr><td>$\log_{a} x$</td><td>$\dfrac{1}{x \ln a}$</td></tr>
     </table>
-    <strong>HL 扩展（反三角）。</strong>
-    $\dfrac{d}{dx}\arcsin x = \dfrac{1}{\sqrt{1 - x^{2}}}$，
-    $\dfrac{d}{dx}\arccos x = -\dfrac{1}{\sqrt{1 - x^{2}}}$，
-    $\dfrac{d}{dx}\arctan x = \dfrac{1}{1 + x^{2}}$。
-    <br><br>
     当自变量比单独的 $x$ 更复杂时，与链式法则结合：$\dfrac{d}{dx} \sin(g(x)) = \cos(g(x)) \cdot g'(x)$，其余类推。
   </div>
+  <div data-course="hl">
+  <div class="cram-cheat" data-lang="en">
+    <strong>HL extension: reciprocal trig, inverse trig and base $a$.</strong>
+    <table class="sg-list">
+      <tr><th>Function</th><th>Derivative</th></tr>
+      <tr><td>$\tan x$</td><td>$\sec^{2} x$</td></tr>
+      <tr><td>$\sec x$</td><td>$\sec x \tan x$</td></tr>
+      <tr><td>$\csc x$</td><td>$-\csc x \cot x$</td></tr>
+      <tr><td>$\cot x$</td><td>$-\csc^{2} x$</td></tr>
+      <tr><td>$a^{x}$</td><td>$a^{x} \ln a$</td></tr>
+      <tr><td>$\log_{a} x$</td><td>$\dfrac{1}{x \ln a}$</td></tr>
+      <tr><td>$\arcsin x$</td><td>$\dfrac{1}{\sqrt{1 - x^{2}}}$</td></tr>
+      <tr><td>$\arccos x$</td><td>$-\dfrac{1}{\sqrt{1 - x^{2}}}$</td></tr>
+      <tr><td>$\arctan x$</td><td>$\dfrac{1}{1 + x^{2}}$</td></tr>
+    </table>
+    The HL derivatives combine with the chain rule in the same way as the SL ones.
+  </div>
+  <div class="cram-cheat" data-lang="zh">
+    <strong>HL 扩展：倒数三角函数、反三角函数与以 $a$ 为底的函数。</strong>
+    <table class="sg-list">
+      <tr><th>函数</th><th>导数</th></tr>
+      <tr><td>$\tan x$</td><td>$\sec^{2} x$</td></tr>
+      <tr><td>$\sec x$</td><td>$\sec x \tan x$</td></tr>
+      <tr><td>$\csc x$</td><td>$-\csc x \cot x$</td></tr>
+      <tr><td>$\cot x$</td><td>$-\csc^{2} x$</td></tr>
+      <tr><td>$a^{x}$</td><td>$a^{x} \ln a$</td></tr>
+      <tr><td>$\log_{a} x$</td><td>$\dfrac{1}{x \ln a}$</td></tr>
+      <tr><td>$\arcsin x$</td><td>$\dfrac{1}{\sqrt{1 - x^{2}}}$</td></tr>
+      <tr><td>$\arccos x$</td><td>$-\dfrac{1}{\sqrt{1 - x^{2}}}$</td></tr>
+      <tr><td>$\arctan x$</td><td>$\dfrac{1}{1 + x^{2}}$</td></tr>
+    </table>
+    HL 的这些导数与 SL 的导数一样，同样与链式法则结合使用。
+  </div>
+  </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.4a: chain with trig + exp</span><span data-lang="zh">E2.4a 例题：链式 + 三角 + 指数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.4a (chain with trig + exp)</span><span data-lang="zh">E2.4a 例题（链式 + 三角 + 指数）</span></div>
     <p><span data-lang="en">Differentiate $y = e^{\sin(2x)}$.</span><span data-lang="zh">求 $y = e^{\sin(2x)}$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -812,9 +1170,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>对三层依次使用链式法则。</strong></p>
     $$ \frac{dy}{dx} \;=\; e^{\sin(2x)} \cdot \cos(2x) \cdot 2 \;=\; 2 \cos(2x) \, e^{\sin(2x)}. $$
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.4b: product with log</span><span data-lang="zh">E2.4b 例题：乘积 + 对数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.4b (product with log)</span><span data-lang="zh">E2.4b 例题（乘积 + 对数）</span></div>
     <p><span data-lang="en">Differentiate $y = x^{2} \ln x$.</span><span data-lang="zh">求 $y = x^{2} \ln x$ 的导数。</span></p>
   </div>
   <div class="worked-solution">
@@ -822,6 +1181,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>乘积法则</strong>，$u = x^{2}$，$v = \ln x$：</p>
     $$ \frac{dy}{dx} \;=\; 2x \cdot \ln x \;+\; x^{2} \cdot \frac{1}{x} \;=\; 2x \ln x \;+\; x \;=\; x \,(2 \ln x + 1). $$
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">▸ Going deeper: where $\tfrac{d}{dx}(e^{x}) = e^{x}$ comes from</span><span data-lang="zh">▸ 深入：$\tfrac{d}{dx}(e^{x}) = e^{x}$ 的由来</span></summary>
@@ -829,8 +1189,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <p data-lang="en">From first principles,</p>
       <p data-lang="zh">由定义出发，</p>
       $$ \frac{d}{dx}(e^{x}) \;=\; \lim_{h \to 0} \frac{e^{x + h} - e^{x}}{h} \;=\; e^{x} \cdot \lim_{h \to 0} \frac{e^{h} - 1}{h}. $$
-      <p data-lang="en">The number $e$ is defined precisely so that $\lim_{h \to 0} \tfrac{e^{h} - 1}{h} = 1$. (Equivalently, $e$ is the unique base for which the slope of $a^{x}$ at $x = 0$ equals $1$.) Hence $\tfrac{d}{dx}(e^{x}) = e^{x} \cdot 1 = e^{x}$. The same calculation gives $\tfrac{d}{dx}(a^{x}) = a^{x} \ln a$, since $\lim_{h \to 0} \tfrac{a^{h} - 1}{h} = \ln a$ in general.</p>
-      <p data-lang="zh">数 $e$ 的定义就是使 $\lim_{h \to 0} \tfrac{e^{h} - 1}{h} = 1$ 的那个底数（等价地：使 $a^{x}$ 在 $x = 0$ 处斜率为 $1$ 的唯一底）。故 $\tfrac{d}{dx}(e^{x}) = e^{x} \cdot 1 = e^{x}$。同理可得 $\tfrac{d}{dx}(a^{x}) = a^{x} \ln a$，因为一般来说 $\lim_{h \to 0} \tfrac{a^{h} - 1}{h} = \ln a$。</p>
+      <p data-lang="en">The number $e$ is defined precisely so that $\lim_{h \to 0} \tfrac{e^{h} - 1}{h} = 1$. (Equivalently, $e$ is the unique base for which the slope of $a^{x}$ at $x = 0$ equals $1$.) Hence $\tfrac{d}{dx}(e^{x}) = e^{x} \cdot 1 = e^{x}$.</p>
+      <p data-lang="zh">数 $e$ 的定义就是使 $\lim_{h \to 0} \tfrac{e^{h} - 1}{h} = 1$ 的那个底数（等价地：$e$ 是使 $a^{x}$ 在 $x = 0$ 处斜率为 $1$ 的唯一底数）。故 $\tfrac{d}{dx}(e^{x}) = e^{x} \cdot 1 = e^{x}$。</p>
+      <div data-course="hl">
+        <p data-lang="en">(HL) The same calculation gives $\tfrac{d}{dx}(a^{x}) = a^{x} \ln a$, since $\lim_{h \to 0} \tfrac{a^{h} - 1}{h} = \ln a$ for any base $a &gt; 0$.</p>
+        <p data-lang="zh">（HL）同理可得 $\tfrac{d}{dx}(a^{x}) = a^{x} \ln a$，因为对任意底数 $a &gt; 0$，$\lim_{h \to 0} \tfrac{a^{h} - 1}{h} = \ln a$。</p>
+      </div>
     </div>
   </details>
 
@@ -847,26 +1211,86 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.4c: second derivative of a standard function</span><span data-lang="zh">E2.4c 例题：标准函数的二阶导数</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.4c (second derivative of a standard function)</span><span data-lang="zh">E2.4c 例题（标准函数的二阶导数）</span></div>
     <p><span data-lang="en">Find $y''$ if $y = \ln(x)$.</span><span data-lang="zh">若 $y = \ln(x)$，求 $y''$。</span></p>
   </div>
   <div class="worked-solution">
     <p data-lang="en"><strong>First derivative, from the table.</strong></p>
     <p data-lang="zh"><strong>一阶导数，查表。</strong></p>
     $$ y' = \frac{1}{x} = x^{-1} $$
-    <p data-lang="en"><strong>Differentiate again using the power rule (E2.1) — the standard-derivatives table only covers first derivatives, so the second derivative falls back on ordinary rules.</strong></p>
-    <p data-lang="zh"><strong>再用幂法则（E2.1）求一次导——标准导数表只列出一阶导数，二阶导数要回到普通法则。</strong></p>
+    <p data-lang="en"><strong>Differentiate again using the power rule (E2.1). The standard-derivatives table only covers first derivatives, so the second derivative falls back on ordinary rules.</strong></p>
+    <p data-lang="zh"><strong>再用幂法则（E2.1）求一次导。标准导数表只列出一阶导数，二阶导数要回到普通法则。</strong></p>
     $$ y'' = -x^{-2} = -\frac{1}{x^2} $$
+  </div>
+  </details>
+
+  <details class="sg-we" open data-course="hl"><summary><span data-lang="en">Worked Example E2.4d: reciprocal, inverse and base-a derivatives (HL)</span><span data-lang="zh">E2.4d 例题：倒数、反三角与以 a 为底的导数（HL）</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Differentiate (a) $y = \arctan(3x)$, (b) $y = 2^{x^{2}}$, (c) $y = \sec(2x)$.</span><span data-lang="zh">求导：(a) $y = \arctan(3x)$，(b) $y = 2^{x^{2}}$，(c) $y = \sec(2x)$。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>(a)</strong> Use $\dfrac{d}{du}\arctan u = \dfrac{1}{1 + u^{2}}$ with $u = 3x$, $u' = 3$.</p>
+    <p data-lang="zh"><strong>(a)</strong> 用 $\dfrac{d}{du}\arctan u = \dfrac{1}{1 + u^{2}}$，取 $u = 3x$，$u' = 3$。</p>
+    $$ \frac{dy}{dx} \;=\; \frac{3}{1 + 9x^{2}}. $$
+    <p data-lang="en"><strong>(b)</strong> Use $\dfrac{d}{du}a^{u} = a^{u} \ln a$ with $a = 2$, $u = x^{2}$, $u' = 2x$.</p>
+    <p data-lang="zh"><strong>(b)</strong> 用 $\dfrac{d}{du}a^{u} = a^{u} \ln a$，取 $a = 2$，$u = x^{2}$，$u' = 2x$。</p>
+    $$ \frac{dy}{dx} \;=\; 2^{x^{2}} \ln 2 \cdot 2x \;=\; 2x \ln 2 \cdot 2^{x^{2}}. $$
+    <p data-lang="en"><strong>(c)</strong> Use $\dfrac{d}{du}\sec u = \sec u \tan u$ with $u = 2x$, $u' = 2$.</p>
+    <p data-lang="zh"><strong>(c)</strong> 用 $\dfrac{d}{du}\sec u = \sec u \tan u$，取 $u = 2x$，$u' = 2$。</p>
+    $$ \frac{dy}{dx} \;=\; 2 \sec(2x) \tan(2x). $$
+    <p data-lang="en"><strong>Why this works.</strong> Each HL derivative is used exactly like an SL one: read the outer derivative from the table, evaluate it at the inner function, and multiply by the inner derivative.</p>
+    <p data-lang="zh"><strong>原理。</strong>HL 的每个导数与 SL 的用法完全相同：从表中读出外层导数，以内层函数为自变量，再乘以内层导数。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">The results $\dfrac{d}{dx}\sin x = \cos x$ and $\dfrac{d}{dx}\cos x = -\sin x$ assume $x$ is in radians; if an angle is given in degrees, convert it first. For a logarithm of a function, write $\dfrac{g'(x)}{g(x)}$ in one step. When a question asks for $f''(x)$, simplify $f'(x)$ first, because differentiating a factorised $f'$ is shorter. Check the sign of every cosine derivative: a dropped minus sign is a typical slip.</p>
+    <p data-lang="zh">$\dfrac{d}{dx}\sin x = \cos x$ 与 $\dfrac{d}{dx}\cos x = -\sin x$ 默认 $x$ 以弧度（<code>radians</code>）为单位；若角度以度给出，先换算。对函数取对数时，一步写出 $\dfrac{g'(x)}{g(x)}$。题目要求 $f''(x)$ 时，先化简 $f'(x)$，对因式分解后的 $f'$ 求导更短。检查每个余弦导数的符号：漏掉负号是典型失误。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate $y = 3\sin x - 4\cos x + 5e^{x}$.</span><span data-lang="zh">1. 求 $y = 3\sin x - 4\cos x + 5e^{x}$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Term by term: $\dfrac{dy}{dx} = 3\cos x + 4\sin x + 5e^{x}$ (the derivative of $-4\cos x$ is $+4\sin x$).</p><p data-lang="zh">逐项求导：$\dfrac{dy}{dx} = 3\cos x + 4\sin x + 5e^{x}$（$-4\cos x$ 的导数是 $+4\sin x$）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Differentiate $y = \ln(x^{2} + 4)$ and $y = e^{x}\cos x$.</span><span data-lang="zh">2. 求 $y = \ln(x^{2} + 4)$ 与 $y = e^{x}\cos x$ 的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{d}{dx}\ln(x^{2} + 4) = \dfrac{2x}{x^{2} + 4}$. Product rule: $\dfrac{d}{dx}(e^{x}\cos x) = e^{x}\cos x - e^{x}\sin x = e^{x}(\cos x - \sin x)$.</p><p data-lang="zh">$\dfrac{d}{dx}\ln(x^{2} + 4) = \dfrac{2x}{x^{2} + 4}$。乘积法则：$\dfrac{d}{dx}(e^{x}\cos x) = e^{x}\cos x - e^{x}\sin x = e^{x}(\cos x - \sin x)$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Given $f(x) = x e^{-x}$, find $f''(x)$ and the value of $f''(0)$.</span><span data-lang="zh">3. 已知 $f(x) = x e^{-x}$，求 $f''(x)$ 与 $f''(0)$ 的值。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f'(x) = e^{-x} - x e^{-x} = (1 - x)e^{-x}$. Differentiate again with the product rule: $f''(x) = -e^{-x} - (1 - x)e^{-x} = (x - 2)e^{-x}$. So $f''(0) = -2$.</p><p data-lang="zh">$f'(x) = e^{-x} - x e^{-x} = (1 - x)e^{-x}$。再用乘积法则求导：$f''(x) = -e^{-x} - (1 - x)e^{-x} = (x - 2)e^{-x}$。故 $f''(0) = -2$。</p></div>
+    </details>
   </div>
 </section>
 
 <hr class="sep">
 
 <!-- E2.5 IMPLICIT DIFFERENTIATION -->
-<section class="section" id="s-e2-5">
+<section class="section" id="s-e2-5" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E2.5 · Implicit Differentiation</span><span data-lang="zh">Topic E2.5 · 隐函数求导</span></div>
-  <h2><span data-lang="en">Implicit Differentiation</span><span data-lang="zh">隐函数求导</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.13</span></h2>
+  <h2><span data-lang="en">Implicit Differentiation</span><span data-lang="zh">隐函数求导</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.14</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Explain what it means for an equation such as $x^{2} + y^{2} = 25$ to define $y$ implicitly as a function of $x$.</li>
+      <li>Apply the chain rule to $y$-terms: $\dfrac{d}{dx}(y^{n}) = n y^{n-1} \dfrac{dy}{dx}$.</li>
+      <li>Apply the product rule to mixed terms such as $xy$ and $x^{2} y$.</li>
+      <li>Solve the differentiated equation for $\dfrac{dy}{dx}$ explicitly.</li>
+      <li>Calculate gradients and tangent equations at a point, and find points where the tangent is horizontal.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>解释（<code>explain</code>）方程 $x^{2} + y^{2} = 25$ 等如何把 $y$ 隐式地定义为 $x$ 的函数。</li>
+      <li>对含 $y$ 的项使用链式法则：$\dfrac{d}{dx}(y^{n}) = n y^{n-1} \dfrac{dy}{dx}$。</li>
+      <li>对 $xy$、$x^{2} y$ 等混合项使用乘积法则。</li>
+      <li>由求导后的方程显式解出 $\dfrac{dy}{dx}$。</li>
+      <li>计算某点处的斜率与切线方程，并求切线水平的点。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>When to use it.</strong> An equation defines $y$ implicitly when $y$ cannot be isolated cleanly. Classic example: the circle $x^{2} + y^{2} = 25$. Squaring or rearranging gives $y = \pm \sqrt{25 - x^{2}}$, but that requires picking a branch. Implicit differentiation avoids the branch choice entirely.
@@ -889,8 +1313,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ol>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.5a: the circle</span><span data-lang="zh">E2.5a 例题：圆</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.5a (the circle)</span><span data-lang="zh">E2.5a 例题（圆）</span></div>
     <p><span data-lang="en">Find $\dfrac{dy}{dx}$ for the circle $x^{2} + y^{2} = 25$, and use it to find the slope of the tangent at the point $(3, 4)$.</span><span data-lang="zh">求圆 $x^{2} + y^{2} = 25$ 的 $\dfrac{dy}{dx}$，并由此求 $(3, 4)$ 处切线的斜率。</span></p>
   </div>
   <div class="worked-solution">
@@ -905,9 +1329,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Geometric check.</strong> The radius from the origin to $(3, 4)$ has slope $4/3$. The tangent is perpendicular to that radius, so its slope is $-3/4$. The implicit derivative agrees.</p>
     <p data-lang="zh"><strong>几何验证。</strong>原点到 $(3, 4)$ 的半径斜率为 $4/3$。切线与半径垂直，斜率应为 $-3/4$。隐函数导数结果一致。</p>
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.5b: mixed term</span><span data-lang="zh">E2.5b 例题：混合项</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.5b (mixed term)</span><span data-lang="zh">E2.5b 例题（混合项）</span></div>
     <p><span data-lang="en">Find $\dfrac{dy}{dx}$ for $x^{3} + 3 x y + y^{3} = 1$.</span><span data-lang="zh">求 $x^{3} + 3 x y + y^{3} = 1$ 的 $\dfrac{dy}{dx}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -921,6 +1346,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>求解。</strong></p>
     $$ \frac{dy}{dx} \;=\; -\frac{3 x^{2} + 3 y}{3 x + 3 y^{2}} \;=\; -\frac{x^{2} + y}{x + y^{2}}. $$
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: forgetting the chain factor</span><span data-lang="zh">陷阱：忘记链式因子</span></strong>
@@ -928,7 +1354,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="3">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Find $\dfrac{dy}{dx}$ at the point $(1, 2)$ on the curve $y^{2} - 2xy = 0$.</span><span data-lang="zh">求曲线 $y^{2} - 2xy = 0$ 在点 $(1, 2)$ 处的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">E2.5 · Q1</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) Find $\dfrac{dy}{dx}$ at the point $(1, 2)$ on the curve $y^{2} - 2xy = 0$.</span><span data-lang="zh">（HL）求曲线 $y^{2} - 2xy = 0$ 在点 $(1, 2)$ 处的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">E2.5 · Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$0$</div>
       <div class="quiz-opt" data-idx="1">$\dfrac{1}{2}$</div>
@@ -940,8 +1366,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.5c: finding a horizontal tangent implicitly</span><span data-lang="zh">E2.5c 例题：隐式求水平切线</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.5c (finding a horizontal tangent implicitly)</span><span data-lang="zh">E2.5c 例题（隐式求水平切线）</span></div>
     <p><span data-lang="en">Find the point(s) on $x^{2} + y^{2} - 4x = 0$ where the tangent is horizontal.</span><span data-lang="zh">求曲线 $x^{2} + y^{2} - 4x = 0$ 上切线为水平的点。</span></p>
   </div>
   <div class="worked-solution">
@@ -953,17 +1379,58 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Substitute back into the original equation to find $y$.</strong></p>
     <p data-lang="zh"><strong>代回原方程求 $y$。</strong></p>
     $$ 4 + y^2 - 8 = 0 \;\Longrightarrow\; y^2 = 4 \;\Longrightarrow\; y = \pm 2. $$
-    <p data-lang="en">Two points: $(2, 2)$ and $(2, -2)$. The key move — setting the <em>numerator</em> to zero rather than the whole derivative — is the general method whenever $\dfrac{dy}{dx}$ implicit comes out as a fraction.</p>
-    <p data-lang="zh">共两个点：$(2, 2)$ 与 $(2, -2)$。关键一步——令<em>分子</em>为零而非整个导数——是每当隐式求得的 $\dfrac{dy}{dx}$ 呈分式形式时的通用方法。</p>
+    <p data-lang="en">Two points: $(2, 2)$ and $(2, -2)$. The key move, setting the <em>numerator</em> to zero rather than the whole derivative, is the general method whenever an implicit $\dfrac{dy}{dx}$ comes out as a fraction.</p>
+    <p data-lang="zh">共两个点：$(2, 2)$ 与 $(2, -2)$。关键一步（令<em>分子</em>为零而非整个导数）是每当隐式求得的 $\dfrac{dy}{dx}$ 呈分式形式时的通用方法。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question gives the expression for $\dfrac{dy}{dx}$ that you must show, write every line: the differentiated equation, the $\dfrac{dy}{dx}$ terms collected on one side, and the division. An answer with $\dfrac{dy}{dx}$ still on both sides of the equation is incomplete. To find a horizontal tangent, set the numerator of $\dfrac{dy}{dx}$ to zero, then substitute back into the original equation to find the matching $y$.</p>
+    <p data-lang="zh">题目给出需证明的 $\dfrac{dy}{dx}$ 表达式（<code>show that</code>）时，写出每一步：求导后的方程、把 $\dfrac{dy}{dx}$ 项移到一侧、再相除。若 $\dfrac{dy}{dx}$ 仍出现在方程两侧，答案并不完整。求水平切线时，令 $\dfrac{dy}{dx}$ 的分子为零，再代回原方程求出对应的 $y$。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find $\dfrac{dy}{dx}$ for the curve $x^{2} + 4y^{2} = 8$.</span><span data-lang="zh">1. 求曲线 $x^{2} + 4y^{2} = 8$ 的 $\dfrac{dy}{dx}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$2x + 8y\dfrac{dy}{dx} = 0$, so $\dfrac{dy}{dx} = -\dfrac{x}{4y}$.</p><p data-lang="zh">$2x + 8y\dfrac{dy}{dx} = 0$，故 $\dfrac{dy}{dx} = -\dfrac{x}{4y}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. The curve $x^{2} y + y^{3} = 10$ passes through $(3, 1)$. Find the gradient there.</span><span data-lang="zh">2. 曲线 $x^{2} y + y^{3} = 10$ 经过 $(3, 1)$。求该点处的斜率。</span></summary>
+      <div class="sg-a"><p data-lang="en">Product rule on $x^{2} y$: $2xy + x^{2}\dfrac{dy}{dx} + 3y^{2}\dfrac{dy}{dx} = 0$, so $\dfrac{dy}{dx} = -\dfrac{2xy}{x^{2} + 3y^{2}}$. At $(3, 1)$: $-\dfrac{6}{9 + 3} = -\dfrac{1}{2}$.</p><p data-lang="zh">对 $x^{2} y$ 用乘积法则：$2xy + x^{2}\dfrac{dy}{dx} + 3y^{2}\dfrac{dy}{dx} = 0$，故 $\dfrac{dy}{dx} = -\dfrac{2xy}{x^{2} + 3y^{2}}$。在 $(3, 1)$ 处：$-\dfrac{6}{9 + 3} = -\dfrac{1}{2}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the equation of the tangent to $x^{2} + xy + y^{2} = 7$ at the point $(1, 2)$.</span><span data-lang="zh">3. 求曲线 $x^{2} + xy + y^{2} = 7$ 在点 $(1, 2)$ 处的切线方程。</span></summary>
+      <div class="sg-a"><p data-lang="en">$2x + y + x\dfrac{dy}{dx} + 2y\dfrac{dy}{dx} = 0$, so $\dfrac{dy}{dx} = -\dfrac{2x + y}{x + 2y}$. At $(1, 2)$: $-\dfrac{4}{5}$. Tangent: $y - 2 = -\dfrac{4}{5}(x - 1)$, i.e. $y = -\dfrac{4}{5}x + \dfrac{14}{5}$ (or $4x + 5y = 14$).</p><p data-lang="zh">$2x + y + x\dfrac{dy}{dx} + 2y\dfrac{dy}{dx} = 0$，故 $\dfrac{dy}{dx} = -\dfrac{2x + y}{x + 2y}$。在 $(1, 2)$ 处：$-\dfrac{4}{5}$。切线：$y - 2 = -\dfrac{4}{5}(x - 1)$，即 $y = -\dfrac{4}{5}x + \dfrac{14}{5}$（或 $4x + 5y = 14$）。</p></div>
+    </details>
   </div>
 </section>
 
 <hr class="sep">
 
 <!-- E2.6 LOGARITHMIC DIFFERENTIATION -->
-<section class="section" id="s-e2-6">
+<section class="section" id="s-e2-6" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic E2.6 · Logarithmic Differentiation</span><span data-lang="zh">Topic E2.6 · 对数求导法</span></div>
-  <h2><span data-lang="en">Logarithmic Differentiation</span><span data-lang="zh">对数求导法</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.13</span></h2>
+  <h2><span data-lang="en">Logarithmic Differentiation</span><span data-lang="zh">对数求导法</span> <span class="hl-flag">HL</span> <span class="ib-ref">AHL 5.14</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Explain why neither the power rule nor the rule for $e^{x}$ applies to $y = x^{x}$.</li>
+      <li>Take $\ln$ of both sides and use the log laws to turn products, quotients and powers into sums.</li>
+      <li>Differentiate $\ln y$ with respect to $x$ as $\dfrac{1}{y}\dfrac{dy}{dx}$.</li>
+      <li>Apply logarithmic differentiation to functions of the form $f(x)^{g(x)}$ and to long products and quotients of powers.</li>
+      <li>Express the final answer in terms of $x$ by multiplying by $y$ and substituting back.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>解释为何幂法则与 $e^{x}$ 的求导法则都不适用于 $y = x^{x}$。</li>
+      <li>两边取 $\ln$，用对数律（<code>log laws</code>）把乘积、商与幂化为求和。</li>
+      <li>把 $\ln y$ 对 $x$ 求导，得 $\dfrac{1}{y}\dfrac{dy}{dx}$。</li>
+      <li>对形如 $f(x)^{g(x)}$ 的函数以及幂次相乘除的长式使用对数求导法（<code>logarithmic differentiation</code>）。</li>
+      <li>两边乘以 $y$ 并代回，把最终答案写成 $x$ 的表达式。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Two situations where logarithmic differentiation is the cleanest path:</strong>
@@ -994,8 +1461,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ol>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.6a: $x^{x}$</span><span data-lang="zh">E2.6a 例题：$x^{x}$</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.6a ($x^{x}$)</span><span data-lang="zh">E2.6a 例题（$x^{x}$）</span></div>
     <p><span data-lang="en">Find $\dfrac{dy}{dx}$ where $y = x^{x}$ for $x &gt; 0$.</span><span data-lang="zh">设 $y = x^{x}$（$x &gt; 0$），求 $\dfrac{dy}{dx}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -1009,9 +1476,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>解出 $\dfrac{dy}{dx}$ 并代回 $y = x^{x}$。</strong></p>
     $$ \frac{dy}{dx} \;=\; y \,(\ln x + 1) \;=\; x^{x} \,(\ln x + 1). $$
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.6b: product of powers</span><span data-lang="zh">E2.6b 例题：幂次相乘</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.6b (product of powers)</span><span data-lang="zh">E2.6b 例题（幂次相乘）</span></div>
     <p><span data-lang="en">Find $\dfrac{dy}{dx}$ where $y = \dfrac{(x + 1)^{4} (x - 2)^{3}}{(x^{2} + 1)^{5}}$.</span><span data-lang="zh">设 $y = \dfrac{(x + 1)^{4} (x - 2)^{3}}{(x^{2} + 1)^{5}}$，求 $\dfrac{dy}{dx}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -1024,9 +1492,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Multiply by $y$.</strong></p>
     <p data-lang="zh"><strong>两边乘以 $y$。</strong></p>
     $$ \frac{dy}{dx} \;=\; \frac{(x + 1)^{4} (x - 2)^{3}}{(x^{2} + 1)^{5}} \left[ \frac{4}{x + 1} \,+\, \frac{3}{x - 2} \,-\, \frac{10 x}{x^{2} + 1} \right]. $$
-    <p data-lang="en"><strong>Remark.</strong> The factor in brackets is the same shape every time: each linear factor of the numerator contributes a positive reciprocal, each factor of the denominator contributes a negative reciprocal, scaled by the original exponent. Once you see the pattern, you can write $\tfrac{dy}{dx}$ directly without re-deriving.</p>
-    <p data-lang="zh"><strong>注。</strong>方括号内的形式有规律：分子每个线性因子贡献"正的倒数"，分母每个线性因子贡献"负的倒数"，缩放系数为原指数。看出规律后可直接写出 $\tfrac{dy}{dx}$ 而无需重新推导。</p>
+    <p data-lang="en"><strong>Remark.</strong> The factor in brackets is the same shape every time: each factor contributes its exponent times (derivative of the factor) divided by (the factor), with a plus sign for a numerator factor and a minus sign for a denominator factor. Once you see the pattern, you can write $\tfrac{dy}{dx}$ directly without re-deriving.</p>
+    <p data-lang="zh"><strong>注。</strong>方括号内的形式有规律：每个因子贡献"原指数 × 因子的导数 ÷ 因子"，分子因子取正号，分母因子取负号。看出规律后可直接写出 $\tfrac{dy}{dx}$ 而无需重新推导。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">▸ Going deeper: why the trick works</span><span data-lang="zh">▸ 深入：该技巧为何成立</span></summary>
@@ -1037,7 +1506,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </details>
 
   <div class="quiz" data-answer="0">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Use logarithmic differentiation to find $\dfrac{dy}{dx}$ when $y = x^{\sin x}$ (for $x &gt; 0$).</span><span data-lang="zh">用对数求导法求 $y = x^{\sin x}$（$x &gt; 0$）的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">E2.6 · Q1</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) Use logarithmic differentiation to find $\dfrac{dy}{dx}$ when $y = x^{\sin x}$ (for $x &gt; 0$).</span><span data-lang="zh">（HL）用对数求导法求 $y = x^{\sin x}$（$x &gt; 0$）的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">E2.6 · Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$x^{\sin x} \!\left( \cos x \cdot \ln x \;+\; \dfrac{\sin x}{x} \right)$</div>
       <div class="quiz-opt" data-idx="1">$x^{\sin x} \cdot \cos x$</div>
@@ -1049,8 +1518,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example E2.6c: variable base AND exponent, more complex</span><span data-lang="zh">E2.6c 例题：底数与指数都更复杂</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example E2.6c (variable base AND exponent, more complex)</span><span data-lang="zh">E2.6c 例题（底数与指数都更复杂）</span></div>
     <p><span data-lang="en">Find $\dfrac{dy}{dx}$ where $y = (x^2+1)^{x}$.</span><span data-lang="zh">设 $y = (x^2+1)^{x}$，求 $\dfrac{dy}{dx}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -1063,8 +1532,31 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Multiply by $y$ and substitute back.</strong></p>
     <p data-lang="zh"><strong>乘以 $y$ 并代回。</strong></p>
     $$ \frac{dy}{dx} = (x^2+1)^{x}\left[\ln(x^2+1) + \frac{2x^2}{x^2+1}\right] $$
-    <p data-lang="en">This differs from $x^x$ (E2.6a) only in that the base $x^2+1$ itself needs the chain rule when differentiated inside the log — the overall method is unchanged.</p>
-    <p data-lang="zh">与 $x^x$（E2.6a）相比，唯一区别是底数 $x^2+1$ 在对数内部求导时需要链式法则——整体方法不变。</p>
+    <p data-lang="en">This differs from $x^x$ (E2.6a) only in that the base $x^2+1$ itself needs the chain rule when differentiated inside the log; the overall method is unchanged.</p>
+    <p data-lang="zh">与 $x^x$（E2.6a）相比，唯一区别是底数 $x^2+1$ 在对数内部求导时需要链式法则；整体方法不变。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the $\ln$ step and the log-law expansion as separate lines before differentiating. An answer left as $\dfrac{1}{y}\dfrac{dy}{dx} = \dots$ is incomplete: multiply by $y$ and replace $y$ with the original expression in $x$. State the condition that keeps each logarithm defined, such as $x &gt; 0$ for $y = x^{x}$.</p>
+    <p data-lang="zh">求导前把取 $\ln$ 与对数律展开分成单独的两行。停在 $\dfrac{1}{y}\dfrac{dy}{dx} = \dots$ 的答案并不完整：要乘以 $y$，并把 $y$ 换回原来关于 $x$ 的表达式。写明保证对数有意义的条件，如 $y = x^{x}$ 需 $x &gt; 0$。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Differentiate $y = x^{2x}$ for $x &gt; 0$.</span><span data-lang="zh">1. 求 $y = x^{2x}$（$x &gt; 0$）的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\ln y = 2x\ln x$, so $\dfrac{1}{y}\dfrac{dy}{dx} = 2\ln x + 2$. Hence $\dfrac{dy}{dx} = 2x^{2x}(\ln x + 1)$.</p><p data-lang="zh">$\ln y = 2x\ln x$，故 $\dfrac{1}{y}\dfrac{dy}{dx} = 2\ln x + 2$。因此 $\dfrac{dy}{dx} = 2x^{2x}(\ln x + 1)$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Use logarithmic differentiation to differentiate $y = \dfrac{(x + 1)^{3}}{(x + 2)^{2}}$ for $x &gt; -1$.</span><span data-lang="zh">2. 用对数求导法求 $y = \dfrac{(x + 1)^{3}}{(x + 2)^{2}}$（$x &gt; -1$）的导数。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\ln y = 3\ln(x + 1) - 2\ln(x + 2)$, so $\dfrac{1}{y}\dfrac{dy}{dx} = \dfrac{3}{x + 1} - \dfrac{2}{x + 2} = \dfrac{x + 4}{(x + 1)(x + 2)}$. Multiplying by $y$: $\dfrac{dy}{dx} = \dfrac{(x + 1)^{2}(x + 4)}{(x + 2)^{3}}$.</p><p data-lang="zh">$\ln y = 3\ln(x + 1) - 2\ln(x + 2)$，故 $\dfrac{1}{y}\dfrac{dy}{dx} = \dfrac{3}{x + 1} - \dfrac{2}{x + 2} = \dfrac{x + 4}{(x + 1)(x + 2)}$。乘以 $y$：$\dfrac{dy}{dx} = \dfrac{(x + 1)^{2}(x + 4)}{(x + 2)^{3}}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $y = x^{x}$ ($x &gt; 0$), find the gradient at $x = 1$ and the exact $x$-coordinate where the tangent is horizontal.</span><span data-lang="zh">3. 对 $y = x^{x}$（$x &gt; 0$），求 $x = 1$ 处的斜率，以及切线水平处的精确 $x$ 坐标。</span></summary>
+      <div class="sg-a"><p data-lang="en">From E2.6a, $\dfrac{dy}{dx} = x^{x}(\ln x + 1)$. At $x = 1$: $1 \cdot (0 + 1) = 1$. Since $x^{x} &gt; 0$, the tangent is horizontal only where $\ln x + 1 = 0$, i.e. $x = e^{-1} = \dfrac{1}{e}$ (where $y = e^{-1/e} \approx 0.692$).</p><p data-lang="zh">由 E2.6a，$\dfrac{dy}{dx} = x^{x}(\ln x + 1)$。在 $x = 1$ 处：$1 \cdot (0 + 1) = 1$。因 $x^{x} &gt; 0$，仅当 $\ln x + 1 = 0$ 时切线水平，即 $x = e^{-1} = \dfrac{1}{e}$（此时 $y = e^{-1/e} \approx 0.692$）。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1076,39 +1568,50 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <h2><span data-lang="en">Exam Strategy &amp; Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Rule selection on Paper 1</span><span data-lang="zh">Paper 1 上的规则选择</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Rule selection</span><span data-lang="zh">规则选择</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>Read the function structure before differentiating.</strong> A composite $f(g(x))$ needs the chain rule; a product $f(x) g(x)$ needs the product rule; a quotient $f(x)/g(x)$ needs the quotient rule. Choose first, compute second.</li>
       <li data-lang="zh"><strong>动笔前先看函数结构。</strong>复合形 $f(g(x))$ 用链式法则；乘积形 $f(x) g(x)$ 用乘积法则；商形 $f(x)/g(x)$ 用商法则。先选规则，再计算。</li>
       <li data-lang="en"><strong>Combine rules when needed.</strong> Many problems are products of composites or quotients with chains inside. Layer the rules: outer rule first, then inner derivatives, each computed with whichever rule fits.</li>
       <li data-lang="zh"><strong>多条规则可叠加使用。</strong>许多题目是"复合的乘积"或"含链式的商"。从外到内依次套用各条规则。</li>
-      <li data-lang="en"><strong>Simplify before solving for tangent slope.</strong> If you need $f'(a)$ at a single point, plug in $x = a$ before doing algebraic simplification of $f'(x)$. Often the substitution makes most terms vanish.</li>
-      <li data-lang="zh"><strong>求点处切线斜率前先简化。</strong>若只需 $f'(a)$ 单点值，可在化简 $f'(x)$ 之前直接代 $x = a$。多数项往往因代入而归零。</li>
+      <li data-lang="en"><strong>Substitute before simplifying.</strong> If you need $f'(a)$ at a single point, plug in $x = a$ before doing algebraic simplification of $f'(x)$. Often the substitution makes most terms vanish.</li>
+      <li data-lang="zh"><strong>只求一点的斜率时先代值。</strong>若只需 $f'(a)$ 单点值，可在化简 $f'(x)$ 之前直接代 $x = a$。多数项往往因代入而归零。</li>
     </ul>
   </div>
 
-  <div class="concept-box" style="border-left-color: var(--accent);">
-    <strong style="color: var(--accent);"><span data-lang="en">Implicit differentiation (HL, Paper 1B / Paper 3)</span><span data-lang="zh">隐函数求导（HL，Paper 1B / Paper 3）</span></strong>
-    <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Mark every $y$ with a chain factor.</strong> The single most common deduction is omitting $\tfrac{dy}{dx}$ on a $y$-term. Before collecting, scan: every $y$-containing term should carry $\tfrac{dy}{dx}$ exactly once.</li>
-      <li data-lang="zh"><strong>每个 $y$ 都要附链式因子。</strong>最常见扣分项是漏写 $\tfrac{dy}{dx}$。整理前先扫一遍：每个含 $y$ 的项都应恰好带一个 $\tfrac{dy}{dx}$。</li>
-      <li data-lang="en"><strong>The product rule on $xy$ produces two pieces.</strong> $\tfrac{d}{dx}(xy) = y + x \tfrac{dy}{dx}$. Forgetting either piece costs A1.</li>
-      <li data-lang="zh"><strong>对 $xy$ 用乘积法则会产生两项。</strong>$\tfrac{d}{dx}(xy) = y + x \tfrac{dy}{dx}$。漏写任一项会扣 A1。</li>
-      <li data-lang="en"><strong>Always solve for $\tfrac{dy}{dx}$ explicitly.</strong> An implicit derivative left in implicit form does not earn the final A1. Collect, factor, and divide.</li>
-      <li data-lang="zh"><strong>必须显式解出 $\tfrac{dy}{dx}$。</strong>停留在隐式形式拿不到最后 A1。整理、提因、除式都要做完。</li>
+  <div class="concept-box" data-course="hl" style="border-left-color: var(--accent);">
+    <strong style="color: var(--accent);"><span data-lang="en">Implicit differentiation (HL)</span><span data-lang="zh">隐函数求导（HL）</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>Mark every $y$ with a chain factor.</strong> A dropped $\tfrac{dy}{dx}$ on a $y$-term is the typical slip. Before collecting, scan: every term that came from differentiating a power of $y$ should carry $\tfrac{dy}{dx}$.</li>
+      <li data-lang="zh"><strong>每个 $y$ 都要附链式因子。</strong>漏写含 $y$ 项上的 $\tfrac{dy}{dx}$ 是典型失误。整理前先扫一遍：由 $y$ 的幂求导得到的每一项都应带 $\tfrac{dy}{dx}$。</li>
+      <li data-lang="en"><strong>The product rule on $xy$ produces two pieces.</strong> $\tfrac{d}{dx}(xy) = y + x \tfrac{dy}{dx}$. Writing only one of them gives a wrong derivative.</li>
+      <li data-lang="zh"><strong>对 $xy$ 用乘积法则会产生两项。</strong>$\tfrac{d}{dx}(xy) = y + x \tfrac{dy}{dx}$。只写其中一项，导数就是错的。</li>
+      <li data-lang="en"><strong>Always solve for $\tfrac{dy}{dx}$ explicitly.</strong> An answer with $\tfrac{dy}{dx}$ still on both sides is incomplete. Collect, factor, and divide.</li>
+      <li data-lang="zh"><strong>必须显式解出 $\tfrac{dy}{dx}$。</strong>$\tfrac{dy}{dx}$ 仍在等式两侧的答案并不完整。整理、提因、相除都要做完。</li>
     </ul>
   </div>
 
-  <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">Logarithmic differentiation (HL, Paper 3)</span><span data-lang="zh">对数求导法（HL，Paper 3）</span></strong>
-    <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>When the base depends on $x$ and so does the exponent, this is your only option.</strong> Power rule and exponential rule both fail. Reach for $\ln$.</li>
-      <li data-lang="zh"><strong>当底数与指数都依赖 $x$ 时，对数求导是唯一选择。</strong>幂法则与指数法则都失效。直接取 $\ln$。</li>
+  <div class="concept-box purple" data-course="hl">
+    <strong><span data-lang="en">Logarithmic differentiation (HL)</span><span data-lang="zh">对数求导法（HL）</span></strong>
+    <ul class="sg-list">
+      <li data-lang="en"><strong>When the base and the exponent both depend on $x$, take $\ln$ first.</strong> The power rule and the rule for $a^{x}$ both fail. Rewriting $f(x)^{g(x)} = e^{g(x) \ln f(x)}$ is the equivalent route.</li>
+      <li data-lang="zh"><strong>当底数与指数都依赖 $x$ 时，先取 $\ln$。</strong>幂法则与 $a^{x}$ 的求导法则都失效。改写为 $f(x)^{g(x)} = e^{g(x) \ln f(x)}$ 是等价的做法。</li>
       <li data-lang="en"><strong>Expand fully before differentiating.</strong> Use $\ln(ab) = \ln a + \ln b$ and $\ln(a^{n}) = n \ln a$ to flatten the right side into a sum. Differentiating a sum is much easier than differentiating a nested expression.</li>
       <li data-lang="zh"><strong>求导前先充分展开。</strong>用 $\ln(ab) = \ln a + \ln b$、$\ln(a^{n}) = n \ln a$ 把右侧展平为求和。求和的导数比嵌套表达式简单得多。</li>
-      <li data-lang="en"><strong>Remember to multiply back by $y$.</strong> The intermediate result is $\tfrac{1}{y} \tfrac{dy}{dx}$, not $\tfrac{dy}{dx}$ itself. Multiplying by $y$ and substituting back the original expression is the final A1.</li>
-      <li data-lang="zh"><strong>记得最后乘回 $y$。</strong>中间结果是 $\tfrac{1}{y} \tfrac{dy}{dx}$，而非 $\tfrac{dy}{dx}$ 本身。乘以 $y$ 并代回原表达式才是最后的 A1。</li>
+      <li data-lang="en"><strong>Remember to multiply back by $y$.</strong> The intermediate result is $\tfrac{1}{y} \tfrac{dy}{dx}$, not $\tfrac{dy}{dx}$ itself. Multiplying by $y$ and substituting back the original expression completes the answer.</li>
+      <li data-lang="zh"><strong>记得最后乘回 $y$。</strong>中间结果是 $\tfrac{1}{y} \tfrac{dy}{dx}$，而非 $\tfrac{dy}{dx}$ 本身。乘以 $y$ 并代回原表达式，答案才完整。</li>
     </ul>
+  </div>
+
+  <div class="concept-box green" data-course="hl">
+    <strong><span data-lang="en">Exam format (HL)</span><span data-lang="zh">考试形式（HL）</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) each last 2 hours and carry 30%; both have a short-response Section A and an extended-response Section B, all compulsory. Paper 3 (technology required, 1 hour, 20%) has two compulsory extended-response questions. The internal assessment, a mathematical exploration, carries the remaining 20%. Practise every rule in this unit by hand.</p>
+    <p data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（必须使用技术工具）各 2 小时，各占 30%；两卷均含简答 Section A 与长答 Section B，全部必答。Paper 3（必须使用技术工具，1 小时，20%）含两道必答长答题。内部评估（<code>IA</code>，数学探究）占其余 20%。本单元的每条规则都要能手算。</p>
+  </div>
+  <div class="concept-box green" data-course="sl">
+    <strong><span data-lang="en">Exam format (SL)</span><span data-lang="zh">考试形式（SL）</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) each last 1 hour 30 minutes and carry 40%; both have a short-response Section A and an extended-response Section B, all compulsory. There is no Paper 3 at SL. The internal assessment, a mathematical exploration, carries the remaining 20%. Practise every rule in this unit by hand.</p>
+    <p data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（必须使用技术工具）各 1 小时 30 分钟，各占 40%；两卷均含简答 Section A 与长答 Section B，全部必答。SL 没有 Paper 3。内部评估（<code>IA</code>，数学探究）占其余 20%。本单元的每条规则都要能手算。</p>
   </div>
 </section>
 
@@ -1131,13 +1634,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Quotient rule?</span><span data-lang="zh">商法则？</span></div><div class="flashcard-back">$$\left(\dfrac{u}{v}\right)' = \dfrac{u' v - u v'}{v^{2}}$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} \sin x = ?$</span><span data-lang="zh">$\dfrac{d}{dx} \sin x = ?$</span></div><div class="flashcard-back">$$\cos x$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} \cos x = ?$</span><span data-lang="zh">$\dfrac{d}{dx} \cos x = ?$</span></div><div class="flashcard-back">$$-\sin x$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} \tan x = ?$</span><span data-lang="zh">$\dfrac{d}{dx} \tan x = ?$</span></div><div class="flashcard-back">$$\sec^{2} x$$</div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) $\dfrac{d}{dx} \tan x = ?$</span><span data-lang="zh">（HL）$\dfrac{d}{dx} \tan x = ?$</span></div><div class="flashcard-back"><span data-lang="en">$\dfrac{1}{\cos^{2} x}$ (HL: $\sec^{2} x$)</span><span data-lang="zh">$\dfrac{1}{\cos^{2} x}$（HL：$\sec^{2} x$）</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} e^{x} = ?$</span><span data-lang="zh">$\dfrac{d}{dx} e^{x} = ?$</span></div><div class="flashcard-back">$$e^{x}$$</div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} \ln x = ?$</span><span data-lang="zh">$\dfrac{d}{dx} \ln x = ?$</span></div><div class="flashcard-back">$$\dfrac{1}{x}$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">$\dfrac{d}{dx} a^{x} = ?$</span><span data-lang="zh">$\dfrac{d}{dx} a^{x} = ?$</span></div><div class="flashcard-back">$$a^{x} \ln a$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Implicit: $\dfrac{d}{dx}(y^{2}) = ?$</span><span data-lang="zh">隐式：$\dfrac{d}{dx}(y^{2}) = ?$</span></div><div class="flashcard-back">$$2 y \, \dfrac{dy}{dx}$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Implicit: $\dfrac{d}{dx}(xy) = ?$</span><span data-lang="zh">隐式：$\dfrac{d}{dx}(xy) = ?$</span></div><div class="flashcard-back">$$y + x \, \dfrac{dy}{dx}$$</div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Logarithmic diff. first step for $y = x^{x}$?</span><span data-lang="zh">$y = x^{x}$ 对数求导第一步？</span></div><div class="flashcard-back"><span data-lang="en">$\ln y = x \ln x$</span><span data-lang="zh">$\ln y = x \ln x$</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) $\dfrac{d}{dx} a^{x} = ?$</span><span data-lang="zh">（HL）$\dfrac{d}{dx} a^{x} = ?$</span></div><div class="flashcard-back">$$a^{x} \ln a$$</div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Implicit: $\dfrac{d}{dx}(y^{2}) = ?$</span><span data-lang="zh">（HL）隐式：$\dfrac{d}{dx}(y^{2}) = ?$</span></div><div class="flashcard-back">$$2 y \, \dfrac{dy}{dx}$$</div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Implicit: $\dfrac{d}{dx}(xy) = ?$</span><span data-lang="zh">（HL）隐式：$\dfrac{d}{dx}(xy) = ?$</span></div><div class="flashcard-back">$$y + x \, \dfrac{dy}{dx}$$</div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(HL) Logarithmic diff. first step for $y = x^{x}$?</span><span data-lang="zh">（HL）$y = x^{x}$ 对数求导第一步？</span></div><div class="flashcard-back"><span data-lang="en">$\ln y = x \ln x$</span><span data-lang="zh">$\ln y = x \ln x$</span></div></div></div>
   </div>
 </section>
 
@@ -1175,7 +1678,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="3">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">For the curve $x y + y^{2} = 6$, find $\dfrac{dy}{dx}$ at $(1, 2)$.</span><span data-lang="zh">对曲线 $x y + y^{2} = 6$，求 $(1, 2)$ 处的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">Q3</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) For the curve $x y + y^{2} = 6$, find $\dfrac{dy}{dx}$ at $(1, 2)$.</span><span data-lang="zh">（HL）对曲线 $x y + y^{2} = 6$，求 $(1, 2)$ 处的 $\dfrac{dy}{dx}$。</span></div><div class="quiz-number">Q3</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$0$</div>
       <div class="quiz-opt" data-idx="1">$-1$</div>
@@ -1201,7 +1704,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="quiz" data-answer="0">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Differentiate $y = (\ln x)^{x}$ for $x &gt; 1$.</span><span data-lang="zh">求 $y = (\ln x)^{x}$（$x &gt; 1$）的导数。</span></div><div class="quiz-number">Q5</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">(HL) Differentiate $y = (\ln x)^{x}$ for $x &gt; 1$.</span><span data-lang="zh">（HL）求 $y = (\ln x)^{x}$（$x &gt; 1$）的导数。</span></div><div class="quiz-number">Q5</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$(\ln x)^{x}\!\left[ \ln(\ln x) + \dfrac{1}{\ln x} \right]$</div>
       <div class="quiz-opt" data-idx="1">$x (\ln x)^{x - 1}$</div>
@@ -1209,7 +1712,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$(\ln x)^{x} \cdot \ln(\ln x)$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Take $\ln$: $\ln y = x \ln(\ln x)$. Differentiate the right side with the product rule: $\tfrac{d}{dx}[x \ln(\ln x)] = \ln(\ln x) + x \cdot \tfrac{1}{\ln x} \cdot \tfrac{1}{x} = \ln(\ln x) + \tfrac{1}{\ln x}$. Multiply by $y$.</span><span data-lang="zh">取 $\ln$：$\ln y = x \ln(\ln x)$。右侧用乘积法则求导：$\tfrac{d}{dx}[x \ln(\ln x)] = \ln(\ln x) + x \cdot \tfrac{1}{\ln x} \cdot \tfrac{1}{x} = \ln(\ln x) + \tfrac{1}{\ln x}$。再乘以 $y$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Both base ($\ln x$) and exponent ($x$) depend on $x$. Logarithmic differentiation is the only path. After $\ln y = x \ln(\ln x)$, differentiate term by term and multiply back by $y$.</span><span data-lang="zh">底数（$\ln x$）与指数（$x$）都依赖 $x$，只能用对数求导。$\ln y = x \ln(\ln x)$ 后逐项求导，再乘回 $y$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Both base ($\ln x$) and exponent ($x$) depend on $x$. Logarithmic differentiation is the natural path. After $\ln y = x \ln(\ln x)$, differentiate term by term and multiply back by $y$.</span><span data-lang="zh">底数（$\ln x$）与指数（$x$）都依赖 $x$，最自然的方法是对数求导。$\ln y = x \ln(\ln x)$ 后逐项求导，再乘回 $y$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 </section>
@@ -1232,13 +1735,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply the chain rule to a double-nested composite such as $\sin(\ln(x^{2} + 1))$</span><span data-lang="zh">将链式法则应用于双层嵌套（如 $\sin(\ln(x^{2} + 1))$）</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply the product rule correctly in both orderings</span><span data-lang="zh">在两种次序下都能正确使用乘积法则</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Apply the quotient rule with the correct minus-sign ordering ($u' v - u v'$ in the numerator)</span><span data-lang="zh">使用商法则时分子保持正确的减号次序（$u' v - u v'$）</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Reproduce the standard derivatives of $\sin$, $\cos$, $\tan$, $e^{x}$, $\ln x$, $a^{x}$</span><span data-lang="zh">复现 $\sin$、$\cos$、$\tan$、$e^{x}$、$\ln x$、$a^{x}$ 的标准导数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Reproduce the standard derivatives of $\sin$, $\cos$, $e^{x}$, $\ln x$ (HL: also $\tan$, $a^{x}$ and $\log_{a} x$)</span><span data-lang="zh">复现 $\sin$、$\cos$、$e^{x}$、$\ln x$ 的标准导数（HL：另加 $\tan$、$a^{x}$ 与 $\log_{a} x$）</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Combine the chain rule with the standard trig, exp, and log derivatives</span><span data-lang="zh">把链式法则与标准三角、指数、对数导数结合</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Reproduce the inverse trig derivatives ($\arcsin$, $\arccos$, $\arctan$)</span><span data-lang="zh">复现反三角函数（$\arcsin$、$\arccos$、$\arctan$）的导数</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Differentiate implicitly, including curves with mixed $xy$ terms requiring the product rule</span><span data-lang="zh">做隐函数求导，含 $xy$ 混合项（需乘积法则）的情形</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Solve for $\tfrac{dy}{dx}$ explicitly after implicit differentiation</span><span data-lang="zh">隐式求导后显式解出 $\tfrac{dy}{dx}$</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Apply logarithmic differentiation to a variable-base, variable-exponent function (e.g. $x^{x}$)</span><span data-lang="zh">对底数与指数都含 $x$ 的函数（如 $x^{x}$）使用对数求导</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Apply logarithmic differentiation to a long product or quotient of powers</span><span data-lang="zh">对幂次相乘除的长式使用对数求导</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Reproduce the reciprocal and inverse trig derivatives ($\sec$, $\csc$, $\cot$, $\arcsin$, $\arccos$, $\arctan$)</span><span data-lang="zh">（HL）复现倒数三角函数与反三角函数（$\sec$、$\csc$、$\cot$、$\arcsin$、$\arccos$、$\arctan$）的导数</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Differentiate implicitly, including curves with mixed $xy$ terms requiring the product rule</span><span data-lang="zh">（HL）做隐函数求导，含 $xy$ 混合项（需乘积法则）的情形</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Solve for $\tfrac{dy}{dx}$ explicitly after implicit differentiation</span><span data-lang="zh">（HL）隐式求导后显式解出 $\tfrac{dy}{dx}$</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Apply logarithmic differentiation to a variable-base, variable-exponent function (e.g. $x^{x}$)</span><span data-lang="zh">（HL）对底数与指数都是变量的函数（如 $x^{x}$）使用对数求导</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">(HL) Apply logarithmic differentiation to a long product or quotient of powers</span><span data-lang="zh">（HL）对幂次相乘除的长式使用对数求导</span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Recognise which of the six rules applies by inspecting the structure of the function</span><span data-lang="zh">通过观察函数结构辨别六条规则中应当使用哪一条</span></li>
   </ul>
 </section>
@@ -1249,11 +1752,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label" data-lang="zh">下一步</div>
   <h2><span data-lang="en">IB Paper-Style Practice</span><span data-lang="zh">IB 试卷风格练习</span></h2>
   <div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
-    <p data-lang="en" style="margin-bottom:16px;">E2 Practice and Solutions are on the roadmap (sibling of the A and D Practice sets). They will ship under <code>Practice Questions/Unit_E2_*.html</code> with the bilingual built-in pattern. In the meantime, the A2 and A5 Practice sets demonstrate the format.</p>
-    <p data-lang="zh" style="margin-bottom:16px;">E2 配套的 Practice 与 Solutions 已在排期（与 A 系列、D 系列的练习集同级）。上线后将位于 <code>Practice Questions/Unit_E2_*.html</code>，采用双语内嵌格式。在此之前，A2 与 A5 的练习集展示了相同格式。</p>
+    <p data-lang="en" style="margin-bottom:16px;">Work through the E2 Practice set, then check every step against the worked Solutions.</p>
+    <p data-lang="zh" style="margin-bottom:16px;">先完成 E2 练习题，再对照详细解答逐步核对。</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="../Practice%20Questions/Unit_A2_Exponents_and_Logarithms_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">A2 Practice (template) →</span><span data-lang="zh">A2 练习题（模板）→</span></a>
-      <a href="../Practice%20Questions/Unit_A5_Proof_and_Algebraic_Manipulation_Practice.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">A5 Practice (most recent) →</span><span data-lang="zh">A5 练习题（最新）→</span></a>
+      <a href="../Practice%20Questions/Unit_E2_Techniques_of_Differential_Calculus_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">E2 Practice →</span><span data-lang="zh">E2 练习题 →</span></a>
+      <a href="../Practice%20Questions/Solutions/Unit_E2_Techniques_of_Differential_Calculus_Solutions.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">E2 Solutions →</span><span data-lang="zh">E2 解答 →</span></a>
     </div>
   </div>
 </section>
@@ -1275,24 +1778,40 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <section class="section" id="how-to-use">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">本指南使用说明</span></h2>
-  <p><span data-lang="en">E2 is computational. There are six rules; learn them once, drill them on every assigned function, and they become reflexive. Almost every Paper 1 differentiation question reduces to identifying which rule to apply first.</span><span data-lang="zh">E2 偏计算。共六条规则，记一次、对每个函数练熟，就能形成条件反射。Paper 1 几乎所有求导题都可归结为"先判断该用哪条规则"。</span></p>
+  <p><span data-lang="en">E2 is computational. There are six rules; learn them once, drill them on every assigned function, and they become reflexive. Each differentiation starts with identifying which rule to apply first.</span><span data-lang="zh">E2 偏计算。共六条规则，记一次、对每个函数练熟，就能形成条件反射。每次求导都从"先判断该用哪条规则"开始。</span></p>
 
   <div class="two-col">
     <div class="card">
       <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
-      <p style="font-size: 0.95rem;" data-lang="en">Memorise the six standard derivatives ($\sin$, $\cos$, $\tan$, $e^{x}$, $\ln x$, $x^{n}$) plus the chain, product, and quotient rule statements. Skip implicit and logarithmic differentiation if you are out of time; they are HL only. Run three practice problems per rule.</p>
-      <p style="font-size: 0.95rem;" data-lang="zh">背熟六个标准导数（$\sin$、$\cos$、$\tan$、$e^{x}$、$\ln x$、$x^{n}$）以及链式、乘积、商法则的公式。时间不够可跳过隐函数与对数求导（HL 专属）。每条规则做三道题。</p>
+      <div data-course="hl">
+      <p style="font-size: 0.95rem;" data-lang="en">Memorise the six standard derivatives ($\sin$, $\cos$, $\tan$, $e^{x}$, $\ln x$, $x^{n}$) plus the chain, product, and quotient rule statements. Skip implicit and logarithmic differentiation if you are out of time. Run three practice problems per rule.</p>
+      <p style="font-size: 0.95rem;" data-lang="zh">背熟六个标准导数（$\sin$、$\cos$、$\tan$、$e^{x}$、$\ln x$、$x^{n}$）以及链式、乘积、商法则的公式。时间不够可跳过隐函数与对数求导。每条规则做三道题。</p>
+      </div>
+      <div data-course="sl">
+      <p data-lang="en">Memorise the five standard derivatives ($\sin$, $\cos$, $e^{x}$, $\ln x$, $x^{n}$) plus the chain, product, and quotient rule statements. Run three practice problems per rule, then a mixed set where you choose the rule yourself.</p>
+      <p data-lang="zh">背熟五个标准导数（$\sin$、$\cos$、$e^{x}$、$\ln x$、$x^{n}$）以及链式、乘积、商法则的公式。每条规则做三道题，再做一组需要自己选规则的综合题。</p>
+      </div>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-icon icon-purple">★</div><div class="card-title"><span data-lang="en">If you are going for a 7</span><span data-lang="zh">如果你目标是 7 分</span></div></div>
-      <p style="font-size: 0.95rem;" data-lang="zh">链式法则要会"嵌套两层及以上"的情形（如 $\sin(\ln(x^{2} + 1))$）。隐函数求导后必须解出 $\tfrac{dy}{dx}$ 的封闭式。对数求导要会处理 $y = (x+1)^{x}$ 这类"变底变指"组合。请背 $\tfrac{d}{dx}\arcsin x = 1/\sqrt{1 - x^{2}}$ 等反三角导数。</p>
-      <p style="font-size: 0.95rem;" data-lang="en">Chain rule must handle two or more nested layers (e.g. $\sin(\ln(x^{2} + 1))$). After implicit differentiation, isolate $\tfrac{dy}{dx}$ as a closed-form expression. Logarithmic differentiation must handle $y = (x+1)^{x}$ style "variable base, variable exponent" combinations. Memorise the inverse trig derivatives ($\tfrac{d}{dx}\arcsin x = 1/\sqrt{1 - x^{2}}$, etc.).</p>
+      <div data-course="hl">
+      <p style="font-size: 0.95rem;" data-lang="zh">（HL）链式法则要会"嵌套两层及以上"的情形（如 $\sin(\ln(x^{2} + 1))$）。隐函数求导后必须解出 $\tfrac{dy}{dx}$ 的封闭式。对数求导要会处理 $y = (x+1)^{x}$ 这类"变底变指"组合。请背 $\tfrac{d}{dx}\arcsin x = 1/\sqrt{1 - x^{2}}$ 等反三角导数。</p>
+      <p style="font-size: 0.95rem;" data-lang="en">(HL) Chain rule must handle two or more nested layers (e.g. $\sin(\ln(x^{2} + 1))$). After implicit differentiation, isolate $\tfrac{dy}{dx}$ as a closed-form expression. Logarithmic differentiation must handle $y = (x+1)^{x}$ style "variable base, variable exponent" combinations. Memorise the inverse trig derivatives ($\tfrac{d}{dx}\arcsin x = 1/\sqrt{1 - x^{2}}$, etc.).</p>
+      </div>
+      <div data-course="sl">
+      <p data-lang="en">Chain rule must handle two or more nested layers (e.g. $\sin(\ln(x^{2} + 1))$). Combine rules confidently: a product whose factors are composites, or a quotient with a chain inside. Find second derivatives by differentiating a simplified $f'(x)$.</p>
+      <p data-lang="zh">链式法则要会"嵌套两层及以上"的情形（如 $\sin(\ln(x^{2} + 1))$）。熟练组合规则：因子为复合函数的乘积，或内部含链式的商。对化简后的 $f'(x)$ 再求导得到二阶导数。</p>
+      </div>
     </div>
   </div>
 
-  <div class="concept-box purple">
+  <div class="concept-box purple" data-course="hl">
     <strong style="color: var(--purple);"><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
-    <span data-lang="en">Implicit differentiation (E2.5) and logarithmic differentiation (E2.6) are <span class="hl-flag">HL</span> only. SL students still need the chain, product, and quotient rules and the standard derivative table (E2.2 through E2.4); they are not HL extensions.</span><span data-lang="zh">隐函数求导（E2.5）与对数求导（E2.6）属 <span class="hl-flag">HL</span> 专属。SL 学生仍须掌握链式、乘积、商法则与标准导数表（E2.2 至 E2.4），这些并非 HL 扩展。</span></span>
+    <span data-lang="en">Implicit differentiation (E2.5) and logarithmic differentiation (E2.6) are <span class="hl-flag">HL</span> only, as are the derivatives of $\tan x$, $\sec x$, $\csc x$, $\cot x$, $a^{x}$, $\log_{a} x$ and the inverse trig functions. SL students still need the chain, product, and quotient rules and the standard derivative table (E2.2 through E2.4); they are not HL extensions.</span><span data-lang="zh">隐函数求导（E2.5）与对数求导（E2.6）属 <span class="hl-flag">HL</span> 专属，$\tan x$、$\sec x$、$\csc x$、$\cot x$、$a^{x}$、$\log_{a} x$ 与反三角函数的导数也是。SL 学生仍须掌握链式、乘积、商法则与标准导数表（E2.2 至 E2.4），这些并非 HL 扩展。</span>
+  </div>
+  <div class="concept-box purple" data-course="sl">
+    <strong><span data-lang="en">Course view</span><span data-lang="zh">课程视图</span></strong>
+    <span data-lang="en">This SL view shows E2.1 to E2.4: the power, chain, product and quotient rules and the derivatives of $\sin x$, $\cos x$, $e^{x}$ and $\ln x$. Switch to the HL view for the remaining two sections.</span><span data-lang="zh">SL 视图显示 E2.1 至 E2.4：幂、链式、乘积、商法则，以及 $\sin x$、$\cos x$、$e^{x}$、$\ln x$ 的导数。切换到 HL 视图可查看其余两个小节。</span>
   </div>
 </section>
   </div>
@@ -1610,6 +2129,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1753,21 +2288,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

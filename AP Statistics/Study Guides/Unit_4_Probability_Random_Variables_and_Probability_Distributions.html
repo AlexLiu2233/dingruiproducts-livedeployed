@@ -168,21 +168,28 @@ code{font-family:var(--font-mono);font-size:.9em}
 </style>
 <style id="sg-textbook-css">
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
-  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
-.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.sg-examtip .sg-label { color: var(--gold); }
+.sg-examtip .sg-label { color: var(--sg-gold); }
 .sg-check .sg-label { color: var(--green); }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
-.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
    a concept-box title takes its box's colour; a formula-box variant colours its top border;
@@ -192,12 +199,12 @@ code{font-family:var(--font-mono);font-size:.9em}
 .concept-box.green > strong:first-child { color: var(--green); }
 .concept-box.orange > strong:first-child { color: var(--orange); }
 .concept-box.purple > strong:first-child { color: var(--purple); }
-.concept-box.gold > strong:first-child { color: var(--gold); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
 .formula-box.red { border-top-color: var(--red); }
 .formula-box.green { border-top-color: var(--green); }
 .formula-box.orange { border-top-color: var(--orange); }
 .formula-box.purple { border-top-color: var(--purple); }
-.formula-box.gold { border-top-color: var(--gold); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
 @media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
@@ -206,12 +213,19 @@ code{font-family:var(--font-mono);font-size:.9em}
 </style>
 <style id="sg-figure-css">
 /* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
-.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-.sg-fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
-.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
-.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
 .sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
 .sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
 .sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
@@ -221,10 +235,10 @@ code{font-family:var(--font-mono);font-size:.9em}
 .sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
 .sg-fig .dash { stroke-dasharray: 6 4; }
 .sg-fig .thin { stroke-width: 1.2; }
-.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
-.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
-.sg-fig .dot { fill: var(--text); stroke: none; }
-.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
 .sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
@@ -744,8 +758,8 @@ code{font-family:var(--font-mono);font-size:.9em}
 <p><strong>TI-Nspire:</strong> <code>menu</code> &gt; Probability &gt; Distributions &gt; Binomial Pdf (or Binomial Cdf). Enter Num Trials $n$, Prob Success $p$ and X Value (Pdf), or Lower and Upper Bound (Cdf). Typed form: <code>binomPdf(n,p,k)</code>, <code>binomCdf(n,p,lower,upper)</code>.</p></div>
 <div class="box calc" data-lang="zh"><strong>计算器：TI-84 与 TI-Nspire</strong><p><strong>TI-84：</strong><code>2ND VARS</code>（DISTR），向下找到 <code>binompdf(</code>（求 $P(X=k)$）或 <code>binomcdf(</code>（求 $P(X\le k)$）。参数顺序始终是 <code>(n, p, k)</code>。求 $P(X\ge k)$ 输入 <code>1-binomcdf(n,p,k-1)</code>。</p>
 <p><strong>TI-Nspire：</strong><code>menu</code> &gt; Probability &gt; Distributions &gt; Binomial Pdf（或 Binomial Cdf）。输入试验次数 $n$、成功概率 $p$ 与 X 值（Pdf），或下界与上界（Cdf）。键入形式：<code>binomPdf(n,p,k)</code>、<code>binomCdf(n,p,lower,upper)</code>。</p></div>
-<p data-lang="en">Practice interactively: <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_statistics&utm_content=unit_4_probability_random_variables_and_probability_distributions__gated_en">binomial sampling simulator</a> (switch between the count $X$ and the proportion $\hat p$) and the <a href="../Runners/stats-u2-free-throw-binomial.html">free-throw binomial calculation stepper</a>.</p>
-<p data-lang="zh">互动练习：<a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_statistics&utm_content=unit_4_probability_random_variables_and_probability_distributions__gated_en">二项抽样模拟器</a>（在计数 $X$ 与比例 $\hat p$ 之间切换）以及<a href="../Runners/stats-u2-free-throw-binomial.html">罚球二项计算演示</a>。</p>
+<p data-lang="en">Practice interactively: <a href="../Runners/stats-u2-binomial-sampling.html">binomial sampling simulator</a> (switch between the count $X$ and the proportion $\hat p$) and the <a href="../Runners/stats-u2-free-throw-binomial.html">free-throw binomial calculation stepper</a>.</p>
+<p data-lang="zh">互动练习：<a href="../Runners/stats-u2-binomial-sampling.html">二项抽样模拟器</a>（在计数 $X$ 与比例 $\hat p$ 之间切换）以及<a href="../Runners/stats-u2-free-throw-binomial.html">罚球二项计算演示</a>。</p>
 <figure class="sg-fig" role="group">
 <svg viewBox="0 0 400 240" role="img" aria-label="Binomial distribution with n = 10 and p = 0.7, bars for x of at least 8 highlighted">
 <line class="grid" x1="50" y1="136.7" x2="380" y2="136.7"/>
@@ -982,8 +996,8 @@ code{font-family:var(--font-mono);font-size:.9em}
 <tr><td>近似正态的条件</td><td>$np\ge10$ 且 $n(1-p)\ge10$（大计数条件）</td><td>总体为正态，或 $n$ 较大（常用经验标准 $n\ge30$），依据 CLT</td></tr></table></div>
 <div class="box tip" data-lang="en"><strong>Must know</strong><p><strong>Central Limit Theorem (CLT):</strong> for a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution of $\bar x$ is approximately normal when $n$ is large, whatever the shape of the population; the approximation improves as $n$ grows. If the population is itself normal, $\bar x$ is normal for every $n$. Increasing $n$ shrinks the spread by the factor $\sqrt n$ but does not change the center.</p></div>
 <div class="box tip" data-lang="zh"><strong>必备知识</strong><p><strong>中心极限定理（CLT）：</strong>对均值 $\mu$、标准差 $\sigma$ 的总体，$n$ 较大时 $\bar x$ 的抽样分布近似为正态，与总体形状无关；$n$ 越大近似越好。若总体本身正态，则对任意 $n$，$\bar x$ 都是正态。增大 $n$ 使离散程度按 $\sqrt n$ 缩小，但不改变中心。</p></div>
-<p data-lang="en">Explore it: the <a href="../Runners/stats-u2-clt-visualizer.html">CLT visualizer</a> lets you change the population shape and the sample size $n$ and shows the histogram of many sample means. See also the <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_statistics&utm_content=unit_4_probability_random_variables_and_probability_distributions__gated_en">binomial sampling simulator</a> for $\hat p$.</p>
-<p data-lang="zh">动手探索：<a href="../Runners/stats-u2-clt-visualizer.html">CLT 可视化工具</a>可改变总体形状与样本量 $n$，并显示大量样本均值的直方图。关于 $\hat p$ 还可参见<a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_statistics&utm_content=unit_4_probability_random_variables_and_probability_distributions__gated_en">二项抽样模拟器</a>。</p>
+<p data-lang="en">Explore it: the <a href="../Runners/stats-u2-clt-visualizer.html">CLT visualizer</a> lets you change the population shape and the sample size $n$ and shows the histogram of many sample means. See also the <a href="../Runners/stats-u2-binomial-sampling.html">binomial sampling simulator</a> for $\hat p$.</p>
+<p data-lang="zh">动手探索：<a href="../Runners/stats-u2-clt-visualizer.html">CLT 可视化工具</a>可改变总体形状与样本量 $n$，并显示大量样本均值的直方图。关于 $\hat p$ 还可参见<a href="../Runners/stats-u2-binomial-sampling.html">二项抽样模拟器</a>。</p>
 <figure class="sg-fig" role="group">
 <svg viewBox="0 0 400 240" role="img" aria-label="Three normal curves for the sampling distribution of the sample mean with n = 4, 25 and 100, all centered at 32">
 <path class="c3" d="M40.0,182.5 L43.5,182.1 L47.1,181.6 L50.6,181.1 L54.2,180.6 L57.7,180.0 L61.2,179.5 L64.8,178.9 L68.3,178.3 L71.9,177.7 L75.4,177.1 L79.0,176.5 L82.5,175.8 L86.0,175.2 L89.6,174.5 L93.1,173.8 L96.7,173.1 L100.2,172.4 L103.8,171.7 L107.3,171.0 L110.8,170.3 L114.4,169.6 L117.9,168.9 L121.5,168.3 L125.0,167.6 L128.5,166.9 L132.1,166.2 L135.6,165.5 L139.2,164.9 L142.7,164.3 L146.2,163.6 L149.8,163.1 L153.3,162.5 L156.9,161.9 L160.4,161.4 L164.0,160.9 L167.5,160.4 L171.0,160.0 L174.6,159.6 L178.1,159.2 L181.7,158.9 L185.2,158.6 L188.8,158.3 L192.3,158.1 L195.8,157.9 L199.4,157.8 L202.9,157.7 L206.5,157.6 L210.0,157.6 L213.5,157.6 L217.1,157.7 L220.6,157.8 L224.2,157.9 L227.7,158.1 L231.2,158.3 L234.8,158.6 L238.3,158.9 L241.9,159.2 L245.4,159.6 L249.0,160.0 L252.5,160.4 L256.0,160.9 L259.6,161.4 L263.1,161.9 L266.7,162.5 L270.2,163.1 L273.8,163.6 L277.3,164.3 L280.8,164.9 L284.4,165.5 L287.9,166.2 L291.5,166.9 L295.0,167.6 L298.5,168.3 L302.1,168.9 L305.6,169.6 L309.2,170.3 L312.7,171.0 L316.2,171.7 L319.8,172.4 L323.3,173.1 L326.9,173.8 L330.4,174.5 L334.0,175.2 L337.5,175.8 L341.0,176.5 L344.6,177.1 L348.1,177.7 L351.7,178.3 L355.2,178.9 L358.8,179.5 L362.3,180.0 L365.8,180.6 L369.4,181.1 L372.9,181.6 L376.5,182.1 L380.0,182.5"/>

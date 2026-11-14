@@ -401,6 +401,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<meta name="dingrui:courses" content="hl,sl">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="hl"] [data-course]:not([data-course~="hl"]) { display: none !important; }
+html[data-course="sl"] [data-course]:not([data-course~="sl"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -415,6 +505,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span class="score-badge zero" id="scoreBadge">0 / 0</span>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="hl"><span data-lang="en">HL</span><span data-lang="zh">HL</span></span><span data-course-label="sl" hidden><span data-lang="en">SL</span><span data-lang="zh">SL</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -483,11 +574,16 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </p>
   <div class="hero-meta">
     <span class="chip chip-maroon">IB AA HL · AHL 3.12 to 3.18</span>
-    <span class="chip chip-green">Papers 1 · 2 · 3</span>
     <span class="chip chip-purple"><span data-lang="en">6 Concepts · Entire unit</span><span data-lang="zh">6 个核心概念 · 全单元</span></span>
-    <span class="hl-flag">HL</span>
+    <span class="chip chip-gold"><span data-lang="en">HL-only</span><span data-lang="zh">仅 HL</span></span>
   </div>
 </section>
+
+<div class="concept-box orange" data-course="sl">
+  <strong><span data-lang="en">This unit is HL only</span><span data-lang="zh">本单元仅限 HL</span></strong>
+  <p data-lang="en">This unit is HL only; SL students can skip it. Vectors (AHL 3.12 to 3.18) are additional higher level content in IB Mathematics: Analysis and Approaches, so they are not part of the SL course. Switch the course button at the top of the page to HL to read the full unit.</p>
+  <p data-lang="zh">本单元仅限 HL；SL 学生可以跳过。向量（<code>vectors</code>，AHL 3.12 至 3.18）属于 IB 数学：分析与方法的高级附加内容（<code>additional higher level</code>），不在 SL 课程中。如需阅读完整单元，请把页面顶部的课程按钮切换到 HL。</p>
+</div>
 
 
 
@@ -503,9 +599,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- C3.1 VECTOR ARITHMETIC -->
-<section class="section" id="s-c3-1">
+<section class="section" id="s-c3-1" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.1 · Arithmetic, Magnitude, Unit Vectors</span><span data-lang="zh">Topic C3.1 · 向量运算、模长、单位向量</span></div>
   <h2><span data-lang="en">Vector Arithmetic, Magnitude, Unit Vectors</span><span data-lang="zh">向量运算、模长、单位向量</span> <span class="ib-ref">AHL 3.12</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>State the meaning of a position vector $\overrightarrow{OA}$ and write a displacement as $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$.</li>
+      <li>Calculate sums, differences and scalar multiples of vectors in column form and in $\mathbf{i}, \mathbf{j}, \mathbf{k}$ form.</li>
+      <li>Calculate the magnitude $|\mathbf{v}|$ and the unit vector $\hat{\mathbf{v}}$ in the direction of $\mathbf{v}$.</li>
+      <li>Find a vector of a given length in a given direction as a multiple of $\hat{\mathbf{v}}$.</li>
+      <li>Deduce whether three points are collinear, and find the point that divides a segment in a given ratio.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>state</code>）位置向量（<code>position vector</code>）$\overrightarrow{OA}$ 的含义，并把位移写成 $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$。</li>
+      <li>在列向量形式与 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 形式下计算（<code>calculate</code>）向量的和、差与数乘。</li>
+      <li>计算模长 $|\mathbf{v}|$ 以及 $\mathbf{v}$ 方向上的单位向量（<code>unit vector</code>）$\hat{\mathbf{v}}$。</li>
+      <li>把给定长度、给定方向的向量写成 $\hat{\mathbf{v}}$ 的倍数。</li>
+      <li>推断（<code>deduce</code>）三点是否共线（<code>collinear</code>），并求按给定比分割线段的点。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Notation.</strong> A vector in three dimensions is written either in unit-vector form or as a column:
@@ -530,8 +644,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     标准基向量 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 分别是沿 $x, y, z$ 轴方向的单位向量。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.1: magnitude and unit vector</span><span data-lang="zh">C3.1 例题：模长与单位向量</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.1 (magnitude and unit vector)</span><span data-lang="zh">C3.1 例题（模长与单位向量）</span></div>
     <p><span data-lang="en">Given $\mathbf{v} = (3, 4, 12)$, find $|\mathbf{v}|$ and the unit vector $\hat{\mathbf{v}}$.</span><span data-lang="zh">设 $\mathbf{v} = (3, 4, 12)$，求 $|\mathbf{v}|$ 与单位向量 $\hat{\mathbf{v}}$。</span></p>
   </div>
   <div class="worked-solution">
@@ -544,6 +658,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Check.</strong> $\left( \tfrac{3}{13} \right)^{2} + \left( \tfrac{4}{13} \right)^{2} + \left( \tfrac{12}{13} \right)^{2} = \tfrac{9 + 16 + 144}{169} = 1$, so $|\hat{\mathbf{v}}| = 1$ as required.</p>
     <p data-lang="zh"><strong>验证。</strong>$\left( \tfrac{3}{13} \right)^{2} + \left( \tfrac{4}{13} \right)^{2} + \left( \tfrac{12}{13} \right)^{2} = \tfrac{9 + 16 + 144}{169} = 1$，故 $|\hat{\mathbf{v}}| = 1$，符合定义。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: why magnitude is a Pythagorean sum</span><span data-lang="zh">深入：为何模长是勾股和</span></summary>
@@ -558,16 +673,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">If $\mathbf{v} = \mathbf{0}$, then $|\mathbf{v}| = 0$ and the formula $\hat{\mathbf{v}} = \mathbf{v} / |\mathbf{v}|$ divides by zero. The zero vector has no direction and therefore no unit vector. Always check that the vector you are normalising is nonzero before dividing.</span><span data-lang="zh">若 $\mathbf{v} = \mathbf{0}$，则 $|\mathbf{v}| = 0$，公式 $\hat{\mathbf{v}} = \mathbf{v} / |\mathbf{v}|$ 会除以零。零向量没有方向，因此没有单位向量。归一化之前务必检查向量非零。</span>
   </div>
 
+  <h3><span data-lang="en">Position vectors, collinearity and the section formula</span><span data-lang="zh">位置向量、共线与定比分点公式</span></h3>
+
+  <div class="concept-box">
+    <strong><span data-lang="en">Position vectors and displacements</span><span data-lang="zh">位置向量与位移</span></strong>
+    <p data-lang="en">The <strong>position vector</strong> of a point $A$ is $\mathbf{a} = \overrightarrow{OA}$, the arrow from the origin $O$ to $A$; its components are the coordinates of $A$. The displacement from $A$ to $B$ is $\overrightarrow{AB} = \overrightarrow{AO} + \overrightarrow{OB} = \mathbf{b} - \mathbf{a}$ (end minus start), and the distance $AB$ is the magnitude $|\mathbf{b} - \mathbf{a}|$.</p>
+    <p data-lang="zh">点 $A$ 的<strong>位置向量</strong>（<code>position vector</code>）是 $\mathbf{a} = \overrightarrow{OA}$，即从原点 $O$ 指向 $A$ 的箭头；它的分量就是 $A$ 的坐标。从 $A$ 到 $B$ 的位移为 $\overrightarrow{AB} = \overrightarrow{AO} + \overrightarrow{OB} = \mathbf{b} - \mathbf{a}$（终点减起点），距离 $AB$ 就是模长 $|\mathbf{b} - \mathbf{a}|$。</p>
+    <p data-lang="en"><strong>Collinear points.</strong> Three points $A, B, C$ are collinear (on one straight line) exactly when $\overrightarrow{AC} = k\,\overrightarrow{AB}$ for some scalar $k$. The two displacements are parallel and both start at $A$, so they lie on the same line. Two parallel vectors that start at different points do not prove collinearity on their own.</p>
+    <p data-lang="zh"><strong>共线的点。</strong>三点 $A, B, C$ 共线（<code>collinear</code>，在同一条直线上）当且仅当存在标量 $k$ 使 $\overrightarrow{AC} = k\,\overrightarrow{AB}$。这两个位移平行且都从 $A$ 出发，所以落在同一条直线上。起点不同的两个平行向量本身不能证明共线。</p>
+    <p data-lang="en"><strong>Section (ratio) formula.</strong> The point $P$ on the segment $AB$ with $AP : PB = m : n$ has position vector $\mathbf{p} = \mathbf{a} + \tfrac{m}{m + n}(\mathbf{b} - \mathbf{a}) = \dfrac{n\mathbf{a} + m\mathbf{b}}{m + n}$. The midpoint ($m = n$) is $\tfrac{1}{2}(\mathbf{a} + \mathbf{b})$.</p>
+    <p data-lang="zh"><strong>定比分点公式（<code>section formula</code>）。</strong>线段 $AB$ 上满足 $AP : PB = m : n$ 的点 $P$ 的位置向量为 $\mathbf{p} = \mathbf{a} + \tfrac{m}{m + n}(\mathbf{b} - \mathbf{a}) = \dfrac{n\mathbf{a} + m\mathbf{b}}{m + n}$。中点（$m = n$）为 $\tfrac{1}{2}(\mathbf{a} + \mathbf{b})$。</p>
+  </div>
+
+  <div class="concept-box red">
+    <strong><span data-lang="en">Common Mistake: start minus end</span><span data-lang="zh">常见错误：起点减终点</span></strong>
+    <p data-lang="en">Writing $\overrightarrow{AB} = \mathbf{a} - \mathbf{b}$ reverses the direction. The magnitude is unchanged, so the slip stays hidden until a later step (a line equation, a ratio point) uses the direction. Say "end minus start" each time you form a displacement.</p>
+    <p data-lang="zh">写成 $\overrightarrow{AB} = \mathbf{a} - \mathbf{b}$ 会把方向弄反。模长不变，所以这个错误会一直隐藏，直到后面的步骤（直线方程、定比分点）用到方向才暴露。每次构造位移时都默念"终点减起点"。</p>
+  </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.1b: position vectors, collinearity and a ratio</span><span data-lang="zh">C3.1b 例题：位置向量、共线与定比分点</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">The points $A(1, 2, -1)$, $B(4, 8, 5)$ and $C(7, 14, 11)$ are given. (a) Find $\overrightarrow{AB}$ and the distance $AB$. (b) Show that $A$, $B$ and $C$ are collinear. (c) Find the point $P$ on $AB$ with $AP : PB = 1 : 2$.</span><span data-lang="zh">已知点 $A(1, 2, -1)$、$B(4, 8, 5)$、$C(7, 14, 11)$。(a) 求 $\overrightarrow{AB}$ 与距离 $AB$。(b) 证明 $A$、$B$、$C$ 三点共线。(c) 求 $AB$ 上满足 $AP : PB = 1 : 2$ 的点 $P$。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>(a)</strong> End minus start: $\overrightarrow{AB} = \mathbf{b} - \mathbf{a} = (4 - 1, \; 8 - 2, \; 5 - (-1)) = (3, 6, 6)$, so $AB = \sqrt{9 + 36 + 36} = \sqrt{81} = 9$.</p>
+    <p data-lang="zh"><strong>(a)</strong> 终点减起点：$\overrightarrow{AB} = \mathbf{b} - \mathbf{a} = (4 - 1, \; 8 - 2, \; 5 - (-1)) = (3, 6, 6)$，所以 $AB = \sqrt{9 + 36 + 36} = \sqrt{81} = 9$。</p>
+    <p data-lang="en"><strong>(b)</strong> $\overrightarrow{AC} = \mathbf{c} - \mathbf{a} = (6, 12, 12) = 2\,\overrightarrow{AB}$. The vectors $\overrightarrow{AB}$ and $\overrightarrow{AC}$ are parallel and share the point $A$, so $A$, $B$, $C$ are collinear. Since $k = 2$, $B$ is the midpoint of $AC$.</p>
+    <p data-lang="zh"><strong>(b)</strong> $\overrightarrow{AC} = \mathbf{c} - \mathbf{a} = (6, 12, 12) = 2\,\overrightarrow{AB}$。$\overrightarrow{AB}$ 与 $\overrightarrow{AC}$ 平行且有公共点 $A$，所以 $A$、$B$、$C$ 共线。由于 $k = 2$，$B$ 是 $AC$ 的中点。</p>
+    <p data-lang="en"><strong>(c)</strong> $AP : PB = 1 : 2$ puts $P$ one third of the way from $A$ to $B$: $\mathbf{p} = \mathbf{a} + \tfrac{1}{3}\overrightarrow{AB} = (1, 2, -1) + (1, 2, 2) = (2, 4, 1)$. Check with the section formula: $\tfrac{1}{3}(2\mathbf{a} + \mathbf{b}) = \tfrac{1}{3}(2 + 4, \; 4 + 8, \; -2 + 5) = (2, 4, 1)$.</p>
+    <p data-lang="zh"><strong>(c)</strong> $AP : PB = 1 : 2$ 表示 $P$ 位于从 $A$ 到 $B$ 的三分之一处：$\mathbf{p} = \mathbf{a} + \tfrac{1}{3}\overrightarrow{AB} = (1, 2, -1) + (1, 2, 2) = (2, 4, 1)$。用定比分点公式验证：$\tfrac{1}{3}(2\mathbf{a} + \mathbf{b}) = \tfrac{1}{3}(2 + 4, \; 4 + 8, \; -2 + 5) = (2, 4, 1)$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Every point on line $AB$ is $\mathbf{a}$ plus a multiple of $\overrightarrow{AB}$; collinearity and ratio points are both statements about that multiple.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>直线 $AB$ 上的每一点都等于 $\mathbf{a}$ 加上 $\overrightarrow{AB}$ 的某个倍数；共线与定比分点说的都是这个倍数。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">"Find a vector of length $5$ parallel to $\mathbf{v}$" means $\pm 5\hat{\mathbf{v}}$: normalise first, then scale, and give both signs unless the question fixes the direction. To "show" three points are collinear, write the multiple explicitly ($\overrightarrow{AC} = 2\,\overrightarrow{AB}$) and say that the vectors share a point. Keep magnitudes exact, such as $3\sqrt{2}$; Paper 1 allows no technology, so practise surd arithmetic by hand.</p>
+    <p data-lang="zh">"求一个长度为 $5$、与 $\mathbf{v}$ 平行的向量"意思是 $\pm 5\hat{\mathbf{v}}$：先归一化再伸缩，除非题目规定了方向，否则两个符号都要写。要"证明"（<code>show</code>）三点共线，必须明确写出倍数关系（$\overrightarrow{AC} = 2\,\overrightarrow{AB}$），并说明两向量有公共点。模长保留精确值，如 $3\sqrt{2}$；Paper 1 不允许使用技术工具（<code>no technology</code>），所以根式运算要练到能手算。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the unit vector in the direction of $(2, -2, 1)$, and a vector of length $6$ in the same direction.</span><span data-lang="zh">1. 求 $(2, -2, 1)$ 方向上的单位向量，以及同方向、长度为 $6$ 的向量。</span></summary>
+      <div class="sg-a"><p data-lang="en">$|(2, -2, 1)| = \sqrt{4 + 4 + 1} = 3$, so the unit vector is $\left(\tfrac{2}{3}, -\tfrac{2}{3}, \tfrac{1}{3}\right)$. Multiply by $6$: $(4, -4, 2)$, which has length $\sqrt{16 + 16 + 4} = 6$.</p><p data-lang="zh">$|(2, -2, 1)| = \sqrt{4 + 4 + 1} = 3$，所以单位向量为 $\left(\tfrac{2}{3}, -\tfrac{2}{3}, \tfrac{1}{3}\right)$。乘以 $6$：$(4, -4, 2)$，其长度为 $\sqrt{16 + 16 + 4} = 6$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For $A(3, -1, 2)$ and $B(5, 3, -2)$, find the midpoint $M$ of $AB$ and the distance $AB$.</span><span data-lang="zh">2. 对 $A(3, -1, 2)$ 与 $B(5, 3, -2)$，求 $AB$ 的中点 $M$ 与距离 $AB$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf{m} = \tfrac{1}{2}(\mathbf{a} + \mathbf{b}) = \tfrac{1}{2}(8, 2, 0) = (4, 1, 0)$. $\overrightarrow{AB} = (2, 4, -4)$, so $AB = \sqrt{4 + 16 + 16} = \sqrt{36} = 6$.</p><p data-lang="zh">$\mathbf{m} = \tfrac{1}{2}(\mathbf{a} + \mathbf{b}) = \tfrac{1}{2}(8, 2, 0) = (4, 1, 0)$。$\overrightarrow{AB} = (2, 4, -4)$，所以 $AB = \sqrt{4 + 16 + 16} = \sqrt{36} = 6$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Are the points $P(1, 0, 2)$, $Q(2, 3, 3)$ and $R(4, 9, 6)$ collinear? Justify your answer.</span><span data-lang="zh">3. 点 $P(1, 0, 2)$、$Q(2, 3, 3)$、$R(4, 9, 6)$ 是否共线？说明理由。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\overrightarrow{PQ} = (1, 3, 1)$ and $\overrightarrow{PR} = (3, 9, 4)$. Matching the first component needs $k = 3$, but $3\,\overrightarrow{PQ} = (3, 9, 3) \ne (3, 9, 4)$. No scalar works, so the points are not collinear.</p><p data-lang="zh">$\overrightarrow{PQ} = (1, 3, 1)$，$\overrightarrow{PR} = (3, 9, 4)$。要使第一个分量相等需 $k = 3$，但 $3\,\overrightarrow{PQ} = (3, 9, 3) \ne (3, 9, 4)$。不存在这样的标量，所以三点不共线。</p></div>
+    </details>
+  </div>
+
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">The magnitude of $\mathbf{w} = (2, -1, 2)$ is:</span><span data-lang="zh">$\mathbf{w} = (2, -1, 2)$ 的模长为：</span></div><div class="quiz-number">C3.1 · Q1</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0">$3$</div>
+      <div class="quiz-opt" data-idx="0">$\sqrt{7}$</div>
       <div class="quiz-opt" data-idx="1">$\sqrt{5}$</div>
-      <div class="quiz-opt" data-idx="2">$3$ (correct), and $\hat{\mathbf{w}} = \tfrac{1}{3}(2, -1, 2)$</div>
+      <div class="quiz-opt" data-idx="2">$3$</div>
       <div class="quiz-opt" data-idx="3">$5$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">$|\mathbf{w}| = \sqrt{4 + 1 + 4} = \sqrt{9} = 3$. The unit vector is $\hat{\mathbf{w}} = \tfrac{1}{3}(2, -1, 2) = (\tfrac{2}{3}, -\tfrac{1}{3}, \tfrac{2}{3})$.</span><span data-lang="zh">$|\mathbf{w}| = \sqrt{4 + 1 + 4} = \sqrt{9} = 3$。单位向量 $\hat{\mathbf{w}} = \tfrac{1}{3}(2, -1, 2) = (\tfrac{2}{3}, -\tfrac{1}{3}, \tfrac{2}{3})$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Sum the squares: $4 + 1 + 4 = 9$. Take the square root: $\sqrt{9} = 3$. The unit vector divides each component by $3$.</span><span data-lang="zh">平方和：$4 + 1 + 4 = 9$。开方：$\sqrt{9} = 3$。单位向量是每个分量除以 $3$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Sum the squares: $4 + 1 + 4 = 9$ (the square of $-1$ is $+1$, so $\sqrt{7}$ comes from a sign slip). Take the square root: $\sqrt{9} = 3$. The unit vector divides each component by $3$.</span><span data-lang="zh">平方和：$4 + 1 + 4 = 9$（$-1$ 的平方是 $+1$，$\sqrt{7}$ 来自符号错误）。开方：$\sqrt{9} = 3$。单位向量是每个分量除以 $3$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 </section>
@@ -575,9 +746,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- C3.2 DOT PRODUCT -->
-<section class="section" id="s-c3-2">
+<section class="section" id="s-c3-2" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.2 · Dot Product and Angle</span><span data-lang="zh">Topic C3.2 · 点积与夹角</span></div>
   <h2><span data-lang="en">Dot Product and Angle Between Vectors</span><span data-lang="zh">点积与向量夹角</span> <span class="ib-ref">AHL 3.13</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate the scalar product $\mathbf{u} \cdot \mathbf{v}$ from components.</li>
+      <li>Calculate the angle between two vectors using $\cos\theta = \dfrac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}|\,|\mathbf{v}|}$.</li>
+      <li>Deduce from the sign of $\mathbf{u} \cdot \mathbf{v}$ whether two vectors are perpendicular, or meet at an acute or an obtuse angle.</li>
+      <li>Use the properties of the scalar product, including $\mathbf{v} \cdot \mathbf{v} = |\mathbf{v}|^{2}$, to expand and simplify expressions.</li>
+      <li>Calculate the scalar projection and the vector projection of one vector onto another.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>由分量计算（<code>calculate</code>）标量积（<code>scalar product</code>）$\mathbf{u} \cdot \mathbf{v}$。</li>
+      <li>用 $\cos\theta = \dfrac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}|\,|\mathbf{v}|}$ 计算两向量的夹角。</li>
+      <li>由 $\mathbf{u} \cdot \mathbf{v}$ 的符号推断（<code>deduce</code>）两向量垂直，或成锐角、钝角。</li>
+      <li>用标量积的性质（包括 $\mathbf{v} \cdot \mathbf{v} = |\mathbf{v}|^{2}$）展开并化简表达式。</li>
+      <li>计算一个向量在另一个向量上的标量投影与向量投影。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Two equivalent formulas for the dot product.</strong>
@@ -602,8 +791,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>代数性质。</strong>点积满足交换律（$\mathbf{u} \cdot \mathbf{v} = \mathbf{v} \cdot \mathbf{u}$）、对加法的分配律，以及 $\mathbf{v} \cdot \mathbf{v} = |\mathbf{v}|^{2}$。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.2: angle between two vectors</span><span data-lang="zh">C3.2 例题：两向量夹角</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.2 (angle between two vectors)</span><span data-lang="zh">C3.2 例题（两向量夹角）</span></div>
     <p><span data-lang="en">Find the angle $\theta$ between $\mathbf{u} = (1, 2, 2)$ and $\mathbf{v} = (2, 1, 0)$.</span><span data-lang="zh">求 $\mathbf{u} = (1, 2, 2)$ 与 $\mathbf{v} = (2, 1, 0)$ 的夹角 $\theta$。</span></p>
   </div>
   <div class="worked-solution">
@@ -616,9 +805,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Apply the angle formula.</strong></p>
     <p data-lang="zh"><strong>套用夹角公式。</strong></p>
     $$ \cos\theta \;=\; \frac{4}{3 \sqrt{5}} \;=\; \frac{4 \sqrt{5}}{15}. $$
-    <p data-lang="en"><strong>Solve for $\theta$.</strong> $\theta = \arccos \tfrac{4}{3 \sqrt{5}} \approx 53.4^{\circ}$ (or $0.9322$ rad).</p>
-    <p data-lang="zh"><strong>解出 $\theta$。</strong>$\theta = \arccos \tfrac{4}{3 \sqrt{5}} \approx 53.4^{\circ}$（约 $0.9322$ rad）。</p>
+    <p data-lang="en"><strong>Solve for $\theta$.</strong> $\theta = \arccos \tfrac{4}{3 \sqrt{5}} \approx 53.4^{\circ}$ (or $0.932$ rad).</p>
+    <p data-lang="zh"><strong>解出 $\theta$。</strong>$\theta = \arccos \tfrac{4}{3 \sqrt{5}} \approx 53.4^{\circ}$（约 $0.932$ rad）。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: why both dot-product formulas agree</span><span data-lang="zh">深入：两种点积公式为何一致</span></summary>
@@ -644,8 +834,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.2b: scalar and vector projection</span><span data-lang="zh">C3.2b 例题：标量投影与向量投影</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.2b (scalar and vector projection)</span><span data-lang="zh">C3.2b 例题（标量投影与向量投影）</span></div>
     <p><span data-lang="en">Using $\mathbf{u} = (1, 2, 2)$ and $\mathbf{v} = (2, 1, 0)$ from above, find the scalar projection and the vector projection of $\mathbf{u}$ onto $\mathbf{v}$.</span><span data-lang="zh">沿用上例中的 $\mathbf{u} = (1, 2, 2)$ 与 $\mathbf{v} = (2, 1, 0)$，求 $\mathbf{u}$ 在 $\mathbf{v}$ 方向上的标量投影与向量投影。</span></p>
   </div>
   <div class="worked-solution">
@@ -658,14 +848,113 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Sanity check.</strong> The scalar projection times the unit vector $\hat{\mathbf{v}} = \mathbf{v}/|\mathbf{v}|$ must equal the vector projection: $\tfrac{4}{\sqrt5}\cdot\tfrac{1}{\sqrt5}(2,1,0) = \tfrac{4}{5}(2,1,0)$. ✓</p>
     <p data-lang="zh"><strong>自我验证。</strong>标量投影乘以单位向量 $\hat{\mathbf{v}} = \mathbf{v}/|\mathbf{v}|$ 应等于向量投影：$\tfrac{4}{\sqrt5}\cdot\tfrac{1}{\sqrt5}(2,1,0) = \tfrac{4}{5}(2,1,0)$。 ✓</p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 300" role="img" aria-label="To-scale drawing in the plane of u = (1, 2, 2) and v = (2, 1, 0): u has length 3, v has length root 5, the angle between them is about 53.4 degrees, and the perpendicular from the tip of u meets v at the scalar projection 4 over root 5, about 1.79">
+      <line class="c2" x1="60" y1="250" x2="261.2" y2="250"/>
+      <path class="c2" d="M 251.2 254.5 L 261.2 250 L 251.2 245.5"/>
+      <line class="c1" x1="60" y1="250" x2="221" y2="33.3"/>
+      <path class="c1" d="M 218.6 44 L 221 33.3 L 211.4 38.6"/>
+      <line class="ax dash thin" x1="221" y1="33.3" x2="221" y2="250"/>
+      <path class="ax thin" d="M 211 250 L 211 240 L 221 240"/>
+      <path class="c4" d="M 100 250 A 40 40 0 0 0 83.9 217.9"/>
+      <line class="c3" x1="60" y1="268" x2="221" y2="268"/>
+      <line class="c3" x1="60" y1="262" x2="60" y2="274"/>
+      <line class="c3" x1="221" y1="262" x2="221" y2="274"/>
+      <circle class="dot" cx="60" cy="250" r="3.5"/>
+      <text x="52" y="254" text-anchor="end">O</text>
+      <text class="c1t" x="231" y="37.3" text-anchor="start">u = (1, 2, 2), |u| = 3</text>
+      <text class="c2t" x="269.2" y="246" text-anchor="start">v = (2, 1, 0)</text>
+      <text class="c2t" x="269.2" y="263" text-anchor="start">|v| = √5 ≈ 2.24</text>
+      <text class="c4t" x="106" y="236" text-anchor="start">θ ≈ 53.4°</text>
+      <text class="mut" x="250" y="110" text-anchor="start">cos θ = u·v ⁄ (|u||v|)</text>
+      <text class="mut" x="250" y="128" text-anchor="start">= 4 ⁄ (3√5) ≈ 0.596</text>
+      <text class="c3t" data-lang="en" x="140.5" y="286" text-anchor="middle">scalar projection = 4/√5 ≈ 1.79</text>
+      <text class="c3t" data-lang="zh" x="140.5" y="286" text-anchor="middle">标量投影 = 4/√5 ≈ 1.79</text>
+      <text class="mut" data-lang="en" x="229" y="190" text-anchor="start">drop a perpendicular</text>
+      <text class="mut" data-lang="zh" x="229" y="190" text-anchor="start">作垂线</text>
+      <text class="mut" data-lang="en" x="229" y="206" text-anchor="start">from the tip of u</text>
+      <text class="mut" data-lang="zh" x="229" y="206" text-anchor="start">（从 u 的终点）</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. The vectors of Worked Examples C3.2 and C3.2b, drawn to scale in the plane that contains them (with $\mathbf{v}$ laid along the horizontal). Read off the angle $\theta \approx 53.4^{\circ}$ from $\cos\theta = \tfrac{4}{3\sqrt{5}}$, and the scalar projection: the perpendicular dropped from the tip of $\mathbf{u}$ lands $|\mathbf{u}|\cos\theta = \tfrac{4}{\sqrt{5}} \approx 1.79$ units along $\mathbf{v}$, short of its tip at $\sqrt{5} \approx 2.24$.</span><span data-lang="zh">图 1. 例题 C3.2 与 C3.2b 中的两个向量，按比例画在包含它们的平面内（$\mathbf{v}$ 沿水平方向放置）。由 $\cos\theta = \tfrac{4}{3\sqrt{5}}$ 读出夹角 $\theta \approx 53.4^{\circ}$，并读出标量投影：从 $\mathbf{u}$ 的终点作垂线，垂足落在沿 $\mathbf{v}$ 方向 $|\mathbf{u}|\cos\theta = \tfrac{4}{\sqrt{5}} \approx 1.79$ 个单位处，没有到达其终点 $\sqrt{5} \approx 2.24$。</span></figcaption>
+  </figure>
+
+  <h3><span data-lang="en">Properties of the scalar product</span><span data-lang="zh">标量积的性质</span></h3>
+
+  <div class="concept-box green">
+    <strong><span data-lang="en">Rules you may use without proof</span><span data-lang="zh">可直接使用的规则</span></strong>
+    <ul class="sg-list" data-lang="en">
+      <li>Commutative: $\mathbf{u} \cdot \mathbf{v} = \mathbf{v} \cdot \mathbf{u}$.</li>
+      <li>Distributive: $\mathbf{u} \cdot (\mathbf{v} + \mathbf{w}) = \mathbf{u} \cdot \mathbf{v} + \mathbf{u} \cdot \mathbf{w}$.</li>
+      <li>Scalars factor out: $(k\mathbf{u}) \cdot \mathbf{v} = k(\mathbf{u} \cdot \mathbf{v})$.</li>
+      <li>Self product: $\mathbf{v} \cdot \mathbf{v} = |\mathbf{v}|^{2}$.</li>
+      <li>Sign: for nonzero vectors, $\mathbf{u} \cdot \mathbf{v} &gt; 0$ means an acute angle, $= 0$ means perpendicular, $&lt; 0$ means an obtuse angle.</li>
+    </ul>
+    <ul class="sg-list" data-lang="zh">
+      <li>交换律：$\mathbf{u} \cdot \mathbf{v} = \mathbf{v} \cdot \mathbf{u}$。</li>
+      <li>分配律：$\mathbf{u} \cdot (\mathbf{v} + \mathbf{w}) = \mathbf{u} \cdot \mathbf{v} + \mathbf{u} \cdot \mathbf{w}$。</li>
+      <li>标量可提出：$(k\mathbf{u}) \cdot \mathbf{v} = k(\mathbf{u} \cdot \mathbf{v})$。</li>
+      <li>自身点积：$\mathbf{v} \cdot \mathbf{v} = |\mathbf{v}|^{2}$。</li>
+      <li>符号：对非零向量，$\mathbf{u} \cdot \mathbf{v} &gt; 0$ 表示锐角，$= 0$ 表示垂直，$&lt; 0$ 表示钝角。</li>
+    </ul>
+    <p data-lang="en"><strong>Why they matter.</strong> Together they let you expand like ordinary algebra: $|\mathbf{u} + \mathbf{v}|^{2} = (\mathbf{u} + \mathbf{v}) \cdot (\mathbf{u} + \mathbf{v}) = |\mathbf{u}|^{2} + 2\,\mathbf{u} \cdot \mathbf{v} + |\mathbf{v}|^{2}$. When $\mathbf{u} \perp \mathbf{v}$ the middle term vanishes and this is Pythagoras.</p>
+    <p data-lang="zh"><strong>为什么重要。</strong>这些规则让你可以像普通代数一样展开：$|\mathbf{u} + \mathbf{v}|^{2} = (\mathbf{u} + \mathbf{v}) \cdot (\mathbf{u} + \mathbf{v}) = |\mathbf{u}|^{2} + 2\,\mathbf{u} \cdot \mathbf{v} + |\mathbf{v}|^{2}$。当 $\mathbf{u} \perp \mathbf{v}$ 时中间项为零，这就是勾股定理。</p>
+  </div>
+
+  <div class="concept-box red">
+    <strong><span data-lang="en">Common Mistake: cancelling a dot product</span><span data-lang="zh">常见错误：约去点积</span></strong>
+    <p data-lang="en">$\mathbf{u} \cdot \mathbf{v} = \mathbf{u} \cdot \mathbf{w}$ does not imply $\mathbf{v} = \mathbf{w}$. With $\mathbf{u} = (1, 0, 0)$, $\mathbf{v} = (0, 1, 0)$ and $\mathbf{w} = (0, 0, 1)$, both products are $0$ but $\mathbf{v} \ne \mathbf{w}$. It only gives $\mathbf{u} \cdot (\mathbf{v} - \mathbf{w}) = 0$, so $\mathbf{u} \perp (\mathbf{v} - \mathbf{w})$ or $\mathbf{v} = \mathbf{w}$. The scalar product is a number, so there is no "dividing by $\mathbf{u}$".</p>
+    <p data-lang="zh">由 $\mathbf{u} \cdot \mathbf{v} = \mathbf{u} \cdot \mathbf{w}$ 推不出 $\mathbf{v} = \mathbf{w}$。取 $\mathbf{u} = (1, 0, 0)$、$\mathbf{v} = (0, 1, 0)$、$\mathbf{w} = (0, 0, 1)$，两个点积都是 $0$，但 $\mathbf{v} \ne \mathbf{w}$。它只能给出 $\mathbf{u} \cdot (\mathbf{v} - \mathbf{w}) = 0$，即 $\mathbf{u} \perp (\mathbf{v} - \mathbf{w})$ 或 $\mathbf{v} = \mathbf{w}$。标量积是一个数，不存在"除以 $\mathbf{u}$"这种运算。</p>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For "the angle between two vectors" keep the sign of $\mathbf{u} \cdot \mathbf{v}$: an obtuse answer such as $120^{\circ}$ is correct there. For "the acute angle between two lines" use $|\mathbf{u} \cdot \mathbf{v}|$ in the numerator. Keep $\cos\theta$ exact (such as $\tfrac{4}{3\sqrt{5}}$) until the last line, and give the angle in the unit the question uses, degrees or radians.</p>
+    <p data-lang="zh">求"两向量的夹角"时保留 $\mathbf{u} \cdot \mathbf{v}$ 的符号：此时像 $120^{\circ}$ 这样的钝角答案是正确的。求"两直线所成的锐角"时，分子用 $|\mathbf{u} \cdot \mathbf{v}|$。$\cos\theta$ 保持精确值（如 $\tfrac{4}{3\sqrt{5}}$）直到最后一行，并按题目使用的单位（度或弧度）给出角度。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find $\mathbf{a} \cdot \mathbf{b}$ for $\mathbf{a} = (2, -1, 3)$ and $\mathbf{b} = (4, 5, -1)$, and state what it tells you about the angle between them.</span><span data-lang="zh">1. 对 $\mathbf{a} = (2, -1, 3)$ 与 $\mathbf{b} = (4, 5, -1)$ 求 $\mathbf{a} \cdot \mathbf{b}$，并说明它告诉你两向量夹角的什么信息。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf{a} \cdot \mathbf{b} = 8 - 5 - 3 = 0$. Both vectors are nonzero, so they are perpendicular: the angle is $90^{\circ}$.</p><p data-lang="zh">$\mathbf{a} \cdot \mathbf{b} = 8 - 5 - 3 = 0$。两向量都非零，所以互相垂直：夹角为 $90^{\circ}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the angle between $(1, -1, 0)$ and $(-1, 0, 1)$.</span><span data-lang="zh">2. 求 $(1, -1, 0)$ 与 $(-1, 0, 1)$ 的夹角。</span></summary>
+      <div class="sg-a"><p data-lang="en">The dot product is $-1 + 0 + 0 = -1$ and both magnitudes are $\sqrt{2}$, so $\cos\theta = \tfrac{-1}{2}$ and $\theta = 120^{\circ}$ (that is, $\tfrac{2\pi}{3}$). The negative dot product signals the obtuse angle.</p><p data-lang="zh">点积为 $-1 + 0 + 0 = -1$，两个模长都是 $\sqrt{2}$，所以 $\cos\theta = \tfrac{-1}{2}$，$\theta = 120^{\circ}$（即 $\tfrac{2\pi}{3}$）。点积为负说明夹角为钝角。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Given $|\mathbf{u}| = 3$, $|\mathbf{v}| = 4$ and $\mathbf{u} \cdot \mathbf{v} = 2$, find $|\mathbf{u} + \mathbf{v}|$.</span><span data-lang="zh">3. 已知 $|\mathbf{u}| = 3$、$|\mathbf{v}| = 4$、$\mathbf{u} \cdot \mathbf{v} = 2$，求 $|\mathbf{u} + \mathbf{v}|$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$|\mathbf{u} + \mathbf{v}|^{2} = |\mathbf{u}|^{2} + 2\,\mathbf{u} \cdot \mathbf{v} + |\mathbf{v}|^{2} = 9 + 4 + 16 = 29$, so $|\mathbf{u} + \mathbf{v}| = \sqrt{29}$. No components are needed: the properties of the scalar product do all the work.</p><p data-lang="zh">$|\mathbf{u} + \mathbf{v}|^{2} = |\mathbf{u}|^{2} + 2\,\mathbf{u} \cdot \mathbf{v} + |\mathbf{v}|^{2} = 9 + 4 + 16 = 29$，所以 $|\mathbf{u} + \mathbf{v}| = \sqrt{29}$。不需要分量：标量积的性质完成了全部工作。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <!-- C3.3 LINE -->
-<section class="section" id="s-c3-3">
+<section class="section" id="s-c3-3" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.3 · Vector Equation of a Line</span><span data-lang="zh">Topic C3.3 · 直线的向量方程</span></div>
   <h2><span data-lang="en">Vector Equation of a Line</span><span data-lang="zh">直线的向量方程</span> <span class="ib-ref">AHL 3.14</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Write the vector equation of a line $\mathbf{r} = \mathbf{a} + \lambda\mathbf{d}$ from a point and a direction vector, or from two points.</li>
+      <li>Convert between the vector form and the parametric form of a line.</li>
+      <li>Determine whether a given point lies on a given line.</li>
+      <li>Calculate the acute angle between two lines from their direction vectors.</li>
+      <li>Interpret $\mathbf{r} = \mathbf{r}_0 + t\mathbf{v}$ as motion with constant velocity, and calculate speed and position.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>由一点与方向向量（<code>direction vector</code>），或由两点，写出（<code>write down</code>）直线的向量方程 $\mathbf{r} = \mathbf{a} + \lambda\mathbf{d}$。</li>
+      <li>在直线的向量式与参数式（<code>parametric form</code>）之间互相转换。</li>
+      <li>判断（<code>determine</code>）给定点是否在给定直线上。</li>
+      <li>由方向向量计算（<code>calculate</code>）两直线所成的锐角。</li>
+      <li>把 $\mathbf{r} = \mathbf{r}_0 + t\mathbf{v}$ 解释为匀速运动，并计算速率与位置。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Vector form.</strong> A line in three dimensions through point $\mathbf{a}$ with direction $\mathbf{d}$ (any nonzero vector parallel to the line) is the set of points
@@ -686,8 +975,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>方向向量不唯一。</strong>$\mathbf{d}$ 的任一非零数乘都描述同一条直线。两直线平行当且仅当其方向向量互为数乘。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.3: line through a point with a direction</span><span data-lang="zh">C3.3 例题：过定点的指向直线</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.3 (line through a point with a direction)</span><span data-lang="zh">C3.3 例题（过定点的指向直线）</span></div>
     <p><span data-lang="en">Write the vector equation and the parametric equations of the line through $(1, 2, 3)$ with direction vector $(2, -1, 1)$. Does the point $(5, 0, 5)$ lie on this line?</span><span data-lang="zh">写出过 $(1, 2, 3)$、方向向量为 $(2, -1, 1)$ 的直线的向量方程与参数方程。判断点 $(5, 0, 5)$ 是否在该直线上。</span></p>
   </div>
   <div class="worked-solution">
@@ -700,10 +989,142 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Test the point $(5, 0, 5)$.</strong> If the point lies on the line, the same parameter value must satisfy all three equations. From $x = 5$: $1 + 2 \lambda = 5 \Rightarrow \lambda = 2$. Check the others: $y = 2 - 2 = 0$ ✓; $z = 3 + 2 = 5$ ✓. All three agree at $\lambda = 2$, so $(5, 0, 5)$ does lie on the line.</p>
     <p data-lang="zh"><strong>检验点 $(5, 0, 5)$。</strong>若点在直线上，则同一参数值需同时满足三个分量方程。由 $x = 5$：$1 + 2 \lambda = 5 \Rightarrow \lambda = 2$。验证其它：$y = 2 - 2 = 0$ ✓；$z = 3 + 2 = 5$ ✓。三式在 $\lambda = 2$ 时一致，故 $(5, 0, 5)$ 在直线上。</p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 345" role="img" aria-label="Cavalier oblique 3D sketch of the line r = (1, 2, 3) + lambda (2, -1, 1): position vector a from the origin to A(1, 2, 3), direction vector d from A to (3, 1, 4), and the point P(5, 0, 5) at lambda = 2">
+      <line class="ax" x1="210" y1="200" x2="82.7" y2="327.3"/>
+      <path class="ax" d="M 85.9 319.1 L 82.7 327.3 L 90.9 324.1"/>
+      <line class="ax" x1="210" y1="200" x2="360" y2="200"/>
+      <path class="ax" d="M 352 203.5 L 360 200 L 352 196.5"/>
+      <line class="ax" x1="210" y1="200" x2="210" y2="14"/>
+      <path class="ax" d="M 213.5 22 L 210 14 L 206.5 22"/>
+      <line class="ax thin" x1="186" y1="218.4" x2="191.6" y2="224"/>
+      <text class="mut" x="196.8" y="235.2" text-anchor="start">1</text>
+      <line class="ax thin" x1="206" y1="170" x2="214" y2="170"/>
+      <text class="mut" x="202" y="174" text-anchor="end">1</text>
+      <line class="ax thin" x1="164.8" y1="239.6" x2="170.4" y2="245.2"/>
+      <text class="mut" x="175.6" y="256.4" text-anchor="start">2</text>
+      <line class="ax thin" x1="206" y1="140" x2="214" y2="140"/>
+      <line class="ax thin" x1="143.6" y1="260.8" x2="149.2" y2="266.4"/>
+      <text class="mut" x="154.4" y="277.6" text-anchor="start">3</text>
+      <line class="ax thin" x1="206" y1="110" x2="214" y2="110"/>
+      <text class="mut" x="202" y="114" text-anchor="end">3</text>
+      <line class="ax thin" x1="122.3" y1="282.1" x2="127.9" y2="287.7"/>
+      <text class="mut" x="133.1" y="298.9" text-anchor="start">4</text>
+      <line class="ax thin" x1="206" y1="80" x2="214" y2="80"/>
+      <line class="ax thin" x1="101.1" y1="303.3" x2="106.7" y2="308.9"/>
+      <text class="mut" x="111.9" y="320.1" text-anchor="start">5</text>
+      <line class="ax thin" x1="206" y1="50" x2="214" y2="50"/>
+      <text class="mut" x="202" y="54" text-anchor="end">5</text>
+      <line class="ax thin" x1="240" y1="196" x2="240" y2="204"/>
+      <text class="mut" x="240" y="192" text-anchor="middle">1</text>
+      <line class="ax thin" x1="270" y1="196" x2="270" y2="204"/>
+      <text class="mut" x="270" y="192" text-anchor="middle">2</text>
+      <line class="ax thin" x1="300" y1="196" x2="300" y2="204"/>
+      <text class="mut" x="300" y="192" text-anchor="middle">3</text>
+      <line class="ax thin" x1="330" y1="196" x2="330" y2="204"/>
+      <text class="mut" x="330" y="192" text-anchor="middle">4</text>
+      <text x="74.7" y="335.3" text-anchor="end">x</text>
+      <text x="368" y="204" text-anchor="start">y</text>
+      <text x="218" y="20" text-anchor="start">z</text>
+      <line class="ax dash thin" x1="248.8" y1="131.2" x2="248.8" y2="221.2"/>
+      <line class="ax dash thin" x1="248.8" y1="221.2" x2="188.8" y2="221.2"/>
+      <line class="ax dash thin" x1="248.8" y1="221.2" x2="270" y2="200"/>
+      <line class="ax dash thin" x1="103.9" y1="156.1" x2="103.9" y2="306.1"/>
+      <line class="c1" x1="285" y1="125" x2="60.5" y2="163.5"/>
+      <line class="c3 dash" x1="210" y1="200" x2="248.8" y2="131.2"/>
+      <path class="c3" d="M 247.8 142.1 L 248.8 131.2 L 240 137.7"/>
+      <line class="c2" x1="248.8" y1="131.2" x2="176.4" y2="143.6"/>
+      <path class="c2" d="M 185.5 137.5 L 176.4 143.6 L 187 146.4"/>
+      <circle class="dot" cx="248.8" cy="131.2" r="3.5"/>
+      <circle class="dot" cx="176.4" cy="143.6" r="3.5"/>
+      <circle class="dot" cx="103.9" cy="156.1" r="3.5"/>
+      <text x="203" y="194" text-anchor="end">O</text>
+      <text x="252.8" y="117.2" text-anchor="start">A(1, 2, 3), λ = 0</text>
+      <text x="170" y="166" text-anchor="end">λ = 1</text>
+      <text x="103.9" y="140.1" text-anchor="middle">P(5, 0, 5), λ = 2</text>
+      <text class="c2t" x="224" y="126" text-anchor="middle">d</text>
+      <text class="c3t" x="239.4" y="171.6" text-anchor="start">a</text>
+      <text class="c1t" x="291" y="130" text-anchor="start">r = a + λd</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. The line of Worked Example C3.3, $\mathbf{r} = (1, 2, 3) + \lambda(2, -1, 1)$, in cavalier oblique projection: the $y$-axis is horizontal, the $z$-axis vertical, and the $x$-axis is drawn at $45^{\circ}$ at full scale, so one unit has the same drawn length on all three axes. The position vector $\mathbf{a}$ (dashed) reaches the line at $A$; the direction vector $\mathbf{d}$ is one step along it, from $A$ to $(3, 1, 4)$. Read off that $\lambda = 0, 1, 2$ give equally spaced points, ending at $P(5, 0, 5)$ on the $xz$-plane. The dashed drops show the heights $z = 3$ at $A$ and $z = 5$ at $P$.</span><span data-lang="zh">图 2. 例题 C3.3 的直线 $\mathbf{r} = (1, 2, 3) + \lambda(2, -1, 1)$，采用斜等测（<code>cavalier oblique</code>）投影：$y$ 轴水平，$z$ 轴竖直，$x$ 轴画成 $45^{\circ}$ 且不缩短，因此一个单位在三条轴上的画长相同。位置向量 $\mathbf{a}$（虚线）到达直线上的点 $A$；方向向量 $\mathbf{d}$ 是沿直线从 $A$ 到 $(3, 1, 4)$ 的一步。可以读出 $\lambda = 0, 1, 2$ 给出等间距的点，最后到达 $xz$ 平面上的 $P(5, 0, 5)$。虚线垂足表示 $A$ 处高度 $z = 3$、$P$ 处高度 $z = 5$。</span></figcaption>
+  </figure>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Two ways the test fails</span><span data-lang="zh">检验失败的两种情形</span></strong>
-    <span data-lang="en">If the three parametric equations give different $\lambda$ values for the candidate point, the point is not on the line. If they give the same $\lambda$ but the point is still not on the line, you computed wrong: there is only one consistent answer per direction. The common slip is mismatched signs on the direction vector.</span><span data-lang="zh">若三个参数方程给出不同的 $\lambda$ 值，则该点不在直线上。若三式同 $\lambda$ 却仍判错，那是算错了：同一直线每个候选点只有唯一的 $\lambda$。最常见的失误是方向向量上的正负号配错。</span>
+    <strong><span data-lang="en">Reading the result of the test</span><span data-lang="zh">如何解读检验结果</span></strong>
+    <span data-lang="en">If one value of $\lambda$ satisfies all three parametric equations, the point is on the line. If the three equations give different $\lambda$ values, the point is not on the line. The usual slip is to solve one equation, find a $\lambda$ and stop: a single component that disagrees is enough to rule the point out, so always check the other two.</span><span data-lang="zh">若同一个 $\lambda$ 同时满足三个参数方程，该点在直线上。若三个方程给出不同的 $\lambda$，该点不在直线上。常见的失误是只解一个方程、求出 $\lambda$ 就停下：只要有一个分量不符就能排除该点，所以一定要检验另外两个分量。</span>
+  </div>
+
+  <h3><span data-lang="en">Angle between two lines and motion along a line</span><span data-lang="zh">两直线的夹角与沿直线的运动</span></h3>
+
+  <div class="concept-box">
+    <strong><span data-lang="en">Angle between two lines</span><span data-lang="zh">两直线的夹角</span></strong>
+    <p data-lang="en">The angle between two lines is the angle between their direction vectors $\mathbf{d}_1$ and $\mathbf{d}_2$, taken as the acute angle: $\cos\theta = \dfrac{|\mathbf{d}_1 \cdot \mathbf{d}_2|}{|\mathbf{d}_1|\,|\mathbf{d}_2|}$. Only the directions matter, so the formula works even for lines that never meet. The absolute value is there because reversing one direction vector describes the same line but would turn $\theta$ into $180^{\circ} - \theta$.</p>
+    <p data-lang="zh">两直线的夹角是它们方向向量 $\mathbf{d}_1$ 与 $\mathbf{d}_2$ 的夹角，取锐角：$\cos\theta = \dfrac{|\mathbf{d}_1 \cdot \mathbf{d}_2|}{|\mathbf{d}_1|\,|\mathbf{d}_2|}$。只有方向起作用，所以即使两直线不相交，公式也适用。取绝对值是因为把一个方向向量反向仍表示同一条直线，却会把 $\theta$ 变成 $180^{\circ} - \theta$。</p>
+    <p data-lang="en"><strong>Motion along a line.</strong> If an object has position $\mathbf{r} = \mathbf{r}_0 + t\mathbf{v}$ at time $t$, it moves along a straight line from $\mathbf{r}_0$ with constant velocity $\mathbf{v}$; its speed is the magnitude $|\mathbf{v}|$. Here the parameter has a physical meaning (time), and the direction vector is the velocity.</p>
+    <p data-lang="zh"><strong>沿直线的运动。</strong>若物体在时刻 $t$ 的位置为 $\mathbf{r} = \mathbf{r}_0 + t\mathbf{v}$，它就从 $\mathbf{r}_0$ 出发，以恒定速度（<code>velocity</code>）$\mathbf{v}$ 沿直线运动；速率（<code>speed</code>）是模长 $|\mathbf{v}|$。这里参数有物理意义（时间），方向向量就是速度。</p>
+  </div>
+
+  <div class="concept-box red">
+    <strong><span data-lang="en">Common Mistake: using position vectors in the angle formula</span><span data-lang="zh">常见错误：在夹角公式中用位置向量</span></strong>
+    <p data-lang="en">For $L_1: \mathbf{r} = (2, 0, 1) + \lambda(2, 3, -2)$ the direction is $(2, 3, -2)$; the point $(2, 0, 1)$ plays no part in the angle. Feeding position vectors into the formula gives the angle between two arrows from the origin, which has nothing to do with the lines.</p>
+    <p data-lang="zh">对 $L_1: \mathbf{r} = (2, 0, 1) + \lambda(2, 3, -2)$，方向是 $(2, 3, -2)$；点 $(2, 0, 1)$ 与夹角无关。把位置向量代入公式，求出的是从原点出发的两个箭头的夹角，与这两条直线毫无关系。</p>
+  </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.3b: line through two points and the angle between lines</span><span data-lang="zh">C3.3b 例题：过两点的直线与两直线的夹角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">$L_1$ passes through $A(2, 0, 1)$ and $B(4, 3, -1)$. $L_2$ is $\mathbf{r} = (0, 1, 5) + \mu(1, -1, 4)$. Write a vector equation of $L_1$ and find the acute angle between $L_1$ and $L_2$.</span><span data-lang="zh">$L_1$ 经过 $A(2, 0, 1)$ 与 $B(4, 3, -1)$。$L_2$ 为 $\mathbf{r} = (0, 1, 5) + \mu(1, -1, 4)$。写出 $L_1$ 的向量方程，并求 $L_1$ 与 $L_2$ 所成的锐角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Direction of $L_1$.</strong> $\mathbf{d}_1 = \overrightarrow{AB} = (4 - 2, \; 3 - 0, \; -1 - 1) = (2, 3, -2)$, so $L_1: \mathbf{r} = (2, 0, 1) + \lambda(2, 3, -2)$.</p>
+    <p data-lang="zh"><strong>$L_1$ 的方向。</strong>$\mathbf{d}_1 = \overrightarrow{AB} = (4 - 2, \; 3 - 0, \; -1 - 1) = (2, 3, -2)$，所以 $L_1: \mathbf{r} = (2, 0, 1) + \lambda(2, 3, -2)$。</p>
+    <p data-lang="en"><strong>Scalar product of the directions.</strong> With $\mathbf{d}_2 = (1, -1, 4)$: $\mathbf{d}_1 \cdot \mathbf{d}_2 = 2 - 3 - 8 = -9$.</p>
+    <p data-lang="zh"><strong>方向向量的标量积。</strong>$\mathbf{d}_2 = (1, -1, 4)$：$\mathbf{d}_1 \cdot \mathbf{d}_2 = 2 - 3 - 8 = -9$。</p>
+    <p data-lang="en"><strong>Magnitudes.</strong> $|\mathbf{d}_1| = \sqrt{4 + 9 + 4} = \sqrt{17}$ and $|\mathbf{d}_2| = \sqrt{1 + 1 + 16} = \sqrt{18} = 3\sqrt{2}$.</p>
+    <p data-lang="zh"><strong>模长。</strong>$|\mathbf{d}_1| = \sqrt{4 + 9 + 4} = \sqrt{17}$，$|\mathbf{d}_2| = \sqrt{1 + 1 + 16} = \sqrt{18} = 3\sqrt{2}$。</p>
+    $$ \cos\theta \;=\; \frac{|-9|}{\sqrt{17} \cdot 3\sqrt{2}} \;=\; \frac{3}{\sqrt{34}} \;\approx\; 0.514, \qquad \theta \;\approx\; 59.0^{\circ}. $$
+    <p data-lang="en"><strong>Why this works.</strong> The angle between lines depends only on their directions, and the absolute value picks the acute angle; without it, the negative product would give the obtuse angle $121.0^{\circ}$ between the same two lines.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>两直线的夹角只取决于方向，绝对值选出锐角；若不取绝对值，负的点积会给出同样两条直线之间的钝角 $121.0^{\circ}$。</p>
+  </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.3c: motion with constant velocity</span><span data-lang="zh">C3.3c 例题：匀速运动</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A drone's position (in metres) $t$ seconds after take-off is $\mathbf{r} = (1, 2, 0) + t(3, -4, 12)$. (a) Find its speed. (b) Find its position after $2$ s. (c) Find when it reaches a height of $30$ m and how far it has flown by then.</span><span data-lang="zh">无人机起飞 $t$ 秒后的位置（单位：米）为 $\mathbf{r} = (1, 2, 0) + t(3, -4, 12)$。(a) 求它的速率。(b) 求 $2$ s 后的位置。(c) 求它何时到达 $30$ m 高度，以及此时已飞行的距离。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>(a)</strong> The velocity is $\mathbf{v} = (3, -4, 12)\ \mathrm{m\,s^{-1}}$, so the speed is $|\mathbf{v}| = \sqrt{9 + 16 + 144} = \sqrt{169} = 13\ \mathrm{m\,s^{-1}}$.</p>
+    <p data-lang="zh"><strong>(a)</strong> 速度为 $\mathbf{v} = (3, -4, 12)\ \mathrm{m\,s^{-1}}$，所以速率为 $|\mathbf{v}| = \sqrt{9 + 16 + 144} = \sqrt{169} = 13\ \mathrm{m\,s^{-1}}$。</p>
+    <p data-lang="en"><strong>(b)</strong> At $t = 2$: $\mathbf{r} = (1 + 6, \; 2 - 8, \; 0 + 24) = (7, -6, 24)$, in metres.</p>
+    <p data-lang="zh"><strong>(b)</strong> $t = 2$ 时：$\mathbf{r} = (1 + 6, \; 2 - 8, \; 0 + 24) = (7, -6, 24)$，单位为米。</p>
+    <p data-lang="en"><strong>(c)</strong> The height is the $z$-component: $12t = 30$, so $t = 2.5$ s, at position $(8.5, -8, 30)$. At constant speed the distance flown is $13 \times 2.5 = 32.5$ m.</p>
+    <p data-lang="zh"><strong>(c)</strong> 高度是 $z$ 分量：$12t = 30$，所以 $t = 2.5$ s，此时位置为 $(8.5, -8, 30)$。速率恒定，飞行距离为 $13 \times 2.5 = 32.5$ m。</p>
+    <p data-lang="en"><strong>Why this works.</strong> The direction vector is the displacement per second, so its magnitude is the speed and each component is the rate of change of one coordinate.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>方向向量就是每秒的位移，所以它的模长是速率，每个分量是对应坐标的变化率。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">A line has infinitely many correct vector equations: any point on it with any nonzero multiple of the direction. If your equation looks different from the one in a later part of the question, test it (the given point satisfies yours, and the directions are parallel) instead of assuming one is wrong. Always write "$\mathbf{r} =$" in front: $(1, 2, 3) + \lambda(2, -1, 1)$ on its own is an expression, not an equation.</p>
+    <p data-lang="zh">一条直线有无数个正确的向量方程：直线上的任一点配上方向向量的任一非零倍数都可以。若你的方程与题目后面小问给出的方程看起来不同，先检验（给出的点满足你的方程，且方向平行），不要直接认定其中一个是错的。前面一定要写"$\mathbf{r} =$"：单独的 $(1, 2, 3) + \lambda(2, -1, 1)$ 只是表达式，不是方程。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write a vector equation of the line through $P(0, 3, -1)$ and $Q(2, 1, 5)$.</span><span data-lang="zh">1. 写出过 $P(0, 3, -1)$ 与 $Q(2, 1, 5)$ 的直线的一个向量方程。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\overrightarrow{PQ} = (2, -2, 6) = 2(1, -1, 3)$, so one answer is $\mathbf{r} = (0, 3, -1) + \lambda(1, -1, 3)$. Using $Q$ as the point or $(2, -2, 6)$ as the direction gives an equally correct equation of the same line.</p><p data-lang="zh">$\overrightarrow{PQ} = (2, -2, 6) = 2(1, -1, 3)$，所以一个答案是 $\mathbf{r} = (0, 3, -1) + \lambda(1, -1, 3)$。用 $Q$ 作为点，或用 $(2, -2, 6)$ 作为方向，得到的也是同一条直线的正确方程。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Does the point $(5, 1, 5)$ lie on $\mathbf{r} = (1, 2, 3) + \lambda(2, -1, 1)$?</span><span data-lang="zh">2. 点 $(5, 1, 5)$ 是否在 $\mathbf{r} = (1, 2, 3) + \lambda(2, -1, 1)$ 上？</span></summary>
+      <div class="sg-a"><p data-lang="en">From $x$: $1 + 2\lambda = 5$, so $\lambda = 2$. Then $y = 2 - 2 = 0 \ne 1$. The $y$-component disagrees, so the point is not on the line (compare $(5, 0, 5)$ in Worked Example C3.3, which is).</p><p data-lang="zh">由 $x$：$1 + 2\lambda = 5$，得 $\lambda = 2$。此时 $y = 2 - 2 = 0 \ne 1$。$y$ 分量不符，所以该点不在直线上（对比例题 C3.3 中的 $(5, 0, 5)$，它在直线上）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the acute angle between lines with direction vectors $(2, 1, -2)$ and $(3, 0, 4)$.</span><span data-lang="zh">3. 求方向向量分别为 $(2, 1, -2)$ 与 $(3, 0, 4)$ 的两直线所成的锐角。</span></summary>
+      <div class="sg-a"><p data-lang="en">The dot product is $6 + 0 - 8 = -2$; the magnitudes are $3$ and $5$. So $\cos\theta = \tfrac{|-2|}{15} = \tfrac{2}{15}$ and $\theta \approx 82.3^{\circ}$.</p><p data-lang="zh">点积为 $6 + 0 - 8 = -2$；模长分别为 $3$ 与 $5$。所以 $\cos\theta = \tfrac{|-2|}{15} = \tfrac{2}{15}$，$\theta \approx 82.3^{\circ}$。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -723,9 +1144,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- C3.4 INTERSECTIONS -->
-<section class="section" id="s-c3-4">
+<section class="section" id="s-c3-4" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.4 · Intersections of Lines</span><span data-lang="zh">Topic C3.4 · 直线之间的位置关系</span></div>
   <h2><span data-lang="en">Intersections of Lines</span><span data-lang="zh">直线之间的位置关系</span> <span class="ib-ref">AHL 3.15</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Explain the difference between intersecting, parallel, coincident and skew lines in three dimensions.</li>
+      <li>Deduce whether two lines are parallel by comparing their direction vectors.</li>
+      <li>Determine whether parallel lines are coincident or distinct by testing one point.</li>
+      <li>Solve the parametric equations of two lines simultaneously to find a point of intersection.</li>
+      <li>Show that two lines are skew, giving both reasons.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>解释（<code>explain</code>）三维空间中相交、平行、重合（<code>coincident</code>）与异面（<code>skew</code>）直线的区别。</li>
+      <li>比较方向向量，推断（<code>deduce</code>）两直线是否平行。</li>
+      <li>检验一个点，判断（<code>determine</code>）平行直线是重合还是不同的直线。</li>
+      <li>联立两直线的参数方程求交点（<code>point of intersection</code>）。</li>
+      <li>证明（<code>show</code>）两直线异面，并给出两条理由。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Three mutually exclusive cases in three dimensions.</strong>
@@ -754,8 +1193,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ul>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.4: classify two lines</span><span data-lang="zh">C3.4 例题：判定两直线的关系</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.4 (classify two lines)</span><span data-lang="zh">C3.4 例题（判定两直线的关系）</span></div>
     <p><span data-lang="en">Determine whether the lines $L_1: \mathbf{r} = (1, 0, 2) + \lambda (1, 1, 1)$ and $L_2: \mathbf{r} = (2, 3, 1) + \mu (2, 0, -1)$ intersect. If they do, find the point of intersection.</span><span data-lang="zh">判断直线 $L_1: \mathbf{r} = (1, 0, 2) + \lambda (1, 1, 1)$ 与 $L_2: \mathbf{r} = (2, 3, 1) + \mu (2, 0, -1)$ 是否相交。若相交，求交点。</span></p>
   </div>
   <div class="worked-solution">
@@ -769,14 +1208,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Conclusion.</strong> The system is inconsistent. Since the directions are not parallel, the lines are <strong>skew</strong>. There is no point of intersection.</p>
     <p data-lang="zh"><strong>结论。</strong>方程组不一致。方向不平行，故两直线<strong>异面</strong>。无公共点。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: why "two of three" is the right verification rule</span><span data-lang="zh">深入：为何用"三式中取两式"验证</span></summary>
     <div class="detail-body">
-      <p data-lang="en">Two parametric lines in three dimensions give a system of three linear equations in two unknowns $(\lambda, \mu)$. Generically, three equations in two unknowns are overdetermined: pick any two of them and they determine $(\lambda, \mu)$ uniquely, and the third equation acts as a consistency check. If the third holds, the lines meet at that $(\lambda, \mu)$; if it fails, the system is inconsistent and there is no common point. The "two of three" procedure is the cleanest version of this argument and the one IB markers expect.</p>
-      <p data-lang="zh">三维空间中两条参数直线给出三式两未知 $(\lambda, \mu)$ 的线性方程组。三式两未知一般属"超定"：任取两式可唯一确定 $(\lambda, \mu)$，第三式则是相容性的验证。若第三式成立，两直线在该 $(\lambda, \mu)$ 处相交；若失败则方程组不一致，无公共点。"取两式解、第三式验"是上述论证最简洁的写法，也是 IB 评卷期望的格式。</p>
+      <p data-lang="en">Two parametric lines in three dimensions give a system of three linear equations in two unknowns $(\lambda, \mu)$. Generically, three equations in two unknowns are overdetermined: two independent equations among them determine $(\lambda, \mu)$ uniquely, and the remaining equation acts as a consistency check. If the third holds, the lines meet at that $(\lambda, \mu)$; if it fails, the system is inconsistent and there is no common point. The "two of three" procedure is the cleanest version of this argument, and it is easy to set out line by line.</p>
+      <p data-lang="zh">三维空间中两条参数直线给出三式两未知 $(\lambda, \mu)$ 的线性方程组。三式两未知一般属"超定"：其中两个独立的方程可唯一确定 $(\lambda, \mu)$，剩下的一式则是相容性的验证。若第三式成立，两直线在该 $(\lambda, \mu)$ 处相交；若失败则方程组不一致，无公共点。"取两式解、第三式验"是上述论证最简洁的写法，也便于逐行写清楚。</p>
     </div>
   </details>
+
+  <h3><span data-lang="en">Parallel lines and coincident lines</span><span data-lang="zh">平行直线与重合直线</span></h3>
+
+  <div class="concept-box">
+    <strong><span data-lang="en">When the directions are parallel</span><span data-lang="zh">方向平行时</span></strong>
+    <p data-lang="en">If $\mathbf{d}_2 = k\,\mathbf{d}_1$, the lines are parallel, and one test decides the rest: take the known point of $L_2$ and check whether it lies on $L_1$. If it does, the lines are <strong>coincident</strong> (two equations for the same line, infinitely many common points). If it does not, they are distinct <strong>parallel lines</strong> with no common point. Solving for $\lambda$ and $\mu$ cannot finish this case on its own, because parallel directions make the system either inconsistent or dependent.</p>
+    <p data-lang="zh">若 $\mathbf{d}_2 = k\,\mathbf{d}_1$，两直线平行，剩下的只需一次检验：取 $L_2$ 上的已知点，检查它是否在 $L_1$ 上。若在，两直线<strong>重合</strong>（<code>coincident</code>，同一条直线的两个方程，有无穷多公共点）。若不在，它们是不同的<strong>平行直线</strong>（<code>parallel lines</code>），没有公共点。仅靠解 $\lambda$ 与 $\mu$ 无法单独完成这种情形，因为方向平行时方程组要么不相容，要么相关。</p>
+  </div>
+
+  <div class="concept-box red">
+    <strong><span data-lang="en">Common Mistake: "not parallel, so they intersect"</span><span data-lang="zh">常见错误："不平行，所以相交"</span></strong>
+    <p data-lang="en">In a plane, two non-parallel lines always meet. In three dimensions they may be skew, as in Worked Example C3.4. Non-parallel directions only tell you the lines are not parallel; the third equation decides between intersecting and skew.</p>
+    <p data-lang="zh">在平面内，两条不平行的直线一定相交。在三维空间中它们可能异面，如例题 C3.4。方向不平行只说明两直线不平行；是相交还是异面要由第三个方程判定。</p>
+  </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.4b: point of intersection and angle</span><span data-lang="zh">C3.4b 例题：交点与夹角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Show that $L_1: \mathbf{r} = (1, 2, 3) + \lambda(1, -1, 2)$ and $L_2: \mathbf{r} = (1, -1, 8) + \mu(2, 1, -1)$ intersect. Find the point of intersection and the acute angle between the lines.</span><span data-lang="zh">证明 $L_1: \mathbf{r} = (1, 2, 3) + \lambda(1, -1, 2)$ 与 $L_2: \mathbf{r} = (1, -1, 8) + \mu(2, 1, -1)$ 相交。求交点以及两直线所成的锐角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Not parallel.</strong> $(1, -1, 2)$ and $(2, 1, -1)$ are not scalar multiples: the first components need $k = 2$, the second need $k = -1$.</p>
+    <p data-lang="zh"><strong>第 1 步：不平行。</strong>$(1, -1, 2)$ 与 $(2, 1, -1)$ 不成倍数：第一分量要求 $k = 2$，第二分量要求 $k = -1$。</p>
+    <p data-lang="en"><strong>Step 2. Equate components.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：分量分别相等。</strong></p>
+    $$ 1 + \lambda \;=\; 1 + 2\mu, \qquad 2 - \lambda \;=\; -1 + \mu, \qquad 3 + 2\lambda \;=\; 8 - \mu. $$
+    <p data-lang="en"><strong>Step 3. Solve two, check the third.</strong> The $x$-equation gives $\lambda = 2\mu$. Substitute into the $y$-equation: $2 - 2\mu = -1 + \mu$, so $3\mu = 3$, $\mu = 1$ and $\lambda = 2$. Check the $z$-equation: $3 + 2(2) = 7$ and $8 - 1 = 7$. It holds, so the lines intersect.</p>
+    <p data-lang="zh"><strong>第 3 步：解两式，验第三式。</strong>由 $x$ 方程得 $\lambda = 2\mu$。代入 $y$ 方程：$2 - 2\mu = -1 + \mu$，所以 $3\mu = 3$，$\mu = 1$，$\lambda = 2$。验证 $z$ 方程：$3 + 2(2) = 7$，$8 - 1 = 7$。成立，所以两直线相交。</p>
+    <p data-lang="en"><strong>Step 4. The point.</strong> Put $\lambda = 2$ into $L_1$: $(1 + 2, \; 2 - 2, \; 3 + 4) = (3, 0, 7)$. As a check, $\mu = 1$ in $L_2$ gives $(1 + 2, \; -1 + 1, \; 8 - 1) = (3, 0, 7)$.</p>
+    <p data-lang="zh"><strong>第 4 步：求交点。</strong>把 $\lambda = 2$ 代入 $L_1$：$(1 + 2, \; 2 - 2, \; 3 + 4) = (3, 0, 7)$。验证：$\mu = 1$ 代入 $L_2$ 得 $(1 + 2, \; -1 + 1, \; 8 - 1) = (3, 0, 7)$。</p>
+    <p data-lang="en"><strong>Step 5. The angle.</strong> $\mathbf{d}_1 \cdot \mathbf{d}_2 = 2 - 1 - 2 = -1$ and $|\mathbf{d}_1| = |\mathbf{d}_2| = \sqrt{6}$, so $\cos\theta = \tfrac{|-1|}{6} = \tfrac{1}{6}$ and $\theta \approx 80.4^{\circ}$.</p>
+    <p data-lang="zh"><strong>第 5 步：求夹角。</strong>$\mathbf{d}_1 \cdot \mathbf{d}_2 = 2 - 1 - 2 = -1$，$|\mathbf{d}_1| = |\mathbf{d}_2| = \sqrt{6}$，所以 $\cos\theta = \tfrac{|-1|}{6} = \tfrac{1}{6}$，$\theta \approx 80.4^{\circ}$。</p>
+    <p data-lang="en"><strong>Why this works.</strong> Two equations fix $\lambda$ and $\mu$; the third is the test that the two lines really share that point. Substituting into both lines is a free check on the arithmetic.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>两个方程确定 $\lambda$ 与 $\mu$；第三个方程检验两直线是否真的共享这一点。把参数分别代回两条直线，可以顺便检验计算。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">To show that lines are skew, state both facts in words: the direction vectors are not scalar multiples, so the lines are not parallel; and the values of $\lambda$ and $\mu$ from two equations fail the third, so the lines do not meet. Either fact alone is an incomplete answer. Give the two lines different parameter letters from the first line of working.</p>
+    <p data-lang="zh">证明两直线异面时，两条事实都要用文字写出：方向向量不成倍数，所以不平行；由两个方程求出的 $\lambda$ 与 $\mu$ 不满足第三个方程，所以不相交。只写其中一条是不完整的答案。从第一行演算起就给两条直线用不同的参数字母。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. $L_1: \mathbf{r} = (1, 0, 2) + \lambda(2, 4, 6)$ and $L_2: \mathbf{r} = (2, 2, 5) + \mu(1, 2, 3)$. Are the lines coincident or distinct parallel lines?</span><span data-lang="zh">1. $L_1: \mathbf{r} = (1, 0, 2) + \lambda(2, 4, 6)$，$L_2: \mathbf{r} = (2, 2, 5) + \mu(1, 2, 3)$。两直线是重合，还是不同的平行直线？</span></summary>
+      <div class="sg-a"><p data-lang="en">$(2, 4, 6) = 2(1, 2, 3)$, so they are parallel. Test the point $(2, 2, 5)$ on $L_1$: $x$ gives $\lambda = \tfrac{1}{2}$, and then $y = 2$ and $z = 2 + 3 = 5$. The point lies on $L_1$, so the lines are coincident.</p><p data-lang="zh">$(2, 4, 6) = 2(1, 2, 3)$，所以两直线平行。检验点 $(2, 2, 5)$ 是否在 $L_1$ 上：由 $x$ 得 $\lambda = \tfrac{1}{2}$，此时 $y = 2$，$z = 2 + 3 = 5$。该点在 $L_1$ 上，所以两直线重合。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Explain why two non-parallel lines in a plane must meet, but two non-parallel lines in space need not.</span><span data-lang="zh">2. 解释为什么平面内两条不平行的直线必然相交，而空间中两条不平行的直线不一定相交。</span></summary>
+      <div class="sg-a"><p data-lang="en">In a plane, equating the lines gives two equations in $\lambda$ and $\mu$, and non-parallel directions make that system solvable with a unique solution. In space there are three equations in the same two unknowns; two of them fix $\lambda$ and $\mu$, and the third can fail. When it fails the lines are skew: they pass over each other at different heights.</p><p data-lang="zh">在平面内，两直线相等给出关于 $\lambda$ 与 $\mu$ 的两个方程，方向不平行保证方程组有唯一解。在空间中，同样两个未知数要满足三个方程；其中两个确定 $\lambda$ 与 $\mu$，第三个可能不成立。不成立时两直线异面：它们在不同的高度上交错而过。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the point of intersection of $L_1: \mathbf{r} = (0, 1, 1) + \lambda(1, 1, 0)$ and $L_2: \mathbf{r} = (2, 0, 4) + \mu(0, 1, -1)$.</span><span data-lang="zh">3. 求 $L_1: \mathbf{r} = (0, 1, 1) + \lambda(1, 1, 0)$ 与 $L_2: \mathbf{r} = (2, 0, 4) + \mu(0, 1, -1)$ 的交点。</span></summary>
+      <div class="sg-a"><p data-lang="en">Equations: $\lambda = 2$, $1 + \lambda = \mu$, $1 = 4 - \mu$. The first gives $\lambda = 2$, the second $\mu = 3$, and the third checks: $4 - 3 = 1$. The point is $(0 + 2, \; 1 + 2, \; 1) = (2, 3, 1)$; $L_2$ with $\mu = 3$ gives $(2, 3, 1)$ too.</p><p data-lang="zh">方程：$\lambda = 2$，$1 + \lambda = \mu$，$1 = 4 - \mu$。第一式得 $\lambda = 2$，第二式得 $\mu = 3$，第三式验证：$4 - 3 = 1$。交点为 $(0 + 2, \; 1 + 2, \; 1) = (2, 3, 1)$；$L_2$ 取 $\mu = 3$ 也得 $(2, 3, 1)$。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Two lines have direction vectors $(2, 4, 6)$ and $(1, 2, 3)$. They are:</span><span data-lang="zh">两直线方向向量为 $(2, 4, 6)$ 与 $(1, 2, 3)$。它们：</span></div><div class="quiz-number">C3.4 · Q1</div></div>
@@ -795,9 +1292,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- C3.5 CROSS PRODUCT -->
-<section class="section" id="s-c3-5">
+<section class="section" id="s-c3-5" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.5 · Cross Product</span><span data-lang="zh">Topic C3.5 · 叉积</span></div>
   <h2><span data-lang="en">Cross Product</span><span data-lang="zh">叉积（向量积）</span> <span class="ib-ref">AHL 3.16</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Calculate the vector product $\mathbf{u} \times \mathbf{v}$ using the determinant layout.</li>
+      <li>State that $\mathbf{u} \times \mathbf{v}$ is perpendicular to both $\mathbf{u}$ and $\mathbf{v}$, with its direction given by the right-hand rule.</li>
+      <li>Use $|\mathbf{u} \times \mathbf{v}| = |\mathbf{u}|\,|\mathbf{v}|\sin\theta$ to find the area of a parallelogram or a triangle.</li>
+      <li>Use the anti-commutative property $\mathbf{v} \times \mathbf{u} = -\,\mathbf{u} \times \mathbf{v}$ and $\mathbf{u} \times \mathbf{u} = \mathbf{0}$.</li>
+      <li>Deduce that two nonzero vectors are parallel when their vector product is $\mathbf{0}$.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>用行列式排列计算（<code>calculate</code>）向量积（<code>vector product</code>）$\mathbf{u} \times \mathbf{v}$。</li>
+      <li>写出（<code>state</code>）$\mathbf{u} \times \mathbf{v}$ 同时垂直于 $\mathbf{u}$ 与 $\mathbf{v}$，方向由右手法则（<code>right-hand rule</code>）确定。</li>
+      <li>用 $|\mathbf{u} \times \mathbf{v}| = |\mathbf{u}|\,|\mathbf{v}|\sin\theta$ 求平行四边形或三角形的面积。</li>
+      <li>使用反交换律（<code>anti-commutative</code>）$\mathbf{v} \times \mathbf{u} = -\,\mathbf{u} \times \mathbf{v}$ 以及 $\mathbf{u} \times \mathbf{u} = \mathbf{0}$。</li>
+      <li>由向量积为 $\mathbf{0}$ 推断（<code>deduce</code>）两个非零向量平行。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Definition via determinant.</strong> For $\mathbf{u} = (u_1, u_2, u_3)$ and $\mathbf{v} = (v_1, v_2, v_3)$,
@@ -822,8 +1337,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <strong>常用性质。</strong>反交换律（$\mathbf{u} \times \mathbf{v} = - \mathbf{v} \times \mathbf{u}$）。对加法分配。$\mathbf{u} \times \mathbf{u} = \mathbf{0}$。两非零向量平行当且仅当 $\mathbf{u} \times \mathbf{v} = \mathbf{0}$。
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.5a: basis vectors</span><span data-lang="zh">C3.5a 例题：基向量</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.5a (basis vectors)</span><span data-lang="zh">C3.5a 例题（基向量）</span></div>
     <p><span data-lang="en">Verify by direct computation that $(1, 0, 0) \times (0, 1, 0) = (0, 0, 1)$.</span><span data-lang="zh">直接计算验证 $(1, 0, 0) \times (0, 1, 0) = (0, 0, 1)$。</span></p>
   </div>
   <div class="worked-solution">
@@ -833,9 +1348,10 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Remark.</strong> The cyclic identities $\mathbf{i} \times \mathbf{j} = \mathbf{k}$, $\mathbf{j} \times \mathbf{k} = \mathbf{i}$, $\mathbf{k} \times \mathbf{i} = \mathbf{j}$ are worth memorising. The order matters: $\mathbf{j} \times \mathbf{i} = - \mathbf{k}$ by anticommutativity.</p>
     <p data-lang="zh"><strong>注。</strong>循环关系 $\mathbf{i} \times \mathbf{j} = \mathbf{k}$、$\mathbf{j} \times \mathbf{k} = \mathbf{i}$、$\mathbf{k} \times \mathbf{i} = \mathbf{j}$ 值得熟记。顺序决定符号：$\mathbf{j} \times \mathbf{i} = - \mathbf{k}$（反交换律）。</p>
   </div>
+  </details>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.5b: area of a triangle</span><span data-lang="zh">C3.5b 例题：三角形面积</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.5b (area of a triangle)</span><span data-lang="zh">C3.5b 例题（三角形面积）</span></div>
     <p><span data-lang="en">Find the area of the triangle with vertices $A(1, 0, 1)$, $B(2, 1, 0)$, and $C(0, 2, 2)$.</span><span data-lang="zh">求顶点为 $A(1, 0, 1)$、$B(2, 1, 0)$、$C(0, 2, 2)$ 的三角形面积。</span></p>
   </div>
   <div class="worked-solution">
@@ -852,10 +1368,33 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="zh"><strong>三角形面积。</strong>等于平行四边形面积的一半：</p>
     $$ \text{Area} \;=\; \tfrac{1}{2} \cdot 3 \sqrt{2} \;=\; \tfrac{3 \sqrt{2}}{2}. $$
   </div>
+  </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);"><span data-lang="en">Pitfall: order matters</span><span data-lang="zh">陷阱：顺序影响方向</span></strong>
     <span data-lang="en">The cross product is anticommutative: $\mathbf{u} \times \mathbf{v} = -(\mathbf{v} \times \mathbf{u})$. The two results have the same magnitude (and so give the same area), but they point in opposite directions. When using the cross product to find a normal vector to a plane, either direction is acceptable, but be consistent within a single problem.</span><span data-lang="zh">叉积满足反交换律：$\mathbf{u} \times \mathbf{v} = -(\mathbf{v} \times \mathbf{u})$。两者模长相同（面积一致）但方向相反。用叉积求平面法向量时，两个方向都合法，但同一题内须保持一致。</span>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Check every vector product by taking its scalar product with each original vector: both must be $0$. In Worked Example C3.5b, $(3, 0, 3) \cdot (1, 1, -1) = 3 + 0 - 3 = 0$ and $(3, 0, 3) \cdot (-1, 2, 1) = -3 + 0 + 3 = 0$. The middle component is where sign slips happen, so write the determinant layout out in full rather than working it in your head.</p>
+    <p data-lang="zh">每算出一个向量积，都与两个原向量分别做标量积检验：两个结果都必须是 $0$。例题 C3.5b 中，$(3, 0, 3) \cdot (1, 1, -1) = 3 + 0 - 3 = 0$，$(3, 0, 3) \cdot (-1, 2, 1) = -3 + 0 + 3 = 0$。符号错误多出在中间分量，所以要把行列式排列完整写出，不要心算。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Calculate $(2, 1, 0) \times (1, 3, 1)$ and check your answer.</span><span data-lang="zh">1. 计算 $(2, 1, 0) \times (1, 3, 1)$ 并检验答案。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\bigl((1)(1) - (0)(3), \; (0)(1) - (2)(1), \; (2)(3) - (1)(1)\bigr) = (1, -2, 5)$. Check: $(1, -2, 5) \cdot (2, 1, 0) = 2 - 2 + 0 = 0$ and $(1, -2, 5) \cdot (1, 3, 1) = 1 - 6 + 5 = 0$.</p><p data-lang="zh">$\bigl((1)(1) - (0)(3), \; (0)(1) - (2)(1), \; (2)(3) - (1)(1)\bigr) = (1, -2, 5)$。检验：$(1, -2, 5) \cdot (2, 1, 0) = 2 - 2 + 0 = 0$，$(1, -2, 5) \cdot (1, 3, 1) = 1 - 6 + 5 = 0$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the area of the triangle with vertices $O(0, 0, 0)$, $P(2, 0, 0)$ and $Q(0, 3, 4)$.</span><span data-lang="zh">2. 求顶点为 $O(0, 0, 0)$、$P(2, 0, 0)$、$Q(0, 3, 4)$ 的三角形面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\overrightarrow{OP} \times \overrightarrow{OQ} = \bigl((0)(4) - (0)(3), \; (0)(0) - (2)(4), \; (2)(3) - (0)(0)\bigr) = (0, -8, 6)$, with magnitude $\sqrt{64 + 36} = 10$. The triangle is half the parallelogram: area $= 5$. (Check: $OP = 2$ and $OQ = 5$ are perpendicular, so the area is $\tfrac{1}{2}(2)(5) = 5$.)</p><p data-lang="zh">$\overrightarrow{OP} \times \overrightarrow{OQ} = \bigl((0)(4) - (0)(3), \; (0)(0) - (2)(4), \; (2)(3) - (0)(0)\bigr) = (0, -8, 6)$，模长 $\sqrt{64 + 36} = 10$。三角形面积是平行四边形的一半：面积 $= 5$。（验证：$OP = 2$ 与 $OQ = 5$ 互相垂直，面积为 $\tfrac{1}{2}(2)(5) = 5$。）</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Given $|\mathbf{u}| = 2$, $|\mathbf{v}| = 5$ and $\mathbf{u} \cdot \mathbf{v} = 6$, find $|\mathbf{u} \times \mathbf{v}|$.</span><span data-lang="zh">3. 已知 $|\mathbf{u}| = 2$、$|\mathbf{v}| = 5$、$\mathbf{u} \cdot \mathbf{v} = 6$，求 $|\mathbf{u} \times \mathbf{v}|$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\cos\theta = \tfrac{6}{2 \times 5} = 0.6$. Since $0 \le \theta \le \pi$, $\sin\theta \ge 0$, so $\sin\theta = \sqrt{1 - 0.36} = 0.8$. Then $|\mathbf{u} \times \mathbf{v}| = 2 \times 5 \times 0.8 = 8$. Check: $8^{2} + 6^{2} = 100 = (2 \times 5)^{2}$.</p><p data-lang="zh">$\cos\theta = \tfrac{6}{2 \times 5} = 0.6$。由于 $0 \le \theta \le \pi$，$\sin\theta \ge 0$，所以 $\sin\theta = \sqrt{1 - 0.36} = 0.8$。于是 $|\mathbf{u} \times \mathbf{v}| = 2 \times 5 \times 0.8 = 8$。验证：$8^{2} + 6^{2} = 100 = (2 \times 5)^{2}$。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -875,9 +1414,29 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- C3.6 PLANES -->
-<section class="section" id="s-c3-6">
+<section class="section" id="s-c3-6" data-course="hl">
   <div class="section-label"><span data-lang="en">Topic C3.6 · Vector Equation of a Plane</span><span data-lang="zh">Topic C3.6 · 平面的向量方程</span></div>
   <h2><span data-lang="en">Vector Equation of a Plane</span><span data-lang="zh">平面的向量方程</span> <span class="ib-ref">AHL 3.17 · 3.18</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en">
+      <li>Write the equation of a plane in vector form $\mathbf{r} \cdot \mathbf{n} = \mathbf{a} \cdot \mathbf{n}$, in Cartesian form $ax + by + cz = d$, and in parametric form.</li>
+      <li>Find a normal vector to a plane through three points using a vector product.</li>
+      <li>Find the point where a line intersects a plane, or deduce that the line is parallel to the plane or lies in it.</li>
+      <li>Calculate the angle between a line and a plane, and the angle between two planes.</li>
+      <li>Find the line of intersection of two planes, and the common point of three planes.</li>
+      <li>Calculate the distance from a point to a plane.</li>
+    </ul>
+    <ul data-lang="zh">
+      <li>写出（<code>write down</code>）平面的向量式 $\mathbf{r} \cdot \mathbf{n} = \mathbf{a} \cdot \mathbf{n}$、直角坐标式 $ax + by + cz = d$ 与参数式。</li>
+      <li>用向量积求过三点的平面的法向量（<code>normal vector</code>）。</li>
+      <li>求直线与平面的交点，或推断（<code>deduce</code>）直线与平面平行或在平面内。</li>
+      <li>计算（<code>calculate</code>）直线与平面的夹角，以及两平面的夹角。</li>
+      <li>求两平面的交线，以及三平面的公共点。</li>
+      <li>计算点到平面的距离。</li>
+    </ul>
+  </div>
 
   <div class="cram-cheat" data-lang="en">
     <strong>Scalar (normal) form.</strong> A plane is fixed by a point $\mathbf{a}$ on it and a normal vector $\mathbf{n}$ perpendicular to it:
@@ -908,8 +1467,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \text{dist}(P, \text{plane}) \;=\; \frac{|a x_P + b y_P + c z_P - d|}{\sqrt{a^{2} + b^{2} + c^{2}}}. $$
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.6: plane through three points</span><span data-lang="zh">C3.6 例题：过三点的平面</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example C3.6 (plane through three points)</span><span data-lang="zh">C3.6 例题（过三点的平面）</span></div>
     <p><span data-lang="en">Find the Cartesian equation of the plane through $A(1, 0, 1)$, $B(2, 1, 0)$, $C(0, 2, 2)$. Then find the (perpendicular) distance from the origin to this plane.</span><span data-lang="zh">求过 $A(1, 0, 1)$、$B(2, 1, 0)$、$C(0, 2, 2)$ 三点的平面的直角坐标方程，并求原点到该平面的距离。</span></p>
   </div>
   <div class="worked-solution">
@@ -932,6 +1491,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p data-lang="en"><strong>Verification.</strong> Test that each of $A, B, C$ satisfies the equation: $A: 1 + 1 = 2$ ✓; $B: 2 + 0 = 2$ ✓; $C: 0 + 2 = 2$ ✓.</p>
     <p data-lang="zh"><strong>验证。</strong>把 $A, B, C$ 三点逐一代入方程：$A: 1 + 1 = 2$ ✓；$B: 2 + 0 = 2$ ✓；$C: 0 + 2 = 2$ ✓。</p>
   </div>
+  </details>
 
   <details>
     <summary><span data-lang="en">Going deeper: why the distance formula is what it is</span><span data-lang="zh">深入：点到平面距离公式的来由</span></summary>
@@ -944,13 +1504,96 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
   </details>
 
+  <h3><span data-lang="en">Angles and intersections: lines and planes</span><span data-lang="zh">角与交：直线与平面</span></h3>
+
+  <div class="concept-box">
+    <strong><span data-lang="en">Line and plane</span><span data-lang="zh">直线与平面</span></strong>
+    <p data-lang="en">Substitute the parametric equations of the line into the Cartesian equation of the plane. This gives one equation in $\lambda$. A unique solution means the line cuts the plane at one point. A false statement such as $0 = 3$ means the line is parallel to the plane and never meets it. An identity such as $0 = 0$ means the line lies in the plane. A quick pre-test: $\mathbf{d} \cdot \mathbf{n} = 0$ means the line is parallel to the plane or lies in it.</p>
+    <p data-lang="zh">把直线的参数方程代入平面的直角坐标方程，得到关于 $\lambda$ 的一个方程。有唯一解：直线与平面交于一点。得到 $0 = 3$ 这类矛盾：直线与平面平行，永不相交。得到 $0 = 0$ 这类恒等式：直线在平面内。快速预判：$\mathbf{d} \cdot \mathbf{n} = 0$ 说明直线与平面平行或在平面内。</p>
+    <p data-lang="en"><strong>Angle between a line and a plane.</strong> It is the angle $\varphi$ between the line and its shadow in the plane. The normal makes the angle $90^{\circ} - \varphi$ with the line, so $\sin\varphi = \dfrac{|\mathbf{d} \cdot \mathbf{n}|}{|\mathbf{d}|\,|\mathbf{n}|}$.</p>
+    <p data-lang="zh"><strong>直线与平面的夹角。</strong>它是直线与其在平面内投影之间的夹角 $\varphi$。法向量与直线的夹角为 $90^{\circ} - \varphi$，所以 $\sin\varphi = \dfrac{|\mathbf{d} \cdot \mathbf{n}|}{|\mathbf{d}|\,|\mathbf{n}|}$。</p>
+    <p data-lang="en"><strong>Two planes.</strong> The angle between two planes is the acute angle between their normals: $\cos\theta = \dfrac{|\mathbf{n}_1 \cdot \mathbf{n}_2|}{|\mathbf{n}_1|\,|\mathbf{n}_2|}$. The intersection of two non-parallel planes is a line. Its direction $\mathbf{n}_1 \times \mathbf{n}_2$ is perpendicular to both normals, so it lies in both planes; find one point on it by setting one variable (for example $z = 0$) and solving the two plane equations.</p>
+    <p data-lang="zh"><strong>两个平面。</strong>两平面的夹角是它们法向量所成的锐角：$\cos\theta = \dfrac{|\mathbf{n}_1 \cdot \mathbf{n}_2|}{|\mathbf{n}_1|\,|\mathbf{n}_2|}$。两个不平行平面的交线是一条直线。其方向 $\mathbf{n}_1 \times \mathbf{n}_2$ 同时垂直于两个法向量，因此位于两个平面内；令某个变量为定值（如 $z = 0$），解两个平面方程即可求出交线上的一点。</p>
+    <p data-lang="en"><strong>Three planes.</strong> Solve the three Cartesian equations as a system. A unique solution is a single common point; infinitely many solutions mean the planes share a line; an inconsistent system means no point lies on all three.</p>
+    <p data-lang="zh"><strong>三个平面。</strong>把三个直角坐标方程联立求解。唯一解：只有一个公共点；无穷多解：三平面有一条公共直线；方程组不相容：没有点同时在三个平面上。</p>
+  </div>
+
+  <div class="concept-box red">
+    <strong><span data-lang="en">Common Mistake: cosine for a line and a plane</span><span data-lang="zh">常见错误：线面角用余弦</span></strong>
+    <p data-lang="en">Putting $\mathbf{d}$ and $\mathbf{n}$ into the cosine formula gives the angle between the line and the normal, which is $90^{\circ} - \varphi$, not the angle with the plane. Use sine, or subtract your cosine answer from $90^{\circ}$.</p>
+    <p data-lang="zh">把 $\mathbf{d}$ 与 $\mathbf{n}$ 代入余弦公式，得到的是直线与法向量的夹角 $90^{\circ} - \varphi$，而不是线面角。要用正弦，或者用 $90^{\circ}$ 减去余弦公式的结果。</p>
+  </div>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.6b: where a line meets a plane, and the angle</span><span data-lang="zh">C3.6b 例题：直线与平面的交点及夹角</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Find the point where $L: \mathbf{r} = (1, 2, 0) + \lambda(1, 1, 2)$ meets the plane $\Pi: x + z = 2$ from Worked Example C3.6, and the angle between $L$ and $\Pi$.</span><span data-lang="zh">求直线 $L: \mathbf{r} = (1, 2, 0) + \lambda(1, 1, 2)$ 与例题 C3.6 中的平面 $\Pi: x + z = 2$ 的交点，以及 $L$ 与 $\Pi$ 的夹角。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Substitute.</strong> On $L$, $x = 1 + \lambda$ and $z = 2\lambda$. Then $(1 + \lambda) + 2\lambda = 2$, so $3\lambda = 1$ and $\lambda = \tfrac{1}{3}$.</p>
+    <p data-lang="zh"><strong>第 1 步：代入。</strong>在 $L$ 上，$x = 1 + \lambda$，$z = 2\lambda$。于是 $(1 + \lambda) + 2\lambda = 2$，$3\lambda = 1$，$\lambda = \tfrac{1}{3}$。</p>
+    <p data-lang="en"><strong>Step 2. The point.</strong> $\left(1 + \tfrac{1}{3}, \; 2 + \tfrac{1}{3}, \; \tfrac{2}{3}\right) = \left(\tfrac{4}{3}, \tfrac{7}{3}, \tfrac{2}{3}\right)$. Check: $\tfrac{4}{3} + \tfrac{2}{3} = 2$.</p>
+    <p data-lang="zh"><strong>第 2 步：交点。</strong>$\left(1 + \tfrac{1}{3}, \; 2 + \tfrac{1}{3}, \; \tfrac{2}{3}\right) = \left(\tfrac{4}{3}, \tfrac{7}{3}, \tfrac{2}{3}\right)$。验证：$\tfrac{4}{3} + \tfrac{2}{3} = 2$。</p>
+    <p data-lang="en"><strong>Step 3. The angle.</strong> $\mathbf{d} = (1, 1, 2)$, $\mathbf{n} = (1, 0, 1)$: $\mathbf{d} \cdot \mathbf{n} = 1 + 0 + 2 = 3$, $|\mathbf{d}| = \sqrt{6}$, $|\mathbf{n}| = \sqrt{2}$.</p>
+    <p data-lang="zh"><strong>第 3 步：夹角。</strong>$\mathbf{d} = (1, 1, 2)$，$\mathbf{n} = (1, 0, 1)$：$\mathbf{d} \cdot \mathbf{n} = 1 + 0 + 2 = 3$，$|\mathbf{d}| = \sqrt{6}$，$|\mathbf{n}| = \sqrt{2}$。</p>
+    $$ \sin\varphi \;=\; \frac{3}{\sqrt{6}\,\sqrt{2}} \;=\; \frac{3}{\sqrt{12}} \;=\; \frac{\sqrt{3}}{2}, \qquad \varphi \;=\; 60^{\circ}. $$
+    <p data-lang="en"><strong>Why this works.</strong> Every point of $L$ is described by one value of $\lambda$, so the plane equation becomes one equation in one unknown. The normal is perpendicular to the plane, which turns the cosine of the line-normal angle into the sine of the line-plane angle.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>$L$ 上每一点都由一个 $\lambda$ 值描述，所以平面方程变成一个一元方程。法向量垂直于平面，因此线与法向量夹角的余弦就是线面角的正弦。</p>
+  </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example C3.6c: two planes, their angle and their line of intersection</span><span data-lang="zh">C3.6c 例题：两平面的夹角与交线</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">$\Pi_1: x + z = 2$ and $\Pi_2: 2x - y + 2z = 3$. Find the acute angle between the planes and a vector equation of their line of intersection.</span><span data-lang="zh">$\Pi_1: x + z = 2$，$\Pi_2: 2x - y + 2z = 3$。求两平面所成的锐角，以及它们交线的一个向量方程。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p data-lang="en"><strong>Step 1. Angle.</strong> $\mathbf{n}_1 = (1, 0, 1)$, $\mathbf{n}_2 = (2, -1, 2)$: $\mathbf{n}_1 \cdot \mathbf{n}_2 = 2 + 0 + 2 = 4$, $|\mathbf{n}_1| = \sqrt{2}$, $|\mathbf{n}_2| = 3$. So $\cos\theta = \tfrac{4}{3\sqrt{2}} \approx 0.943$ and $\theta \approx 19.5^{\circ}$.</p>
+    <p data-lang="zh"><strong>第 1 步：夹角。</strong>$\mathbf{n}_1 = (1, 0, 1)$，$\mathbf{n}_2 = (2, -1, 2)$：$\mathbf{n}_1 \cdot \mathbf{n}_2 = 2 + 0 + 2 = 4$，$|\mathbf{n}_1| = \sqrt{2}$，$|\mathbf{n}_2| = 3$。所以 $\cos\theta = \tfrac{4}{3\sqrt{2}} \approx 0.943$，$\theta \approx 19.5^{\circ}$。</p>
+    <p data-lang="en"><strong>Step 2. Direction of the line.</strong></p>
+    <p data-lang="zh"><strong>第 2 步：交线方向。</strong></p>
+    $$ \mathbf{n}_1 \times \mathbf{n}_2 \;=\; \bigl( (0)(2) - (1)(-1), \; (1)(2) - (1)(2), \; (1)(-1) - (0)(2) \bigr) \;=\; (1, 0, -1). $$
+    <p data-lang="en"><strong>Step 3. One point.</strong> Set $z = 0$: $\Pi_1$ gives $x = 2$, then $\Pi_2$ gives $4 - y = 3$, so $y = 1$. The point is $(2, 1, 0)$.</p>
+    <p data-lang="zh"><strong>第 3 步：求一点。</strong>令 $z = 0$：由 $\Pi_1$ 得 $x = 2$，再由 $\Pi_2$ 得 $4 - y = 3$，$y = 1$。该点为 $(2, 1, 0)$。</p>
+    $$ \mathbf{r} \;=\; (2, 1, 0) + t(1, 0, -1). $$
+    <p data-lang="en"><strong>Check.</strong> At $t = 1$ the point is $(3, 1, -1)$: $\Pi_1$: $3 - 1 = 2$ ✓; $\Pi_2$: $6 - 1 - 2 = 3$ ✓.</p>
+    <p data-lang="zh"><strong>验证。</strong>$t = 1$ 时点为 $(3, 1, -1)$：$\Pi_1$：$3 - 1 = 2$ ✓；$\Pi_2$：$6 - 1 - 2 = 3$ ✓。</p>
+    <p data-lang="en"><strong>Why this works.</strong> A direction lying in a plane is perpendicular to that plane's normal; $\mathbf{n}_1 \times \mathbf{n}_2$ is perpendicular to both normals, so it lies in both planes.</p>
+    <p data-lang="zh"><strong>为什么可行。</strong>位于平面内的方向必垂直于该平面的法向量；$\mathbf{n}_1 \times \mathbf{n}_2$ 同时垂直于两个法向量，所以同时位于两个平面内。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Before any formula, write which vectors you are using: "$\mathbf{d} = \ldots$, $\mathbf{n} = \ldots$". For a line and a plane use sine; for two planes use the normals and cosine. State the result in words ("the angle between $L$ and $\Pi$ is $60^{\circ}$"). After finding a line of intersection, substitute a second point of it (such as $t = 1$) into both plane equations: it is a quick check that catches a wrong cross product.</p>
+    <p data-lang="zh">套用任何公式之前，先写明所用的向量："$\mathbf{d} = \ldots$，$\mathbf{n} = \ldots$"。线面角用正弦；两平面夹角用法向量和余弦。用文字写出结论（"$L$ 与 $\Pi$ 的夹角为 $60^{\circ}$"）。求出交线后，再取交线上的第二个点（如 $t = 1$）代入两个平面方程：这能快速发现算错的叉积。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Show that the line $\mathbf{r} = (0, 0, 2) + \lambda(1, 1, -1)$ lies in the plane $x + z = 2$.</span><span data-lang="zh">1. 证明直线 $\mathbf{r} = (0, 0, 2) + \lambda(1, 1, -1)$ 在平面 $x + z = 2$ 内。</span></summary>
+      <div class="sg-a"><p data-lang="en">On the line $x = \lambda$ and $z = 2 - \lambda$, so $x + z = \lambda + 2 - \lambda = 2$ for every $\lambda$. The equation is an identity, so every point of the line is in the plane. (Consistent with $\mathbf{d} \cdot \mathbf{n} = 1 + 0 - 1 = 0$.)</p><p data-lang="zh">直线上 $x = \lambda$，$z = 2 - \lambda$，所以对任意 $\lambda$ 都有 $x + z = \lambda + 2 - \lambda = 2$。这是恒等式，所以直线上每一点都在平面内。（与 $\mathbf{d} \cdot \mathbf{n} = 1 + 0 - 1 = 0$ 一致。）</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the acute angle between the planes $x + y = 3$ and $y + z = 1$.</span><span data-lang="zh">2. 求平面 $x + y = 3$ 与 $y + z = 1$ 所成的锐角。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf{n}_1 = (1, 1, 0)$, $\mathbf{n}_2 = (0, 1, 1)$: $\mathbf{n}_1 \cdot \mathbf{n}_2 = 1$ and both magnitudes are $\sqrt{2}$, so $\cos\theta = \tfrac{1}{2}$ and $\theta = 60^{\circ}$.</p><p data-lang="zh">$\mathbf{n}_1 = (1, 1, 0)$，$\mathbf{n}_2 = (0, 1, 1)$：$\mathbf{n}_1 \cdot \mathbf{n}_2 = 1$，两个模长都是 $\sqrt{2}$，所以 $\cos\theta = \tfrac{1}{2}$，$\theta = 60^{\circ}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the common point of the planes $x + y + z = 6$, $x - y + z = 2$ and $2x + z = 5$.</span><span data-lang="zh">3. 求平面 $x + y + z = 6$、$x - y + z = 2$ 与 $2x + z = 5$ 的公共点。</span></summary>
+      <div class="sg-a"><p data-lang="en">Subtract the second equation from the first: $2y = 4$, so $y = 2$. Then $x + z = 4$ and $2x + z = 5$ give $x = 1$, $z = 3$. The planes meet at the single point $(1, 2, 3)$. Check: $1 + 2 + 3 = 6$, $1 - 2 + 3 = 2$, $2 + 3 = 5$.</p><p data-lang="zh">第一式减第二式：$2y = 4$，$y = 2$。再由 $x + z = 4$ 与 $2x + z = 5$ 得 $x = 1$，$z = 3$。三平面交于唯一一点 $(1, 2, 3)$。验证：$1 + 2 + 3 = 6$，$1 - 2 + 3 = 2$，$2 + 3 = 5$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">4. Find the distance from $P(3, 1, 2)$ to the plane $2x - y + 2z = 3$.</span><span data-lang="zh">4. 求点 $P(3, 1, 2)$ 到平面 $2x - y + 2z = 3$ 的距离。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{|2(3) - 1 + 2(2) - 3|}{\sqrt{4 + 1 + 4}} = \dfrac{|6 - 1 + 4 - 3|}{3} = \dfrac{6}{3} = 2$.</p><p data-lang="zh">$\dfrac{|2(3) - 1 + 2(2) - 3|}{\sqrt{4 + 1 + 4}} = \dfrac{|6 - 1 + 4 - 3|}{3} = \dfrac{6}{3} = 2$。</p></div>
+    </details>
+  </div>
+
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A normal vector to the plane $2 x - y + 3 z = 7$ is:</span><span data-lang="zh">平面 $2 x - y + 3 z = 7$ 的一个法向量为：</span></div><div class="quiz-number">C3.6 · Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$(7, 0, 0)$</div>
       <div class="quiz-opt" data-idx="1">$(2, -1, 3)$</div>
       <div class="quiz-opt" data-idx="2">$(2, 1, 3)$</div>
-      <div class="quiz-opt" data-idx="3">$(-2, 1, -3)$ <span data-lang="en">only</span><span data-lang="zh">仅此</span></div>
+      <div class="quiz-opt" data-idx="3">$(2, -1, -3)$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Read the coefficients of $x, y, z$ directly: $(2, -1, 3)$. Any nonzero scalar multiple (including $(-2, 1, -3)$) is also a valid normal vector, but the question asks for one normal, and $(2, -1, 3)$ is the canonical reading.</span><span data-lang="zh">$x, y, z$ 的系数直接给出法向量 $(2, -1, 3)$。其任一非零数乘（包括 $(-2, 1, -3)$）也是合法的法向量，但题目只求一个法向量，$(2, -1, 3)$ 是最直接的读法。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">In $a x + b y + c z = d$, the normal vector is $(a, b, c)$. Read the coefficients directly: $(2, -1, 3)$.</span><span data-lang="zh">$a x + b y + c z = d$ 中，法向量即 $(a, b, c)$。直接读系数：$(2, -1, 3)$。</span></div>
@@ -961,32 +1604,32 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <hr class="sep">
 
 <!-- EXAM STRATEGY -->
-<section class="section" id="exam-strategy">
+<section class="section" id="exam-strategy" data-course="hl">
   <div class="section-label"><span data-lang="en">Exam Tactics</span><span data-lang="zh">考试技巧</span></div>
   <h2><span data-lang="en">Exam Strategy and Common Pitfalls</span><span data-lang="zh">考试策略与常见陷阱</span></h2>
 
   <div class="concept-box orange">
-    <strong style="color: var(--orange);"><span data-lang="en">Setting up lines and planes (Paper 1 / Paper 2)</span><span data-lang="zh">建立直线与平面（Paper 1 / Paper 2）</span></strong>
+    <strong style="color: var(--orange);"><span data-lang="en">Setting up lines and planes</span><span data-lang="zh">建立直线与平面</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>State which point and which direction you are using.</strong> For a line, "point $\mathbf{a}$, direction $\mathbf{d}$" earns the M1. For a plane, name the point and the normal vector before writing the equation.</li>
-      <li data-lang="zh"><strong>明示所用的点与方向。</strong>直线题写出"点 $\mathbf{a}$、方向 $\mathbf{d}$"可拿 M1。平面题先点名"点 + 法向量"，再写方程。</li>
+      <li data-lang="en"><strong>State which point and which direction you are using.</strong> For a line, write "point $\mathbf{a}$, direction $\mathbf{d}$" so your method is clear. For a plane, name the point and the normal vector before writing the equation.</li>
+      <li data-lang="zh"><strong>明示所用的点与方向。</strong>直线题写出"点 $\mathbf{a}$、方向 $\mathbf{d}$"，让方法一目了然。平面题先点名"点 + 法向量"，再写方程。</li>
       <li data-lang="en"><strong>Use different parameter letters for different lines.</strong> $L_1$ uses $\lambda$, $L_2$ uses $\mu$. Reusing the same letter is the canonical slip when checking for intersections.</li>
       <li data-lang="zh"><strong>不同直线用不同参数字母。</strong>$L_1$ 用 $\lambda$、$L_2$ 用 $\mu$。求交点时若两线复用同一字母，是最容易出现的代数错。</li>
     </ul>
   </div>
 
   <div class="concept-box" style="border-left-color: var(--accent);">
-    <strong style="color: var(--accent);"><span data-lang="en">Dot and cross products (Paper 1 / Paper 2)</span><span data-lang="zh">点积与叉积（Paper 1 / Paper 2）</span></strong>
+    <strong style="color: var(--accent);"><span data-lang="en">Dot and cross products</span><span data-lang="zh">点积与叉积</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li data-lang="en"><strong>Dot product is a scalar; cross product is a vector.</strong> Writing $\mathbf{u} \cdot \mathbf{v} = (3, 0, 5)$ or $\mathbf{u} \times \mathbf{v} = 7$ costs marks immediately.</li>
-      <li data-lang="zh"><strong>点积是标量、叉积是向量。</strong>写出 $\mathbf{u} \cdot \mathbf{v} = (3, 0, 5)$ 或 $\mathbf{u} \times \mathbf{v} = 7$ 立刻扣分。</li>
-      <li data-lang="en"><strong>For "angle between" two vectors, take an absolute value if the question asks for the acute angle.</strong> $\cos\theta$ can be negative; if the marker wants the acute angle, use $\arccos \tfrac{|\mathbf{u} \cdot \mathbf{v}|}{|\mathbf{u}||\mathbf{v}|}$.</li>
-      <li data-lang="zh"><strong>题目要求"锐角"时取绝对值。</strong>$\cos\theta$ 可为负；若评卷要锐角，应用 $\arccos \tfrac{|\mathbf{u} \cdot \mathbf{v}|}{|\mathbf{u}||\mathbf{v}|}$。</li>
+      <li data-lang="en"><strong>Dot product is a scalar; cross product is a vector.</strong> Writing $\mathbf{u} \cdot \mathbf{v} = (3, 0, 5)$ or $\mathbf{u} \times \mathbf{v} = 7$ is a notation error: a scalar cannot equal a vector.</li>
+      <li data-lang="zh"><strong>点积是标量、叉积是向量。</strong>写出 $\mathbf{u} \cdot \mathbf{v} = (3, 0, 5)$ 或 $\mathbf{u} \times \mathbf{v} = 7$ 是记号错误：标量不能等于向量。</li>
+      <li data-lang="en"><strong>For "angle between" two vectors, take an absolute value if the question asks for the acute angle.</strong> $\cos\theta$ can be negative; if the question asks for the acute angle, use $\arccos \tfrac{|\mathbf{u} \cdot \mathbf{v}|}{|\mathbf{u}||\mathbf{v}|}$.</li>
+      <li data-lang="zh"><strong>题目要求"锐角"时取绝对值。</strong>$\cos\theta$ 可为负；若题目要求锐角，应用 $\arccos \tfrac{|\mathbf{u} \cdot \mathbf{v}|}{|\mathbf{u}||\mathbf{v}|}$。</li>
     </ul>
   </div>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">Planes and distances (Paper 2 / Paper 3 HL)</span><span data-lang="zh">平面与距离（Paper 2 / Paper 3 HL）</span></strong>
+    <strong style="color: var(--purple);"><span data-lang="en">Planes and distances</span><span data-lang="zh">平面与距离</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li data-lang="en"><strong>The coefficients of $x, y, z$ in the Cartesian form are the normal.</strong> Conversely, given a normal $(a, b, c)$ and a known point, the equation is $a(x - x_0) + b(y - y_0) + c(z - z_0) = 0$.</li>
       <li data-lang="zh"><strong>直角坐标方程中 $x, y, z$ 的系数即为法向量。</strong>反之，已知法向量 $(a, b, c)$ 与一点 $(x_0, y_0, z_0)$，方程为 $a(x - x_0) + b(y - y_0) + c(z - z_0) = 0$。</li>
@@ -996,6 +1639,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <li data-lang="zh"><strong>用原始点逐一验证。</strong>若用 $A, B, C$ 三点定义平面，三点都应满足你的最终方程。这是廉价且可靠的末段自检。</li>
     </ul>
   </div>
+
+  <div class="concept-box orange">
+    <strong><span data-lang="en">Exam format (HL)</span><span data-lang="zh">考试形式（HL）</span></strong>
+    <p data-lang="en">Paper 1 (no technology) and Paper 2 (technology required) each last 2 hours and are each worth 30%; each has a compulsory Section A (short response) and Section B (extended response). Paper 3 (technology required, 1 hour, 20%) has two compulsory extended-response questions. The internal assessment, a mathematical exploration, is the remaining 20%. Practise scalar and vector products, and the plane-through-three-points routine, by hand with exact values, since Paper 1 allows no technology.</p>
+    <p data-lang="zh">Paper 1（不允许使用技术工具）与 Paper 2（要求使用技术工具）各 2 小时，各占 30%；两份试卷都有必答的 Section A（短答）和 Section B（长答）。Paper 3（要求使用技术工具，1 小时，占 20%）有两道必答的长答题。其余 20% 是内部评估（<code>internal assessment</code>），即数学探究（<code>mathematical exploration</code>）。由于 Paper 1 不允许使用技术工具，标量积、向量积以及"过三点求平面"的流程都要练到能用精确值手算。</p>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1003,7 +1652,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- FLASHCARDS -->
 <section class="section" id="flashcards">
   <div class="section-label"><span data-lang="en">Active Recall</span><span data-lang="zh">主动回忆</span></div>
-  <h2><span data-lang="en">Flashcards</span><span data-lang="zh">闪卡</span></h2>
+  <h2><span data-lang="en">Flashcards (HL unit)</span><span data-lang="zh">闪卡（HL 单元）</span></h2>
   <div class="flashcard-toolbar">
     <div id="fcCount"><span data-lang="en">0 / 12 flipped</span><span data-lang="zh">已翻 0 / 12</span></div>
     <div>
@@ -1032,7 +1681,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- UNIT QUIZ -->
 <section class="section" id="unit-quiz">
   <div class="section-label"><span data-lang="en">Mixed Practice</span><span data-lang="zh">综合练习</span></div>
-  <h2><span data-lang="en">Unit C3 Practice Quiz</span><span data-lang="zh">单元 C3 练习测验</span></h2>
+  <h2><span data-lang="en">Unit C3 Practice Quiz (HL unit)</span><span data-lang="zh">单元 C3 练习测验（HL 单元）</span></h2>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">If $\mathbf{u} = (3, -2, 6)$, then $|\mathbf{u}|$ equals:</span><span data-lang="zh">$\mathbf{u} = (3, -2, 6)$ 时，$|\mathbf{u}|$ 等于：</span></div><div class="quiz-number">Q1</div></div>
@@ -1073,15 +1722,15 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
-  <div class="quiz" data-answer="3">
+  <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">$(1, 2, 0) \times (3, 0, 1)$ equals:</span><span data-lang="zh">$(1, 2, 0) \times (3, 0, 1)$ 等于：</span></div><div class="quiz-number">Q4</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$(2, -1, -6)$</div>
       <div class="quiz-opt" data-idx="1">$(2, 1, -6)$</div>
       <div class="quiz-opt" data-idx="2">$(-2, 1, 6)$</div>
-      <div class="quiz-opt" data-idx="3">$(2, -1, -6)$ <span data-lang="en">(check signs)</span><span data-lang="zh">（核对符号）</span></div>
+      <div class="quiz-opt" data-idx="3">$(2, -1, 6)$</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">First component: $(2)(1) - (0)(0) = 2$. Second: $(0)(3) - (1)(1) = -1$. Third: $(1)(0) - (2)(3) = -6$. Result: $(2, -1, -6)$. Options 0 and 3 are both this answer; either is correct.</span><span data-lang="zh">第一分量：$(2)(1) - (0)(0) = 2$。第二分量：$(0)(3) - (1)(1) = -1$。第三分量：$(1)(0) - (2)(3) = -6$。结果 $(2, -1, -6)$。选项 0 与 3 都对应此答案，任选其一即可。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">First component: $(2)(1) - (0)(0) = 2$. Second: $(0)(3) - (1)(1) = -1$. Third: $(1)(0) - (2)(3) = -6$. Result: $(2, -1, -6)$. Check: $(2, -1, -6) \cdot (1, 2, 0) = 2 - 2 + 0 = 0$ and $(2, -1, -6) \cdot (3, 0, 1) = 6 + 0 - 6 = 0$.</span><span data-lang="zh">第一分量：$(2)(1) - (0)(0) = 2$。第二分量：$(0)(3) - (1)(1) = -1$。第三分量：$(1)(0) - (2)(3) = -6$。结果 $(2, -1, -6)$。检验：$(2, -1, -6) \cdot (1, 2, 0) = 2 - 2 + 0 = 0$，$(2, -1, -6) \cdot (3, 0, 1) = 6 + 0 - 6 = 0$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Use the determinant formula and watch the middle-component sign: $(u_3 v_1 - u_1 v_3)$. Result is $(2, -1, -6)$.</span><span data-lang="zh">用行列式公式，注意中间分量符号 $(u_3 v_1 - u_1 v_3)$。结果 $(2, -1, -6)$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1105,41 +1754,41 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <!-- CHECKLIST -->
 <section class="section" id="checklist">
   <div class="section-label"><span data-lang="en">Self-check</span><span data-lang="zh">自查</span></div>
-  <h2><span data-lang="en">Readiness Checklist</span><span data-lang="zh">备考清单</span></h2>
+  <h2><span data-lang="en">Readiness Checklist (HL unit)</span><span data-lang="zh">备考清单（HL 单元）</span></h2>
 
-  <p data-lang="en">Tick each item when you can do it cold, without notes, on your first attempt. The entire unit is HL only, so every item below carries the <span class="hl-flag">HL</span> chip.</p>
-  <p data-lang="zh">每一条都要"裸做"做对（不看笔记、一次过）才打勾。本单元为纯 HL，故每一条都挂 <span class="hl-flag">HL</span> 标。</p>
+  <p data-lang="en">Tick each item when you can do it cold, without notes, on your first attempt. The entire unit is HL only, so every item below is HL content.</p>
+  <p data-lang="zh">每一条都要"裸做"做对（不看笔记、一次过）才打勾。本单元为纯 HL，所以下面每一条都是 HL 内容。</p>
 
   <div id="checkProgress" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; font-weight: 600;"><span data-lang="en">0 / 13 mastered</span><span data-lang="zh">已掌握 0 / 13</span></div>
 
   <ul class="checklist" id="checklistUl">
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Translate between column-vector form and $\mathbf{i}, \mathbf{j}, \mathbf{k}$ form</span><span data-lang="zh">在列向量与 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 形式之间互换</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Compute magnitude $|\mathbf{v}|$ and normalise to obtain $\hat{\mathbf{v}}$</span><span data-lang="zh">算模长 $|\mathbf{v}|$ 并归一化得 $\hat{\mathbf{v}}$</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Compute a dot product and find the angle between two vectors</span><span data-lang="zh">算点积、求两向量夹角</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Test two vectors for perpendicularity using the dot product</span><span data-lang="zh">用点积判别两向量是否垂直</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Write the vector and parametric equations of a line through a point with a given direction (or through two given points)</span><span data-lang="zh">写出过定点指向直线（或过两点直线）的向量式与参数式</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Determine whether a candidate point lies on a given line</span><span data-lang="zh">判断候选点是否在给定直线上</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Classify two lines in 3D as intersecting, parallel, or skew, with parameter algebra</span><span data-lang="zh">用参数代数将两条三维直线分类为相交、平行或异面</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Find the point of intersection when two lines meet</span><span data-lang="zh">当两直线相交时求交点</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Compute a cross product via the $\mathbf{i}, \mathbf{j}, \mathbf{k}$ determinant</span><span data-lang="zh">用 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 行列式计算叉积</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Use the cross product to find the area of a parallelogram or triangle</span><span data-lang="zh">用叉积求平行四边形或三角形的面积</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Write the Cartesian equation of a plane given a point and a normal vector</span><span data-lang="zh">已知一点与法向量，写出平面的直角坐标方程</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Find a normal to a plane defined by three points using the cross product of two edge vectors</span><span data-lang="zh">对由三点定义的平面，用两边向量的叉积求法向量</span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span class="hl-flag">HL</span> <span data-lang="en">Compute the perpendicular distance from a point to a plane in Cartesian form</span><span data-lang="zh">由直角坐标方程算点到平面的垂直距离</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Translate between column-vector form and $\mathbf{i}, \mathbf{j}, \mathbf{k}$ form</span><span data-lang="zh">在列向量与 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 形式之间互换</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute magnitude $|\mathbf{v}|$ and normalise to obtain $\hat{\mathbf{v}}$</span><span data-lang="zh">算模长 $|\mathbf{v}|$ 并归一化得 $\hat{\mathbf{v}}$</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute a dot product and find the angle between two vectors</span><span data-lang="zh">算点积、求两向量夹角</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Test two vectors for perpendicularity using the dot product</span><span data-lang="zh">用点积判别两向量是否垂直</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Write the vector and parametric equations of a line through a point with a given direction (or through two given points)</span><span data-lang="zh">写出过定点指向直线（或过两点直线）的向量式与参数式</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Determine whether a candidate point lies on a given line</span><span data-lang="zh">判断候选点是否在给定直线上</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Classify two lines in 3D as intersecting, parallel, or skew, with parameter algebra</span><span data-lang="zh">用参数代数将两条三维直线分类为相交、平行或异面</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Find the point of intersection when two lines meet</span><span data-lang="zh">当两直线相交时求交点</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute a cross product via the $\mathbf{i}, \mathbf{j}, \mathbf{k}$ determinant</span><span data-lang="zh">用 $\mathbf{i}, \mathbf{j}, \mathbf{k}$ 行列式计算叉积</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Use the cross product to find the area of a parallelogram or triangle</span><span data-lang="zh">用叉积求平行四边形或三角形的面积</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Write the Cartesian equation of a plane given a point and a normal vector</span><span data-lang="zh">已知一点与法向量，写出平面的直角坐标方程</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Find a normal to a plane defined by three points using the cross product of two edge vectors</span><span data-lang="zh">对由三点定义的平面，用两边向量的叉积求法向量</span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">✓</span> <span data-lang="en">Compute the perpendicular distance from a point to a plane in Cartesian form</span><span data-lang="zh">由直角坐标方程算点到平面的垂直距离</span></li>
   </ul>
 </section>
 
 <!-- IB PRACTICE -->
-<section class="section" id="ib-practice">
+<section class="section" id="ib-practice" data-course="hl">
   <div class="section-label" data-lang="en">Next Step</div>
   <div class="section-label" data-lang="zh">下一步</div>
   <h2><span data-lang="en">IB Paper-Style Practice</span><span data-lang="zh">IB 试卷风格练习</span></h2>
   <div style="background:var(--accent-light);border-left:4px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:12px 0;">
-    <p data-lang="en" style="margin-bottom:16px;">C3 Practice and Solutions are on the roadmap. They will ship under <code>Practice Questions/Unit_C3_*.html</code> with the bilingual built-in pattern.</p>
-    <p data-lang="zh" style="margin-bottom:16px;">C3 配套的 Practice 与 Solutions 已在排期，上线后位于 <code>Practice Questions/Unit_C3_*.html</code>，采用双语内嵌格式。</p>
+    <p data-lang="en" style="margin-bottom:16px;">Work the C3 practice set next, then mark it against the fully worked solutions.</p>
+    <p data-lang="zh" style="margin-bottom:16px;">接下来完成 C3 练习题，再对照完整的解答批改。</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="../Practice%20Questions/Unit_A2_Exponents_and_Logarithms_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">A2 Practice (template) →</span><span data-lang="zh">A2 练习题（模板）→</span></a>
-      <a href="../Practice%20Questions/Unit_A5_Proof_and_Algebraic_Manipulation_Practice.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">A5 Practice (most recent) →</span><span data-lang="zh">A5 练习题（最新）→</span></a>
+      <a href="../Practice%20Questions/Unit_C3_Vectors_Practice.html" style="display:inline-block;padding:10px 22px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;"><span data-lang="en">C3 Practice →</span><span data-lang="zh">C3 练习题 →</span></a>
+      <a href="../Practice%20Questions/Solutions/Unit_C3_Vectors_Solutions.html" style="display:inline-block;padding:10px 22px;background:#fff;color:var(--accent);text-decoration:none;border-radius:8px;font-weight:600;font-size:.9rem;border:1px solid var(--accent);"><span data-lang="en">C3 Solutions →</span><span data-lang="zh">C3 解答 →</span></a>
     </div>
   </div>
 </section>
@@ -1155,19 +1804,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 
 <!-- __sg_appendix__ relocated syllabus + how-to-use (was top-of-page) -->
-<details class="sg-appendix" id="sg-appendix">
+<details class="sg-appendix" id="sg-appendix" data-course="hl">
   <summary><span data-lang="en">How to use this guide</span><span data-lang="zh">本指南使用说明</span></summary>
   <div class="detail-body">
-      <section class="section" id="how-to-use">
+      <section class="section" id="how-to-use" data-course="hl">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">本指南使用说明</span></h2>
-  <p><span data-lang="en">C3 is one of the four super-topics in IB Math AA HL that is entirely HL only. Standard Level students do not encounter vectors in the new syllabus, so every section here is HL material. The unit is also a Paper 3 favourite: questions tend to fuse several sub-topics in one extended task (find a line, intersect with a plane, measure an angle).</span><span data-lang="zh">C3 是 IB 数学 AA HL 四个"纯 HL"超主题之一。新大纲下，标准水平的学生不学向量，因此本单元所有内容都是 HL。本单元同时是 Paper 3 的常客：考题往往把多个子主题串成一道长题（求一条直线，与一个平面相交，再求夹角）。</span></p>
+  <p><span data-lang="en">C3 is one of four units in this course (with A4, E5 and E6) that are entirely HL only. Vectors are additional higher level content (AHL 3.12 to 3.18), so Standard Level students do not study them and every section here is HL material. An extended question can chain several sub-topics in one task (find a line, intersect it with a plane, measure an angle), so practise the whole chain, not only single steps.</span><span data-lang="zh">C3 是本课程中四个完全属于 HL 的单元之一（另外三个是 A4、E5、E6）。向量属于高级附加内容（AHL 3.12 至 3.18），标准水平（SL）的学生不学，因此本单元每一节都是 HL 内容。一道长题可以把多个子主题串在一起（求一条直线，与一个平面相交，再求夹角），所以要练完整的链条，而不只是单个步骤。</span></p>
 
   <div class="two-col">
     <div class="card">
       <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
-      <p style="font-size: 0.95rem;" data-lang="en">Memorise the three big formulas: $|\mathbf{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}$, $\mathbf{u} \cdot \mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\theta$, and the line $\mathbf{r} = \mathbf{a} + \lambda \mathbf{d}$. Practise one full Paper 2 question: line through two given points, intersect with a plane, find the angle between line and plane.</p>
-      <p style="font-size: 0.95rem;" data-lang="zh">背熟三大公式：$|\mathbf{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}$、$\mathbf{u} \cdot \mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\theta$、直线 $\mathbf{r} = \mathbf{a} + \lambda \mathbf{d}$。完整做一道 Paper 2：求过两点的直线，与平面相交，再求线与面的夹角。</p>
+      <p style="font-size: 0.95rem;" data-lang="en">Memorise the three big formulas: $|\mathbf{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}$, $\mathbf{u} \cdot \mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\theta$, and the line $\mathbf{r} = \mathbf{a} + \lambda \mathbf{d}$. Practise one full extended question: line through two given points, intersect with a plane, find the angle between line and plane.</p>
+      <p style="font-size: 0.95rem;" data-lang="zh">背熟三大公式：$|\mathbf{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}$、$\mathbf{u} \cdot \mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\theta$、直线 $\mathbf{r} = \mathbf{a} + \lambda \mathbf{d}$。完整做一道长题：求过两点的直线，与平面相交，再求线与面的夹角。</p>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-icon icon-purple">★</div><div class="card-title"><span data-lang="en">If you are going for a 7</span><span data-lang="zh">如果你目标是 7 分</span></div></div>
@@ -1178,7 +1827,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">HL flag</span><span data-lang="zh">HL 标记说明</span></strong>
-    <span data-lang="en">The entire unit (C3.1 through C3.6, syllabus codes AHL 3.12 to 3.18) is <span class="hl-flag">HL</span> only. There are no Standard Level sub-bullets in vectors. The hero meta strip carries the <span class="hl-flag">HL</span> chip for the whole unit so individual section headers do not need to repeat it.</span><span data-lang="zh">整个单元（C3.1 至 C3.6，大纲编号 AHL 3.12 至 3.18）都是 <span class="hl-flag">HL</span> 专属。向量没有 SL 子条目。Hero 元信息栏已挂 <span class="hl-flag">HL</span> 标识统辖全单元，故各节标题不再重复挂牌。</span>
+    <span data-lang="en">The entire unit (C3.1 through C3.6, syllabus codes AHL 3.12 to 3.18) is HL only. There are no Standard Level sub-topics in vectors. The hero carries an HL-only chip for the whole unit, so individual section headers do not repeat it.</span><span data-lang="zh">整个单元（C3.1 至 C3.6，大纲编号 AHL 3.12 至 3.18）都是 HL 专属。向量没有 SL 子主题。Hero 区的"仅 HL"标识统辖全单元，故各节标题不再重复挂牌。</span>
   </div>
 </section>
   </div>
@@ -1496,6 +2145,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1639,21 +2304,54 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
     });
-  });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>
