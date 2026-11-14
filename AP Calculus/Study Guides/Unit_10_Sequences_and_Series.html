@@ -27,7 +27,7 @@
 
 <link rel="stylesheet" href="/vendor/katex/katex.min.css">
 <script defer src="/vendor/katex/katex.min.js"></script>
-<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<script defer src="/vendor/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}], ignoredTags: ['script', 'noscript', 'style', 'textarea', 'code', 'option'], throwOnError: false});"></script>
 
 <style>
 :root {
@@ -378,6 +378,7 @@ pre .str { color: #A6E3A1; font-weight: 600; }
 .concept-box.green { border-left-color: var(--green); }
 .concept-box.orange { border-left-color: var(--orange); }
 .concept-box.red { border-left-color: var(--red); }
+.concept-box.ap-trap strong { color: var(--red); }
 .concept-box.purple { border-left-color: var(--purple); }
 .concept-box > strong:first-child { 
   display: inline-block; margin-bottom: 8px; 
@@ -443,6 +444,65 @@ summary:hover { background: var(--accent-light); }
 summary::before { content: '▸'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
 details[open] summary { border-bottom: 1px solid var(--border); }
 details[open] summary::before { transform: rotate(90deg); }
+/* ─── WORKED EXAMPLE CARDS (surfaced, no longer collapsed) ─── */
+.example-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 22px 22px 18px;
+  margin: 22px 0;
+}
+.example-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.example-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+.example-card .detail-body { font-size: 0.95rem; }
+
+.example-steps {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.example-step {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  line-height: 1.72;
+}
+.example-step .katex-display {
+  margin: 10px 0 6px;
+  text-align: left;
+}
+.example-step strong {
+  display: inline-block;
+  min-width: 72px;
+  color: var(--accent);
+}
+.example-step.example-result {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
+}
+.example-note {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+.example-step .katex, .example-note .katex { white-space: normal; }
+
 details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
 
 /* ─── QUICK REF ─── */
@@ -950,6 +1010,86 @@ body.lang-zh [data-lang="en"] { display: none !important; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -1029,8 +1169,6 @@ body.lang-zh [data-lang="en"] { display: none !important; }
     探索无穷多项之和如何收敛到一个有限值。掌握各类收敛判别法、泰勒与麦克劳林级数，以及误差界。
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon"><span data-lang="en">17–18% of AP Exam</span><span data-lang="zh">占 AP 考试 17–18%</span></span>
-    <span class="chip chip-green"><span data-lang="en">~17–18 Class Periods</span><span data-lang="zh">约 17–18 课时</span></span>
     <span class="chip chip-purple"><span data-lang="en">15 Topics · BC Only</span><span data-lang="zh">15 个主题 · 仅 BC</span></span>
   </div>
 </section>
@@ -1067,6 +1205,12 @@ body.lang-zh [data-lang="en"] { display: none !important; }
 
   <h2 data-lang="zh">定义收敛与发散的无穷级数</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define the $n$th partial sum $S_n$ of a series.</li><li>State the definition of a convergent series in terms of $\lim_{n\to\infty} S_n$.</li><li>Distinguish a convergent sequence of terms from a convergent series.</li><li>Calculate the sum of a telescoping or geometric series from a formula for $S_n$.</li><li>Explain why $a_n \to 0$ alone does not show that a series converges.</li></ul>
+    <ul data-lang="zh"><li>定义级数的第 $n$ 个部分和 $S_n$。</li><li>用 $\lim_{n\to\infty} S_n$ 表述级数收敛（<code>convergent series</code>）的定义。</li><li>区分各项组成的数列收敛与级数收敛。</li><li>由 $S_n$ 的公式计算裂项相消级数或等比级数的和。</li><li>解释为什么仅有 $a_n \to 0$ 不能说明级数收敛。</li></ul>
+  </div>
+
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">Big Idea</strong>
     <strong style="color: var(--accent);" data-lang="zh">核心思想</strong>
@@ -1086,33 +1230,77 @@ body.lang-zh [data-lang="en"] { display: none !important; }
   <div class="concept-box orange">
     <strong style="color: var(--orange);" data-lang="en">Key Distinction</strong>
     <strong style="color: var(--orange);" data-lang="zh">关键区别</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en"><strong>Sequence:</strong> An ordered list of numbers $\{a_n\}$ — does each <em>term</em> approach a value?</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh"><strong>数列（<code>sequence</code>）：</strong>有序的数字列表 $\{a_n\}$ —— 看每一<em>项（<code>term</code>）</em>是否趋近某个值。</span>
-    <span style="display:block; margin-top:4px;" data-lang="en"><strong>Series:</strong> The <em>sum</em> of a sequence — does the running total approach a value?</span>
-    <span style="display:block; margin-top:4px;" data-lang="zh"><strong>级数（<code>series</code>）：</strong>数列各项的<em>累加</em> —— 看累加和是否趋近某个值。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en"><strong>Sequence:</strong> An ordered list of numbers $\{a_n\}$. Does each <em>term</em> approach a value?</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh"><strong>数列（<code>sequence</code>）：</strong>有序的数字列表 $\{a_n\}$。看每一<em>项（<code>term</code>）</em>是否趋近某个值。</span>
+    <span style="display:block; margin-top:4px;" data-lang="en"><strong>Series:</strong> The <em>sum</em> of a sequence. Does the running total approach a value?</span>
+    <span style="display:block; margin-top:4px;" data-lang="zh"><strong>级数（<code>series</code>）：</strong>数列各项的<em>累加</em>。看累加和是否趋近某个值。</span>
     <span style="display:block; margin-top:8px;" data-lang="en">A sequence can converge while its corresponding series diverges. For example, $a_n = 1/n \to 0$, but $\sum 1/n = \infty$.</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">数列可以收敛而对应的级数发散。例如，$a_n = 1/n \to 0$，但 $\sum 1/n = \infty$。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Telescoping Series</span><span data-lang="zh">例题 —— 裂项相消级数</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Determine if the series converges:</span><span class="cm" data-lang="zh">判断该级数是否收敛：</span>
-$$ \sum_{n=1}^{\infty} \frac{1}{n(n+1)} $$
-
-<span class="cm" data-lang="en">Use partial fractions:</span><span class="cm" data-lang="zh">使用部分分式分解：</span>
-  1/[n(n+1)] = 1/n − 1/(n+1)
-
-<span class="cm" data-lang="en">Write partial sums (terms cancel!):</span><span class="cm" data-lang="zh">写出部分和（各项相消！）：</span>
-  S_n = (1 − 1/2) + (1/2 − 1/3) + ⋯ + (1/n − 1/(n+1))
-      = 1 − 1/(n+1)
-
-<span class="cm" data-lang="en">Take the limit:</span><span class="cm" data-lang="zh">取极限：</span>
-  lim(n→∞) S_n = 1 − 0 = <span class="num">1</span>
-
-<span class="str" data-lang="en">The series converges to 1.</span><span class="str" data-lang="zh">该级数收敛到 1。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Telescoping Series</span><span data-lang="zh">例题：裂项相消级数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Determine if the series converges:</span><span data-lang="zh">判断该级数是否收敛：</span>
+        $$\sum_{n=1}^{\infty}\frac{1}{n(n+1)}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Partial fractions</span><span data-lang="zh">部分分式</span></strong> <span data-lang="en">Use partial fractions:</span><span data-lang="zh">使用部分分式分解：</span>
+        $$\frac{1}{n(n+1)}=\frac1n-\frac{1}{n+1}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Partial sums</span><span data-lang="zh">部分和</span></strong> <span data-lang="en">Write partial sums (terms cancel!):</span><span data-lang="zh">写出部分和（各项相消！）：</span>
+        $$S_n=\left(1-\tfrac12\right)+\left(\tfrac12-\tfrac13\right)+\cdots+\left(\tfrac1n-\tfrac{1}{n+1}\right)=1-\frac{1}{n+1}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong> <span data-lang="en">Take the limit:</span><span data-lang="zh">取极限：</span>
+        $$\lim_{n\to\infty}S_n=1-0=1$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The series converges to 1.</span><span data-lang="zh">该级数收敛到 1。</span></div>
     </div>
+  </div>
   </details>
+  <figure class="sg-fig" role="group">
+<svg viewBox="0 0 420 240" role="img" aria-label="Partial sums of the series sum of 1 over 2 to the n, rising 0.5, 0.75, 0.875 and levelling off toward the dashed line at 1, with bars showing the halving terms"><line class="ax" x1="50" y1="200" x2="410" y2="200"/><line class="ax" x1="50" y1="200" x2="50" y2="28"/><line class="c2 dash" x1="50" y1="40" x2="400" y2="40"/><rect class="fill2" x="83" y="120.0" width="14" height="80.0"/><rect class="fill2" x="123" y="160.0" width="14" height="40.0"/><rect class="fill2" x="163" y="180.0" width="14" height="20.0"/><rect class="fill2" x="203" y="190.0" width="14" height="10.0"/><rect class="fill2" x="243" y="195.0" width="14" height="5.0"/><rect class="fill2" x="283" y="197.5" width="14" height="2.5"/><rect class="fill2" x="323" y="198.75" width="14" height="1.25"/><rect class="fill2" x="363" y="199.38" width="14" height="0.62"/><polyline class="c1" fill="none" points="90,120.0 130,80.0 170,60.0 210,50.0 250,45.0 290,42.5 330,41.25 370,40.62"/><circle class="c1" cx="90" cy="120.0" r="3"/><circle class="c1" cx="130" cy="80.0" r="3"/><circle class="c1" cx="170" cy="60.0" r="3"/><circle class="c1" cx="210" cy="50.0" r="3"/><circle class="c1" cx="250" cy="45.0" r="3"/><circle class="c1" cx="290" cy="42.5" r="3"/><circle class="c1" cx="330" cy="41.25" r="3"/><circle class="c1" cx="370" cy="40.62" r="3"/><line class="ax" x1="90" y1="200" x2="90" y2="204"/><text class="mut" data-lang="en" x="90" y="216" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="90" y="216" text-anchor="middle">1</text><line class="ax" x1="130" y1="200" x2="130" y2="204"/><text class="mut" data-lang="en" x="130" y="216" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="130" y="216" text-anchor="middle">2</text><line class="ax" x1="170" y1="200" x2="170" y2="204"/><text class="mut" data-lang="en" x="170" y="216" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="170" y="216" text-anchor="middle">3</text><line class="ax" x1="210" y1="200" x2="210" y2="204"/><text class="mut" data-lang="en" x="210" y="216" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="210" y="216" text-anchor="middle">4</text><line class="ax" x1="250" y1="200" x2="250" y2="204"/><text class="mut" data-lang="en" x="250" y="216" text-anchor="middle">5</text><text class="mut" data-lang="zh" x="250" y="216" text-anchor="middle">5</text><line class="ax" x1="290" y1="200" x2="290" y2="204"/><text class="mut" data-lang="en" x="290" y="216" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="290" y="216" text-anchor="middle">6</text><line class="ax" x1="330" y1="200" x2="330" y2="204"/><text class="mut" data-lang="en" x="330" y="216" text-anchor="middle">7</text><text class="mut" data-lang="zh" x="330" y="216" text-anchor="middle">7</text><line class="ax" x1="370" y1="200" x2="370" y2="204"/><text class="mut" data-lang="en" x="370" y="216" text-anchor="middle">8</text><text class="mut" data-lang="zh" x="370" y="216" text-anchor="middle">8</text><line class="ax" x1="46" y1="200" x2="50" y2="200"/><text class="mut" data-lang="en" x="42" y="204" text-anchor="end">0</text><text class="mut" data-lang="zh" x="42" y="204" text-anchor="end">0</text><line class="ax" x1="46" y1="120.0" x2="50" y2="120.0"/><text class="mut" data-lang="en" x="42" y="124.0" text-anchor="end">0.5</text><text class="mut" data-lang="zh" x="42" y="124.0" text-anchor="end">0.5</text><line class="ax" x1="46" y1="40" x2="50" y2="40"/><text class="mut" data-lang="en" x="42" y="44" text-anchor="end">1</text><text class="mut" data-lang="zh" x="42" y="44" text-anchor="end">1</text><text class="lbl" data-lang="en" x="405" y="232" text-anchor="end">n</text><text class="lbl" data-lang="zh" x="405" y="232" text-anchor="end">n</text><text class="lbl" data-lang="en" x="58" y="24">S<tspan baseline-shift="sub" font-size="9">n</tspan></text><text class="lbl" data-lang="zh" x="58" y="24">S<tspan baseline-shift="sub" font-size="9">n</tspan></text><text class="c2t" data-lang="en" x="58" y="58">limit S = 1</text><text class="c2t" data-lang="zh" x="58" y="58">极限 S = 1</text><text class="c1t" data-lang="en" x="222" y="118">partial sums S<tspan baseline-shift="sub" font-size="9">n</tspan> = 1 − 1/2<tspan baseline-shift="super" font-size="9">n</tspan></text><text class="c1t" data-lang="zh" x="222" y="118">部分和 S<tspan baseline-shift="sub" font-size="9">n</tspan> = 1 − 1/2<tspan baseline-shift="super" font-size="9">n</tspan></text><text class="mut" data-lang="en" x="222" y="140">bars: terms a<tspan baseline-shift="sub" font-size="9">n</tspan> = 1/2<tspan baseline-shift="super" font-size="9">n</tspan></text><text class="mut" data-lang="zh" x="222" y="140">柱：各项 a<tspan baseline-shift="sub" font-size="9">n</tspan> = 1/2<tspan baseline-shift="super" font-size="9">n</tspan></text></svg>
+<figcaption><span data-lang="en">Figure 10.1. The series $\sum_{n=1}^{\infty} 1/2^n$ drawn to scale. The bars are the terms $a_n = 1/2^n$; the dots are the partial sums $S_n = 1 - 1/2^n$. Read off that each new term closes half of the remaining gap to the dashed line, so $S_n \to 1$ and the series converges to $1$.</span><span data-lang="zh">图 10.1. 按比例绘制的级数 $\sum_{n=1}^{\infty} 1/2^n$。柱为各项 $a_n = 1/2^n$；圆点为部分和 $S_n = 1 - 1/2^n$。从图中读出：每加一项都补上与虚线之间剩余差距的一半，所以 $S_n \to 1$，级数收敛到 $1$。</span></figcaption>
+  </figure>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Partial Sums of $\sum 1/2^n$</span><span data-lang="zh">例题：$\sum 1/2^n$ 的部分和</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Use partial sums to decide whether the series converges, and find its sum if it does.</span><span data-lang="zh">用部分和判断该级数是否收敛；若收敛，求其和。</span>
+        $$\sum_{n=1}^{\infty}\frac{1}{2^n}=\frac12+\frac14+\frac18+\cdots$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">First partial sums</span><span data-lang="zh">前几个部分和</span></strong> <span data-lang="en">Add one term at a time:</span><span data-lang="zh">逐项相加：</span>
+        $$S_1=\tfrac12,\quad S_2=\tfrac34,\quad S_3=\tfrac78,\quad S_4=\tfrac{15}{16}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Pattern</span><span data-lang="zh">规律</span></strong> <span data-lang="en">Each $S_n$ is $1$ minus the last term added, so</span><span data-lang="zh">每个 $S_n$ 都等于 $1$ 减去最后加上的那一项，所以</span>
+        $$S_n=1-\frac{1}{2^n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong> <span data-lang="en">Since $1/2^n \to 0$,</span><span data-lang="zh">因为 $1/2^n \to 0$，</span>
+        $$\lim_{n\to\infty}S_n=1-0=1$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The partial sums converge to $1$, so the series converges and $\sum_{n=1}^{\infty} 1/2^n = 1$ (Figure 10.1).</span><span data-lang="zh">部分和收敛到 $1$，所以级数收敛，且 $\sum_{n=1}^{\infty} 1/2^n = 1$（图 10.1）。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">The value of an infinite series is defined as the limit of its partial sums; here each term closes half the remaining gap to $1$.</span><span data-lang="zh">无穷级数的值定义为其部分和的极限；本题中每一项都补上与 $1$ 之间剩余差距的一半。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question gives a formula for $S_n$, the sum of the series is $\lim_{n\to\infty} S_n$, and a single term is $a_n = S_n - S_{n-1}$ for $n \ge 2$. Conclude in words with the limit shown, for example: since $\lim_{n\to\infty} S_n = 1$, the series converges to $1$. Do not confuse the limit of the terms with the limit of the partial sums.</p>
+    <p data-lang="zh">若题目给出 $S_n$ 的公式，级数的和就是 $\lim_{n\to\infty} S_n$，单独一项为 $a_n = S_n - S_{n-1}$（$n \ge 2$）。写结论时要写出极限，例如：因为 $\lim_{n\to\infty} S_n = 1$，所以级数收敛到 $1$。不要把各项的极限与部分和的极限混为一谈。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The partial sums of a series are $S_n = \dfrac{3n}{n+1}$. Find $a_5$ and the sum of the series.</span><span data-lang="zh">1. 某级数的部分和为 $S_n = \dfrac{3n}{n+1}$。求 $a_5$ 及该级数的和。</span></summary>
+      <div class="sg-a"><p data-lang="en">$a_5 = S_5 - S_4 = \dfrac{15}{6} - \dfrac{12}{5} = 2.5 - 2.4 = \dfrac{1}{10}$. The sum is $\lim_{n\to\infty} \dfrac{3n}{n+1} = 3$, so the series converges to $3$.</p><p data-lang="zh">$a_5 = S_5 - S_4 = \dfrac{15}{6} - \dfrac{12}{5} = 2.5 - 2.4 = \dfrac{1}{10}$。级数的和为 $\lim_{n\to\infty} \dfrac{3n}{n+1} = 3$，即级数收敛到 $3$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. True or false: if $\lim_{n\to\infty} a_n = 0$, then $\sum a_n$ converges.</span><span data-lang="zh">2. 判断对错：若 $\lim_{n\to\infty} a_n = 0$，则 $\sum a_n$ 收敛。</span></summary>
+      <div class="sg-a"><p data-lang="en">False. The harmonic series has $a_n = 1/n \to 0$, but $\sum 1/n$ diverges. Terms tending to $0$ is necessary for convergence, not sufficient.</p><p data-lang="zh">错误。调和级数满足 $a_n = 1/n \to 0$，但 $\sum 1/n$ 发散。各项趋于 $0$ 是收敛的必要条件，而非充分条件。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the sum of $\displaystyle\sum_{n=1}^{\infty}\left(\frac1n-\frac{1}{n+2}\right)$.</span><span data-lang="zh">3. 求 $\displaystyle\sum_{n=1}^{\infty}\left(\frac1n-\frac{1}{n+2}\right)$ 的和。</span></summary>
+      <div class="sg-a"><p data-lang="en">Writing out the terms, everything cancels except the first two positive parts and the last two negative parts: $S_n = 1 + \tfrac12 - \tfrac{1}{n+1} - \tfrac{1}{n+2}$. As $n \to \infty$, $S_n \to \tfrac32$, so the series converges to $\tfrac32$.</p><p data-lang="zh">写出各项后，除了前两个正项和最后两个负项外全部相消：$S_n = 1 + \tfrac12 - \tfrac{1}{n+1} - \tfrac{1}{n+2}$。当 $n \to \infty$ 时 $S_n \to \tfrac32$，所以级数收敛到 $\tfrac32$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1125,15 +1313,21 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n(n+1)} $$
   <h2 data-lang="en">Working with Geometric Series</h2>
   <h2 data-lang="zh">处理等比级数</h2>
 
-  <p data-lang="en">A <strong>geometric series</strong> has a constant ratio $r$ between consecutive terms. It is the most important series to recognize on the AP exam because it has a clean closed-form sum.</p>
-  <p data-lang="zh"><strong>等比级数（<code>geometric series</code>）</strong>相邻两项之比为常数 $r$。这是 AP 考试中最重要的可识别级数，因为它有简洁的闭式求和公式。</p>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Identify the first term $a$ and ratio $r$ of a geometric series written in any form.</li><li>State that a geometric series with $a \ne 0$ converges if and only if $|r| &lt; 1$.</li><li>Calculate the sum $\dfrac{a}{1-r}$, using the first term actually written.</li><li>Explain why the series diverges when $|r| \ge 1$.</li><li>Write a repeating decimal as a geometric series and as a fraction.</li></ul>
+    <ul data-lang="zh"><li>识别任意形式的等比级数的首项 $a$ 与公比 $r$。</li><li>说明首项 $a \ne 0$ 的等比级数当且仅当 $|r| &lt; 1$ 时收敛。</li><li>用实际写出的首项计算和 $\dfrac{a}{1-r}$。</li><li>解释当 $|r| \ge 1$ 时级数为何发散。</li><li>把循环小数写成等比级数并化为分数。</li></ul>
+  </div>
+
+  <p data-lang="en">A <strong>geometric series</strong> has a constant ratio $r$ between consecutive terms. It is the most important series to recognize because it is one of the few with a clean closed-form sum.</p>
+  <p data-lang="zh"><strong>等比级数（<code>geometric series</code>）</strong>相邻两项之比为常数 $r$。这是最重要的可识别级数，因为它是少数有简洁闭式求和公式的级数之一。</p>
 
   <div class="formula-box">
     <div class="formula-label" data-lang="en">Geometric Series</div>
     <div class="formula-label" data-lang="zh">等比级数</div>
     $$ \sum_{n=0}^{\infty} ar^n = a + ar + ar^2 + \cdots = \frac{a}{1-r}, \quad |r| < 1 $$
-    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="en">Converges if and only if $|r| < 1$. Diverges if $|r| \geq 1$.</p>
-    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">当且仅当 $|r| < 1$ 时收敛；当 $|r| \geq 1$ 时发散。</p>
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="en">For $a \ne 0$: converges if and only if $|r| < 1$; diverges if $|r| \geq 1$.</p>
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">当 $a \ne 0$ 时：当且仅当 $|r| < 1$ 时收敛；当 $|r| \geq 1$ 时发散。</p>
   </div>
 
   <!-- ─── INTERACTIVE GEOMETRIC SERIES VISUALIZER ─── -->
@@ -1151,8 +1345,8 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n(n+1)} $$
       <div class="widget-readout" id="geoReadout">r = 0.50</div>
     </div>
     <div class="widget-sum-readout" id="geoSumReadout">
-      <span data-lang="en">Partial sum $S_{20}$ = </span><span data-lang="zh">部分和 $S_{20}$ = </span><span class="sum-val" id="geoPartialVal">—</span><br>
-      <span data-lang="en">Exact sum $\frac{a}{1-r}$ = </span><span data-lang="zh">精确和 $\frac{a}{1-r}$ = </span><span class="exact-val" id="geoExactVal">—</span>
+      <span data-lang="en">Partial sum $S_{20}$ = </span><span data-lang="zh">部分和 $S_{20}$ = </span><span class="sum-val" id="geoPartialVal">…</span><br>
+      <span data-lang="en">Exact sum $\frac{a}{1-r}$ = </span><span data-lang="zh">精确和 $\frac{a}{1-r}$ = </span><span class="exact-val" id="geoExactVal">…</span>
     </div>
     <div id="geoConvergeBanner" style="display:none;"></div>
   </div>
@@ -1160,24 +1354,24 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n(n+1)} $$
   <div class="concept-box green">
     <strong style="color: var(--green);" data-lang="en">Recognizing Geometric Series</strong>
     <strong style="color: var(--green);" data-lang="zh">识别等比级数</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">Look for a series where each term is obtained by multiplying the previous term by a constant. The first term $a$ and ratio $r$ may be hidden — extract them by rewriting.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">寻找每项由前项乘以常数得到的级数。首项 $a$ 和公比 $r$ 可能被掩藏——通过改写形式将其提取出来。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Look for a series where each term is obtained by multiplying the previous term by a constant. The first term $a$ and ratio $r$ may be hidden; extract them by rewriting.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">寻找每项由前项乘以常数得到的级数。首项 $a$ 和公比 $r$ 可能被掩藏；通过改写形式将其提取出来。</span>
     <span style="display:block; margin-top:8px;" data-lang="en"><em>Example:</em> $\displaystyle\sum_{n=1}^{\infty} \frac{3}{5^n} = \sum_{n=1}^{\infty} 3 \cdot \left(\frac{1}{5}\right)^n = \frac{3/5}{1 - 1/5} = \frac{3}{4}$.</span>
     <span style="display:block; margin-top:8px;" data-lang="zh"><em>例：</em> $\displaystyle\sum_{n=1}^{\infty} \frac{3}{5^n} = \sum_{n=1}^{\infty} 3 \cdot \left(\frac{1}{5}\right)^n = \frac{3/5}{1 - 1/5} = \frac{3}{4}$。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Geometric Series</span><span data-lang="zh">例题 —— 等比级数</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find the sum:</span><span class="cm" data-lang="zh">求和：</span>
-$$ \sum_{n=0}^{\infty} \frac{(-1)^n \cdot 2^n}{3^n} = \sum_{n=0}^{\infty} \left(\frac{-2}{3}\right)^n $$
-
-<span class="cm" data-lang="en">Identify: a = 1, r = −2/3</span><span class="cm" data-lang="zh">识别：a = 1，r = −2/3</span>
-<span class="cm" data-lang="en">Since |r| = 2/3 < 1, it converges:</span><span class="cm" data-lang="zh">因为 |r| = 2/3 < 1，所以收敛：</span>
-
-  S = a/(1−r) = 1/(1−(−2/3))
-    = 1/(1 + 2/3) = 1/(5/3) = <span class="num">3/5</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Geometric Series</span><span data-lang="zh">例题：等比级数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find the sum:</span><span data-lang="zh">求和：</span>
+        $$\sum_{n=0}^{\infty}\frac{(-1)^n\cdot 2^n}{3^n}=\sum_{n=0}^{\infty}\left(\frac{-2}{3}\right)^n$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Identify</span><span data-lang="zh">识别</span></strong> <span data-lang="en">$a=1$, $r=-\tfrac23$. Since $|r|=\tfrac23<1$, it converges:</span><span data-lang="zh">$a=1$，$r=-\tfrac23$。因为 $|r|=\tfrac23<1$，所以收敛：</span>
+        $$S=\frac{a}{1-r}=\frac{1}{1-\left(-\frac23\right)}=\frac{1}{1+\frac23}=\frac{1}{5/3}=\frac35$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The sum is $\dfrac35$.</span><span data-lang="zh">和为 $\dfrac35$。</span></div>
     </div>
+  </div>
   </details>
 
   <div class="quiz" data-answer="2">
@@ -1192,6 +1386,42 @@ $$ \sum_{n=0}^{\infty} \frac{(-1)^n \cdot 2^n}{3^n} = \sum_{n=0}^{\infty} \left(
     <div class="quiz-explain wrong-exp"><span data-lang="en">Starting at $n=1$: first term $a_1 = 2/3$, common ratio $r = 2/3$. Sum $= \frac{a_1}{1-r} = \frac{2/3}{1/3} = 2$.</span><span data-lang="zh">从 $n=1$ 开始：首项 $a_1 = 2/3$，公比 $r = 2/3$。和 $= \frac{a_1}{1-r} = \frac{2/3}{1/3} = 2$。</span></div>
 
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">↻ Try Again</span><span data-lang="zh">↻ 再试一次</span></button>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: A Repeating Decimal</span><span data-lang="zh">例题：循环小数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Write $0.363636\ldots$ as a fraction using a geometric series.</span><span data-lang="zh">用等比级数把 $0.363636\ldots$ 写成分数。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Series</span><span data-lang="zh">级数</span></strong> <span data-lang="en">Split the decimal into blocks of two digits:</span><span data-lang="zh">把小数按两位一组拆开：</span>
+        $$0.3636\ldots=0.36+0.0036+0.000036+\cdots=\sum_{n=0}^{\infty}0.36\,(0.01)^n$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Identify</span><span data-lang="zh">识别</span></strong> <span data-lang="en">$a=0.36$ and $r=0.01$. Since $|r|=0.01&lt;1$, the series converges.</span><span data-lang="zh">$a=0.36$，$r=0.01$。因为 $|r|=0.01&lt;1$，级数收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Sum</span><span data-lang="zh">求和</span></strong>
+        $$S=\frac{0.36}{1-0.01}=\frac{0.36}{0.99}=\frac{36}{99}=\frac{4}{11}$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$0.3636\ldots = \dfrac{4}{11}$. Check: $4 \div 11 = 0.3636\ldots$</span><span data-lang="zh">$0.3636\ldots = \dfrac{4}{11}$。检验：$4 \div 11 = 0.3636\ldots$</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">Each block is $1/100$ of the previous one, so the decimal is a geometric series with a ratio well inside $(-1,1)$.</span><span data-lang="zh">每一组都是前一组的 $1/100$，所以该小数是一个公比远在 $(-1,1)$ 之内的等比级数。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Before writing $\dfrac{a}{1-r}$, state $|r| &lt; 1$ as the reason the series converges. Take $a$ to be the first term of the series as written: $\sum_{n=1}^{\infty}(2/3)^n$ starts at $2/3$, so its sum is $2$, not $3$.</p>
+    <p data-lang="zh">写 $\dfrac{a}{1-r}$ 之前，先写明 $|r| &lt; 1$ 作为收敛的理由。$a$ 取级数实际写出的第一项：$\sum_{n=1}^{\infty}(2/3)^n$ 从 $2/3$ 开始，所以和为 $2$，而不是 $3$。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find $\displaystyle\sum_{n=2}^{\infty}\frac{5}{3^n}$.</span><span data-lang="zh">1. 求 $\displaystyle\sum_{n=2}^{\infty}\frac{5}{3^n}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">The first term ($n=2$) is $5/9$ and $r = 1/3$, with $|r| &lt; 1$. Sum $= \dfrac{5/9}{1-1/3} = \dfrac{5/9}{2/3} = \dfrac56$.</p><p data-lang="zh">第一项（$n=2$）为 $5/9$，$r = 1/3$，且 $|r| &lt; 1$。和 $= \dfrac{5/9}{1-1/3} = \dfrac{5/9}{2/3} = \dfrac56$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For which $x$ does $\displaystyle\sum_{n=0}^{\infty}\left(\frac{x}{3}\right)^n$ converge, and what is its sum there?</span><span data-lang="zh">2. $\displaystyle\sum_{n=0}^{\infty}\left(\frac{x}{3}\right)^n$ 对哪些 $x$ 收敛？收敛时和为多少？</span></summary>
+      <div class="sg-a"><p data-lang="en">It is geometric with $a = 1$ and $r = x/3$. It converges when $|x/3| &lt; 1$, that is $-3 &lt; x &lt; 3$, and then the sum is $\dfrac{1}{1-x/3} = \dfrac{3}{3-x}$.</p><p data-lang="zh">这是 $a = 1$、$r = x/3$ 的等比级数。当 $|x/3| &lt; 1$，即 $-3 &lt; x &lt; 3$ 时收敛，此时和为 $\dfrac{1}{1-x/3} = \dfrac{3}{3-x}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Does $\displaystyle\sum_{n=0}^{\infty}(-1)^n$ converge?</span><span data-lang="zh">3. $\displaystyle\sum_{n=0}^{\infty}(-1)^n$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. Here $r = -1$, so $|r| = 1$. The partial sums are $1, 0, 1, 0, \ldots$, which have no finite limit, and that is what divergence means. The $n$th term test confirms it: the terms do not tend to $0$, which is enough to prove divergence (but terms tending to $0$ would not prove convergence).</p><p data-lang="zh">不收敛。此处 $r = -1$，$|r| = 1$。部分和依次为 $1, 0, 1, 0, \ldots$，没有有限的极限，这正是发散的含义。第 $n$ 项判别法也可确认：各项不趋于 $0$，这足以证明发散（但各项趋于 $0$ 并不能证明收敛）。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1213,10 +1443,16 @@ $$ \sum_{n=0}^{\infty} \frac{(-1)^n \cdot 2^n}{3^n} = \sum_{n=0}^{\infty} \left(
 </style>
 <img class="dr-fig-light" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-nth-term-trap_light.png" alt="Two series with terms a_n to 0: partial sums of the harmonic series grow without bound while partial sums of the p=2 series level off -- the nth Term Test cannot distinguish them. / 两个级数的各项均趋于 0：调和级数的部分和无界增长，而 p=2 级数的部分和趋于平稳——第 n 项判别法无法区分两者。">
 <img class="dr-fig-dark" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-nth-term-trap_dark.png" alt="Two series with terms a_n to 0: partial sums of the harmonic series grow without bound while partial sums of the p=2 series level off -- the nth Term Test cannot distinguish them. / 两个级数的各项均趋于 0：调和级数的部分和无界增长，而 p=2 级数的部分和趋于平稳——第 n 项判别法无法区分两者。">
-<figcaption><span data-lang="en">Two series with terms a_n to 0: partial sums of the harmonic series grow without bound while partial sums of the p=2 series level off -- the nth Term Test cannot distinguish them.</span><span data-lang="zh">两个级数的各项均趋于 0：调和级数的部分和无界增长，而 p=2 级数的部分和趋于平稳——第 n 项判别法无法区分两者。</span></figcaption>
+<figcaption><span data-lang="en">Two series with terms a_n to 0: partial sums of the harmonic series grow without bound while partial sums of the p=2 series level off -- the nth Term Test cannot distinguish them.</span><span data-lang="zh">两个级数的各项均趋于 0：调和级数的部分和无界增长，而 p=2 级数的部分和趋于平稳；第 n 项判别法无法区分两者。</span></figcaption>
 </figure>
 
   <h2 data-lang="zh">第 $n$ 项发散判别法</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the $n$th term test for divergence.</li><li>Apply the test as the first check on any series.</li><li>Calculate $\lim_{n\to\infty} a_n$ for rational, exponential and oscillating terms.</li><li>Explain why the test is inconclusive when $\lim_{n\to\infty} a_n = 0$.</li><li>Deduce divergence when the limit of the terms does not exist.</li></ul>
+    <ul data-lang="zh"><li>表述第 $n$ 项发散判别法。</li><li>把该判别法作为任何级数的第一步检查。</li><li>计算有理式、指数式与振荡项的 $\lim_{n\to\infty} a_n$。</li><li>解释当 $\lim_{n\to\infty} a_n = 0$ 时该判别法为何不能下结论。</li><li>当各项的极限不存在时推出级数发散。</li></ul>
+  </div>
 
   <div class="formula-box" style="border-top-color: var(--red);">
     <div class="formula-label" style="color: var(--red);" data-lang="en">nth Term Test (Divergence Test)</div>
@@ -1225,10 +1461,10 @@ $$ \sum_{n=0}^{\infty} \frac{(-1)^n \cdot 2^n}{3^n} = \sum_{n=0}^{\infty} \left(
   </div>
 
   <div class="concept-box red">
-    <strong style="color: var(--red);" data-lang="en">Critical Warning — One-Way Test!</strong>
-    <strong style="color: var(--red);" data-lang="zh">重要警示 —— 单向判别！</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">The nth Term Test can only prove <strong>divergence</strong>. If $\lim a_n = 0$, the test is <strong>inconclusive</strong> — the series may converge or diverge.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">第 n 项判别法只能证明<strong>发散</strong>。若 $\lim a_n = 0$，则判别法<strong>不能下结论</strong> —— 级数可能收敛也可能发散。</span>
+    <strong style="color: var(--red);" data-lang="en">Critical Warning: One-Way Test!</strong>
+    <strong style="color: var(--red);" data-lang="zh">重要警示：单向判别！</strong>
+    <span style="display:block; margin-top:8px;" data-lang="en">The nth Term Test can only prove <strong>divergence</strong>. If $\lim a_n = 0$, the test is <strong>inconclusive</strong>: the series may converge or diverge.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">第 n 项判别法只能证明<strong>发散</strong>。若 $\lim a_n = 0$，则判别法<strong>不能下结论</strong>：级数可能收敛也可能发散。</span>
     <span style="display:block; margin-top:8px;" data-lang="en"><em>Classic trap:</em> $a_n = 1/n \to 0$, but $\sum 1/n$ diverges (harmonic series). So "$\lim a_n = 0$" does NOT mean the series converges.</span>
     <span style="display:block; margin-top:8px;" data-lang="zh"><em>经典陷阱：</em> $a_n = 1/n \to 0$，但 $\sum 1/n$ 发散（调和级数（<code>harmonic series</code>））。因此 “$\lim a_n = 0$” <strong>不</strong>意味着级数收敛。</span>
   </div>
@@ -1236,30 +1472,65 @@ $$ \sum_{n=0}^{\infty} \frac{(-1)^n \cdot 2^n}{3^n} = \sum_{n=0}^{\infty} \left(
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">When to Use It</strong>
     <strong style="color: var(--accent);" data-lang="zh">何时使用</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">This should be your <strong>first check</strong> on every series problem. If the terms don't go to zero, you're done — it diverges. Only if $a_n \to 0$ do you need to apply a more sophisticated test.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">每道级数题都应将此作为<strong>首要检查</strong>。若各项不趋于零，则结论已得 —— 发散。仅当 $a_n \to 0$ 时才需要使用更复杂的判别法。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">This should be your <strong>first check</strong> on every series problem. If the terms don't go to zero, you're done: it diverges. Only if $a_n \to 0$ do you need to apply a more sophisticated test.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">每道级数题都应将此作为<strong>首要检查</strong>。若各项不趋于零，则结论已得：发散。仅当 $a_n \to 0$ 时才需要使用更复杂的判别法。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — nth Term Test</span><span data-lang="zh">例题 —— 第 n 项判别法</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does this series converge or diverge?</span><span class="cm" data-lang="zh">该级数收敛还是发散？</span>
-$$ \sum_{n=1}^{\infty} \frac{n}{2n+1} $$
-
-<span class="cm" data-lang="en">Apply nth term test:</span><span class="cm" data-lang="zh">应用第 n 项判别法：</span>
-  lim(n→∞) n/(2n+1) = lim(n→∞) 1/(2 + 1/n) = <span class="num">1/2 ≠ 0</span>
-
-<span class="str" data-lang="en">By the nth Term Test, the series diverges.</span><span class="str" data-lang="zh">由第 n 项判别法，级数发散。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: nth Term Test</span><span data-lang="zh">例题：第 n 项判别法</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this series converge or diverge?</span><span data-lang="zh">该级数收敛还是发散？</span>
+        $$\sum_{n=1}^{\infty}\frac{n}{2n+1}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">nth Term Test</span><span data-lang="zh">第 n 项判别法</span></strong> <span data-lang="en">Apply the nth Term Test:</span><span data-lang="zh">应用第 n 项判别法：</span>
+        $$\lim_{n\to\infty}\frac{n}{2n+1}=\lim_{n\to\infty}\frac{1}{2+\frac1n}=\frac12\ne 0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">By the nth Term Test, the series diverges.</span><span data-lang="zh">由第 n 项判别法，级数发散。</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);" data-lang="en">Common Mistake — Running the Test Backwards</strong>
-    <strong style="color: var(--purple);" data-lang="zh">常见错误 —— 反向套用判别法</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">Students often try to use the nth Term Test "in reverse" to prove convergence — this is invalid. Contrast $a_n = 1/n$ (harmonic series, diverges) with $a_n = 1/n^2$ ($p$-series, converges). Both satisfy $\lim a_n = 0$, yet only one converges.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">学生常试图“反向”使用第 n 项判别法来证明收敛 —— 这是无效的。对比 $a_n = 1/n$（调和级数，发散）与 $a_n = 1/n^2$（$p$ 级数，收敛）：两者都满足 $\lim a_n = 0$，但只有一个收敛。</span>
-    <span style="display:block; margin-top:8px;" data-lang="en">Once the limit is zero, the test tells you nothing — switch to the integral test, a comparison test, or the $p$-series rule to settle the question.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">一旦极限为零，该判别法就无法给出任何结论 —— 需改用积分判别法、比较判别法或 $p$ 级数规则来判定。</span>
+    <strong style="color: var(--purple);" data-lang="en">Common Mistake: Running the Test Backwards</strong>
+    <strong style="color: var(--purple);" data-lang="zh">常见错误：反向套用判别法</strong>
+    <span style="display:block; margin-top:8px;" data-lang="en">Students often try to use the nth Term Test "in reverse" to prove convergence; this is invalid. Contrast $a_n = 1/n$ (harmonic series, diverges) with $a_n = 1/n^2$ ($p$-series, converges). Both satisfy $\lim a_n = 0$, yet only one converges.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">学生常试图“反向”使用第 n 项判别法来证明收敛，这是无效的。对比 $a_n = 1/n$（调和级数，发散）与 $a_n = 1/n^2$（$p$ 级数，收敛）：两者都满足 $\lim a_n = 0$，但只有一个收敛。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Once the limit is zero, the test tells you nothing; switch to the integral test, a comparison test, or the $p$-series rule to settle the question.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">一旦极限为零，该判别法就无法给出任何结论，需改用积分判别法、比较判别法或 $p$ 级数规则来判定。</span>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: A Limit Equal to $e$</span><span data-lang="zh">例题：极限为 $e$ 的情形</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this series converge or diverge?</span><span data-lang="zh">该级数收敛还是发散？</span>
+        $$\sum_{n=1}^{\infty}\left(1+\frac1n\right)^{n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Limit of the terms</span><span data-lang="zh">各项的极限</span></strong> <span data-lang="en">This is the standard limit that defines $e$:</span><span data-lang="zh">这是定义 $e$ 的标准极限：</span>
+        $$\lim_{n\to\infty}\left(1+\frac1n\right)^{n}=e\approx 2.718\ne 0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">By the $n$th term test, the series diverges.</span><span data-lang="zh">由第 $n$ 项判别法，级数发散。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">Adding infinitely many terms that each stay near $2.718$ makes the partial sums grow without bound.</span><span data-lang="zh">无穷多个都接近 $2.718$ 的项相加，部分和会无界增长。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the limit and its value, then the conclusion with the test named: $\lim_{n\to\infty} a_n = \tfrac12 \ne 0$, so the series diverges by the $n$th term test. Never use this test to claim convergence; if the limit is $0$, say the test is inconclusive and choose another test.</p>
+    <p data-lang="zh">写出极限及其值，再写出带判别法名称的结论：$\lim_{n\to\infty} a_n = \tfrac12 \ne 0$，所以由第 $n$ 项判别法级数发散。不要用该判别法得出收敛；若极限为 $0$，应写明判别法不能下结论，再换用其他判别法。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Does $\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+1}{5n^2-n}$ converge?</span><span data-lang="zh">1. $\displaystyle\sum_{n=1}^{\infty}\frac{2n^2+1}{5n^2-n}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. Dividing top and bottom by $n^2$ gives $\lim_{n\to\infty} a_n = \tfrac25 \ne 0$, so the series diverges by the $n$th term test.</p><p data-lang="zh">不收敛。分子分母同除以 $n^2$ 得 $\lim_{n\to\infty} a_n = \tfrac25 \ne 0$，所以由第 $n$ 项判别法级数发散。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Does $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{2n+1}$ converge?</span><span data-lang="zh">2. $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{2n+1}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. $|a_n| = \dfrac{n}{2n+1} \to \tfrac12$, so the terms swing between values near $\tfrac12$ and $-\tfrac12$ and $\lim_{n\to\infty} a_n$ does not exist. Since the terms do not tend to $0$, the series diverges by the $n$th term test.</p><p data-lang="zh">不收敛。$|a_n| = \dfrac{n}{2n+1} \to \tfrac12$，所以各项在接近 $\tfrac12$ 与 $-\tfrac12$ 的值之间摆动，$\lim_{n\to\infty} a_n$ 不存在。各项不趋于 $0$，所以由第 $n$ 项判别法级数发散。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. The terms of $\displaystyle\sum_{n=1}^{\infty}\ln\frac{n}{n+1}$ tend to $0$. Does the series converge?</span><span data-lang="zh">3. $\displaystyle\sum_{n=1}^{\infty}\ln\frac{n}{n+1}$ 的各项趋于 $0$。该级数是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">The $n$th term test is inconclusive. Write $a_n = \ln n - \ln(n+1)$; the sum telescopes to $S_n = \ln 1 - \ln(n+1) = -\ln(n+1)$, which tends to $-\infty$. The series diverges even though $a_n \to 0$.</p><p data-lang="zh">第 $n$ 项判别法不能下结论。写成 $a_n = \ln n - \ln(n+1)$，求和时裂项相消得 $S_n = \ln 1 - \ln(n+1) = -\ln(n+1)$，趋于 $-\infty$。虽然 $a_n \to 0$，级数仍发散。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1286,6 +1557,12 @@ $$ \sum_{n=1}^{\infty} \frac{n}{2n+1} $$
 
   <h2 data-lang="zh">收敛的积分判别法</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the hypotheses of the integral test: $f$ positive, continuous and decreasing for $x \ge 1$ (or from some point on), with $a_n = f(n)$.</li><li>Verify that $f$ is decreasing with $f'(x) &lt; 0$ or with a clear reason.</li><li>Evaluate the improper integral $\int_1^{\infty} f(x)\,dx$ as a limit.</li><li>Deduce whether the series converges or diverges from the integral.</li><li>Explain why the value of the integral is not the sum of the series.</li></ul>
+    <ul data-lang="zh"><li>表述积分判别法的条件：$f$ 在 $x \ge 1$（或从某点起）上为正、连续且单调递减，且 $a_n = f(n)$。</li><li>用 $f'(x) &lt; 0$ 或明确的理由验证 $f$ 单调递减。</li><li>以极限的形式计算反常积分 $\int_1^{\infty} f(x)\,dx$。</li><li>由积分推出级数收敛或发散。</li><li>解释为什么积分的值不是级数的和。</li></ul>
+  </div>
+
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">The Connection</strong>
     <strong style="color: var(--accent);" data-lang="zh">联系</strong>
@@ -1303,28 +1580,24 @@ $$ \sum_{n=1}^{\infty} \frac{n}{2n+1} $$
   <div class="concept-box orange">
     <strong style="color: var(--orange);" data-lang="en">Conditions Matter!</strong>
     <strong style="color: var(--orange);" data-lang="zh">条件必须满足！</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">On the AP exam, you must verify that $f$ is positive, continuous, and decreasing. Stating "by the integral test" without checking conditions loses points.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">AP 考试中必须验证 $f$ 为正、连续且单调递减。仅写“由积分判别法”而不检验条件会被扣分。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Before using the test, verify that $f$ is positive, continuous, and decreasing. Writing "by the integral test" without checking these conditions is an incomplete justification.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">使用该判别法之前，必须验证 $f$ 为正、连续且单调递减。仅写“由积分判别法”而不检验这些条件，论证是不完整的。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Integral Test</span><span data-lang="zh">例题 —— 积分判别法</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does the series converge?</span><span class="cm" data-lang="zh">该级数是否收敛？</span>
-$$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
-
-<span class="cm" data-lang="en">Let f(x) = 1/(x² + 1). It is positive, continuous,</span><span class="cm" data-lang="zh">设 f(x) = 1/(x² + 1)。它在 x ≥ 1 上</span>
-<span class="cm" data-lang="en">and decreasing for x ≥ 1. ✓</span><span class="cm" data-lang="zh">为正、连续且单调递减。✓</span>
-
-<span class="cm" data-lang="en">Evaluate the improper integral:</span><span class="cm" data-lang="zh">计算反常积分：</span>
-∫₁∞ 1/(x²+1) dx = lim(b→∞) [arctan(x)]₁ᵇ
-                 = lim(b→∞) [arctan(b) − arctan(1)]
-                 = π/2 − π/4 = <span class="num">π/4</span>
-
-<span class="str" data-lang="en">The integral converges, so the series converges.</span><span class="str" data-lang="zh">积分收敛，因此级数收敛。</span>
-<span class="cm" data-lang="en">(Note: the series sum ≠ π/4; the integral test</span><span class="cm" data-lang="zh">（注意：级数和 ≠ π/4；积分判别法</span>
-<span class="cm" data-lang="en"> only tells us convergence, not the exact sum.)</span><span class="cm" data-lang="zh"> 只判断收敛性，不给出精确和。）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Integral Test</span><span data-lang="zh">例题：积分判别法</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does the series converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=1}^{\infty}\frac{1}{n^2+1}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Conditions</span><span data-lang="zh">条件</span></strong> <span data-lang="en">Let $f(x)=\dfrac{1}{x^2+1}$. It is positive, continuous, and decreasing for $x\ge 1$. Valid.</span><span data-lang="zh">设 $f(x)=\dfrac{1}{x^2+1}$。它在 $x\ge 1$ 上为正、连续且单调递减。条件成立。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Integral</span><span data-lang="zh">积分</span></strong> <span data-lang="en">Evaluate the improper integral:</span><span data-lang="zh">计算反常积分：</span>
+        $$\int_1^{\infty}\frac{dx}{x^2+1}=\lim_{b\to\infty}\left[\arctan x\right]_1^b=\lim_{b\to\infty}\left[\arctan b-\arctan 1\right]=\frac{\pi}{2}-\frac{\pi}{4}=\frac{\pi}{4}$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The integral converges, so the series converges.</span><span data-lang="zh">积分收敛，因此级数收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Note</span><span data-lang="zh">注意</span></strong> <span data-lang="en">The series sum is not $\pi/4$; the integral test only tells us convergence, not the exact sum.</span><span data-lang="zh">级数和不等于 $\pi/4$；积分判别法只判断收敛性，不给出精确和。</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box">
@@ -1332,8 +1605,43 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
     <strong style="color: var(--accent);" data-lang="zh">附加：估计余项</strong>
     <span style="display:block; margin-top:8px;" data-lang="en">The same reasoning bounds how far a partial sum is from the true total: $\int_{n+1}^{\infty} f(x)\,dx \leq \sum_{k=n+1}^{\infty} a_k \leq \int_{n}^{\infty} f(x)\,dx$.</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">同样的推理可以界定部分和与真实总和之间的差距：$\int_{n+1}^{\infty} f(x)\,dx \leq \sum_{k=n+1}^{\infty} a_k \leq \int_{n}^{\infty} f(x)\,dx$。</span>
-    <span style="display:block; margin-top:8px;" data-lang="en">This works for <strong>any</strong> series meeting the integral test's hypotheses, not just alternating ones — a more general tool than the alternating series error bound.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">这对满足积分判别法条件的<strong>任何</strong>级数都成立，不只是交错级数 —— 比交错级数误差界更通用。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">This works for <strong>any</strong> series meeting the integral test's hypotheses, not just alternating ones, so it is a more general tool than the alternating series error bound.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">这对满足积分判别法条件的<strong>任何</strong>级数都成立，不只是交错级数，因此比交错级数误差界更通用。</span>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: A Series That Diverges Slowly</span><span data-lang="zh">例题：缓慢发散的级数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this series converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=2}^{\infty}\frac{1}{n\ln n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Conditions</span><span data-lang="zh">条件</span></strong> <span data-lang="en">Let $f(x)=\dfrac{1}{x\ln x}$ for $x\ge 2$. It is positive and continuous there, and decreasing because $x\ln x$ is increasing.</span><span data-lang="zh">设 $f(x)=\dfrac{1}{x\ln x}$，$x\ge 2$。它在此处为正且连续，并且因为 $x\ln x$ 递增，所以它单调递减。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Integral</span><span data-lang="zh">积分</span></strong> <span data-lang="en">Substitute $u=\ln x$, $du=dx/x$:</span><span data-lang="zh">代换 $u=\ln x$，$du=dx/x$：</span>
+        $$\int_2^{\infty}\frac{dx}{x\ln x}=\lim_{b\to\infty}\Big[\ln(\ln x)\Big]_2^{b}=\lim_{b\to\infty}\big(\ln(\ln b)-\ln(\ln 2)\big)=\infty$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The integral diverges, so the series diverges by the integral test.</span><span data-lang="zh">积分发散，所以由积分判别法级数发散。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">The series and the integral have the same tail behaviour, because the rectangles of height $f(n)$ sit just above and just below the curve.</span><span data-lang="zh">级数与积分的尾部行为相同，因为高为 $f(n)$ 的矩形紧贴在曲线的上方和下方。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Start the integral at the same index as the series, show why $f$ is decreasing (a derivative or a one-line reason), write the improper integral as $\lim_{b\to\infty}$, and conclude about the series, not only the integral. The integral's value is not the series' sum.</p>
+    <p data-lang="zh">积分的下限与级数的起始指标相同；说明 $f$ 为何单调递减（求导或一句话理由）；把反常积分写成 $\lim_{b\to\infty}$ 的形式；结论要落在级数上，而不只是积分上。积分的值不是级数的和。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Use the integral test on $\displaystyle\sum_{n=1}^{\infty} n e^{-n^2}$.</span><span data-lang="zh">1. 对 $\displaystyle\sum_{n=1}^{\infty} n e^{-n^2}$ 使用积分判别法。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f(x) = xe^{-x^2}$ is positive and continuous for $x \ge 1$, and $f'(x) = e^{-x^2}(1-2x^2) &lt; 0$ there, so $f$ is decreasing. $\int_1^{\infty} xe^{-x^2}\,dx = \lim_{b\to\infty}\Big[-\tfrac12 e^{-x^2}\Big]_1^{b} = \dfrac{1}{2e}$, which is finite, so the series converges.</p><p data-lang="zh">$f(x) = xe^{-x^2}$ 在 $x \ge 1$ 上为正且连续，且 $f'(x) = e^{-x^2}(1-2x^2) &lt; 0$，故 $f$ 单调递减。$\int_1^{\infty} xe^{-x^2}\,dx = \lim_{b\to\infty}\Big[-\tfrac12 e^{-x^2}\Big]_1^{b} = \dfrac{1}{2e}$，为有限值，所以级数收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. $\int_1^{\infty} \dfrac{dx}{x^2} = 1$. Is $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2}$ equal to $1$?</span><span data-lang="zh">2. $\int_1^{\infty} \dfrac{dx}{x^2} = 1$。$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2}$ 等于 $1$ 吗？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. The integral test shows only that the series converges. Already $S_2 = 1 + \tfrac14 = 1.25 &gt; 1$, so the sum is larger than $1$.</p><p data-lang="zh">不等于。积分判别法只说明级数收敛。仅 $S_2 = 1 + \tfrac14 = 1.25 &gt; 1$，所以和大于 $1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Why can the integral test not be applied directly to $\displaystyle\sum_{n=1}^{\infty}\frac{2+\sin n}{n^2}$? How can you decide it instead?</span><span data-lang="zh">3. 为什么不能直接对 $\displaystyle\sum_{n=1}^{\infty}\frac{2+\sin n}{n^2}$ 使用积分判别法？应如何判定？</span></summary>
+      <div class="sg-a"><p data-lang="en">$f(x) = (2+\sin x)/x^2$ is not decreasing, because $\sin x$ makes it wobble, so a hypothesis fails. Instead compare: $0 &lt; \dfrac{2+\sin n}{n^2} \le \dfrac{3}{n^2}$, and $\sum 3/n^2$ converges, so the series converges by the direct comparison test.</p><p data-lang="zh">$f(x) = (2+\sin x)/x^2$ 因 $\sin x$ 的起伏而不单调递减，条件不满足。改用比较：$0 &lt; \dfrac{2+\sin n}{n^2} \le \dfrac{3}{n^2}$，而 $\sum 3/n^2$ 收敛，所以由比较判别法级数收敛。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1360,8 +1668,14 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
 
   <h2 data-lang="zh">调和级数与 $p$ 级数</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the $p$-series rule: $\sum 1/n^p$ converges if $p &gt; 1$ and diverges if $p \le 1$.</li><li>Rewrite roots and products as a single power of $n$ to read off $p$.</li><li>Explain why the harmonic series diverges even though $1/n \to 0$.</li><li>Distinguish a $p$-series $\sum 1/n^p$ from a geometric series $\sum 1/p^n$.</li><li>Justify the $p$-series rule with the integral test.</li></ul>
+    <ul data-lang="zh"><li>表述 $p$ 级数规则：$\sum 1/n^p$ 在 $p &gt; 1$ 时收敛，在 $p \le 1$ 时发散。</li><li>把根式与乘积改写为 $n$ 的单一幂次，从而读出 $p$。</li><li>解释为什么尽管 $1/n \to 0$，调和级数仍发散。</li><li>区分 $p$ 级数 $\sum 1/n^p$ 与等比级数 $\sum 1/p^n$。</li><li>用积分判别法论证 $p$ 级数规则。</li></ul>
+  </div>
+
   <p data-lang="en">Two important families of series that you should know by name and be able to classify instantly.</p>
-  <p data-lang="zh">两类重要的级数族 —— 必须能按名称识别并立刻判断其收敛性。</p>
+  <p data-lang="zh">两类重要的级数族：必须能按名称识别并立刻判断其收敛性。</p>
 
   <div class="qref">
     <div class="qref-title" data-lang="en">Key Series to Memorize</div>
@@ -1413,10 +1727,60 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
   <div class="concept-box orange">
     <strong style="color: var(--orange);" data-lang="en">Proof Sketch: Oresme's Grouping Argument</strong>
     <strong style="color: var(--orange);" data-lang="zh">证明思路：奥雷姆的分组法</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">Group the harmonic series as $1 + \tfrac12 + \left(\tfrac13+\tfrac14\right) + \left(\tfrac15+\tfrac16+\tfrac17+\tfrac18\right) + \cdots$. Each parenthesized group sums to more than $\tfrac12$ — for instance $\tfrac13+\tfrac14 > \tfrac14+\tfrac14 = \tfrac12$.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">将调和级数分组：$1 + \tfrac12 + \left(\tfrac13+\tfrac14\right) + \left(\tfrac15+\tfrac16+\tfrac17+\tfrac18\right) + \cdots$。每个括号内的和都大于 $\tfrac12$ —— 例如 $\tfrac13+\tfrac14 > \tfrac14+\tfrac14 = \tfrac12$。</span>
-    <span style="display:block; margin-top:8px;" data-lang="en">Since infinitely many groups each add at least $\tfrac12$, the partial sums grow without bound — a calculus-free proof of divergence.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">由于有无穷多个这样的组，每组都至少贡献 $\tfrac12$，部分和会无界增长 —— 这是一个不用微积分的发散证明。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Group the harmonic series as $1 + \tfrac12 + \left(\tfrac13+\tfrac14\right) + \left(\tfrac15+\tfrac16+\tfrac17+\tfrac18\right) + \cdots$. Each parenthesized group sums to more than $\tfrac12$; for instance $\tfrac13+\tfrac14 > \tfrac14+\tfrac14 = \tfrac12$.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">将调和级数分组：$1 + \tfrac12 + \left(\tfrac13+\tfrac14\right) + \left(\tfrac15+\tfrac16+\tfrac17+\tfrac18\right) + \cdots$。每个括号内的和都大于 $\tfrac12$，例如 $\tfrac13+\tfrac14 > \tfrac14+\tfrac14 = \tfrac12$。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Since infinitely many groups each add at least $\tfrac12$, the partial sums grow without bound: a calculus-free proof of divergence.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">由于有无穷多个这样的组，每组都至少贡献 $\tfrac12$，部分和会无界增长。这是一个不用微积分的发散证明。</span>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Rewrite, Then Read Off $p$</span><span data-lang="zh">例题：先改写，再读出 $p$</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Classify each series.</span><span data-lang="zh">判断每个级数的收敛性。</span>
+        $$\text{(a) }\sum_{n=1}^{\infty}\frac{1}{n\sqrt n}\qquad \text{(b) }\sum_{n=1}^{\infty}\frac{n^2}{n^{2.5}}\qquad \text{(c) }\sum_{n=1}^{\infty}\frac{4}{\sqrt[3]{n^2}}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">(a)</span><span data-lang="zh">(a)</span></strong> <span data-lang="en">$n\sqrt n = n^{3/2}$, so $p = \tfrac32 &gt; 1$: converges.</span><span data-lang="zh">$n\sqrt n = n^{3/2}$，所以 $p = \tfrac32 &gt; 1$：收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">(b)</span><span data-lang="zh">(b)</span></strong> <span data-lang="en">$\dfrac{n^2}{n^{2.5}} = \dfrac{1}{n^{0.5}}$, so $p = 0.5 \le 1$: diverges.</span><span data-lang="zh">$\dfrac{n^2}{n^{2.5}} = \dfrac{1}{n^{0.5}}$，所以 $p = 0.5 \le 1$：发散。</span></div>
+      <div class="example-step"><strong><span data-lang="en">(c)</span><span data-lang="zh">(c)</span></strong> <span data-lang="en">$\sqrt[3]{n^2} = n^{2/3}$, so the series is $4$ times a $p$-series with $p = \tfrac23 \le 1$: diverges.</span><span data-lang="zh">$\sqrt[3]{n^2} = n^{2/3}$，所以该级数是 $p = \tfrac23 \le 1$ 的 $p$ 级数的 $4$ 倍：发散。</span></div>
+      <div class="example-step example-result"><span data-lang="en">(a) converges; (b) and (c) diverge.</span><span data-lang="zh">(a) 收敛；(b) 与 (c) 发散。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">A nonzero constant multiple does not change convergence, so only the exponent of $n$ matters.</span><span data-lang="zh">乘以非零常数不改变收敛性，所以只有 $n$ 的指数起作用。</span></div>
+    </div>
+  </div>
+  </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Proving the $p$-Series Rule</span><span data-lang="zh">例题：证明 $p$ 级数规则</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Use the integral test to show when $\sum_{n=1}^{\infty} 1/n^p$ converges, for $p &gt; 0$.</span><span data-lang="zh">对 $p &gt; 0$，用积分判别法说明 $\sum_{n=1}^{\infty} 1/n^p$ 何时收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Conditions</span><span data-lang="zh">条件</span></strong> <span data-lang="en">$f(x) = x^{-p}$ is positive, continuous and decreasing for $x \ge 1$ when $p &gt; 0$.</span><span data-lang="zh">当 $p &gt; 0$ 时，$f(x) = x^{-p}$ 在 $x \ge 1$ 上为正、连续且单调递减。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Case $p \ne 1$</span><span data-lang="zh">情形 $p \ne 1$</span></strong>
+        $$\int_1^{\infty}x^{-p}\,dx=\lim_{b\to\infty}\frac{b^{1-p}-1}{1-p}=\begin{cases}\dfrac{1}{p-1}, &amp; p&gt;1\\[4pt] \infty, &amp; p&lt;1\end{cases}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Case $p = 1$</span><span data-lang="zh">情形 $p = 1$</span></strong>
+        $$\int_1^{\infty}\frac{dx}{x}=\lim_{b\to\infty}\ln b=\infty$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The integral, and so the series, converges exactly when $p &gt; 1$. (For $p \le 0$ the terms do not tend to $0$, so the series diverges by the $n$th term test.)</span><span data-lang="zh">积分（从而级数）恰在 $p &gt; 1$ 时收敛。（当 $p \le 0$ 时各项不趋于 $0$，由第 $n$ 项判别法级数发散。）</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">When $p &gt; 1$, $b^{1-p} \to 0$; when $p &lt; 1$, $b^{1-p} \to \infty$. That single exponent decides the whole family.</span><span data-lang="zh">当 $p &gt; 1$ 时 $b^{1-p} \to 0$；当 $p &lt; 1$ 时 $b^{1-p} \to \infty$。这一个指数决定了整族级数的收敛性。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Convert every root to an exponent before reading $p$, and give the reason in full: a $p$-series with $p = \tfrac32 &gt; 1$, so it converges. Check which letter is in the exponent: $\sum 1/n^2$ is a $p$-series, while $\sum 1/2^n$ is geometric.</p>
+    <p data-lang="zh">读 $p$ 之前先把根式化为指数，并完整写出理由：这是 $p = \tfrac32 &gt; 1$ 的 $p$ 级数，所以收敛。看清指数位置上是哪个字母：$\sum 1/n^2$ 是 $p$ 级数，而 $\sum 1/2^n$ 是等比级数。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Does $\displaystyle\sum_{n=1}^{\infty}\frac{5}{n^{0.99}}$ converge?</span><span data-lang="zh">1. $\displaystyle\sum_{n=1}^{\infty}\frac{5}{n^{0.99}}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. It is $5$ times a $p$-series with $p = 0.99 \le 1$, so it diverges.</p><p data-lang="zh">不收敛。它是 $p = 0.99 \le 1$ 的 $p$ 级数的 $5$ 倍，所以发散。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Both $\sum_{n=1}^{\infty} 1/n^2$ and $\sum_{n=1}^{\infty} 1/2^n$ converge. Which one is a $p$-series, and which one can you sum exactly with a formula from this unit?</span><span data-lang="zh">2. $\sum_{n=1}^{\infty} 1/n^2$ 与 $\sum_{n=1}^{\infty} 1/2^n$ 都收敛。哪个是 $p$ 级数？哪个可以用本单元的公式求出精确和？</span></summary>
+      <div class="sg-a"><p data-lang="en">$\sum 1/n^2$ is the $p$-series ($p = 2$). $\sum 1/2^n$ is geometric with $a = \tfrac12$ and $r = \tfrac12$, so its sum is $\dfrac{1/2}{1-1/2} = 1$.</p><p data-lang="zh">$\sum 1/n^2$ 是 $p$ 级数（$p = 2$）。$\sum 1/2^n$ 是 $a = \tfrac12$、$r = \tfrac12$ 的等比级数，其和为 $\dfrac{1/2}{1-1/2} = 1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For which values of $k$ does $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{2k-1}}$ converge?</span><span data-lang="zh">3. $k$ 取哪些值时 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{2k-1}}$ 收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">It is a $p$-series with $p = 2k - 1$. It converges when $2k - 1 &gt; 1$, that is $k &gt; 1$.</p><p data-lang="zh">这是 $p = 2k - 1$ 的 $p$ 级数。当 $2k - 1 &gt; 1$，即 $k &gt; 1$ 时收敛。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1429,6 +1793,12 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
   <div class="section-label">Topic 10.6</div>
   <h2 data-lang="en">Comparison Tests for Convergence</h2>
   <h2 data-lang="zh">收敛的比较判别法</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the direct comparison test, including which direction of inequality proves what.</li><li>State the limit comparison test with positive terms and $0 &lt; L &lt; \infty$.</li><li>Choose a benchmark $p$-series or geometric series from the dominant terms.</li><li>Explain why a comparison in the wrong direction proves nothing.</li><li>Apply each test with a written inequality or limit and a named benchmark.</li></ul>
+    <ul data-lang="zh"><li>表述比较判别法，包括不等式的哪个方向能证明什么。</li><li>表述极限比较判别法：各项为正且 $0 &lt; L &lt; \infty$。</li><li>根据主导项选取作为基准的 $p$ 级数或等比级数。</li><li>解释方向错误的比较为何什么也证明不了。</li><li>使用每种判别法时写出不等式或极限，并点名基准级数。</li></ul>
+  </div>
 
   <h3 data-lang="en">Direct Comparison Test (DCT)</h3>
 <!-- dingrui:fig calc10-comparison-test-bound -->
@@ -1463,7 +1833,7 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
   <div class="formula-box">
     <div class="formula-label" data-lang="en">Limit Comparison Test</div>
     <div class="formula-label" data-lang="zh">极限比较判别法</div>
-    $$ \text{If } \lim_{n\to\infty} \frac{a_n}{b_n} = L, \quad 0 < L < \infty $$
+    $$ \text{If } a_n > 0,\ b_n > 0 \text{ and } \lim_{n\to\infty} \frac{a_n}{b_n} = L, \quad 0 < L < \infty $$
     $$ \text{then } \sum a_n \text{ and } \sum b_n \text{ both converge or both diverge.} $$
   </div>
 
@@ -1476,24 +1846,56 @@ $$ \sum_{n=1}^{\infty} \frac{1}{n^2 + 1} $$
     <span style="display:block; margin-top:4px;" data-lang="zh"><strong>极限比较：</strong>当各项有相近的“主导行为”但不等式不易建立时使用。通常更易操作。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Limit Comparison Test</span><span data-lang="zh">例题 —— 极限比较判别法</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does this converge?</span><span class="cm" data-lang="zh">该级数是否收敛？</span>
-$$ \sum_{n=1}^{\infty} \frac{3n+1}{n^3 - 2} $$
-
-<span class="cm" data-lang="en">For large n, the dominant behavior is ≈ 3n/n³ = 3/n².</span><span class="cm" data-lang="zh">当 n 很大时，主导项 ≈ 3n/n³ = 3/n²。</span>
-<span class="cm" data-lang="en">Compare with b_n = 1/n² (p-series, p=2, converges).</span><span class="cm" data-lang="zh">与 b_n = 1/n² 比较（p 级数，p=2，收敛）。</span>
-
-  lim(n→∞) a_n/b_n = lim(n→∞) [(3n+1)/(n³−2)] / [1/n²]
-                    = lim(n→∞) (3n+1)·n²/(n³−2)
-                    = lim(n→∞) (3n³+n²)/(n³−2)
-                    = <span class="num">3</span>
-
-<span class="cm" data-lang="en">Since 0 < 3 < ∞ and Σ 1/n² converges:</span><span class="cm" data-lang="zh">因为 0 < 3 < ∞ 且 Σ 1/n² 收敛：</span>
-<span class="str" data-lang="en">By the Limit Comparison Test, the series converges.</span><span class="str" data-lang="zh">由极限比较判别法，级数收敛。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Limit Comparison Test</span><span data-lang="zh">例题：极限比较判别法</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=1}^{\infty}\frac{3n+1}{n^3-2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Compare</span><span data-lang="zh">比较</span></strong> <span data-lang="en">For large $n$, the dominant behavior is $\approx \dfrac{3n}{n^3}=\dfrac{3}{n^2}$. Compare with $b_n=\dfrac{1}{n^2}$ ($p$-series, $p=2$, converges).</span><span data-lang="zh">当 $n$ 很大时，主导项 $\approx \dfrac{3n}{n^3}=\dfrac{3}{n^2}$。与 $b_n=\dfrac{1}{n^2}$ 比较（$p$ 级数，$p=2$，收敛）。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong>
+        $$\lim_{n\to\infty}\frac{a_n}{b_n}=\lim_{n\to\infty}\frac{3n+1}{n^3-2}\cdot n^2=\lim_{n\to\infty}\frac{3n^3+n^2}{n^3-2}=3$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Conclusion</span><span data-lang="zh">结论</span></strong> <span data-lang="en">Since $0<3<\infty$ and $\sum\dfrac{1}{n^2}$ converges:</span><span data-lang="zh">因为 $0<3<\infty$ 且 $\sum\dfrac{1}{n^2}$ 收敛：</span></div>
+      <div class="example-step example-result"><span data-lang="en">By the Limit Comparison Test, the series converges.</span><span data-lang="zh">由极限比较判别法，级数收敛。</span></div>
     </div>
+  </div>
   </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Direct Comparison with a Geometric Series</span><span data-lang="zh">例题：与等比级数直接比较</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this series converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=1}^{\infty}\frac{1}{3^n+n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Inequality</span><span data-lang="zh">不等式</span></strong> <span data-lang="en">Making the denominator smaller makes the fraction larger:</span><span data-lang="zh">分母变小，分数变大：</span>
+        $$0&lt;\frac{1}{3^n+n}&lt;\frac{1}{3^n}\quad\text{for all } n\ge 1$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Benchmark</span><span data-lang="zh">基准</span></strong> <span data-lang="en">$\sum 1/3^n$ is geometric with $r = \tfrac13$, $|r| &lt; 1$, so it converges.</span><span data-lang="zh">$\sum 1/3^n$ 是 $r = \tfrac13$、$|r| &lt; 1$ 的等比级数，收敛。</span></div>
+      <div class="example-step example-result"><span data-lang="en">The given series is smaller than a convergent series, so it converges by the direct comparison test.</span><span data-lang="zh">原级数小于一个收敛级数，所以由比较判别法收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">A positive-term series has increasing partial sums; if they stay below a finite total they must have a limit.</span><span data-lang="zh">正项级数的部分和单调递增；若始终低于一个有限的总和，就一定有极限。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For the direct comparison test write the inequality, its direction and the benchmark's behaviour, for example $0 &lt; a_n \le 1/3^n$ and $\sum 1/3^n$ converges. Being smaller than a divergent series, or larger than a convergent one, proves nothing. For the limit comparison test, show the limit, state $0 &lt; L &lt; \infty$, and name the benchmark.</p>
+    <p data-lang="zh">使用比较判别法时，写出不等式、其方向以及基准级数的敛散性，例如 $0 &lt; a_n \le 1/3^n$ 且 $\sum 1/3^n$ 收敛。小于发散级数，或大于收敛级数，都证明不了什么。使用极限比较判别法时，写出极限，说明 $0 &lt; L &lt; \infty$，并点名基准级数。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Does $\displaystyle\sum_{n=1}^{\infty}\frac{\ln n}{n}$ converge?</span><span data-lang="zh">1. $\displaystyle\sum_{n=1}^{\infty}\frac{\ln n}{n}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. For $n \ge 3$, $\ln n &gt; 1$, so $\dfrac{\ln n}{n} &gt; \dfrac1n$. The harmonic series diverges, so the series diverges by the direct comparison test (dropping the first two terms does not change divergence).</p><p data-lang="zh">不收敛。当 $n \ge 3$ 时 $\ln n &gt; 1$，所以 $\dfrac{\ln n}{n} &gt; \dfrac1n$。调和级数发散，所以由比较判别法级数发散（去掉前两项不影响发散性）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A student writes $\dfrac{1}{n^2+1} &lt; \dfrac1n$ and concludes nothing. Why, and what comparison works?</span><span data-lang="zh">2. 某学生写出 $\dfrac{1}{n^2+1} &lt; \dfrac1n$ 后无法下结论。为什么？哪种比较可行？</span></summary>
+      <div class="sg-a"><p data-lang="en">Being smaller than the divergent harmonic series gives no information. Use $\dfrac{1}{n^2+1} &lt; \dfrac{1}{n^2}$ instead: $\sum 1/n^2$ is a convergent $p$-series ($p = 2$), so the series converges.</p><p data-lang="zh">小于发散的调和级数不能提供任何信息。改用 $\dfrac{1}{n^2+1} &lt; \dfrac{1}{n^2}$：$\sum 1/n^2$ 是收敛的 $p$ 级数（$p = 2$），所以级数收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Use the limit comparison test on $\displaystyle\sum_{n=1}^{\infty}\frac{1}{\sqrt{n^2+1}}$.</span><span data-lang="zh">3. 对 $\displaystyle\sum_{n=1}^{\infty}\frac{1}{\sqrt{n^2+1}}$ 使用极限比较判别法。</span></summary>
+      <div class="sg-a"><p data-lang="en">Compare with $b_n = 1/n$: $\displaystyle\lim_{n\to\infty}\frac{a_n}{b_n} = \lim_{n\to\infty}\frac{n}{\sqrt{n^2+1}} = 1$, and $0 &lt; 1 &lt; \infty$. Since $\sum 1/n$ diverges, the series diverges.</p><p data-lang="zh">与 $b_n = 1/n$ 比较：$\displaystyle\lim_{n\to\infty}\frac{a_n}{b_n} = \lim_{n\to\infty}\frac{n}{\sqrt{n^2+1}} = 1$，且 $0 &lt; 1 &lt; \infty$。因为 $\sum 1/n$ 发散，所以级数发散。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1519,6 +1921,12 @@ $$ \sum_{n=1}^{\infty} \frac{3n+1}{n^3 - 2} $$
 
   <h2 data-lang="zh">交错级数收敛判别法</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the three conditions of the alternating series test: $b_n &gt; 0$, $b_n$ decreasing (at least eventually), and $\lim_{n\to\infty} b_n = 0$.</li><li>Verify that $b_n$ is decreasing with algebra or with $f'(x) &lt; 0$.</li><li>Apply the test to series written with $(-1)^n$ or $(-1)^{n+1}$.</li><li>Explain why failing a condition makes the test inconclusive, not a proof of divergence.</li><li>Use the $n$th term test when $b_n$ does not tend to $0$.</li></ul>
+    <ul data-lang="zh"><li>表述交错级数判别法的三个条件：$b_n &gt; 0$，$b_n$ 单调递减（至少从某项起），且 $\lim_{n\to\infty} b_n = 0$。</li><li>用代数方法或 $f'(x) &lt; 0$ 验证 $b_n$ 单调递减。</li><li>对用 $(-1)^n$ 或 $(-1)^{n+1}$ 写出的级数应用该判别法。</li><li>解释为何某个条件不满足只说明判别法不能下结论，而不是证明发散。</li><li>当 $b_n$ 不趋于 $0$ 时改用第 $n$ 项判别法。</li></ul>
+  </div>
+
   <div class="formula-box" style="border-top-color: var(--green);">
     <div class="formula-label" style="color: var(--green);" data-lang="en">Alternating Series Test (Leibniz Test)</div>
     <div class="formula-label" style="color: var(--green);" data-lang="zh">交错级数判别法（<code>alternating series test</code>，莱布尼茨判别法）</div>
@@ -1529,8 +1937,8 @@ $$ \sum_{n=1}^{\infty} \frac{3n+1}{n^3 - 2} $$
   <div class="concept-box red">
     <strong style="color: var(--red);" data-lang="en">All Three Conditions Required!</strong>
     <strong style="color: var(--red);" data-lang="zh">三个条件缺一不可！</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">On the AP exam, you must explicitly verify all three conditions when justifying with the alternating series test. Simply saying "it alternates and goes to zero" is not sufficient — you must also show the terms are decreasing in absolute value.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">在 AP 考试中使用交错级数判别法时必须显式验证全部三个条件。仅写“交错且趋于零”是不够的 —— 还必须证明各项的绝对值单调递减。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">A complete justification with the alternating series test states all three conditions explicitly. Simply saying "it alternates and goes to zero" is not sufficient; you must also show the terms are decreasing in absolute value.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">用交错级数判别法作完整论证时，必须显式写出全部三个条件。仅写“交错且趋于零”是不够的，还必须证明各项的绝对值单调递减。</span>
   </div>
 
   <div class="concept-box orange">
@@ -1544,20 +1952,18 @@ $$ \sum_{n=1}^{\infty} \frac{3n+1}{n^3 - 2} $$
     <span style="display:block; margin-top:4px;" data-lang="zh">2. 令 $f(x) = b_x$，证明在 $x \geq 1$ 上 $f'(x) < 0$（微积分方法）。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Alternating Series Test</span><span data-lang="zh">例题 —— 交错级数判别法</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does this converge?</span><span class="cm" data-lang="zh">该级数是否收敛？</span>
-$$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^2} $$
-
-<span class="cm" data-lang="en">Here b_n = 1/n².</span><span class="cm" data-lang="zh">此处 b_n = 1/n²。</span>
-
-<span class="cm" data-lang="en">✓ b_n > 0 for all n</span><span class="cm" data-lang="zh">✓ 对所有 n，b_n > 0</span>
-<span class="cm" data-lang="en">✓ b_{n+1} = 1/(n+1)² < 1/n² = b_n (decreasing)</span><span class="cm" data-lang="zh">✓ b_{n+1} = 1/(n+1)² < 1/n² = b_n（递减）</span>
-<span class="cm" data-lang="en">✓ lim(n→∞) 1/n² = 0</span><span class="cm" data-lang="zh">✓ lim(n→∞) 1/n² = 0</span>
-
-<span class="str" data-lang="en">All three conditions met → series converges</span><span class="str" data-lang="zh">三个条件全部满足 → 由交错级数判别法，</span>
-<span class="str" data-lang="en">by the Alternating Series Test.</span><span class="str" data-lang="zh">级数收敛。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Alternating Series Test</span><span data-lang="zh">例题：交错级数判别法</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Setup</span><span data-lang="zh">设定</span></strong> <span data-lang="en">Here $b_n=\dfrac{1}{n^2}$. Check the three conditions:</span><span data-lang="zh">此处 $b_n=\dfrac{1}{n^2}$。检验三个条件：</span></div>
+      <div class="example-step"><strong><span data-lang="en">Condition 1</span><span data-lang="zh">条件 1</span></strong> <span data-lang="en">$b_n>0$ for all $n$.</span><span data-lang="zh">对所有 $n$，$b_n>0$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Condition 2</span><span data-lang="zh">条件 2</span></strong> <span data-lang="en">$b_{n+1}=\dfrac{1}{(n+1)^2}<\dfrac{1}{n^2}=b_n$ (decreasing).</span><span data-lang="zh">$b_{n+1}=\dfrac{1}{(n+1)^2}<\dfrac{1}{n^2}=b_n$（递减）。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Condition 3</span><span data-lang="zh">条件 3</span></strong> <span data-lang="en">$\displaystyle\lim_{n\to\infty}\frac{1}{n^2}=0$.</span><span data-lang="zh">$\displaystyle\lim_{n\to\infty}\frac{1}{n^2}=0$。</span></div>
+      <div class="example-step example-result"><span data-lang="en">All three conditions are met, so the series converges by the Alternating Series Test.</span><span data-lang="zh">三个条件全部满足，由交错级数判别法，级数收敛。</span></div>
+    </div>
   </div>
   </details>
 
@@ -1569,10 +1975,47 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^2} $$
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Yes, by the Ratio Test</span><span data-lang="zh">是，由比值判别法</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Cannot be determined</span><span data-lang="zh">无法判断</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\lim_{n\to\infty} \frac{(-1)^n \cdot n}{n+1}$ does not equal $0$ — the absolute value approaches $1$. The nth Term Test immediately tells us the series diverges.</span><span data-lang="zh">正确！$\lim_{n\to\infty} \frac{(-1)^n \cdot n}{n+1}$ 不等于 $0$ —— 绝对值趋于 $1$。第 n 项判别法立即告诉我们级数发散。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\lim_{n\to\infty} \frac{(-1)^n \cdot n}{n+1}$ does not equal $0$: the absolute value approaches $1$. The nth Term Test immediately tells us the series diverges.</span><span data-lang="zh">正确！$\lim_{n\to\infty} \frac{(-1)^n \cdot n}{n+1}$ 不等于 $0$：绝对值趋于 $1$。第 n 项判别法立即告诉我们级数发散。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Check: $\lim |a_n| = \lim n/(n+1) = 1 \neq 0$. Since the terms don't approach zero, the series diverges by the nth Term Test.</span><span data-lang="zh">检查：$\lim |a_n| = \lim n/(n+1) = 1 \neq 0$。各项不趋于零，因此由第 n 项判别法发散。</span></div>
 
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">↻ Try Again</span><span data-lang="zh">↻ 再试一次</span></button>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Decreasing Only Eventually</span><span data-lang="zh">例题：从某项起才递减</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this series converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=2}^{\infty}\frac{(-1)^{n}\ln n}{n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Positive</span><span data-lang="zh">为正</span></strong> <span data-lang="en">$b_n = \dfrac{\ln n}{n} &gt; 0$ for $n \ge 2$.</span><span data-lang="zh">当 $n \ge 2$ 时 $b_n = \dfrac{\ln n}{n} &gt; 0$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Decreasing</span><span data-lang="zh">递减</span></strong> <span data-lang="en">Let $f(x) = \dfrac{\ln x}{x}$. Then</span><span data-lang="zh">设 $f(x) = \dfrac{\ln x}{x}$，则</span>
+        $$f'(x)=\frac{1-\ln x}{x^2}&lt;0\quad\text{for } x&gt;e$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Eventually</span><span data-lang="zh">从某项起</span></strong> <span data-lang="en">So $b_n$ is decreasing for $n \ge 3$; the first terms do not affect convergence.</span><span data-lang="zh">所以 $b_n$ 从 $n \ge 3$ 起单调递减；前几项不影响收敛性。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong> <span data-lang="en">By L'Hospital's rule, $\displaystyle\lim_{x\to\infty}\frac{\ln x}{x}=\lim_{x\to\infty}\frac{1/x}{1}=0$.</span><span data-lang="zh">由洛必达法则，$\displaystyle\lim_{x\to\infty}\frac{\ln x}{x}=\lim_{x\to\infty}\frac{1/x}{1}=0$。</span></div>
+      <div class="example-step example-result"><span data-lang="en">All three conditions hold (decreasing from $n = 3$ on), so the series converges by the alternating series test.</span><span data-lang="zh">三个条件都成立（从 $n = 3$ 起递减），所以由交错级数判别法级数收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">Convergence depends only on the tail of a series, so the decreasing condition only needs to hold from some index onward.</span><span data-lang="zh">收敛性只取决于级数的尾部，所以递减条件只需从某一项起成立。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Name all three conditions in your justification: $b_n &gt; 0$, $b_{n+1} \le b_n$ with a reason, and $\lim_{n\to\infty} b_n = 0$. If $\lim_{n\to\infty} b_n \ne 0$, the alternating series test says nothing; the divergence conclusion comes from the $n$th term test.</p>
+    <p data-lang="zh">论证中写出全部三个条件：$b_n &gt; 0$，$b_{n+1} \le b_n$（附理由），以及 $\lim_{n\to\infty} b_n = 0$。若 $\lim_{n\to\infty} b_n \ne 0$，交错级数判别法不给出结论；发散的结论来自第 $n$ 项判别法。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Does $\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n}{2n+1}$ converge?</span><span data-lang="zh">1. $\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n}{2n+1}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">Yes. $b_n = \dfrac{1}{2n+1} &gt; 0$, it decreases because the denominator increases, and $b_n \to 0$. By the alternating series test the series converges.</p><p data-lang="zh">收敛。$b_n = \dfrac{1}{2n+1} &gt; 0$，因分母递增而单调递减，且 $b_n \to 0$。由交错级数判别法，级数收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A student says an alternating series diverges because its $b_n$ is not decreasing. Is that reasoning valid?</span><span data-lang="zh">2. 某学生说一个交错级数发散，因为它的 $b_n$ 不是单调递减的。这个推理正确吗？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. When a hypothesis fails, the alternating series test is inconclusive; it never proves divergence. Another test (for example the $n$th term test, or absolute convergence) must decide.</p><p data-lang="zh">不正确。条件不满足时，交错级数判别法不能下结论；它从不证明发散。必须用其他判别法（例如第 $n$ 项判别法或绝对收敛）来判定。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Does $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n (n+3)}{n}$ converge?</span><span data-lang="zh">3. $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n (n+3)}{n}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. $b_n = \dfrac{n+3}{n} \to 1$, so the terms do not tend to $0$; the series diverges by the $n$th term test.</p><p data-lang="zh">不收敛。$b_n = \dfrac{n+3}{n} \to 1$，各项不趋于 $0$；由第 $n$ 项判别法级数发散。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1585,6 +2028,12 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^2} $$
   <div class="section-label">Topic 10.8</div>
   <h2 data-lang="en">Ratio Test for Convergence</h2>
   <h2 data-lang="zh">收敛的比值判别法</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Calculate $L = \lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|$, simplifying factorials and powers first.</li><li>State the conclusions: absolute convergence if $L &lt; 1$, divergence if $L &gt; 1$ or $L = \infty$, no conclusion if $L = 1$.</li><li>Identify series where the ratio test works well (factorials, exponentials).</li><li>Explain why the ratio test is inconclusive for every $p$-series and rational term.</li><li>Choose another test when $L = 1$.</li></ul>
+    <ul data-lang="zh"><li>先化简阶乘与幂，再计算 $L = \lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|$。</li><li>表述结论：$L &lt; 1$ 时绝对收敛，$L &gt; 1$ 或 $L = \infty$ 时发散，$L = 1$ 时不能下结论。</li><li>识别比值判别法适用的级数（含阶乘、指数）。</li><li>解释为何比值判别法对每个 $p$ 级数和有理式通项都不能下结论。</li><li>当 $L = 1$ 时换用其他判别法。</li></ul>
+  </div>
 
   <div class="formula-box">
     <div class="formula-label" data-lang="en">Ratio Test</div>
@@ -1609,49 +2058,73 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^2} $$
     <span style="display:block; margin-top:8px;" data-lang="zh">当级数含<strong>阶乘</strong>（$n!$）、<strong>指数</strong>（$a^n$）或<strong>两者组合</strong>时使用比值判别法。这些场景下比值能优雅地化简。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Ratio Test</span><span data-lang="zh">例题 —— 比值判别法</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does this converge?</span><span class="cm" data-lang="zh">该级数是否收敛？</span>
-$$ \sum_{n=1}^{\infty} \frac{n!}{3^n} $$
-
-<span class="cm" data-lang="en">Compute the ratio:</span><span class="cm" data-lang="zh">计算比值：</span>
-  |a_{n+1}/a_n| = [(n+1)!/3^(n+1)] / [n!/3^n]
-               = (n+1)!/n! · 3^n/3^(n+1)
-               = (n+1) · 1/3
-               = <span class="num">(n+1)/3</span>
-
-  L = lim(n→∞) (n+1)/3 = <span class="num">∞ > 1</span>
-
-<span class="str" data-lang="en">By the Ratio Test, the series diverges.</span><span class="str" data-lang="zh">由比值判别法，级数发散。</span>
-<span class="cm" data-lang="en">(Factorials grow faster than exponentials!)</span><span class="cm" data-lang="zh">（阶乘增长比指数更快！）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Ratio Test</span><span data-lang="zh">例题：比值判别法</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=1}^{\infty}\frac{n!}{3^n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Ratio</span><span data-lang="zh">比值</span></strong> <span data-lang="en">Compute the ratio:</span><span data-lang="zh">计算比值：</span>
+        $$\left|\frac{a_{n+1}}{a_n}\right|=\frac{(n+1)!/3^{n+1}}{n!/3^n}=\frac{(n+1)!}{n!}\cdot\frac{3^n}{3^{n+1}}=\frac{n+1}{3}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong>
+        $$L=\lim_{n\to\infty}\frac{n+1}{3}=\infty>1$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">By the Ratio Test, the series diverges. (Factorials grow faster than exponentials!)</span><span data-lang="zh">由比值判别法，级数发散。（阶乘增长比指数更快！）</span></div>
     </div>
+  </div>
   </details>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Ratio Test (Convergent)</span><span data-lang="zh">例题 —— 比值判别法（收敛情形）</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Does this converge?</span><span class="cm" data-lang="zh">该级数是否收敛？</span>
-$$ \sum_{n=0}^{\infty} \frac{5^n}{n!} $$
-
-<span class="cm" data-lang="en">Compute the ratio:</span><span class="cm" data-lang="zh">计算比值：</span>
-  |a_{n+1}/a_n| = [5^(n+1)/(n+1)!] / [5^n/n!]
-               = 5/(n+1)
-
-  L = lim(n→∞) 5/(n+1) = <span class="num">0 < 1</span>
-
-<span class="str" data-lang="en">By the Ratio Test, the series converges absolutely.</span><span class="str" data-lang="zh">由比值判别法，级数绝对收敛。</span>
-<span class="cm" data-lang="en">(This is actually the series for e⁵!)</span><span class="cm" data-lang="zh">（这其实就是 e⁵ 的级数！）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Ratio Test (Convergent)</span><span data-lang="zh">例题：比值判别法（收敛情形）</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Does this converge?</span><span data-lang="zh">该级数是否收敛？</span>
+        $$\sum_{n=0}^{\infty}\frac{5^n}{n!}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Ratio</span><span data-lang="zh">比值</span></strong> <span data-lang="en">Compute the ratio:</span><span data-lang="zh">计算比值：</span>
+        $$\left|\frac{a_{n+1}}{a_n}\right|=\frac{5^{n+1}/(n+1)!}{5^n/n!}=\frac{5}{n+1}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Limit</span><span data-lang="zh">极限</span></strong>
+        $$L=\lim_{n\to\infty}\frac{5}{n+1}=0<1$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">By the Ratio Test, the series converges absolutely. (This is actually the series for $e^5$!)</span><span data-lang="zh">由比值判别法，级数绝对收敛。（这其实就是 $e^5$ 的级数！）</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box red">
     <strong style="color: var(--red);" data-lang="en">Where the Ratio Test Fails</strong>
     <strong style="color: var(--red);" data-lang="zh">比值判别法失效之处</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">The Ratio Test is powerless whenever $L = 1$ — and this happens for <strong>every</strong> $p$-series, since $\lim_{n\to\infty}\left|\dfrac{n^p}{(n+1)^p}\right| = 1$ regardless of $p$.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">当 $L = 1$ 时比值判别法完全失效 —— 而这对<strong>每一个</strong> $p$ 级数都会发生，因为无论 $p$ 取何值，$\lim_{n\to\infty}\left|\dfrac{n^p}{(n+1)^p}\right| = 1$。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">The Ratio Test is powerless whenever $L = 1$, and this happens for <strong>every</strong> $p$-series, since $\lim_{n\to\infty}\left|\dfrac{n^p}{(n+1)^p}\right| = 1$ regardless of $p$.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">当 $L = 1$ 时比值判别法完全失效，而这对<strong>每一个</strong> $p$ 级数都会发生，因为无论 $p$ 取何值，$\lim_{n\to\infty}\left|\dfrac{n^p}{(n+1)^p}\right| = 1$。</span>
     <span style="display:block; margin-top:8px;" data-lang="en">Compare $\sum 1/n$ (diverges) with $\sum 1/n^2$ (converges): both give $L = 1$, yet they behave oppositely. When you hit $L = 1$, abandon the Ratio Test and reach for the integral test, a comparison test, or the $p$-series rule instead.</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">对比 $\sum 1/n$（发散）与 $\sum 1/n^2$（收敛）：两者都给出 $L = 1$，但表现完全相反。遇到 $L = 1$ 时，应放弃比值判别法，改用积分判别法、比较判别法或 $p$ 级数规则。</span>
+  </div>
+
+  <div class="concept-box red ap-trap">
+    <strong><span data-lang="en">AP Trap: Ratio Test or Alternating Series Test?</span><span data-lang="zh">AP 陷阱：用比值判别法还是交错级数判别法？</span></strong>
+    <span data-lang="en">For $\sum (-1)^n/\sqrt n$, the Ratio Test gives $L=1$ and says nothing. The Alternating Series Test works: $1/\sqrt n$ is positive, decreasing, and tends to $0$, so the series converges. But it converges only <em>conditionally</em>, since $\sum 1/\sqrt n$ is a $p$-series with $p=\tfrac12\le1$ and diverges. The Ratio Test applied to $|a_n|$ proves absolute convergence only when $L&lt;1$; the Alternating Series Test never does.</span>
+    <span data-lang="zh">对 $\sum (-1)^n/\sqrt n$，比值判别法得 $L=1$，无法判定。交错级数判别法可用：$1/\sqrt n$ 为正、递减且趋于 $0$，所以级数收敛。但它只是<em>条件收敛</em>，因为 $\sum 1/\sqrt n$ 是 $p=\tfrac12\le1$ 的 $p$ 级数，发散。对 $|a_n|$ 用比值判别法，仅当 $L&lt;1$ 时才能证明绝对收敛；交错级数判别法永远证明不了绝对收敛。</span>
+  </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the ratio with absolute value bars, cancel before taking the limit (for example $\dfrac{(n+1)!}{n!} = n+1$), state the value of $L$, and compare it with $1$ in words. If $L = 1$, write that the ratio test is inconclusive and switch tests.</p>
+    <p data-lang="zh">写出带绝对值的比值，先约分再取极限（例如 $\dfrac{(n+1)!}{n!} = n+1$），写出 $L$ 的值，并用文字与 $1$ 比较。若 $L = 1$，写明比值判别法不能下结论，再换用其他判别法。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Use the ratio test on $\displaystyle\sum_{n=1}^{\infty}\frac{n}{2^n}$.</span><span data-lang="zh">1. 对 $\displaystyle\sum_{n=1}^{\infty}\frac{n}{2^n}$ 使用比值判别法。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^n}{n} = \dfrac{n+1}{2n} \to \dfrac12$. Since $L = \tfrac12 &lt; 1$, the series converges absolutely.</p><p data-lang="zh">$\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^n}{n} = \dfrac{n+1}{2n} \to \dfrac12$。因为 $L = \tfrac12 &lt; 1$，级数绝对收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What does the ratio test say about $\displaystyle\sum_{n=1}^{\infty}\frac{n^3}{n^4+1}$, and how do you decide the series?</span><span data-lang="zh">2. 比值判别法对 $\displaystyle\sum_{n=1}^{\infty}\frac{n^3}{n^4+1}$ 给出什么结论？应如何判定该级数？</span></summary>
+      <div class="sg-a"><p data-lang="en">The ratio tends to $L = 1$, so the ratio test is inconclusive. Limit comparison with $1/n$: $\dfrac{n^3/(n^4+1)}{1/n} = \dfrac{n^4}{n^4+1} \to 1$, and $\sum 1/n$ diverges, so the series diverges.</p><p data-lang="zh">比值趋于 $L = 1$，比值判别法不能下结论。与 $1/n$ 作极限比较：$\dfrac{n^3/(n^4+1)}{1/n} = \dfrac{n^4}{n^4+1} \to 1$，而 $\sum 1/n$ 发散，所以级数发散。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Does $\displaystyle\sum_{n=1}^{\infty}\frac{2^n\, n!}{n^n}$ converge?</span><span data-lang="zh">3. $\displaystyle\sum_{n=1}^{\infty}\frac{2^n\, n!}{n^n}$ 是否收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{a_{n+1}}{a_n} = \dfrac{2^{n+1}(n+1)!}{(n+1)^{n+1}}\cdot\dfrac{n^n}{2^n\, n!} = \dfrac{2(n+1)\,n^n}{(n+1)^{n+1}} = 2\left(\dfrac{n}{n+1}\right)^n$. Since $\left(\dfrac{n}{n+1}\right)^n = \dfrac{1}{(1+1/n)^n} \to \dfrac1e$, $L = \dfrac2e \approx 0.736 &lt; 1$, so the series converges absolutely.</p><p data-lang="zh">$\dfrac{a_{n+1}}{a_n} = \dfrac{2^{n+1}(n+1)!}{(n+1)^{n+1}}\cdot\dfrac{n^n}{2^n\, n!} = \dfrac{2(n+1)\,n^n}{(n+1)^{n+1}} = 2\left(\dfrac{n}{n+1}\right)^n$。因为 $\left(\dfrac{n}{n+1}\right)^n = \dfrac{1}{(1+1/n)^n} \to \dfrac1e$，所以 $L = \dfrac2e \approx 0.736 &lt; 1$，级数绝对收敛。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1677,6 +2150,12 @@ $$ \sum_{n=0}^{\infty} \frac{5^n}{n!} $$
 </figure>
 
   <h2 data-lang="zh">判别绝对收敛或条件收敛</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define absolute convergence and conditional convergence.</li><li>State that absolute convergence implies convergence, and that the converse is false.</li><li>Test $\sum |a_n|$ first, with a $p$-series, comparison or ratio test.</li><li>Apply the alternating series test to the original series when $\sum |a_n|$ diverges.</li><li>Classify series whose signs are not strictly alternating, such as $\sum \sin n / n^2$.</li></ul>
+    <ul data-lang="zh"><li>定义绝对收敛与条件收敛。</li><li>说明绝对收敛蕴含收敛，且逆命题不成立。</li><li>先用 $p$ 级数、比较或比值判别法检验 $\sum |a_n|$。</li><li>当 $\sum |a_n|$ 发散时，对原级数使用交错级数判别法。</li><li>判别符号并非严格交替的级数，例如 $\sum \sin n / n^2$。</li></ul>
+  </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">Definitions</strong>
@@ -1711,19 +2190,52 @@ $$ \sum_{n=0}^{\infty} \frac{5^n}{n!} $$
     <p data-lang="zh"><strong>步骤 3：</strong>若 $\sum a_n$ 也发散 → <strong>发散</strong>。</p>
   </div>
 
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Classifying a Series</span><span data-lang="zh">例题：判别级数类型</span></summary>
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon icon-blue">✓</div>
-      <div class="card-title"><span data-lang="en">Worked Example — Classifying a Series</span><span data-lang="zh">例题 —— 判别级数类型</span></div>
-    </div>
     <p style="margin-bottom: 8px;" data-lang="en">Classify $\displaystyle\sum_{n=1}^{\infty} \frac{(-1)^n}{\sqrt{n}}$.</p>
     <p style="margin-bottom: 8px;" data-lang="zh">判别 $\displaystyle\sum_{n=1}^{\infty} \frac{(-1)^n}{\sqrt{n}}$ 的类型。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 1:</strong> $\sum |a_n| = \sum 1/\sqrt{n}$ is a $p$-series with $p = 1/2 \leq 1$, so it diverges — not absolutely convergent.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 1：</strong>$\sum |a_n| = \sum 1/\sqrt{n}$ 是 $p = 1/2 \leq 1$ 的 $p$ 级数，故发散 —— 不是绝对收敛。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 1:</strong> $\sum |a_n| = \sum 1/\sqrt{n}$ is a $p$-series with $p = 1/2 \leq 1$, so it diverges: not absolutely convergent.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 1：</strong>$\sum |a_n| = \sum 1/\sqrt{n}$ 是 $p = 1/2 \leq 1$ 的 $p$ 级数，故发散：不是绝对收敛。</p>
     <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 2:</strong> Apply the AST to the original series: $b_n = 1/\sqrt{n}$ is positive, decreasing, and $b_n \to 0$, so the series converges.</p>
     <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 2：</strong>对原级数应用交错级数判别法：$b_n = 1/\sqrt{n}$ 为正、单调递减，且 $b_n \to 0$，故原级数收敛。</p>
     <p data-lang="en"><strong>Conclusion:</strong> Converges, but not absolutely → <strong>conditionally convergent</strong>.</p>
     <p data-lang="zh"><strong>结论：</strong>收敛但非绝对收敛 → <strong>条件收敛</strong>。</p>
+  </div>
+  </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Signs That Do Not Alternate</span><span data-lang="zh">例题：符号不严格交替的级数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Classify the series.</span><span data-lang="zh">判别该级数的类型。</span>
+        $$\sum_{n=1}^{\infty}\frac{\sin n}{n^2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Absolute values</span><span data-lang="zh">取绝对值</span></strong> <span data-lang="en">Since $|\sin n| \le 1$,</span><span data-lang="zh">因为 $|\sin n| \le 1$，</span>
+        $$0\le\left|\frac{\sin n}{n^2}\right|\le\frac{1}{n^2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Compare</span><span data-lang="zh">比较</span></strong> <span data-lang="en">$\sum 1/n^2$ is a convergent $p$-series ($p = 2$), so $\sum |\sin n / n^2|$ converges by the direct comparison test.</span><span data-lang="zh">$\sum 1/n^2$ 是收敛的 $p$ 级数（$p = 2$），所以由比较判别法 $\sum |\sin n / n^2|$ 收敛。</span></div>
+      <div class="example-step example-result"><span data-lang="en">The series is absolutely convergent, and therefore convergent.</span><span data-lang="zh">该级数绝对收敛，因此收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">The signs of $\sin n$ follow no regular pattern, so the alternating series test does not apply; absolute convergence avoids the sign question entirely.</span><span data-lang="zh">$\sin n$ 的符号没有规则的交替模式，交错级数判别法不适用；绝对收敛完全绕开了符号问题。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Classify in a fixed order and name each test: first $\sum |a_n|$, then the original series. The answer conditionally convergent needs both halves shown: $\sum |a_n|$ diverges and $\sum a_n$ converges.</p>
+    <p data-lang="zh">按固定顺序判别并写出所用判别法：先判 $\sum |a_n|$，再判原级数。结论为条件收敛时，两部分都要写出：$\sum |a_n|$ 发散且 $\sum a_n$ 收敛。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}$.</span><span data-lang="zh">1. 判别 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}$ 的类型。</span></summary>
+      <div class="sg-a"><p data-lang="en">Absolutely convergent: $\sum |a_n| = \sum 1/n^2$ is a $p$-series with $p = 2 &gt; 1$.</p><p data-lang="zh">绝对收敛：$\sum |a_n| = \sum 1/n^2$ 是 $p = 2 &gt; 1$ 的 $p$ 级数。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n^2+1}$.</span><span data-lang="zh">2. 判别 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n^2+1}$ 的类型。</span></summary>
+      <div class="sg-a"><p data-lang="en">$|a_n| = \dfrac{n}{n^2+1}$; limit comparison with $1/n$ gives $\dfrac{n^2}{n^2+1} \to 1$, so $\sum |a_n|$ diverges. For the original series, $b_n = \dfrac{n}{n^2+1} &gt; 0$, $f'(x) = \dfrac{1-x^2}{(x^2+1)^2} \le 0$ for $x \ge 1$, and $b_n \to 0$, so it converges by the alternating series test. The series is conditionally convergent.</p><p data-lang="zh">$|a_n| = \dfrac{n}{n^2+1}$；与 $1/n$ 作极限比较得 $\dfrac{n^2}{n^2+1} \to 1$，所以 $\sum |a_n|$ 发散。对原级数，$b_n = \dfrac{n}{n^2+1} &gt; 0$，当 $x \ge 1$ 时 $f'(x) = \dfrac{1-x^2}{(x^2+1)^2} \le 0$，且 $b_n \to 0$，由交错级数判别法收敛。该级数条件收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n+1}$.</span><span data-lang="zh">3. 判别 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n+1}$ 的类型。</span></summary>
+      <div class="sg-a"><p data-lang="en">Divergent: $|a_n| = \dfrac{n}{n+1} \to 1$, so the terms do not tend to $0$ (the $n$th term test).</p><p data-lang="zh">发散：$|a_n| = \dfrac{n}{n+1} \to 1$，各项不趋于 $0$（第 $n$ 项判别法）。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1750,6 +2262,12 @@ $$ \sum_{n=0}^{\infty} \frac{5^n}{n!} $$
 
   <h2 data-lang="zh">交错级数误差界</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the alternating series error bound $|S - S_n| \le b_{n+1}$ and the conditions it needs.</li><li>Calculate the number of terms needed for a given accuracy.</li><li>Determine whether $S_n$ is an overestimate or an underestimate from the sign of the first omitted term.</li><li>Explain why the true sum lies between consecutive partial sums.</li><li>Identify series where the bound cannot be used.</li></ul>
+    <ul data-lang="zh"><li>表述交错级数误差界 $|S - S_n| \le b_{n+1}$ 及其所需条件。</li><li>计算达到给定精度所需的项数。</li><li>根据第一个被舍弃项的符号判断 $S_n$ 是高估还是低估。</li><li>解释为什么真实和位于相邻两个部分和之间。</li><li>识别不能使用该误差界的级数。</li></ul>
+  </div>
+
   <div class="formula-box" style="border-top-color: var(--orange);">
     <div class="formula-label" style="color: var(--orange);" data-lang="en">Alternating Series Error Bound</div>
     <div class="formula-label" style="color: var(--orange);" data-lang="zh">交错级数误差界（<code>alternating series error bound</code>）</div>
@@ -1761,37 +2279,73 @@ $$ \sum_{n=0}^{\infty} \frac{5^n}{n!} $$
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">Why This Works</strong>
     <strong style="color: var(--accent);" data-lang="zh">原理</strong>
-    <span data-lang="en">For an alternating series satisfying the AST, the partial sums oscillate around the true value $S$, and each new term brings the sum closer. So the maximum error is bounded by the size of the next term.</span>
-    <span data-lang="zh">对满足交错级数判别法的级数，部分和绕真值 $S$ 振荡，每加一项都更接近 $S$。因此最大误差由下一项的大小所控制。</span>
+    <span data-lang="en">For an alternating series satisfying the AST, consecutive partial sums $S_n$ and $S_{n+1}$ land on opposite sides of the true value $S$. So $S$ lies between them, and the gap between them is exactly $b_{n+1}$. The error of $S_n$ is therefore at most $b_{n+1}$, and the sign of the error is the sign of the first omitted term.</span>
+    <span data-lang="zh">对满足交错级数判别法的级数，相邻部分和 $S_n$ 与 $S_{n+1}$ 位于真值 $S$ 的两侧。因此 $S$ 夹在两者之间，而两者的间距恰为 $b_{n+1}$。所以 $S_n$ 的误差至多为 $b_{n+1}$，并且误差的符号与第一个被舍弃项的符号相同。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Alternating Series Error Bound</span><span data-lang="zh">例题 —— 交错级数误差界</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Approximate the sum of the series to within 0.01:</span><span class="cm" data-lang="zh">将该级数之和近似到误差 0.01 以内：</span>
-$$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
-
-<span class="cm" data-lang="en">We need |a_{n+1}| = 1/(n+1)³ < 0.01</span><span class="cm" data-lang="zh">需要 |a_{n+1}| = 1/(n+1)³ < 0.01</span>
-  (n+1)³ > 100
-  n+1 > 4.64...
-  n ≥ 4  →  <span data-lang="en">use </span><span data-lang="zh">使用 </span><span class="num">S₄</span>
-
-<span class="cm" data-lang="en">Compute:</span><span class="cm" data-lang="zh">计算：</span>
-  S₄ = 1/1 − 1/8 + 1/27 − 1/64
-     = 1 − 0.125 + 0.0370 − 0.0156
-     ≈ <span class="num">0.8965</span>
-
-<span class="str" data-lang="en">S₄ approximates the sum with error ≤ 1/125 = 0.008 < 0.01. ✓</span><span class="str" data-lang="zh">S₄ 近似该和，误差 ≤ 1/125 = 0.008 < 0.01。✓</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Alternating Series Error Bound</span><span data-lang="zh">例题：交错级数误差界</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Approximate the sum of the series to within $0.01$:</span><span data-lang="zh">将该级数之和近似到误差 $0.01$ 以内：</span>
+        $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^3}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Choose n</span><span data-lang="zh">选取 n</span></strong> <span data-lang="en">We need $|a_{n+1}|=\dfrac{1}{(n+1)^3}<0.01$:</span><span data-lang="zh">需要 $|a_{n+1}|=\dfrac{1}{(n+1)^3}<0.01$：</span>
+        $$(n+1)^3>100\ \Rightarrow\ n+1>4.64\ldots\ \Rightarrow\ n\ge 4$$
+       <span data-lang="en">So use $S_4$.</span><span data-lang="zh">所以使用 $S_4$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Compute</span><span data-lang="zh">计算</span></strong>
+        $$S_4=\frac11-\frac18+\frac1{27}-\frac1{64}=1-0.125+0.0370-0.0156\approx 0.8964$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$S_4$ approximates the sum with error $\le \dfrac{1}{125}=0.008<0.01$.</span><span data-lang="zh">$S_4$ 近似该和，误差 $\le \dfrac{1}{125}=0.008<0.01$。</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box red">
-    <strong style="color: var(--red);" data-lang="en">Common Mistake — Skipping the AST Check</strong>
-    <strong style="color: var(--red);" data-lang="zh">常见错误 —— 跳过交错级数判别法条件检查</strong>
-    <span style="display:block; margin-top:8px;" data-lang="en">The bound $|S - S_n| \leq b_{n+1}$ only holds once you've verified the series actually satisfies the Alternating Series Test — terms positive, decreasing, and tending to zero.</span>
+    <strong style="color: var(--red);" data-lang="en">Common Mistake: Skipping the AST Check</strong>
+    <strong style="color: var(--red);" data-lang="zh">常见错误：跳过交错级数判别法条件检查</strong>
+    <span style="display:block; margin-top:8px;" data-lang="en">The bound $|S - S_n| \leq b_{n+1}$ only holds once you've verified the series actually satisfies the Alternating Series Test (terms positive, decreasing, and tending to zero).</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">误差界 $|S - S_n| \leq b_{n+1}$ 只有在验证该级数确实满足交错级数判别法（各项为正、单调递减、趋于零）后才成立。</span>
-    <span style="display:block; margin-top:8px;" data-lang="en">Skipping that check and jumping straight to the error bound can produce a bound that isn't actually valid — always state the AST conditions hold first on the free-response section.</span>
-    <span style="display:block; margin-top:8px;" data-lang="zh">若跳过该检查直接套用误差界，得到的界可能并不成立 —— 在自由回答题中应先说明交错级数判别法的条件成立。</span>
+    <span style="display:block; margin-top:8px;" data-lang="en">Skipping that check and jumping straight to the error bound can produce a bound that isn't actually valid. In a free-response answer, state that the AST conditions hold first.</span>
+    <span style="display:block; margin-top:8px;" data-lang="zh">若跳过该检查直接套用误差界，得到的界可能并不成立。在自由回答题中应先说明交错级数判别法的条件成立。</span>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Overestimate or Underestimate?</span><span data-lang="zh">例题：高估还是低估？</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Use $S_3$ to approximate the sum $S$, bound the error, and say whether $S_3$ is too large or too small.</span><span data-lang="zh">用 $S_3$ 近似和 $S$，给出误差界，并判断 $S_3$ 偏大还是偏小。</span>
+        $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n!}=1-\frac12+\frac16-\frac1{24}+\cdots$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Conditions</span><span data-lang="zh">条件</span></strong> <span data-lang="en">$b_n = 1/n! &gt; 0$, it decreases since $(n+1)! &gt; n!$, and $b_n \to 0$: the alternating series test applies.</span><span data-lang="zh">$b_n = 1/n! &gt; 0$，因 $(n+1)! &gt; n!$ 而递减，且 $b_n \to 0$：交错级数判别法适用。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Approximate</span><span data-lang="zh">近似</span></strong>
+        $$S_3=1-\frac12+\frac16=\frac23\approx 0.6667$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Bound</span><span data-lang="zh">误差界</span></strong> <span data-lang="en">The first omitted term is $a_4 = -\tfrac{1}{24}$:</span><span data-lang="zh">第一个被舍弃项为 $a_4 = -\tfrac{1}{24}$：</span>
+        $$|S-S_3|\le b_4=\frac{1}{24}\approx 0.0417$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Direction</span><span data-lang="zh">方向</span></strong> <span data-lang="en">The first omitted term is negative, so $S - S_3 &lt; 0$.</span><span data-lang="zh">第一个被舍弃项为负，所以 $S - S_3 &lt; 0$。</span></div>
+      <div class="example-step example-result"><span data-lang="en">$S_3 \approx 0.6667$ is an overestimate, with error at most $0.0417$. (The exact sum is $1 - 1/e \approx 0.6321$, an error of about $0.0345$.)</span><span data-lang="zh">$S_3 \approx 0.6667$ 是高估值，误差至多 $0.0417$。（精确和为 $1 - 1/e \approx 0.6321$，误差约 $0.0345$。）</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">$S$ lies between $S_3$ and $S_4$, and $S_4 = S_3 + a_4$ is below $S_3$, so $S$ is below $S_3$.</span><span data-lang="zh">$S$ 位于 $S_3$ 与 $S_4$ 之间，而 $S_4 = S_3 + a_4$ 小于 $S_3$，所以 $S$ 小于 $S_3$。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">State that the alternating series test conditions hold before quoting the bound, then write it with the first omitted term, $|S - S_n| \le b_{n+1}$, and give its numerical value. For over or under, use the sign of that first omitted term: negative means $S_n$ is too large.</p>
+    <p data-lang="zh">引用误差界之前先说明交错级数判别法的条件成立，再用第一个被舍弃项写出 $|S - S_n| \le b_{n+1}$ 并给出其数值。判断高估或低估时看第一个被舍弃项的符号：为负说明 $S_n$ 偏大。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. How many terms of $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}$ guarantee an error less than $0.001$?</span><span data-lang="zh">1. $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}$ 取多少项能保证误差小于 $0.001$？</span></summary>
+      <div class="sg-a"><p data-lang="en">Need $b_{n+1} = \dfrac{1}{n+1} &lt; 0.001$, so $n + 1 &gt; 1000$. Taking $n = 1000$ terms gives error at most $\dfrac{1}{1001} &lt; 0.001$.</p><p data-lang="zh">需要 $b_{n+1} = \dfrac{1}{n+1} &lt; 0.001$，即 $n + 1 &gt; 1000$。取 $n = 1000$ 项，误差至多 $\dfrac{1}{1001} &lt; 0.001$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. In the worked example above, $S_4 \approx 0.8964$ approximates $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^3}$. Is $S_4$ an overestimate or an underestimate?</span><span data-lang="zh">2. 在上面的例题中，$S_4 \approx 0.8964$ 近似 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^3}$。$S_4$ 是高估还是低估？</span></summary>
+      <div class="sg-a"><p data-lang="en">The first omitted term is $a_5 = +\dfrac{1}{125}$, which is positive, so $S - S_4 &gt; 0$ and $S_4$ is an underestimate.</p><p data-lang="zh">第一个被舍弃项为 $a_5 = +\dfrac{1}{125}$，为正，所以 $S - S_4 &gt; 0$，$S_4$ 是低估值。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Why can the alternating series error bound not be used for $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n+1}$?</span><span data-lang="zh">3. 为什么不能对 $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{n+1}$ 使用交错级数误差界？</span></summary>
+      <div class="sg-a"><p data-lang="en">Its $b_n = \dfrac{n}{n+1} \to 1$, so the alternating series test conditions fail; in fact the series diverges by the $n$th term test, so there is no sum to approximate.</p><p data-lang="zh">其 $b_n = \dfrac{n}{n+1} \to 1$，交错级数判别法的条件不成立；事实上由第 $n$ 项判别法该级数发散，根本没有可近似的和。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1805,11 +2359,17 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
   <h2 data-lang="en">Finding Taylor Polynomial Approximations of Functions</h2>
   <h2 data-lang="zh">求函数的泰勒多项式近似</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Write the Taylor polynomial $P_n(x)$ of $f$ about $x = a$ from derivative values.</li><li>Explain why the coefficient of $(x-a)^k$ is $\dfrac{f^{(k)}(a)}{k!}$.</li><li>Construct Maclaurin polynomials for $\sin x$, $\cos x$ and $e^x$.</li><li>Calculate an approximation $f(x) \approx P_n(x)$ near the centre.</li><li>Deduce a derivative value from a polynomial: $f^{(k)}(a) = k! \times$ coefficient of $(x-a)^k$.</li><li>Interpret a graph: the approximation is best near the centre and improves with degree.</li></ul>
+    <ul data-lang="zh"><li>由各阶导数值写出 $f$ 关于 $x = a$ 的泰勒多项式 $P_n(x)$。</li><li>解释为什么 $(x-a)^k$ 的系数是 $\dfrac{f^{(k)}(a)}{k!}$。</li><li>构造 $\sin x$、$\cos x$ 与 $e^x$ 的麦克劳林多项式。</li><li>在中心附近计算近似值 $f(x) \approx P_n(x)$。</li><li>由多项式反推导数值：$f^{(k)}(a) = k! \times$ $(x-a)^k$ 的系数。</li><li>解读图像：中心附近近似最好，次数越高近似越好。</li></ul>
+  </div>
+
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">The Big Idea</strong>
     <strong style="color: var(--accent);" data-lang="zh">核心思想</strong>
-    <span data-lang="en">A Taylor polynomial approximates a function near a point $x = a$ using derivatives at that point. The more terms you include, the better the approximation — and in many cases, the infinite Taylor series equals the function exactly.</span>
-    <span data-lang="zh"><strong>泰勒多项式（<code>Taylor polynomial</code>）</strong>使用函数在点 $x = a$ 处的各阶导数来近似该点附近的函数。所含项越多，近似越好 —— 很多情况下，无穷<strong>泰勒级数（<code>Taylor series</code>）</strong>恰等于该函数本身。</span>
+    <span data-lang="en">A Taylor polynomial approximates a function near a point $x = a$ using derivatives at that point. The more terms you include, the better the approximation, and in many cases, the infinite Taylor series equals the function exactly.</span>
+    <span data-lang="zh"><strong>泰勒多项式（<code>Taylor polynomial</code>）</strong>使用函数在点 $x = a$ 处的各阶导数来近似该点附近的函数。所含项越多，近似越好；很多情况下，无穷<strong>泰勒级数（<code>Taylor series</code>）</strong>恰等于该函数本身。</span>
   </div>
 
   <div class="formula-box">
@@ -1848,18 +2408,61 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
     </div>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Taylor Polynomial for $e^x$ at $a = 0$</span><span data-lang="zh">例题 —— $e^x$ 在 $a = 0$ 处的泰勒多项式</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find the 4th-degree Maclaurin polynomial for f(x) = eˣ.</span><span class="cm" data-lang="zh">求 f(x) = eˣ 的 4 次麦克劳林多项式。</span>
-
-<span class="cm" data-lang="en">All derivatives of eˣ are eˣ, and e⁰ = 1:</span><span class="cm" data-lang="zh">eˣ 的各阶导数都是 eˣ，且 e⁰ = 1：</span>
-  f(0) = 1,  f'(0) = 1,  f''(0) = 1,  f'''(0) = 1,  f⁴(0) = 1
-
-<span class="cm">P₄(x) = 1 + x + x²/2! + x³/3! + x⁴/4!</span>
-       = <span class="num">1 + x + x²/2 + x³/6 + x⁴/24</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Taylor Polynomial for $e^x$ at $a = 0$</span><span data-lang="zh">例题：$e^x$ 在 $a = 0$ 处的泰勒多项式</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find the 4th-degree Maclaurin polynomial for $f(x)=e^x$.</span><span data-lang="zh">求 $f(x)=e^x$ 的 4 次麦克劳林多项式。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Derivatives</span><span data-lang="zh">导数</span></strong> <span data-lang="en">All derivatives of $e^x$ are $e^x$, and $e^0=1$:</span><span data-lang="zh">$e^x$ 的各阶导数都是 $e^x$，且 $e^0=1$：</span>
+        $$f(0)=f'(0)=f''(0)=f'''(0)=f^{(4)}(0)=1$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Polynomial</span><span data-lang="zh">多项式</span></strong>
+        $$P_4(x)=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}=1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}$$
+      </div>
     </div>
+  </div>
   </details>
+  <figure class="sg-fig" role="group">
+<svg viewBox="0 0 440 260" role="img" aria-label="Graph of sin x for x from minus 4 to 4 with its Maclaurin polynomials of degree 1, 3 and 5; all four agree near 0 and the higher degrees stay close over a wider interval"><defs><clipPath id="u10-taylor-clip"><rect x="20" y="14" width="400" height="232"/></clipPath></defs><line class="ax" x1="14" y1="130" x2="428" y2="130"/><line class="ax" x1="220" y1="246" x2="220" y2="12"/><line class="ax" x1="70" y1="126" x2="70" y2="134"/><line class="ax" x1="120" y1="126" x2="120" y2="134"/><text class="mut" data-lang="en" x="120" y="122" text-anchor="middle">−2</text><text class="mut" data-lang="zh" x="120" y="122" text-anchor="middle">−2</text><line class="ax" x1="170" y1="126" x2="170" y2="134"/><text class="mut" data-lang="en" x="170" y="122" text-anchor="middle">−1</text><text class="mut" data-lang="zh" x="170" y="122" text-anchor="middle">−1</text><line class="ax" x1="270" y1="126" x2="270" y2="134"/><text class="mut" data-lang="en" x="270" y="147" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="270" y="147" text-anchor="middle">1</text><line class="ax" x1="320" y1="126" x2="320" y2="134"/><text class="mut" data-lang="en" x="320" y="147" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="320" y="147" text-anchor="middle">2</text><line class="ax" x1="370" y1="126" x2="370" y2="134"/><polyline class="c1" fill="none" clip-path="url(#u10-taylor-clip)" points="20.0,96.7 22.5,98.18 25.0,99.74 27.5,101.37 30.0,103.08 32.5,104.85 35.0,106.69 37.5,108.58 40.0,110.53 42.5,112.53 45.0,114.57 47.5,116.64 50.0,118.76 52.5,120.9 55.0,123.06 57.5,125.24 60.0,127.43 62.5,129.63 65.0,131.83 67.5,134.02 70.0,136.21 72.5,138.38 75.0,140.53 77.5,142.65 80.0,144.74 82.5,146.79 85.0,148.8 87.5,150.77 90.0,152.68 92.5,154.54 95.0,156.33 97.5,158.06 100.0,159.72 102.5,161.3 105.0,162.81 107.5,164.24 110.0,165.57 112.5,166.82 115.0,167.98 117.5,169.04 120.0,170.01 122.5,170.87 125.0,171.64 127.5,172.3 130.0,172.85 132.5,173.3 135.0,173.63 137.5,173.86 140.0,173.98 142.5,173.99 145.0,173.89 147.5,173.68 150.0,173.36 152.5,172.93 155.0,172.4 157.5,171.76 160.0,171.01 162.5,170.16 165.0,169.21 167.5,168.17 170.0,167.02 172.5,165.79 175.0,164.47 177.5,163.06 180.0,161.56 182.5,159.99 185.0,158.35 187.5,156.63 190.0,154.84 192.5,153.0 195.0,151.09 197.5,149.14 200.0,147.13 202.5,145.09 205.0,143.0 207.5,140.89 210.0,138.74 212.5,136.58 215.0,134.39 217.5,132.2 220.0,130.0 222.5,127.8 225.0,125.61 227.5,123.42 230.0,121.26 232.5,119.11 235.0,117.0 237.5,114.91 240.0,112.87 242.5,110.86 245.0,108.91 247.5,107.0 250.0,105.16 252.5,103.37 255.0,101.65 257.5,100.01 260.0,98.44 262.5,96.94 265.0,95.53 267.5,94.21 270.0,92.98 272.5,91.83 275.0,90.79 277.5,89.84 280.0,88.99 282.5,88.24 285.0,87.6 287.5,87.07 290.0,86.64 292.5,86.32 295.0,86.11 297.5,86.01 300.0,86.02 302.5,86.14 305.0,86.37 307.5,86.7 310.0,87.15 312.5,87.7 315.0,88.36 317.5,89.13 320.0,89.99 322.5,90.96 325.0,92.02 327.5,93.18 330.0,94.43 332.5,95.76 335.0,97.19 337.5,98.7 340.0,100.28 342.5,101.94 345.0,103.67 347.5,105.46 350.0,107.32 352.5,109.23 355.0,111.2 357.5,113.21 360.0,115.26 362.5,117.35 365.0,119.47 367.5,121.62 370.0,123.79 372.5,125.98 375.0,128.17 377.5,130.37 380.0,132.57 382.5,134.76 385.0,136.94 387.5,139.1 390.0,141.24 392.5,143.36 395.0,145.43 397.5,147.47 400.0,149.47 402.5,151.42 405.0,153.31 407.5,155.15 410.0,156.92 412.5,158.63 415.0,160.26 417.5,161.82 420.0,163.3"/><polyline class="c2 dash" fill="none" clip-path="url(#u10-taylor-clip)" points="22.5,303.8 25.0,301.6 27.5,299.4 30.0,297.2 32.5,295.0 35.0,292.8 37.5,290.6 40.0,288.4 42.5,286.2 45.0,284.0 47.5,281.8 50.0,279.6 52.5,277.4 55.0,275.2 57.5,273.0 60.0,270.8 62.5,268.6 65.0,266.4 67.5,264.2 70.0,262.0 72.5,259.8 75.0,257.6 77.5,255.4 80.0,253.2 82.5,251.0 85.0,248.8 87.5,246.6 90.0,244.4 92.5,242.2 95.0,240.0 97.5,237.8 100.0,235.6 102.5,233.4 105.0,231.2 107.5,229.0 110.0,226.8 112.5,224.6 115.0,222.4 117.5,220.2 120.0,218.0 122.5,215.8 125.0,213.6 127.5,211.4 130.0,209.2 132.5,207.0 135.0,204.8 137.5,202.6 140.0,200.4 142.5,198.2 145.0,196.0 147.5,193.8 150.0,191.6 152.5,189.4 155.0,187.2 157.5,185.0 160.0,182.8 162.5,180.6 165.0,178.4 167.5,176.2 170.0,174.0 172.5,171.8 175.0,169.6 177.5,167.4 180.0,165.2 182.5,163.0 185.0,160.8 187.5,158.6 190.0,156.4 192.5,154.2 195.0,152.0 197.5,149.8 200.0,147.6 202.5,145.4 205.0,143.2 207.5,141.0 210.0,138.8 212.5,136.6 215.0,134.4 217.5,132.2 220.0,130.0 222.5,127.8 225.0,125.6 227.5,123.4 230.0,121.2 232.5,119.0 235.0,116.8 237.5,114.6 240.0,112.4 242.5,110.2 245.0,108.0 247.5,105.8 250.0,103.6 252.5,101.4 255.0,99.2 257.5,97.0 260.0,94.8 262.5,92.6 265.0,90.4 267.5,88.2 270.0,86.0 272.5,83.8 275.0,81.6 277.5,79.4 280.0,77.2 282.5,75.0 285.0,72.8 287.5,70.6 290.0,68.4 292.5,66.2 295.0,64.0 297.5,61.8 300.0,59.6 302.5,57.4 305.0,55.2 307.5,53.0 310.0,50.8 312.5,48.6 315.0,46.4 317.5,44.2 320.0,42.0 322.5,39.8 325.0,37.6 327.5,35.4 330.0,33.2 332.5,31.0 335.0,28.8 337.5,26.6 340.0,24.4 342.5,22.2 345.0,20.0 347.5,17.8 350.0,15.6 352.5,13.4 355.0,11.2 357.5,9.0 360.0,6.8 362.5,4.6 365.0,2.4 367.5,0.2 370.0,-2.0 372.5,-4.2 375.0,-6.4 377.5,-8.6 380.0,-10.8 382.5,-13.0 385.0,-15.2 387.5,-17.4 390.0,-19.6 392.5,-21.8 395.0,-24.0 397.5,-26.2 400.0,-28.4 402.5,-30.6 405.0,-32.8 407.5,-35.0 410.0,-37.2 412.5,-39.4 415.0,-41.6 417.5,-43.8 420.0,-46.0"/><polyline class="c3" fill="none" clip-path="url(#u10-taylor-clip)" points="42.5,-41.89 45.0,-30.42 47.5,-19.33 50.0,-8.63 52.5,1.7 55.0,11.66 57.5,21.26 60.0,30.5 62.5,39.39 65.0,47.93 67.5,56.13 70.0,64.0 72.5,71.54 75.0,78.75 77.5,85.64 80.0,92.22 82.5,98.49 85.0,104.46 87.5,110.13 90.0,115.51 92.5,120.6 95.0,125.42 97.5,129.96 100.0,134.22 102.5,138.23 105.0,141.98 107.5,145.47 110.0,148.71 112.5,151.72 115.0,154.49 117.5,157.02 120.0,159.33 122.5,161.42 125.0,163.3 127.5,164.97 130.0,166.43 132.5,167.7 135.0,168.77 137.5,169.66 140.0,170.36 142.5,170.89 145.0,171.25 147.5,171.44 150.0,171.48 152.5,171.36 155.0,171.09 157.5,170.68 160.0,170.13 162.5,169.45 165.0,168.64 167.5,167.71 170.0,166.67 172.5,165.51 175.0,164.25 177.5,162.9 180.0,161.45 182.5,159.91 185.0,158.28 187.5,156.59 190.0,154.82 192.5,152.98 195.0,151.08 197.5,149.13 200.0,147.13 202.5,145.09 205.0,143.0 207.5,140.89 210.0,138.74 212.5,136.58 215.0,134.39 217.5,132.2 220.0,130.0 222.5,127.8 225.0,125.61 227.5,123.42 230.0,121.26 232.5,119.11 235.0,117.0 237.5,114.91 240.0,112.87 242.5,110.87 245.0,108.92 247.5,107.02 250.0,105.18 252.5,103.41 255.0,101.72 257.5,100.09 260.0,98.55 262.5,97.1 265.0,95.75 267.5,94.49 270.0,93.33 272.5,92.29 275.0,91.36 277.5,90.55 280.0,89.87 282.5,89.32 285.0,88.91 287.5,88.64 290.0,88.52 292.5,88.56 295.0,88.75 297.5,89.11 300.0,89.64 302.5,90.34 305.0,91.23 307.5,92.3 310.0,93.57 312.5,95.03 315.0,96.7 317.5,98.58 320.0,100.67 322.5,102.98 325.0,105.51 327.5,108.28 330.0,111.29 332.5,114.53 335.0,118.02 337.5,121.77 340.0,125.78 342.5,130.04 345.0,134.58 347.5,139.4 350.0,144.49 352.5,149.87 355.0,155.54 357.5,161.51 360.0,167.78 362.5,174.36 365.0,181.25 367.5,188.46 370.0,196.0 372.5,203.87 375.0,212.07 377.5,220.61 380.0,229.5 382.5,238.74 385.0,248.34 387.5,258.3 390.0,268.63 392.5,279.33 395.0,290.42 397.5,301.89"/><polyline class="c4" fill="none" clip-path="url(#u10-taylor-clip)" points="20.0,212.13 22.5,204.43 25.0,197.42 27.5,191.06 30.0,185.33 32.5,180.19 35.0,175.61 37.5,171.54 40.0,167.97 42.5,164.85 45.0,162.16 47.5,159.88 50.0,157.97 52.5,156.4 55.0,155.16 57.5,154.21 60.0,153.53 62.5,153.11 65.0,152.91 67.5,152.91 70.0,153.1 72.5,153.45 75.0,153.95 77.5,154.58 80.0,155.32 82.5,156.16 85.0,157.07 87.5,158.05 90.0,159.07 92.5,160.14 95.0,161.22 97.5,162.32 100.0,163.42 102.5,164.51 105.0,165.58 107.5,166.61 110.0,167.61 112.5,168.56 115.0,169.46 117.5,170.3 120.0,171.07 122.5,171.76 125.0,172.38 127.5,172.91 130.0,173.36 132.5,173.72 135.0,173.98 137.5,174.14 140.0,174.21 142.5,174.17 145.0,174.03 147.5,173.79 150.0,173.45 152.5,173.0 155.0,172.45 157.5,171.8 160.0,171.04 162.5,170.18 165.0,169.23 167.5,168.18 170.0,167.03 172.5,165.8 175.0,164.47 177.5,163.06 180.0,161.57 182.5,159.99 185.0,158.35 187.5,156.63 190.0,154.84 192.5,153.0 195.0,151.09 197.5,149.14 200.0,147.13 202.5,145.09 205.0,143.0 207.5,140.89 210.0,138.74 212.5,136.58 215.0,134.39 217.5,132.2 220.0,130.0 222.5,127.8 225.0,125.61 227.5,123.42 230.0,121.26 232.5,119.11 235.0,117.0 237.5,114.91 240.0,112.87 242.5,110.86 245.0,108.91 247.5,107.0 250.0,105.16 252.5,103.37 255.0,101.65 257.5,100.01 260.0,98.43 262.5,96.94 265.0,95.53 267.5,94.2 270.0,92.97 272.5,91.82 275.0,90.77 277.5,89.82 280.0,88.96 282.5,88.2 285.0,87.55 287.5,87.0 290.0,86.55 292.5,86.21 295.0,85.97 297.5,85.83 300.0,85.79 302.5,85.86 305.0,86.02 307.5,86.28 310.0,86.64 312.5,87.09 315.0,87.62 317.5,88.24 320.0,88.93 322.5,89.7 325.0,90.54 327.5,91.44 330.0,92.39 332.5,93.39 335.0,94.42 337.5,95.49 340.0,96.58 342.5,97.68 345.0,98.78 347.5,99.86 350.0,100.93 352.5,101.95 355.0,102.93 357.5,103.84 360.0,104.68 362.5,105.42 365.0,106.05 367.5,106.55 370.0,106.9 372.5,107.09 375.0,107.09 377.5,106.89 380.0,106.47 382.5,105.79 385.0,104.84 387.5,103.6 390.0,102.03 392.5,100.12 395.0,97.84 397.5,95.15 400.0,92.03 402.5,88.46 405.0,84.39 407.5,79.81 410.0,74.67 412.5,68.94 415.0,62.58 417.5,55.57 420.0,47.87"/><text class="c2t" data-lang="en" x="322" y="30" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">1</tspan>(x) = x</text><text class="c2t" data-lang="zh" x="322" y="30" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">1</tspan>(x) = x</text><text class="c3t" data-lang="en" x="355" y="232" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">3</tspan></text><text class="c3t" data-lang="zh" x="355" y="232" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">3</tspan></text><text class="c4t" data-lang="en" x="420" y="38" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">5</tspan></text><text class="c4t" data-lang="zh" x="420" y="38" text-anchor="end">P<tspan baseline-shift="sub" font-size="9">5</tspan></text><text class="c1t" data-lang="en" x="420" y="184" text-anchor="end">sin x</text><text class="c1t" data-lang="zh" x="420" y="184" text-anchor="end">sin x</text><text class="lbl" data-lang="en" x="432" y="126" text-anchor="end">x</text><text class="lbl" data-lang="zh" x="432" y="126" text-anchor="end">x</text><text class="lbl" data-lang="en" x="226" y="20">y</text><text class="lbl" data-lang="zh" x="226" y="20">y</text></svg>
+<figcaption><span data-lang="en">Figure 10.2. $\sin x$ and its Maclaurin polynomials $P_1(x)=x$, $P_3(x)=x-x^3/6$ and $P_5(x)=x-x^3/6+x^5/120$ on $-4 \le x \le 4$, drawn to scale. Read off that all four agree near the centre $x=0$, and each higher degree stays close to $\sin x$ over a wider interval: $P_1$ is close only for small $|x|$, $P_3$ stays within about $0.06$ up to $|x| = 1.5$, and $P_5$ stays within about $0.03$ up to $|x| = 2$.</span><span data-lang="zh">图 10.2. 按比例绘制的 $\sin x$ 及其麦克劳林多项式 $P_1(x)=x$、$P_3(x)=x-x^3/6$ 与 $P_5(x)=x-x^3/6+x^5/120$，范围 $-4 \le x \le 4$。从图中读出：四条曲线在中心 $x=0$ 附近重合，次数越高，与 $\sin x$ 接近的区间越宽：$P_1$ 只在 $|x|$ 很小时接近，$P_3$ 在 $|x| = 1.5$ 以内误差约在 $0.06$ 以内，而 $P_5$ 在 $|x| = 2$ 以内误差约在 $0.03$ 以内。</span></figcaption>
+  </figure>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: A Taylor Polynomial from a Table</span><span data-lang="zh">例题：由数值表构造泰勒多项式</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">A function $f$ has $f(2) = 3$, $f'(2) = -1$, $f''(2) = 4$ and $f'''(2) = 12$. Write the third-degree Taylor polynomial for $f$ about $x = 2$ and use it to approximate $f(2.1)$.</span><span data-lang="zh">函数 $f$ 满足 $f(2) = 3$，$f'(2) = -1$，$f''(2) = 4$，$f'''(2) = 12$。写出 $f$ 关于 $x = 2$ 的三次泰勒多项式，并用它近似 $f(2.1)$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Coefficients</span><span data-lang="zh">系数</span></strong> <span data-lang="en">Divide each derivative by $k!$:</span><span data-lang="zh">每个导数除以 $k!$：</span>
+        $$\frac{f(2)}{0!}=3,\quad \frac{f'(2)}{1!}=-1,\quad \frac{f''(2)}{2!}=\frac42=2,\quad \frac{f'''(2)}{3!}=\frac{12}{6}=2$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Polynomial</span><span data-lang="zh">多项式</span></strong>
+        $$P_3(x)=3-(x-2)+2(x-2)^2+2(x-2)^3$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Approximate</span><span data-lang="zh">近似</span></strong> <span data-lang="en">With $x - 2 = 0.1$:</span><span data-lang="zh">取 $x - 2 = 0.1$：</span>
+        $$P_3(2.1)=3-0.1+2(0.01)+2(0.001)=3-0.1+0.02+0.002=2.922$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$P_3(x) = 3 - (x-2) + 2(x-2)^2 + 2(x-2)^3$ and $f(2.1) \approx 2.922$.</span><span data-lang="zh">$P_3(x) = 3 - (x-2) + 2(x-2)^2 + 2(x-2)^3$，$f(2.1) \approx 2.922$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">Dividing by $k!$ makes the $k$th derivative of $P_3$ at $x = 2$ equal $f^{(k)}(2)$, so $P_3$ matches $f$ in value, slope and curvature at the centre.</span><span data-lang="zh">除以 $k!$ 使 $P_3$ 在 $x = 2$ 处的 $k$ 阶导数等于 $f^{(k)}(2)$，所以 $P_3$ 在中心处与 $f$ 的函数值、斜率和弯曲程度都一致。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Keep the powers centred at $a$: write $(x-2)^k$, not $x^k$. When derivative values come from a table, show the substitution into $\dfrac{f^{(k)}(a)}{k!}$ for each coefficient before simplifying, and write approximations as $f(2.1) \approx P_3(2.1)$, not as an equality.</p>
+    <p data-lang="zh">幂次要以 $a$ 为中心：写 $(x-2)^k$，而不是 $x^k$。导数值来自表格时，先把每个系数代入 $\dfrac{f^{(k)}(a)}{k!}$ 再化简；近似值写成 $f(2.1) \approx P_3(2.1)$，不要写成等号。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Use the second-degree Maclaurin polynomial for $\cos x$ to approximate $\cos(0.2)$.</span><span data-lang="zh">1. 用 $\cos x$ 的二次麦克劳林多项式近似 $\cos(0.2)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$P_2(x) = 1 - \dfrac{x^2}{2}$, so $\cos(0.2) \approx 1 - \dfrac{0.04}{2} = 0.98$. (A calculator gives $0.98007$.)</p><p data-lang="zh">$P_2(x) = 1 - \dfrac{x^2}{2}$，所以 $\cos(0.2) \approx 1 - \dfrac{0.04}{2} = 0.98$。（计算器给出 $0.98007$。）</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. The third-degree Taylor polynomial of $f$ about $x = 1$ is $P_3(x) = 4 + 2(x-1) - 3(x-1)^2 + (x-1)^3$. Find $f''(1)$ and $f'''(1)$.</span><span data-lang="zh">2. $f$ 关于 $x = 1$ 的三次泰勒多项式为 $P_3(x) = 4 + 2(x-1) - 3(x-1)^2 + (x-1)^3$。求 $f''(1)$ 与 $f'''(1)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f''(1) = 2! \times (-3) = -6$ and $f'''(1) = 3! \times 1 = 6$.</p><p data-lang="zh">$f''(1) = 2! \times (-3) = -6$，$f'''(1) = 3! \times 1 = 6$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the second-degree Taylor polynomial for $\ln x$ about $x = 1$ and use it to approximate $\ln(1.1)$.</span><span data-lang="zh">3. 求 $\ln x$ 关于 $x = 1$ 的二次泰勒多项式，并用它近似 $\ln(1.1)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f(1) = 0$, $f'(x) = 1/x$ gives $f'(1) = 1$, and $f''(x) = -1/x^2$ gives $f''(1) = -1$. So $P_2(x) = (x-1) - \dfrac{(x-1)^2}{2}$ and $\ln(1.1) \approx 0.1 - 0.005 = 0.095$. (A calculator gives $0.09531$.)</p><p data-lang="zh">$f(1) = 0$；$f'(x) = 1/x$ 得 $f'(1) = 1$；$f''(x) = -1/x^2$ 得 $f''(1) = -1$。所以 $P_2(x) = (x-1) - \dfrac{(x-1)^2}{2}$，$\ln(1.1) \approx 0.1 - 0.005 = 0.095$。（计算器给出 $0.09531$。）</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1884,6 +2487,12 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
 </figure>
 
   <h2 data-lang="zh">拉格朗日误差界</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the Lagrange error bound $|f(x) - P_n(x)| \le \dfrac{M}{(n+1)!}|x-a|^{n+1}$.</li><li>Identify $M$ as an upper bound for $|f^{(n+1)}|$ on the interval between $a$ and $x$.</li><li>Calculate the bound with numbers substituted.</li><li>Explain why any valid upper bound for $|f^{(n+1)}|$ works, not only the smallest.</li><li>Choose between the Lagrange bound and the alternating series bound.</li></ul>
+    <ul data-lang="zh"><li>表述拉格朗日误差界 $|f(x) - P_n(x)| \le \dfrac{M}{(n+1)!}|x-a|^{n+1}$。</li><li>明确 $M$ 是 $|f^{(n+1)}|$ 在 $a$ 与 $x$ 之间区间上的一个上界。</li><li>代入数值计算误差界。</li><li>解释为何 $|f^{(n+1)}|$ 的任何有效上界都可以用，而不必是最小的。</li><li>在拉格朗日误差界与交错级数误差界之间作出选择。</li></ul>
+  </div>
 
   <div class="formula-box" style="border-top-color: var(--red);">
     <div class="formula-label" style="color: var(--red);" data-lang="en">Lagrange Error Bound (Taylor's Remainder)</div>
@@ -1913,25 +2522,57 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
     <span style="display:block; margin-top:8px;" data-lang="zh">若泰勒级数为交错级数且满足交错级数判别法的条件，可改用更简单的<strong>交错级数误差界</strong>。当级数非交错时使用拉格朗日误差界。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Lagrange Error Bound</span><span data-lang="zh">例题 —— 拉格朗日误差界</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Use the 3rd-degree Maclaurin polynomial for sin(x)</span><span class="cm" data-lang="zh">用 sin(x) 的 3 次麦克劳林多项式</span>
-<span class="cm" data-lang="en">to approximate sin(0.5). Bound the error.</span><span class="cm" data-lang="zh">近似 sin(0.5)，并估计误差界。</span>
-
-<span class="cm">P₃(x) = x − x³/6</span>
-<span class="cm">P₃(0.5) = 0.5 − 0.125/6 = 0.5 − 0.02083 ≈ 0.47917</span>
-
-<span class="cm" data-lang="en">Error bound: n = 3, a = 0, x = 0.5</span><span class="cm" data-lang="zh">误差界：n = 3，a = 0，x = 0.5</span>
-<span class="cm" data-lang="en">f⁴(x) = sin(x), so |f⁴(c)| ≤ 1 for all c → M = 1</span><span class="cm" data-lang="zh">f⁴(x) = sin(x)，所以对所有 c 有 |f⁴(c)| ≤ 1 → M = 1</span>
-
-  |R₃| ≤ M · |x−a|⁴ / 4! = 1 · (0.5)⁴ / 24
-       = 0.0625/24 ≈ <span class="num">0.0026</span>
-
-<span class="str" data-lang="en">The approximation 0.47917 has error ≤ 0.0026.</span><span class="str" data-lang="zh">近似值 0.47917 的误差 ≤ 0.0026。</span>
-<span class="cm" data-lang="en">(Actual: sin(0.5) ≈ 0.47943, error ≈ 0.00026)</span><span class="cm" data-lang="zh">（实际：sin(0.5) ≈ 0.47943，误差 ≈ 0.00026）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Lagrange Error Bound</span><span data-lang="zh">例题：拉格朗日误差界</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Use the 3rd-degree Maclaurin polynomial for $\sin x$ to approximate $\sin(0.5)$. Bound the error.</span><span data-lang="zh">用 $\sin x$ 的 3 次麦克劳林多项式近似 $\sin(0.5)$，并估计误差界。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Approximate</span><span data-lang="zh">近似</span></strong>
+        $$P_3(x)=x-\frac{x^3}{6},\qquad P_3(0.5)=0.5-\frac{0.125}{6}\approx 0.47917$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Bound M</span><span data-lang="zh">求 M</span></strong> <span data-lang="en">Error bound with $n=3$, $a=0$, $x=0.5$. Since $f^{(4)}(x)=\sin x$, we have $|f^{(4)}(c)|\le 1$ for all $c$, so $M=1$.</span><span data-lang="zh">误差界取 $n=3$，$a=0$，$x=0.5$。因为 $f^{(4)}(x)=\sin x$，所以对所有 $c$ 有 $|f^{(4)}(c)|\le 1$，即 $M=1$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Error</span><span data-lang="zh">误差</span></strong>
+        $$|R_3|\le\frac{M\,|x-a|^4}{4!}=\frac{1\cdot(0.5)^4}{24}=\frac{0.0625}{24}\approx 0.0026$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The approximation $0.47917$ has error $\le 0.0026$. (Actual: $\sin(0.5)\approx 0.47943$, error $\approx 0.00026$.)</span><span data-lang="zh">近似值 $0.47917$ 的误差 $\le 0.0026$。（实际：$\sin(0.5)\approx 0.47943$，误差 $\approx 0.00026$。）</span></div>
     </div>
+  </div>
   </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Bounding the Error for $e^{0.2}$</span><span data-lang="zh">例题：估计 $e^{0.2}$ 的误差界</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Use the second-degree Maclaurin polynomial for $e^x$ to approximate $e^{0.2}$, and bound the error.</span><span data-lang="zh">用 $e^x$ 的二次麦克劳林多项式近似 $e^{0.2}$，并给出误差界。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Approximate</span><span data-lang="zh">近似</span></strong>
+        $$P_2(x)=1+x+\frac{x^2}{2},\qquad P_2(0.2)=1+0.2+0.02=1.22$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Find M</span><span data-lang="zh">求 M</span></strong> <span data-lang="en">Here $n = 2$, so we need $f'''(x) = e^x$. It is increasing, so on $[0, 0.2]$ its largest value is $e^{0.2}$, and $e^{0.2} &lt; e &lt; 3$. Take $M = 3$.</span><span data-lang="zh">此处 $n = 2$，需要 $f'''(x) = e^x$。它是增函数，所以在 $[0, 0.2]$ 上最大值为 $e^{0.2}$，且 $e^{0.2} &lt; e &lt; 3$。取 $M = 3$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Bound</span><span data-lang="zh">误差界</span></strong>
+        $$|R_2(0.2)|\le\frac{M\,|0.2-0|^{3}}{3!}=\frac{3(0.008)}{6}=0.004$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$e^{0.2} \approx 1.22$ with error at most $0.004$. (A calculator gives $e^{0.2} \approx 1.22140$, an actual error of about $0.0014$.)</span><span data-lang="zh">$e^{0.2} \approx 1.22$，误差至多 $0.004$。（计算器给出 $e^{0.2} \approx 1.22140$，实际误差约 $0.0014$。）</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">We cannot use $e^{0.2}$ itself as $M$ when it is the value being approximated, so a simple safe overestimate is enough.</span><span data-lang="zh">当 $e^{0.2}$ 正是要近似的量时，不能直接用它作 $M$，因此取一个简单而可靠的上界即可。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Show the bound with numbers substituted, $\dfrac{M}{(n+1)!}|x-a|^{n+1}$, and say where $M$ comes from: the largest value of $|f^{(n+1)}|$ between $a$ and $x$, or the bound the question gives. Use the $(n+1)$th derivative, not the $n$th, and raise $|x-a|$ to the $(n+1)$th power.</p>
+    <p data-lang="zh">代入数值写出 $\dfrac{M}{(n+1)!}|x-a|^{n+1}$，并说明 $M$ 的来源：$|f^{(n+1)}|$ 在 $a$ 与 $x$ 之间的最大值，或题目给出的界。要用 $(n+1)$ 阶导数而不是 $n$ 阶，并把 $|x-a|$ 取 $(n+1)$ 次幂。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. $|f^{(4)}(x)| \le 6$ for $1 \le x \le 1.5$. Bound the error when the third-degree Taylor polynomial about $x = 1$ approximates $f(1.5)$.</span><span data-lang="zh">1. 当 $1 \le x \le 1.5$ 时 $|f^{(4)}(x)| \le 6$。用关于 $x = 1$ 的三次泰勒多项式近似 $f(1.5)$，给出误差界。</span></summary>
+      <div class="sg-a"><p data-lang="en">$|R_3(1.5)| \le \dfrac{6\,(0.5)^4}{4!} = \dfrac{6(0.0625)}{24} = 0.015625$.</p><p data-lang="zh">$|R_3(1.5)| \le \dfrac{6\,(0.5)^4}{4!} = \dfrac{6(0.0625)}{24} = 0.015625$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Bound the error when the Maclaurin polynomial $P_4$ for $\cos x$ approximates $\cos(0.5)$, using $n = 4$.</span><span data-lang="zh">2. 用 $n = 4$，估计 $\cos x$ 的麦克劳林多项式 $P_4$ 近似 $\cos(0.5)$ 时的误差界。</span></summary>
+      <div class="sg-a"><p data-lang="en">$f^{(5)}(x) = -\sin x$, so $|f^{(5)}| \le 1$ and $M = 1$. The bound is $\dfrac{(0.5)^5}{5!} = \dfrac{0.03125}{120} \approx 0.00026$.</p><p data-lang="zh">$f^{(5)}(x) = -\sin x$，所以 $|f^{(5)}| \le 1$，取 $M = 1$。误差界为 $\dfrac{(0.5)^5}{5!} = \dfrac{0.03125}{120} \approx 0.00026$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A student takes $M = |f^{(n+1)}(a)|$, the value at the centre only. Why is that not a valid choice in general?</span><span data-lang="zh">3. 某学生只取中心处的值 $M = |f^{(n+1)}(a)|$。为什么这一般不是有效的选择？</span></summary>
+      <div class="sg-a"><p data-lang="en">$M$ must bound $|f^{(n+1)}(c)|$ for every $c$ between $a$ and $x$, because the theorem only says the error equals $\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ for some unknown $c$ there. The value at $a$ can be smaller than the values further along.</p><p data-lang="zh">$M$ 必须对 $a$ 与 $x$ 之间的每个 $c$ 都是 $|f^{(n+1)}(c)|$ 的上界，因为定理只说明误差等于 $\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$，其中 $c$ 是该区间内某个未知的点。$a$ 处的值可能小于区间其他位置的值。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1950,12 +2591,18 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
   [data-theme="dark"] #fig-calc10-interval-endpoints .dr-fig-light { display: none; }
   [data-theme="dark"] #fig-calc10-interval-endpoints .dr-fig-dark { display: block; }
 </style>
-<img class="dr-fig-light" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-interval-endpoints_light.png" alt="The interval of convergence (1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges). / 收敛区间 (1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。">
-<img class="dr-fig-dark" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-interval-endpoints_dark.png" alt="The interval of convergence (1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges). / 收敛区间 (1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。">
-<figcaption><span data-lang="en">The interval of convergence (1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges).</span><span data-lang="zh">收敛区间 (1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。</span></figcaption>
+<img class="dr-fig-light" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-interval-endpoints_light.png" alt="The interval of convergence [1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges). / 收敛区间 [1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。">
+<img class="dr-fig-dark" src="../../out/figures/Unit_10_Sequences_and_Series/calc10-interval-endpoints_dark.png" alt="The interval of convergence [1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges). / 收敛区间 [1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。">
+<figcaption><span data-lang="en">The interval of convergence [1, 5) with a closed dot at x = 1 (included, endpoint converges) and an open circle at x = 5 (excluded, endpoint diverges).</span><span data-lang="zh">收敛区间 [1, 5)：x = 1 处为实心点（该端点收敛，取等号），x = 5 处为空心圈（该端点发散，不取等号）。</span></figcaption>
 </figure>
 
   <h2 data-lang="zh">幂级数的收敛半径与收敛区间</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Apply the ratio test to a power series to find its radius of convergence $R$.</li><li>Write the open interval $(c - R, c + R)$.</li><li>Test each endpoint separately, naming the test used.</li><li>State the interval of convergence with brackets that match the endpoint results.</li><li>Identify the cases $R = 0$ and $R = \infty$.</li></ul>
+    <ul data-lang="zh"><li>对幂级数使用比值判别法求收敛半径 $R$。</li><li>写出开区间 $(c - R, c + R)$。</li><li>分别检验每个端点，并写出所用判别法。</li><li>用与端点结果一致的括号写出收敛区间。</li><li>识别 $R = 0$ 与 $R = \infty$ 的情形。</li></ul>
+  </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">Power Series</strong>
@@ -1968,8 +2615,8 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
     <div class="formula-label" style="color: var(--purple);" data-lang="en">Finding Radius of Convergence</div>
     <div class="formula-label" style="color: var(--purple);" data-lang="zh">求收敛半径（<code>radius of convergence</code>）</div>
     $$ R = \lim_{n\to\infty} \left|\frac{a_n}{a_{n+1}}\right| \quad \text{(or use the ratio test on the series)} $$
-    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="en">The series converges when $|x - c| < R$ and diverges when $|x - c| > R$.</p>
-    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">当 $|x - c| < R$ 时级数收敛，当 $|x - c| > R$ 时发散。</p>
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="en">The series converges when $|x - c| < R$ and diverges when $|x - c| > R$. The shortcut formula needs every coefficient nonzero and the limit to exist; for a series with only even or odd powers, such as $\sum x^{2n}/4^n$, apply the ratio test to the whole term instead.</p>
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">当 $|x - c| < R$ 时级数收敛，当 $|x - c| > R$ 时发散。该简便公式要求每个系数都不为零且极限存在；对只含偶次或奇次幂的级数（如 $\sum x^{2n}/4^n$），应对整个通项使用比值判别法。</p>
   </div>
 
   <div class="card">
@@ -1994,26 +2641,21 @@ $$ \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} $$
     <span style="display:block; margin-top:8px;" data-lang="zh">比值判别法给出的是收敛的开区间。必须分别检验两个端点。这正是 p 级数、调和级数与交错级数判别法发挥作用的地方。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Interval of Convergence</span><span data-lang="zh">例题 —— 收敛区间</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find the interval of convergence:</span><span class="cm" data-lang="zh">求收敛区间：</span>
-$$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
-
-<span class="cm" data-lang="en">Ratio test:</span><span class="cm" data-lang="zh">比值判别法：</span>
-  |a_{n+1}/a_n| = |(x−3)^(n+1)/[(n+1)2^(n+1)]| / |(x−3)^n/[n·2^n]|
-               = |x−3|/2 · n/(n+1)
-
-  lim = |x−3|/2
-
-<span class="cm" data-lang="en">Converges when |x−3|/2 < 1  →  |x−3| < 2  →  R = 2</span><span class="cm" data-lang="zh">当 |x−3|/2 < 1 时收敛  →  |x−3| < 2  →  R = 2</span>
-<span class="cm" data-lang="en">Open interval: (1, 5)</span><span class="cm" data-lang="zh">开区间：(1, 5)</span>
-
-<span class="cm" data-lang="en">Test x = 1:</span><span class="cm" data-lang="zh">检验 x = 1：</span>  Σ (-1)^n/n → <span data-lang="en">alternating harmonic → </span><span data-lang="zh">交错调和级数 → </span><span class="str" data-lang="en">converges</span><span class="str" data-lang="zh">收敛</span>
-<span class="cm" data-lang="en">Test x = 5:</span><span class="cm" data-lang="zh">检验 x = 5：</span>  Σ 1/n → <span data-lang="en">harmonic → </span><span data-lang="zh">调和级数 → </span><span class="str" data-lang="en">diverges</span><span class="str" data-lang="zh">发散</span>
-
-<span class="str" data-lang="en">Interval of convergence: [1, 5)</span><span class="str" data-lang="zh">收敛区间：[1, 5)</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Interval of Convergence</span><span data-lang="zh">例题：收敛区间</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find the interval of convergence:</span><span data-lang="zh">求收敛区间：</span>
+        $$\sum_{n=1}^{\infty}\frac{(x-3)^n}{n\cdot 2^n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Ratio test</span><span data-lang="zh">比值判别法</span></strong>
+        $$\left|\frac{a_{n+1}}{a_n}\right|=\frac{|x-3|^{n+1}/\left[(n+1)2^{n+1}\right]}{|x-3|^n/\left[n\cdot 2^n\right]}=\frac{|x-3|}{2}\cdot\frac{n}{n+1}\ \longrightarrow\ \frac{|x-3|}{2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Radius</span><span data-lang="zh">半径</span></strong> <span data-lang="en">Converges when $\dfrac{|x-3|}{2}<1$, that is $|x-3|<2$, so $R=2$. The open interval is $(1,5)$.</span><span data-lang="zh">当 $\dfrac{|x-3|}{2}<1$ 时收敛，即 $|x-3|<2$，故 $R=2$。开区间为 $(1,5)$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Endpoint x = 1</span><span data-lang="zh">端点 x = 1</span></strong> <span data-lang="en">$\displaystyle\sum\frac{(-1)^n}{n}$ is the alternating harmonic series, so it converges.</span><span data-lang="zh">$\displaystyle\sum\frac{(-1)^n}{n}$ 是交错调和级数，收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Endpoint x = 5</span><span data-lang="zh">端点 x = 5</span></strong> <span data-lang="en">$\displaystyle\sum\frac{1}{n}$ is the harmonic series, so it diverges.</span><span data-lang="zh">$\displaystyle\sum\frac{1}{n}$ 是调和级数，发散。</span></div>
+      <div class="example-step example-result"><span data-lang="en">Interval of convergence: $[1,5)$</span><span data-lang="zh">收敛区间：$[1,5)$</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box green">
@@ -2021,6 +2663,43 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
     <strong style="color: var(--green);" data-lang="zh">重要性质</strong>
     <span style="display:block; margin-top:8px;" data-lang="en">Term-by-term differentiation and integration preserve the radius of convergence (but endpoints may change).</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">逐项求导与逐项积分保持收敛半径不变（但端点的收敛性可能改变）。</span>
+  </div>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Both Endpoints Included</span><span data-lang="zh">例题：两个端点都包含</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find the interval of convergence:</span><span data-lang="zh">求收敛区间：</span>
+        $$\sum_{n=1}^{\infty}\frac{(x+1)^n}{n^2\,3^n}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Ratio test</span><span data-lang="zh">比值判别法</span></strong>
+        $$\left|\frac{a_{n+1}}{a_n}\right|=\frac{|x+1|^{n+1}}{(n+1)^2\,3^{n+1}}\cdot\frac{n^2\,3^n}{|x+1|^n}=\frac{|x+1|}{3}\cdot\frac{n^2}{(n+1)^2}\ \longrightarrow\ \frac{|x+1|}{3}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Radius</span><span data-lang="zh">半径</span></strong> <span data-lang="en">Converges when $|x+1| &lt; 3$, so $R = 3$ and the open interval is $(-4, 2)$.</span><span data-lang="zh">当 $|x+1| &lt; 3$ 时收敛，所以 $R = 3$，开区间为 $(-4, 2)$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Endpoint x = 2</span><span data-lang="zh">端点 x = 2</span></strong> <span data-lang="en">$\displaystyle\sum\frac{3^n}{n^2\,3^n}=\sum\frac{1}{n^2}$, a $p$-series with $p = 2$: converges.</span><span data-lang="zh">$\displaystyle\sum\frac{3^n}{n^2\,3^n}=\sum\frac{1}{n^2}$，$p = 2$ 的 $p$ 级数：收敛。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Endpoint x = −4</span><span data-lang="zh">端点 x = −4</span></strong> <span data-lang="en">$\displaystyle\sum\frac{(-3)^n}{n^2\,3^n}=\sum\frac{(-1)^n}{n^2}$, which converges absolutely because $\sum 1/n^2$ converges.</span><span data-lang="zh">$\displaystyle\sum\frac{(-3)^n}{n^2\,3^n}=\sum\frac{(-1)^n}{n^2}$，因为 $\sum 1/n^2$ 收敛，所以它绝对收敛。</span></div>
+      <div class="example-step example-result"><span data-lang="en">Interval of convergence: $[-4, 2]$.</span><span data-lang="zh">收敛区间：$[-4, 2]$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">At $|x+1| = R$ the ratio test gives $L = 1$ and says nothing, so each endpoint is a separate numerical series to test.</span><span data-lang="zh">在 $|x+1| = R$ 处比值判别法得 $L = 1$，不能下结论，所以每个端点都是一个需要单独检验的数项级数。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">After the ratio test, state $R$ and the open interval, then test both endpoints and name the test used at each (for example $p$-series, alternating series test). The final interval can be open, closed or half-open; its brackets must match your endpoint results.</p>
+    <p data-lang="zh">用完比值判别法后，写出 $R$ 与开区间，再检验两个端点并写出各自所用的判别法（例如 $p$ 级数、交错级数判别法）。最终区间可以是开区间、闭区间或半开区间；括号必须与端点结果一致。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find the radius of convergence of $\displaystyle\sum_{n=0}^{\infty}\frac{x^n}{n!}$.</span><span data-lang="zh">1. 求 $\displaystyle\sum_{n=0}^{\infty}\frac{x^n}{n!}$ 的收敛半径。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{|x|}{n+1} \to 0 &lt; 1$ for every $x$, so $R = \infty$ and the series converges for all real $x$.</p><p data-lang="zh">对每个 $x$，$\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{|x|}{n+1} \to 0 &lt; 1$，所以 $R = \infty$，级数对所有实数 $x$ 收敛。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For which $x$ does $\displaystyle\sum_{n=0}^{\infty} n!\,x^n$ converge?</span><span data-lang="zh">2. $\displaystyle\sum_{n=0}^{\infty} n!\,x^n$ 对哪些 $x$ 收敛？</span></summary>
+      <div class="sg-a"><p data-lang="en">For $x \ne 0$, $\left|\dfrac{a_{n+1}}{a_n}\right| = (n+1)|x| \to \infty$, so the series diverges. It converges only at $x = 0$, so $R = 0$.</p><p data-lang="zh">当 $x \ne 0$ 时，$\left|\dfrac{a_{n+1}}{a_n}\right| = (n+1)|x| \to \infty$，级数发散。它只在 $x = 0$ 处收敛，所以 $R = 0$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the interval of convergence of $\displaystyle\sum_{n=1}^{\infty}\frac{(x-5)^n}{\sqrt n\,2^n}$.</span><span data-lang="zh">3. 求 $\displaystyle\sum_{n=1}^{\infty}\frac{(x-5)^n}{\sqrt n\,2^n}$ 的收敛区间。</span></summary>
+      <div class="sg-a"><p data-lang="en">The ratio tends to $\dfrac{|x-5|}{2}$, so $R = 2$ and the open interval is $(3, 7)$. At $x = 7$: $\sum 1/\sqrt n$, a $p$-series with $p = \tfrac12 \le 1$, diverges. At $x = 3$: $\sum (-1)^n/\sqrt n$ converges by the alternating series test. Interval: $[3, 7)$.</p><p data-lang="zh">比值趋于 $\dfrac{|x-5|}{2}$，所以 $R = 2$，开区间为 $(3, 7)$。$x = 7$ 时：$\sum 1/\sqrt n$ 是 $p = \tfrac12 \le 1$ 的 $p$ 级数，发散。$x = 3$ 时：$\sum (-1)^n/\sqrt n$ 由交错级数判别法收敛。区间为 $[3, 7)$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -2034,11 +2713,17 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
   <h2 data-lang="en">Finding Taylor or Maclaurin Series for a Function</h2>
   <h2 data-lang="zh">求函数的泰勒或麦克劳林级数</h2>
 
-  <p data-lang="en">These four Maclaurin series are the building blocks for the AP exam. Memorize them.</p>
-  <p data-lang="zh">这四条<strong>常见的麦克劳林级数（<code>common Maclaurin series</code>）</strong>是 AP 考试的基本砖块。请熟记。</p>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Write the general term $\dfrac{f^{(n)}(a)}{n!}(x-a)^n$ of a Taylor series.</li><li>Recall the Maclaurin series for $e^x$, $\sin x$, $\cos x$ and $\dfrac{1}{1-x}$ with their intervals.</li><li>Construct new series by substitution or multiplication by a power of $x$.</li><li>Deduce a derivative value from a series coefficient.</li><li>Write a series both as its first few nonzero terms and in sigma notation.</li></ul>
+    <ul data-lang="zh"><li>写出泰勒级数的通项 $\dfrac{f^{(n)}(a)}{n!}(x-a)^n$。</li><li>记住 $e^x$、$\sin x$、$\cos x$ 与 $\dfrac{1}{1-x}$ 的麦克劳林级数及其收敛区间。</li><li>通过代换或乘以 $x$ 的幂构造新级数。</li><li>由级数的系数反推导数值。</li><li>既写出前几个非零项，也用求和符号写出级数。</li></ul>
+  </div>
+
+  <p data-lang="en">These four Maclaurin series are the building blocks for almost every other series in this unit. Memorize them.</p>
+  <p data-lang="zh">这四条<strong>常见的麦克劳林级数（<code>common Maclaurin series</code>）</strong>是本单元几乎所有其他级数的基本砖块。请熟记。</p>
 
   <div class="qref">
-    <div class="qref-title" data-lang="en">Essential Maclaurin Series — Memorize These!</div>
+    <div class="qref-title" data-lang="en">Essential Maclaurin Series: Memorize These!</div>
     <div class="qref-title" data-lang="zh">必记的麦克劳林级数</div>
     <div class="table-wrap">
       <table>
@@ -2068,23 +2753,56 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
     <span style="display:block; margin-top:4px;" data-lang="zh">$1/(1-x)$ 就是<strong>等比级数</strong>！</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Constructing from a Known Series</span><span data-lang="zh">例题 —— 从已知级数构造</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find the Maclaurin series for f(x) = e^(−x²).</span><span class="cm" data-lang="zh">求 f(x) = e^(−x²) 的麦克劳林级数。</span>
-
-<span class="cm" data-lang="en">Start with the known series for eᵘ:</span><span class="cm" data-lang="zh">从已知的 eᵘ 级数出发：</span>
-  eᵘ = Σ uⁿ/n!
-
-<span class="cm" data-lang="en">Substitute u = −x²:</span><span class="cm" data-lang="zh">代入 u = −x²：</span>
-  e^(−x²) = Σ (−x²)ⁿ/n!
-           = Σ (−1)ⁿ x^(2n) / n!
-
-           = 1 − x² + x⁴/2! − x⁶/3! + ⋯
-
-           = <span class="num">Σ_{n=0}^∞ (−1)ⁿ x^(2n) / n!</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Constructing from a Known Series</span><span data-lang="zh">例题：从已知级数构造</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find the Maclaurin series for $f(x)=e^{-x^2}$.</span><span data-lang="zh">求 $f(x)=e^{-x^2}$ 的麦克劳林级数。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Known series</span><span data-lang="zh">已知级数</span></strong> <span data-lang="en">Start with the known series for $e^u$:</span><span data-lang="zh">从已知的 $e^u$ 级数出发：</span>
+        $$e^u=\sum_{n=0}^{\infty}\frac{u^n}{n!}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Substitute</span><span data-lang="zh">代入</span></strong> <span data-lang="en">Substitute $u=-x^2$:</span><span data-lang="zh">代入 $u=-x^2$：</span>
+        $$e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-x^2)^n}{n!}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\displaystyle e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}$</span><span data-lang="zh">$\displaystyle e^{-x^2}=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}$</span></div>
     </div>
+  </div>
   </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: A High Derivative from a Series</span><span data-lang="zh">例题：由级数求高阶导数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">For $f(x) = e^{-x^2}$, find $f^{(6)}(0)$.</span><span data-lang="zh">对 $f(x) = e^{-x^2}$，求 $f^{(6)}(0)$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Series</span><span data-lang="zh">级数</span></strong> <span data-lang="en">From the worked example above:</span><span data-lang="zh">由上面的例题：</span>
+        $$e^{-x^2}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Coefficient</span><span data-lang="zh">系数</span></strong> <span data-lang="en">The coefficient of $x^6$ is $-\dfrac{1}{3!} = -\dfrac16$.</span><span data-lang="zh">$x^6$ 的系数为 $-\dfrac{1}{3!} = -\dfrac16$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Match</span><span data-lang="zh">对应</span></strong> <span data-lang="en">In a Maclaurin series that coefficient equals $\dfrac{f^{(6)}(0)}{6!}$:</span><span data-lang="zh">在麦克劳林级数中，该系数等于 $\dfrac{f^{(6)}(0)}{6!}$：</span>
+        $$f^{(6)}(0)=6!\cdot\left(-\frac16\right)=720\cdot\left(-\frac16\right)=-120$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$f^{(6)}(0) = -120$.</span><span data-lang="zh">$f^{(6)}(0) = -120$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Why this works</span><span data-lang="zh">原理</span></strong> <span data-lang="en">A function has only one power series about a given centre, so the coefficients found by substitution must be $f^{(n)}(0)/n!$.</span><span data-lang="zh">函数关于给定中心的幂级数是唯一的，所以通过代换得到的系数一定等于 $f^{(n)}(0)/n!$。</span></div>
+    </div>
+  </div>
+  </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Give the first few nonzero terms and the general term when asked for a series, and check that the general term reproduces those first terms. When a question asks for a derivative value at the centre, read it off: $f^{(k)}(a) = k! \times$ the coefficient of $(x-a)^k$.</p>
+    <p data-lang="zh">题目要求写级数时，写出前几个非零项和通项，并检查通项能否给出这些项。若要求中心处的导数值，直接读取：$f^{(k)}(a) = k! \times$ $(x-a)^k$ 的系数。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write the first three nonzero terms of the Maclaurin series for $\cos(2x)$.</span><span data-lang="zh">1. 写出 $\cos(2x)$ 的麦克劳林级数的前三个非零项。</span></summary>
+      <div class="sg-a"><p data-lang="en">Substitute $2x$ into $\cos u = 1 - \dfrac{u^2}{2!} + \dfrac{u^4}{4!} - \cdots$: $1 - \dfrac{4x^2}{2} + \dfrac{16x^4}{24} = 1 - 2x^2 + \dfrac23 x^4$.</p><p data-lang="zh">把 $2x$ 代入 $\cos u = 1 - \dfrac{u^2}{2!} + \dfrac{u^4}{4!} - \cdots$：$1 - \dfrac{4x^2}{2} + \dfrac{16x^4}{24} = 1 - 2x^2 + \dfrac23 x^4$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Write the Taylor series for $e^x$ about $x = 1$ in sigma notation.</span><span data-lang="zh">2. 用求和符号写出 $e^x$ 关于 $x = 1$ 的泰勒级数。</span></summary>
+      <div class="sg-a"><p data-lang="en">Every derivative of $e^x$ at $x = 1$ equals $e$, so $e^x = \displaystyle\sum_{n=0}^{\infty}\frac{e\,(x-1)^n}{n!}$, valid for all $x$.</p><p data-lang="zh">$e^x$ 在 $x = 1$ 处的各阶导数都等于 $e$，所以 $e^x = \displaystyle\sum_{n=0}^{\infty}\frac{e\,(x-1)^n}{n!}$，对所有 $x$ 成立。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $g(x) = x\sin x$, find $g^{(4)}(0)$.</span><span data-lang="zh">3. 对 $g(x) = x\sin x$，求 $g^{(4)}(0)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$x\sin x = x\left(x - \dfrac{x^3}{6} + \cdots\right) = x^2 - \dfrac{x^4}{6} + \cdots$. The coefficient of $x^4$ is $-\dfrac16$, so $g^{(4)}(0) = 4! \cdot \left(-\dfrac16\right) = -4$.</p><p data-lang="zh">$x\sin x = x\left(x - \dfrac{x^3}{6} + \cdots\right) = x^2 - \dfrac{x^4}{6} + \cdots$。$x^4$ 的系数为 $-\dfrac16$，所以 $g^{(4)}(0) = 4! \cdot \left(-\dfrac16\right) = -4$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -2096,6 +2814,12 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
   <div class="section-label">Topic 10.15</div>
   <h2 data-lang="en">Representing Functions as Power Series</h2>
   <h2 data-lang="zh">将函数表示为幂级数</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Construct power series by substituting into $\dfrac{1}{1-x}$, $e^x$, $\sin x$ and $\cos x$.</li><li>Differentiate and integrate power series term by term.</li><li>Determine the constant of integration by evaluating at the centre.</li><li>State that the radius of convergence is unchanged by these operations, while endpoints must be rechecked.</li><li>Use a series to evaluate a limit.</li></ul>
+    <ul data-lang="zh"><li>通过代入 $\dfrac{1}{1-x}$、$e^x$、$\sin x$ 与 $\cos x$ 构造幂级数。</li><li>对幂级数逐项求导与逐项积分。</li><li>在中心处取值以确定积分常数。</li><li>说明这些运算不改变收敛半径，但端点需重新检验。</li><li>用级数求极限。</li></ul>
+  </div>
 
   <div class="concept-box">
     <strong style="color: var(--accent);" data-lang="en">The Toolkit</strong>
@@ -2112,39 +2836,29 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
     <span style="display:block; margin-top:4px;" data-lang="zh"><strong>4. 逐项积分：</strong>对每一项积分得到 $\int f(x)\,dx$ 的级数。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Substitution</span><span data-lang="zh">例题 —— 代换</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find a power series for 1/(1+x²).</span><span class="cm" data-lang="zh">求 1/(1+x²) 的幂级数。</span>
-
-<span class="cm" data-lang="en">Start with: 1/(1−u) = Σ uⁿ for |u| < 1</span><span class="cm" data-lang="zh">从已知出发：当 |u| < 1 时 1/(1−u) = Σ uⁿ</span>
-<span class="cm" data-lang="en">Let u = −x²:</span><span class="cm" data-lang="zh">令 u = −x²：</span>
-
-  1/(1−(−x²)) = 1/(1+x²)
-              = Σ (−x²)ⁿ
-              = Σ (−1)ⁿ x^(2n)
-
-              = <span class="num">1 − x² + x⁴ − x⁶ + ⋯</span>
-<span class="cm" data-lang="en">for |x| < 1</span><span class="cm" data-lang="zh">|x| < 1</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Substitution</span><span data-lang="zh">例题：代换</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find a power series for $\dfrac{1}{1+x^2}$.</span><span data-lang="zh">求 $\dfrac{1}{1+x^2}$ 的幂级数。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Known series</span><span data-lang="zh">已知级数</span></strong> <span data-lang="en">Start with $\dfrac{1}{1-u}=\displaystyle\sum_{n=0}^{\infty}u^n$ for $|u|<1$, and let $u=-x^2$:</span><span data-lang="zh">从已知出发：当 $|u|<1$ 时 $\dfrac{1}{1-u}=\displaystyle\sum_{n=0}^{\infty}u^n$，令 $u=-x^2$：</span>
+        $$\frac{1}{1-(-x^2)}=\frac{1}{1+x^2}=\sum_{n=0}^{\infty}(-x^2)^n=\sum_{n=0}^{\infty}(-1)^n x^{2n}$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\dfrac{1}{1+x^2}=1-x^2+x^4-x^6+\cdots$ for $|x|<1$</span><span data-lang="zh">$\dfrac{1}{1+x^2}=1-x^2+x^4-x^6+\cdots$，$|x|<1$</span></div>
     </div>
+  </div>
   </details>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Term-by-Term Integration</span><span data-lang="zh">例题 —— 逐项积分</span></summary>
-    <div class="detail-body">
-<pre><span class="cm" data-lang="en">Find a power series for arctan(x).</span><span class="cm" data-lang="zh">求 arctan(x) 的幂级数。</span>
-
-<span class="cm" data-lang="en">We know d/dx[arctan(x)] = 1/(1+x²)</span><span class="cm" data-lang="zh">已知 d/dx[arctan(x)] = 1/(1+x²)</span>
-<span class="cm" data-lang="en">So arctan(x) = ∫ 1/(1+x²) dx</span><span class="cm" data-lang="zh">所以 arctan(x) = ∫ 1/(1+x²) dx</span>
-
-<span class="cm" data-lang="en">From above: 1/(1+x²) = Σ (−1)ⁿ x^(2n)</span><span class="cm" data-lang="zh">由上：1/(1+x²) = Σ (−1)ⁿ x^(2n)</span>
-
-<span class="cm" data-lang="en">Integrate term by term:</span><span class="cm" data-lang="zh">逐项积分：</span>
-  arctan(x) = Σ (−1)ⁿ x^(2n+1)/(2n+1) + C
-
-<span class="cm" data-lang="en">Since arctan(0) = 0, we get C = 0:</span><span class="cm" data-lang="zh">因为 arctan(0) = 0，所以 C = 0：</span>
-  arctan(x) = <span class="num">x − x³/3 + x⁵/5 − x⁷/7 + ⋯</span>
-<span class="cm" data-lang="en">for |x| ≤ 1</span><span class="cm" data-lang="zh">|x| ≤ 1</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Term-by-Term Integration</span><span data-lang="zh">例题：逐项积分</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Question</span><span data-lang="zh">问题</span></strong> <span data-lang="en">Find a power series for $\arctan x$.</span><span data-lang="zh">求 $\arctan x$ 的幂级数。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Start</span><span data-lang="zh">出发点</span></strong> <span data-lang="en">We know $\dfrac{d}{dx}\left[\arctan x\right]=\dfrac{1}{1+x^2}$, so $\arctan x=\displaystyle\int\frac{dx}{1+x^2}$. From above, $\dfrac{1}{1+x^2}=\displaystyle\sum_{n=0}^{\infty}(-1)^n x^{2n}$.</span><span data-lang="zh">已知 $\dfrac{d}{dx}\left[\arctan x\right]=\dfrac{1}{1+x^2}$，所以 $\arctan x=\displaystyle\int\frac{dx}{1+x^2}$。由上，$\dfrac{1}{1+x^2}=\displaystyle\sum_{n=0}^{\infty}(-1)^n x^{2n}$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Integrate</span><span data-lang="zh">积分</span></strong> <span data-lang="en">Integrate term by term:</span><span data-lang="zh">逐项积分：</span>
+        $$\arctan x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{2n+1}+C$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Constant</span><span data-lang="zh">常数</span></strong> <span data-lang="en">Since $\arctan 0=0$, we get $C=0$.</span><span data-lang="zh">因为 $\arctan 0=0$，所以 $C=0$。</span></div>
+      <div class="example-step example-result"><span data-lang="en">$\arctan x=x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\dfrac{x^7}{7}+\cdots$ for $|x|\le 1$</span><span data-lang="zh">$\arctan x=x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\dfrac{x^7}{7}+\cdots$，$|x|\le 1$</span></div>
+    </div>
   </div>
   </details>
 
@@ -2160,6 +2874,26 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
     <div class="quiz-explain wrong-exp"><span data-lang="en">Since $e^x = \sum_{n=0}^{\infty} x^n/n!$, multiplying by $x$ gives $xe^x = \sum_{n=0}^{\infty} x^{n+1}/n!$.</span><span data-lang="zh">由 $e^x = \sum_{n=0}^{\infty} x^n/n!$，乘以 $x$ 得 $xe^x = \sum_{n=0}^{\infty} x^{n+1}/n!$。</span></div>
 
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">↻ Try Again</span><span data-lang="zh">↻ 再试一次</span></button>
+  </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Carry the interval with every substitution: replacing $x$ by $-x^2$ in $\dfrac{1}{1-x}$ needs $|-x^2| &lt; 1$. After integrating term by term, evaluate both sides at the centre to find $C$. The radius stays the same after differentiating or integrating, but recheck each endpoint.</p>
+    <p data-lang="zh">每次代换都要带上收敛区间：在 $\dfrac{1}{1-x}$ 中以 $-x^2$ 代 $x$ 需要 $|-x^2| &lt; 1$。逐项积分后，在中心处计算两边以确定 $C$。求导或积分后半径不变，但每个端点都要重新检验。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find a power series for $\dfrac{1}{(1-x)^2}$ by differentiating a known series.</span><span data-lang="zh">1. 通过对已知级数求导，求 $\dfrac{1}{(1-x)^2}$ 的幂级数。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{d}{dx}\dfrac{1}{1-x} = \dfrac{1}{(1-x)^2}$, so differentiate $\sum_{n=0}^{\infty} x^n$ term by term: $\dfrac{1}{(1-x)^2} = \sum_{n=1}^{\infty} n x^{n-1} = 1 + 2x + 3x^2 + \cdots$ for $|x| &lt; 1$.</p><p data-lang="zh">$\dfrac{d}{dx}\dfrac{1}{1-x} = \dfrac{1}{(1-x)^2}$，所以对 $\sum_{n=0}^{\infty} x^n$ 逐项求导：$\dfrac{1}{(1-x)^2} = \sum_{n=1}^{\infty} n x^{n-1} = 1 + 2x + 3x^2 + \cdots$，$|x| &lt; 1$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the Maclaurin series for $\ln(1+x)$ and its interval of convergence.</span><span data-lang="zh">2. 求 $\ln(1+x)$ 的麦克劳林级数及其收敛区间。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\dfrac{1}{1+x} = \sum_{n=0}^{\infty}(-1)^n x^n$ for $|x| &lt; 1$. Integrating term by term, $\ln(1+x) = \sum_{n=0}^{\infty}\dfrac{(-1)^n x^{n+1}}{n+1} + C$, and $\ln 1 = 0$ gives $C = 0$: $x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \cdots$. At $x = 1$ it is the alternating harmonic series (converges); at $x = -1$ it is minus the harmonic series (diverges). Interval: $(-1, 1]$.</p><p data-lang="zh">当 $|x| &lt; 1$ 时 $\dfrac{1}{1+x} = \sum_{n=0}^{\infty}(-1)^n x^n$。逐项积分得 $\ln(1+x) = \sum_{n=0}^{\infty}\dfrac{(-1)^n x^{n+1}}{n+1} + C$，由 $\ln 1 = 0$ 得 $C = 0$：$x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \cdots$。$x = 1$ 时为交错调和级数（收敛）；$x = -1$ 时为调和级数的相反数（发散）。区间为 $(-1, 1]$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Use the Maclaurin series for $\sin x$ to find $\displaystyle\lim_{x\to 0}\frac{\sin x - x}{x^3}$.</span><span data-lang="zh">3. 用 $\sin x$ 的麦克劳林级数求 $\displaystyle\lim_{x\to 0}\frac{\sin x - x}{x^3}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\sin x - x = -\dfrac{x^3}{6} + \dfrac{x^5}{120} - \cdots$, so $\dfrac{\sin x - x}{x^3} = -\dfrac16 + \dfrac{x^2}{120} - \cdots \to -\dfrac16$.</p><p data-lang="zh">$\sin x - x = -\dfrac{x^3}{6} + \dfrac{x^5}{120} - \cdots$，所以 $\dfrac{\sin x - x}{x^3} = -\dfrac16 + \dfrac{x^2}{120} - \cdots \to -\dfrac16$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -2191,20 +2925,20 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
       <div class="card-icon icon-blue">?</div>
       <div class="card-title"><span data-lang="en">Decision Flowchart</span><span data-lang="zh">判别决策流程</span></div>
     </div>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 0 — Always start here:</strong> Does $\lim a_n = 0$? If NO → <strong>diverges</strong> (nth Term Test). If YES → continue.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 0 —— 永远先做：</strong>$\lim a_n = 0$ 吗？若否 → <strong>发散</strong>（第 n 项判别法）。若是 → 继续。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 1 — Is it geometric?</strong> $\sum ar^n$ → converges if $|r| < 1$, diverges if $|r| \geq 1$.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 1 —— 是等比级数吗？</strong>$\sum ar^n$ → $|r| < 1$ 时收敛，$|r| \geq 1$ 时发散。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 2 — Is it a $p$-series?</strong> $\sum 1/n^p$ → converges if $p > 1$, diverges if $p \leq 1$.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 2 —— 是 $p$ 级数吗？</strong>$\sum 1/n^p$ → $p > 1$ 时收敛，$p \leq 1$ 时发散。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 3 — Does it alternate?</strong> Try the <strong>Alternating Series Test</strong>.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 3 —— 是否交错？</strong>尝试<strong>交错级数判别法</strong>。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 4 — Factorials or exponentials?</strong> Try the <strong>Ratio Test</strong>.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 4 —— 含阶乘或指数？</strong>尝试<strong>比值判别法</strong>。</p>
-    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 5 — Looks like a known series?</strong> Try <strong>Direct or Limit Comparison</strong>.</p>
-    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 5 —— 与已知级数相似？</strong>尝试<strong>比较判别法或极限比较判别法</strong>。</p>
-    <p data-lang="en"><strong>Step 6 — None of the above?</strong> Try the <strong>Integral Test</strong>.</p>
-    <p data-lang="zh"><strong>步骤 6 —— 以上都不是？</strong>尝试<strong>积分判别法</strong>。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 0 (always start here):</strong> Does $\lim a_n = 0$? If NO → <strong>diverges</strong> (nth Term Test). If YES → continue.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 0（永远先做）：</strong>$\lim a_n = 0$ 吗？若否 → <strong>发散</strong>（第 n 项判别法）。若是 → 继续。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 1: Is it geometric?</strong> $\sum ar^n$ → converges if $|r| < 1$, diverges if $|r| \geq 1$.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 1：是等比级数吗？</strong>$\sum ar^n$ → $|r| < 1$ 时收敛，$|r| \geq 1$ 时发散。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 2: Is it a $p$-series?</strong> $\sum 1/n^p$ → converges if $p > 1$, diverges if $p \leq 1$.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 2：是 $p$ 级数吗？</strong>$\sum 1/n^p$ → $p > 1$ 时收敛，$p \leq 1$ 时发散。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 3: Does it alternate?</strong> Try the <strong>Alternating Series Test</strong>.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 3：是否交错？</strong>尝试<strong>交错级数判别法</strong>。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 4: Factorials or exponentials?</strong> Try the <strong>Ratio Test</strong>.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 4：含阶乘或指数？</strong>尝试<strong>比值判别法</strong>。</p>
+    <p style="margin-bottom: 8px;" data-lang="en"><strong>Step 5: Looks like a known series?</strong> Try <strong>Direct or Limit Comparison</strong>.</p>
+    <p style="margin-bottom: 8px;" data-lang="zh"><strong>步骤 5：与已知级数相似？</strong>尝试<strong>比较判别法或极限比较判别法</strong>。</p>
+    <p data-lang="en"><strong>Step 6: None of the above?</strong> Try the <strong>Integral Test</strong>.</p>
+    <p data-lang="zh"><strong>步骤 6：以上都不是？</strong>尝试<strong>积分判别法</strong>。</p>
   </div>
 
   <div class="qref">
@@ -2234,7 +2968,7 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
         </tr>
         <tr>
           <td><strong><span data-lang="en">Integral</span><span data-lang="zh">积分</span></strong></td>
-          <td><span data-lang="en">Positive, decreasing $f(n)$</span><span data-lang="zh">正、单调递减的 $f(n)$</span></td>
+          <td><span data-lang="en">Positive, continuous, decreasing $f(n)$</span><span data-lang="zh">正、连续、单调递减的 $f(n)$</span></td>
           <td><span data-lang="en">Same as $\int_1^{\infty} f(x)\,dx$</span><span data-lang="zh">与 $\int_1^{\infty} f(x)\,dx$ 同性质</span></td>
         </tr>
         <tr>
@@ -2250,7 +2984,7 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
         <tr>
           <td><strong><span data-lang="en">Alternating Series</span><span data-lang="zh">交错级数</span></strong></td>
           <td>$\sum (-1)^n b_n$</td>
-          <td><span data-lang="en">Converges if $b_n$ decreasing → $0$</span><span data-lang="zh">$b_n$ 递减且 → $0$ 时收敛</span></td>
+          <td><span data-lang="en">Converges if $b_n &gt; 0$ is decreasing and $b_n \to 0$</span><span data-lang="zh">$b_n &gt; 0$ 单调递减且 $b_n \to 0$ 时收敛</span></td>
         </tr>
         <tr>
           <td><strong><span data-lang="en">Ratio</span><span data-lang="zh">比值</span></strong></td>
@@ -2269,13 +3003,13 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
 <!-- ═══════════════════════════════════════════════ -->
 <section class="section" id="exam-strategy">
   <div class="section-label">Exam Strategy</div>
-  <h2 data-lang="en">How Unit 10 Appears on the AP Exam</h2>
-  <h2 data-lang="zh">单元 10 在 AP 考试中的考查形式</h2>
+  <h2 data-lang="en">Exam Strategy for Unit 10</h2>
+  <h2 data-lang="zh">单元 10 考试策略</h2>
 
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-blue">MC</div>
-      <div class="card-title"><span data-lang="en">MCQ — Common Question Styles</span><span data-lang="zh">选择题 —— 常见题型</span></div>
+      <div class="card-title"><span data-lang="en">MCQ: Tasks to Practise</span><span data-lang="zh">选择题：需练习的题型</span></div>
     </div>
     <p data-lang="en"><strong>Determine convergence/divergence</strong> of a given series using the appropriate test.</p>
     <p data-lang="zh"><strong>判断收敛/发散：</strong>对给定级数使用合适的判别法。</p>
@@ -2292,10 +3026,10 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-green">FR</div>
-      <div class="card-title"><span data-lang="en">FRQ — Common Question Styles</span><span data-lang="zh">解答题 —— 常见题型</span></div>
+      <div class="card-title"><span data-lang="en">FRQ: Tasks to Practise</span><span data-lang="zh">解答题：需练习的题型</span></div>
     </div>
-    <p data-lang="en"><strong>Series FRQ:</strong> Usually involves finding a Taylor polynomial from a table of derivatives, using it to approximate a value, and bounding the error.</p>
-    <p data-lang="zh"><strong>级数解答题：</strong>通常给出导数值表，要求构造泰勒多项式、用它近似某值并估计误差界。</p>
+    <p data-lang="en"><strong>Taylor polynomial chain:</strong> build a Taylor polynomial from a table of derivative values, use it to approximate a value, and bound the error.</p>
+    <p data-lang="zh"><strong>泰勒多项式链式任务：</strong>由导数值表构造泰勒多项式，用它近似某值，并估计误差界。</p>
     <p data-lang="en"><strong>Deriving a new series</strong> from a known one via substitution, differentiation, or integration.</p>
     <p data-lang="zh"><strong>由已知级数推导新级数：</strong>通过代换、求导或积分。</p>
     <p data-lang="en"><strong>Finding the interval of convergence</strong> with complete endpoint analysis.</p>
@@ -2305,12 +3039,12 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
   </div>
 
   <div class="concept-box red">
-    <strong style="color: var(--red);" data-lang="en">Top Mistakes That Lose Points</strong>
-    <strong style="color: var(--red);" data-lang="zh">最常见的失分错误</strong>
+    <strong style="color: var(--red);" data-lang="en">Top Mistakes to Avoid</strong>
+    <strong style="color: var(--red);" data-lang="zh">最常见的错误</strong>
     <span style="display:block; margin-top:8px;" data-lang="en">1. Not verifying conditions for a convergence test (especially the AST).</span>
     <span style="display:block; margin-top:8px;" data-lang="zh">1. 不验证收敛判别法的前提条件（尤其是交错级数判别法）。</span>
-    <span style="display:block; margin-top:4px;" data-lang="en">2. Saying "by the nth Term Test, the series converges" — it only proves divergence!</span>
-    <span style="display:block; margin-top:4px;" data-lang="zh">2. 写“由第 n 项判别法级数收敛” —— 第 n 项判别法只能证明发散！</span>
+    <span style="display:block; margin-top:4px;" data-lang="en">2. Saying "by the nth Term Test, the series converges": it only proves divergence!</span>
+    <span style="display:block; margin-top:4px;" data-lang="zh">2. 写“由第 n 项判别法级数收敛”：第 n 项判别法只能证明发散！</span>
     <span style="display:block; margin-top:4px;" data-lang="en">3. Forgetting to check endpoints when finding the interval of convergence.</span>
     <span style="display:block; margin-top:4px;" data-lang="zh">3. 求收敛区间时忘记检验端点。</span>
     <span style="display:block; margin-top:4px;" data-lang="en">4. Confusing the Lagrange error bound with the alternating series error bound.</span>
@@ -2327,8 +3061,8 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
 <!-- ═══════════════════════════════════════════════ -->
 <section class="section" id="flashcards">
   <div class="section-label">Review</div>
-  <h2 data-lang="en">Flashcards — Click to Flip</h2>
-  <h2 data-lang="zh">闪卡 —— 点击翻面</h2>
+  <h2 data-lang="en">Flashcards: Click to Flip</h2>
+  <h2 data-lang="zh">闪卡：点击翻面</h2>
 
   <div class="flashcard-toolbar">
     <span class="fc-count" id="fcCount"><span data-lang="en">0 / 8 flipped</span><span data-lang="zh">已翻 0 / 8 张</span></span>
@@ -2398,8 +3132,8 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
 <section class="section" id="unit-quiz">
   <div class="section-label">Assessment
   </div>
-  <h2 data-lang="en">Unit 10 — Practice Quiz</h2>
-  <h2 data-lang="zh">单元 10 —— 练习小测</h2>
+  <h2 data-lang="en">Unit 10 Practice Quiz</h2>
+  <h2 data-lang="zh">单元 10 练习小测</h2>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-q"><span data-lang="en">1. Which series converges?</span><span data-lang="zh">1. 下列级数中哪一个收敛？</span></div>
@@ -2531,8 +3265,8 @@ $$ \sum_{n=1}^{\infty} \frac{(x-3)^n}{n \cdot 2^n} $$
 
 <div class="footer-wrap">
   <div class="footer-brand">鼎睿学苑 · Dingrui Scholars</div>
-  <p data-lang="en">AP Calculus AB/BC — Unit 10: Infinite Sequences and Series · 2025 Edition</p>
-  <p data-lang="zh">AP 微积分 AB/BC —— 单元 10：无穷数列与级数 · 2025 版</p>
+  <p data-lang="en">AP Calculus AB/BC · Unit 10: Infinite Sequences and Series · 2025 Edition</p>
+  <p data-lang="zh">AP 微积分 AB/BC · 单元 10：无穷数列与级数 · 2025 版</p>
 </div>
 
 <style id="dr-related-css">
@@ -2616,7 +3350,6 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 function toggleLang() {
   const isZh = document.body.classList.contains('lang-zh');
   document.body.classList.toggle('lang-zh', !isZh);
-  try { localStorage.setItem('drs.lang', isZh ? 'en' : 'zh'); } catch(e) {}
 }
 try {
   if (false) document.body.classList.add('lang-zh');
@@ -3250,6 +3983,22 @@ updateDashboard();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -3393,21 +4142,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

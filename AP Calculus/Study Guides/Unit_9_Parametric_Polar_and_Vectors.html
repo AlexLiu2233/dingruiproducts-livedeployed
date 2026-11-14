@@ -302,6 +302,7 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
 .concept-box.green { border-left-color: var(--green); }
 .concept-box.orange { border-left-color: var(--orange); }
 .concept-box.red { border-left-color: var(--red); }
+.concept-box.ap-trap strong { color: var(--red); }
 .concept-box.purple { border-left-color: var(--purple); }
 .concept-box > strong:first-child { 
   display: inline-block; margin-bottom: 8px; 
@@ -351,6 +352,65 @@ summary:hover { background: var(--accent-light); }
 summary::before { content: '▸'; transition: transform 0.2s; font-size: 1rem; color: var(--accent); }
 details[open] summary { border-bottom: 1px solid var(--border); }
 details[open] summary::before { transform: rotate(90deg); }
+/* ─── WORKED EXAMPLE CARDS (surfaced, no longer collapsed) ─── */
+.example-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 22px 22px 18px;
+  margin: 22px 0;
+}
+.example-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.example-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+.example-card .detail-body { font-size: 0.95rem; }
+
+.example-steps {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.example-step {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  line-height: 1.72;
+}
+.example-step .katex-display {
+  margin: 10px 0 6px;
+  text-align: left;
+}
+.example-step strong {
+  display: inline-block;
+  min-width: 72px;
+  color: var(--accent);
+}
+.example-step.example-result {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
+}
+.example-note {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+.example-step .katex, .example-note .katex { white-space: normal; }
+
 details .detail-body { padding: 20px; font-size: 0.95rem; background: var(--bg-card); }
 
 /* ─── QUICK REF ─── */
@@ -876,6 +936,86 @@ body.lang-zh [data-lang="en"] { display: none !important; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--sg-gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--sg-gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -942,14 +1082,12 @@ body.lang-zh [data-lang="en"] { display: none !important; }
   <h1 data-lang="en">Unit 9: Parametric Equations,<br>Polar Coordinates &amp; Vector-Valued Functions</h1>
   <h1 data-lang="zh">单元 9：参数方程、<br>极坐标与向量值函数</h1>
   <p class="hero-sub" data-lang="en">
-    Extend calculus to curves in the plane — parametric &amp; polar derivatives, arc length, vector motion, and polar areas. <strong>BC Only.</strong>
+    Extend calculus to curves in the plane: parametric &amp; polar derivatives, arc length, vector motion, and polar areas. <strong>BC only: every topic in this unit is BC content and is not part of AB.</strong>
   </p>
   <p class="hero-sub" data-lang="zh">
-    将微积分扩展到平面曲线 —— 参数方程与极坐标的导数、弧长、向量运动以及极坐标面积。<strong>仅 BC。</strong>
+    将微积分扩展到平面曲线：参数方程与极坐标的导数、弧长、向量运动以及极坐标面积。<strong>仅 BC：本单元每个主题都属于 BC 内容，不在 AB 范围内。</strong>
   </p>
   <div class="hero-meta">
-    <span class="chip chip-maroon"><span data-lang="en">11–12% of AP Exam</span><span data-lang="zh">占 AP 考试 11–12%</span></span>
-    <span class="chip chip-green"><span data-lang="en">~10–11 Class Periods</span><span data-lang="zh">约 10–11 课时</span></span>
     <span class="chip chip-purple"><span data-lang="en">9 Topics</span><span data-lang="zh">9 个主题</span></span>
   </div>
 </section>
@@ -983,6 +1121,12 @@ body.lang-zh [data-lang="en"] { display: none !important; }
 
   <h2 data-lang="zh">参数方程（<code>parametric equations</code>）的定义与求导</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State what the parameter $t$ represents and plot points of a curve from $x(t)$ and $y(t)$.</li><li>Calculate $\frac{dy}{dx}$ at a point as $\frac{dy/dt}{dx/dt}$.</li><li>Deduce where a parametric curve has horizontal or vertical tangent lines.</li><li>Write an equation of the tangent line at a given value of $t$.</li><li>Explain the direction in which a curve is traced as $t$ increases.</li></ul>
+    <ul data-lang="zh"><li>说明参数 $t$ 的含义，并由 $x(t)$、$y(t)$ 描点画出曲线。</li><li>用 $\frac{dy/dt}{dx/dt}$ 计算某点处的 $\frac{dy}{dx}$。</li><li>推断参数曲线在何处有水平切线或垂直切线（<code>horizontal / vertical tangent</code>）。</li><li>写出给定 $t$ 值处的切线方程（<code>tangent line</code>）。</li><li>解释随着 $t$ 增大曲线被描出的方向（<code>direction of motion</code>）。</li></ul>
+  </div>
+
   <div class="concept-box">
     <strong style="color: var(--accent);"><span data-lang="en">Parametric Equations</span><span data-lang="zh">参数方程</span></strong>
     <span data-lang="en">A curve is defined by $x = f(t)$ and $y = g(t)$, where $t$ is the parameter. Each value of $t$ gives a point $(x, y)$ on the curve.</span>
@@ -993,7 +1137,7 @@ body.lang-zh [data-lang="en"] { display: none !important; }
   <p data-lang="zh">参数曲线切线（<code>tangent line</code>）的斜率（<code>slope</code>）通过<strong>链式法则（<code>chain rule</code>）</strong>得到：</p>
 
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">First Derivative — Parametric</span><span data-lang="zh">一阶导数 —— 参数方程</span></div>
+    <div class="formula-label"><span data-lang="en">First Derivative (Parametric)</span><span data-lang="zh">一阶导数（参数方程）</span></div>
     $$ \frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}} $$
     <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="en">provided $\frac{dx}{dt} \neq 0$</p>
     <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;" data-lang="zh">前提是 $\frac{dx}{dt} \neq 0$</p>
@@ -1005,24 +1149,17 @@ body.lang-zh [data-lang="en"] { display: none !important; }
     <span data-lang="zh">学生常常只算出 $\frac{dy}{dt}$ 或 $\frac{dx}{dt}$，却忘了相除。切线斜率是<em>比值</em> $\frac{dy}{dx}$，而不是其中任何一个导数本身。</span>
   </div>
 
-  <h3 data-lang="en">Worked Example</h3>
-  <h3 data-lang="zh">例题</h3>
-<pre data-lang="en"><span class="cm">Given: x = t² + 1,  y = t³ − 3t</span>
-
-<span class="cm">Find dy/dx at t = 2.</span>
-
-dx/dt = <span class="num">2t</span>       →  at t=2:  dx/dt = <span class="num">4</span>
-dy/dt = <span class="num">3t² − 3</span>  →  at t=2:  dy/dt = <span class="num">9</span>
-
-dy/dx = <span class="num">9/4</span></pre>
-<pre data-lang="zh"><span class="cm">已知：x = t² + 1，y = t³ − 3t</span>
-
-<span class="cm">求 t = 2 处的 dy/dx。</span>
-
-dx/dt = <span class="num">2t</span>       →  当 t=2 时：dx/dt = <span class="num">4</span>
-dy/dt = <span class="num">3t² − 3</span>  →  当 t=2 时：dy/dt = <span class="num">9</span>
-
-dy/dx = <span class="num">9/4</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Slope of a Parametric Curve at a Point</span><span data-lang="zh">例题：参数曲线在某点的斜率</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$x=t^2+1$, $y=t^3-3t$. Find $dy/dx$ at $t=2$.</span><span data-lang="zh">$x=t^2+1$，$y=t^3-3t$。求 $t=2$ 处的 $dy/dx$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Derivatives</span><span data-lang="zh">求导</span></strong>
+        $$\frac{dx}{dt}=2t\ \Rightarrow\ \frac{dx}{dt}\bigg|_{t=2}=4,\qquad \frac{dy}{dt}=3t^2-3\ \Rightarrow\ \frac{dy}{dt}\bigg|_{t=2}=9$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\dfrac{dy}{dx}=\dfrac{9}{4}$</span><span data-lang="zh">$\dfrac{dy}{dx}=\dfrac{9}{4}$</span></div>
+    </div>
+  </div>
+  </details>
 
   <div class="concept-box green">
     <strong style="color: var(--green);"><span data-lang="en">Key Exam Concept</span><span data-lang="zh">关键考点</span></strong>
@@ -1031,7 +1168,7 @@ dy/dx = <span class="num">9/4</span></pre>
   </div>
 
   <div class="quiz" data-answer="2">
-    <div class="quiz-q"><span data-lang="en">Given $x = \sin(t)$, $y = \cos(t)$, what is $\frac{dy}{dx}$?</span><span data-lang="zh">已知 $x = \sin(t)$，$y = \cos(t)$，求 $\frac{dy}{dx}$。</span></div>
+    <div class="quiz-q"><span data-lang="en">Given $x = \sin(t)$, $y = \cos(t)$, what is $\frac{dy}{dx}$ where $\cos(t) \neq 0$?</span><span data-lang="zh">已知 $x = \sin(t)$，$y = \cos(t)$，求 $\cos(t) \neq 0$ 处的 $\frac{dy}{dx}$。</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$\frac{\cos(t)}{\sin(t)}$</div>
       <div class="quiz-opt" data-idx="1">$\frac{\sin(t)}{\cos(t)}$</div>
@@ -1042,71 +1179,88 @@ dy/dx = <span class="num">9/4</span></pre>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Find $\frac{dy}{dt} = -\sin(t)$ and $\frac{dx}{dt} = \cos(t)$. Divide them: $\frac{dy}{dx} = \frac{-\sin(t)}{\cos(t)}$.</span><span data-lang="zh">先求 $\frac{dy}{dt} = -\sin(t)$ 与 $\frac{dx}{dt} = \cos(t)$，再相除：$\frac{dy}{dx} = \frac{-\sin(t)}{\cos(t)}$。</span></div>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Locating Horizontal and Vertical Tangents</span><span data-lang="zh">例题 —— 求水平切线与垂直切线</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Given: x = t³ − 3t,  y = t² for −2 ≤ t ≤ 2.</span>
-<span class="cm">Find every value of t where the curve has a horizontal or vertical tangent.</span>
-
-dx/dt = <span class="num">3t² − 3</span> = 3(t² − 1)
-dy/dt = <span class="num">2t</span>
-
-<span class="cm">Horizontal tangent: dy/dt = 0 and dx/dt ≠ 0</span>
-2t = 0  →  t = <span class="num">0</span>.  Check dx/dt at t=0: 3(0−1) = −3 ≠ 0. ✓ valid.
-
-<span class="cm">Vertical tangent: dx/dt = 0 and dy/dt ≠ 0</span>
-3(t² − 1) = 0  →  t = <span class="num">±1</span>.  Check dy/dt: at t=1, dy/dt=2≠0; at t=−1, dy/dt=−2≠0. ✓ both valid.
-
-<span class="cm">So: horizontal tangent at t=0; vertical tangents at t=1 and t=−1.</span></pre>
-<pre data-lang="zh"><span class="cm">已知：x = t³ − 3t，y = t²，其中 −2 ≤ t ≤ 2。</span>
-<span class="cm">求曲线上所有具有水平切线或垂直切线的 t 值。</span>
-
-dx/dt = <span class="num">3t² − 3</span> = 3(t² − 1)
-dy/dt = <span class="num">2t</span>
-
-<span class="cm">水平切线：dy/dt = 0 且 dx/dt ≠ 0</span>
-2t = 0  →  t = <span class="num">0</span>。检验 t=0 处 dx/dt：3(0−1) = −3 ≠ 0。✓ 有效。
-
-<span class="cm">垂直切线：dx/dt = 0 且 dy/dt ≠ 0</span>
-3(t² − 1) = 0  →  t = <span class="num">±1</span>。检验 dy/dt：t=1 时 dy/dt=2≠0；t=−1 时 dy/dt=−2≠0。✓ 均有效。
-
-<span class="cm">结论：t=0 处水平切线；t=1 与 t=−1 处垂直切线。</span></pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">The check step is not optional: if <code>dy/dt</code> and <code>dx/dt</code> were <em>both</em> zero at the same $t$, the curve would have a cusp or a discontinuity there instead of a genuine tangent, and the point must be examined separately (e.g. with a limit of the slope).</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">检验步骤并非可有可无：若某个 $t$ 处 <code>dy/dt</code> 与 <code>dx/dt</code> <em>同时</em>为零，则曲线在该处可能出现尖点或不连续，而非真正的切线，需要单独分析（例如用斜率的极限）。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Locating Horizontal and Vertical Tangents</span><span data-lang="zh">例题：求水平切线与垂直切线</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Curve $x=t^3-3t$, $y=t^2$ for $-2\le t\le 2$. Find every value of $t$ where the curve has a horizontal or vertical tangent.</span><span data-lang="zh">曲线 $x=t^3-3t$，$y=t^2$，其中 $-2\le t\le 2$。求曲线上所有具有水平切线或垂直切线的 $t$ 值。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Derivatives</span><span data-lang="zh">求导</span></strong>
+        $$\frac{dx}{dt}=3t^2-3=3(t^2-1),\qquad \frac{dy}{dt}=2t$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Horizontal</span><span data-lang="zh">水平切线</span></strong> <span data-lang="en">Need $dy/dt=0$ and $dx/dt\ne 0$:</span><span data-lang="zh">需要 $dy/dt=0$ 且 $dx/dt\ne 0$：</span>
+        $$2t=0\ \Rightarrow\ t=0$$
+       <span data-lang="en">Check $dx/dt$ at $t=0$: $3(0-1)=-3\ne 0$. Valid.</span><span data-lang="zh">检验 $t=0$ 处 $dx/dt$：$3(0-1)=-3\ne 0$。有效。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Vertical</span><span data-lang="zh">垂直切线</span></strong> <span data-lang="en">Need $dx/dt=0$ and $dy/dt\ne 0$:</span><span data-lang="zh">需要 $dx/dt=0$ 且 $dy/dt\ne 0$：</span>
+        $$3(t^2-1)=0\ \Rightarrow\ t=\pm 1$$
+       <span data-lang="en">Check $dy/dt$: at $t=1$ it is $2\ne 0$; at $t=-1$ it is $-2\ne 0$. Both valid.</span><span data-lang="zh">检验 $dy/dt$：$t=1$ 时为 $2\ne 0$；$t=-1$ 时为 $-2\ne 0$。均有效。</span></div>
+      <div class="example-step example-result"><span data-lang="en">Horizontal tangent at $t=0$; vertical tangents at $t=1$ and $t=-1$.</span><span data-lang="zh">$t=0$ 处水平切线；$t=1$ 与 $t=-1$ 处垂直切线。</span></div>
     </div>
+    <p class="example-note" data-lang="en">The check step is not optional: if $dy/dt$ and $dx/dt$ were <em>both</em> zero at the same $t$, the curve would have a cusp or a discontinuity there instead of a genuine tangent, and the point must be examined separately (e.g. with a limit of the slope).</p>
+    <p class="example-note" data-lang="zh">检验步骤并非可有可无：若某个 $t$ 处 $dy/dt$ 与 $dx/dt$ <em>同时</em>为零，则曲线在该处可能出现尖点或不连续，而非真正的切线，需要单独分析（例如用斜率的极限）。</p>
+  </div>
   </details>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — From Slope to a Full Tangent Line Equation</span><span data-lang="zh">例题 —— 从斜率到完整的切线方程</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Same curve as the very first example: x = t² + 1, y = t³ − 3t.</span>
-<span class="cm">Write an equation for the line tangent to the curve at t = 2.</span>
-
-<span class="cm">The slope alone was already found above: dy/dx = 9/4 at t = 2.</span>
-<span class="cm">On the AP exam, a slope by itself is not a full answer: the line</span>
-<span class="cm">equation needs a point too, so plug t = 2 into BOTH x(t) and y(t):</span>
-
-x(2) = 2² + 1 = <span class="num">5</span>
-y(2) = 2³ − 3(2) = 8 − 6 = <span class="num">2</span>
-
-<span class="cm">Assemble point-slope form from the point (5, 2) and slope 9/4:</span>
-y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
-<pre data-lang="zh"><span class="cm">沿用最初的例子：x = t² + 1，y = t³ − 3t。</span>
-<span class="cm">求曲线在 t = 2 处的切线方程。</span>
-
-<span class="cm">上面已求出斜率：t = 2 处 dy/dx = 9/4。</span>
-<span class="cm">在 AP 考试中，只给出斜率并不是完整答案，切线方程还需要一个点，</span>
-<span class="cm">所以把 t = 2 同时代入 x(t) 与 y(t)：</span>
-
-x(2) = 2² + 1 = <span class="num">5</span>
-y(2) = 2³ − 3(2) = 8 − 6 = <span class="num">2</span>
-
-<span class="cm">用点 (5, 2) 与斜率 9/4 写出点斜式：</span>
-y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">Free-response graders look for the equation itself, point and slope combined into one statement; stopping at "$\frac{dy}{dx} = \frac{9}{4}$" earns only partial credit even though it is the harder half of the work. Whenever a question says "write an equation for the tangent line," treat finding the slope as step one of two, not the whole task.</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">自由作答题的评分标准要看到完整的方程，把点和斜率写在同一个表达式里；只停留在"$\frac{dy}{dx} = \frac{9}{4}$"通常只能拿到部分分，尽管这一步其实是更难的部分。只要题目问的是"写出切线方程"，就应该把求斜率当作两步中的第一步，而不是全部任务。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: From Slope to a Full Tangent Line Equation</span><span data-lang="zh">例题：从斜率到完整的切线方程</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Same curve as the very first example: $x=t^2+1$, $y=t^3-3t$. Write an equation for the line tangent to the curve at $t=2$.</span><span data-lang="zh">沿用最初的例子：$x=t^2+1$，$y=t^3-3t$。求曲线在 $t=2$ 处的切线方程。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Slope</span><span data-lang="zh">斜率</span></strong> <span data-lang="en">The slope was already found above:</span><span data-lang="zh">上面已求出斜率：</span>
+        $$\frac{dy}{dx}\bigg|_{t=2}=\frac{9}{4}$$
+       <span data-lang="en">A slope by itself is not a full answer: the line equation needs a point too, so plug $t=2$ into BOTH $x(t)$ and $y(t)$:</span><span data-lang="zh">只给出斜率并不是完整答案，切线方程还需要一个点，所以把 $t=2$ 同时代入 $x(t)$ 与 $y(t)$：</span></div>
+      <div class="example-step"><strong><span data-lang="en">Point</span><span data-lang="zh">点</span></strong>
+        $$x(2)=2^2+1=5,\qquad y(2)=2^3-3(2)=8-6=2$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Line</span><span data-lang="zh">直线</span></strong> <span data-lang="en">Assemble point-slope form from the point $(5,2)$ and slope $\tfrac94$:</span><span data-lang="zh">用点 $(5,2)$ 与斜率 $\tfrac94$ 写出点斜式：</span>
+        $$y-2=\frac{9}{4}(x-5)$$
+      </div>
     </div>
+    <p class="example-note" data-lang="en">A question that asks for the tangent line wants the equation itself, point and slope combined into one statement; stopping at "$\frac{dy}{dx} = \frac{9}{4}$" is an incomplete answer even though it is the harder half of the work. Whenever a question says "write an equation for the tangent line," treat finding the slope as step one of two, not the whole task.</p>
+    <p class="example-note" data-lang="zh">题目要求切线时，要的是完整的方程，把点和斜率写在同一个表达式里；只停留在"$\frac{dy}{dx} = \frac{9}{4}$"是不完整的答案，尽管这一步其实是更难的部分。只要题目问的是"写出切线方程"，就应该把求斜率当作两步中的第一步，而不是全部任务。</p>
+  </div>
   </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 420 340" role="img" aria-label="The curve x = t squared plus 1, y = t cubed minus 3t for t from -2 to 2, drawn to scale with arrows showing the direction of increasing t and the velocity vector at t = 2.">
+      <line class="ax" x1="30.0" y1="212.0" x2="330.0" y2="212.0"/>
+      <line class="ax" x1="50.0" y1="324.0" x2="50.0" y2="20.0"/>
+      <line class="ax thin" x1="90.0" y1="208.0" x2="90.0" y2="216.0"/>
+      <line class="ax thin" x1="130.0" y1="208.0" x2="130.0" y2="216.0"/>
+      <line class="ax thin" x1="170.0" y1="208.0" x2="170.0" y2="216.0"/>
+      <line class="ax thin" x1="210.0" y1="208.0" x2="210.0" y2="216.0"/>
+      <line class="ax thin" x1="250.0" y1="208.0" x2="250.0" y2="216.0"/>
+      <line class="ax thin" x1="290.0" y1="208.0" x2="290.0" y2="216.0"/>
+      <line class="ax thin" x1="46.0" y1="292.0" x2="54.0" y2="292.0"/>
+      <line class="ax thin" x1="46.0" y1="252.0" x2="54.0" y2="252.0"/>
+      <line class="ax thin" x1="46.0" y1="172.0" x2="54.0" y2="172.0"/>
+      <line class="ax thin" x1="46.0" y1="132.0" x2="54.0" y2="132.0"/>
+      <line class="ax thin" x1="46.0" y1="92.0" x2="54.0" y2="92.0"/>
+      <line class="ax thin" x1="46.0" y1="52.0" x2="54.0" y2="52.0"/>
+      <text class="mut" data-lang="en" x="130.0" y="229.0" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="130.0" y="229.0" text-anchor="middle">2</text>
+      <text class="mut" data-lang="en" x="170.0" y="229.0" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="170.0" y="229.0" text-anchor="middle">3</text>
+      <text class="mut" data-lang="en" x="250.0" y="229.0" text-anchor="middle">5</text><text class="mut" data-lang="zh" x="250.0" y="229.0" text-anchor="middle">5</text>
+      <text class="mut" data-lang="en" x="290.0" y="229.0" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="290.0" y="229.0" text-anchor="middle">6</text>
+      <text class="mut" data-lang="en" x="43.0" y="296.0" text-anchor="end">−2</text><text class="mut" data-lang="zh" x="43.0" y="296.0" text-anchor="end">−2</text>
+      <text class="mut" data-lang="en" x="43.0" y="136.0" text-anchor="end">2</text><text class="mut" data-lang="zh" x="43.0" y="136.0" text-anchor="end">2</text>
+      <text class="mut" data-lang="en" x="43.0" y="56.0" text-anchor="end">4</text><text class="mut" data-lang="zh" x="43.0" y="56.0" text-anchor="end">4</text>
+      <text class="lbl" data-lang="en" x="336.0" y="216.0">x</text><text class="lbl" data-lang="zh" x="336.0" y="216.0">x</text>
+      <text class="lbl" data-lang="en" x="58.0" y="26.0">y</text><text class="lbl" data-lang="zh" x="58.0" y="26.0">y</text>
+      <path class="c1" d="M250.0,292.0 L246.8,284.9 L243.7,278.0 L240.5,271.3 L237.5,264.7 L234.4,258.4 L231.4,252.2 L228.4,246.2 L225.4,240.4 L222.5,234.7 L219.6,229.3 L216.7,224.0 L213.9,218.9 L211.1,213.9 L208.3,209.1 L205.6,204.5 L202.9,200.1 L200.2,195.8 L197.6,191.6 L195.0,187.7 L192.4,183.8 L189.9,180.2 L187.3,176.7 L184.9,173.3 L182.4,170.1 L180.0,167.0 L177.6,164.1 L175.3,161.3 L172.9,158.6 L170.7,156.1 L168.4,153.8 L166.2,151.5 L164.0,149.4 L161.8,147.4 L159.7,145.6 L157.6,143.9 L155.5,142.3 L153.5,140.8 L151.5,139.5 L149.5,138.2 L147.6,137.1 L145.7,136.1 L143.8,135.2 L142.0,134.5 L140.2,133.8 L138.4,133.2 L136.7,132.8 L134.9,132.4 L133.3,132.2 L131.6,132.0 L130.0,132.0 L128.4,132.0 L126.9,132.2 L125.3,132.4 L123.9,132.7 L122.4,133.2 L121.0,133.7 L119.6,134.2 L118.2,134.9 L116.9,135.7 L115.6,136.5 L114.3,137.4 L113.1,138.4 L111.9,139.4 L110.7,140.5 L109.6,141.7 L108.5,143.0 L107.4,144.3 L106.4,145.7 L105.4,147.1 L104.4,148.6 L103.5,150.2 L102.5,151.8 L101.7,153.5 L100.8,155.2 L100.0,157.0 L99.2,158.8 L98.5,160.7 L97.7,162.6 L97.1,164.6 L96.4,166.6 L95.8,168.6 L95.2,170.7 L94.6,172.8 L94.1,174.9 L93.6,177.1 L93.1,179.3 L92.7,181.5 L92.3,183.8 L91.9,186.0 L91.6,188.3 L91.3,190.6 L91.0,193.0 L90.8,195.3 L90.6,197.7 L90.4,200.0 L90.3,202.4 L90.1,204.8 L90.1,207.2 L90.0,209.6 L90.0,212.0 L90.0,214.4 L90.1,216.8 L90.1,219.2 L90.3,221.6 L90.4,224.0 L90.6,226.3 L90.8,228.7 L91.0,231.0 L91.3,233.4 L91.6,235.7 L91.9,238.0 L92.3,240.2 L92.7,242.5 L93.1,244.7 L93.6,246.9 L94.1,249.1 L94.6,251.2 L95.2,253.3 L95.8,255.4 L96.4,257.4 L97.1,259.4 L97.7,261.4 L98.5,263.3 L99.2,265.2 L100.0,267.0 L100.8,268.8 L101.7,270.5 L102.5,272.2 L103.5,273.8 L104.4,275.4 L105.4,276.9 L106.4,278.3 L107.4,279.7 L108.5,281.0 L109.6,282.3 L110.7,283.5 L111.9,284.6 L113.1,285.6 L114.3,286.6 L115.6,287.5 L116.9,288.3 L118.2,289.1 L119.6,289.8 L121.0,290.3 L122.4,290.8 L123.9,291.3 L125.3,291.6 L126.9,291.8 L128.4,292.0 L130.0,292.0 L131.6,292.0 L133.3,291.8 L134.9,291.6 L136.7,291.2 L138.4,290.8 L140.2,290.2 L142.0,289.5 L143.8,288.8 L145.7,287.9 L147.6,286.9 L149.5,285.8 L151.5,284.5 L153.5,283.2 L155.5,281.7 L157.6,280.1 L159.7,278.4 L161.8,276.6 L164.0,274.6 L166.2,272.5 L168.4,270.2 L170.7,267.9 L172.9,265.4 L175.3,262.7 L177.6,259.9 L180.0,257.0 L182.4,253.9 L184.9,250.7 L187.3,247.3 L189.9,243.8 L192.4,240.2 L195.0,236.3 L197.6,232.4 L200.2,228.2 L202.9,223.9 L205.6,219.5 L208.3,214.9 L211.1,210.1 L213.9,205.1 L216.7,200.0 L219.6,194.7 L222.5,189.3 L225.4,183.6 L228.4,177.8 L231.4,171.8 L234.4,165.6 L237.5,159.3 L240.5,152.7 L243.7,146.0 L246.8,139.1 L250.0,132.0"/>
+      <path class="c1" d="M193.4,192.8 L192.4,183.8 L200.4,188.0"/>
+      <path class="c1" d="M112.2,144.1 L104.4,148.6 L105.0,139.7"/>
+      <path class="c1" d="M103.8,266.4 L104.4,275.4 L96.6,270.9"/>
+      <path class="c1" d="M184.4,244.3 L192.4,240.2 L191.4,249.1"/>
+      <line class="c2" x1="250.0" y1="132.0" x2="290.0" y2="42.0"/>
+      <path class="c2" d="M281.3,48.8 L290.0,42.0 L290.8,53.0"/>
+      <circle class="dot" cx="250.0" cy="292.0" r="3.5"/>
+      <circle class="dot" cx="90.0" cy="212.0" r="3.5"/>
+      <circle class="dot" cx="250.0" cy="132.0" r="3.5"/>
+      <text class="lbl" data-lang="en" x="258.0" y="297.0">t = −2 (start)</text><text class="lbl" data-lang="zh" x="258.0" y="297.0">t = −2（起点）</text>
+      <text class="lbl" data-lang="en" x="258.0" y="150.0">(5, 2), t = 2</text><text class="lbl" data-lang="zh" x="258.0" y="150.0">(5, 2)，t = 2</text>
+      <text class="lbl" data-lang="en" x="83.0" y="204.0" text-anchor="end">t = 0</text><text class="lbl" data-lang="zh" x="83.0" y="204.0" text-anchor="end">t = 0</text>
+      <text class="lbl c2t" data-lang="en" x="298.0" y="46.0">v(2) = ⟨4, 9⟩</text><text class="lbl c2t" data-lang="zh" x="298.0" y="46.0">v(2) = ⟨4, 9⟩</text>
+      <text class="mut" data-lang="en" x="298.0" y="62.0">drawn at ¼ length</text><text class="mut" data-lang="zh" x="298.0" y="62.0">按 ¼ 长度绘制</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. The curve x = t² + 1, y = t³ − 3t for −2 ≤ t ≤ 2, drawn with equal scales on both axes. The chevrons show the direction of increasing t; the curve crosses itself at (4, 0), where t = −√3 and t = √3. The blue arrow is the velocity vector ⟨4, 9⟩ at t = 2, drawn at a quarter of its length: it points along the tangent line, and its slope 9/4 is dy/dx at t = 2. The vertical tangent at t = 0 is where dx/dt = 0.</span><span data-lang="zh">图 1. 曲线 x = t² + 1，y = t³ − 3t（−2 ≤ t ≤ 2），两轴比例相同。折线箭头表示 t 增大时的运动方向；曲线在 (4, 0) 处自交，对应 t = −√3 与 t = √3。蓝色箭头是 t = 2 时的速度向量（<code>velocity vector</code>）⟨4, 9⟩，按四分之一长度绘制：它沿切线方向，斜率 9/4 就是 t = 2 处的 dy/dx。t = 0 处的垂直切线（<code>vertical tangent</code>）对应 dx/dt = 0。</span></figcaption>
+  </figure>
 
   <!-- Interactive Parametric Curve Tracer -->
   <div class="interactive-widget" id="param-widget">
@@ -1126,6 +1280,26 @@ y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
       <span data-lang="en">Slope</span><span data-lang="zh">斜率</span> $\frac{dy}{dx}$: <span class="sum-val" id="paramSlope">0.00</span>
     </div>
   </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question asks for a tangent line, report both the point $(x(t_0), y(t_0))$ and the slope $\frac{dy}{dx}$ at $t_0$ in one equation. If $\frac{dx}{dt}$ and $\frac{dy}{dt}$ are both $0$ at $t_0$, the quotient formula gives no answer: say so and examine that point separately rather than writing a slope.</p>
+    <p data-lang="zh">题目问切线时，要在同一个方程里同时给出点 $(x(t_0), y(t_0))$ 与 $t_0$ 处的斜率 $\frac{dy}{dx}$。若 $t_0$ 处 $\frac{dx}{dt}$ 与 $\frac{dy}{dt}$ 同时为 $0$，商式公式给不出答案：要明确说明并单独分析该点，而不是硬写一个斜率。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. When does a parametric curve have a vertical tangent line?</span><span data-lang="zh">1. 参数曲线何时有垂直切线？</span></summary>
+      <div class="sg-a"><p data-lang="en">When $\frac{dx}{dt} = 0$ and $\frac{dy}{dt} \neq 0$ at the same value of $t$: the slope $\frac{dy/dt}{dx/dt}$ grows without bound there. If both derivatives are $0$, the test is inconclusive.</p><p data-lang="zh">当同一 $t$ 值处 $\frac{dx}{dt} = 0$ 且 $\frac{dy}{dt} \neq 0$ 时：此处斜率 $\frac{dy/dt}{dx/dt}$ 无界增大。若两个导数都为 $0$，则无法据此判断。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For $x = 3t - 1$, $y = t^2 + 2$, find $\frac{dy}{dx}$ at $t = 1$.</span><span data-lang="zh">2. 对 $x = 3t - 1$，$y = t^2 + 2$，求 $t = 1$ 处的 $\frac{dy}{dx}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\frac{dx}{dt} = 3$ and $\frac{dy}{dt} = 2t$, so $\frac{dy}{dx} = \frac{2t}{3}$. At $t = 1$ the slope is $\frac{2}{3}$.</p><p data-lang="zh">$\frac{dx}{dt} = 3$，$\frac{dy}{dt} = 2t$，所以 $\frac{dy}{dx} = \frac{2t}{3}$。当 $t = 1$ 时斜率为 $\frac{2}{3}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Write an equation of the tangent line to $x = t^3$, $y = t^2 - 4t$ at $t = 1$.</span><span data-lang="zh">3. 写出 $x = t^3$，$y = t^2 - 4t$ 在 $t = 1$ 处的切线方程。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\frac{dx}{dt} = 3t^2 = 3$ and $\frac{dy}{dt} = 2t - 4 = -2$ at $t = 1$, so the slope is $-\frac{2}{3}$. The point is $(1, 1 - 4) = (1, -3)$. Tangent line: $y + 3 = -\frac{2}{3}(x - 1)$.</p><p data-lang="zh">$t = 1$ 时 $\frac{dx}{dt} = 3t^2 = 3$，$\frac{dy}{dt} = 2t - 4 = -2$，所以斜率为 $-\frac{2}{3}$。点为 $(1, 1 - 4) = (1, -3)$。切线：$y + 3 = -\frac{2}{3}(x - 1)$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1135,11 +1309,17 @@ y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
   <h2 data-lang="en">Second Derivatives of Parametric Equations</h2>
   <h2 data-lang="zh">参数方程的二阶导数（<code>second derivative</code>）</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the formula $\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\left(\frac{dy}{dx}\right)}{\frac{dx}{dt}}$ and explain why it divides by $\frac{dx}{dt}$.</li><li>Calculate $\frac{d^2y}{dx^2}$ for a parametric curve as a function of $t$.</li><li>Deduce concavity at a given $t$ from the sign of $\frac{d^2y}{dx^2}$.</li><li>Identify the common error of dividing $\frac{d^2y}{dt^2}$ by $\frac{d^2x}{dt^2}$.</li></ul>
+    <ul data-lang="zh"><li>写出公式 $\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\left(\frac{dy}{dx}\right)}{\frac{dx}{dt}}$，并解释为何要除以 $\frac{dx}{dt}$。</li><li>把参数曲线的 $\frac{d^2y}{dx^2}$ 算成关于 $t$ 的函数。</li><li>由 $\frac{d^2y}{dx^2}$ 的符号推断给定 $t$ 处的凹凸性（<code>concavity</code>）。</li><li>识别用 $\frac{d^2y}{dt^2}$ 除以 $\frac{d^2x}{dt^2}$ 这一常见错误。</li></ul>
+  </div>
+
   <p data-lang="en">To find the concavity of a parametric curve, compute the <strong>second derivative</strong> $\frac{d^2y}{dx^2}$.</p>
   <p data-lang="zh">要判断参数曲线的凹凸性，需要计算<strong>二阶导数</strong> $\frac{d^2y}{dx^2}$。</p>
 
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Second Derivative — Parametric</span><span data-lang="zh">二阶导数 —— 参数方程</span></div>
+    <div class="formula-label"><span data-lang="en">Second Derivative (Parametric)</span><span data-lang="zh">二阶导数（参数方程）</span></div>
     $$ \frac{d^2y}{dx^2} = \frac{\frac{d}{dt} \left[ \frac{dy}{dx} \right]}{\frac{dx}{dt}} $$
   </div>
 
@@ -1160,34 +1340,71 @@ y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
     <p data-lang="zh"><strong>第 3 步：</strong>再除以 $\frac{dx}{dt}$ $\rightarrow$ $\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}\left(\frac{dy}{dx}\right)}{\frac{dx}{dt}}$</p>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Second Derivative</span><span data-lang="zh">例题 —— 二阶导数</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Given: x = t², y = t³</span>
-
-<span class="cm">Step 1:</span> dy/dx = (3t²)/(2t) = <span class="num">3t/2</span>
-
-<span class="cm">Step 2:</span> d/dt [3t/2] = <span class="num">3/2</span>
-
-<span class="cm">Step 3:</span> d²y/dx² = (3/2) / (2t) = <span class="num">3/(4t)</span>
-
-<span class="cm">At t = 1: d²y/dx² = 3/4 > 0 → concave up</span></pre>
-<pre data-lang="zh"><span class="cm">已知：x = t²，y = t³</span>
-
-<span class="cm">第 1 步：</span> dy/dx = (3t²)/(2t) = <span class="num">3t/2</span>
-
-<span class="cm">第 2 步：</span> d/dt [3t/2] = <span class="num">3/2</span>
-
-<span class="cm">第 3 步：</span> d²y/dx² = (3/2) / (2t) = <span class="num">3/(4t)</span>
-
-<span class="cm">当 t = 1：d²y/dx² = 3/4 > 0 → 凹向上</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Second Derivative</span><span data-lang="zh">例题：二阶导数</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$x=t^2$, $y=t^3$</span><span data-lang="zh">$x=t^2$，$y=t^3$</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 1</span><span data-lang="zh">第 1 步</span></strong>
+        $$\frac{dy}{dx}=\frac{3t^2}{2t}=\frac{3t}{2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 2</span><span data-lang="zh">第 2 步</span></strong>
+        $$\frac{d}{dt}\left[\frac{3t}{2}\right]=\frac{3}{2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 3</span><span data-lang="zh">第 3 步</span></strong>
+        $$\frac{d^2y}{dx^2}=\frac{3/2}{2t}=\frac{3}{4t}$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">At $t=1$: $\dfrac{d^2y}{dx^2}=\dfrac34>0$, so the curve is concave up.</span><span data-lang="zh">当 $t=1$：$\dfrac{d^2y}{dx^2}=\dfrac34>0$，所以曲线凹向上。</span></div>
     </div>
+  </div>
+  </details>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Concavity on Both Sides of $t = 0$</span><span data-lang="zh">例题：$t = 0$ 两侧的凹凸性</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$x = t^2$, $y = t^3 - 3t$ for $t \neq 0$. Find $\frac{d^2y}{dx^2}$ and the concavity at $t = 1$ and $t = -1$.</span><span data-lang="zh">$x = t^2$，$y = t^3 - 3t$，$t \neq 0$。求 $\frac{d^2y}{dx^2}$，并判断 $t = 1$ 与 $t = -1$ 处的凹凸性。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 1</span><span data-lang="zh">第 1 步</span></strong>
+        $$\frac{dy}{dx}=\frac{3t^2-3}{2t}=\frac32\left(t-\frac1t\right)$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 2</span><span data-lang="zh">第 2 步</span></strong>
+        $$\frac{d}{dt}\left[\frac{dy}{dx}\right]=\frac32\left(1+\frac{1}{t^2}\right)$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 3</span><span data-lang="zh">第 3 步</span></strong> <span data-lang="en">Divide by $\frac{dx}{dt} = 2t$:</span><span data-lang="zh">除以 $\frac{dx}{dt} = 2t$：</span>
+        $$\frac{d^2y}{dx^2}=\frac{\frac32\left(1+\frac{1}{t^2}\right)}{2t}=\frac{3(t^2+1)}{4t^3}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Evaluate</span><span data-lang="zh">代入</span></strong>
+        $$t=1:\ \frac{3(2)}{4}=\frac32>0,\qquad t=-1:\ \frac{3(2)}{-4}=-\frac32<0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">Concave up at $t = 1$ and concave down at $t = -1$; in general concave up for $t > 0$ and concave down for $t < 0$.</span><span data-lang="zh">$t = 1$ 处凹向上，$t = -1$ 处凹向下；一般地，$t > 0$ 时凹向上，$t < 0$ 时凹向下。</span></div>
+    </div>
+    <p class="example-note" data-lang="en">Why this works: the numerator $3(t^2+1)$ is always positive, so the sign of $\frac{d^2y}{dx^2}$ is the sign of $t^3$, which comes from dividing by $\frac{dx}{dt} = 2t$. Skipping that division would give $\frac32\left(1+\frac{1}{t^2}\right) > 0$ and the wrong answer at $t = -1$.</p>
+    <p class="example-note" data-lang="zh">原理：分子 $3(t^2+1)$ 恒为正，所以 $\frac{d^2y}{dx^2}$ 的符号就是 $t^3$ 的符号，而这来自除以 $\frac{dx}{dt} = 2t$。若漏掉这一步除法，会得到 $\frac32\left(1+\frac{1}{t^2}\right) > 0$，在 $t = -1$ 处就判断错了。</p>
+  </div>
   </details>
 
   <div class="concept-box green">
     <strong style="color: var(--green);"><span data-lang="en">Reading Concavity from the Sign of d²y/dx²</span><span data-lang="zh">从 d²y/dx² 的符号判断凹凸性</span></strong>
-    <span data-lang="en">Exactly as with ordinary functions, a positive second derivative means the curve is concave up at that value of $t$ (it bends upward, like a cup), and a negative second derivative means concave down (it bends downward, like a frown). The parameter $t$ never appears directly in this interpretation — you're still reading the graph of $y$ against $x$, just computed through an intermediate variable. This is why AP free-response questions often ask you to justify concavity "using the second derivative," expecting exactly this sign argument, not a description of the curve's shape from a picture.</span>
-    <span data-lang="zh">与普通函数完全一样，二阶导数为正说明曲线在该 $t$ 值处凹向上（像杯子一样向上弯曲），为负说明凹向下（像皱眉一样向下弯曲）。参数 $t$ 在这个解读中并不直接出现——你仍然是在读 $y$ 关于 $x$ 的图像，只是通过一个中间变量计算得到。这正是为什么 AP 自由作答题常要求你"用二阶导数"说明凹凸性——期望的正是这种符号论证，而不是凭图像描述曲线形状。</span>
+    <span data-lang="en">Exactly as with ordinary functions, a positive second derivative means the curve is concave up at that value of $t$ (it bends upward, like a cup), and a negative second derivative means concave down (it bends downward, like a frown). The parameter $t$ never appears directly in this interpretation: you're still reading the graph of $y$ against $x$, just computed through an intermediate variable. When a question asks you to justify concavity, give exactly this sign argument, not a description of the curve's shape from a picture.</span>
+    <span data-lang="zh">与普通函数完全一样，二阶导数为正说明曲线在该 $t$ 值处凹向上（像杯子一样向上弯曲），为负说明凹向下（像皱眉一样向下弯曲）。参数 $t$ 在这个解读中并不直接出现：你仍然是在读 $y$ 关于 $x$ 的图像，只是通过一个中间变量计算得到。当题目要求说明凹凸性时，给出的应当正是这种符号论证，而不是凭图像描述曲线形状。</span>
+  </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the intermediate line $\frac{d}{dt}\left(\frac{dy}{dx}\right)$ before you divide by $\frac{dx}{dt}$, so the reader can see you used the correct formula. Then justify concavity with a sentence that names the sign: "concave down at $t = -1$ because $\frac{d^2y}{dx^2} = -\frac32 < 0$ there."</p>
+    <p data-lang="zh">在除以 $\frac{dx}{dt}$ 之前先写出中间一步 $\frac{d}{dt}\left(\frac{dy}{dx}\right)$，让读者看到你用的是正确公式。然后用一句点明符号的话说明凹凸性："因为 $t = -1$ 处 $\frac{d^2y}{dx^2} = -\frac32 < 0$，所以曲线在该处凹向下。"</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Why is $\frac{d^2y}{dx^2}$ not equal to $\frac{d^2y}{dt^2} \div \frac{d^2x}{dt^2}$?</span><span data-lang="zh">1. 为什么 $\frac{d^2y}{dx^2}$ 不等于 $\frac{d^2y}{dt^2} \div \frac{d^2x}{dt^2}$？</span></summary>
+      <div class="sg-a"><p data-lang="en">$\frac{d^2y}{dx^2}$ is the derivative of $\frac{dy}{dx}$ with respect to $x$. By the chain rule that equals $\frac{d}{dt}\left(\frac{dy}{dx}\right) \div \frac{dx}{dt}$. The ratio of second derivatives in $t$ measures something else and does not give the concavity of $y$ against $x$.</p><p data-lang="zh">$\frac{d^2y}{dx^2}$ 是 $\frac{dy}{dx}$ 关于 $x$ 的导数。由链式法则，它等于 $\frac{d}{dt}\left(\frac{dy}{dx}\right) \div \frac{dx}{dt}$。关于 $t$ 的两个二阶导数之比衡量的是别的量，不能给出 $y$ 关于 $x$ 的凹凸性。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For $x = t^2$, $y = t^3$ ($t \neq 0$), is the curve concave up or down at $t = -1$?</span><span data-lang="zh">2. 对 $x = t^2$，$y = t^3$（$t \neq 0$），曲线在 $t = -1$ 处凹向上还是凹向下？</span></summary>
+      <div class="sg-a"><p data-lang="en">From the worked example above, $\frac{d^2y}{dx^2} = \frac{3}{4t}$. At $t = -1$ this is $-\frac34 < 0$, so the curve is concave down there.</p><p data-lang="zh">由上面的例题，$\frac{d^2y}{dx^2} = \frac{3}{4t}$。当 $t = -1$ 时其值为 $-\frac34 < 0$，所以曲线在该处凹向下。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $x = 2t$, $y = t^3$, find $\frac{d^2y}{dx^2}$ at $t = 2$.</span><span data-lang="zh">3. 对 $x = 2t$，$y = t^3$，求 $t = 2$ 处的 $\frac{d^2y}{dx^2}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\frac{dy}{dx} = \frac{3t^2}{2}$. Then $\frac{d}{dt}\left(\frac{dy}{dx}\right) = 3t$, and dividing by $\frac{dx}{dt} = 2$ gives $\frac{d^2y}{dx^2} = \frac{3t}{2}$. At $t = 2$ this is $3 > 0$: concave up.</p><p data-lang="zh">$\frac{dy}{dx} = \frac{3t^2}{2}$。于是 $\frac{d}{dt}\left(\frac{dy}{dx}\right) = 3t$，再除以 $\frac{dx}{dt} = 2$ 得 $\frac{d^2y}{dx^2} = \frac{3t}{2}$。当 $t = 2$ 时其值为 $3 > 0$：凹向上。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1211,8 +1428,14 @@ y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
 
   <h2 data-lang="zh">参数曲线的弧长（<code>arc length</code>）</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the arc length formula $L = \int_a^b \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt$.</li><li>Explain why the integrand is the speed of a particle tracing the curve.</li><li>Set up an arc length integral with limits in $t$.</li><li>Calculate arc length exactly when a substitution works, or numerically with a calculator.</li><li>Explain why a curve traced twice has its length counted twice.</li></ul>
+    <ul data-lang="zh"><li>写出弧长公式 $L = \int_a^b \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt$。</li><li>解释为何被积函数就是沿曲线运动的质点的速率（<code>speed</code>）。</li><li>列出以 $t$ 为积分限的弧长积分。</li><li>在可换元时精确计算弧长，否则用计算器数值计算。</li><li>解释为何被描两次的曲线其长度会被计算两次。</li></ul>
+  </div>
+
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Arc Length — Parametric</span><span data-lang="zh">弧长 —— 参数方程</span></div>
+    <div class="formula-label"><span data-lang="en">Arc Length (Parametric)</span><span data-lang="zh">弧长（参数方程）</span></div>
     $$ L = \int_{a}^{b} \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2} dt $$
   </div>
 
@@ -1224,34 +1447,29 @@ y − 2 = <span class="num">(9/4)</span>(x − 5)</pre>
 
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Exam Note</span><span data-lang="zh">考试提示</span></strong>
-    <span data-lang="en">On the AP exam, you'll typically set up the integral and evaluate with a calculator. Focus on writing the correct integrand and limits of integration.</span>
-    <span data-lang="zh">在 AP 考试中，通常你只需要列出积分式并用计算器求值。重点是写对被积函数和积分上下限。</span>
+    <span data-lang="en">When a calculator is allowed, set up the integral and evaluate it numerically. The work that matters is writing the correct integrand and limits of integration.</span>
+    <span data-lang="zh">允许使用计算器时，列出积分式并用计算器数值求值。关键在于写对被积函数和积分上下限。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Arc Length</span><span data-lang="zh">例题 —— 弧长</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Find the length of the curve x = 3t, y = 4t, for 0 ≤ t ≤ 5.</span>
-
-dx/dt = <span class="num">3</span>,  dy/dt = <span class="num">4</span>
-
-L = ∫₀⁵ √(9 + 16) dt = ∫₀⁵ <span class="num">5</span> dt = <span class="num">25</span>
-
-<span class="cm">(This is just a line segment of length 25 — makes sense!)</span></pre>
-<pre data-lang="zh"><span class="cm">求曲线 x = 3t、y = 4t 在 0 ≤ t ≤ 5 上的长度。</span>
-
-dx/dt = <span class="num">3</span>，dy/dt = <span class="num">4</span>
-
-L = ∫₀⁵ √(9 + 16) dt = ∫₀⁵ <span class="num">5</span> dt = <span class="num">25</span>
-
-<span class="cm">（这就是一段长度为 25 的线段 —— 合情合理！）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Arc Length</span><span data-lang="zh">例题：弧长</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find the length of the curve $x=3t$, $y=4t$, for $0\le t\le 5$.</span><span data-lang="zh">求曲线 $x=3t$、$y=4t$ 在 $0\le t\le 5$ 上的长度。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Derivatives</span><span data-lang="zh">求导</span></strong>
+        $$\frac{dx}{dt}=3,\qquad \frac{dy}{dt}=4$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Length</span><span data-lang="zh">弧长</span></strong>
+        $$L=\int_0^5\sqrt{9+16}\,dt=\int_0^5 5\,dt=25$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">This is just a line segment of length 25, which makes sense.</span><span data-lang="zh">这就是一段长度为 25 的线段，合情合理！</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">Why the Formula Uses Speed, Not Velocity</span><span data-lang="zh">为什么公式用的是速率而非速度</span></strong>
-    <span data-lang="en">The arc length formula integrates $\sqrt{(x')^2 + (y')^2}$ — the <em>magnitude</em> of the velocity vector, never its sign or direction. This is deliberate: arc length always accumulates, even if the particle momentarily reverses course. Contrast this with a straightforward integral of velocity, which would let forward and backward motion cancel out — appropriate for <em>displacement</em>, but never for a length or a distance, both of which can only add.</span>
-    <span data-lang="zh">弧长公式对 $\sqrt{(x')^2 + (y')^2}$ 积分——即速度向量的<em>模</em>，而不涉及其符号或方向。这是有意为之：弧长总是不断累积的，即使质点中途暂时掉头也是如此。这与直接对速度积分不同——后者会让正向与反向运动相互抵消，这对<em>位移</em>是恰当的，但对长度或路程永远不适用，因为两者只能累加，不能相消。</span>
+    <span data-lang="en">The arc length formula integrates $\sqrt{(x')^2 + (y')^2}$, the <em>magnitude</em> of the velocity vector, never its sign or direction. This is deliberate: arc length always accumulates, even if the particle momentarily reverses course. Contrast this with a straightforward integral of velocity, which would let forward and backward motion cancel out: appropriate for <em>displacement</em>, but never for a length or a distance, both of which can only add.</span>
+    <span data-lang="zh">弧长公式对 $\sqrt{(x')^2 + (y')^2}$ 积分，即速度向量的<em>模</em>，而不涉及其符号或方向。这是有意为之：弧长总是不断累积的，即使质点中途暂时掉头也是如此。这与直接对速度积分不同：后者会让正向与反向运动相互抵消，这对<em>位移</em>是恰当的，但对长度或路程永远不适用，因为两者只能累加，不能相消。</span>
   </div>
 
   <div class="practice-input-group">
@@ -1264,31 +1482,44 @@ L = ∫₀⁵ √(9 + 16) dt = ∫₀⁵ <span class="num">5</span> dt = <span c
     <div class="practice-feedback" id="pfb1"></div>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Arc Length of a Curved (Non-Linear) Path</span><span data-lang="zh">例题 —— 曲线（非直线）路径的弧长</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Find the length of x = t², y = (2/3)t³ for 0 ≤ t ≤ 2.</span>
-
-dx/dt = <span class="num">2t</span>,  dy/dt = <span class="num">2t²</span>
-
-<span class="cm">Set up the integrand:</span>
-√((2t)² + (2t²)²) = √(4t² + 4t⁴) = 2t·√(1 + t²)   <span class="cm">(t ≥ 0 on this interval, so √(t²) = t)</span>
-
-<span class="cm">Substitute u = 1 + t², du = 2t dt — this cancels the 2t out front exactly:</span>
-L = ∫₀² 2t√(1+t²) dt = ∫₁⁵ √u du = [ (2/3)u^(3/2) ]₁⁵ = (2/3)(5√5 − 1) ≈ <span class="num">7.29</span></pre>
-<pre data-lang="zh"><span class="cm">求 x = t²、y = (2/3)t³ 在 0 ≤ t ≤ 2 上的长度。</span>
-
-dx/dt = <span class="num">2t</span>，dy/dt = <span class="num">2t²</span>
-
-<span class="cm">列出被积函数：</span>
-√((2t)² + (2t²)²) = √(4t² + 4t⁴) = 2t·√(1 + t²)   <span class="cm">（此区间 t ≥ 0，故 √(t²) = t）</span>
-
-<span class="cm">令 u = 1 + t²，du = 2t dt —— 恰好消去前面的 2t：</span>
-L = ∫₀² 2t√(1+t²) dt = ∫₁⁵ √u du = [ (2/3)u^(3/2) ]₁⁵ = (2/3)(5√5 − 1) ≈ <span class="num">7.29</span></pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">Unlike the straight-line example above, this integrand does not simplify to a constant — most AP arc-length integrals are evaluated numerically on a calculator, but recognizing the $u$-substitution here (when it is available) turns a calculator problem into an exact closed form, which is worth checking for before reaching for technology.</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">与上面的直线例子不同，此被积函数不能化简为常数——大多数 AP 弧长积分需用计算器数值求值，但若能识别出此处可用的 $u$ 替换，就能把计算器题变为精确的闭式解，值得在诉诸计算器前先检查一下。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Arc Length of a Curved (Non-Linear) Path</span><span data-lang="zh">例题：曲线（非直线）路径的弧长</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find the length of $x=t^2$, $y=\tfrac23 t^3$ for $0\le t\le 2$.</span><span data-lang="zh">求 $x=t^2$、$y=\tfrac23 t^3$ 在 $0\le t\le 2$ 上的长度。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Derivatives</span><span data-lang="zh">求导</span></strong>
+        $$\frac{dx}{dt}=2t,\qquad \frac{dy}{dt}=2t^2$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Integrand</span><span data-lang="zh">被积函数</span></strong> <span data-lang="en">Set up the integrand ($t\ge 0$ on this interval, so $\sqrt{t^2}=t$):</span><span data-lang="zh">列出被积函数（此区间 $t\ge 0$，故 $\sqrt{t^2}=t$）：</span>
+        $$\sqrt{(2t)^2+(2t^2)^2}=\sqrt{4t^2+4t^4}=2t\sqrt{1+t^2}$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Substitute</span><span data-lang="zh">换元</span></strong> <span data-lang="en">Let $u=1+t^2$, so $du=2t\,dt$. This cancels the $2t$ out front exactly:</span><span data-lang="zh">令 $u=1+t^2$，$du=2t\,dt$，恰好消去前面的 $2t$：</span>
+        $$L=\int_0^2 2t\sqrt{1+t^2}\,dt=\int_1^5\sqrt{u}\,du=\left[\tfrac23u^{3/2}\right]_1^5=\tfrac23\left(5\sqrt5-1\right)\approx 6.79$$
+      </div>
     </div>
+    <p class="example-note" data-lang="en">Unlike the straight-line example above, this integrand does not simplify to a constant. Most arc-length integrals have no elementary antiderivative and are evaluated numerically on a calculator, but recognizing the $u$-substitution here (when it is available) turns a calculator problem into an exact closed form, which is worth checking for before reaching for technology.</p>
+    <p class="example-note" data-lang="zh">与上面的直线例子不同，此被积函数不能化简为常数。大多数弧长积分没有初等原函数，需用计算器数值求值，但若能识别出此处可用的 $u$ 替换，就能把计算器题变为精确的闭式解，值得在诉诸计算器前先检查一下。</p>
+  </div>
   </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Keep everything in $t$: the integrand uses $\frac{dx}{dt}$ and $\frac{dy}{dt}$, and the limits are $t$-values, not $x$-values. Write the full integral before pressing calculator keys, so a reader can check the setup separately from the number.</p>
+    <p data-lang="zh">全部用 $t$ 表示：被积函数用 $\frac{dx}{dt}$ 与 $\frac{dy}{dt}$，积分限是 $t$ 值而不是 $x$ 值。按计算器之前先写出完整积分式，让读者能把列式与数值分开检查。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does the integrand $\sqrt{(x'(t))^2 + (y'(t))^2}$ represent physically?</span><span data-lang="zh">1. 被积函数 $\sqrt{(x'(t))^2 + (y'(t))^2}$ 的物理意义是什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">It is the speed of a particle whose position at time $t$ is $(x(t), y(t))$: the magnitude of the velocity vector. Integrating speed over time gives distance travelled along the path, which is the arc length.</p><p data-lang="zh">它是位置为 $(x(t), y(t))$ 的质点在时间 $t$ 的速率，即速度向量的模。速率对时间积分得到沿路径走过的路程，也就是弧长。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the exact length of $x = 1 + 3t^2$, $y = 4 + 2t^3$ for $0 \le t \le 1$.</span><span data-lang="zh">2. 求 $x = 1 + 3t^2$，$y = 4 + 2t^3$ 在 $0 \le t \le 1$ 上的精确长度。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\frac{dx}{dt} = 6t$ and $\frac{dy}{dt} = 6t^2$, so the integrand is $\sqrt{36t^2 + 36t^4} = 6t\sqrt{1+t^2}$ for $t \ge 0$. With $u = 1 + t^2$: $L = \int_1^2 3\sqrt{u}\,du = 2\left(2\sqrt2 - 1\right) \approx 3.657$.</p><p data-lang="zh">$\frac{dx}{dt} = 6t$，$\frac{dy}{dt} = 6t^2$，所以当 $t \ge 0$ 时被积函数为 $\sqrt{36t^2 + 36t^4} = 6t\sqrt{1+t^2}$。令 $u = 1 + t^2$：$L = \int_1^2 3\sqrt{u}\,du = 2\left(2\sqrt2 - 1\right) \approx 3.657$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Set up (do not evaluate by hand) the length of $x = t^2$, $y = \sin t$ for $0 \le t \le \pi$.</span><span data-lang="zh">3. 列出（不必手算）$x = t^2$，$y = \sin t$ 在 $0 \le t \le \pi$ 上的长度。</span></summary>
+      <div class="sg-a"><p data-lang="en">$L = \int_0^{\pi} \sqrt{4t^2 + \cos^2 t}\,dt$. This has no elementary antiderivative; a calculator gives $L \approx 10.354$.</p><p data-lang="zh">$L = \int_0^{\pi} \sqrt{4t^2 + \cos^2 t}\,dt$。它没有初等原函数；用计算器得 $L \approx 10.354$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1311,6 +1542,12 @@ L = ∫₀² 2t√(1+t²) dt = ∫₁⁵ √u du = [ (2/3)u^(3/2) ]₁⁵ = (2/3
 
   <h2 data-lang="zh">向量值函数（<code>vector-valued function</code>）的定义与求导</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the meaning of $\mathbf{r}(t) = \langle x(t), y(t) \rangle$ as a position vector.</li><li>Calculate velocity $\mathbf{v}(t) = \mathbf{r}'(t)$ and acceleration $\mathbf{a}(t) = \mathbf{r}''(t)$ component by component.</li><li>Calculate speed as the magnitude $|\mathbf{v}(t)|$.</li><li>Explain why the velocity vector is tangent to the path and points in the direction of motion.</li><li>Deduce the slope of the path from the velocity components.</li></ul>
+    <ul data-lang="zh"><li>说明 $\mathbf{r}(t) = \langle x(t), y(t) \rangle$ 作为位置向量（<code>position vector</code>）的含义。</li><li>按分量计算速度 $\mathbf{v}(t) = \mathbf{r}'(t)$ 与加速度 $\mathbf{a}(t) = \mathbf{r}''(t)$。</li><li>把速率计算为模 $|\mathbf{v}(t)|$。</li><li>解释为何速度向量与路径相切并指向运动方向。</li><li>由速度分量推断路径的斜率。</li></ul>
+  </div>
+
   <div class="concept-box purple">
   <strong style="color: var(--purple);"><span data-lang="en">Vector-Valued Function</span><span data-lang="zh">向量值函数</span></strong>
   <span data-lang="en">A function of the form $\mathbf{r}(t) = \langle x(t), y(t) \rangle = x(t)\mathbf{i} + y(t)\mathbf{j}$. It gives the position of a particle in the plane at time $t$.</span>
@@ -1330,33 +1567,64 @@ L = ∫₀² 2t√(1+t²) dt = ∫₁⁵ √u du = [ (2/3)u^(3/2) ]₁⁵ = (2/3
 
   <div class="concept-box green">
     <strong style="color: var(--green);"><span data-lang="en">Connection</span><span data-lang="zh">联系</span></strong>
-    <span data-lang="en">Parametric equations and vector-valued functions describe the exact same thing — planar motion. The notation is different, but the calculus is identical.</span>
-    <span data-lang="zh">参数方程与向量值函数描述的是同一件事 —— 平面运动（<code>planar motion</code>）。记号不同，但微积分的内容完全一样。</span>
+    <span data-lang="en">Parametric equations and vector-valued functions describe the exact same thing: planar motion. The notation is different, but the calculus is identical.</span>
+    <span data-lang="zh">参数方程与向量值函数描述的是同一件事：平面运动（<code>planar motion</code>）。记号不同，但微积分的内容完全一样。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Velocity and Speed from a Position Vector</span><span data-lang="zh">例题 —— 由位置向量求速度与速率</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Given: r(t) = ⟨t² − 1, 2t + 3⟩. Find the velocity vector and speed at t = 2.</span>
-
-<span class="cm">Differentiate component-wise:</span>
-r'(t) = ⟨2t, 2⟩  →  <span class="cm">at t = 2:</span>  r'(2) = <span class="num">⟨4, 2⟩</span>
-
-<span class="cm">Speed is the magnitude of the velocity vector:</span>
-|r'(2)| = √(4² + 2²) = √20 = <span class="num">2√5</span>
-
-<span class="cm">The vector ⟨4, 2⟩ also gives the direction of motion — tangent to the curve at t = 2.</span></pre>
-<pre data-lang="zh"><span class="cm">已知：r(t) = ⟨t² − 1, 2t + 3⟩。求 t = 2 时的速度向量与速率。</span>
-
-<span class="cm">按分量求导：</span>
-r'(t) = ⟨2t, 2⟩  →  <span class="cm">当 t = 2 时：</span>  r'(2) = <span class="num">⟨4, 2⟩</span>
-
-<span class="cm">速率是速度向量的模：</span>
-|r'(2)| = √(4² + 2²) = √20 = <span class="num">2√5</span>
-
-<span class="cm">向量 ⟨4, 2⟩ 同时给出了运动方向 —— 即曲线在 t = 2 处的切线方向。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Velocity and Speed from a Position Vector</span><span data-lang="zh">例题：由位置向量求速度与速率</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$\mathbf r(t)=\langle t^2-1,\ 2t+3\rangle$. Find the velocity vector and speed at $t=2$.</span><span data-lang="zh">$\mathbf r(t)=\langle t^2-1,\ 2t+3\rangle$。求 $t=2$ 时的速度向量与速率。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Velocity</span><span data-lang="zh">速度</span></strong> <span data-lang="en">Differentiate component-wise:</span><span data-lang="zh">按分量求导：</span>
+        $$\mathbf r'(t)=\langle 2t,\ 2\rangle\ \Rightarrow\ \mathbf r'(2)=\langle 4,\ 2\rangle$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Speed</span><span data-lang="zh">速率</span></strong> <span data-lang="en">Speed is the magnitude of the velocity vector:</span><span data-lang="zh">速率是速度向量的模：</span>
+        $$\left|\mathbf r'(2)\right|=\sqrt{4^2+2^2}=\sqrt{20}=2\sqrt5$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">The vector $\langle 4,2\rangle$ also gives the direction of motion, tangent to the curve at $t=2$.</span><span data-lang="zh">向量 $\langle 4,2\rangle$ 同时给出了运动方向，即曲线在 $t=2$ 处的切线方向。</span></div>
     </div>
+  </div>
   </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Velocity and Acceleration on an Ellipse</span><span data-lang="zh">例题：椭圆上的速度与加速度</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$\mathbf r(t) = \langle 3\cos t,\ 2\sin t\rangle$. Find the velocity, speed and acceleration at $t = \frac{\pi}{2}$.</span><span data-lang="zh">$\mathbf r(t) = \langle 3\cos t,\ 2\sin t\rangle$。求 $t = \frac{\pi}{2}$ 时的速度、速率与加速度。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Velocity</span><span data-lang="zh">速度</span></strong>
+        $$\mathbf v(t)=\langle -3\sin t,\ 2\cos t\rangle\ \Rightarrow\ \mathbf v\left(\tfrac{\pi}{2}\right)=\langle -3,\ 0\rangle$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Speed</span><span data-lang="zh">速率</span></strong>
+        $$\left|\mathbf v\left(\tfrac{\pi}{2}\right)\right|=\sqrt{(-3)^2+0^2}=3$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Acceleration</span><span data-lang="zh">加速度</span></strong>
+        $$\mathbf a(t)=\langle -3\cos t,\ -2\sin t\rangle\ \Rightarrow\ \mathbf a\left(\tfrac{\pi}{2}\right)=\langle 0,\ -2\rangle$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">At $t = \frac{\pi}{2}$ the particle is at $(0, 2)$, moving left with speed $3$; the acceleration $\langle 0, -2\rangle$ points straight down, toward the centre of the ellipse.</span><span data-lang="zh">$t = \frac{\pi}{2}$ 时质点位于 $(0, 2)$，以速率 $3$ 向左运动；加速度 $\langle 0, -2\rangle$ 竖直向下，指向椭圆中心。</span></div>
+    </div>
+    <p class="example-note" data-lang="en">Why this works: each component is an ordinary function of $t$, so the derivative rules apply to each one separately. Since $\mathbf v \cdot \mathbf a = 0$ here, the speed is momentarily neither increasing nor decreasing: the speed $\sqrt{9\sin^2 t + 4\cos^2 t}$ reaches its maximum value $3$ at $t = \frac{\pi}{2}$.</p>
+    <p class="example-note" data-lang="zh">原理：每个分量都是 $t$ 的普通函数，所以求导法则可以分别作用于每个分量。此处 $\mathbf v \cdot \mathbf a = 0$，速率在该瞬间既不增加也不减小：速率 $\sqrt{9\sin^2 t + 4\cos^2 t}$ 在 $t = \frac{\pi}{2}$ 处取得最大值 $3$。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Match the form of the answer to the word in the question: "velocity vector" or "acceleration vector" needs both components, $\langle a, b\rangle$; "speed" needs one non-negative number, $\sqrt{a^2+b^2}$. Giving a vector when speed is asked, or the reverse, answers a different question.</p>
+    <p data-lang="zh">答案形式要与题目用词对应："速度向量"（<code>velocity vector</code>）或"加速度向量"要给出两个分量 $\langle a, b\rangle$；"速率"（<code>speed</code>）只要一个非负数 $\sqrt{a^2+b^2}$。问速率却给向量（或反之），等于回答了另一个问题。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. For $\mathbf r(t) = \langle t^3,\ 4t\rangle$, find the velocity and the speed at $t = 1$.</span><span data-lang="zh">1. 对 $\mathbf r(t) = \langle t^3,\ 4t\rangle$，求 $t = 1$ 时的速度与速率。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf v(t) = \langle 3t^2, 4\rangle$, so $\mathbf v(1) = \langle 3, 4\rangle$ and the speed is $\sqrt{9 + 16} = 5$.</p><p data-lang="zh">$\mathbf v(t) = \langle 3t^2, 4\rangle$，所以 $\mathbf v(1) = \langle 3, 4\rangle$，速率为 $\sqrt{9 + 16} = 5$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. In which direction does the velocity vector point, relative to the path?</span><span data-lang="zh">2. 速度向量相对于路径指向哪个方向？</span></summary>
+      <div class="sg-a"><p data-lang="en">Along the tangent line to the path at that point, in the direction the particle is moving (the direction of increasing $t$).</p><p data-lang="zh">沿路径在该点的切线方向，并指向质点运动的方向（$t$ 增大的方向）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $\mathbf r(t) = \langle \sin(2t),\ e^t\rangle$, find $\mathbf v(0)$, $\mathbf a(0)$ and the slope $\frac{dy}{dx}$ of the path at $t = 0$.</span><span data-lang="zh">3. 对 $\mathbf r(t) = \langle \sin(2t),\ e^t\rangle$，求 $\mathbf v(0)$、$\mathbf a(0)$ 以及路径在 $t = 0$ 处的斜率 $\frac{dy}{dx}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf v(t) = \langle 2\cos(2t), e^t\rangle$, so $\mathbf v(0) = \langle 2, 1\rangle$. $\mathbf a(t) = \langle -4\sin(2t), e^t\rangle$, so $\mathbf a(0) = \langle 0, 1\rangle$. Slope $= \frac{y'(0)}{x'(0)} = \frac12$.</p><p data-lang="zh">$\mathbf v(t) = \langle 2\cos(2t), e^t\rangle$，所以 $\mathbf v(0) = \langle 2, 1\rangle$。$\mathbf a(t) = \langle -4\sin(2t), e^t\rangle$，所以 $\mathbf a(0) = \langle 0, 1\rangle$。斜率 $= \frac{y'(0)}{x'(0)} = \frac12$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1365,6 +1633,12 @@ r'(t) = ⟨2t, 2⟩  →  <span class="cm">当 t = 2 时：</span>  r'(2) = <spa
   <div class="section-label">Topic 9.5</div>
   <h2 data-lang="en">Integrating Vector-Valued Functions</h2>
   <h2 data-lang="zh">向量值函数的积分（<code>integral</code>）</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State that a vector-valued function is integrated component by component, with one constant per component.</li><li>Calculate a position function from a velocity function and an initial position.</li><li>Calculate a later position as initial position plus $\int_a^b \mathbf{v}(t)\,dt$.</li><li>Calculate a definite integral of a vector-valued function as a vector.</li></ul>
+    <ul data-lang="zh"><li>说明向量值函数按分量积分，每个分量各有一个常数。</li><li>由速度函数与初始位置求出位置函数（<code>initial value problem</code>）。</li><li>把之后的位置计算为初始位置加上 $\int_a^b \mathbf{v}(t)\,dt$。</li><li>把向量值函数的定积分算成一个向量。</li></ul>
+  </div>
 
   <p data-lang="en">Integration also works <strong>component-wise</strong>:</p>
   <p data-lang="zh">积分同样按<strong>分量</strong>逐一进行：</p>
@@ -1380,42 +1654,77 @@ r'(t) = ⟨2t, 2⟩  →  <span class="cm">当 t = 2 时：</span>  r'(2) = <spa
     <span data-lang="zh">已知 $\mathbf{v}(t) = \langle x'(t), y'(t) \rangle$ 和初始位置 $\mathbf{r}(t_0) = \langle x_0, y_0 \rangle$，对每个分量积分，再用初始条件解出积分常数。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Vector IVP</span><span data-lang="zh">例题 —— 向量初值问题</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Given: r'(t) = ⟨2t, eᵗ⟩, r(0) = ⟨3, 1⟩</span>
-
-<span class="cm">Integrate component-wise:</span>
-x(t) = t² + C₁     y(t) = eᵗ + C₂
-
-<span class="cm">Apply initial conditions r(0) = ⟨3, 1⟩:</span>
-x(0) = 0 + C₁ = 3  →  C₁ = <span class="num">3</span>
-y(0) = 1 + C₂ = 1  →  C₂ = <span class="num">0</span>
-
-<span class="cm">Solution:</span> <b>r(t)</b> = ⟨t² + 3, eᵗ⟩</pre>
-<pre data-lang="zh"><span class="cm">已知：r'(t) = ⟨2t, eᵗ⟩，r(0) = ⟨3, 1⟩</span>
-
-<span class="cm">按分量积分：</span>
-x(t) = t² + C₁     y(t) = eᵗ + C₂
-
-<span class="cm">代入初始条件 r(0) = ⟨3, 1⟩：</span>
-x(0) = 0 + C₁ = 3  →  C₁ = <span class="num">3</span>
-y(0) = 1 + C₂ = 1  →  C₂ = <span class="num">0</span>
-
-<span class="cm">解：</span> <b>r(t)</b> = ⟨t² + 3, eᵗ⟩</pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Vector IVP</span><span data-lang="zh">例题：向量初值问题</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$\mathbf r'(t)=\langle 2t,\ e^t\rangle$, $\ \mathbf r(0)=\langle 3,\ 1\rangle$</span><span data-lang="zh">$\mathbf r'(t)=\langle 2t,\ e^t\rangle$，$\ \mathbf r(0)=\langle 3,\ 1\rangle$</span></div>
+      <div class="example-step"><strong><span data-lang="en">Integrate</span><span data-lang="zh">积分</span></strong> <span data-lang="en">Integrate component-wise:</span><span data-lang="zh">按分量积分：</span>
+        $$x(t)=t^2+C_1,\qquad y(t)=e^t+C_2$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Initial condition</span><span data-lang="zh">初始条件</span></strong> <span data-lang="en">Apply $\mathbf r(0)=\langle 3,1\rangle$:</span><span data-lang="zh">代入 $\mathbf r(0)=\langle 3,1\rangle$：</span>
+        $$x(0)=0+C_1=3\ \Rightarrow\ C_1=3,\qquad y(0)=1+C_2=1\ \Rightarrow\ C_2=0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">Solution: $\mathbf r(t)=\langle t^2+3,\ e^t\rangle$</span><span data-lang="zh">解：$\mathbf r(t)=\langle t^2+3,\ e^t\rangle$</span></div>
     </div>
+  </div>
   </details>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Position at a Later Time from a Definite Integral</span><span data-lang="zh">例题：用定积分求之后时刻的位置</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">A particle has $\mathbf v(t) = \langle 6t^2,\ 2t - 4\rangle$ and $\mathbf r(1) = \langle 2,\ -1\rangle$. Find $\mathbf r(3)$.</span><span data-lang="zh">质点的 $\mathbf v(t) = \langle 6t^2,\ 2t - 4\rangle$，且 $\mathbf r(1) = \langle 2,\ -1\rangle$。求 $\mathbf r(3)$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Set up</span><span data-lang="zh">列式</span></strong> <span data-lang="en">Position at $t = 3$ is position at $t = 1$ plus the net change:</span><span data-lang="zh">$t = 3$ 时的位置等于 $t = 1$ 时的位置加上净变化：</span>
+        $$\mathbf r(3)=\mathbf r(1)+\int_1^3\mathbf v(t)\,dt$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">x</span><span data-lang="zh">x 分量</span></strong>
+        $$\int_1^3 6t^2\,dt=\left[2t^3\right]_1^3=54-2=52$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">y</span><span data-lang="zh">y 分量</span></strong>
+        $$\int_1^3 (2t-4)\,dt=\left[t^2-4t\right]_1^3=(9-12)-(1-4)=0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\mathbf r(3) = \langle 2 + 52,\ -1 + 0\rangle = \langle 54,\ -1\rangle$</span><span data-lang="zh">$\mathbf r(3) = \langle 2 + 52,\ -1 + 0\rangle = \langle 54,\ -1\rangle$</span></div>
+    </div>
+    <p class="example-note" data-lang="en">Why this works: the Fundamental Theorem of Calculus applies to each component, so $\int_1^3 \mathbf v\,dt$ is the displacement from $t = 1$ to $t = 3$. A net $y$-change of $0$ does not mean the particle stood still vertically: $y'(t) < 0$ before $t = 2$ and $y'(t) > 0$ after, and the two pieces cancel.</p>
+    <p class="example-note" data-lang="zh">原理：微积分基本定理（<code>Fundamental Theorem of Calculus</code>）对每个分量都成立，所以 $\int_1^3 \mathbf v\,dt$ 是从 $t = 1$ 到 $t = 3$ 的位移。$y$ 方向净变化为 $0$ 并不表示质点在竖直方向没动：$t = 2$ 之前 $y'(t) < 0$，之后 $y'(t) > 0$，两部分相互抵消。</p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For "where is the particle at time $b$?", write the structure $\mathbf r(b) = \mathbf r(a) + \int_a^b \mathbf v(t)\,dt$ (or the $x$ and $y$ versions) before computing. It shows where the initial condition enters, and it works with a calculator when the antiderivative is not elementary.</p>
+    <p data-lang="zh">遇到"质点在时刻 $b$ 位于何处"时，计算前先写出结构 $\mathbf r(b) = \mathbf r(a) + \int_a^b \mathbf v(t)\,dt$（或 $x$、$y$ 分量形式）。它表明初始条件从哪里进入，而且在原函数不是初等函数时也能配合计算器使用。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Why does integrating $\mathbf v(t) = \langle x'(t), y'(t)\rangle$ produce two constants of integration?</span><span data-lang="zh">1. 为什么对 $\mathbf v(t) = \langle x'(t), y'(t)\rangle$ 积分会产生两个积分常数？</span></summary>
+      <div class="sg-a"><p data-lang="en">Each component is integrated separately, and each antiderivative has its own constant. Together they form a constant vector $\mathbf C = \langle C_1, C_2\rangle$, fixed by the two coordinates of the initial position.</p><p data-lang="zh">每个分量分别积分，每个原函数都有自己的常数。两者合成一个常向量 $\mathbf C = \langle C_1, C_2\rangle$，由初始位置的两个坐标确定。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Evaluate $\int_0^1 \langle 2t,\ 3t^2\rangle\,dt$.</span><span data-lang="zh">2. 计算 $\int_0^1 \langle 2t,\ 3t^2\rangle\,dt$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\left\langle \left[t^2\right]_0^1, \left[t^3\right]_0^1 \right\rangle = \langle 1, 1\rangle$.</p><p data-lang="zh">$\left\langle \left[t^2\right]_0^1, \left[t^3\right]_0^1 \right\rangle = \langle 1, 1\rangle$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A particle has $\mathbf v(t) = \langle 4t,\ e^t\rangle$ and $\mathbf r(0) = \langle 1,\ 2\rangle$. Find $\mathbf r(t)$ and $\mathbf r(1)$.</span><span data-lang="zh">3. 质点的 $\mathbf v(t) = \langle 4t,\ e^t\rangle$，$\mathbf r(0) = \langle 1,\ 2\rangle$。求 $\mathbf r(t)$ 与 $\mathbf r(1)$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$x(t) = 2t^2 + C_1$ with $C_1 = 1$; $y(t) = e^t + C_2$ with $1 + C_2 = 2$, so $C_2 = 1$. Thus $\mathbf r(t) = \langle 2t^2 + 1,\ e^t + 1\rangle$ and $\mathbf r(1) = \langle 3,\ e + 1\rangle \approx \langle 3,\ 3.718\rangle$.</p><p data-lang="zh">$x(t) = 2t^2 + C_1$，$C_1 = 1$；$y(t) = e^t + C_2$，由 $1 + C_2 = 2$ 得 $C_2 = 1$。所以 $\mathbf r(t) = \langle 2t^2 + 1,\ e^t + 1\rangle$，$\mathbf r(1) = \langle 3,\ e + 1\rangle \approx \langle 3,\ 3.718\rangle$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <section class="section" id="s9-6">
   <div class="section-label">Topic 9.6</div>
-  <h2 data-lang="en">Solving Motion Problems — Parametric &amp; Vector-Valued</h2>
-  <h2 data-lang="zh">求解运动问题 —— 参数方程与向量值函数</h2>
+  <h2 data-lang="en">Solving Motion Problems: Parametric &amp; Vector-Valued</h2>
+  <h2 data-lang="zh">求解运动问题：参数方程与向量值函数</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the formulas for position, velocity, speed, acceleration, displacement and total distance in the plane.</li><li>Calculate displacement as $\int_a^b \mathbf{v}(t)\,dt$ and total distance as $\int_a^b |\mathbf{v}(t)|\,dt$.</li><li>Deduce whether speed is increasing or decreasing from the sign of $\mathbf{v} \cdot \mathbf{a}$.</li><li>Explain why distance travelled can exceed the magnitude of the displacement.</li><li>Interpret the sign of $x'(t)$ or $y'(t)$ as horizontal or vertical direction of motion.</li></ul>
+    <ul data-lang="zh"><li>写出平面运动中位置、速度、速率、加速度、位移与总路程的公式。</li><li>把位移计算为 $\int_a^b \mathbf{v}(t)\,dt$，把总路程计算为 $\int_a^b |\mathbf{v}(t)|\,dt$。</li><li>由 $\mathbf{v} \cdot \mathbf{a}$ 的符号推断速率是增加还是减小。</li><li>解释为何走过的路程可以大于位移（<code>displacement</code>）的大小。</li><li>把 $x'(t)$ 或 $y'(t)$ 的符号解释为水平或竖直方向的运动方向。</li></ul>
+  </div>
 
   <div class="qref">
-    <div class="qref-title"><span data-lang="en">Quick Reference — Planar Motion</span><span data-lang="zh">速查表 —— 平面运动</span></div>
+    <div class="qref-title"><span data-lang="en">Quick Reference: Planar Motion</span><span data-lang="zh">速查表：平面运动</span></div>
     <div class="table-wrap">
       <table>
         <tr><th><span data-lang="en">Quantity</span><span data-lang="zh">量</span></th><th><span data-lang="en">Formula</span><span data-lang="zh">公式</span></th></tr>
@@ -1437,8 +1746,8 @@ y(0) = 1 + C₂ = 1  →  C₂ = <span class="num">0</span>
 
   <div class="concept-box">
     <strong style="color: var(--accent);"><span data-lang="en">Speed Increasing vs Decreasing</span><span data-lang="zh">速率递增还是递减</span></strong>
-    <span data-lang="en">Speed is increasing when the velocity and acceleration vectors "agree" — specifically, when the dot product $\mathbf{v}(t) \cdot \mathbf{a}(t) > 0$. Speed is decreasing when $\mathbf{v}(t) \cdot \mathbf{a}(t) < 0$.</span>
-    <span data-lang="zh">当速度向量与加速度向量（<code>acceleration vector</code>）"方向一致"时，速率在增加 —— 具体来说，就是点积 $\mathbf{v}(t) \cdot \mathbf{a}(t) > 0$。当 $\mathbf{v}(t) \cdot \mathbf{a}(t) < 0$ 时，速率在减小。</span>
+    <span data-lang="en">Speed is increasing when the velocity and acceleration vectors "agree", specifically when the dot product $\mathbf{v}(t) \cdot \mathbf{a}(t) > 0$. Speed is decreasing when $\mathbf{v}(t) \cdot \mathbf{a}(t) < 0$.</span>
+    <span data-lang="zh">当速度向量与加速度向量（<code>acceleration vector</code>）"方向一致"时，速率在增加；具体来说，就是点积 $\mathbf{v}(t) \cdot \mathbf{a}(t) > 0$。当 $\mathbf{v}(t) \cdot \mathbf{a}(t) < 0$ 时，速率在减小。</span>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -1453,36 +1762,24 @@ y(0) = 1 + C₂ = 1  →  C₂ = <span class="num">0</span>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Speed is the magnitude of the velocity vector: $\sqrt{3^2 + 4^2} = \sqrt{25} = 5$. Don't just add the components!</span><span data-lang="zh">速率是速度向量的模：$\sqrt{3^2 + 4^2} = \sqrt{25} = 5$。不要直接把两个分量相加！</span></div>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Is Speed Increasing or Decreasing?</span><span data-lang="zh">例题 —— 速率是在增加还是减小</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">A particle moves with x(t) = t² − 4t and y(t) = t³ − 3t. Is speed</span>
-<span class="cm">increasing or decreasing at t = 1?</span>
-
-x'(t) = <span class="num">2t − 4</span>  →  x'(1) = <span class="num">−2</span>
-y'(t) = <span class="num">3t² − 3</span>  →  y'(1) = <span class="num">0</span>
-x''(t) = <span class="num">2</span>
-y''(t) = <span class="num">6t</span>  →  y''(1) = <span class="num">6</span>
-
-<span class="cm">Test the sign of v(t) · a(t):</span>
-v(1)·a(1) = (−2)(2) + (0)(6) = −4 + 0 = <span class="num">−4</span> &lt; 0
-
-<span class="cm">Negative dot product ⇒ speed is DECREASING at t = 1.</span></pre>
-<pre data-lang="zh"><span class="cm">质点满足 x(t) = t² − 4t，y(t) = t³ − 3t。求 t = 1 时速率</span>
-<span class="cm">是在增加还是减小。</span>
-
-x'(t) = <span class="num">2t − 4</span>  →  x'(1) = <span class="num">−2</span>
-y'(t) = <span class="num">3t² − 3</span>  →  y'(1) = <span class="num">0</span>
-x''(t) = <span class="num">2</span>
-y''(t) = <span class="num">6t</span>  →  y''(1) = <span class="num">6</span>
-
-<span class="cm">检验 v(t) · a(t) 的符号：</span>
-v(1)·a(1) = (−2)(2) + (0)(6) = −4 + 0 = <span class="num">−4</span> &lt; 0
-
-<span class="cm">点积为负 ⇒ t = 1 时速率在减小。</span></pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">This dot-product test is the 2D analogue of the familiar 1D rule "speed increases when velocity and acceleration have the same sign." Here it is applied component-by-component and summed, exactly like any other dot product — no need to separately compute the speed function and differentiate it.</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">这一点积判别法是一维中"速度与加速度同号时速率增加"这一熟悉规则的二维类比。此处逐分量相乘再求和，与任何其他点积计算方式完全一致——无需另外求出速率函数再对其求导。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Is Speed Increasing or Decreasing?</span><span data-lang="zh">例题：速率是在增加还是减小</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">A particle has $x(t)=t^2-4t$ and $y(t)=t^3-3t$. Is its speed increasing or decreasing at $t=1$?</span><span data-lang="zh">质点满足 $x(t)=t^2-4t$，$y(t)=t^3-3t$。求 $t=1$ 时速率是在增加还是减小。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Velocity</span><span data-lang="zh">速度</span></strong>
+        $$x'(t)=2t-4\ \Rightarrow\ x'(1)=-2,\qquad y'(t)=3t^2-3\ \Rightarrow\ y'(1)=0$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Acceleration</span><span data-lang="zh">加速度</span></strong>
+        $$x''(t)=2,\qquad y''(t)=6t\ \Rightarrow\ y''(1)=6$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Dot product</span><span data-lang="zh">点积</span></strong> <span data-lang="en">Test the sign of $\mathbf v(t)\cdot\mathbf a(t)$:</span><span data-lang="zh">检验 $\mathbf v(t)\cdot\mathbf a(t)$ 的符号：</span>
+        $$\mathbf v(1)\cdot\mathbf a(1)=(-2)(2)+(0)(6)=-4+0=-4<0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">A negative dot product means speed is DECREASING at $t=1$.</span><span data-lang="zh">点积为负，说明 $t=1$ 时速率在减小。</span></div>
     </div>
+    <p class="example-note" data-lang="en">This dot-product test is the 2D analogue of the familiar 1D rule "speed increases when velocity and acceleration have the same sign." Here it is applied component-by-component and summed, exactly like any other dot product, with no need to separately compute the speed function and differentiate it.</p>
+    <p class="example-note" data-lang="zh">这一点积判别法是一维中"速度与加速度同号时速率增加"这一熟悉规则的二维类比。此处逐分量相乘再求和，与任何其他点积计算方式完全一致，无需另外求出速率函数再对其求导。</p>
+  </div>
   </details>
 
   <div class="practice-input-group">
@@ -1495,37 +1792,43 @@ v(1)·a(1) = (−2)(2) + (0)(6) = −4 + 0 = <span class="num">−4</span> &lt; 
     <div class="practice-feedback" id="pfb2"></div>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Total Distance vs. Displacement</span><span data-lang="zh">例题 —— 总路程与位移</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">A particle moves with velocity v(t) = ⟨2, 3t² − 3⟩ for 0 ≤ t ≤ 2.</span>
-<span class="cm">Find (a) displacement in y and (b) total distance traveled in y.</span>
-
-<span class="cm">(a) Displacement — integrate the velocity component directly:</span>
-∫₀² (3t² − 3) dt = [t³ − 3t]₀² = (8 − 6) − 0 = <span class="num">2</span>
-
-<span class="cm">(b) Distance — first check if the y-velocity changes sign on [0,2]:</span>
-3t² − 3 = 0  →  t = 1  (velocity is negative on [0,1], positive on [1,2])
-
-<span class="cm">Split the integral and take absolute value of each piece:</span>
-∫₀¹ |3t² − 3| dt + ∫₁² |3t² − 3| dt = 2 + 4 = <span class="num">6</span>
-
-<span class="cm">Distance (6) &gt; |displacement| (2) because the particle reversed direction — this only happens when velocity changes sign.</span></pre>
-<pre data-lang="zh"><span class="cm">质点以 v(t) = ⟨2, 3t² − 3⟩ 运动，0 ≤ t ≤ 2。</span>
-<span class="cm">求 (a) y 方向的位移，(b) y 方向的总路程。</span>
-
-<span class="cm">(a) 位移 —— 直接对速度分量积分：</span>
-∫₀² (3t² − 3) dt = [t³ − 3t]₀² = (8 − 6) − 0 = <span class="num">2</span>
-
-<span class="cm">(b) 路程 —— 先检查 y 方向速度在 [0,2] 上是否变号：</span>
-3t² − 3 = 0  →  t = 1（[0,1] 上速度为负，[1,2] 上为正）
-
-<span class="cm">分段积分，每段取绝对值：</span>
-∫₀¹ |3t² − 3| dt + ∫₁² |3t² − 3| dt = 2 + 4 = <span class="num">6</span>
-
-<span class="cm">路程（6）大于 |位移|（2），因为质点中途改变了方向 —— 只有速度变号时才会出现这种情况。</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Total Distance vs. Displacement</span><span data-lang="zh">例题：总路程与位移</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">A particle has velocity $\mathbf v(t)=\langle 2,\ 3t^2-3\rangle$ for $0\le t\le 2$. Find (a) the displacement in $y$ and (b) the total distance traveled in $y$.</span><span data-lang="zh">质点速度为 $\mathbf v(t)=\langle 2,\ 3t^2-3\rangle$，$0\le t\le 2$。求 (a) $y$ 方向的位移，(b) $y$ 方向的总路程。</span></div>
+      <div class="example-step"><strong><span data-lang="en">(a) Displacement</span><span data-lang="zh">(a) 位移</span></strong> <span data-lang="en">Integrate the velocity component directly:</span><span data-lang="zh">直接对速度分量积分：</span>
+        $$\int_0^2(3t^2-3)\,dt=\left[t^3-3t\right]_0^2=(8-6)-0=2$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">(b) Sign check</span><span data-lang="zh">(b) 符号检查</span></strong> <span data-lang="en">First check whether the $y$-velocity changes sign on $[0,2]$:</span><span data-lang="zh">先检查 $y$ 方向速度在 $[0,2]$ 上是否变号：</span>
+        $$3t^2-3=0\ \Rightarrow\ t=1$$
+       <span data-lang="en">The velocity is negative on $[0,1]$ and positive on $[1,2]$.</span><span data-lang="zh">$[0,1]$ 上速度为负，$[1,2]$ 上为正。</span></div>
+      <div class="example-step"><strong><span data-lang="en">(b) Distance</span><span data-lang="zh">(b) 路程</span></strong> <span data-lang="en">Split the integral and take the absolute value of each piece:</span><span data-lang="zh">分段积分，每段取绝对值：</span>
+        $$\int_0^1|3t^2-3|\,dt+\int_1^2|3t^2-3|\,dt=2+4=6$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">Distance (6) is greater than $|\text{displacement}|$ (2) because the particle reversed direction. This only happens when velocity changes sign.</span><span data-lang="zh">路程（6）大于 $|\text{位移}|$（2），因为质点中途改变了方向。只有速度变号时才会出现这种情况。</span></div>
     </div>
+  </div>
   </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Total distance is $\int_a^b \sqrt{(x'(t))^2 + (y'(t))^2}\,dt$, one integral of speed; it is not $\int |x'(t)|\,dt + \int |y'(t)|\,dt$. For speed increasing or decreasing at an instant, state the sign of $\mathbf v \cdot \mathbf a$ with its value, for example "$\mathbf v(1) \cdot \mathbf a(1) = -4 < 0$, so speed is decreasing."</p>
+    <p data-lang="zh">总路程是 $\int_a^b \sqrt{(x'(t))^2 + (y'(t))^2}\,dt$，即速率的一个积分；它不是 $\int |x'(t)|\,dt + \int |y'(t)|\,dt$。判断某一时刻速率增减时，写出 $\mathbf v \cdot \mathbf a$ 的数值和符号，例如"$\mathbf v(1) \cdot \mathbf a(1) = -4 < 0$，所以速率在减小"。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What is the difference between displacement and total distance travelled?</span><span data-lang="zh">1. 位移与总路程有什么区别？</span></summary>
+      <div class="sg-a"><p data-lang="en">Displacement $\int_a^b \mathbf v(t)\,dt$ is the net change in position, a vector. Total distance $\int_a^b |\mathbf v(t)|\,dt$ is the length of the path, a non-negative number. They differ whenever the particle doubles back.</p><p data-lang="zh">位移 $\int_a^b \mathbf v(t)\,dt$ 是位置的净变化，是一个向量。总路程 $\int_a^b |\mathbf v(t)|\,dt$ 是路径的长度，是一个非负数。只要质点折返，两者就不同。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. At $t = 2$ a particle has $\mathbf v(2) = \langle 1,\ -2\rangle$ and $\mathbf a(2) = \langle 3,\ 1\rangle$. Is its speed increasing or decreasing at $t = 2$?</span><span data-lang="zh">2. $t = 2$ 时质点的 $\mathbf v(2) = \langle 1,\ -2\rangle$，$\mathbf a(2) = \langle 3,\ 1\rangle$。$t = 2$ 时其速率在增加还是减小？</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathbf v(2) \cdot \mathbf a(2) = (1)(3) + (-2)(1) = 1 > 0$, so the speed is increasing at $t = 2$.</p><p data-lang="zh">$\mathbf v(2) \cdot \mathbf a(2) = (1)(3) + (-2)(1) = 1 > 0$，所以 $t = 2$ 时速率在增加。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A particle has $\mathbf v(t) = \langle 2t,\ t^2 - 1\rangle$ for $0 \le t \le 3$. Find the total distance travelled and the magnitude of the displacement.</span><span data-lang="zh">3. 质点的 $\mathbf v(t) = \langle 2t,\ t^2 - 1\rangle$，$0 \le t \le 3$。求总路程与位移的大小。</span></summary>
+      <div class="sg-a"><p data-lang="en">Speed $= \sqrt{4t^2 + (t^2-1)^2} = \sqrt{(t^2+1)^2} = t^2 + 1$, so distance $= \int_0^3 (t^2 + 1)\,dt = 9 + 3 = 12$. Displacement $= \langle \left[t^2\right]_0^3, \left[\tfrac{t^3}{3} - t\right]_0^3 \rangle = \langle 9, 6\rangle$, magnitude $\sqrt{117} \approx 10.817 < 12$.</p><p data-lang="zh">速率 $= \sqrt{4t^2 + (t^2-1)^2} = \sqrt{(t^2+1)^2} = t^2 + 1$，所以路程 $= \int_0^3 (t^2 + 1)\,dt = 9 + 3 = 12$。位移 $= \langle \left[t^2\right]_0^3, \left[\tfrac{t^3}{3} - t\right]_0^3 \rangle = \langle 9, 6\rangle$，大小为 $\sqrt{117} \approx 10.817 < 12$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -1547,6 +1850,12 @@ v(1)·a(1) = (−2)(2) + (0)(6) = −4 + 0 = <span class="num">−4</span> &lt; 
 </figure>
 
   <h2 data-lang="zh">极坐标（<code>polar coordinate</code>）的定义与极坐标求导</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Convert between polar $(r, \theta)$ and rectangular $(x, y)$ coordinates.</li><li>Explain why a polar curve $r = f(\theta)$ is a parametric curve with parameter $\theta$.</li><li>Calculate $\frac{dy}{dx}$ for a polar curve using the product rule.</li><li>Interpret the sign of $\frac{dr}{d\theta}$ as the point moving toward or away from the pole.</li><li>Deduce the tangent line at the pole when $r(\theta_0) = 0$ and $r'(\theta_0) \neq 0$.</li></ul>
+    <ul data-lang="zh"><li>在极坐标 $(r, \theta)$ 与直角坐标 $(x, y)$ 之间转换。</li><li>解释为何极坐标曲线 $r = f(\theta)$ 是以 $\theta$ 为参数的参数曲线。</li><li>用乘积法则（<code>product rule</code>）计算极坐标曲线的 $\frac{dy}{dx}$。</li><li>把 $\frac{dr}{d\theta}$ 的符号解释为点在靠近还是远离极点（<code>pole</code>）。</li><li>当 $r(\theta_0) = 0$ 且 $r'(\theta_0) \neq 0$ 时，推断极点处的切线。</li></ul>
+  </div>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">Polar Coordinates</span><span data-lang="zh">极坐标</span></strong>
@@ -1575,40 +1884,24 @@ v(1)·a(1) = (−2)(2) + (0)(6) = −4 + 0 = <span class="num">−4</span> &lt; 
     <span data-lang="zh">因为 $x = r\cos(\theta)$、$y = r\sin(\theta)$，对 $\theta$ 求导时必须使用乘积法则。记住：$r$ 是 $\theta$ 的函数。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Slope of a Polar Curve</span><span data-lang="zh">例题 —— 极坐标曲线的斜率</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Find dy/dx for r = 1 + sin(θ) at θ = π/2.</span>
-
-<span class="cm">Set up x(θ) and y(θ):</span>
-x = r cos(θ) = (1 + sin θ) cos θ
-y = r sin(θ) = (1 + sin θ) sin θ
-
-<span class="cm">Differentiate each with the product rule:</span>
-dx/dθ = cos(θ)·cos(θ) + (1+sin θ)·(−sin θ) = cos²θ − sinθ − sin²θ
-dy/dθ = cos(θ)·sin(θ) + (1+sin θ)·cos(θ) = sinθ cosθ + cosθ + sinθ cosθ
-
-<span class="cm">Evaluate at θ = π/2 (cos = 0, sin = 1):</span>
-dx/dθ = 0 − 1 − 1 = <span class="num">−2</span>
-dy/dθ = 0 + 0 + 0 = <span class="num">0</span>
-
-dy/dx = 0 / (−2) = <span class="num">0</span>  <span class="cm">(a horizontal tangent — the top of the cardioid)</span></pre>
-<pre data-lang="zh"><span class="cm">求 r = 1 + sin(θ) 在 θ = π/2 处的 dy/dx。</span>
-
-<span class="cm">先写出 x(θ) 与 y(θ)：</span>
-x = r cos(θ) = (1 + sin θ) cos θ
-y = r sin(θ) = (1 + sin θ) sin θ
-
-<span class="cm">分别用乘积法则求导：</span>
-dx/dθ = cos(θ)·cos(θ) + (1+sin θ)·(−sin θ) = cos²θ − sinθ − sin²θ
-dy/dθ = cos(θ)·sin(θ) + (1+sin θ)·cos(θ) = sinθ cosθ + cosθ + sinθ cosθ
-
-<span class="cm">代入 θ = π/2（cos = 0，sin = 1）：</span>
-dx/dθ = 0 − 1 − 1 = <span class="num">−2</span>
-dy/dθ = 0 + 0 + 0 = <span class="num">0</span>
-
-dy/dx = 0 / (−2) = <span class="num">0</span>  <span class="cm">（水平切线 —— 心脏线的顶点）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Slope of a Polar Curve</span><span data-lang="zh">例题：极坐标曲线的斜率</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find $dy/dx$ for $r=1+\sin\theta$ at $\theta=\pi/2$.</span><span data-lang="zh">求 $r=1+\sin\theta$ 在 $\theta=\pi/2$ 处的 $dy/dx$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Set up</span><span data-lang="zh">列式</span></strong> <span data-lang="en">Write $x(\theta)$ and $y(\theta)$:</span><span data-lang="zh">先写出 $x(\theta)$ 与 $y(\theta)$：</span>
+        $$x=r\cos\theta=(1+\sin\theta)\cos\theta,\qquad y=r\sin\theta=(1+\sin\theta)\sin\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Differentiate</span><span data-lang="zh">求导</span></strong> <span data-lang="en">Use the product rule on each:</span><span data-lang="zh">分别用乘积法则求导：</span>
+        $$\frac{dx}{d\theta}=\cos\theta\cos\theta+(1+\sin\theta)(-\sin\theta)=\cos^2\theta-\sin\theta-\sin^2\theta$$
+      
+        $$\frac{dy}{d\theta}=\cos\theta\sin\theta+(1+\sin\theta)\cos\theta=2\sin\theta\cos\theta+\cos\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Evaluate</span><span data-lang="zh">代入</span></strong> <span data-lang="en">At $\theta=\pi/2$ we have $\cos\theta=0$ and $\sin\theta=1$:</span><span data-lang="zh">代入 $\theta=\pi/2$（$\cos\theta=0$，$\sin\theta=1$）：</span>
+        $$\frac{dx}{d\theta}=0-1-1=-2,\qquad \frac{dy}{d\theta}=0+0=0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\dfrac{dy}{dx}=\dfrac{0}{-2}=0$, a horizontal tangent at the top of the cardioid.</span><span data-lang="zh">$\dfrac{dy}{dx}=\dfrac{0}{-2}=0$，即心脏线顶点处的水平切线。</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box red">
@@ -1617,45 +1910,52 @@ dy/dx = 0 / (−2) = <span class="num">0</span>  <span class="cm">（水平切�
     <span data-lang="zh">当极坐标曲线经过极点时，即某个角度 $\theta_0$ 处 $r(\theta_0) = 0$，其实完全不需要硬算完整的乘积法则商式。因为 $r = 0$ 时 $x = r\cos\theta$ 与 $y = r\sin\theta$ 都为零，导数会化简为 $\frac{dx}{d\theta} = r'(\theta_0)\cos\theta_0$ 与 $\frac{dy}{d\theta} = r'(\theta_0)\sin\theta_0$，于是 $r'(\theta_0)$ 直接从商式中约掉。极点处的切线就是射线 $\theta = \theta_0$，斜率为 $\tan(\theta_0)$，前提是 $r'(\theta_0) \neq 0$（如果 $r'(\theta_0)$ 也恰好为零，这个捷径就不适用了，该点需要单独处理）。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Tangent Line at the Pole</span><span data-lang="zh">例题 —— 极点处的切线</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Find the tangent line to r = sin(2θ) at the pole, for the petal</span>
-<span class="cm">that begins at θ = 0.</span>
-
-<span class="cm">r = 0 when sin(2θ) = 0, so θ = 0 is a pole angle for this petal.</span>
-
-<span class="cm">Shortcut check: r'(θ) = 2cos(2θ), so r'(0) = 2 ≠ 0, meaning the shortcut applies.</span>
-<span class="cm">Tangent line at the pole: θ = 0, i.e. slope = tan(0) = </span><span class="num">0</span>
-
-<span class="cm">Verify with the full quotient, x = sin(2θ)cos(θ), y = sin(2θ)sin(θ):</span>
-dx/dθ = 2cos(2θ)cos(θ) − sin(2θ)sin(θ)  →  at θ=0:  2(1)(1) − 0 = <span class="num">2</span>
-dy/dθ = 2cos(2θ)sin(θ) + sin(2θ)cos(θ)  →  at θ=0:  2(1)(0) + 0(1) = <span class="num">0</span>
-
-dy/dx = 0/2 = <span class="num">0</span>  <span class="cm">✓ matches the shortcut exactly</span></pre>
-<pre data-lang="zh"><span class="cm">求 r = sin(2θ) 在极点处的切线，取从 θ = 0 开始的花瓣。</span>
-
-<span class="cm">当 sin(2θ) = 0 时 r = 0，故此花瓣对应的极点角为 θ = 0。</span>
-
-<span class="cm">捷径检验：r'(θ) = 2cos(2θ)，故 r'(0) = 2 ≠ 0，捷径可用。</span>
-<span class="cm">极点处切线：θ = 0，即斜率 = tan(0) = </span><span class="num">0</span>
-
-<span class="cm">用完整商式验证，x = sin(2θ)cos(θ)，y = sin(2θ)sin(θ)：</span>
-dx/dθ = 2cos(2θ)cos(θ) − sin(2θ)sin(θ)  →  θ=0 时：2(1)(1) − 0 = <span class="num">2</span>
-dy/dθ = 2cos(2θ)sin(θ) + sin(2θ)cos(θ)  →  θ=0 时：2(1)(0) + 0(1) = <span class="num">0</span>
-
-dy/dx = 0/2 = <span class="num">0</span>  <span class="cm">✓ 与捷径结果完全一致</span></pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">The full quotient always agrees with the shortcut when $r'(\theta_0) \neq 0$, so on the exam it is faster and equally rigorous to jump straight to $\tan(\theta_0)$ once you have confirmed the curve actually reaches the pole at that angle.</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">只要 $r'(\theta_0) \neq 0$，完整商式的结果必然与捷径一致，所以在考试中，一旦确认曲线在该角度确实经过极点，直接跳到 $\tan(\theta_0)$ 既更快，也同样严谨。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Tangent Line at the Pole</span><span data-lang="zh">例题：极点处的切线</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find the tangent line to $r=\sin(2\theta)$ at the pole, for the petal that begins at $\theta=0$.</span><span data-lang="zh">求 $r=\sin(2\theta)$ 在极点处的切线，取从 $\theta=0$ 开始的花瓣。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Pole angle</span><span data-lang="zh">极点角</span></strong> <span data-lang="en">$r=0$ when $\sin(2\theta)=0$, so $\theta=0$ is a pole angle for this petal.</span><span data-lang="zh">当 $\sin(2\theta)=0$ 时 $r=0$，故此花瓣对应的极点角为 $\theta=0$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Shortcut</span><span data-lang="zh">捷径</span></strong> <span data-lang="en">Since $r'(\theta)=2\cos(2\theta)$, we get $r'(0)=2\ne 0$, so the shortcut applies. The tangent line at the pole is $\theta=0$, with slope:</span><span data-lang="zh">由 $r'(\theta)=2\cos(2\theta)$ 得 $r'(0)=2\ne 0$，捷径可用。极点处切线为 $\theta=0$，斜率：</span>
+        $$\tan(0)=0$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Verify</span><span data-lang="zh">验证</span></strong> <span data-lang="en">Verify with the full quotient, $x=\sin(2\theta)\cos\theta$, $y=\sin(2\theta)\sin\theta$:</span><span data-lang="zh">用完整商式验证，$x=\sin(2\theta)\cos\theta$，$y=\sin(2\theta)\sin\theta$：</span>
+        $$\frac{dx}{d\theta}=2\cos(2\theta)\cos\theta-\sin(2\theta)\sin\theta\ \Rightarrow\ 2(1)(1)-0=2$$
+      
+        $$\frac{dy}{d\theta}=2\cos(2\theta)\sin\theta+\sin(2\theta)\cos\theta\ \Rightarrow\ 2(1)(0)+0(1)=0$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$\dfrac{dy}{dx}=\dfrac02=0$, which matches the shortcut exactly.</span><span data-lang="zh">$\dfrac{dy}{dx}=\dfrac02=0$，与捷径结果完全一致。</span></div>
     </div>
+    <p class="example-note" data-lang="en">The full quotient always agrees with the shortcut when $r'(\theta_0) \neq 0$, so on the exam it is faster and equally rigorous to jump straight to $\tan(\theta_0)$ once you have confirmed the curve actually reaches the pole at that angle.</p>
+    <p class="example-note" data-lang="zh">只要 $r'(\theta_0) \neq 0$，完整商式的结果必然与捷径一致，所以在考试中，一旦确认曲线在该角度确实经过极点，直接跳到 $\tan(\theta_0)$ 既更快，也同样严谨。</p>
+  </div>
   </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Do not confuse $\frac{dr}{d\theta}$ with $\frac{dy}{dx}$. A question about the curve's slope or tangent line needs the full quotient $\frac{dy/d\theta}{dx/d\theta}$; a question about whether the point is moving toward or away from the origin needs the sign of $\frac{dr}{d\theta}$ together with the sign of $r$.</p>
+    <p data-lang="zh">不要把 $\frac{dr}{d\theta}$ 与 $\frac{dy}{dx}$ 混淆。问曲线的斜率或切线时，需要完整商式 $\frac{dy/d\theta}{dx/d\theta}$；问点在靠近还是远离原点时，需要 $\frac{dr}{d\theta}$ 的符号，并结合 $r$ 的符号。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Convert the polar point $(r, \theta) = \left(2, \frac{\pi}{3}\right)$ to rectangular coordinates.</span><span data-lang="zh">1. 把极坐标点 $(r, \theta) = \left(2, \frac{\pi}{3}\right)$ 化为直角坐标。</span></summary>
+      <div class="sg-a"><p data-lang="en">$x = 2\cos\frac{\pi}{3} = 1$ and $y = 2\sin\frac{\pi}{3} = \sqrt3$, so the point is $(1, \sqrt3)$.</p><p data-lang="zh">$x = 2\cos\frac{\pi}{3} = 1$，$y = 2\sin\frac{\pi}{3} = \sqrt3$，所以该点为 $(1, \sqrt3)$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For $r = 3 - 2\sin\theta$ at $\theta = \frac{\pi}{6}$, is the point moving toward or away from the origin as $\theta$ increases?</span><span data-lang="zh">2. 对 $r = 3 - 2\sin\theta$，在 $\theta = \frac{\pi}{6}$ 处，随着 $\theta$ 增大，点在靠近还是远离原点？</span></summary>
+      <div class="sg-a"><p data-lang="en">$r\left(\frac{\pi}{6}\right) = 3 - 1 = 2 > 0$ and $\frac{dr}{d\theta} = -2\cos\theta = -\sqrt3 < 0$. Since $r$ is positive and decreasing, the distance from the origin is decreasing: the point moves toward the origin.</p><p data-lang="zh">$r\left(\frac{\pi}{6}\right) = 3 - 1 = 2 > 0$，$\frac{dr}{d\theta} = -2\cos\theta = -\sqrt3 < 0$。由于 $r$ 为正且在减小，到原点的距离在减小：点在靠近原点。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find $\frac{dy}{dx}$ for $r = 2\cos\theta$ at $\theta = \frac{\pi}{4}$.</span><span data-lang="zh">3. 求 $r = 2\cos\theta$ 在 $\theta = \frac{\pi}{4}$ 处的 $\frac{dy}{dx}$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$x = 2\cos^2\theta$ and $y = 2\sin\theta\cos\theta = \sin(2\theta)$. Then $\frac{dx}{d\theta} = -2\sin(2\theta) = -2$ and $\frac{dy}{d\theta} = 2\cos(2\theta) = 0$ at $\theta = \frac{\pi}{4}$, so $\frac{dy}{dx} = 0$: a horizontal tangent at the top $(1, 1)$ of this circle.</p><p data-lang="zh">$x = 2\cos^2\theta$，$y = 2\sin\theta\cos\theta = \sin(2\theta)$。于是 $\theta = \frac{\pi}{4}$ 时 $\frac{dx}{d\theta} = -2\sin(2\theta) = -2$，$\frac{dy}{d\theta} = 2\cos(2\theta) = 0$，所以 $\frac{dy}{dx} = 0$：在这个圆的最高点 $(1, 1)$ 处有水平切线。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <section class="section" id="s9-8">
   <div class="section-label">Topic 9.8</div>
-  <h2 data-lang="en">Area of a Polar Region — Single Curve</h2>
+  <h2 data-lang="en">Area of a Polar Region: Single Curve</h2>
 <!-- dingrui:fig calc9-polar-sector-element -->
 <figure class="dr-fig" id="fig-calc9-polar-sector-element">
 <style>
@@ -1669,7 +1969,13 @@ dy/dx = 0/2 = <span class="num">0</span>  <span class="cm">✓ 与捷径结果�
 <figcaption><span data-lang="en">A polar curve with a thin sector element between theta and theta + dtheta, whose area (1/2) r^2 dtheta the integral accumulates.</span><span data-lang="zh">极坐标曲线上介于 theta 与 theta + dtheta 之间的细扇形元素，其面积 (1/2) r² dtheta 由积分累加。</span></figcaption>
 </figure>
 
-  <h2 data-lang="zh">极坐标区域的面积 —— 单曲线</h2>
+  <h2 data-lang="zh">极坐标区域的面积：单曲线</h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the polar area formula $A = \frac12\int_{\alpha}^{\beta} r^2\,d\theta$ and explain it from the area of a thin sector.</li><li>Deduce limits $\alpha$ and $\beta$ that sweep a region exactly once, often from consecutive zeros of $r$.</li><li>Calculate polar areas exactly using $\cos^2 u = \frac{1 + \cos 2u}{2}$ and $\sin^2 u = \frac{1 - \cos 2u}{2}$.</li><li>Use symmetry to compute one piece of a region and multiply.</li><li>Calculate polar areas numerically with a calculator when no exact antiderivative is practical.</li></ul>
+    <ul data-lang="zh"><li>写出极坐标面积公式 $A = \frac12\int_{\alpha}^{\beta} r^2\,d\theta$，并用细扇形（<code>sector</code>）面积解释它。</li><li>推断恰好扫过区域一次的积分限 $\alpha$ 与 $\beta$，通常取 $r$ 的相邻零点。</li><li>用 $\cos^2 u = \frac{1 + \cos 2u}{2}$ 与 $\sin^2 u = \frac{1 - \cos 2u}{2}$ 精确计算极坐标面积。</li><li>利用对称性（<code>symmetry</code>）先算区域的一部分再乘倍数。</li><li>在精确原函数不便求出时，用计算器数值计算极坐标面积。</li></ul>
+  </div>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Polar Area Formula</span><span data-lang="zh">极坐标面积公式</span></div>
@@ -1686,32 +1992,72 @@ dy/dx = 0/2 = <span class="num">0</span>  <span class="cm">✓ 与捷径结果�
     <strong style="color: var(--red);"><span data-lang="en">Common Exam Traps</span><span data-lang="zh">常见考试陷阱</span></strong>
     <span data-lang="en" style="display:block; margin-top:8px;">1. Forgetting the $\frac{1}{2}$ in front of the integral.</span>
     <span data-lang="zh" style="display:block; margin-top:8px;">1. 忘记积分前的 $\frac{1}{2}$。</span>
-    <span data-lang="en" style="display:block; margin-top:4px;">2. Forgetting to <strong>square</strong> $r$ — the integrand is $[r(\theta)]^2$.</span>
-    <span data-lang="zh" style="display:block; margin-top:4px;">2. 忘记把 $r$ <strong>平方</strong> —— 被积函数是 $[r(\theta)]^2$。</span>
-    <span data-lang="en" style="display:block; margin-top:4px;">3. Using wrong limits — sketch the curve first to identify bounds!</span>
-    <span data-lang="zh" style="display:block; margin-top:4px;">3. 积分上下限写错 —— 先画出极坐标曲线再确定边界！</span>
+    <span data-lang="en" style="display:block; margin-top:4px;">2. Forgetting to <strong>square</strong> $r$: the integrand is $[r(\theta)]^2$.</span>
+    <span data-lang="zh" style="display:block; margin-top:4px;">2. 忘记把 $r$ <strong>平方</strong>：被积函数是 $[r(\theta)]^2$。</span>
+    <span data-lang="en" style="display:block; margin-top:4px;">3. Using wrong limits: sketch the curve first to identify bounds!</span>
+    <span data-lang="zh" style="display:block; margin-top:4px;">3. 积分上下限写错：先画出极坐标曲线再确定边界！</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Area of One Petal of $r = \cos(2\theta)$</span><span data-lang="zh">例题 —— 求 $r = \cos(2\theta)$ 一个花瓣的面积</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">r = cos(2θ) is a rose with 4 petals.</span>
-<span class="cm">One petal: from θ = −π/4 to θ = π/4 (where r ≥ 0).</span>
+    <div class="concept-box red ap-trap">
+    <strong><span data-lang="en">AP Trap: Bounds Must Sweep the Region Exactly Once</span><span data-lang="zh">AP 陷阱：积分上下限必须恰好扫过区域一次</span></strong>
+    <span data-lang="en">For the circle $r=2\sin\theta$, the area is $\tfrac12\int_0^{\pi}(2\sin\theta)^2\,d\theta=\pi$. Using $0$ to $2\pi$ traces the circle twice (for $\pi&lt;\theta&lt;2\pi$, $r$ is negative and the same points are covered again) and gives $2\pi$. Always find the $\theta$-interval where the curve is traced once, usually between consecutive zeros of $r$.</span>
+    <span data-lang="zh">对圆 $r=2\sin\theta$，面积为 $\tfrac12\int_0^{\pi}(2\sin\theta)^2\,d\theta=\pi$。若取 $0$ 到 $2\pi$，圆会被描两次（$\pi&lt;\theta&lt;2\pi$ 时 $r$ 为负，覆盖的是同样的点），得到 $2\pi$。务必先找出曲线只被描一次的 $\theta$ 区间，通常取 $r$ 相邻两个零点之间。</span>
+  </div>
 
-A = ½ ∫<sub>−π/4</sub><sup>π/4</sup> [cos(2θ)]² dθ
-
-<span class="cm">Use identity: cos²(u) = (1 + cos(2u))/2</span>
-A = ½ ∫<sub>−π/4</sub><sup>π/4</sup> (1 + cos(4θ))/2 dθ = ¼ [θ + sin(4θ)/4]<sub>−π/4</sub><sup>π/4</sup>
-A = ¼ [(π/4 + 0) − (−π/4 + 0)] = ¼ · π/2 = <span class="num">π/8</span></pre>
-<pre data-lang="zh"><span class="cm">r = cos(2θ) 是一个 4 瓣玫瑰线。</span>
-<span class="cm">一个花瓣：θ 从 −π/4 到 π/4（此时 r ≥ 0）。</span>
-
-A = ½ ∫<sub>−π/4</sub><sup>π/4</sup> [cos(2θ)]² dθ
-
-<span class="cm">用恒等式：cos²(u) = (1 + cos(2u))/2</span>
-A = ½ ∫<sub>−π/4</sub><sup>π/4</sup> (1 + cos(4θ))/2 dθ = ¼ [θ + sin(4θ)/4]<sub>−π/4</sub><sup>π/4</sup>
-A = ¼ [(π/4 + 0) − (−π/4 + 0)] = ¼ · π/2 = <span class="num">π/8</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Area of One Petal of $r = \cos(2\theta)$</span><span data-lang="zh">例题：求 $r = \cos(2\theta)$ 一个花瓣的面积</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">$r=\cos(2\theta)$ is a rose with 4 petals. One petal runs from $\theta=-\pi/4$ to $\theta=\pi/4$ (where $r\ge 0$).</span><span data-lang="zh">$r=\cos(2\theta)$ 是一个 4 瓣玫瑰线。一个花瓣：$\theta$ 从 $-\pi/4$ 到 $\pi/4$（此时 $r\ge 0$）。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Set up</span><span data-lang="zh">列式</span></strong>
+        $$A=\frac12\int_{-\pi/4}^{\pi/4}\left[\cos(2\theta)\right]^2d\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Identity</span><span data-lang="zh">恒等式</span></strong> <span data-lang="en">Use $\cos^2u=\dfrac{1+\cos 2u}{2}$:</span><span data-lang="zh">用恒等式 $\cos^2u=\dfrac{1+\cos 2u}{2}$：</span>
+        $$A=\frac12\int_{-\pi/4}^{\pi/4}\frac{1+\cos(4\theta)}{2}\,d\theta=\frac14\left[\theta+\frac{\sin(4\theta)}{4}\right]_{-\pi/4}^{\pi/4}$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$A=\dfrac14\left[\left(\dfrac{\pi}{4}+0\right)-\left(-\dfrac{\pi}{4}+0\right)\right]=\dfrac14\cdot\dfrac{\pi}{2}=\dfrac{\pi}{8}$</span><span data-lang="zh">$A=\dfrac14\left[\left(\dfrac{\pi}{4}+0\right)-\left(-\dfrac{\pi}{4}+0\right)\right]=\dfrac14\cdot\dfrac{\pi}{2}=\dfrac{\pi}{8}$</span></div>
     </div>
+  </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 400 352" role="img" aria-label="The cardioid r = 1 + cos theta drawn to scale, with the region swept from theta = 0 to theta = pi/2 shaded; its area is 3 pi/8 + 1, about 2.18.">
+      <path class="fill2" d="M86.0,180.0 L306.0,180.0 L305.9,174.2 L305.5,168.5 L305.0,162.8 L304.2,157.1 L303.2,151.4 L302.0,145.8 L300.5,140.2 L298.8,134.8 L297.0,129.4 L294.9,124.0 L292.6,118.8 L290.1,113.7 L287.4,108.7 L284.6,103.8 L281.5,99.0 L278.3,94.4 L274.9,89.9 L271.3,85.6 L267.6,81.4 L263.8,77.4 L259.8,73.5 L255.6,69.8 L251.4,66.3 L247.0,63.0 L242.5,59.9 L237.9,57.0 L233.2,54.2 L228.5,51.7 L223.7,49.4 L218.8,47.2 L213.8,45.3 L208.9,43.6 L203.8,42.0 L198.8,40.7 L193.7,39.6 L188.7,38.7 L183.6,38.0 L178.5,37.5 L173.5,37.2 L168.5,37.1 L163.5,37.2 L158.6,37.5 L153.7,38.0 L148.9,38.6 L144.2,39.5 L139.5,40.5 L135.0,41.7 L130.5,43.1 L126.1,44.6 L121.8,46.2 L117.7,48.1 L113.6,50.0 L109.7,52.1 L105.9,54.4 L102.2,56.7 L98.7,59.2 L95.3,61.7 L92.1,64.4 L89.0,67.2 L86.0,70.0 Z"/>
+      <line class="ax" x1="20.0" y1="180.0" x2="361.0" y2="180.0"/>
+      <line class="ax" x1="86.0" y1="339.5" x2="86.0" y2="45.8"/>
+      <line class="ax thin" x1="196.0" y1="176.0" x2="196.0" y2="184.0"/>
+      <text class="mut" data-lang="en" x="196.0" y="197.0" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="196.0" y="197.0" text-anchor="middle">1</text>
+      <path class="c1" d="M306.0,180.0 L305.9,174.2 L305.5,168.5 L305.0,162.8 L304.2,157.1 L303.2,151.4 L302.0,145.8 L300.5,140.2 L298.8,134.8 L297.0,129.4 L294.9,124.0 L292.6,118.8 L290.1,113.7 L287.4,108.7 L284.6,103.8 L281.5,99.0 L278.3,94.4 L274.9,89.9 L271.3,85.6 L267.6,81.4 L263.8,77.4 L259.8,73.5 L255.6,69.8 L251.4,66.3 L247.0,63.0 L242.5,59.9 L237.9,57.0 L233.2,54.2 L228.5,51.7 L223.7,49.4 L218.8,47.2 L213.8,45.3 L208.9,43.6 L203.8,42.0 L198.8,40.7 L193.7,39.6 L188.7,38.7 L183.6,38.0 L178.5,37.5 L173.5,37.2 L168.5,37.1 L163.5,37.2 L158.6,37.5 L153.7,38.0 L148.9,38.6 L144.2,39.5 L139.5,40.5 L135.0,41.7 L130.5,43.1 L126.1,44.6 L121.8,46.2 L117.7,48.1 L113.6,50.0 L109.7,52.1 L105.9,54.4 L102.2,56.7 L98.7,59.2 L95.3,61.7 L92.1,64.4 L89.0,67.2 L86.0,70.0 L83.2,72.9 L80.5,75.9 L78.0,78.9 L75.7,82.0 L73.5,85.2 L71.5,88.4 L69.6,91.6 L67.9,94.8 L66.3,98.0 L64.9,101.2 L63.6,104.5 L62.5,107.7 L61.5,110.9 L60.7,114.1 L60.0,117.3 L59.5,120.4 L59.0,123.5 L58.7,126.5 L58.6,129.5 L58.5,132.4 L58.6,135.2 L58.7,138.0 L59.0,140.7 L59.3,143.3 L59.8,145.9 L60.3,148.3 L61.0,150.7 L61.6,153.0 L62.4,155.1 L63.2,157.2 L64.1,159.2 L65.0,161.1 L66.0,162.9 L66.9,164.6 L68.0,166.2 L69.0,167.7 L70.1,169.0 L71.1,170.3 L72.2,171.5 L73.2,172.6 L74.3,173.6 L75.3,174.6 L76.3,175.4 L77.3,176.1 L78.3,176.8 L79.2,177.4 L80.1,177.9 L80.9,178.3 L81.7,178.7 L82.4,179.0 L83.0,179.3 L83.6,179.5 L84.2,179.7 L84.7,179.8 L85.1,179.9 L85.4,179.9 L85.7,180.0 L85.8,180.0 L86.0,180.0 L86.0,180.0 L86.0,180.0 L85.8,180.0 L85.7,180.0 L85.4,180.1 L85.1,180.1 L84.7,180.2 L84.2,180.3 L83.6,180.5 L83.0,180.7 L82.4,181.0 L81.7,181.3 L80.9,181.7 L80.1,182.1 L79.2,182.6 L78.3,183.2 L77.3,183.9 L76.3,184.6 L75.3,185.4 L74.3,186.4 L73.2,187.4 L72.2,188.5 L71.1,189.7 L70.1,191.0 L69.0,192.3 L68.0,193.8 L66.9,195.4 L66.0,197.1 L65.0,198.9 L64.1,200.8 L63.2,202.8 L62.4,204.9 L61.6,207.0 L61.0,209.3 L60.3,211.7 L59.8,214.1 L59.3,216.7 L59.0,219.3 L58.7,222.0 L58.6,224.8 L58.5,227.6 L58.6,230.5 L58.7,233.5 L59.0,236.5 L59.5,239.6 L60.0,242.7 L60.7,245.9 L61.5,249.1 L62.5,252.3 L63.6,255.5 L64.9,258.8 L66.3,262.0 L67.9,265.2 L69.6,268.4 L71.5,271.6 L73.5,274.8 L75.7,278.0 L78.0,281.1 L80.5,284.1 L83.2,287.1 L86.0,290.0 L89.0,292.8 L92.1,295.6 L95.3,298.3 L98.7,300.8 L102.2,303.3 L105.9,305.6 L109.7,307.9 L113.6,310.0 L117.7,311.9 L121.8,313.8 L126.1,315.4 L130.5,316.9 L135.0,318.3 L139.5,319.5 L144.2,320.5 L148.9,321.4 L153.7,322.0 L158.6,322.5 L163.5,322.8 L168.5,322.9 L173.5,322.8 L178.5,322.5 L183.6,322.0 L188.7,321.3 L193.7,320.4 L198.8,319.3 L203.8,318.0 L208.9,316.4 L213.8,314.7 L218.8,312.8 L223.7,310.6 L228.5,308.3 L233.2,305.8 L237.9,303.0 L242.5,300.1 L247.0,297.0 L251.4,293.7 L255.6,290.2 L259.8,286.5 L263.8,282.6 L267.6,278.6 L271.3,274.4 L274.9,270.1 L278.3,265.6 L281.5,261.0 L284.6,256.2 L287.4,251.3 L290.1,246.3 L292.6,241.2 L294.9,236.0 L297.0,230.6 L298.8,225.2 L300.5,219.8 L302.0,214.2 L303.2,208.6 L304.2,202.9 L305.0,197.2 L305.5,191.5 L305.9,185.8 L306.0,180.0"/>
+      <path class="c1" d="M176.4,41.3 L168.5,37.1 L176.4,32.9"/>
+      <circle class="dot" cx="86.0" cy="180.0" r="3.5"/>
+      <circle class="dot" cx="306.0" cy="180.0" r="3.5"/>
+      <circle class="dot" cx="86.0" cy="70.0" r="3.5"/>
+      <text class="lbl" data-lang="en" x="92.0" y="198.0">O</text><text class="lbl" data-lang="zh" x="92.0" y="198.0">O</text>
+      <text class="lbl" data-lang="en" x="314.0" y="173.0">θ = 0, r = 2</text><text class="lbl" data-lang="zh" x="314.0" y="173.0">θ = 0，r = 2</text>
+      <text class="lbl" data-lang="en" x="86.0" y="30.4" text-anchor="middle">θ = π/2, r = 1</text><text class="lbl" data-lang="zh" x="86.0" y="30.4" text-anchor="middle">θ = π/2，r = 1</text>
+      <text class="lbl c2t" data-lang="en" x="99.2" y="138.2">A = 3π/8 + 1 ≈ 2.18</text><text class="lbl c2t" data-lang="zh" x="99.2" y="138.2">A = 3π/8 + 1 ≈ 2.18</text>
+      <text class="lbl c1t" data-lang="en" x="209.2" y="331.8">r = 1 + cos θ</text><text class="lbl c1t" data-lang="zh" x="209.2" y="331.8">r = 1 + cos θ</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. The cardioid r = 1 + cos θ drawn to scale (the tick on the horizontal axis is at distance 1 from the pole O). As θ runs from 0 to π/2 the radius shrinks from r = 2 to r = 1 and sweeps the shaded region, whose area is ½∫ r² dθ over 0 ≤ θ ≤ π/2 = 3π/8 + 1 ≈ 2.18 (worked example below). The whole cardioid, 0 ≤ θ ≤ 2π, has area 3π/2.</span><span data-lang="zh">图 2. 按比例绘制的心脏线（<code>cardioid</code>）r = 1 + cos θ（水平轴上的刻度到极点 O 的距离为 1）。当 θ 从 0 变到 π/2 时，极径从 r = 2 缩短到 r = 1，扫出阴影区域，其面积为 0 ≤ θ ≤ π/2 上的 ½∫ r² dθ = 3π/8 + 1 ≈ 2.18（见下方例题）。整条心脏线（0 ≤ θ ≤ 2π）的面积为 3π/2。</span></figcaption>
+  </figure>
+
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Area Swept by a Cardioid over a Quarter Turn</span><span data-lang="zh">例题：心脏线在四分之一圈内扫过的面积</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find the area of the region swept by $r = 1 + \cos\theta$ for $0 \le \theta \le \frac{\pi}{2}$ (the shaded region in Figure 2).</span><span data-lang="zh">求 $r = 1 + \cos\theta$ 在 $0 \le \theta \le \frac{\pi}{2}$ 上扫过的区域面积（图 2 中的阴影区域）。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Set up</span><span data-lang="zh">列式</span></strong>
+        $$A=\frac12\int_0^{\pi/2}(1+\cos\theta)^2\,d\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Expand</span><span data-lang="zh">展开</span></strong> <span data-lang="en">Square, then use $\cos^2\theta = \frac{1+\cos 2\theta}{2}$:</span><span data-lang="zh">先平方，再用 $\cos^2\theta = \frac{1+\cos 2\theta}{2}$：</span>
+        $$(1+\cos\theta)^2=1+2\cos\theta+\cos^2\theta=\frac32+2\cos\theta+\frac12\cos 2\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Integrate</span><span data-lang="zh">积分</span></strong>
+        $$A=\frac12\left[\frac32\theta+2\sin\theta+\frac14\sin 2\theta\right]_0^{\pi/2}=\frac12\left(\frac{3\pi}{4}+2+0\right)$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$A = \frac{3\pi}{8} + 1 \approx 2.178$</span><span data-lang="zh">$A = \frac{3\pi}{8} + 1 \approx 2.178$</span></div>
+    </div>
+    <p class="example-note" data-lang="en">Why this works: each thin sector between $\theta$ and $\theta + d\theta$ has area $\frac12 r^2\,d\theta$, and the integral adds them from $\theta = 0$ to $\theta = \frac{\pi}{2}$. Check: the whole cardioid has area $\frac{3\pi}{2} \approx 4.712$, and this quarter turn holds the widest part of it, so $2.178$ (about $46\%$) is reasonable.</p>
+    <p class="example-note" data-lang="zh">原理：$\theta$ 与 $\theta + d\theta$ 之间的每个细扇形面积为 $\frac12 r^2\,d\theta$，积分把它们从 $\theta = 0$ 累加到 $\theta = \frac{\pi}{2}$。检验：整条心脏线的面积为 $\frac{3\pi}{2} \approx 4.712$，而这四分之一圈包含了它最宽的部分，所以 $2.178$（约 $46\%$）是合理的。</p>
+  </div>
   </details>
 
   <div class="quiz" data-answer="0">
@@ -1740,9 +2086,29 @@ A = ¼ [(π/4 + 0) − (−π/4 + 0)] = ¼ · π/2 = <span class="num">π/8</spa
       <div class="widget-readout" id="polarReadout">β = π</div>
     </div>
     <div class="widget-sum-readout">
-      <span data-lang="en">Area so far:</span><span data-lang="zh">当前面积：</span> <span class="sum-val" id="polarArea">—</span> &emsp;
+      <span data-lang="en">Area so far:</span><span data-lang="zh">当前面积：</span> <span class="sum-val" id="polarArea">0</span> &emsp;
       <span data-lang="en">Full area ($0$ to $2\pi$):</span><span data-lang="zh">完整面积（$0$ 到 $2\pi$）：</span> <span class="sum-val" style="color: var(--green);">3π/2 ≈ 4.712</span>
     </div>
+  </div>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the $\frac12$, the square and the limits in the integral before simplifying: $\frac12\int_{\alpha}^{\beta} (r(\theta))^2\,d\theta$. Then check the limits by tracing the curve: if $r$ turns negative inside $[\alpha, \beta]$, the integral is also counting points on the opposite side of the pole.</p>
+    <p data-lang="zh">化简之前先在积分里写出 $\frac12$、平方与积分限：$\frac12\int_{\alpha}^{\beta} (r(\theta))^2\,d\theta$。然后沿曲线描一遍来检查积分限：若 $r$ 在 $[\alpha, \beta]$ 内变为负数，积分也在计入极点另一侧的点。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Where do the $\frac12$ and the square in $\frac12\int r^2\,d\theta$ come from?</span><span data-lang="zh">1. $\frac12\int r^2\,d\theta$ 中的 $\frac12$ 与平方从何而来？</span></summary>
+      <div class="sg-a"><p data-lang="en">A circular sector of radius $r$ and angle $d\theta$ has area $\frac12 r^2\,d\theta$ (a fraction $\frac{d\theta}{2\pi}$ of $\pi r^2$). The integral adds these thin sectors.</p><p data-lang="zh">半径为 $r$、圆心角为 $d\theta$ 的扇形面积为 $\frac12 r^2\,d\theta$（即 $\pi r^2$ 的 $\frac{d\theta}{2\pi}$）。积分把这些细扇形累加起来。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the area enclosed by $r = 4\cos\theta$.</span><span data-lang="zh">2. 求 $r = 4\cos\theta$ 所围的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">The circle is traced once for $-\frac{\pi}{2} \le \theta \le \frac{\pi}{2}$. $A = \frac12\int_{-\pi/2}^{\pi/2} 16\cos^2\theta\,d\theta = 8 \cdot \frac{\pi}{2} = 4\pi$, matching a circle of radius $2$.</p><p data-lang="zh">当 $-\frac{\pi}{2} \le \theta \le \frac{\pi}{2}$ 时圆恰好被描一次。$A = \frac12\int_{-\pi/2}^{\pi/2} 16\cos^2\theta\,d\theta = 8 \cdot \frac{\pi}{2} = 4\pi$，与半径为 $2$ 的圆一致。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the area of the upper half of the cardioid $r = 1 + \cos\theta$, $0 \le \theta \le \pi$.</span><span data-lang="zh">3. 求心脏线 $r = 1 + \cos\theta$ 上半部分（$0 \le \theta \le \pi$）的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">$A = \frac12\int_0^{\pi}\left(\frac32 + 2\cos\theta + \frac12\cos 2\theta\right)d\theta = \frac12 \cdot \frac{3\pi}{2} = \frac{3\pi}{4} \approx 2.356$, half of the full area $\frac{3\pi}{2}$.</p><p data-lang="zh">$A = \frac12\int_0^{\pi}\left(\frac32 + 2\cos\theta + \frac12\cos 2\theta\right)d\theta = \frac12 \cdot \frac{3\pi}{2} = \frac{3\pi}{4} \approx 2.356$，是全部面积 $\frac{3\pi}{2}$ 的一半。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1766,6 +2132,12 @@ A = ¼ [(π/4 + 0) − (−π/4 + 0)] = ¼ · π/2 = <span class="num">π/8</spa
 
   <h2 data-lang="zh">两条极坐标曲线之间的面积</h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the formula $A = \frac12\int_{\alpha}^{\beta} \left(r_{\text{outer}}^2 - r_{\text{inner}}^2\right)d\theta$.</li><li>Calculate intersection angles by solving $r_1(\theta) = r_2(\theta)$.</li><li>Check separately whether both curves pass through the pole.</li><li>Deduce which curve is outer on each $\theta$-interval by testing an angle inside it.</li><li>Explain why the squares are subtracted inside the integral, not $(r_{\text{outer}} - r_{\text{inner}})^2$.</li></ul>
+    <ul data-lang="zh"><li>写出公式 $A = \frac12\int_{\alpha}^{\beta} \left(r_{\text{outer}}^2 - r_{\text{inner}}^2\right)d\theta$。</li><li>解 $r_1(\theta) = r_2(\theta)$ 求出交点角（<code>intersection</code>）。</li><li>单独检查两条曲线是否都经过极点。</li><li>在每个 $\theta$ 区间内取一个角检验，推断哪条曲线在外。</li><li>解释为何在积分内相减的是两个平方，而不是 $(r_{\text{outer}} - r_{\text{inner}})^2$。</li></ul>
+  </div>
+
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Area Between Polar Curves</span><span data-lang="zh">两极坐标曲线之间的面积</span></div>
     $$ A = \frac{1}{2} \int_{\alpha}^{\beta} \left( [r_{\text{outer}}(\theta)]^2 - [r_{\text{inner}}(\theta)]^2 \right) d\theta $$
@@ -1781,42 +2153,25 @@ A = ¼ [(π/4 + 0) − (−π/4 + 0)] = ¼ · π/2 = <span class="num">π/8</spa
     <span data-lang="zh" style="display:block; margin-top:4px;">3. 代公式：把两个平方放到积分<em>内部</em>相减，不要在积分外面相减。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Area Inside One Curve and Outside Another</span><span data-lang="zh">例题 —— 一条曲线内、另一条曲线外的面积</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Find the area inside r = 2 and outside r = 2 − 2sin(θ).</span>
-
-<span class="cm">Step 1 — Find intersections by setting the curves equal:</span>
-2 = 2 − 2sin(θ)  →  sin(θ) = 0  →  θ = 0, π
-
-<span class="cm">Step 2 — On this interval, check which curve is outer.</span>
-<span class="cm">At θ = π/2: r = 2 − 2sin(π/2) = 0, so r = 2 (the circle) is outer.</span>
-
-<span class="cm">Step 3 — Apply the formula, outer² − inner², over the interval where r=2 is outer (0 to π):</span>
-A = ½ ∫₀<sup>π</sup> [2² − (2 − 2sinθ)²] dθ
-
-<span class="cm">Expand (2 − 2sinθ)² = 4 − 8sinθ + 4sin²θ:</span>
-A = ½ ∫₀<sup>π</sup> [4 − (4 − 8sinθ + 4sin²θ)] dθ = ½ ∫₀<sup>π</sup> [8sinθ − 4sin²θ] dθ
-
-<span class="cm">This integrates (using sin²θ = (1−cos2θ)/2) to:</span>
-A = <span class="num">4π − 2π = 2π</span>  <span class="cm">(exact intermediate steps omitted — set up is the graded skill)</span></pre>
-<pre data-lang="zh"><span class="cm">求 r = 2 内部、r = 2 − 2sin(θ) 外部的面积。</span>
-
-<span class="cm">第 1 步 —— 令两曲线相等，求交点：</span>
-2 = 2 − 2sin(θ)  →  sin(θ) = 0  →  θ = 0, π
-
-<span class="cm">第 2 步 —— 在该区间上检查哪条曲线在外。</span>
-<span class="cm">当 θ = π/2 时：r = 2 − 2sin(π/2) = 0，所以 r = 2（圆）在外。</span>
-
-<span class="cm">第 3 步 —— 在 r=2 为外曲线的区间（0 到 π）上代入"外² − 内²"：</span>
-A = ½ ∫₀<sup>π</sup> [2² − (2 − 2sinθ)²] dθ
-
-<span class="cm">展开 (2 − 2sinθ)² = 4 − 8sinθ + 4sin²θ：</span>
-A = ½ ∫₀<sup>π</sup> [4 − (4 − 8sinθ + 4sin²θ)] dθ = ½ ∫₀<sup>π</sup> [8sinθ − 4sin²θ] dθ
-
-<span class="cm">用 sin²θ = (1−cos2θ)/2 积分，得：</span>
-A = <span class="num">4π − 2π = 2π</span>  <span class="cm">（省略了具体积分步骤 —— 正确列式才是本题考查的核心技能）</span></pre>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Area Inside One Curve and Outside Another</span><span data-lang="zh">例题：一条曲线内、另一条曲线外的面积</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Find the area inside $r=2$ and outside $r=2-2\sin\theta$.</span><span data-lang="zh">求 $r=2$ 内部、$r=2-2\sin\theta$ 外部的面积。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 1</span><span data-lang="zh">第 1 步</span></strong> <span data-lang="en">Find intersections by setting the curves equal:</span><span data-lang="zh">令两曲线相等，求交点：</span>
+        $$2=2-2\sin\theta\ \Rightarrow\ \sin\theta=0\ \Rightarrow\ \theta=0,\ \pi$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 2</span><span data-lang="zh">第 2 步</span></strong> <span data-lang="en">On this interval, check which curve is outer. At $\theta=\pi/2$: $r=2-2\sin(\pi/2)=0$, so $r=2$ (the circle) is outer.</span><span data-lang="zh">在该区间上检查哪条曲线在外。当 $\theta=\pi/2$ 时：$r=2-2\sin(\pi/2)=0$，所以 $r=2$（圆）在外。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 3</span><span data-lang="zh">第 3 步</span></strong> <span data-lang="en">Apply outer$^2-$inner$^2$ over the interval where $r=2$ is outer ($0$ to $\pi$):</span><span data-lang="zh">在 $r=2$ 为外曲线的区间（$0$ 到 $\pi$）上代入“外$^2-$内$^2$”：</span>
+        $$A=\frac12\int_0^{\pi}\left[2^2-(2-2\sin\theta)^2\right]d\theta$$
+       <span data-lang="en">Expand $(2-2\sin\theta)^2=4-8\sin\theta+4\sin^2\theta$:</span><span data-lang="zh">展开 $(2-2\sin\theta)^2=4-8\sin\theta+4\sin^2\theta$：</span>
+        $$A=\frac12\int_0^{\pi}\left[8\sin\theta-4\sin^2\theta\right]d\theta$$
+      </div>
+      <div class="example-step"><strong><span data-lang="en">Step 4</span><span data-lang="zh">第 4 步</span></strong> <span data-lang="en">Integrate, using $\sin^2\theta=\dfrac{1-\cos 2\theta}{2}$:</span><span data-lang="zh">用 $\sin^2\theta=\dfrac{1-\cos 2\theta}{2}$ 积分：</span>
+        $$A=\frac12\left[-8\cos\theta-2\theta+\sin 2\theta\right]_0^{\pi}=\frac12\left(16-2\pi\right)$$
+      </div>
+      <div class="example-step example-result"><span data-lang="en">$A=8-\pi$</span><span data-lang="zh">$A=8-\pi$</span></div>
     </div>
+  </div>
   </details>
 
   <div class="concept-box red">
@@ -1825,65 +2180,60 @@ A = <span class="num">4π − 2π = 2π</span>  <span class="cm">（省略了具
     <span data-lang="zh">解 $r_1(\theta) = r_2(\theta)$ 只能找出两条曲线在<em>同一个</em>角度 $\theta$ 处相交的点，却会漏掉两条曲线各自在<em>不同</em>角度经过极点（$r=0$）的情形，因为极点是同一个点，无论是哪个 $\theta$ 到达那里。在信任 $r_1 = r_2$ 给出的交点之前，务必单独检查 $r_1(\theta) = 0$ 与 $r_2(\theta) = 0$ 是否各自有解；如果两者都有解，极点本身就是一个额外的交点，而这一点单靠代数是永远发现不了的。</span>
   </div>
 
-  <details>
-    <summary><span data-lang="en">Worked Example — Finding the Hidden Intersection at the Pole</span><span data-lang="zh">例题 —— 找出隐藏在极点处的交点</span></summary>
-    <div class="detail-body">
-<pre data-lang="en"><span class="cm">Curves: r₁ = 2cos(θ), r₂ = 2sin(θ), two circles of radius 1,</span>
-<span class="cm">one centered on the x-axis, one on the y-axis, both through the origin.</span>
-<span class="cm">Find every intersection point.</span>
-
-<span class="cm">Step 1, set the expressions equal:</span>
-2cos(θ) = 2sin(θ)  →  tan(θ) = 1  →  θ = <span class="num">π/4</span>  (in [0, 2π))
-<span class="cm">At θ = π/4:</span>  r = 2cos(π/4) = <span class="num">√2</span>
-
-<span class="cm">Step 2, check the pole separately, don't skip this:</span>
-r₁ = 2cos(θ) = 0  at  θ = π/2
-r₂ = 2sin(θ) = 0  at  θ = 0
-
-<span class="cm">Both curves reach r = 0, just at different θ values, so the pole IS a</span>
-<span class="cm">shared point, even though θ = π/2 and θ = 0 never solve r₁ = r₂.</span>
-
-<span class="cm">Conclusion: TWO intersection points total,</span>
-<span class="cm">(√2, π/4), found algebraically, and the pole, found by the separate check.</span></pre>
-<pre data-lang="zh"><span class="cm">曲线：r₁ = 2cos(θ)，r₂ = 2sin(θ)，两个半径为 1 的圆，</span>
-<span class="cm">一个圆心在 x 轴上，一个在 y 轴上，都经过原点。</span>
-<span class="cm">求所有交点。</span>
-
-<span class="cm">第 1 步，令两表达式相等：</span>
-2cos(θ) = 2sin(θ)  →  tan(θ) = 1  →  θ = <span class="num">π/4</span>（在 [0, 2π) 内）
-<span class="cm">θ = π/4 时：</span>  r = 2cos(π/4) = <span class="num">√2</span>
-
-<span class="cm">第 2 步，单独检查极点，这一步不能省略：</span>
-r₁ = 2cos(θ) = 0  于  θ = π/2
-r₂ = 2sin(θ) = 0  于  θ = 0
-
-<span class="cm">两条曲线都能达到 r = 0，只是 θ 值不同，所以极点确实是两条曲线的</span>
-<span class="cm">公共点，即使 θ = π/2 与 θ = 0 从未同时满足 r₁ = r₂。</span>
-
-<span class="cm">结论：共有两个交点，</span>
-<span class="cm">(√2, π/4)，由代数求出；以及极点，由单独检查求出。</span></pre>
-      <p data-lang="en" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">A student who only solves $r_1 = r_2$ finds one of the two intersections and would then set up an area-between-curves integral with the wrong bounds, since the missing pole intersection is often exactly where the "outer" and "inner" curve swap roles.</p>
-      <p data-lang="zh" style="margin-top: 8px; font-size: 0.92rem; color: var(--text-secondary);">如果只解 $r_1 = r_2$，就只能找到两个交点中的一个，接下来列出的两曲线间面积积分很可能用错边界，因为遗漏的这个极点交点往往正是"外曲线"与"内曲线"互换角色的位置。</p>
+  <details class="sg-we" open><summary><span data-lang="en">Worked Example: Finding the Hidden Intersection at the Pole</span><span data-lang="zh">例题：找出隐藏在极点处的交点</span></summary>
+  <div class="example-card">
+    <div class="example-steps">
+      <div class="example-step"><strong><span data-lang="en">Given</span><span data-lang="zh">已知</span></strong> <span data-lang="en">Curves $r_1=2\cos\theta$ and $r_2=2\sin\theta$: two circles of radius 1, one centered on the $x$-axis and one on the $y$-axis, both through the origin. Find every intersection point.</span><span data-lang="zh">曲线 $r_1=2\cos\theta$，$r_2=2\sin\theta$：两个半径为 1 的圆，一个圆心在 $x$ 轴上，一个在 $y$ 轴上，都经过原点。求所有交点。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 1</span><span data-lang="zh">第 1 步</span></strong> <span data-lang="en">Set the expressions equal:</span><span data-lang="zh">令两表达式相等：</span>
+        $$2\cos\theta=2\sin\theta\ \Rightarrow\ \tan\theta=1\ \Rightarrow\ \theta=\frac{\pi}{4}\quad(\text{in }[0,2\pi))$$
+       <span data-lang="en">At $\theta=\pi/4$: $r=2\cos(\pi/4)=\sqrt2$.</span><span data-lang="zh">$\theta=\pi/4$ 时：$r=2\cos(\pi/4)=\sqrt2$。</span></div>
+      <div class="example-step"><strong><span data-lang="en">Step 2</span><span data-lang="zh">第 2 步</span></strong> <span data-lang="en">Check the pole separately; do not skip this:</span><span data-lang="zh">单独检查极点，这一步不能省略：</span>
+        $$r_1=2\cos\theta=0\ \text{at}\ \theta=\frac{\pi}{2},\qquad r_2=2\sin\theta=0\ \text{at}\ \theta=0$$
+       <span data-lang="en">Both curves reach $r=0$, just at different $\theta$ values, so the pole IS a shared point, even though $\theta=\pi/2$ and $\theta=0$ never solve $r_1=r_2$.</span><span data-lang="zh">两条曲线都能达到 $r=0$，只是 $\theta$ 值不同，所以极点确实是两条曲线的公共点，即使 $\theta=\pi/2$ 与 $\theta=0$ 从未同时满足 $r_1=r_2$。</span></div>
+      <div class="example-step example-result"><span data-lang="en">Conclusion: TWO intersection points in total, $\left(\sqrt2,\ \pi/4\right)$ found algebraically, and the pole, found by the separate check.</span><span data-lang="zh">结论：共有两个交点，$\left(\sqrt2,\ \pi/4\right)$ 由代数求出；以及极点，由单独检查求出。</span></div>
     </div>
+    <p class="example-note" data-lang="en">A student who only solves $r_1 = r_2$ finds one of the two intersections and would then set up an area-between-curves integral with the wrong bounds, since the missing pole intersection is often exactly where the "outer" and "inner" curve swap roles.</p>
+    <p class="example-note" data-lang="zh">如果只解 $r_1 = r_2$，就只能找到两个交点中的一个，接下来列出的两曲线间面积积分很可能用错边界，因为遗漏的这个极点交点往往正是"外曲线"与"内曲线"互换角色的位置。</p>
+  </div>
   </details>
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Show the intersection work and the outer/inner test before the integral, for example "$2\cos\theta = 1$ at $\theta = \pm\frac{\pi}{3}$; at $\theta = 0$, $2 > 1$ so $r = 2\cos\theta$ is outer." If the outer curve changes partway, split the integral at that angle.</p>
+    <p data-lang="zh">在写积分之前先写出求交点和判断内外的过程，例如"$2\cos\theta = 1$ 得 $\theta = \pm\frac{\pi}{3}$；$\theta = 0$ 时 $2 > 1$，所以 $r = 2\cos\theta$ 在外"。如果外曲线在中途改变，就在该角度处把积分拆开。</p>
+  </div>
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Why is the integrand $r_{\text{outer}}^2 - r_{\text{inner}}^2$ and not $(r_{\text{outer}} - r_{\text{inner}})^2$?</span><span data-lang="zh">1. 为什么被积函数是 $r_{\text{outer}}^2 - r_{\text{inner}}^2$ 而不是 $(r_{\text{outer}} - r_{\text{inner}})^2$？</span></summary>
+      <div class="sg-a"><p data-lang="en">The region is the big sector minus the small sector at each angle: $\frac12 r_{\text{outer}}^2\,d\theta - \frac12 r_{\text{inner}}^2\,d\theta$. Squaring the difference would be the area of a sector of radius $r_{\text{outer}} - r_{\text{inner}}$, which is a different, smaller shape.</p><p data-lang="zh">在每个角度上，区域是大扇形减去小扇形：$\frac12 r_{\text{outer}}^2\,d\theta - \frac12 r_{\text{inner}}^2\,d\theta$。把差平方得到的是半径为 $r_{\text{outer}} - r_{\text{inner}}$ 的扇形面积，那是另一个更小的图形。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Find the angles $\theta$ in $[-\pi, \pi)$ where $r = 2\cos\theta$ and $r = 1$ intersect.</span><span data-lang="zh">2. 求 $r = 2\cos\theta$ 与 $r = 1$ 在 $[-\pi, \pi)$ 内相交的角 $\theta$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$2\cos\theta = 1$ gives $\cos\theta = \frac12$, so $\theta = \pm\frac{\pi}{3}$. The circle $r = 1$ never reaches the pole, so there is no extra intersection there.</p><p data-lang="zh">$2\cos\theta = 1$ 得 $\cos\theta = \frac12$，所以 $\theta = \pm\frac{\pi}{3}$。圆 $r = 1$ 不经过极点，所以那里没有额外的交点。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the area inside $r = 2\cos\theta$ and outside $r = 1$.</span><span data-lang="zh">3. 求 $r = 2\cos\theta$ 内部、$r = 1$ 外部的面积。</span></summary>
+      <div class="sg-a"><p data-lang="en">$A = \frac12\int_{-\pi/3}^{\pi/3}\left(4\cos^2\theta - 1\right)d\theta = \frac12\int_{-\pi/3}^{\pi/3}\left(1 + 2\cos 2\theta\right)d\theta = \frac12\left[\theta + \sin 2\theta\right]_{-\pi/3}^{\pi/3} = \frac{\pi}{3} + \frac{\sqrt3}{2} \approx 1.913$.</p><p data-lang="zh">$A = \frac12\int_{-\pi/3}^{\pi/3}\left(4\cos^2\theta - 1\right)d\theta = \frac12\int_{-\pi/3}^{\pi/3}\left(1 + 2\cos 2\theta\right)d\theta = \frac12\left[\theta + \sin 2\theta\right]_{-\pi/3}^{\pi/3} = \frac{\pi}{3} + \frac{\sqrt3}{2} \approx 1.913$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <section class="section" id="exam-strategy">
   <div class="section-label">Exam Strategy</div>
-  <h2 data-lang="en">How Unit 9 Appears on the AP Exam</h2>
-  <h2 data-lang="zh">单元 9 在 AP 考试中的考法</h2>
+  <h2 data-lang="en">Exam Strategy for Unit 9</h2>
+  <h2 data-lang="zh">单元 9 考试策略</h2>
 
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-blue">MC</div>
-      <div class="card-title"><span data-lang="en">MCQ — Common Question Styles</span><span data-lang="zh">选择题 —— 常见题型</span></div>
+      <div class="card-title"><span data-lang="en">Multiple Choice: Question Types to Practise</span><span data-lang="zh">选择题：需要练习的题型</span></div>
     </div>
     <p data-lang="en"><strong>Find $\frac{dy}{dx}$</strong> for a parametric curve at a specific t-value.</p>
     <p data-lang="zh"><strong>在指定的 t 值处求 $\frac{dy}{dx}$</strong>（参数曲线）。</p>
-    <p data-lang="en"><strong>Set up</strong> an arc length or polar area integral (frequently without evaluating).</p>
-    <p data-lang="zh"><strong>列出</strong>弧长或极坐标面积的积分（常常无需求值）。</p>
+    <p data-lang="en"><strong>Set up</strong> an arc length or polar area integral, with or without evaluating it.</p>
+    <p data-lang="zh"><strong>列出</strong>弧长或极坐标面积的积分（有时需要求值，有时只需列式）。</p>
     <p data-lang="en"><strong>Determine</strong> speed, velocity, or acceleration from vector components.</p>
     <p data-lang="zh"><strong>由向量分量</strong>求速率、速度或加速度。</p>
     <p data-lang="en"><strong>Identify</strong> horizontal/vertical tangents on parametric curves.</p>
@@ -1893,16 +2243,16 @@ r₂ = 2sin(θ) = 0  于  θ = 0
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-green">FR</div>
-      <div class="card-title"><span data-lang="en">FRQ — Common Question Styles</span><span data-lang="zh">自由作答题 —— 常见题型</span></div>
+      <div class="card-title"><span data-lang="en">Free Response: Question Types to Practise</span><span data-lang="zh">自由作答题：需要练习的题型</span></div>
     </div>
-    <p data-lang="en"><strong>Particle in the plane:</strong> Given velocity components, find position, speed, total distance, or acceleration. Heavily involves initial value problems.</p>
-    <p data-lang="zh"><strong>平面内的质点：</strong>给出速度分量，求位置、速率、总路程或加速度。这类题往往涉及初值问题。</p>
-    <p data-lang="en"><strong>Polar area:</strong> Set up and evaluate area integrals, often between two curves or for one petal of a rose.</p>
-    <p data-lang="zh"><strong>极坐标面积：</strong>列出并计算面积积分，常见的是两条曲线之间的面积，或玫瑰线一个花瓣的面积。</p>
+    <p data-lang="en"><strong>Particle in the plane:</strong> Given velocity components, find position, speed, total distance, or acceleration. Finding position usually means solving an initial value problem.</p>
+    <p data-lang="zh"><strong>平面内的质点：</strong>给出速度分量，求位置、速率、总路程或加速度。求位置通常就是解一个初值问题。</p>
+    <p data-lang="en"><strong>Polar area:</strong> Set up and evaluate area integrals, for example between two curves or for one petal of a rose.</p>
+    <p data-lang="zh"><strong>极坐标面积：</strong>列出并计算面积积分，例如两条曲线之间的面积，或玫瑰线一个花瓣的面积。</p>
   </div>
 
   <div class="concept-box red">
-    <strong style="color: var(--red);"><span data-lang="en">Top Mistakes That Lose Points</span><span data-lang="zh">最常失分的错误</span></strong>
+    <strong style="color: var(--red);"><span data-lang="en">Top Mistakes to Avoid</span><span data-lang="zh">最常见的错误</span></strong>
     <span data-lang="en" style="display:block; margin-top:8px;">1. Computing $\frac{d^2y}{dx^2}$ by dividing $\frac{d^2y}{dt^2}$ by $\frac{d^2x}{dt^2}$.</span>
     <span data-lang="zh" style="display:block; margin-top:8px;">1. 用 $\frac{d^2y}{dt^2}$ 除以 $\frac{d^2x}{dt^2}$ 来算 $\frac{d^2y}{dx^2}$。</span>
     <span data-lang="en" style="display:block; margin-top:4px;">2. Forgetting the $\frac{1}{2}$ or the square in polar area integrals.</span>
@@ -1918,8 +2268,8 @@ r₂ = 2sin(θ) = 0  于  θ = 0
 
 <section class="section" id="flashcards">
   <div class="section-label">Review</div>
-  <h2 data-lang="en">Flashcards — Click to Flip</h2>
-  <h2 data-lang="zh">闪卡 —— 点击翻面</h2>
+  <h2 data-lang="en">Flashcards: Click to Flip</h2>
+  <h2 data-lang="zh">闪卡：点击翻面</h2>
 
   <div class="flashcard-grid">
     <div class="flashcard" onclick="this.classList.toggle('flipped')">
@@ -1965,15 +2315,15 @@ r₂ = 2sin(θ) = 0  于  θ = 0
 
 <section class="section" id="unit-quiz">
   <div class="section-label">Assessment</div>
-  <h2 data-lang="en">Unit 9 — Practice Quiz</h2>
-  <h2 data-lang="zh">单元 9 —— 练习测验</h2>
+  <h2 data-lang="en">Unit 9 Practice Quiz</h2>
+  <h2 data-lang="zh">单元 9 练习测验</h2>
 
   <div class="quiz" data-answer="3">
-    <div class="quiz-q"><span data-lang="en">1. Given $x = t^2 - 1$, $y = 2t + 3$, find $\frac{dy}{dx}$.</span><span data-lang="zh">1. 已知 $x = t^2 - 1$、$y = 2t + 3$，求 $\frac{dy}{dx}$。</span></div>
+    <div class="quiz-q"><span data-lang="en">1. Given $x = t^2 - 1$, $y = 2t + 3$, find $\frac{dy}{dx}$ for $t \neq 0$.</span><span data-lang="zh">1. 已知 $x = t^2 - 1$、$y = 2t + 3$，求 $t \neq 0$ 时的 $\frac{dy}{dx}$。</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">$t$</div>
       <div class="quiz-opt" data-idx="1">$2t$</div>
-      <div class="quiz-opt" data-idx="2">$\frac{2}{2t} = t$</div>
+      <div class="quiz-opt" data-idx="2">$\frac{1}{2t}$</div>
       <div class="quiz-opt" data-idx="3">$\frac{1}{t}$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\frac{dx}{dt} = 2t$, $\frac{dy}{dt} = 2$. So $\frac{dy}{dx} = \frac{2}{2t} = \frac{1}{t}$.</span><span data-lang="zh">正确！$\frac{dx}{dt} = 2t$，$\frac{dy}{dt} = 2$。所以 $\frac{dy}{dx} = \frac{2}{2t} = \frac{1}{t}$。</span></div>
@@ -1984,11 +2334,11 @@ r₂ = 2sin(θ) = 0  于  θ = 0
     <div class="quiz-q"><span data-lang="en">2. To find $\frac{d^2y}{dx^2}$ for a parametric curve, you should:</span><span data-lang="zh">2. 求参数曲线的 $\frac{d^2y}{dx^2}$，应当：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">Divide $\frac{d^2y}{dt^2}$ by $\frac{d^2x}{dt^2}$</span><span data-lang="zh">用 $\frac{d^2y}{dt^2}$ 除以 $\frac{d^2x}{dt^2}$</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">Take the derivative of $\frac{dy}{dx}$ with respect to $x$</span><span data-lang="zh">对 $\frac{dy}{dx}$ 关于 $x$ 求导</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Take the derivative of $\frac{dy}{dx}$ with respect to $t$ and stop there</span><span data-lang="zh">对 $\frac{dy}{dx}$ 关于 $t$ 求导后就停止</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Take $\frac{d}{dt}\left[\frac{dy}{dx}\right]$ and divide by $\frac{dx}{dt}$</span><span data-lang="zh">先算 $\frac{d}{dt}\left[\frac{dy}{dx}\right]$，再除以 $\frac{dx}{dt}$</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Square $\frac{dy}{dx}$</span><span data-lang="zh">把 $\frac{dy}{dx}$ 平方</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$. This is heavily tested!</span><span data-lang="zh">正确！$\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$。这一点几乎每年都考！</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$. Dividing by $\frac{dx}{dt}$ is the chain-rule step that turns a rate in $t$ into a rate in $x$.</span><span data-lang="zh">正确！$\frac{d^2y}{dx^2} = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$。除以 $\frac{dx}{dt}$ 正是把关于 $t$ 的变化率换成关于 $x$ 的变化率的链式法则步骤。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The correct process is to differentiate $\frac{dy}{dx}$ with respect to $t$, then divide that result by $\frac{dx}{dt}$.</span><span data-lang="zh">正确流程：先对 $\frac{dy}{dx}$ 关于 $t$ 求导，再把结果除以 $\frac{dx}{dt}$。</span></div>
   </div>
 
@@ -2017,7 +2367,7 @@ r₂ = 2sin(θ) = 0  于  θ = 0
   </div>
 
   <div class="quiz" data-answer="2">
-    <div class="quiz-q"><span data-lang="en">5. A particle has $\mathbf{v}(t) = \langle 2, -3 \rangle$ and $\mathbf{a}(t) = \langle 1, 4 \rangle$. Is its speed increasing or decreasing?</span><span data-lang="zh">5. 质点的 $\mathbf{v}(t) = \langle 2, -3 \rangle$，$\mathbf{a}(t) = \langle 1, 4 \rangle$。此时其速率在递增还是递减？</span></div>
+    <div class="quiz-q"><span data-lang="en">5. At time $t = t_0$ a particle has $\mathbf{v}(t_0) = \langle 2, -3 \rangle$ and $\mathbf{a}(t_0) = \langle 1, 4 \rangle$. At that instant, is its speed increasing or decreasing?</span><span data-lang="zh">5. 在时刻 $t = t_0$，质点的 $\mathbf{v}(t_0) = \langle 2, -3 \rangle$，$\mathbf{a}(t_0) = \langle 1, 4 \rangle$。在该瞬间，其速率在递增还是递减？</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">Increasing, because acceleration is nonzero</span><span data-lang="zh">递增，因为加速度不为零</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">Increasing, because $|\mathbf{a}| > 0$</span><span data-lang="zh">递增，因为 $|\mathbf{a}| > 0$</span></div>
@@ -2060,7 +2410,7 @@ r₂ = 2sin(θ) = 0  于  θ = 0
 </section>
 
 <div style="text-align: center; padding: 40px 0; color: var(--text-secondary); font-size: 0.85rem;">
-  <p>鼎睿学苑 · Dingrui Scholars — AP Calculus AB/BC Unit 9 Notes</p>
+  <p>鼎睿学苑 · Dingrui Scholars · AP Calculus AB/BC Unit 9 Notes</p>
 </div>
 
 <!-- consult-cta: lead-gen conversion surface (Sprint A) -->
@@ -2133,7 +2483,6 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 function toggleLang() {
   const isZh = document.body.classList.contains('lang-zh');
   document.body.classList.toggle('lang-zh', !isZh);
-  try { localStorage.setItem('drs.lang', isZh ? 'en' : 'zh'); } catch(e) {}
 }
 try {
   if (false) document.body.classList.add('lang-zh');
@@ -2679,6 +3028,22 @@ function toggleCheck(li) {
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -2822,21 +3187,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>
