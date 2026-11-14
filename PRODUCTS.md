@@ -10,11 +10,12 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 
 | Course | 🆓 Free preview pages | 🔒 Unlockable pages | Total pages |
 |---|---:|---:|---:|
-| AP CSA | 10 | 3 | 13 |
+| ACT Math | 3 | 1 | 4 |
+| AP CSA | 11 | 5 | 16 |
 | AP CSP | 15 | 6 | 21 |
 | AP Calculus | 9 | 21 | 30 |
 | AP Physics | 9 | 12 | 21 |
-| AP Statistics | 12 | 8 | 20 |
+| AP Statistics | 21 | 15 | 36 |
 | High School Biology | 9 | 27 | 36 |
 | High School Chemistry | 9 | 33 | 42 |
 | High School Computer Science | 9 | 30 | 39 |
@@ -23,13 +24,40 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | IB Chemistry HL | 11 | 9 | 20 |
 | IB Math HL | 9 | 57 | 66 |
 | IB Physics HL | 9 | 63 | 72 |
+| SAT Math | 3 | 1 | 4 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **165** | **392** | **557** |
+| **Grand total** | **181** | **403** | **584** |
 
 ## Legend
 
 - 🆓 **Free preview** — open to everyone; click the product name to read it on the live site.
 - 🔒 **Unlockable** — unlocks on the live site with an approved student email. Listed for completeness, not linked.
+
+## ACT Math
+
+### Unit 1: Number & Quantity and Algebra
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 1: Number & Quantity and Algebra](https://notes.dingruischolars.com/ACT%20Math/Study%20Guides/Unit_1_Number_Quantity_and_Algebra.html) | Study Guide | 🆓 Free preview |
+
+### Unit 2: Functions
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 2: Functions](https://notes.dingruischolars.com/ACT%20Math/Study%20Guides/Unit_2_Functions.html) | Study Guide | 🆓 Free preview |
+
+### Unit 3: Geometry
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 3: Geometry](https://notes.dingruischolars.com/ACT%20Math/Study%20Guides/Unit_3_Geometry.html) | Study Guide | 🆓 Free preview |
+
+### Unit 4: Statistics, Probability and Essential Skills
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 4: Statistics, Probability and Essential Skills | Study Guide | 🔒 Unlockable |
 
 ## AP CSA
 
@@ -57,6 +85,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | [Unit 3: Class Creation](https://notes.dingruischolars.com/AP%20CSA/Study%20Guides/Unit_3_Class_Creation.html) | Study Guide | 🆓 Free preview |
 | [Unit 3: Class Creation — AP-Style Practice](https://notes.dingruischolars.com/AP%20CSA/Practice%20Questions/Unit_3_Class_Creation_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 3: Class Creation — Solutions](https://notes.dingruischolars.com/AP%20CSA/Practice%20Questions/Solutions/Unit_3_Class_Creation_Solutions.html) | Solutions | 🆓 Free preview |
+| [Primitive vs reference parameters](https://notes.dingruischolars.com/AP%20CSA/Runners/csa-u3-reference-mutator.html) | Code Runner | 🆓 Free preview |
 
 ### Unit 4: Data Collections
 
@@ -65,6 +94,8 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit 4: Data Collections | Study Guide | 🔒 Unlockable |
 | Unit 4: Data Collections — AP-Style Practice | Practice Questions | 🔒 Unlockable |
 | Unit 4: Data Collections — Solutions | Solutions | 🔒 Unlockable |
+| Row-major vs column-major 2D traversal | Code Runner | 🔒 Unlockable |
+| Removing from an ArrayList while looping forward | Code Runner | 🔒 Unlockable |
 
 ## AP CSP
 
@@ -256,50 +287,86 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 
 ## AP Statistics
 
-### Unit 1: Exploring One-Variable Data and Collecting Data
+### Unit 1: Exploring One-Variable Data
 
 | Product | Type | Tier |
 |---|---|---|
+| [Unit 1: Exploring One-Variable Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_One_Variable_Data_9U.html) | Study Guide | 🆓 Free preview |
 | [Unit 1: Exploring One-Variable Data and Collecting Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data.html) | Study Guide | 🆓 Free preview |
 | [Unit 1: Exploring One-Variable Data and Collecting Data Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 1: Exploring One-Variable Data and Collecting Data Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Solutions.html) | Solutions | 🆓 Free preview |
 | [Unit 1: Commute time: center and spread](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u1-commute-summary.html) | TI-84 Worked Stepper | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u1-sampling-bias.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
-### Unit 2: Probability, Random Variables, and Probability Distributions
+### Unit 2: Exploring Two-Variable Data
 
 | Product | Type | Tier |
 |---|---|---|
+| [Unit 2: Exploring Two-Variable Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Exploring_Two_Variable_Data_9U.html) | Study Guide | 🆓 Free preview |
 | [Unit 2: Probability, Random Variables, and Probability Distributions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Probability_Random_Variables_and_Probability_Distributions.html) | Study Guide | 🆓 Free preview |
 | [Unit 2: Probability, Random Variables, and Probability Distributions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 2: Probability, Random Variables, and Probability Distributions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Solutions.html) | Solutions | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-binomial-sampling.html) | TI-84 Worked Stepper | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-clt-visualizer.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [Unit 2: Free throws: binomial probability](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-free-throw-binomial.html) | TI-84 Worked Stepper | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-regression-outlier.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
-### Unit 3: Inference for Categorical Data: Proportions
+### Unit 3: Collecting Data
 
 | Product | Type | Tier |
 |---|---|---|
+| [Unit 3: Collecting Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Collecting_Data_9U.html) | Study Guide | 🆓 Free preview |
 | [Unit 3: Inference for Categorical Data: Proportions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Inference_for_Categorical_Data_Proportions.html) | Study Guide | 🆓 Free preview |
 | [Unit 3: Inference for Categorical Data: Proportions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_3_Inference_for_Categorical_Data_Proportions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 3: Inference for Categorical Data: Proportions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_3_Inference_for_Categorical_Data_Proportions_Solutions.html) | Solutions | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-ci-capture.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [Unit 3: Transit fares: one-proportion confidence interval](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-one-proportion-ci.html) | TI-84 Worked Stepper | 🆓 Free preview |
+| [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-type-errors.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
 ### Unit 4: Inference for Quantitative Data: Means
 
 | Product | Type | Tier |
 |---|---|---|
 | Unit 4: Inference for Quantitative Data: Means | Study Guide | 🔒 Unlockable |
+| Unit 4: Probability, Random Variables, and Probability Distributions | Study Guide | 🔒 Unlockable |
 | Unit 4: Inference for Quantitative Data: Means Practice Problems | Practice Questions | 🔒 Unlockable |
 | Unit 4: Inference for Quantitative Data: Means Solutions | Solutions | 🔒 Unlockable |
 | Unit 4: Sleep study: one-sample t confidence interval | TI-84 Worked Stepper | 🔒 Unlockable |
+| AP Statistics | TI-84 Worked Stepper | 🔒 Unlockable |
 
 ### Unit 5: Regression Analysis
 
 | Product | Type | Tier |
 |---|---|---|
 | Unit 5: Regression Analysis | Study Guide | 🔒 Unlockable |
+| Unit 5: Sampling Distributions | Study Guide | 🔒 Unlockable |
 | Unit 5: Regression Analysis Practice Problems | Practice Questions | 🔒 Unlockable |
 | Unit 5: Regression Analysis Solutions | Solutions | 🔒 Unlockable |
 | Unit 5: Cyclist training: linear regression and residuals | TI-84 Worked Stepper | 🔒 Unlockable |
+
+### Unit 6: Inference for Proportions
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 6: Inference for Proportions | Study Guide | 🔒 Unlockable |
+
+### Unit 7: Inference for Quantitative Data: Means
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 7: Inference for Quantitative Data: Means | Study Guide | 🔒 Unlockable |
+
+### Unit 8: Chi-Square Inference
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 8: Chi-Square Inference | Study Guide | 🔒 Unlockable |
+
+### Unit 9: Inference for Slopes
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 9: Inference for Slopes | Study Guide | 🔒 Unlockable |
 
 ## High School Biology
 
@@ -1262,6 +1329,32 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Unit E5: Fusion and stars | Study Guide | 🔒 Unlockable |
 | Unit E5: Fusion and Stars — IB-Style Practice | Practice Questions | 🔒 Unlockable |
 | Unit E5: Fusion and Stars — Solutions | Solutions | 🔒 Unlockable |
+
+## SAT Math
+
+### Unit 1: Algebra
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 1: Algebra](https://notes.dingruischolars.com/SAT%20Math/Study%20Guides/Unit_1_Algebra.html) | Study Guide | 🆓 Free preview |
+
+### Unit 2: Advanced Math
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 2: Advanced Math](https://notes.dingruischolars.com/SAT%20Math/Study%20Guides/Unit_2_Advanced_Math.html) | Study Guide | 🆓 Free preview |
+
+### Unit 3: Problem-Solving and Data Analysis
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit 3: Problem-Solving and Data Analysis](https://notes.dingruischolars.com/SAT%20Math/Study%20Guides/Unit_3_Problem_Solving_and_Data_Analysis.html) | Study Guide | 🆓 Free preview |
+
+### Unit 4: Geometry and Trigonometry
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 4: Geometry and Trigonometry | Study Guide | 🔒 Unlockable |
 
 ## University Calculus
 
