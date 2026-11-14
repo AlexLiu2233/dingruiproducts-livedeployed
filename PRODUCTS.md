@@ -22,11 +22,12 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | High School Math | 9 | 36 | 45 |
 | High School Physics | 9 | 27 | 36 |
 | IB Chemistry HL | 11 | 9 | 20 |
+| IB Math AI HL | 3 | 3 | 6 |
 | IB Math HL | 9 | 57 | 66 |
 | IB Physics HL | 9 | 63 | 72 |
 | SAT Math | 3 | 1 | 4 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **181** | **404** | **585** |
+| **Grand total** | **184** | **407** | **591** |
 
 ## Legend
 
@@ -963,6 +964,44 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | Structure 3: Classification of Matter | Study Guide | 🔒 Unlockable |
 | Structure 3: Classification of Matter — IB-Style Practice | Practice Questions | 🔒 Unlockable |
 | Structure 3 Classification of Matter Solutions | Solutions | 🔒 Unlockable |
+
+## IB Math AI HL
+
+### Unit B3: Financial Mathematics
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit B3: Financial Mathematics | Study Guide | 🔒 Unlockable |
+
+### Unit B5: Matrices and Markov Chains
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit B5: Matrices and Markov Chains](https://notes.dingruischolars.com/IB%20Math%20AI%20HL/Study%20Guides/Unit_B5_Matrices_and_Markov_Chains.html) | Study Guide | 🆓 Free preview |
+
+### Unit C1: Straight Line Geometry
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit C1: Straight Line Geometry | Study Guide | 🔒 Unlockable |
+
+### Unit C5: Graph Theory
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit C5: Graph Theory](https://notes.dingruischolars.com/IB%20Math%20AI%20HL/Study%20Guides/Unit_C5_Graph_Theory.html) | Study Guide | 🆓 Free preview |
+
+### Unit D5: Inferential Statistics
+
+| Product | Type | Tier |
+|---|---|---|
+| [Unit D5: Inferential Statistics](https://notes.dingruischolars.com/IB%20Math%20AI%20HL/Study%20Guides/Unit_D5_Inferential_Statistics.html) | Study Guide | 🆓 Free preview |
+
+### Unit E5: Differential Equations and Modelling
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit E5: Differential Equations and Modelling | Study Guide | 🔒 Unlockable |
 
 ## IB Math HL
 
