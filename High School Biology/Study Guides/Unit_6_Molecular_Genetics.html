@@ -440,6 +440,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
+.sg-fig .dot { fill: var(--text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -537,24 +603,44 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 1 &middot; DNA structure</span><span data-lang="zh">第 1 节 &middot; DNA 结构</span></div>
   <h2><span data-lang="en">DNA Structure: The Double Helix and Base Pairing</span><span data-lang="zh">DNA 结构：双螺旋与碱基配对</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the structure of DNA (sugar-phosphate backbone, four bases, two antiparallel strands) and the base-pairing rules A-T and G-C.</li><li>Write the complementary strand of a DNA sequence with its 5' and 3' ends labelled.</li><li>Use Chargaff's rules to calculate the percentage of every base and the number of hydrogen bonds in a DNA fragment.</li><li>State three differences between DNA and RNA.</li></ul>
+    <ul data-lang="zh"><li>说出 DNA 的结构（糖-磷酸骨架、四种碱基、两条反向平行链）以及碱基配对规则 A-T 和 G-C。</li><li>写出一段 DNA 序列的互补链，并标明 5' 端和 3' 端。</li><li>运用查哥夫定律（<code>Chargaff's rules</code>）计算每种碱基的百分比以及 DNA 片段中的氢键数。</li><li>说出 DNA 与 RNA 的三点区别。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">The double helix in four facts.</span><span data-lang="zh">双螺旋四要点。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
       <li><span data-lang="en"><strong>Structure:</strong> DNA is a double-stranded helix. Each strand is a polymer of nucleotides; each nucleotide has a sugar (deoxyribose), a phosphate group, and one of four nitrogenous bases.</span><span data-lang="zh"><strong>结构：</strong>DNA 是双链螺旋。每条链是核苷酸聚合体；每个核苷酸含一个糖（脱氧核糖）、一个磷酸基团和四种含氮碱基之一。</span></li>
       <li><span data-lang="en"><strong>Base pairing (Chargaff's rules):</strong> Adenine (A) pairs with Thymine (T) via two hydrogen bonds; Guanine (G) pairs with Cytosine (C) via three hydrogen bonds. The two strands are antiparallel (one runs 5'&rarr;3', the other 3'&rarr;5').</span><span data-lang="zh"><strong>碱基配对（查哥夫定律）：</strong>腺嘌呤（A）与胸腺嘧啶（T）通过两个氢键配对；鸟嘌呤（G）与胞嘧啶（C）通过三个氢键配对。两条链反向平行（一条 5'&rarr;3'，另一条 3'&rarr;5'）。</span></li>
-      <li><span data-lang="en"><strong>Information:</strong> The sequence of bases encodes genetic information. A gene is a specific sequence of DNA that codes for a functional product (usually a protein). Human cells contain ~3 billion base pairs organized into 23 chromosome pairs.</span><span data-lang="zh"><strong>信息：</strong>碱基序列编码遗传信息。基因是编码功能产物（通常是蛋白质）的特定 DNA 序列。人类细胞含约 30 亿碱基对，组织为 23 对染色体。</span></li>
+      <li><span data-lang="en"><strong>Information:</strong> The sequence of bases encodes genetic information. A gene is a specific sequence of DNA that codes for a functional product (usually a protein). The human genome is about 3 billion base pairs per set of 23 chromosomes; a body cell has two sets (23 chromosome pairs, about 6 billion base pairs).</span><span data-lang="zh"><strong>信息：</strong>碱基序列编码遗传信息。基因是编码功能产物（通常是蛋白质）的特定 DNA 序列。人类基因组每套 23 条染色体约含 30 亿碱基对；体细胞有两套（23 对染色体，约 60 亿碱基对）。</span></li>
       <li><span data-lang="en"><strong>RNA differs from DNA:</strong> RNA is single-stranded; uses ribose sugar instead of deoxyribose; uses Uracil (U) instead of Thymine (T); shorter than a full chromosome.</span><span data-lang="zh"><strong>RNA 与 DNA 的区别：</strong>RNA 是单链；使用核糖而非脱氧核糖；使用尿嘧啶（U）代替胸腺嘧啶（T）；比完整染色体短。</span></li>
     </ul>
   </div>
 
+<details open>
+<summary><span data-lang="en">Worked Example 1: Base-pairing complement</span><span data-lang="zh">例题 1：碱基配对互补</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 1 &middot; Base-pairing complement</span><span data-lang="zh">例题 1 &middot; 碱基配对互补</span></div>
     <p><span data-lang="en">A strand of DNA has the sequence 5'-ATGCCTAG-3'. Write (a) the complementary DNA strand and (b) the mRNA strand that would be transcribed from the template strand.</span><span data-lang="zh">一条 DNA 链的序列为 5'-ATGCCTAG-3'。写出 (a) 互补 DNA 链和 (b) 以该链为模板转录所得 mRNA 链。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">(a) Complementary DNA strand:</span><span data-lang="zh">(a) 互补 DNA 链：</span></strong> <span data-lang="en">Apply A-T and G-C pairing, antiparallel: 3'-TACGGATC-5' (or written 5'-CTAGGCAT-3' if reversed).</span><span data-lang="zh">应用 A-T 和 G-C 配对规则，反向平行：3'-TACGGATC-5'（反向写为 5'-CTAGGCAT-3'）。</span></p>
     <p><strong><span data-lang="en">(b) mRNA transcribed from the template strand (3'-TACGGATC-5'):</span><span data-lang="zh">(b) 以模板链（3'-TACGGATC-5'）转录所得 mRNA：</span></strong> <span data-lang="en">mRNA pairs with the template using A-U, T-A, G-C, C-G (U replaces T in RNA). mRNA sequence: 5'-AUGCCUAG-3'. Note: the mRNA sequence matches the coding (non-template) DNA strand, with U replacing T.</span><span data-lang="zh">mRNA 与模板链配对，规则为 A-U、T-A、G-C、C-G（RNA 中 U 替代 T）。mRNA 序列：5'-AUGCCUAG-3'。注意：mRNA 序列与编码链（非模板链）相同，T 改为 U。</span></p>
   </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 2: Chargaff's rules and hydrogen bonds</span><span data-lang="zh">例题 2：查哥夫定律与氢键</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A double-stranded DNA fragment from a bacterium is 1000 base pairs long, and 18% of its bases are cytosine. Find (a) the percentage of each of the four bases and (b) the total number of hydrogen bonds holding the two strands together (an A-T pair has 2, a G-C pair has 3).</span><span data-lang="zh">某细菌的双链 DNA 片段长 1000 个碱基对，其中 18% 的碱基是胞嘧啶。求：(a) 四种碱基各占的百分比；(b) 把两条链连在一起的氢键总数（A-T 对有 2 个，G-C 对有 3 个）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Percentages.</strong> In double-stranded DNA, A = T and G = C. So G = 18% as well, and G + C = 36%. The rest is 100% &minus; 36% = 64%, shared equally by A and T, so A = T = 32%.</span><span data-lang="zh"><strong>(a) 百分比。</strong>双链 DNA 中 A = T，G = C。所以 G 也是 18%，G + C = 36%。其余 100% &minus; 36% = 64% 由 A 和 T 平分，故 A = T = 32%。</span></p>
+    <p><span data-lang="en"><strong>(b) Hydrogen bonds.</strong> G-C pairs: 36% of 1000 = 360. A-T pairs: 1000 &minus; 360 = 640. Hydrogen bonds: 360 &times; 3 + 640 &times; 2 = 1080 + 1280 = 2360.</span><span data-lang="zh"><strong>(b) 氢键。</strong>G-C 对：1000 的 36% = 360 对。A-T 对：1000 &minus; 360 = 640 对。氢键数：360 &times; 3 + 640 &times; 2 = 1080 + 1280 = 2360。</span></p>
+    <p><span data-lang="en"><strong>Why it works.</strong> Every A on one strand faces a T on the other, and every G faces a C, so the counts are equal in pairs. <strong>Common error:</strong> applying A = T to a single-stranded molecule (a single-stranded DNA virus, or any RNA), where the base counts need not match.</span><span data-lang="zh"><strong>为什么成立。</strong>一条链上的每个 A 都对着另一条链上的 T，每个 G 都对着 C，所以成对的数量相等。<strong>常见错误：</strong>把 A = T 用在单链分子（单链 DNA 病毒或任何 RNA）上；单链分子的碱基数不一定相等。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which base pairs with Guanine (G) in DNA?</span><span data-lang="zh">在 DNA 中，哪个碱基与鸟嘌呤（G）配对？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
@@ -583,11 +669,32 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; the historical discovery of DNA structure (Watson, Crick, Franklin, Wilkins; AB Biology 30 C3.1k)</span><span data-lang="zh">深入 &mdash; DNA 结构的历史发现（沃森、克里克、富兰克林、威尔金斯；AB Biology 30 C3.1k）</span></summary>
+    <summary><span data-lang="en">Going deeper: the historical discovery of DNA structure (Watson, Crick, Franklin, Wilkins; AB Biology 30 C3.1k)</span><span data-lang="zh">深入：DNA 结构的历史发现（沃森、克里克、富兰克林、威尔金斯；AB Biology 30 C3.1k）</span></summary>
     <div class="detail-body">
       <p><span data-lang="en">Alberta Biology 30 C3.1k states: "summarize the historical events that led to the discovery of the structure of the DNA molecule, including the work of Franklin and Watson and Crick." Rosalind Franklin's X-ray crystallography (Photo 51, 1952) revealed the helical structure and dimensions. Watson and Crick used Franklin's data (controversially, without direct permission) along with Chargaff's base-ratio data and Wilkins' crystallographic work to build their double-helix model (1953, Nature). Erwin Chargaff had established by 1950 that A = T and G = C in any DNA sample (Chargaff's rules). The model correctly predicted that the two strands were complementary and antiparallel, immediately suggesting a copying mechanism.</span><span data-lang="zh">阿尔伯塔 Biology 30 C3.1k 要求："总结导致发现 DNA 分子结构的历史事件，包括富兰克林以及沃森和克里克的工作。"罗莎琳德·富兰克林的 X 射线晶体学（51 号照片，1952 年）揭示了螺旋结构与尺寸。沃森和克里克利用富兰克林的数据（存在争议，未直接获得许可）、查哥夫的碱基比例数据和威尔金斯的晶体学研究，构建了双螺旋模型（1953 年，《自然》）。查哥夫于 1950 年前确立：任何 DNA 样本中 A = T，G = C（查哥夫定律）。该模型正确预测两条链互补且反向平行，立即暗示了一种复制机制。</span></p>
     </div>
   </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>state</em> asks for the rule only; <em>write</em> a complementary strand expects the 5' and 3' ends labelled; <em>calculate</em> expects the percentages to add to 100% and the working shown. Common errors: pairing A with U in DNA, writing a complement without saying which way it runs, giving G = A, and using Chargaff's rules on single-stranded molecules.</p><p data-lang="zh">命令词：<em>state</em>（陈述）只要求写出规则；<em>write</em>（写出）互补链时应标明 5' 端和 3' 端；<em>calculate</em>（计算）要求各百分比之和为 100% 并写出过程。常见错误：在 DNA 中让 A 与 U 配对、写出互补链却不说明方向、写成 G = A，以及把查哥夫定律用在单链分子上。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. State Chargaff's rules and explain why they hold for double-stranded DNA.</span><span data-lang="zh">1. 陈述查哥夫定律，并解释它为什么适用于双链 DNA。</span></summary>
+      <div class="sg-a"><p data-lang="en">In double-stranded DNA the amount of A equals T and the amount of G equals C. Each A pairs with a T and each G pairs with a C across the two strands, so the two bases of a pair are always present in equal numbers.</p><p data-lang="zh">双链 DNA 中 A 的量等于 T，G 的量等于 C。两条链之间每个 A 与一个 T 配对，每个 G 与一个 C 配对，所以每一对碱基的数量总是相等。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Write the complementary strand of 5'-GGATCA-3', in the 5'&rarr;3' direction.</span><span data-lang="zh">2. 写出 5'-GGATCA-3' 的互补链，按 5'&rarr;3' 方向书写。</span></summary>
+      <div class="sg-a"><p data-lang="en">Pair each base: the complement reads 3'-CCTAGT-5'. Written 5'&rarr;3' (reverse it) the answer is 5'-TGATCC-3'.</p><p data-lang="zh">逐个碱基配对：互补链为 3'-CCTAGT-5'。按 5'&rarr;3' 书写（反过来）答案是 5'-TGATCC-3'。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A double-stranded DNA sample is 24% thymine. What percentage is guanine?</span><span data-lang="zh">3. 一个双链 DNA 样本中胸腺嘧啶占 24%。鸟嘌呤占百分之几？</span></summary>
+      <div class="sg-a"><p data-lang="en">A = T = 24%, so A + T = 48%. Then G + C = 100% &minus; 48% = 52%, and G = C = 26%.</p><p data-lang="zh">A = T = 24%，所以 A + T = 48%。于是 G + C = 100% &minus; 48% = 52%，G = C = 26%。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -596,8 +703,14 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 2 &middot; DNA replication</span><span data-lang="zh">第 2 节 &middot; DNA 复制</span></div>
   <h2><span data-lang="en">DNA Replication</span><span data-lang="zh">DNA 复制</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe semi-conservative replication and state where and when it happens in a eukaryotic cell.</li><li>Predict the density of DNA after each generation in the Meselson-Stahl experiment and say which models each result rules out.</li><li>Explain with the 5'&rarr;3' rule why one new strand is made continuously (leading) and the other in Okazaki fragments (lagging).</li><li>State the roles of helicase, primase, DNA polymerase and DNA ligase.</li></ul>
+    <ul data-lang="zh"><li>描述半保留复制，并说明它在真核细胞中发生的位置和时期。</li><li>预测梅塞尔森-斯塔尔实验中每一代 DNA 的密度，并说明每个结果排除了哪些模型。</li><li>用 5'&rarr;3' 规则解释为什么一条新链连续合成（前导链），另一条以冈崎片段合成（后随链）。</li><li>说出解旋酶、引物酶、DNA 聚合酶和 DNA 连接酶的作用。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Semi-conservative replication &mdash; the key rule.</span><span data-lang="zh">半保留复制 &mdash; 核心规则。</span></strong>
+    <strong><span data-lang="en">Semi-conservative replication: the key rule.</span><span data-lang="zh">半保留复制：核心规则。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
       <li><span data-lang="en"><strong>Semi-conservative:</strong> when DNA replicates, each new double helix contains one original (parental) strand and one newly synthesized strand. Both daughter DNA molecules are identical to the parent.</span><span data-lang="zh"><strong>半保留：</strong>DNA 复制时，每个新双螺旋含一条原有（亲本）链和一条新合成链。两个子代 DNA 分子均与亲本相同。</span></li>
       <li><span data-lang="en"><strong>Where:</strong> occurs in the nucleus (eukaryotes) before cell division (S phase of the cell cycle).</span><span data-lang="zh"><strong>位置：</strong>在细胞分裂前发生于细胞核（真核生物）（细胞周期 S 期）。</span></li>
@@ -605,13 +718,75 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </ul>
   </div>
 
+  <p><span data-lang="en"><strong>Why two kinds of new strand?</strong> DNA polymerase can only add nucleotides to a 3' end, so every new strand grows 5'&rarr;3'. The two template strands run in opposite directions (they are antiparallel), so at one fork the new strand on one template grows toward the fork and can be made in one piece: the <em>leading strand</em>. The new strand on the other template can only grow away from the fork. It is built backwards in short pieces called <em>Okazaki fragments</em>, each started as the fork opens further and later joined by DNA ligase: the <em>lagging strand</em>.</span><span data-lang="zh"><strong>为什么有两种新链？</strong>DNA 聚合酶只能在 3' 端添加核苷酸，所以每条新链都按 5'&rarr;3' 延伸。两条模板链方向相反（反向平行），因此在同一个复制叉处，一条模板上的新链朝复制叉方向延伸，可以一次连续合成：这是<em>前导链</em>（<code>leading strand</code>）。另一条模板上的新链只能背离复制叉延伸，要分成许多短片段向后合成，这些短片段叫<em>冈崎片段</em>（<code>Okazaki fragments</code>），复制叉每打开一段就起始一个，之后由 DNA 连接酶连接：这是<em>后随链</em>（<code>lagging strand</code>）。</span></p>
+
+<figure class="sg-fig" role="group">
+<svg viewBox="0 0 460 300" role="img" aria-label="A DNA replication fork. The parental double helix on the left splits into two arms. On the lower arm the new leading strand grows continuously toward the fork. On the upper arm the new lagging strand is made as separate Okazaki fragments 1, 2 and 3, each growing away from the fork. All new strands grow 5 prime to 3 prime.">
+<line class="ax" x1="40" y1="138" x2="150" y2="138"/>
+<line class="ax" x1="40" y1="162" x2="150" y2="162"/>
+<line class="grid" x1="55" y1="138" x2="55" y2="162"/>
+<line class="grid" x1="75" y1="138" x2="75" y2="162"/>
+<line class="grid" x1="95" y1="138" x2="95" y2="162"/>
+<line class="grid" x1="115" y1="138" x2="115" y2="162"/>
+<line class="grid" x1="135" y1="138" x2="135" y2="162"/>
+<line class="ax" x1="150" y1="138" x2="410" y2="58"/>
+<line class="ax" x1="150" y1="162" x2="410" y2="242"/>
+<line class="c4" x1="182.8" y1="142.6" x2="230.4" y2="127.9"/>
+<polygon class="dot c4t" points="235.4,126.4 227.9,132.9 225.6,125.2"/>
+<text class="mut" data-lang="en" x="215" y="157.6" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="215" y="157.6" text-anchor="middle">3</text>
+<line class="c4" x1="249.7" y1="122" x2="306.8" y2="104.4"/>
+<polygon class="dot c4t" points="311.8,102.9 304.4,109.4 302,101.6"/>
+<text class="mut" data-lang="en" x="286.6" y="135.5" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="286.6" y="135.5" text-anchor="middle">2</text>
+<line class="c4" x1="326.2" y1="98.4" x2="383.3" y2="80.8"/>
+<polygon class="dot c4t" points="388.3,79.3 380.9,85.8 378.5,78.1"/>
+<text class="mut" data-lang="en" x="363.1" y="112" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="363.1" y="112" text-anchor="middle">1</text>
+<line class="c3" x1="181.1" y1="153.1" x2="388.3" y2="220.7"/>
+<polygon class="dot c3t" points="175.1,155.1 184.9,153.9 182.6,161.6"/>
+<circle class="c1" cx="150" cy="150" r="9"/>
+<line class="arrow thin" x1="120" y1="206" x2="144" y2="158"/>
+<circle class="dot" cx="144" cy="158" r="2.4"/>
+<text class="mut" data-lang="en" x="100" y="222" text-anchor="middle">Helicase</text><text class="mut" data-lang="zh" x="100" y="222" text-anchor="middle">解旋酶</text>
+<text class="lbl" data-lang="en" x="40" y="120" text-anchor="start">Parental DNA</text><text class="lbl" data-lang="zh" x="40" y="120" text-anchor="start">亲本 DNA</text>
+<text class="mut" data-lang="en" x="34" y="142" text-anchor="end">3'</text><text class="mut" data-lang="zh" x="34" y="142" text-anchor="end">3'</text>
+<text class="mut" data-lang="en" x="34" y="170" text-anchor="end">5'</text><text class="mut" data-lang="zh" x="34" y="170" text-anchor="end">5'</text>
+<text class="mut" data-lang="en" x="416" y="56" text-anchor="start">5'</text><text class="mut" data-lang="zh" x="416" y="56" text-anchor="start">5'</text>
+<text class="mut" data-lang="en" x="416" y="248" text-anchor="start">3'</text><text class="mut" data-lang="zh" x="416" y="248" text-anchor="start">3'</text>
+<text class="c4t" data-lang="en" x="150" y="40" text-anchor="start">Lagging strand (Okazaki fragments)</text><text class="c4t" data-lang="zh" x="150" y="40" text-anchor="start">后随链（冈崎片段）</text>
+<text class="c3t" data-lang="en" x="190" y="262" text-anchor="start">Leading strand (continuous)</text><text class="c3t" data-lang="zh" x="190" y="262" text-anchor="start">前导链（连续合成）</text>
+<text class="mut" data-lang="en" x="255.6" y="145.1" text-anchor="middle">5'</text><text class="mut" data-lang="zh" x="255.6" y="145.1" text-anchor="middle">5'</text>
+<text class="mut" data-lang="en" x="317.7" y="126" text-anchor="middle">3'</text><text class="mut" data-lang="zh" x="317.7" y="126" text-anchor="middle">3'</text>
+<text class="mut" data-lang="en" x="396.3" y="216.7" text-anchor="start">5'</text><text class="mut" data-lang="zh" x="396.3" y="216.7" text-anchor="start">5'</text>
+<text class="mut" data-lang="en" x="171" y="160" text-anchor="end">3'</text><text class="mut" data-lang="zh" x="171" y="160" text-anchor="end">3'</text>
+<line class="arrow" x1="300" y1="284" x2="200" y2="284"/>
+<polygon class="dot" points="196,284 204,280.4 204,287.6"/>
+<text class="mut" data-lang="en" x="310" y="288" text-anchor="start">Fork moves left</text><text class="mut" data-lang="zh" x="310" y="288" text-anchor="start">复制叉向左移动</text>
+</svg>
+<figcaption><span data-lang="en">Figure 1. A replication fork. The parental helix on the left (rungs are base pairs) opens toward the left as the fork moves. Read the 5' and 3' labels: the leading strand (green) grows 5'&rarr;3' toward the fork in one piece, while the lagging strand (orange) is made as fragments 1, 2 and 3, each growing 5'&rarr;3' away from the fork. Fragment 3 is the newest; the gaps between fragments are sealed by DNA ligase.</span><span data-lang="zh">图 1. 复制叉。左侧的亲本双螺旋（横档代表碱基对）随着复制叉向左移动而解开。请读图中的 5' 和 3' 标记：前导链（绿色）按 5'&rarr;3' 朝复制叉方向连续合成；后随链（橙色）以片段 1、2、3 合成，每个片段都按 5'&rarr;3' 背离复制叉延伸。片段 3 最新；片段之间的缺口由 DNA 连接酶封接。</span></figcaption>
+</figure>
+
+<details open>
+<summary><span data-lang="en">Worked Example 3: Semi-conservative replication prediction</span><span data-lang="zh">例题 3：半保留复制预测</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 2 &middot; Semi-conservative replication prediction</span><span data-lang="zh">例题 2 &middot; 半保留复制预测</span></div>
     <p><span data-lang="en">A researcher labels all DNA in a cell with a heavy nitrogen isotope (¹⁵N). The cell then replicates once in a medium containing only light nitrogen (¹⁴N). Predict the composition of the daughter DNA molecules and explain why this supports the semi-conservative model.</span><span data-lang="zh">研究者用重氮同位素（¹⁵N）标记细胞内所有 DNA。该细胞随后在仅含轻氮（¹⁴N）的培养基中复制一次。预测子代 DNA 分子的组成，并解释这如何支持半保留模型。</span></p>
   </div>
   <div class="worked-solution">
-    <p><strong><span data-lang="en">Result:</span><span data-lang="zh">结果：</span></strong> <span data-lang="en">All daughter DNA molecules are hybrid &mdash; one ¹⁵N strand (original) and one ¹⁴N strand (new). In density-gradient centrifugation, all molecules band at an intermediate density, not at the heavy position. This is exactly what Meselson and Stahl found in 1958, ruling out conservative replication (which would give half heavy + half light) and dispersive replication (which would give all intermediate but in a different pattern). Semi-conservative predicts one band at intermediate density after one replication: confirmed.</span><span data-lang="zh">结果：所有子代 DNA 分子均为杂合体 &mdash; 一条 ¹⁵N 链（原有）和一条 ¹⁴N 链（新合成）。在密度梯度离心中，所有分子聚集在中间密度带，而非重密度带。这正是梅塞尔森和斯塔尔在 1958 年的发现，排除了保留复制（将产生一半重 + 一半轻）和弥散复制（模式不同）的可能。半保留复制预测复制一次后出现一条中间密度带：得到证实。</span></p>
+    <p><strong><span data-lang="en">Result:</span><span data-lang="zh">结果：</span></strong> <span data-lang="en">All daughter DNA molecules are hybrid: one ¹⁵N strand (original) and one ¹⁴N strand (new). In density-gradient centrifugation, all molecules band at an intermediate density, not at the heavy position. This is what Meselson and Stahl found in 1958 after one generation. It rules out conservative replication (which would give one heavy band and one light band). Dispersive replication also predicts a single intermediate band after one generation, so the models are separated one generation later: semi-conservative replication gives two bands (hybrid and light) after generation 2, while dispersive replication keeps a single band (see Worked Example 4). Semi-conservative replication predicts one band at intermediate density after one replication: confirmed.</span><span data-lang="zh">所有子代 DNA 分子均为杂合体：一条 ¹⁵N 链（原有）和一条 ¹⁴N 链（新合成）。在密度梯度离心中，所有分子聚集在中间密度带，而非重密度带。这正是梅塞尔森和斯塔尔在 1958 年复制一代后的发现，排除了保留复制（将产生一条重带和一条轻带）。弥散复制在第一代后同样预测出现一条中间密度带，所以要再复制一代才能区分：第 2 代后半保留复制出现两条带（杂合带和轻带），而弥散复制仍只有一条带（见例题 4）。半保留复制预测复制一次后出现一条中间密度带：得到证实。</span></p>
   </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 4: Heavy DNA after three generations</span><span data-lang="zh">例题 4：三代之后的重 DNA</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A bacterium whose DNA is entirely ¹⁵N (both strands heavy) is moved to a medium with only ¹⁴N and copies its DNA three times (three generations). Starting from one DNA molecule, find after generation 3: (a) the number of DNA molecules, (b) how many are hybrid (¹⁵N/¹⁴N) and how many are fully light (¹⁴N/¹⁴N), (c) the fraction of all strands that still carry ¹⁵N, and (d) the bands a density-gradient tube shows after generation 2 under the semi-conservative and the dispersive models.</span><span data-lang="zh">一个 DNA 全部为 ¹⁵N（两条链都是重链）的细菌被转入只含 ¹⁴N 的培养基，并把 DNA 复制三次（三代）。从一个 DNA 分子开始，求第 3 代之后：(a) DNA 分子数；(b) 其中杂合（¹⁵N/¹⁴N）和完全轻（¹⁴N/¹⁴N）的分子各有多少；(c) 仍带有 ¹⁵N 的链占所有链的比例；(d) 第 2 代之后，在半保留模型和弥散模型下密度梯度管中各出现什么条带。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Molecules.</strong> Each replication doubles the number of molecules: 2³ = 8.</span><span data-lang="zh"><strong>(a) 分子数。</strong>每复制一次分子数加倍：2³ = 8。</span></p>
+    <p><span data-lang="en"><strong>(b) Hybrid and light.</strong> The two original ¹⁵N strands are never destroyed. Each ends up in a different molecule, so there are always exactly 2 hybrid molecules after generation 1, and 8 &minus; 2 = 6 fully light molecules. No fully heavy molecule is left after generation 1.</span><span data-lang="zh"><strong>(b) 杂合与轻。</strong>两条原有的 ¹⁵N 链从不会被破坏。它们分别落入不同的分子，所以第 1 代之后始终恰有 2 个杂合分子，其余 8 &minus; 2 = 6 个是完全轻的分子。第 1 代之后不再有完全重的分子。</span></p>
+    <p><span data-lang="en"><strong>(c) Strands.</strong> 8 molecules have 16 strands, and 2 of them are ¹⁵N: 2/16 = 1/8 = 12.5%.</span><span data-lang="zh"><strong>(c) 链。</strong>8 个分子共有 16 条链，其中 2 条是 ¹⁵N：2/16 = 1/8 = 12.5%。</span></p>
+    <p><span data-lang="en"><strong>(d) Generation 2.</strong> There are 4 molecules: 2 hybrid and 2 light. Semi-conservative replication predicts two bands of equal amount (intermediate and light). Dispersive replication predicts that every molecule is a mixture (about one quarter ¹⁵N), so a single band. Meselson and Stahl saw two bands, which supports the semi-conservative model.</span><span data-lang="zh"><strong>(d) 第 2 代。</strong>共 4 个分子：2 个杂合，2 个轻。半保留复制预测出现两条量相等的带（中间带和轻带）。弥散复制预测每个分子都是混合体（约四分之一为 ¹⁵N），因此只有一条带。梅塞尔森和斯塔尔看到的是两条带，这支持半保留模型。</span></p>
+    <p><span data-lang="en"><strong>Common error:</strong> forgetting that the original strands survive, which leads to answers such as &ldquo;no ¹⁵N left after three generations&rdquo;. The number of ¹⁵N strands stays at 2 while the total grows.</span><span data-lang="zh"><strong>常见错误：</strong>忘记原有链会保留下来，从而得出&ldquo;三代之后不再有 ¹⁵N&rdquo;之类的答案。¹⁵N 链的数目始终是 2 条，而总数在增加。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What does "semi-conservative replication" mean?</span><span data-lang="zh">"半保留复制"是什么意思？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
@@ -640,11 +815,32 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; enzyme roles in replication: helicase, DNA polymerase, primase, ligase, Okazaki fragments (SBI4U D3.1 / D2.1)</span><span data-lang="zh">深入 &mdash; 复制中的酶角色：解旋酶、DNA 聚合酶、引物酶、连接酶、冈崎片段（SBI4U D3.1 / D2.1）</span></summary>
+    <summary><span data-lang="en">Going deeper: enzyme roles in replication: helicase, DNA polymerase, primase, ligase, Okazaki fragments (SBI4U D3.1 / D2.1)</span><span data-lang="zh">深入：复制中的酶角色：解旋酶、DNA 聚合酶、引物酶、连接酶、冈崎片段（SBI4U D3.1 / D2.1）</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en"><span class="honors-flag">Honors SBI4U</span> SBI4U D2.1 names: "polymerase I, II, and III, DNA ligase, helicase, Okazaki fragment." (1) <strong>Helicase</strong> unwinds and separates the two parental strands at the replication fork. (2) <strong>Primase</strong> lays down a short RNA primer to provide a starting 3'-OH for DNA synthesis. (3) <strong>DNA Polymerase III</strong> extends the new strand by adding nucleotides in the 5'&rarr;3' direction only; it cannot start a new strand without a primer. (4) Because the leading strand is synthesized continuously toward the fork, but the lagging strand is synthesized away from the fork in short segments called <strong>Okazaki fragments</strong>. (5) <strong>DNA Polymerase I</strong> removes RNA primers and replaces them with DNA. (6) <strong>DNA Ligase</strong> seals the nicks between Okazaki fragments, producing a continuous strand.</span><span data-lang="zh"><span class="honors-flag">荣誉 SBI4U</span> SBI4U D2.1 命名："聚合酶 I、II、III，DNA 连接酶，解旋酶，冈崎片段。"(1) <strong>解旋酶</strong>在复制叉处解开并分离两条亲本链。(2) <strong>引物酶</strong>铺设短 RNA 引物，为 DNA 合成提供起始 3'-OH。(3) <strong>DNA 聚合酶 III</strong> 仅能以 5'&rarr;3' 方向添加核苷酸延伸新链；无引物时无法启动新链。(4) 前导链向复制叉方向连续合成，而后随链以远离复制叉方向合成，形成短片段即<strong>冈崎片段</strong>。(5) <strong>DNA 聚合酶 I</strong> 移除 RNA 引物并以 DNA 替换。(6) <strong>DNA 连接酶</strong>封接冈崎片段间的缺口，形成连续链。</span></p>
+      <p><span data-lang="en"><span class="honors-flag">Honors SBI4U</span> D2.1 names: "polymerase I, II, and III, DNA ligase, helicase, Okazaki fragment." (1) <strong>Helicase</strong> unwinds and separates the two parental strands at the replication fork. (2) <strong>Primase</strong> lays down a short RNA primer to provide a starting 3'-OH for DNA synthesis. (3) <strong>DNA Polymerase III</strong> extends the new strand by adding nucleotides in the 5'&rarr;3' direction only; it cannot start a new strand without a primer. (4) The leading strand is synthesized continuously toward the fork, but the lagging strand is synthesized away from the fork in short segments called <strong>Okazaki fragments</strong>. (5) <strong>DNA Polymerase I</strong> removes RNA primers and replaces them with DNA. (6) <strong>DNA Ligase</strong> seals the nicks between Okazaki fragments, producing a continuous strand.</span><span data-lang="zh"><span class="honors-flag">荣誉 SBI4U</span> D2.1 命名："聚合酶 I、II、III，DNA 连接酶，解旋酶，冈崎片段。"(1) <strong>解旋酶</strong>在复制叉处解开并分离两条亲本链。(2) <strong>引物酶</strong>铺设短 RNA 引物，为 DNA 合成提供起始 3'-OH。(3) <strong>DNA 聚合酶 III</strong> 仅能以 5'&rarr;3' 方向添加核苷酸延伸新链；无引物时无法启动新链。(4) 前导链向复制叉方向连续合成，而后随链以远离复制叉的方向合成短片段，即<strong>冈崎片段</strong>。(5) <strong>DNA 聚合酶 I</strong> 移除 RNA 引物并以 DNA 替换。(6) <strong>DNA 连接酶</strong>封接冈崎片段间的缺口，形成连续链。</span></p>
     </div>
   </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>predict</em> needs the band positions and the reason; <em>explain</em> a leading or lagging strand needs the 5'&rarr;3' rule; <em>describe</em> the steps in order. Common errors: saying DNA polymerase builds 3'&rarr;5', calling the lagging strand &ldquo;slower&rdquo; instead of &ldquo;discontinuous&rdquo;, saying the parental strands are destroyed, putting replication in M phase instead of S phase, and mixing up the fraction of molecules with the fraction of strands that carry ¹⁵N.</p><p data-lang="zh">命令词：<em>predict</em>（预测）要写出条带位置和理由；<em>explain</em>（解释）前导链或后随链要用 5'&rarr;3' 规则；<em>describe</em>（描述）要按顺序写出步骤。常见错误：说 DNA 聚合酶按 3'&rarr;5' 合成；把后随链说成&ldquo;更慢&rdquo;而不是&ldquo;不连续&rdquo;；说亲本链被破坏；把复制放在 M 期而不是 S 期；以及混淆含 ¹⁵N 的分子比例与含 ¹⁵N 的链的比例。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Why is the lagging strand made in Okazaki fragments?</span><span data-lang="zh">1. 为什么后随链以冈崎片段的形式合成？</span></summary>
+      <div class="sg-a"><p data-lang="en">DNA polymerase can only add nucleotides to a 3' end, so every new strand grows 5'&rarr;3'. The two template strands are antiparallel, so on one template this direction points away from the fork. That strand can only be built backwards in short pieces, each started as the fork opens further; DNA ligase then joins the fragments.</p><p data-lang="zh">DNA 聚合酶只能在 3' 端添加核苷酸，所以每条新链都按 5'&rarr;3' 延伸。两条模板链反向平行，因此在其中一条模板上这个方向指向远离复制叉的一侧。这条链只能以短片段向后合成，复制叉每打开一段就起始一个片段；随后 DNA 连接酶把片段连起来。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A cell with all-¹⁵N DNA replicates four times in ¹⁴N medium, starting from one DNA molecule. How many molecules are there, and how many of them contain any ¹⁵N?</span><span data-lang="zh">2. 一个 DNA 全为 ¹⁵N 的细胞在 ¹⁴N 培养基中复制四次，起始为一个 DNA 分子。共有多少个分子？其中有多少个含 ¹⁵N？</span></summary>
+      <div class="sg-a"><p data-lang="en">2⁴ = 16 molecules. Only the 2 original ¹⁵N strands exist, in 2 different (hybrid) molecules, so 2 molecules contain ¹⁵N (2/16 = 1/8) and the other 14 are fully ¹⁴N.</p><p data-lang="zh">2⁴ = 16 个分子。只有 2 条原有的 ¹⁵N 链，分别位于 2 个不同的（杂合）分子中，所以 2 个分子含 ¹⁵N（2/16 = 1/8），其余 14 个完全是 ¹⁴N。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. In which phase of the cell cycle does DNA replicate, and why must it finish before mitosis?</span><span data-lang="zh">3. DNA 在细胞周期的哪个时期复制？为什么必须在有丝分裂之前完成？</span></summary>
+      <div class="sg-a"><p data-lang="en">S phase (synthesis) of interphase. Each chromosome must be copied first so that mitosis can give each daughter cell one complete copy.</p><p data-lang="zh">间期的 S 期（合成期）。每条染色体必须先被复制，有丝分裂才能让每个子细胞得到一份完整的拷贝。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -652,6 +848,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-7-3">
   <div class="section-label"><span data-lang="en">Section 3 &middot; Transcription</span><span data-lang="zh">第 3 节 &middot; 转录</span></div>
   <h2><span data-lang="en">Transcription: DNA &rarr; mRNA</span><span data-lang="zh">转录：DNA &rarr; mRNA</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Identify the template strand and the coding strand of a gene and state which one the mRNA matches.</li><li>Write the mRNA made from a template strand, whether the template is given 3'&rarr;5' or 5'&rarr;3'.</li><li>State the roles of RNA polymerase and the promoter, and where transcription happens in eukaryotes and prokaryotes.</li><li>Explain how introns are removed to make mature mRNA and predict the effect on the protein.</li></ul>
+    <ul data-lang="zh"><li>识别基因的模板链和编码链，并说明 mRNA 与哪一条链相同。</li><li>写出由模板链转录得到的 mRNA，模板链可按 3'&rarr;5' 或 5'&rarr;3' 给出。</li><li>说出 RNA 聚合酶和启动子的作用，以及转录在真核生物和原核生物中的发生位置。</li><li>解释内含子如何被去除而形成成熟 mRNA，并预测对蛋白质的影响。</li></ul>
+  </div>
 
   <div class="cram-cheat">
     <strong><span data-lang="en">Transcription in five facts.</span><span data-lang="zh">转录五要点。</span></strong>
@@ -665,7 +867,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">T</div><div class="card-title"><span data-lang="en">DNA vs RNA &mdash; quick comparison</span><span data-lang="zh">DNA 与 RNA 快速对比</span></div></div>
+    <div class="card-header"><div class="card-icon icon-green">T</div><div class="card-title"><span data-lang="en">DNA vs RNA: quick comparison</span><span data-lang="zh">DNA 与 RNA 快速对比</span></div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th><span data-lang="en">Feature</span><span data-lang="zh">特征</span></th><th><span data-lang="en">DNA</span><span data-lang="zh">DNA</span></th><th><span data-lang="en">RNA</span><span data-lang="zh">RNA</span></th></tr></thead>
@@ -680,6 +882,31 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </div>
   </div>
 
+<details open>
+<summary><span data-lang="en">Worked Example 5: Template strand, coding strand and mRNA</span><span data-lang="zh">例题 5：模板链、编码链与 mRNA</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">The coding (non-template) strand of a gene segment is 5'-ATGGCTTACTGA-3'. (a) Write the template strand with its 3' and 5' ends. (b) Write the mRNA made by RNA polymerase. (c) In which direction does RNA polymerase move along the template strand?</span><span data-lang="zh">某基因片段的编码链（非模板链）为 5'-ATGGCTTACTGA-3'。(a) 写出模板链并标明 3' 端和 5' 端。(b) 写出 RNA 聚合酶合成的 mRNA。(c) RNA 聚合酶沿模板链朝哪个方向移动？</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Template strand.</strong> Pair each base of the coding strand (A-T, T-A, G-C, C-G) and run the new strand the other way: 3'-TACCGAATGACT-5'.</span><span data-lang="zh"><strong>(a) 模板链。</strong>把编码链的每个碱基配对（A-T、T-A、G-C、C-G），新链方向相反：3'-TACCGAATGACT-5'。</span></p>
+    <p><span data-lang="en"><strong>(b) mRNA.</strong> The mRNA is complementary to the template, with U in place of T: 5'-AUGGCUUACUGA-3'. It has the same sequence as the coding strand, with U for T.</span><span data-lang="zh"><strong>(b) mRNA。</strong>mRNA 与模板链互补，用 U 代替 T：5'-AUGGCUUACUGA-3'。它的序列与编码链相同，只是 T 换成 U。</span></p>
+    <p><span data-lang="en"><strong>(c) Direction.</strong> RNA polymerase reads the template 3'&rarr;5' and builds the mRNA 5'&rarr;3'.</span><span data-lang="zh"><strong>(c) 方向。</strong>RNA 聚合酶沿模板链按 3'&rarr;5' 方向读取，并按 5'&rarr;3' 方向合成 mRNA。</span></p>
+    <p><span data-lang="en"><strong>Common error:</strong> saying the mRNA is complementary to the coding strand. It is complementary to the template, and therefore matches the coding strand.</span><span data-lang="zh"><strong>常见错误：</strong>说 mRNA 与编码链互补。它与模板链互补，因此与编码链相同（T 换成 U）。</span></p>
+  </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 6: A template written 5'&rarr;3'</span><span data-lang="zh">例题 6：模板链按 5'&rarr;3' 书写</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A template strand is written 5'-TTAAGGCATCAT-3'. Write the mRNA, 5'&rarr;3'.</span><span data-lang="zh">一条模板链写作 5'-TTAAGGCATCAT-3'。写出 mRNA，按 5'&rarr;3' 书写。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Step 1: reverse.</strong> Rewrite the template 3'&rarr;5': 3'-TACTACGGAATT-5'.</span><span data-lang="zh"><strong>步骤 1：反转。</strong>把模板链改写成 3'&rarr;5'：3'-TACTACGGAATT-5'。</span></p>
+    <p><span data-lang="en"><strong>Step 2: pair.</strong> Pair each base, with U for T: 5'-AUGAUGCCUUAA-3'.</span><span data-lang="zh"><strong>步骤 2：配对。</strong>逐个碱基配对，用 U 代替 T：5'-AUGAUGCCUUAA-3'。</span></p>
+    <p><span data-lang="en"><strong>Check.</strong> The coding strand is the mRNA with T for U, 5'-ATGATGCCTTAA-3'. It is the reverse complement of the template. <strong>Common error:</strong> pairing the template in the order it is written without reversing gives 3'-AAUUCCGUAGUA-5'. That is the same molecule written backwards, so it must be read as 5'-AUGAUGCCUUAA-3' before it is used.</span><span data-lang="zh"><strong>检查。</strong>编码链是把 mRNA 中的 U 换回 T：5'-ATGATGCCTTAA-3'，它是模板链的反向互补序列。<strong>常见错误：</strong>不反转、直接按书写顺序配对，得到 3'-AAUUCCGUAGUA-5'。这是同一分子的反向写法，使用前必须改写成 5'-AUGAUGCCUUAA-3'。</span></p>
+  </div>
+</details>
+
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Where does transcription occur in a eukaryotic cell?</span><span data-lang="zh">转录在真核细胞的哪里发生？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
     <div class="quiz-options">
@@ -689,7 +916,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">At the cell membrane</span><span data-lang="zh">在细胞膜处</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Transcription occurs in the nucleus, where DNA is stored. mRNA is synthesized there and then exits through nuclear pores to the cytoplasm, where it is translated at ribosomes.</span><span data-lang="zh">转录在细胞核中发生，那里储存着 DNA。mRNA 在此合成后通过核孔输出至细胞质，在核糖体上翻译。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Transcription = nucleus (where DNA is). Translation = ribosome (in cytoplasm). These are two separate locations &mdash; a classic exam point.</span><span data-lang="zh">转录 = 细胞核（DNA 所在）。翻译 = 核糖体（细胞质中）。两个不同位置 &mdash; 经典考点。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Transcription = nucleus (where DNA is). Translation = ribosome (in cytoplasm). These are two separate locations: a classic exam point.</span><span data-lang="zh">转录 = 细胞核（DNA 所在）。翻译 = 核糖体（细胞质中）。两个不同位置：经典考点。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -701,9 +928,30 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">5'-ATGCTT-3'</span><span data-lang="zh">5'-ATGCTT-3'</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">5'-AUGCUU-3'</span><span data-lang="zh">5'-AUGCUU-3'</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">mRNA is complementary and antiparallel to the template strand, using U instead of T. Template 3'-TACGAA-5' &rarr; mRNA 5'-AUGCUU-3'. T pairs to A (written as A in mRNA), A pairs to U, C pairs to G, G pairs to C, A to U, A to U.</span><span data-lang="zh">mRNA 与模板链互补且反向平行，用 U 替代 T。模板 3'-TACGAA-5' &rarr; mRNA 5'-AUGCUU-3'。T 对应 A（mRNA 中写为 A），A 对应 U，C 对应 G，G 对应 C，A 对应 U，A 对应 U。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">mRNA is complementary and antiparallel to the template strand, using U instead of T. Template 3'-TACGAA-5' &rarr; mRNA 5'-AUGCUU-3'. Reading the template base by base: T gives A, A gives U, C gives G, G gives C, A gives U, A gives U.</span><span data-lang="zh">mRNA 与模板链互补且反向平行，用 U 替代 T。模板 3'-TACGAA-5' &rarr; mRNA 5'-AUGCUU-3'。按模板链逐个碱基读取：T 配 A，A 配 U，C 配 G，G 配 C，A 配 U，A 配 U。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Remember: in mRNA, U replaces T. RNA is read 5'&rarr;3'. Template 3'-T-A-C-G-A-A-5' gives mRNA 5'-A-U-G-C-U-U-3'.</span><span data-lang="zh">记住：mRNA 中 U 替代 T。RNA 按 5'&rarr;3' 方向读取。模板 3'-T-A-C-G-A-A-5' 给出 mRNA 5'-A-U-G-C-U-U-3'。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>identify</em> means name the strand and give a reason; <em>write</em> an mRNA means show 5' and 3' ends and use U, not T; <em>explain</em> splicing means say which sequences are removed and what the ribosome then reads. Common errors: leaving T in an mRNA, calling the mRNA complementary to the coding strand, forgetting to reverse a template written 5'&rarr;3', and placing transcription at the ribosome.</p><p data-lang="zh">命令词：<em>identify</em>（识别）要指出是哪条链并给出理由；<em>write</em>（写出）mRNA 要标明 5' 端和 3' 端并用 U 而不是 T；<em>explain</em>（解释）剪接要说明哪些序列被去除以及核糖体随后读取什么。常见错误：mRNA 中仍写 T、说 mRNA 与编码链互补、忘记反转按 5'&rarr;3' 书写的模板链，以及把转录放在核糖体上。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The coding strand of a gene is 5'-ATGCCATAA-3'. Write the template strand (3'&rarr;5') and the mRNA (5'&rarr;3').</span><span data-lang="zh">1. 某基因的编码链为 5'-ATGCCATAA-3'。写出模板链（3'&rarr;5'）和 mRNA（5'&rarr;3'）。</span></summary>
+      <div class="sg-a"><p data-lang="en">Template: 3'-TACGGTATT-5'. mRNA: 5'-AUGCCAUAA-3' (the coding strand with U for T).</p><p data-lang="zh">模板链：3'-TACGGTATT-5'。mRNA：5'-AUGCCAUAA-3'（编码链中 T 换成 U）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A eukaryotic pre-mRNA is 5'-AUGGCU GUAUAAGCAG CCUUGA-3'. The middle 10 bases (GUAUAAGCAG) are an intron. Write the mature mRNA, give its length, and name the polypeptide it codes for (AUG Met, GCU Ala, CCU Pro, UGA stop). What would happen if the intron were not removed (GUA Val, UAA stop)?</span><span data-lang="zh">2. 某真核生物前体 mRNA 为 5'-AUGGCU GUAUAAGCAG CCUUGA-3'。中间 10 个碱基（GUAUAAGCAG）是内含子。写出成熟 mRNA，给出其长度，并说出它编码的多肽（AUG Met，GCU Ala，CCU Pro，UGA 终止）。如果内含子没有被去除会怎样（GUA Val，UAA 终止）？</span></summary>
+      <div class="sg-a"><p data-lang="en">Splicing removes the intron and joins the exons: 5'-AUGGCUCCUUGA-3', 12 bases. The codons are AUG GCU CCU UGA, so the polypeptide is Met-Ala-Pro (3 amino acids, UGA stops translation). If the intron stayed, the codons would be AUG GCU GUA UAA and translation would stop early after Met-Ala-Val.</p><p data-lang="zh">剪接去除内含子并把外显子连接起来：5'-AUGGCUCCUUGA-3'，共 12 个碱基。密码子为 AUG GCU CCU UGA，所以多肽是 Met-Ala-Pro（3 个氨基酸，UGA 终止翻译）。如果内含子保留，密码子就是 AUG GCU GUA UAA，翻译会在 Met-Ala-Val 之后提前终止。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Name the enzyme of transcription and give two differences between transcription and DNA replication.</span><span data-lang="zh">3. 说出转录的酶，并给出转录与 DNA 复制的两点区别。</span></summary>
+      <div class="sg-a"><p data-lang="en">RNA polymerase. Transcription copies only one gene region, using one strand as the template, while replication copies the whole genome. Transcription makes a single-stranded RNA containing U, while replication makes a DNA double helix. (RNA polymerase also needs no primer, and transcription is not limited to S phase.)</p><p data-lang="zh">RNA 聚合酶。转录只复制某个基因区域，只用一条链作模板，而复制要复制整个基因组。转录产生含 U 的单链 RNA，而复制产生 DNA 双螺旋。（RNA 聚合酶还不需要引物，转录也不限于 S 期。）</p></div>
+    </details>
   </div>
 </section>
 
@@ -713,6 +961,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 4 &middot; Translation</span><span data-lang="zh">第 4 节 &middot; 翻译</span></div>
   <h2><span data-lang="en">Translation: mRNA &rarr; Protein</span><span data-lang="zh">翻译：mRNA &rarr; 蛋白质</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the start codon and the three stop codons, and count the amino acids that an mRNA codes for.</li><li>Find the reading frame from the first AUG and translate an mRNA with a codon table.</li><li>Write the tRNA anticodon for a codon, keeping the 5' and 3' ends straight.</li><li>Describe initiation, elongation and termination, and locate transcription and translation on a cell diagram.</li></ul>
+    <ul data-lang="zh"><li>说出起始密码子和三个终止密码子，并数出一条 mRNA 编码的氨基酸数目。</li><li>从第一个 AUG 确定读码框，并用密码子表翻译 mRNA。</li><li>写出密码子对应的 tRNA 反密码子，并正确标注 5' 端和 3' 端。</li><li>描述起始、延伸和终止，并在细胞示意图上标出转录和翻译的位置。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Translation in five facts.</span><span data-lang="zh">翻译五要点。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
@@ -720,20 +974,87 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <li><span data-lang="en"><strong>Codons:</strong> the mRNA is read in triplets of bases called codons. Each codon specifies one amino acid (or a start/stop signal). AUG is the universal start codon (codes for methionine). UAA, UAG, UGA are stop codons.</span><span data-lang="zh"><strong>密码子：</strong>mRNA 以三联体碱基（密码子）方式读取。每个密码子对应一种氨基酸（或起始/终止信号）。AUG 是通用起始密码子（编码甲硫氨酸）。UAA、UAG、UGA 是终止密码子。</span></li>
       <li><span data-lang="en"><strong>tRNA and anticodons:</strong> each tRNA carries a specific amino acid and has an anticodon complementary to the mRNA codon. The ribosome aligns codon and anticodon, and the amino acid is added to the growing polypeptide chain.</span><span data-lang="zh"><strong>tRNA 与反密码子：</strong>每个 tRNA 携带特定氨基酸，具有与 mRNA 密码子互补的反密码子。核糖体使密码子和反密码子对齐，氨基酸被添加到不断延长的多肽链上。</span></li>
       <li><span data-lang="en"><strong>Steps:</strong> (1) Initiation: ribosome assembles on mRNA at AUG. (2) Elongation: tRNAs deliver amino acids one by one; peptide bonds form. (3) Termination: ribosome reaches a stop codon; polypeptide is released.</span><span data-lang="zh"><strong>步骤：</strong>(1) 起始：核糖体在 AUG 处组装于 mRNA 上。(2) 延伸：tRNA 逐一递送氨基酸；形成肽键。(3) 终止：核糖体到达终止密码子；多肽链释放。</span></li>
-      <li><span data-lang="en"><strong>Genetic code degeneracy:</strong> most amino acids are coded by more than one codon. This means many base changes in the third position of a codon (wobble position) do not change the amino acid &mdash; producing a silent mutation.</span><span data-lang="zh"><strong>遗传密码的简并性：</strong>大多数氨基酸由多个密码子编码。这意味着密码子第三位（摆动位）的许多碱基变化不会改变氨基酸 &mdash; 产生沉默突变。</span></li>
+      <li><span data-lang="en"><strong>Genetic code degeneracy:</strong> most amino acids are coded by more than one codon. This means many base changes in the third position of a codon (wobble position) do not change the amino acid: producing a silent mutation.</span><span data-lang="zh"><strong>遗传密码的简并性：</strong>大多数氨基酸由多个密码子编码。这意味着密码子第三位（摆动位）的许多碱基变化不会改变氨基酸：产生沉默突变。</span></li>
     </ul>
   </div>
 
+<figure class="sg-fig" role="group">
+<svg viewBox="0 0 480 300" role="img" aria-label="From gene to polypeptide. In the nucleus RNA polymerase copies the DNA into mRNA, which leaves through a nuclear pore. In the cytoplasm a ribosome reads the mRNA codons AUG, GCU and UCC; tRNAs with anticodons UAC and CGA bring Met and Ala, which are joined into a polypeptide.">
+<rect class="box" x="10" y="12" width="182" height="130" rx="22"/>
+<text class="lbl" data-lang="en" x="26" y="34" text-anchor="start">Nucleus</text><text class="lbl" data-lang="zh" x="26" y="34" text-anchor="start">细胞核</text>
+<text class="c4t" data-lang="en" x="26" y="52" text-anchor="start">1. Transcription</text><text class="c4t" data-lang="zh" x="26" y="52" text-anchor="start">1. 转录</text>
+<line class="ax" x1="26" y1="82" x2="112" y2="82"/>
+<line class="ax" x1="26" y1="96" x2="112" y2="96"/>
+<line class="grid" x1="32" y1="82" x2="32" y2="96"/>
+<line class="grid" x1="42" y1="82" x2="42" y2="96"/>
+<line class="grid" x1="52" y1="82" x2="52" y2="96"/>
+<line class="grid" x1="62" y1="82" x2="62" y2="96"/>
+<line class="grid" x1="72" y1="82" x2="72" y2="96"/>
+<line class="grid" x1="82" y1="82" x2="82" y2="96"/>
+<line class="grid" x1="92" y1="82" x2="92" y2="96"/>
+<line class="grid" x1="102" y1="82" x2="102" y2="96"/>
+<text class="mut" data-lang="en" x="26" y="76" text-anchor="start">DNA</text><text class="mut" data-lang="zh" x="26" y="76" text-anchor="start">DNA</text>
+<circle class="c4" cx="124" cy="89" r="13"/>
+<text class="mut" data-lang="en" x="124" y="118" text-anchor="middle">RNA polymerase</text><text class="mut" data-lang="zh" x="124" y="118" text-anchor="middle">RNA 聚合酶</text>
+<path class="c4" d="M137 89 C160 89, 165 106, 192 106 L 250 196 Q 258 214 280 214 L 450 214"/>
+<circle class="dot" cx="192" cy="106" r="3.6"/>
+<text class="mut" data-lang="en" x="200" y="98" text-anchor="start">Nuclear pore</text><text class="mut" data-lang="zh" x="200" y="98" text-anchor="start">核孔</text>
+<text class="c4t" data-lang="en" x="224" y="170" text-anchor="end">mRNA</text><text class="c4t" data-lang="zh" x="224" y="170" text-anchor="end">mRNA</text>
+<text class="mut" data-lang="en" x="140" y="78" text-anchor="start">5'</text><text class="mut" data-lang="zh" x="140" y="78" text-anchor="start">5'</text>
+<text class="mut" data-lang="en" x="456" y="218" text-anchor="start">3'</text><text class="mut" data-lang="zh" x="456" y="218" text-anchor="start">3'</text>
+<ellipse class="fill1" cx="350" cy="165" rx="88" ry="46"/><ellipse class="c1" cx="350" cy="165" rx="88" ry="46"/>
+<ellipse class="fill2" cx="350" cy="229" rx="78" ry="15"/><ellipse class="c2" cx="350" cy="229" rx="78" ry="15"/>
+<path class="c4" d="M280 214 L 450 214"/>
+<text class="lbl" data-lang="en" x="402" y="150" text-anchor="middle">Ribosome</text><text class="lbl" data-lang="zh" x="402" y="150" text-anchor="middle">核糖体</text>
+<text class="c1t" data-lang="en" x="296" y="100" text-anchor="start">2. Translation</text><text class="c1t" data-lang="zh" x="296" y="100" text-anchor="start">2. 翻译</text>
+<rect class="box" x="289" y="186" width="34" height="26" rx="4"/>
+<text class="mono" data-lang="en" x="306" y="204" text-anchor="middle">UAC</text><text class="mono" data-lang="zh" x="306" y="204" text-anchor="middle">UAC</text>
+<rect class="box" x="289" y="158" width="34" height="18" rx="4"/>
+<line class="ax" x1="306" y1="176" x2="306" y2="186"/>
+<text class="lbl" data-lang="en" x="306" y="171" text-anchor="middle">Met</text><text class="lbl" data-lang="zh" x="306" y="171" text-anchor="middle">Met</text>
+<rect class="box" x="333" y="186" width="34" height="26" rx="4"/>
+<text class="mono" data-lang="en" x="350" y="204" text-anchor="middle">CGA</text><text class="mono" data-lang="zh" x="350" y="204" text-anchor="middle">CGA</text>
+<rect class="box" x="333" y="158" width="34" height="18" rx="4"/>
+<line class="ax" x1="350" y1="176" x2="350" y2="186"/>
+<text class="lbl" data-lang="en" x="350" y="171" text-anchor="middle">Ala</text><text class="lbl" data-lang="zh" x="350" y="171" text-anchor="middle">Ala</text>
+<line class="c3" x1="323" y1="167" x2="333" y2="167"/>
+<line class="arrow thin" x1="404" y1="106" x2="329" y2="159"/>
+<circle class="dot" cx="328" cy="160" r="2.4"/>
+<text class="mut" data-lang="en" x="400" y="100" text-anchor="start">peptide bond</text><text class="mut" data-lang="zh" x="400" y="100" text-anchor="start">肽键</text>
+<text class="mono" data-lang="en" x="306" y="238" text-anchor="middle">AUG</text><text class="mono" data-lang="zh" x="306" y="238" text-anchor="middle">AUG</text>
+<text class="mono" data-lang="en" x="350" y="238" text-anchor="middle">GCU</text><text class="mono" data-lang="zh" x="350" y="238" text-anchor="middle">GCU</text>
+<text class="mono" data-lang="en" x="394" y="238" text-anchor="middle">UCC</text><text class="mono" data-lang="zh" x="394" y="238" text-anchor="middle">UCC</text>
+<text class="mut" data-lang="en" x="374" y="196" text-anchor="start">tRNA</text><text class="mut" data-lang="zh" x="374" y="196" text-anchor="start">tRNA</text>
+<text class="mut" data-lang="en" x="262" y="266" text-anchor="start">Codons are read 5' to 3'</text><text class="mut" data-lang="zh" x="262" y="266" text-anchor="start">密码子按 5' 到 3' 读取</text>
+<text class="lbl" data-lang="en" x="24" y="270" text-anchor="start">Cytoplasm</text><text class="lbl" data-lang="zh" x="24" y="270" text-anchor="start">细胞质</text>
+</svg>
+<figcaption><span data-lang="en">Figure 2. From gene to polypeptide in a eukaryotic cell. 1. In the nucleus RNA polymerase copies the DNA into mRNA, which leaves through a nuclear pore. 2. At the ribosome the codons are read 5'&rarr;3' (left to right: AUG, GCU, UCC). The tRNA for AUG carries Met and has the anticodon UAC; the tRNA for GCU carries Ala and has the anticodon CGA (anticodons are drawn 3'&rarr;5'). A peptide bond joins Met and Ala.</span><span data-lang="zh">图 2. 真核细胞中从基因到多肽。1. 在细胞核中，RNA 聚合酶把 DNA 转录成 mRNA，mRNA 经核孔离开。2. 在核糖体上，密码子按 5'&rarr;3'（从左到右：AUG、GCU、UCC）读取。读取 AUG 的 tRNA 携带 Met，反密码子为 UAC；读取 GCU 的 tRNA 携带 Ala，反密码子为 CGA（反密码子按 3'&rarr;5' 绘出）。肽键把 Met 和 Ala 连接起来。</span></figcaption>
+</figure>
+
+<details open>
+<summary><span data-lang="en">Worked Example 7: Codon translation</span><span data-lang="zh">例题 7：密码子翻译</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 3 &middot; Codon translation</span><span data-lang="zh">例题 3 &middot; 密码子翻译</span></div>
     <p><span data-lang="en">A segment of mRNA reads 5'-AUG-CCU-AGG-UAA-3'. Identify (a) the start codon, (b) the number of amino acids in the polypeptide, (c) the stop codon, and (d) the anticodon for CCU.</span><span data-lang="zh">一段 mRNA 序列为 5'-AUG-CCU-AGG-UAA-3'。请确定：(a) 起始密码子；(b) 多肽链中氨基酸数目；(c) 终止密码子；(d) CCU 的反密码子。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">(a) Start codon: AUG.</span><span data-lang="zh">(a) 起始密码子：AUG。</span></strong></p>
-    <p><strong><span data-lang="en">(b) Amino acids: 2.</span><span data-lang="zh">(b) 氨基酸数目：2 个。</span></strong> <span data-lang="en">AUG codes for Met; CCU for Pro; AGG for Arg; UAA is a stop codon (no amino acid). So 3 codons are translated (AUG, CCU, AGG), giving Met-Pro-Arg. Wait &mdash; 3 amino acids (Met, Pro, Arg). UAA terminates. Final polypeptide: 3 amino acids.</span><span data-lang="zh">AUG 编码 Met（甲硫氨酸）；CCU 编码 Pro（脯氨酸）；AGG 编码 Arg（精氨酸）；UAA 是终止密码子（不编码氨基酸）。共翻译 3 个密码子（AUG、CCU、AGG），产生 Met-Pro-Arg。UAA 终止。最终多肽：3 个氨基酸。</span></p>
+    <p><strong><span data-lang="en">(b) Amino acids: 3.</span><span data-lang="zh">(b) 氨基酸数目：3 个。</span></strong> <span data-lang="en">AUG codes for Met; CCU for Pro; AGG for Arg; UAA is a stop codon (no amino acid). So 3 codons are translated (AUG, CCU, AGG), giving the polypeptide Met-Pro-Arg with 3 amino acids. UAA terminates translation and is not counted.</span><span data-lang="zh">AUG 编码 Met（甲硫氨酸）；CCU 编码 Pro（脯氨酸）；AGG 编码 Arg（精氨酸）；UAA 是终止密码子（不编码氨基酸）。共翻译 3 个密码子（AUG、CCU、AGG），得到含 3 个氨基酸的多肽 Met-Pro-Arg。UAA 终止翻译，不计入氨基酸。</span></p>
     <p><strong><span data-lang="en">(c) Stop codon: UAA.</span><span data-lang="zh">(c) 终止密码子：UAA。</span></strong></p>
     <p><strong><span data-lang="en">(d) Anticodon for CCU: GGA</span><span data-lang="zh">(d) CCU 的反密码子：GGA</span></strong> <span data-lang="en">(anticodon is complementary and antiparallel to the codon: codon 5'-CCU-3' &rarr; anticodon 3'-GGA-5', conventionally written 5'-AGG-3' as the tRNA anticodon).</span><span data-lang="zh">（反密码子与密码子互补且反向平行：密码子 5'-CCU-3' &rarr; 反密码子 3'-GGA-5'，通常写为 tRNA 反密码子 5'-AGG-3'）。</span></p>
   </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 8: Reading frame and the first AUG</span><span data-lang="zh">例题 8：读码框与第一个 AUG</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">An mRNA segment is 5'-CGAUGGCUUCCAAAUAGGC-3'. Codon table excerpt: AUG Met, GCU Ala, UCC Ser, AAA Lys, UAG stop; CGA Arg, UGG Trp, CUU Leu, CCA Pro, AAU Asn, AGG Arg. (a) Where does translation start, and what polypeptide is made? (b) What would be read if translation wrongly began at the first base? (c) Write the anticodon (5'&rarr;3') of the tRNA that reads GCU.</span><span data-lang="zh">一段 mRNA 为 5'-CGAUGGCUUCCAAAUAGGC-3'。密码子表节选：AUG Met，GCU Ala，UCC Ser，AAA Lys，UAG 终止；CGA Arg，UGG Trp，CUU Leu，CCA Pro，AAU Asn，AGG Arg。(a) 翻译从哪里开始？合成什么多肽？(b) 如果错误地从第一个碱基开始读，会读出什么？(c) 写出读取 GCU 的 tRNA 的反密码子（5'&rarr;3'）。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Start and product.</strong> The ribosome starts at the first AUG, bases 3 to 5. The codons are AUG | GCU | UCC | AAA | UAG, with GC left over. The polypeptide is Met-Ala-Ser-Lys (4 amino acids). UAG is a stop codon, so translation ends there and the leftover GC is not translated.</span><span data-lang="zh"><strong>(a) 起点与产物。</strong>核糖体从第一个 AUG（第 3 至 5 位碱基）开始。密码子依次为 AUG | GCU | UCC | AAA | UAG，剩下 GC。多肽是 Met-Ala-Ser-Lys（4 个氨基酸）。UAG 是终止密码子，翻译到此结束，剩下的 GC 不被翻译。</span></p>
+    <p><span data-lang="en"><strong>(b) Wrong frame.</strong> From base 1 the codons are CGA | UGG | CUU | CCA | AAU | AGG, then a leftover C: Arg-Trp-Leu-Pro-Asn-Arg, six amino acids and no stop. Every amino acid differs, so the start codon fixes the reading frame for the whole message.</span><span data-lang="zh"><strong>(b) 错误的读码框。</strong>从第 1 位开始，密码子是 CGA | UGG | CUU | CCA | AAU | AGG，剩下一个 C：Arg-Trp-Leu-Pro-Asn-Arg，共六个氨基酸，没有终止密码子。每个氨基酸都不同，所以起始密码子决定了整条信息的读码框。</span></p>
+    <p><span data-lang="en"><strong>(c) Anticodon.</strong> Codon 5'-GCU-3' pairs antiparallel with 3'-CGA-5', which is written 5'-AGC-3' for the tRNA anticodon. <strong>Common error:</strong> counting the stop codon as an amino acid, or writing the anticodon in the same direction as the codon.</span><span data-lang="zh"><strong>(c) 反密码子。</strong>密码子 5'-GCU-3' 与 3'-CGA-5' 反向平行配对，tRNA 反密码子写作 5'-AGC-3'。<strong>常见错误：</strong>把终止密码子数成一个氨基酸，或把反密码子与密码子按同一方向书写。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which molecule delivers amino acids to the ribosome during translation?</span><span data-lang="zh">翻译过程中，哪种分子将氨基酸运送至核糖体？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
@@ -760,6 +1081,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">Central dogma: DNA &rarr; RNA &rarr; Protein. DNA is replicated (DNA&rarr;DNA), transcribed (DNA&rarr;RNA), and then translated (RNA&rarr;Protein).</span><span data-lang="zh">中心法则：DNA &rarr; RNA &rarr; 蛋白质。DNA 被复制（DNA&rarr;DNA）、转录（DNA&rarr;RNA），再被翻译（RNA&rarr;蛋白质）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>translate</em> means start at the first AUG, read triplets 5'&rarr;3', name each amino acid and stop at a stop codon; <em>count</em> the amino acids without the stop; <em>state</em> the anticodon with its ends labelled. Common errors: starting at base 1, counting the stop codon, putting T in an mRNA codon, and giving the anticodon in the wrong direction.</p><p data-lang="zh">命令词：<em>translate</em>（翻译）指从第一个 AUG 开始，按 5'&rarr;3' 读三联体，写出每个氨基酸并在终止密码子处停止；<em>count</em>（数）氨基酸时不包括终止密码子；<em>state</em>（陈述）反密码子时要标明两端。常见错误：从第 1 位碱基开始读、把终止密码子计入、在 mRNA 密码子中写 T，以及反密码子方向写反。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Translate 5'-AUGUUUAAGUGA-3' (AUG Met, UUU Phe, AAG Lys, UGA stop).</span><span data-lang="zh">1. 翻译 5'-AUGUUUAAGUGA-3'（AUG Met，UUU Phe，AAG Lys，UGA 终止）。</span></summary>
+      <div class="sg-a"><p data-lang="en">Codons: AUG | UUU | AAG | UGA. The polypeptide is Met-Phe-Lys (3 amino acids); UGA is a stop codon and is not counted.</p><p data-lang="zh">密码子：AUG | UUU | AAG | UGA。多肽是 Met-Phe-Lys（3 个氨基酸）；UGA 是终止密码子，不计入。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. An mRNA is 5'-GAUGCCAUAGU-3' (AUG Met, CCA Pro, UAG stop). How many amino acids are made?</span><span data-lang="zh">2. 一条 mRNA 为 5'-GAUGCCAUAGU-3'（AUG Met，CCA Pro，UAG 终止）。合成多少个氨基酸？</span></summary>
+      <div class="sg-a"><p data-lang="en">The first AUG is at bases 2 to 4. Codons: AUG | CCA | UAG, then a leftover U. The polypeptide is Met-Pro, so 2 amino acids.</p><p data-lang="zh">第一个 AUG 位于第 2 至 4 位。密码子：AUG | CCA | UAG，剩下一个 U。多肽是 Met-Pro，共 2 个氨基酸。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Write the tRNA anticodons (5'&rarr;3') that read the codons AUG and GCU.</span><span data-lang="zh">3. 写出读取密码子 AUG 和 GCU 的 tRNA 反密码子（5'&rarr;3'）。</span></summary>
+      <div class="sg-a"><p data-lang="en">AUG pairs with 3'-UAC-5', written 5'-CAU-3'. GCU pairs with 3'-CGA-5', written 5'-AGC-3'.</p><p data-lang="zh">AUG 与 3'-UAC-5' 配对，写作 5'-CAU-3'。GCU 与 3'-CGA-5' 配对，写作 5'-AGC-3'。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -768,16 +1110,48 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 5 &middot; Mutations</span><span data-lang="zh">第 5 节 &middot; 突变</span></div>
   <h2><span data-lang="en">Mutations: Changes in the DNA Sequence</span><span data-lang="zh">突变：DNA 序列的改变</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define a mutation and classify a base substitution as silent, missense or nonsense from the codon table.</li><li>Predict the effect of an insertion or deletion on the reading frame and on the length of the protein.</li><li>Explain why a deletion of three bases is usually less harmful than a deletion of one base.</li><li>Distinguish somatic mutations from germline mutations in terms of inheritance.</li></ul>
+    <ul data-lang="zh"><li>定义突变，并根据密码子表把碱基替换分类为沉默突变、错义突变或无义突变。</li><li>预测插入或缺失对读码框和蛋白质长度的影响。</li><li>解释为什么缺失三个碱基通常比缺失一个碱基危害小。</li><li>区分体细胞突变与生殖细胞突变在遗传方面的差异。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Mutations &mdash; types and consequences.</span><span data-lang="zh">突变 &mdash; 类型与后果。</span></strong>
+    <strong><span data-lang="en">Mutations: types and consequences.</span><span data-lang="zh">突变：类型与后果。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
       <li><strong><span data-lang="en">Definition:</span><span data-lang="zh">定义：</span></strong> <span data-lang="en">a mutation is a permanent, heritable change in the nucleotide sequence of DNA. Mutations can be spontaneous (errors in replication) or induced (caused by a mutagen).</span><span data-lang="zh">突变是 DNA 核苷酸序列的永久、可遗传的变化。突变可以是自发的（复制过程中的错误）或诱发的（由诱变剂引起）。</span></li>
-      <li><strong><span data-lang="en">Point mutations (substitutions):</span><span data-lang="zh">点突变（替换）：</span></strong> <span data-lang="en">one base is changed. Three outcomes: (a) <em>Silent</em> &mdash; no amino acid change (genetic code degeneracy). (b) <em>Missense</em> &mdash; one amino acid changes; may alter protein function. (c) <em>Nonsense</em> &mdash; creates a premature stop codon; truncates the protein.</span><span data-lang="zh">一个碱基改变。三种结果：(a) <em>沉默突变</em> &mdash; 氨基酸不变（遗传密码简并性）。(b) <em>错义突变</em> &mdash; 一个氨基酸改变；可能影响蛋白质功能。(c) <em>无义突变</em> &mdash; 产生提前的终止密码子；蛋白质被截短。</span></li>
+      <li><strong><span data-lang="en">Point mutations (substitutions):</span><span data-lang="zh">点突变（替换）：</span></strong> <span data-lang="en">one base is changed. Three outcomes: (a) <em>Silent</em>: no amino acid change (genetic code degeneracy). (b) <em>Missense</em>: one amino acid changes; may alter protein function. (c) <em>Nonsense</em>: creates a premature stop codon; truncates the protein.</span><span data-lang="zh">一个碱基改变。三种结果：(a) <em>沉默突变</em>：氨基酸不变（遗传密码简并性）。(b) <em>错义突变</em>：一个氨基酸改变；可能影响蛋白质功能。(c) <em>无义突变</em>：产生提前的终止密码子；蛋白质被截短。</span></li>
       <li><strong><span data-lang="en">Frameshift mutations:</span><span data-lang="zh">移码突变：</span></strong> <span data-lang="en">insertions or deletions of bases (other than multiples of 3) shift the reading frame of all codons downstream. Usually produce a non-functional protein. More severe than point mutations in most cases.</span><span data-lang="zh">碱基的插入或缺失（非 3 的倍数）使下游所有密码子的读码框移位。通常产生无功能蛋白质。大多数情况下比点突变危害更严重。</span></li>
       <li><strong><span data-lang="en">Mutagens:</span><span data-lang="zh">诱变剂：</span></strong> <span data-lang="en">agents that increase the mutation rate. Chemical mutagens (e.g. base analogs, alkylating agents); radiation mutagens (UV light causes thymine dimers; ionizing radiation breaks DNA strands). SBI4U D3.4 names "radiation and chemicals."</span><span data-lang="zh">增加突变率的因素。化学诱变剂（如碱基类似物、烷化剂）；辐射诱变剂（紫外线导致胸腺嘧啶二聚体；电离辐射断裂 DNA 链）。SBI4U D3.4 提及"辐射和化学物质"。</span></li>
-      <li><strong><span data-lang="en">Consequences:</span><span data-lang="zh">后果：</span></strong> <span data-lang="en">mutations in somatic cells affect only that individual (e.g. cancer if in tumor-suppressor genes). Mutations in germline cells (gametes) are heritable. Most mutations are neutral or harmful; rarely, a mutation is beneficial (source of evolutionary variation &mdash; NGSS HS-LS3-1; BC Life Sciences 11 microevolution; AB 30-C3.6k).</span><span data-lang="zh">体细胞中的突变只影响该个体（如肿瘤抑制基因突变导致癌症）。生殖细胞（配子）中的突变可以遗传。大多数突变为中性或有害；极少数突变是有益的（进化变异的来源 &mdash; NGSS HS-LS3-1；BC Life Sciences 11 微进化；AB 30-C3.6k）。</span></li>
+      <li><strong><span data-lang="en">Consequences:</span><span data-lang="zh">后果：</span></strong> <span data-lang="en">mutations in somatic cells affect only that individual (e.g. cancer if in tumor-suppressor genes). Mutations in germline cells (gametes) are heritable. Most mutations are neutral or harmful; rarely, a mutation is beneficial (source of evolutionary variation: NGSS HS-LS3-1; BC Life Sciences 11 microevolution; AB 30-C3.6k).</span><span data-lang="zh">体细胞中的突变只影响该个体（如肿瘤抑制基因突变导致癌症）。生殖细胞（配子）中的突变可以遗传。大多数突变为中性或有害；极少数突变是有益的（进化变异的来源：NGSS HS-LS3-1；BC Life Sciences 11 微进化；AB 30-C3.6k）。</span></li>
     </ul>
   </div>
+
+<details open>
+<summary><span data-lang="en">Worked Example 9: Classifying point mutations</span><span data-lang="zh">例题 9：点突变的分类</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A normal mRNA is 5'-AUG GAA CUU AAA UGG UAA-3'. Codon table excerpt: AUG Met, GAA and GAG Glu, CUU Leu, CCU Pro, AAA Lys, UGG Trp, UAA stop. Three separate substitutions in the gene change the mRNA: (i) base 6, A to G; (ii) base 8, U to C; (iii) base 10, A to U. For each, write the changed codon, the polypeptide, and the type of mutation.</span><span data-lang="zh">正常 mRNA 为 5'-AUG GAA CUU AAA UGG UAA-3'。密码子表节选：AUG Met，GAA 和 GAG Glu，CUU Leu，CCU Pro，AAA Lys，UGG Trp，UAA 终止。基因中的三个独立碱基替换使 mRNA 发生改变：(i) 第 6 位碱基 A 变为 G；(ii) 第 8 位碱基 U 变为 C；(iii) 第 10 位碱基 A 变为 U。对每一个，写出改变后的密码子、多肽以及突变类型。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Normal.</strong> Met-Glu-Leu-Lys-Trp (5 amino acids), then UAA stops.</span><span data-lang="zh"><strong>正常。</strong>Met-Glu-Leu-Lys-Trp（5 个氨基酸），随后 UAA 终止。</span></p>
+    <p><span data-lang="en"><strong>(i) Silent.</strong> GAA becomes GAG, and both code for Glu. The polypeptide is unchanged: Met-Glu-Leu-Lys-Trp. The third base of a codon often tolerates a change because the genetic code is degenerate.</span><span data-lang="zh"><strong>(i) 沉默突变。</strong>GAA 变为 GAG，二者都编码 Glu。多肽不变：Met-Glu-Leu-Lys-Trp。密码子的第三位碱基常能容忍改变，因为遗传密码具有简并性。</span></p>
+    <p><span data-lang="en"><strong>(ii) Missense.</strong> CUU becomes CCU, so Leu is replaced by Pro: Met-Glu-Pro-Lys-Trp. The length is the same, but one amino acid differs; whether the protein still works depends on where that amino acid sits.</span><span data-lang="zh"><strong>(ii) 错义突变。</strong>CUU 变为 CCU，Leu 被 Pro 取代：Met-Glu-Pro-Lys-Trp。长度不变，但有一个氨基酸不同；蛋白质是否仍有功能取决于这个氨基酸所处的位置。</span></p>
+    <p><span data-lang="en"><strong>(iii) Nonsense.</strong> AAA becomes UAA, a stop codon, so translation ends early: Met-Glu-Leu (3 amino acids instead of 5). A truncated protein is usually non-functional.</span><span data-lang="zh"><strong>(iii) 无义突变。</strong>AAA 变为 UAA，即终止密码子，翻译提前结束：Met-Glu-Leu（3 个氨基酸而不是 5 个）。被截短的蛋白质通常没有功能。</span></p>
+    <p><span data-lang="en"><strong>Common error:</strong> assuming every substitution changes the protein. Classify by comparing the amino acids, not the bases.</span><span data-lang="zh"><strong>常见错误：</strong>以为每个碱基替换都会改变蛋白质。分类要比较氨基酸，而不是比较碱基。</span></p>
+  </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 10: Frameshift or in-frame?</span><span data-lang="zh">例题 10：移码还是读码框不变？</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Use the same normal mRNA, 5'-AUG GAA CUU AAA UGG UAA-3' (AUGGAACUUAAAUGGUAA with no spaces). Codon table excerpt: AAU Asn, GGU Gly, GGC Gly. (a) Base 10 (the first A of AAA) is deleted. (b) The three bases GGC are inserted after base 9. Read each new sequence from the AUG and describe the effect on the protein.</span><span data-lang="zh">使用同一条正常 mRNA：5'-AUG GAA CUU AAA UGG UAA-3'（去掉空格即 AUGGAACUUAAAUGGUAA）。密码子表节选：AAU Asn，GGU Gly，GGC Gly。(a) 第 10 位碱基（AAA 的第一个 A）被缺失。(b) 在第 9 位碱基之后插入三个碱基 GGC。从 AUG 起读取每条新序列，并描述对蛋白质的影响。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) One-base deletion.</strong> The sequence becomes AUGGAACUUAAUGGUAA, read as AUG | GAA | CUU | AAU | GGU | AA. The polypeptide is Met-Glu-Leu-Asn-Gly. Every codon after the deletion is read in a shifted frame (Lys becomes Asn, Trp becomes Gly), and the original stop codon is no longer read in frame, so the ribosome would carry on into whatever follows.</span><span data-lang="zh"><strong>(a) 缺失一个碱基。</strong>序列变为 AUGGAACUUAAUGGUAA，读作 AUG | GAA | CUU | AAU | GGU | AA。多肽是 Met-Glu-Leu-Asn-Gly。缺失点之后的每个密码子都在移位的读码框中被读取（Lys 变成 Asn，Trp 变成 Gly），原来的终止密码子也不再处于读码框中，所以核糖体会继续读下去。</span></p>
+    <p><span data-lang="en"><strong>(b) Three-base insertion.</strong> The sequence becomes AUGGAACUUGGCAAAUGGUAA, read as AUG | GAA | CUU | GGC | AAA | UGG | UAA. The polypeptide is Met-Glu-Leu-Gly-Lys-Trp: the same amino acids as before plus one extra Gly. The frame is kept, and the stop codon is still read.</span><span data-lang="zh"><strong>(b) 插入三个碱基。</strong>序列变为 AUGGAACUUGGCAAAUGGUAA，读作 AUG | GAA | CUU | GGC | AAA | UGG | UAA。多肽是 Met-Glu-Leu-Gly-Lys-Trp：原有的氨基酸再加上多出的一个 Gly。读码框保持不变，终止密码子仍被读取。</span></p>
+    <p><span data-lang="en"><strong>Rule.</strong> An insertion or deletion whose size is not a multiple of 3 shifts the frame for everything downstream. A multiple of 3 keeps the frame and only adds or removes whole amino acids.</span><span data-lang="zh"><strong>规则。</strong>插入或缺失的碱基数不是 3 的倍数时，下游所有内容的读码框都会移位；是 3 的倍数时读码框不变，只增减整个氨基酸。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A mutation changes the codon GAA (glutamic acid) to GAG. Knowing that GAG also codes for glutamic acid, what type of mutation is this?</span><span data-lang="zh">一个突变将密码子 GAA（谷氨酸）变为 GAG。已知 GAG 同样编码谷氨酸，这是哪种类型的突变？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
@@ -801,8 +1175,29 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">They are caused by UV radiation, not by replication errors</span><span data-lang="zh">它们由紫外线引起，而非复制错误</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">An insertion or deletion of a non-multiple of 3 shifts the reading frame for all codons 3' of the mutation, changing every amino acid from that point onward. This usually produces a completely different and non-functional protein.</span><span data-lang="zh">非 3 的倍数的插入或缺失使突变点 3' 侧所有密码子的读码框移位，从该点起每个氨基酸都改变。这通常产生完全不同且无功能的蛋白质。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Frameshifts shift the reading frame for all downstream codons &mdash; this changes many amino acids, not just one. They don't always create an immediate stop codon, they affect DNA (mutations are changes to DNA by definition), and they can have many causes.</span><span data-lang="zh">移码突变使下游所有密码子的读码框移位 &mdash; 这改变了许多氨基酸，而非仅一个。它们不总是立即创建终止密码子，它们影响 DNA（突变在定义上即 DNA 的变化），且可以有多种原因。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Frameshifts shift the reading frame for all downstream codons: this changes many amino acids, not just one. They don't always create an immediate stop codon, they affect DNA (mutations are changes to DNA by definition), and they can have many causes.</span><span data-lang="zh">移码突变使下游所有密码子的读码框移位：这改变了许多氨基酸，而非仅一个。它们不总是立即创建终止密码子，它们影响 DNA（突变在定义上即 DNA 的变化），且可以有多种原因。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>classify</em> needs the type and the evidence (compare the amino acids); <em>predict</em> the protein by writing the new codons in order; <em>explain</em> why a frameshift is severe by naming the shifted reading frame. Common errors: calling a substitution a frameshift, saying every substitution changes the protein, forgetting that a stop codon ends the chain, and saying all mutations are inherited.</p><p data-lang="zh">命令词：<em>classify</em>（分类）要写出类型和依据（比较氨基酸）；<em>predict</em>（预测）蛋白质要按顺序写出新密码子；<em>explain</em>（解释）移码突变为什么严重要指出读码框的移位。常见错误：把碱基替换说成移码突变、说每个碱基替换都会改变蛋白质、忘记终止密码子会使链终止，以及说所有突变都会遗传。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. The codon CAG codes for Gln. Classify each change: (a) CAA (Gln), (b) CCG (Pro), (c) UAG (stop).</span><span data-lang="zh">1. 密码子 CAG 编码 Gln。对下列改变分类：(a) CAA（Gln），(b) CCG（Pro），(c) UAG（终止）。</span></summary>
+      <div class="sg-a"><p data-lang="en">(a) Silent: the amino acid is unchanged. (b) Missense: Gln is replaced by Pro. (c) Nonsense: the codon becomes a stop codon, so the protein is cut short.</p><p data-lang="zh">(a) 沉默突变：氨基酸不变。(b) 错义突变：Gln 被 Pro 取代。(c) 无义突变：密码子变成终止密码子，蛋白质被截短。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. In 5'-AUG GAA CUU AAA UGG UAA-3', the codon CUU is deleted. Write the new polypeptide and explain why this is less harmful than deleting one base.</span><span data-lang="zh">2. 在 5'-AUG GAA CUU AAA UGG UAA-3' 中，密码子 CUU 被缺失。写出新的多肽，并解释为什么这比缺失一个碱基危害小。</span></summary>
+      <div class="sg-a"><p data-lang="en">The new mRNA is AUG GAA AAA UGG UAA, so the polypeptide is Met-Glu-Lys-Trp (one amino acid fewer). Three bases are a whole codon, so the reading frame is unchanged and only one amino acid is lost, whereas deleting one base shifts every later codon.</p><p data-lang="zh">新的 mRNA 是 AUG GAA AAA UGG UAA，多肽为 Met-Glu-Lys-Trp（少一个氨基酸）。三个碱基正好是一个完整密码子，读码框不变，只丢失一个氨基酸；而缺失一个碱基会使之后的每个密码子移位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A UV-induced mutation occurs in a skin cell, and another occurs in a cell that is dividing to make sperm. Which can be inherited, and why?</span><span data-lang="zh">3. 紫外线在一个皮肤细胞中诱发了突变，另一个突变发生在正在分裂形成精子的细胞中。哪一个可以遗传？为什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">The mutation in the cell that makes sperm (a germline cell) can be passed to offspring, because it can end up in a gamete. The skin cell mutation is somatic: it affects that person (for example, it can contribute to skin cancer) but is not passed on.</p><p data-lang="zh">发生在形成精子的细胞（生殖细胞）中的突变可以传给后代，因为它可能进入配子。皮肤细胞的突变是体细胞突变：它影响这个人本身（例如可能促成皮肤癌），但不会遗传。</p></div>
+    </details>
   </div>
 </section>
 
@@ -812,15 +1207,102 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 6 &middot; Gene regulation</span><span data-lang="zh">第 6 节 &middot; 基因调控</span></div>
   <h2><span data-lang="en">Gene Regulation and the Operon Model</span><span data-lang="zh">基因调控与操纵子模型</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the roles of the promoter, operator, structural genes and repressor in the lac operon.</li><li>Predict whether the lac genes are on or off when lactose is absent and when it is present, and calculate the fold-change in enzyme activity.</li><li>Predict the behaviour of lac operon mutants from the rule that the genes are off only when an active repressor sits on the operator.</li><li>Explain why cells with the same DNA can differ, using differential gene expression.</li></ul>
+    <ul data-lang="zh"><li>说出 lac 操纵子中启动子、操作子、结构基因和阻遏蛋白的作用。</li><li>预测无乳糖和有乳糖时 lac 基因是开启还是关闭，并计算酶活性的倍数变化。</li><li>根据&ldquo;只有活性阻遏蛋白结合在操作子上时基因才关闭&rdquo;的规则，预测 lac 操纵子突变体的表现。</li><li>用差异基因表达解释为什么 DNA 相同的细胞可以不同。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Why regulate gene expression?</span><span data-lang="zh">为何要调控基因表达？</span></strong>
     <p style="margin-top: 8px; font-size: 0.94rem;"><span data-lang="en">Not all genes are active in every cell at all times. Gene regulation controls <em>when</em>, <em>where</em>, and <em>how much</em> of a protein is made. All somatic cells carry the same DNA; differentiation is due to differential gene expression (different genes switched on in different cell types).</span><span data-lang="zh">并非所有基因在每个细胞中随时都处于活跃状态。基因调控控制蛋白质合成的<em>时间</em>、<em>位置</em>和<em>数量</em>。所有体细胞携带相同的 DNA；分化源于差异基因表达（不同细胞类型中不同基因被开启）。</span></p>
   </div>
 
   <div class="concept-box purple">
-    <strong style="color: var(--purple);"><span data-lang="en">The lac operon (prokaryotic gene regulation) &mdash; <span class="honors-flag">Honors SBI4U D3.3</span></span><span data-lang="zh">lac 操纵子（原核基因调控）&mdash; <span class="honors-flag">荣誉 SBI4U D3.3</span></span></strong>
-    <p style="margin-top: 8px;"><span data-lang="en">An <strong>operon</strong> is a cluster of functionally related genes in prokaryotes controlled by a single promoter. The <em>lac</em> operon of <em>E. coli</em> controls lactose digestion. Key components: (1) <strong>Promoter</strong> &mdash; where RNA polymerase binds. (2) <strong>Operator</strong> &mdash; a DNA switch sequence between the promoter and the genes. (3) <strong>Structural genes</strong> (lacZ, lacY, lacA) &mdash; encode the enzymes for lactose metabolism. (4) <strong>Repressor protein</strong> &mdash; encoded by the regulatory gene (lacI); binds the operator and blocks transcription when lactose is absent. When <strong>lactose is present</strong>, the inducer molecule (allolactose) binds the repressor, changes its shape so it can no longer bind the operator, and RNA polymerase transcribes the structural genes. When lactose is absent, the repressor is active, the operator is blocked, and the genes are OFF.</span><span data-lang="zh"><strong>操纵子</strong>是原核生物中由单一启动子控制的一组功能相关基因。大肠杆菌的 <em>lac</em> 操纵子控制乳糖消化。关键成分：(1) <strong>启动子</strong> &mdash; RNA 聚合酶结合处。(2) <strong>操作子</strong> &mdash; 启动子与基因之间的 DNA 开关序列。(3) <strong>结构基因</strong>（lacZ、lacY、lacA）&mdash; 编码乳糖代谢酶。(4) <strong>阻遏蛋白</strong> &mdash; 由调控基因（lacI）编码；无乳糖时结合操作子并阻止转录。<strong>有乳糖时</strong>，诱导分子（别乳糖）与阻遏蛋白结合，改变其构型使其无法再结合操作子，RNA 聚合酶转录结构基因。无乳糖时，阻遏蛋白有活性，操作子被阻断，基因关闭。</span></p>
+    <strong style="color: var(--purple);"><span data-lang="en">The lac operon (prokaryotic gene regulation): <span class="honors-flag">Honors SBI4U D3.3</span></span><span data-lang="zh">lac 操纵子（原核基因调控）：<span class="honors-flag">荣誉 SBI4U D3.3</span></span></strong>
+    <p style="margin-top: 8px;"><span data-lang="en">An <strong>operon</strong> is a cluster of functionally related genes in prokaryotes controlled by a single promoter. The <em>lac</em> operon of <em>E. coli</em> controls lactose digestion. Key components: (1) <strong>Promoter</strong>: where RNA polymerase binds. (2) <strong>Operator</strong>: a DNA switch sequence between the promoter and the genes. (3) <strong>Structural genes</strong> (lacZ, lacY, lacA): encode the enzymes for lactose metabolism. (4) <strong>Repressor protein</strong>: encoded by the regulatory gene (lacI); binds the operator and blocks transcription when lactose is absent. When <strong>lactose is present</strong>, the inducer molecule (allolactose) binds the repressor, changes its shape so it can no longer bind the operator, and RNA polymerase transcribes the structural genes. When lactose is absent, the repressor is active, the operator is blocked, and the genes are OFF.</span><span data-lang="zh"><strong>操纵子</strong>是原核生物中由单一启动子控制的一组功能相关基因。大肠杆菌的 <em>lac</em> 操纵子控制乳糖消化。关键成分：(1) <strong>启动子</strong>：RNA 聚合酶结合处。(2) <strong>操作子</strong>：启动子与基因之间的 DNA 开关序列。(3) <strong>结构基因</strong>（lacZ、lacY、lacA）：编码乳糖代谢酶。(4) <strong>阻遏蛋白</strong>：由调控基因（lacI）编码；无乳糖时结合操作子并阻止转录。<strong>有乳糖时</strong>，诱导分子（别乳糖）与阻遏蛋白结合，改变其构型使其无法再结合操作子，RNA 聚合酶转录结构基因。无乳糖时，阻遏蛋白有活性，操作子被阻断，基因关闭。</span></p>
   </div>
+
+<figure class="sg-fig" role="group">
+<svg viewBox="0 0 460 310" role="img" aria-label="The lac operon in two states. Top, lactose absent: the repressor sits on the operator, RNA polymerase at the promoter is blocked, no mRNA is made. Bottom, lactose present: allolactose binds the repressor, which leaves the operator, and RNA polymerase transcribes lacZ, lacY and lacA into one mRNA.">
+<text class="c1t" data-lang="en" x="10" y="14" text-anchor="start">Lactose absent: genes OFF</text><text class="c1t" data-lang="zh" x="10" y="14" text-anchor="start">无乳糖：基因关闭</text>
+<rect class="box" x="70" y="78" width="40" height="26"/>
+<rect class="fill2" x="70" y="78" width="40" height="26"/>
+<text class="mut" data-lang="en" x="90" y="96" text-anchor="middle">P</text><text class="mut" data-lang="zh" x="90" y="96" text-anchor="middle">P</text>
+<rect class="box" x="110" y="78" width="30" height="26"/>
+<rect class="fill3" x="110" y="78" width="30" height="26"/>
+<text class="mut" data-lang="en" x="125" y="96" text-anchor="middle">O</text><text class="mut" data-lang="zh" x="125" y="96" text-anchor="middle">O</text>
+<rect class="box" x="140" y="78" width="80" height="26"/>
+<rect class="fill1" x="140" y="78" width="80" height="26"/>
+<text class="mut" data-lang="en" x="180" y="96" text-anchor="middle">lacZ</text><text class="mut" data-lang="zh" x="180" y="96" text-anchor="middle">lacZ</text>
+<rect class="box" x="220" y="78" width="70" height="26"/>
+<rect class="fill1" x="220" y="78" width="70" height="26"/>
+<text class="mut" data-lang="en" x="255" y="96" text-anchor="middle">lacY</text><text class="mut" data-lang="zh" x="255" y="96" text-anchor="middle">lacY</text>
+<rect class="box" x="290" y="78" width="60" height="26"/>
+<rect class="fill1" x="290" y="78" width="60" height="26"/>
+<text class="mut" data-lang="en" x="320" y="96" text-anchor="middle">lacA</text><text class="mut" data-lang="zh" x="320" y="96" text-anchor="middle">lacA</text>
+<text class="mut" data-lang="en" x="10" y="96" text-anchor="start">DNA</text><text class="mut" data-lang="zh" x="10" y="96" text-anchor="start">DNA</text>
+<ellipse class="fill1" cx="125" cy="67" rx="22" ry="15"/><ellipse class="c1" cx="125" cy="67" rx="22" ry="15"/>
+<text class="c1t" data-lang="en" x="153" y="64" text-anchor="start">Repressor</text><text class="c1t" data-lang="zh" x="153" y="64" text-anchor="start">阻遏蛋白</text>
+<circle class="c4" cx="90" cy="67" r="11"/>
+<text class="c4t" data-lang="en" x="60" y="44" text-anchor="middle">RNA polymerase</text><text class="c4t" data-lang="zh" x="60" y="44" text-anchor="middle">RNA 聚合酶</text>
+<text class="c1t" data-lang="en" x="255" y="130" text-anchor="middle">blocked: no mRNA</text><text class="c1t" data-lang="zh" x="255" y="130" text-anchor="middle">被阻挡：无 mRNA</text>
+<text class="c3t" data-lang="en" x="10" y="164" text-anchor="start">Lactose present: genes ON</text><text class="c3t" data-lang="zh" x="10" y="164" text-anchor="start">有乳糖：基因开启</text>
+<rect class="box" x="70" y="228" width="40" height="26"/>
+<rect class="fill2" x="70" y="228" width="40" height="26"/>
+<text class="mut" data-lang="en" x="90" y="246" text-anchor="middle">P</text><text class="mut" data-lang="zh" x="90" y="246" text-anchor="middle">P</text>
+<rect class="box" x="110" y="228" width="30" height="26"/>
+<rect class="fill3" x="110" y="228" width="30" height="26"/>
+<text class="mut" data-lang="en" x="125" y="246" text-anchor="middle">O</text><text class="mut" data-lang="zh" x="125" y="246" text-anchor="middle">O</text>
+<rect class="box" x="140" y="228" width="80" height="26"/>
+<rect class="fill1" x="140" y="228" width="80" height="26"/>
+<text class="mut" data-lang="en" x="180" y="246" text-anchor="middle">lacZ</text><text class="mut" data-lang="zh" x="180" y="246" text-anchor="middle">lacZ</text>
+<rect class="box" x="220" y="228" width="70" height="26"/>
+<rect class="fill1" x="220" y="228" width="70" height="26"/>
+<text class="mut" data-lang="en" x="255" y="246" text-anchor="middle">lacY</text><text class="mut" data-lang="zh" x="255" y="246" text-anchor="middle">lacY</text>
+<rect class="box" x="290" y="228" width="60" height="26"/>
+<rect class="fill1" x="290" y="228" width="60" height="26"/>
+<text class="mut" data-lang="en" x="320" y="246" text-anchor="middle">lacA</text><text class="mut" data-lang="zh" x="320" y="246" text-anchor="middle">lacA</text>
+<text class="mut" data-lang="en" x="10" y="246" text-anchor="start">DNA</text><text class="mut" data-lang="zh" x="10" y="246" text-anchor="start">DNA</text>
+<ellipse class="c1 dash" cx="395" cy="202" rx="26" ry="16"/>
+<circle class="c3" cx="386" cy="202" r="4"/><circle class="c3" cx="404" cy="202" r="4"/>
+<text class="c3t" data-lang="en" x="455" y="178" text-anchor="end">Repressor + allolactose</text><text class="c3t" data-lang="zh" x="455" y="178" text-anchor="end">阻遏蛋白 + 别乳糖</text>
+<circle class="c4" cx="105" cy="217" r="11"/>
+<text class="c4t" data-lang="en" x="80" y="194" text-anchor="start">RNA polymerase</text><text class="c4t" data-lang="zh" x="80" y="194" text-anchor="start">RNA 聚合酶</text>
+<line class="arrow" x1="120" y1="217" x2="300" y2="217"/>
+<polygon class="dot" points="310,217 301,221.1 301,212.9"/>
+<text class="mut" data-lang="en" x="215" y="210" text-anchor="middle">transcription</text><text class="mut" data-lang="zh" x="215" y="210" text-anchor="middle">转录</text>
+<path class="c4" d="M140 272 q 10 -9 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0"/>
+<text class="c4t" data-lang="en" x="250" y="294" text-anchor="middle">mRNA for lacZ, lacY, lacA</text><text class="c4t" data-lang="zh" x="250" y="294" text-anchor="middle">lacZ、lacY、lacA 的 mRNA</text>
+</svg>
+<figcaption><span data-lang="en">Figure 3. The lac operon in two states. P is the promoter, O the operator, and lacZ, lacY, lacA the structural genes. Top: with no lactose, the repressor sits on the operator and RNA polymerase is blocked, so no mRNA is made. Bottom: with lactose, allolactose binds the repressor (dashed), the repressor leaves the operator, and RNA polymerase transcribes all three genes into one mRNA.</span><span data-lang="zh">图 3. 两种状态下的 lac 操纵子。P 为启动子，O 为操作子，lacZ、lacY、lacA 为结构基因。上图：没有乳糖时，阻遏蛋白结合在操作子上，RNA 聚合酶被阻挡，不合成 mRNA。下图：有乳糖时，别乳糖与阻遏蛋白结合（虚线），阻遏蛋白离开操作子，RNA 聚合酶把三个基因转录成一条 mRNA。</span></figcaption>
+</figure>
+
+<details open>
+<summary><span data-lang="en">Worked Example 11: Switching the lac operon and fold-change</span><span data-lang="zh">例题 11：lac 操纵子的开关与倍数变化</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">In an example experiment, E. coli grown without lactose shows 3 units of beta-galactosidase (the enzyme coded by lacZ). After lactose is added, the activity rises to 1200 units. (a) State whether the operon is on or off in each condition and what is bound to the operator. (b) Calculate the fold-increase. (c) Why is the activity not exactly 0 without lactose? (d) What happens when the lactose is used up?</span><span data-lang="zh">在一个示例实验中，没有乳糖时培养的大肠杆菌表现出 3 单位的 &beta;-半乳糖苷酶（由 lacZ 编码的酶）。加入乳糖后，活性升到 1200 单位。(a) 说明两种条件下操纵子是开启还是关闭，以及操作子上结合的是什么。(b) 计算增加的倍数。(c) 为什么没有乳糖时活性不恰好为 0？(d) 乳糖被用完后会发生什么？</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) States.</strong> Without lactose, the active repressor is bound to the operator and blocks RNA polymerase: the operon is off. With lactose, allolactose (made from lactose) binds the repressor and changes its shape, the repressor leaves the operator, and RNA polymerase transcribes lacZ, lacY and lacA: the operon is on.</span><span data-lang="zh"><strong>(a) 状态。</strong>没有乳糖时，活性阻遏蛋白结合在操作子上并阻挡 RNA 聚合酶：操纵子关闭。有乳糖时，别乳糖（由乳糖生成）与阻遏蛋白结合并改变其形状，阻遏蛋白离开操作子，RNA 聚合酶转录 lacZ、lacY 和 lacA：操纵子开启。</span></p>
+    <p><span data-lang="en"><strong>(b) Fold-increase.</strong> 1200 &divide; 3 = 400, so the activity rises 400-fold.</span><span data-lang="zh"><strong>(b) 倍数。</strong>1200 &divide; 3 = 400，所以活性增加到 400 倍。</span></p>
+    <p><span data-lang="en"><strong>(c) Not exactly zero.</strong> Repression is not perfect: now and then the repressor leaves the operator and a few mRNA copies are made, so a small amount of enzyme is always present.</span><span data-lang="zh"><strong>(c) 不恰好为零。</strong>阻遏并不完美：阻遏蛋白偶尔会离开操作子，合成少量 mRNA，所以总有少量酶存在。</span></p>
+    <p><span data-lang="en"><strong>(d) Lactose gone.</strong> Allolactose falls, the repressor returns to its active shape and binds the operator again, transcription stops, and the operon switches off. <strong>Common error:</strong> saying the lactose &ldquo;turns on&rdquo; the genes directly. Lactose acts through the repressor.</span><span data-lang="zh"><strong>(d) 乳糖耗尽。</strong>别乳糖减少，阻遏蛋白恢复活性形状并再次结合操作子，转录停止，操纵子关闭。<strong>常见错误：</strong>说乳糖直接&ldquo;打开&rdquo;基因。乳糖是通过阻遏蛋白起作用的。</span></p>
+  </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 12: Predicting lac operon mutants</span><span data-lang="zh">例题 12：预测 lac 操纵子突变体</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">Three E. coli strains each carry one mutation. Strain A: no working repressor protein is made. Strain B: the operator sequence is changed so the repressor cannot bind it. Strain C: the repressor cannot bind allolactose, but still binds the operator. For each strain, state whether the lac genes are on or off (i) without lactose and (ii) with lactose, and justify.</span><span data-lang="zh">三个大肠杆菌菌株各带一个突变。菌株 A：不能产生有功能的阻遏蛋白。菌株 B：操作子序列改变，阻遏蛋白无法结合。菌株 C：阻遏蛋白不能结合别乳糖，但仍能结合操作子。对每个菌株，说明 (i) 无乳糖和 (ii) 有乳糖时 lac 基因是开启还是关闭，并说明理由。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Rule.</strong> The genes are off only when an active repressor sits on the operator. Otherwise RNA polymerase can transcribe them.</span><span data-lang="zh"><strong>规则。</strong>只有活性阻遏蛋白结合在操作子上时基因才关闭；否则 RNA 聚合酶就能转录它们。</span></p>
+    <p><span data-lang="en"><strong>Strain A:</strong> on without lactose and on with lactose. There is no repressor to block the operator.</span><span data-lang="zh"><strong>菌株 A：</strong>无乳糖时开启，有乳糖时也开启。没有阻遏蛋白来阻断操作子。</span></p>
+    <p><span data-lang="en"><strong>Strain B:</strong> on without lactose and on with lactose. The repressor is made, but it cannot bind the changed operator.</span><span data-lang="zh"><strong>菌株 B：</strong>无乳糖时开启，有乳糖时也开启。阻遏蛋白能合成，但无法结合改变后的操作子。</span></p>
+    <p><span data-lang="en"><strong>Strain C:</strong> off without lactose and off with lactose. Allolactose cannot release the repressor, so it stays on the operator. <strong>Common error:</strong> expecting strain C to switch on because lactose is present. What matters is whether the repressor can change shape.</span><span data-lang="zh"><strong>菌株 C：</strong>无乳糖时关闭，有乳糖时也关闭。别乳糖不能使阻遏蛋白释放，所以它一直留在操作子上。<strong>常见错误：</strong>因为有乳糖就以为菌株 C 会开启。关键在于阻遏蛋白能否改变形状。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In the lac operon of E. coli, what happens when lactose is absent from the environment?</span><span data-lang="zh">在大肠杆菌的 lac 操纵子中，当环境中没有乳糖时会发生什么？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
@@ -843,9 +1325,30 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Mutations gradually accumulate differently in each tissue over time</span><span data-lang="zh">随时间推移，不同组织中逐渐积累不同的突变</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Only muscle cells have the full genome; liver cells have a partial genome</span><span data-lang="zh">只有肌肉细胞有完整的基因组；肝细胞有部分基因组</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">All somatic cells carry the complete genome. What differs between cell types is which genes are expressed &mdash; transcription factors and epigenetic marks switch specific genes on or off, producing different proteins and therefore different cell types. This is differential gene expression.</span><span data-lang="zh">所有体细胞携带完整基因组。不同细胞类型的差异在于哪些基因被表达 &mdash; 转录因子和表观遗传标记开启或关闭特定基因，产生不同蛋白质，从而形成不同细胞类型。这就是差异基因表达。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">All somatic cells carry the complete genome. What differs between cell types is which genes are expressed: transcription factors and epigenetic marks switch specific genes on or off, producing different proteins and therefore different cell types. This is differential gene expression.</span><span data-lang="zh">所有体细胞携带完整基因组。不同细胞类型的差异在于哪些基因被表达：转录因子和表观遗传标记开启或关闭特定基因，产生不同蛋白质，从而形成不同细胞类型。这就是差异基因表达。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Same DNA in all somatic cells. Different cell types = different genes expressed (differential gene expression). Mutations don't drive normal differentiation. All somatic cells have the complete genome.</span><span data-lang="zh">所有体细胞 DNA 相同。不同细胞类型 = 不同基因被表达（差异基因表达）。突变不驱动正常分化。所有体细胞有完整基因组。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>predict</em> needs on or off plus the reason; <em>explain</em> means follow the chain lactose, allolactose, repressor, operator, RNA polymerase; <em>calculate</em> a fold-change by dividing the new value by the old one. Common errors: saying lactose binds the operator, saying the repressor binds the promoter, treating a repressor mutant as always off, and forgetting that all body cells carry the same DNA.</p><p data-lang="zh">命令词：<em>predict</em>（预测）要写出开启或关闭及理由；<em>explain</em>（解释）要沿着乳糖、别乳糖、阻遏蛋白、操作子、RNA 聚合酶这条链叙述；计算倍数变化（<em>calculate</em>）要用新值除以旧值。常见错误：说乳糖结合操作子、说阻遏蛋白结合启动子、把阻遏蛋白缺失的突变体当成始终关闭，以及忘记所有体细胞携带相同的 DNA。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does the repressor bind when lactose is absent, and what is the result?</span><span data-lang="zh">1. 没有乳糖时，阻遏蛋白结合什么？结果如何？</span></summary>
+      <div class="sg-a"><p data-lang="en">It binds the operator, which blocks RNA polymerase. No mRNA is made for lacZ, lacY and lacA, so the genes are off.</p><p data-lang="zh">它结合操作子，阻挡 RNA 聚合酶。不合成 lacZ、lacY、lacA 的 mRNA，所以基因关闭。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A strain has a mutation in the promoter so that RNA polymerase cannot bind. Are the lac genes on or off when lactose is present?</span><span data-lang="zh">2. 某菌株的启动子发生突变，RNA 聚合酶无法结合。有乳糖时 lac 基因是开启还是关闭？</span></summary>
+      <div class="sg-a"><p data-lang="en">Off. Even if the repressor leaves the operator, RNA polymerase cannot start transcription without binding the promoter.</p><p data-lang="zh">关闭。即使阻遏蛋白离开了操作子，RNA 聚合酶不能结合启动子也就无法起始转录。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Liver cells and muscle cells in one person carry the same DNA. Explain why they make different proteins.</span><span data-lang="zh">3. 同一个人的肝细胞和肌肉细胞携带相同的 DNA。解释它们为什么合成不同的蛋白质。</span></summary>
+      <div class="sg-a"><p data-lang="en">Different genes are switched on in each cell type (differential gene expression), so different mRNAs are made and different proteins result. The genome is the same; what changes is which genes are transcribed.</p><p data-lang="zh">每种细胞类型开启的基因不同（差异基因表达），所以转录出不同的 mRNA，产生不同的蛋白质。基因组相同；不同的是哪些基因被转录。</p></div>
+    </details>
   </div>
 </section>
 
@@ -855,8 +1358,14 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 7 &middot; Biotechnology</span><span data-lang="zh">第 7 节 &middot; 生物技术</span></div>
   <h2><span data-lang="en">Biotechnology: PCR and Gel Electrophoresis</span><span data-lang="zh">生物技术：PCR 与凝胶电泳</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe the three steps of a PCR cycle with their temperatures and state why primers and Taq polymerase are needed.</li><li>Calculate the number of copies after n cycles of PCR.</li><li>Explain why DNA fragments move toward the positive electrode in gel electrophoresis and why smaller fragments travel farther.</li><li>Estimate the size of a fragment from the positions of the bands of a DNA ladder.</li></ul>
+    <ul data-lang="zh"><li>描述 PCR 循环的三个步骤及其温度，并说明为什么需要引物和 Taq 聚合酶。</li><li>计算 PCR 经过 n 个循环后的拷贝数。</li><li>解释凝胶电泳中 DNA 片段为什么向正极移动，以及为什么较小的片段迁移得更远。</li><li>根据 DNA 梯状标记的条带位置估计片段大小。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">PCR (Polymerase Chain Reaction) &mdash; amplifying DNA.</span><span data-lang="zh">PCR（聚合酶链式反应）&mdash; 扩增 DNA。</span></strong>
+    <strong><span data-lang="en">PCR (Polymerase Chain Reaction): amplifying DNA.</span><span data-lang="zh">PCR（聚合酶链式反应）：扩增 DNA。</span></strong>
     <p style="margin-top: 8px; font-size: 0.94rem;"><span data-lang="en">PCR makes millions of copies of a specific DNA segment from a tiny sample. Used in forensics, disease diagnosis, and research. Three repeated steps (each cycle &asymp; 30 s to 1 min at different temperatures):</span><span data-lang="zh">PCR 可从微量样品中扩增出数百万份特定 DNA 片段。用于法医鉴定、疾病诊断和研究。三个重复步骤（每个循环约 30 秒至 1 分钟，温度各不同）：</span></p>
     <ol style="margin: 8px 0 0 22px; font-size: 0.94rem;">
       <li><strong><span data-lang="en">Denaturation (~95 °C):</span><span data-lang="zh">变性（约 95 °C）：</span></strong> <span data-lang="en">the double-stranded DNA is heated; hydrogen bonds break and the two strands separate.</span><span data-lang="zh">双链 DNA 被加热；氢键断裂，两条链分离。</span></li>
@@ -866,9 +1375,33 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">G</div><div class="card-title"><span data-lang="en">Gel electrophoresis &mdash; separating DNA fragments by size</span><span data-lang="zh">凝胶电泳 &mdash; 按大小分离 DNA 片段</span></div></div>
+    <div class="card-header"><div class="card-icon icon-orange">G</div><div class="card-title"><span data-lang="en">Gel electrophoresis: separating DNA fragments by size</span><span data-lang="zh">凝胶电泳：按大小分离 DNA 片段</span></div></div>
     <p style="font-size: 0.94rem; margin-top: 8px;"><span data-lang="en">DNA fragments are loaded into wells at one end of an agarose gel. An electric current is applied: because DNA is negatively charged (phosphate backbone), fragments migrate toward the positive electrode. Smaller fragments move faster and travel farther; larger fragments move slower and stay near the top. The result is a banding pattern where band position indicates fragment size (compared to a DNA ladder of known sizes). Applications: DNA fingerprinting (forensics), paternity testing, gel-purification of PCR products, restriction mapping.</span><span data-lang="zh">DNA 片段被加入凝胶一端的加样孔。施加电流：因 DNA 带负电（磷酸骨架），片段向正极迁移。较小片段移动较快，迁移更远；较大片段移动较慢，停留在靠近顶端处。结果呈现条带图案，条带位置指示片段大小（与已知大小的 DNA 梯状标记比较）。应用：DNA 指纹鉴定（法医）、亲子鉴定、PCR 产物的凝胶纯化、限制性酶切图谱。</span></p>
   </div>
+
+<details open>
+<summary><span data-lang="en">Worked Example 13: PCR amplification</span><span data-lang="zh">例题 13：PCR 扩增</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">A forensic sample contains 50 copies of the target DNA. A PCR runs 25 cycles, and every copy is doubled in every cycle. (a) How many copies of the target are there at the end? (b) How long does it take if each cycle takes 1 minute? (c) Why is the real number lower?</span><span data-lang="zh">一份法医样本含有 50 个目标 DNA 拷贝。PCR 运行 25 个循环，每个循环中每个拷贝都加倍。(a) 结束时有多少个目标拷贝？(b) 如果每个循环需要 1 分钟，总共多长时间？(c) 为什么实际数量更少？</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Copies.</strong> Each cycle doubles the number, so the count is $50 \times 2^{25}$. Since $2^{25} = 33\,554\,432$, the result is $50 \times 33\,554\,432 = 1\,677\,721\,600$, about $1.7 \times 10^{9}$ copies.</span><span data-lang="zh"><strong>(a) 拷贝数。</strong>每个循环使数量加倍，所以拷贝数为 $50 \times 2^{25}$。因为 $2^{25} = 33\,554\,432$，结果为 $50 \times 33\,554\,432 = 1\,677\,721\,600$，约 $1.7 \times 10^{9}$ 个拷贝。</span></p>
+    <p><span data-lang="en"><strong>(b) Time.</strong> 25 cycles &times; 1 minute = 25 minutes.</span><span data-lang="zh"><strong>(b) 时间。</strong>25 个循环 &times; 1 分钟 = 25 分钟。</span></p>
+    <p><span data-lang="en"><strong>(c) Real yield.</strong> The formula assumes perfect doubling. In practice not every copy is copied in every cycle, and primers and nucleotides run out, so the formula gives an upper limit. <strong>Common error:</strong> multiplying (50 &times; 25) instead of doubling 25 times.</span><span data-lang="zh"><strong>(c) 实际产量。</strong>公式假定完美加倍。实际上并非每个拷贝在每个循环中都被复制，而且引物和核苷酸会被耗尽，所以公式给出的是上限。<strong>常见错误：</strong>把 50 乘以 25，而不是加倍 25 次。</span></p>
+  </div>
+</details>
+
+<details open>
+<summary><span data-lang="en">Worked Example 14: Estimating fragment size from a gel</span><span data-lang="zh">例题 14：根据凝胶估计片段大小</span></summary>
+  <div class="formula-box">
+    <p><span data-lang="en">An example gel has a DNA ladder in one lane. Distances from the well: 1000 bp at 2.0 cm, 500 bp at 3.0 cm, 250 bp at 4.0 cm. Three sample bands lie at 2.0 cm, 3.5 cm and 4.0 cm. (a) Which end of the gel is the positive electrode? (b) Give the size of each sample band. (c) Which fragment is largest, and why?</span><span data-lang="zh">一个示例凝胶的一条泳道加了 DNA 梯状标记。距加样孔的距离：1000 bp 在 2.0 cm，500 bp 在 3.0 cm，250 bp 在 4.0 cm。三条样品条带位于 2.0 cm、3.5 cm 和 4.0 cm。(a) 凝胶的哪一端是正极？(b) 给出每条样品条带的大小。(c) 哪个片段最大？为什么？</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Direction.</strong> DNA is negatively charged because of its phosphate groups, so it moves toward the positive electrode, which is the end away from the wells.</span><span data-lang="zh"><strong>(a) 方向。</strong>DNA 的磷酸基团使它带负电，所以向正极移动，正极在远离加样孔的一端。</span></p>
+    <p><span data-lang="en"><strong>(b) Sizes.</strong> The bands at 2.0 cm and 4.0 cm match the 1000 bp and 250 bp ladder bands. The band at 3.5 cm lies between the 500 bp band (3.0 cm) and the 250 bp band (4.0 cm), halfway in distance. On this ladder each halving of size adds 1.0 cm, so 0.5 cm further is half a halving: 500 &divide; &radic;2 &asymp; 354 bp. Reading this as &ldquo;between 250 and 500 bp, about 350 bp&rdquo; is enough.</span><span data-lang="zh"><strong>(b) 大小。</strong>2.0 cm 和 4.0 cm 处的条带分别与梯状标记的 1000 bp 和 250 bp 条带吻合。3.5 cm 处的条带位于 500 bp 条带（3.0 cm）和 250 bp 条带（4.0 cm）之间，距离上正好在中间。在这个梯状标记上，大小每减半，距离增加 1.0 cm，所以再多 0.5 cm 就是半个减半：500 &divide; &radic;2 &asymp; 354 bp。读作&ldquo;介于 250 和 500 bp 之间，约 350 bp&rdquo;就足够了。</span></p>
+    <p><span data-lang="en"><strong>(c) Largest.</strong> The 1000 bp fragment is largest and travelled least. Larger fragments meet more resistance from the gel matrix. <strong>Common error:</strong> thinking that bigger fragments run faster because they carry more charge.</span><span data-lang="zh"><strong>(c) 最大。</strong>1000 bp 片段最大，迁移最短。较大的片段受到凝胶基质的阻力更大。<strong>常见错误：</strong>以为较大的片段带更多电荷所以跑得更快。</span></p>
+  </div>
+</details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In gel electrophoresis, which DNA fragments travel the farthest from the wells?</span><span data-lang="zh">在凝胶电泳中，哪些 DNA 片段从加样孔迁移最远？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
@@ -878,7 +1411,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Smallest fragments, because they move more easily through the gel pores</span><span data-lang="zh">最小片段，因为它们更容易穿过凝胶孔隙</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">All fragments travel the same distance; only staining intensity differs</span><span data-lang="zh">所有片段迁移相同距离；只有染色强度不同</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">In gel electrophoresis, DNA migrates toward the positive electrode (DNA is negatively charged). Smaller fragments experience less resistance from the gel matrix and move farther. This is how fragment size is determined &mdash; compare position to a DNA ladder of known sizes.</span><span data-lang="zh">在凝胶电泳中，DNA 向正极迁移（DNA 带负电）。较小片段受凝胶基质阻力更小，迁移更远。这就是确定片段大小的方式 &mdash; 与已知大小的 DNA 梯状标记的位置比较。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">In gel electrophoresis, DNA migrates toward the positive electrode (DNA is negatively charged). Smaller fragments experience less resistance from the gel matrix and move farther. This is how fragment size is determined: compare position to a DNA ladder of known sizes.</span><span data-lang="zh">在凝胶电泳中，DNA 向正极迁移（DNA 带负电）。较小片段受凝胶基质阻力更小，迁移更远。这就是确定片段大小的方式：与已知大小的 DNA 梯状标记的位置比较。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Small fragments travel farthest. All DNA is negatively charged, so direction is the same; size determines distance.</span><span data-lang="zh">小片段迁移最远。所有 DNA 均带负电，故方向相同；大小决定距离。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -894,6 +1427,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain correct-exp"><span data-lang="en">Primers are short single-stranded DNA oligonucleotides complementary to the sequences flanking the target region. They anneal (bind) to the template during the annealing step and provide the 3'-OH end that Taq polymerase requires to begin extending the new strand. Without primers, Taq polymerase cannot start synthesis.</span><span data-lang="zh">引物是与目标区域两侧序列互补的短单链 DNA 寡核苷酸。它们在退火步骤中与模板结合，提供 Taq 聚合酶开始延伸新链所需的 3'-OH 末端。没有引物，Taq 聚合酶无法启动合成。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Primers define the target region and provide a starting point for Taq polymerase. Denaturation is done by heating; ligation is not part of PCR (that is done by DNA ligase in other contexts); gel labeling uses fluorescent dyes, not primers.</span><span data-lang="zh">引物界定目标区域并为 Taq 聚合酶提供起点。变性通过加热完成；连接不是 PCR 的一部分（在其他情境下由 DNA 连接酶完成）；凝胶标记使用荧光染料，而非引物。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>calculate</em> copies by writing the starting number times 2 to the power of the number of cycles; <em>describe</em> the PCR steps in order with temperatures; <em>explain</em> a gel result by naming the charge, the direction and the role of size. Common errors: adding cycles instead of doubling, forgetting that primers define the target, saying DNA moves toward the negative electrode, and reading the largest fragment as the one that travelled farthest.</p><p data-lang="zh">命令词：<em>calculate</em>（计算）拷贝数要写成起始数量乘以 2 的循环次数次方；<em>describe</em>（描述）PCR 要按顺序写出步骤和温度；<em>explain</em>（解释）凝胶结果要指出电荷、方向和大小的作用。常见错误：把循环数相加而不是加倍、忘记引物决定目标区域、说 DNA 向负极移动，以及把迁移最远的片段当成最大的片段。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A PCR starts with 8 copies of the target and runs 5 cycles with perfect doubling. How many copies result?</span><span data-lang="zh">1. 一个 PCR 起始有 8 个目标拷贝，运行 5 个循环且完美加倍。得到多少拷贝？</span></summary>
+      <div class="sg-a"><p data-lang="en">$8 \times 2^{5} = 8 \times 32 = 256$ copies.</p><p data-lang="zh">$8 \times 2^{5} = 8 \times 32 = 256$ 个拷贝。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Why does PCR use Taq polymerase rather than human DNA polymerase, and what do the primers do?</span><span data-lang="zh">2. 为什么 PCR 使用 Taq 聚合酶而不是人的 DNA 聚合酶？引物起什么作用？</span></summary>
+      <div class="sg-a"><p data-lang="en">The denaturation step heats the mixture to about 95 &deg;C, which would destroy human DNA polymerase, but Taq polymerase from a heat-loving bacterium survives. The primers bind to the sequences flanking the target, so they mark the region to copy and provide the 3' end that the polymerase extends.</p><p data-lang="zh">变性步骤把混合物加热到约 95 &deg;C，这会破坏人的 DNA 聚合酶，而来自嗜热细菌的 Taq 聚合酶能够耐受。引物结合目标区域两侧的序列，因此标出要复制的区域，并提供聚合酶延伸所需的 3' 端。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A gel contains fragments of 100 bp, 400 bp and 1500 bp. In which direction do they move, and in what order of distance from the wells (farthest first)?</span><span data-lang="zh">3. 一块凝胶含有 100 bp、400 bp 和 1500 bp 的片段。它们向哪个方向移动？按离加样孔的距离从远到近排序。</span></summary>
+      <div class="sg-a"><p data-lang="en">They move toward the positive electrode because DNA is negatively charged. Farthest first: 100 bp, then 400 bp, then 1500 bp, since smaller fragments move more easily through the gel.</p><p data-lang="zh">它们向正极移动，因为 DNA 带负电。从远到近：100 bp、400 bp、1500 bp，因为较小的片段更容易穿过凝胶。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1012,7 +1566,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Only the start codon is affected</span><span data-lang="zh">只有起始密码子受影响</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Inserting a single base (not a multiple of 3) causes a frameshift. Every codon 3' of the insertion is read in a shifted frame, changing every amino acid from that point and usually producing a non-functional protein or a premature stop codon.</span><span data-lang="zh">插入一个碱基（非 3 的倍数）导致移码。插入点 3' 侧的每个密码子均在移位的读码框中读取，从该点起每个氨基酸都改变，通常产生无功能蛋白质或提前终止密码子。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">A single-base insertion causes a frameshift &mdash; not a missense (that's a substitution) and degeneracy doesn't help (degeneracy only applies to synonymous substitutions, not frameshifts).</span><span data-lang="zh">单碱基插入导致移码突变 &mdash; 不是错义突变（那是替换），简并性无济于事（简并性仅适用于同义替换，不适用于移码突变）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A single-base insertion causes a frameshift: not a missense (that's a substitution) and degeneracy doesn't help (degeneracy only applies to synonymous substitutions, not frameshifts).</span><span data-lang="zh">单碱基插入导致移码突变：不是错义突变（那是替换），简并性无济于事（简并性仅适用于同义替换，不适用于移码突变）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1057,7 +1611,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="feeders">
   <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续衔接</span></div>
   <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
-  <p><span data-lang="en">Molecular genetics is the mechanistic core that every downstream biology topic draws on. The DNA&rarr;RNA&rarr;protein pathway you learned here underpins Mendelian Genetics (Unit 5 &mdash; alleles are different DNA sequences; dominance is about which protein is produced), Cell Division (Unit 4 &mdash; chromosomes must be replicated before division), Evolution (Unit 7 &mdash; mutations are the ultimate source of genetic variation), and Biotechnology applications throughout advanced biology.</span><span data-lang="zh">分子遗传学是所有后续生物学主题所依赖的机制核心。你在此处学到的 DNA&rarr;RNA&rarr;蛋白质通路支撑着孟德尔遗传学（第 5 单元——等位基因是不同的 DNA 序列；显性是关于产生哪种蛋白质的问题）、细胞分裂（第 4 单元——分裂前必须复制染色体）、进化（第 7 单元——突变是遗传变异的最终来源）以及整个高等生物学中的生物技术应用。</span></p>
+  <p><span data-lang="en">Molecular genetics is the mechanistic core that every downstream biology topic draws on. The DNA&rarr;RNA&rarr;protein pathway you learned here underpins Mendelian Genetics (Unit 5: alleles are different DNA sequences; dominance is about which protein is produced), Cell Division (Unit 4: chromosomes must be replicated before division), Evolution (Unit 7: mutations are the ultimate source of genetic variation), and Biotechnology applications throughout advanced biology.</span><span data-lang="zh">分子遗传学是所有后续生物学主题所依赖的机制核心。你在此处学到的 DNA&rarr;RNA&rarr;蛋白质通路支撑着孟德尔遗传学（第 5 单元：等位基因是不同的 DNA 序列；显性是关于产生哪种蛋白质的问题）、细胞分裂（第 4 单元：分裂前必须复制染色体）、进化（第 7 单元：突变是遗传变异的最终来源）以及整个高等生物学中的生物技术应用。</span></p>
 
   <div style="margin: 20px 0;">
     <p><strong><span data-lang="en">Within High School Biology.</span><span data-lang="zh">在 HS Biology 内部。</span></strong></p>
@@ -1066,7 +1620,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
   <div style="margin: 20px 0;">
     <p><strong><span data-lang="en">Feeds into AP Biology and IB Biology.</span><span data-lang="zh">衔接 AP Biology 与 IB Biology。</span></strong></p>
-    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">This guide is the direct prerequisite for AP Biology Unit 6 (Gene Expression and Regulation) and IB Biology HL Topic B2 (Molecular Biology). Both courses assume fluency with the central dogma, codon reading, and mutation classification from day one. AP Biology extends into post-translational modification, epigenetics, and gene regulation in eukaryotes (enhancers, silencers). IB Biology HL adds gel electrophoresis analysis, Southern blotting, and a deeper treatment of gene cloning. Neither course exists yet in this repo; treat this guide as the prerequisite and revisit it when those products ship.</span><span data-lang="zh">本指南是 AP Biology 第 6 单元（基因表达与调控）和 IB Biology HL Topic B2（分子生物学）的直接先修。两门课程从第一天起就默认学生熟练掌握中心法则、密码子读取和突变分类。AP Biology 进一步涉及翻译后修饰、表观遗传学和真核生物的基因调控（增强子、沉默子）。IB Biology HL 增加了凝胶电泳分析、Southern 印迹法和更深入的基因克隆处理。目前这两门课程均未收录于本仓库中；将本指南视为先修材料，待相关产品上线后再作衔接。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">This guide is the direct prerequisite for AP Biology Unit 6 (Gene Expression and Regulation) and IB Biology. Both courses build on the central dogma, codon reading, and mutation classification. AP Biology extends into post-translational modification, epigenetics, and gene regulation in eukaryotes (enhancers, silencers). IB Biology adds gel electrophoresis analysis, Southern blotting, and a deeper treatment of gene cloning. Neither course exists yet in this repo; treat this guide as the prerequisite and revisit it when those products ship.</span><span data-lang="zh">本指南是 AP Biology 第 6 单元（基因表达与调控）和 IB Biology 的直接先修。两门课程都建立在中心法则、密码子读取和突变分类之上。AP Biology 进一步涉及翻译后修饰、表观遗传学和真核生物的基因调控（增强子、沉默子）。IB Biology 增加了凝胶电泳分析、Southern 印迹法和更深入的基因克隆处理。目前这两门课程均未收录于本仓库中；将本指南视为先修材料，待相关产品上线后再作衔接。</span></p>
   </div>
   <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
   <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_biology&utm_content=unit_6_molecular_genetics__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_biology&utm_content=unit_6_molecular_genetics__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
@@ -1140,33 +1694,33 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div>
       <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US NGSS</span><span data-lang="zh">美国 NGSS</span></div>
       <ul>
-        <li><code>HS-LS1-1</code> <span data-lang="en">"Construct an explanation based on evidence for how the structure of DNA determines the structure of proteins, which carry out the essential functions of life through systems of specialized cells." [Assessment Boundary: Assessment does not include identification of specific cell or tissue types, whole body systems, specific protein structures and functions, or the biochemistry of protein synthesis.] &mdash; maps to &sect;1&ndash;&sect;4 (DNA structure, replication, transcription, translation at the conceptual level).</span><span data-lang="zh">"基于证据构建解释，说明 DNA 的结构如何决定蛋白质的结构，蛋白质通过特化细胞系统执行生命的基本功能。"[评估边界：不含特定细胞或组织类型、完整体系统、特定蛋白质结构与功能或蛋白质合成的生物化学。]&mdash;&mdash;对应 &sect;1&ndash;&sect;4（概念层面的 DNA 结构、复制、转录、翻译）。</span></li>
-        <li><code>HS-LS3-1</code> <span data-lang="en">"Ask questions to clarify relationships about the role of DNA and chromosomes in coding the instructions for characteristic traits passed from parents to offspring." [Assessment Boundary: Assessment does not include the phases of meiosis or the biochemical mechanism of specific steps in the process.] &mdash; maps to &sect;1 (DNA as the hereditary molecule) and &sect;5 (mutations as sources of variation).</span><span data-lang="zh">"提出问题，阐明 DNA 和染色体在将特征性状编码为遗传指令并传递给后代方面的作用。"[评估边界：不含减数分裂的各期或过程中特定步骤的生物化学机制。]&mdash;&mdash;对应 &sect;1（DNA 作为遗传分子）和 &sect;5（突变作为变异来源）。</span></li>
-        <li><span data-lang="en">NGSS keeps molecular genetics <strong>conceptual</strong> &mdash; it explicitly excludes the biochemistry of protein synthesis. The conceptual DNA&rarr;protein&rarr;specialized-cell explanation is the expectation, not the named-enzyme mechanism.</span><span data-lang="zh">NGSS 将分子遗传学保持在<strong>概念层面</strong>&mdash;&mdash;明确排除蛋白质合成的生物化学。其期望是概念性的 DNA&rarr;蛋白质&rarr;特化细胞解释，而非命名酶的机制。</span></li>
+        <li><code>HS-LS1-1</code> <span data-lang="en">"Construct an explanation based on evidence for how the structure of DNA determines the structure of proteins, which carry out the essential functions of life through systems of specialized cells." [Assessment Boundary: Assessment does not include identification of specific cell or tissue types, whole body systems, specific protein structures and functions, or the biochemistry of protein synthesis.]; maps to &sect;1&ndash;&sect;4 (DNA structure, replication, transcription, translation at the conceptual level).</span><span data-lang="zh">"基于证据构建解释，说明 DNA 的结构如何决定蛋白质的结构，蛋白质通过特化细胞系统执行生命的基本功能。"[评估边界：不含特定细胞或组织类型、完整体系统、特定蛋白质结构与功能或蛋白质合成的生物化学。]，对应 &sect;1&ndash;&sect;4（概念层面的 DNA 结构、复制、转录、翻译）。</span></li>
+        <li><code>HS-LS3-1</code> <span data-lang="en">"Ask questions to clarify relationships about the role of DNA and chromosomes in coding the instructions for characteristic traits passed from parents to offspring." [Assessment Boundary: Assessment does not include the phases of meiosis or the biochemical mechanism of specific steps in the process.]; maps to &sect;1 (DNA as the hereditary molecule) and &sect;5 (mutations as sources of variation).</span><span data-lang="zh">"提出问题，阐明 DNA 和染色体在将特征性状编码为遗传指令并传递给后代方面的作用。"[评估边界：不含减数分裂的各期或过程中特定步骤的生物化学机制。]，对应 &sect;1（DNA 作为遗传分子）和 &sect;5（突变作为变异来源）。</span></li>
+        <li><span data-lang="en">NGSS keeps molecular genetics <strong>conceptual</strong>: it explicitly excludes the biochemistry of protein synthesis. The conceptual DNA&rarr;protein&rarr;specialized-cell explanation is the expectation, not the named-enzyme mechanism.</span><span data-lang="zh">NGSS 将分子遗传学保持在<strong>概念层面</strong>，明确排除蛋白质合成的生物化学。其期望是概念性的 DNA&rarr;蛋白质&rarr;特化细胞解释，而非命名酶的机制。</span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario</span><span data-lang="zh">安大略</span></div>
       <ul>
-        <li><strong>SBI4U</strong> <span data-lang="en">Strand D: Molecular Genetics &mdash; Overall Expectation D3: "demonstrate an understanding of concepts related to molecular genetics, and how genetic modification is applied in industry and agriculture." <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh">Strand D：分子遗传学 &mdash; 总体期望 D3："展示对分子遗传学相关概念的理解，以及遗传修改在工业和农业中的应用。" <span class="honors-flag">荣誉 SBI4U</span></span></li>
-        <li><strong>SBI4U</strong> <code>D3.1</code> <span data-lang="en">"explain the current model of DNA replication, and describe the different repair mechanisms that can correct mistakes in DNA sequencing" &mdash; &sect;2. Named enzymes (helicase, polymerase I/II/III, ligase, Okazaki fragments) are SBI4U expectations. <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh"><code>D3.1</code>："解释 DNA 复制的现行模型，并描述可纠正 DNA 测序错误的各种修复机制"&mdash;&mdash;即 &sect;2。命名酶（解旋酶、聚合酶 I/II/III、连接酶、冈崎片段）是 SBI4U 的期望。<span class="honors-flag">荣誉 SBI4U</span></span></li>
-        <li><strong>SBI4U</strong> <code>D3.3</code> <span data-lang="en">"explain the steps involved in the process of protein synthesis and how genetic expression is controlled in prokaryotes and eukaryotes by regulatory proteins (e.g., the role of operons in prokaryotic cells)" &mdash; &sect;3, &sect;4, &sect;6. <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh"><code>D3.3</code>："解释蛋白质合成过程中的步骤，以及调控蛋白如何在原核和真核细胞中控制基因表达（如操纵子在原核细胞中的作用）"&mdash;&mdash;即 &sect;3、&sect;4、&sect;6。<span class="honors-flag">荣誉 SBI4U</span></span></li>
+        <li><strong>SBI4U</strong> <span data-lang="en">Strand D: Molecular Genetics: Overall Expectation D3: "demonstrate an understanding of concepts related to molecular genetics, and how genetic modification is applied in industry and agriculture." <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh">Strand D：分子遗传学：总体期望 D3："展示对分子遗传学相关概念的理解，以及遗传修改在工业和农业中的应用。" <span class="honors-flag">荣誉 SBI4U</span></span></li>
+        <li><strong>SBI4U</strong> <code>D3.1</code> <span data-lang="en">"explain the current model of DNA replication, and describe the different repair mechanisms that can correct mistakes in DNA sequencing": &sect;2. Named enzymes (helicase, polymerase I/II/III, ligase, Okazaki fragments) are SBI4U expectations. <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh"><code>D3.1</code>："解释 DNA 复制的现行模型，并描述可纠正 DNA 测序错误的各种修复机制"，即 &sect;2。命名酶（解旋酶、聚合酶 I/II/III、连接酶、冈崎片段）是 SBI4U 的期望。<span class="honors-flag">荣誉 SBI4U</span></span></li>
+        <li><strong>SBI4U</strong> <code>D3.3</code> <span data-lang="en">"explain the steps involved in the process of protein synthesis and how genetic expression is controlled in prokaryotes and eukaryotes by regulatory proteins (e.g., the role of operons in prokaryotic cells)": &sect;3, &sect;4, &sect;6. <span class="honors-flag">Honors SBI4U</span></span><span data-lang="zh"><code>D3.3</code>："解释蛋白质合成过程中的步骤，以及调控蛋白如何在原核和真核细胞中控制基因表达（如操纵子在原核细胞中的作用）"，即 &sect;3、&sect;4、&sect;6。<span class="honors-flag">荣誉 SBI4U</span></span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
       <ul>
-        <li><strong>Anatomy &amp; Physiology 12</strong> <span data-lang="en">Big Idea 2: "Gene expression, through protein synthesis, is an interaction between genes and the environment." Content: "DNA: the cell's genetic information; replication" and "Gene expression and protein synthesis" &mdash; &sect;1&ndash;&sect;4.</span><span data-lang="zh">Anatomy &amp; Physiology 12 大概念 2："基因表达（通过蛋白质合成）是基因与环境之间的相互作用。"内容："DNA：细胞的遗传信息；复制"与"基因表达和蛋白质合成"&mdash;&mdash;即 &sect;1&ndash;&sect;4。</span></li>
-        <li><strong>Anatomy &amp; Physiology 12</strong> <span data-lang="en">Content: "Genomics and biotechnology: Human Genome Project, cloning, recombinant DNA, GMOs, transgenic organisms, genetic modification, gene therapy" &mdash; &sect;7.</span><span data-lang="zh">Anatomy &amp; Physiology 12 内容："基因组学与生物技术：人类基因组计划、克隆、重组 DNA、转基因生物、遗传修改、基因治疗"&mdash;&mdash;即 &sect;7。</span></li>
-        <li><strong>Life Sciences 11</strong> <span data-lang="en">Content: "microevolution: changes in DNA: mutations" &mdash; &sect;5. BC introduces DNA structure conceptually in Science 10 ("DNA structure and function: genes and chromosomes; gene expression") as the Grade-10 foundation.</span><span data-lang="zh">Life Sciences 11 内容："微进化：DNA 的变化：突变"&mdash;&mdash;即 &sect;5。BC 在 Science 10 中以概念方式介绍 DNA 结构（"DNA 结构与功能：基因与染色体；基因表达"）作为 10 年级基础。</span></li>
+        <li><strong>Anatomy &amp; Physiology 12</strong> <span data-lang="en">Big Idea 2: "Gene expression, through protein synthesis, is an interaction between genes and the environment." Content: "DNA: the cell's genetic information; replication" and "Gene expression and protein synthesis": &sect;1&ndash;&sect;4.</span><span data-lang="zh">Anatomy &amp; Physiology 12 大概念 2："基因表达（通过蛋白质合成）是基因与环境之间的相互作用。"内容："DNA：细胞的遗传信息；复制"与"基因表达和蛋白质合成"，即 &sect;1&ndash;&sect;4。</span></li>
+        <li><strong>Anatomy &amp; Physiology 12</strong> <span data-lang="en">Content: "Genomics and biotechnology: Human Genome Project, cloning, recombinant DNA, GMOs, transgenic organisms, genetic modification, gene therapy": &sect;7.</span><span data-lang="zh">Anatomy &amp; Physiology 12 内容："基因组学与生物技术：人类基因组计划、克隆、重组 DNA、转基因生物、遗传修改、基因治疗"，即 &sect;7。</span></li>
+        <li><strong>Life Sciences 11</strong> <span data-lang="en">Content: "microevolution: changes in DNA: mutations": &sect;5. BC introduces DNA structure conceptually in Science 10 ("DNA structure and function: genes and chromosomes; gene expression") as the Grade-10 foundation.</span><span data-lang="zh">Life Sciences 11 内容："微进化：DNA 的变化：突变"，即 &sect;5。BC 在 Science 10 中以概念方式介绍 DNA 结构（"DNA 结构与功能：基因与染色体；基因表达"）作为 10 年级基础。</span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta</span><span data-lang="zh">阿尔伯塔</span></div>
       <ul>
-        <li><strong>Biology 30</strong> <span data-lang="en">Unit C GO3 &mdash; "Students will explain classical genetics at the molecular level." Outcome <code>30&ndash;C3.2k</code>: "describe, in general, how genetic information is contained in the sequence of bases in DNA molecules in chromosomes and how the DNA molecules replicate themselves" &mdash; &sect;1, &sect;2.</span><span data-lang="zh">Biology 30 Unit C GO3 &mdash;"学生将在分子层面解释经典遗传学。"结果 <code>30&ndash;C3.2k</code>："一般性描述遗传信息如何包含在染色体 DNA 分子的碱基序列中，以及 DNA 分子如何自我复制"&mdash;&mdash;即 &sect;1、&sect;2。</span></li>
-        <li><strong>Biology 30</strong> <span data-lang="en">Outcome <code>30&ndash;C3.3k</code>: "describe, in general, how genetic information is transcribed into sequences of bases in RNA molecules and is finally translated into sequences of amino acids in proteins" &mdash; &sect;3, &sect;4. Alberta hedges with "in general" &mdash; sits between NGSS (conceptual only) and SBI4U (full mechanism). <span class="honors-flag">Honors Biology 30</span></span><span data-lang="zh">结果 <code>30&ndash;C3.3k</code>："一般性描述遗传信息如何转录为 RNA 分子中的碱基序列，并最终翻译为蛋白质中的氨基酸序列"&mdash;&mdash;即 &sect;3、&sect;4。阿尔伯塔以"一般性"作限定——介于 NGSS（仅概念）与 SBI4U（完整机制）之间。<span class="honors-flag">荣誉 Biology 30</span></span></li>
-        <li><strong>Biology 30</strong> <span data-lang="en">Outcome <code>30&ndash;C3.6k</code>: "explain how a random change (mutation) in the sequence of bases results in abnormalities or provides a source of genetic variability" &mdash; &sect;5. Alberta defers all of molecular genetics to Biology 30 (Grade 12). <span class="honors-flag">Honors Biology 30</span></span><span data-lang="zh">结果 <code>30&ndash;C3.6k</code>："解释碱基序列中的随机变化（突变）如何导致异常或提供遗传变异来源"&mdash;&mdash;即 &sect;5。阿尔伯塔将所有分子遗传学延迟至 Biology 30（12 年级）。<span class="honors-flag">荣誉 Biology 30</span></span></li>
+        <li><strong>Biology 30</strong> <span data-lang="en">Unit C GO3: "Students will explain classical genetics at the molecular level." Outcome <code>30&ndash;C3.2k</code>: "describe, in general, how genetic information is contained in the sequence of bases in DNA molecules in chromosomes and how the DNA molecules replicate themselves": &sect;1, &sect;2.</span><span data-lang="zh">Biology 30 Unit C GO3: "学生将在分子层面解释经典遗传学。"结果 <code>30&ndash;C3.2k</code>："一般性描述遗传信息如何包含在染色体 DNA 分子的碱基序列中，以及 DNA 分子如何自我复制"，即 &sect;1、&sect;2。</span></li>
+        <li><strong>Biology 30</strong> <span data-lang="en">Outcome <code>30&ndash;C3.3k</code>: "describe, in general, how genetic information is transcribed into sequences of bases in RNA molecules and is finally translated into sequences of amino acids in proteins": &sect;3, &sect;4. Alberta hedges with "in general": sits between NGSS (conceptual only) and SBI4U (full mechanism). <span class="honors-flag">Honors Biology 30</span></span><span data-lang="zh">结果 <code>30&ndash;C3.3k</code>："一般性描述遗传信息如何转录为 RNA 分子中的碱基序列，并最终翻译为蛋白质中的氨基酸序列"，即 &sect;3、&sect;4。阿尔伯塔以"一般性"作限定，介于 NGSS（仅概念）与 SBI4U（完整机制）之间。<span class="honors-flag">荣誉 Biology 30</span></span></li>
+        <li><strong>Biology 30</strong> <span data-lang="en">Outcome <code>30&ndash;C3.6k</code>: "explain how a random change (mutation) in the sequence of bases results in abnormalities or provides a source of genetic variability": &sect;5. Alberta defers all of molecular genetics to Biology 30 (Grade 12). <span class="honors-flag">Honors Biology 30</span></span><span data-lang="zh">结果 <code>30&ndash;C3.6k</code>："解释碱基序列中的随机变化（突变）如何导致异常或提供遗传变异来源"，即 &sect;5。阿尔伯塔将所有分子遗传学延迟至 Biology 30（12 年级）。<span class="honors-flag">荣誉 Biology 30</span></span></li>
       </ul>
     </div>
   </div>
@@ -1175,7 +1729,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <section class="section" id="how-to-use">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
-  <p><span data-lang="en">Molecular genetics sits at the heart of every senior biology curriculum. All four curricula agree on the conceptual core: DNA carries hereditary information, it is copied by replication, read out by transcription into RNA, and decoded by translation into protein. They diverge sharply on <em>depth</em>. US NGSS HS-LS1-1 explicitly excludes the biochemistry of protein synthesis &mdash; the conceptual DNA&rarr;protein&rarr;specialized-cell explanation is the expectation. Alberta Biology 30 Unit C GO3 uses "in general" throughout, sitting between NGSS and Ontario. Ontario SBI4U Strand D goes deepest: it names polymerases I/II/III, helicase, ligase, Okazaki fragments, codon/anticodon, and the operon model &mdash; all carried here with <span class="honors-flag">Honors SBI4U</span> flags. BC Anatomy &amp; Physiology 12 covers DNA replication and gene expression at a level between NGSS and SBI4U. The table below locates each section in your curriculum.</span><span data-lang="zh">分子遗传学（DNA / RNA）是所有高中生物大纲的核心主题。四套大纲在概念核心上高度一致：DNA 携带遗传信息，通过复制（<code>复制</code>）拷贝，通过转录（<code>转录</code>）读出为 RNA，再通过翻译（<code>翻译</code>）解码为蛋白质。但在<em>深度</em>上差异显著。美国 NGSS HS-LS1-1 明确排除蛋白质合成的生物化学——概念性的 DNA&rarr;蛋白质&rarr;特化细胞解释是期望所在。阿尔伯塔 Biology 30 Unit C GO3 全程使用"一般性"限定，介于 NGSS 与安大略之间。安大略 SBI4U Strand D 最为深入：要求命名聚合酶 I/II/III、解旋酶、连接酶、冈崎片段、密码子/反密码子及操纵子模型——本指南均以 <span class="honors-flag">荣誉 SBI4U</span> 标注。BC Anatomy &amp; Physiology 12 涵盖 DNA 复制与基因表达，深度介于 NGSS 与 SBI4U 之间。下表定位各节在你大纲中的位置。</span></p>
+  <p><span data-lang="en">Molecular genetics sits at the heart of every senior biology curriculum. All four curricula agree on the conceptual core: DNA carries hereditary information, it is copied by replication, read out by transcription into RNA, and decoded by translation into protein. They diverge sharply on <em>depth</em>. US NGSS HS-LS1-1 explicitly excludes the biochemistry of protein synthesis: the conceptual DNA&rarr;protein&rarr;specialized-cell explanation is the expectation. Alberta Biology 30 Unit C GO3 uses "in general" throughout, sitting between NGSS and Ontario. Ontario SBI4U Strand D goes deepest: it names polymerases I/II/III, helicase, ligase, Okazaki fragments, codon/anticodon, and the operon model: all carried here with <span class="honors-flag">Honors SBI4U</span> flags. BC Anatomy &amp; Physiology 12 covers DNA replication and gene expression at a level between NGSS and SBI4U. The table below locates each section in your curriculum.</span><span data-lang="zh">分子遗传学（DNA / RNA）是所有高中生物大纲的核心主题。四套大纲在概念核心上高度一致：DNA 携带遗传信息，通过复制（<code>复制</code>）拷贝，通过转录（<code>转录</code>）读出为 RNA，再通过翻译（<code>翻译</code>）解码为蛋白质。但在<em>深度</em>上差异显著。美国 NGSS HS-LS1-1 明确排除蛋白质合成的生物化学，概念性的 DNA&rarr;蛋白质&rarr;特化细胞解释是期望所在。阿尔伯塔 Biology 30 Unit C GO3 全程使用"一般性"限定，介于 NGSS 与安大略之间。安大略 SBI4U Strand D 最为深入：要求命名聚合酶 I/II/III、解旋酶、连接酶、冈崎片段、密码子/反密码子及操纵子模型，本指南均以 <span class="honors-flag">荣誉 SBI4U</span> 标注。BC Anatomy &amp; Physiology 12 涵盖 DNA 复制与基因表达，深度介于 NGSS 与 SBI4U 之间。下表定位各节在你大纲中的位置。</span></p>
 
   <div style="overflow-x: auto; margin: 16px 0 18px;">
   <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
@@ -1190,27 +1744,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <tbody>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US NGSS HS-LS1-1 / HS-LS3-1</span><span data-lang="zh">美国 NGSS HS-LS1-1 / HS-LS3-1</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (DNA structure), &sect;3 (transcription concept), &sect;4 (translation concept), &sect;5 (mutations as variation) &mdash; the conceptual DNA&rarr;protein&rarr;cell model</span><span data-lang="zh">&sect;1（DNA 结构）、&sect;3（转录概念）、&sect;4（翻译概念）、&sect;5（突变作为变异）&mdash;&mdash;概念性 DNA&rarr;蛋白质&rarr;细胞模型</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Enzyme-level replication detail (&sect;2 Honors box); operon mechanism (&sect;6 Honors) &mdash; NGSS Assessment Boundary excludes the biochemistry of protein synthesis</span><span data-lang="zh">酶级复制细节（&sect;2 荣誉框）；操纵子机制（&sect;6 荣誉）&mdash;&mdash;NGSS 评估边界排除蛋白质合成的生物化学</span></td>
-        <td style="padding: 8px 10px;"><code>NGSS HS Life Science</code> <span data-lang="en">&mdash; HS-LS1-1 PE and Assessment Boundary</span><span data-lang="zh">&mdash; HS-LS1-1 表现期望及评估边界</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (DNA structure), &sect;3 (transcription concept), &sect;4 (translation concept), &sect;5 (mutations as variation): the conceptual DNA&rarr;protein&rarr;cell model</span><span data-lang="zh">&sect;1（DNA 结构）、&sect;3（转录概念）、&sect;4（翻译概念）、&sect;5（突变作为变异），概念性 DNA&rarr;蛋白质&rarr;细胞模型</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Enzyme-level replication detail (&sect;2 Honors box); operon mechanism (&sect;6 Honors): NGSS Assessment Boundary excludes the biochemistry of protein synthesis</span><span data-lang="zh">酶级复制细节（&sect;2 荣誉框）；操纵子机制（&sect;6 荣誉），NGSS 评估边界排除蛋白质合成的生物化学</span></td>
+        <td style="padding: 8px 10px;"><code>NGSS HS Life Science</code><span data-lang="en">: HS-LS1-1 PE and Assessment Boundary</span><span data-lang="zh">：HS-LS1-1 表现期望及评估边界</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 12 &mdash; SBI4U <span class="honors-flag">Honors</span></span><span data-lang="zh">安大略 12 年级 &mdash; SBI4U <span class="honors-flag">荣誉</span></span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 12: SBI4U <span class="honors-flag">Honors</span></span><span data-lang="zh">安大略 12 年级：SBI4U <span class="honors-flag">荣誉</span></span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">All 7 sections in full: Strand D D3.1 (replication, polymerases, helicase, Okazaki fragments), D3.2 (RNA vs DNA), D3.3 (protein synthesis steps, operons), D3.4 (mutagens), D3.5 (genetic modification), D3.6 (restriction enzymes, plasmids)</span><span data-lang="zh">全部 7 节完整学习：Strand D D3.1（复制、聚合酶、解旋酶、冈崎片段）、D3.2（RNA 与 DNA）、D3.3（蛋白质合成步骤、操纵子）、D3.4（诱变剂）、D3.5（遗传修改）、D3.6（限制酶、质粒）</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Nothing &mdash; SBI4U Molecular Genetics is the deepest treatment; all sections are core</span><span data-lang="zh">无 &mdash; SBI4U 分子遗传学是最深层次；所有章节均为核心</span></td>
-        <td style="padding: 8px 10px;"><code>Ontario SBI3U/4U Biology</code> <span data-lang="en">&mdash; SBI4U Strand D D3.1&ndash;D3.7</span><span data-lang="zh">&mdash; SBI4U Strand D D3.1&ndash;D3.7</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Nothing: SBI4U Molecular Genetics is the deepest treatment; all sections are core</span><span data-lang="zh">无：SBI4U 分子遗传学是最深层次；所有章节均为核心</span></td>
+        <td style="padding: 8px 10px;"><code>Ontario SBI3U/4U Biology</code><span data-lang="en">: SBI4U Strand D D3.1&ndash;D3.7</span><span data-lang="zh">：SBI4U Strand D D3.1&ndash;D3.7</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC Anatomy &amp; Physiology 12</span><span data-lang="zh">BC Anatomy &amp; Physiology 12</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;5 core (DNA structure, replication, gene expression, protein synthesis, mutations); &sect;7 (genomics &amp; biotechnology: recombinant DNA, GMOs, gene therapy)</span><span data-lang="zh">&sect;1&ndash;&sect;5 核心（DNA 结构、复制、基因表达、蛋白质合成、突变）；&sect;7（基因组学与生物技术：重组 DNA、转基因生物、基因治疗）</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Named-enzyme detail in replication (&sect;2 Honors box); operon detail (&sect;6 Honors) &mdash; BC A&amp;P 12 covers gene expression at a higher level than NGSS but not at SBI4U named-enzyme depth</span><span data-lang="zh">复制中的命名酶细节（&sect;2 荣誉框）；操纵子细节（&sect;6 荣誉）&mdash;&mdash;BC A&amp;P 12 基因表达深度高于 NGSS 但未达 SBI4U 命名酶深度</span></td>
-        <td style="padding: 8px 10px;"><code>BC Life Sciences 11 / Anatomy 12</code> <span data-lang="en">&mdash; A&amp;P 12 Big Idea 2 + Content</span><span data-lang="zh">&mdash; A&amp;P 12 大概念 2 + 内容</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Named-enzyme detail in replication (&sect;2 Honors box); operon detail (&sect;6 Honors): BC A&amp;P 12 covers gene expression at a higher level than NGSS but not at SBI4U named-enzyme depth</span><span data-lang="zh">复制中的命名酶细节（&sect;2 荣誉框）；操纵子细节（&sect;6 荣誉），BC A&amp;P 12 基因表达深度高于 NGSS 但未达 SBI4U 命名酶深度</span></td>
+        <td style="padding: 8px 10px;"><code>BC Life Sciences 11 / Anatomy 12</code><span data-lang="en">: A&amp;P 12 Big Idea 2 + Content</span><span data-lang="zh">：A&amp;P 12 大概念 2 + 内容</span></td>
       </tr>
       <tr>
         <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB Biology 30 <span class="honors-flag">Honors</span></span><span data-lang="zh">阿尔伯塔 Biology 30 <span class="honors-flag">荣誉</span></span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;5 at the "in general" level (Unit C GO3: C3.2k replication, C3.3k transcription/translation, C3.6k mutations); &sect;7 (C3.4k restriction enzymes and DNA transformation)</span><span data-lang="zh">"一般性"层面的 &sect;1&ndash;&sect;5（Unit C GO3：C3.2k 复制、C3.3k 转录/翻译、C3.6k 突变）；&sect;7（C3.4k 限制酶与 DNA 转化）</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Named-enzyme mechanism in replication (&sect;2 Honors) and operon mechanism (&sect;6 Honors) &mdash; Alberta hedges with "in general"; SBI4U enzyme lists not required at AB level</span><span data-lang="zh">复制中的命名酶机制（&sect;2 荣誉）与操纵子机制（&sect;6 荣誉）&mdash;&mdash;阿尔伯塔使用"一般性"限定；AB 层级不要求 SBI4U 酶的命名列表</span></td>
-        <td style="padding: 8px 10px;"><code>Alberta Biology 20/30</code> <span data-lang="en">&mdash; Biology 30 Unit C GO3 (C3.1k&ndash;C3.7k)</span><span data-lang="zh">&mdash; Biology 30 Unit C GO3（C3.1k&ndash;C3.7k）</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Named-enzyme mechanism in replication (&sect;2 Honors) and operon mechanism (&sect;6 Honors): Alberta hedges with "in general"; SBI4U enzyme lists not required at AB level</span><span data-lang="zh">复制中的命名酶机制（&sect;2 荣誉）与操纵子机制（&sect;6 荣誉），阿尔伯塔使用"一般性"限定；AB 层级不要求 SBI4U 酶的命名列表</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta Biology 20/30</code><span data-lang="en">: Biology 30 Unit C GO3 (C3.1k&ndash;C3.7k)</span><span data-lang="zh">：Biology 30 Unit C GO3（C3.1k&ndash;C3.7k）</span></td>
       </tr>
     </tbody>
   </table>
@@ -1455,6 +2009,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1598,21 +2168,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>
