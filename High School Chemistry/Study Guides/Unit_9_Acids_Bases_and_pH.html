@@ -440,6 +440,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
+.sg-fig .dot { fill: var(--text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -539,27 +605,50 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 1 &middot; Acid/base definitions</span><span data-lang="zh">第 1 节 &middot; 酸碱定义</span></div>
   <h2><span data-lang="en">Acid/Base Definitions: Arrhenius and Brønsted-Lowry</span><span data-lang="zh">酸碱定义：阿伦尼乌斯与布朗斯特-劳里</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the Arrhenius and the Brønsted-Lowry definitions of an acid and of a base.</li><li>Explain why the Brønsted-Lowry definition is broader than the Arrhenius definition.</li><li>Identify the acid, base, conjugate acid and conjugate base in a proton-transfer equation.</li><li>Write the conjugate acid or conjugate base of a given species.</li><li>Explain what <em>amphoteric</em> means and show it with two equations for one species.</li></ul>
+    <ul data-lang="zh"><li>陈述酸和碱的阿伦尼乌斯定义与布朗斯特-劳里定义。</li><li>解释布朗斯特-劳里定义为何比阿伦尼乌斯定义更广泛。</li><li>在质子转移方程中识别酸、碱、共轭酸和共轭碱。</li><li>写出给定物种的共轭酸或共轭碱。</li><li>解释<em>两性</em>（<code>amphoteric</code>）的含义，并用同一物种的两个方程说明。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Two frameworks, one direction of travel.</span><span data-lang="zh">两种框架，一个发展方向。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Arrhenius acid</span><span data-lang="zh">阿伦尼乌斯酸</span></strong> <span data-lang="en">&mdash; a substance that produces $\text{H}^+$ (or $\text{H}_3\text{O}^+$) in aqueous solution. Example: HCl, HNO₃, CH₃COOH. AB Chemistry 20 GO2: "define Arrhenius (modified) acids as substances that produce H₃O⁺(aq) in aqueous solutions and recognize that the definition is limited."</span><span data-lang="zh">&mdash; 在水溶液中产生 $\text{H}^+$（或 $\text{H}_3\text{O}^+$）的物质。例如：HCl、HNO₃、CH₃COOH。AB Chemistry 20 GO2："将阿伦尼乌斯（修正）酸定义为在水溶液中产生 H₃O⁺(aq) 的物质，并认识到该定义的局限性。"</span></li>
-      <li><strong><span data-lang="en">Arrhenius base</span><span data-lang="zh">阿伦尼乌斯碱</span></strong> <span data-lang="en">&mdash; a substance that produces $\text{OH}^-$ in aqueous solution. Example: NaOH, KOH, Ca(OH)₂. SCH3U E3.5: "explain the Arrhenius theory of acids and bases."</span><span data-lang="zh">&mdash; 在水溶液中产生 $\text{OH}^-$ 的物质。例如：NaOH、KOH、Ca(OH)₂。SCH3U E3.5："解释阿伦尼乌斯酸碱理论。"</span></li>
-      <li><strong><span data-lang="en">Brønsted-Lowry acid</span><span data-lang="zh">布朗斯特-劳里酸</span></strong> <span data-lang="en">&mdash; a <em>proton donor</em> (donates $\text{H}^+$). Broader than Arrhenius: works in non-aqueous media too. SCH4U E3.6: "explain the Brønsted-Lowry theory of acids and bases."</span><span data-lang="zh">&mdash; <em>质子供体</em>（提供 $\text{H}^+$）。比阿伦尼乌斯更广泛：也适用于非水体系。SCH4U E3.6："解释布朗斯特-劳里酸碱理论。"</span></li>
-      <li><strong><span data-lang="en">Brønsted-Lowry base</span><span data-lang="zh">布朗斯特-劳里碱</span></strong> <span data-lang="en">&mdash; a <em>proton acceptor</em> (accepts $\text{H}^+$). Every Brønsted-Lowry acid produces a <strong>conjugate base</strong> after donating; every base produces a <strong>conjugate acid</strong> after accepting.</span><span data-lang="zh">&mdash; <em>质子受体</em>（接受 $\text{H}^+$）。每个布朗斯特-劳里酸在提供质子后产生<strong>共轭碱</strong>；每个碱在接受质子后产生<strong>共轭酸</strong>。</span></li>
+      <li><strong><span data-lang="en">Arrhenius acid</span><span data-lang="zh">阿伦尼乌斯酸</span></strong><span data-lang="en">: a substance that produces $\text{H}^+$ (or $\text{H}_3\text{O}^+$) in aqueous solution. Example: HCl, HNO₃, CH₃COOH. AB Chemistry 20 GO2: "define Arrhenius (modified) acids as substances that produce H₃O⁺(aq) in aqueous solutions and recognize that the definition is limited."</span><span data-lang="zh">：在水溶液中产生 $\text{H}^+$（或 $\text{H}_3\text{O}^+$）的物质。例如：HCl、HNO₃、CH₃COOH。AB Chemistry 20 GO2："将阿伦尼乌斯（修正）酸定义为在水溶液中产生 H₃O⁺(aq) 的物质，并认识到该定义的局限性。"</span></li>
+      <li><strong><span data-lang="en">Arrhenius base</span><span data-lang="zh">阿伦尼乌斯碱</span></strong><span data-lang="en">: a substance that produces $\text{OH}^-$ in aqueous solution. Example: NaOH, KOH, Ca(OH)₂. SCH3U E3.5: "explain the Arrhenius theory of acids and bases."</span><span data-lang="zh">：在水溶液中产生 $\text{OH}^-$ 的物质。例如：NaOH、KOH、Ca(OH)₂。SCH3U E3.5："解释阿伦尼乌斯酸碱理论。"</span></li>
+      <li><strong><span data-lang="en">Brønsted-Lowry acid</span><span data-lang="zh">布朗斯特-劳里酸</span></strong><span data-lang="en">: a <em>proton donor</em> (donates $\text{H}^+$). Broader than Arrhenius: works in non-aqueous media too. SCH4U E3.6: "explain the Brønsted-Lowry theory of acids and bases."</span><span data-lang="zh">：<em>质子供体</em>（提供 $\text{H}^+$）。比阿伦尼乌斯更广泛：也适用于非水体系。SCH4U E3.6："解释布朗斯特-劳里酸碱理论。"</span></li>
+      <li><strong><span data-lang="en">Brønsted-Lowry base</span><span data-lang="zh">布朗斯特-劳里碱</span></strong><span data-lang="en">: a <em>proton acceptor</em> (accepts $\text{H}^+$). Every Brønsted-Lowry acid produces a <strong>conjugate base</strong> after donating; every base produces a <strong>conjugate acid</strong> after accepting.</span><span data-lang="zh">：<em>质子受体</em>（接受 $\text{H}^+$）。每个布朗斯特-劳里酸在提供质子后产生<strong>共轭碱</strong>；每个碱在接受质子后产生<strong>共轭酸</strong>。</span></li>
     </ul>
     <p style="margin: 10px 0 4px;"><strong><span data-lang="en">Conjugate pair:</span><span data-lang="zh">共轭对：</span></strong></p>
     $$ \underbrace{\text{HA}}_{\text{acid}} + \underbrace{\text{B}}_{\text{base}} \rightleftharpoons \underbrace{\text{A}^-}_{\text{conj. base}} + \underbrace{\text{BH}^+}_{\text{conj. acid}} $$
     <span data-lang="en">AB Chemistry 30 GO1: "describe Brønsted-Lowry acids as proton donors and bases as proton acceptors; write Brønsted-Lowry equations; identify conjugate pairs."</span><span data-lang="zh">AB Chemistry 30 GO1："将布朗斯特-劳里酸描述为质子供体，碱为质子受体；书写布朗斯特-劳里方程；识别共轭对。"</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 1: Identifying conjugate pairs</span><span data-lang="zh">例题 1：识别共轭对</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 1 &middot; Identifying conjugate pairs</span><span data-lang="zh">例题 1 &middot; 识别共轭对</span></div>
     <p><span data-lang="en">In the reaction $\text{HF}(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{F}^-(aq) + \text{H}_3\text{O}^+(aq)$, identify: (a) the Brønsted-Lowry acid and its conjugate base, (b) the Brønsted-Lowry base and its conjugate acid.</span><span data-lang="zh">在反应 $\text{HF}(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{F}^-(aq) + \text{H}_3\text{O}^+(aq)$ 中，识别：(a) 布朗斯特-劳里酸及其共轭碱，(b) 布朗斯特-劳里碱及其共轭酸。</span></p>
   </div>
   <div class="worked-solution">
-    <p><strong><span data-lang="en">(a) Acid and conjugate base.</span><span data-lang="zh">(a) 酸与共轭碱。</span></strong> <span data-lang="en">HF donates a proton $\text{H}^+$ to water, so HF is the <em>Brønsted-Lowry acid</em>. After donation, $\text{F}^-$ remains — that is the <em>conjugate base</em>. Conjugate pair: HF / F⁻.</span><span data-lang="zh">HF 向水提供质子 $\text{H}^+$，故 HF 是<em>布朗斯特-劳里酸</em>。提供后剩下 $\text{F}^-$——这是<em>共轭碱</em>。共轭对：HF / F⁻。</span></p>
+    <p><strong><span data-lang="en">(a) Acid and conjugate base.</span><span data-lang="zh">(a) 酸与共轭碱。</span></strong> <span data-lang="en">HF donates a proton $\text{H}^+$ to water, so HF is the <em>Brønsted-Lowry acid</em>. After donation, $\text{F}^-$ remains. That is the <em>conjugate base</em>. Conjugate pair: HF / F⁻.</span><span data-lang="zh">HF 向水提供质子 $\text{H}^+$，故 HF 是<em>布朗斯特-劳里酸</em>。提供后剩下 $\text{F}^-$，这是<em>共轭碱</em>。共轭对：HF / F⁻。</span></p>
     <p><strong><span data-lang="en">(b) Base and conjugate acid.</span><span data-lang="zh">(b) 碱与共轭酸。</span></strong> <span data-lang="en">Water accepts the proton to form $\text{H}_3\text{O}^+$, so H₂O is the <em>Brønsted-Lowry base</em>. After acceptance, $\text{H}_3\text{O}^+$ is the <em>conjugate acid</em>. Conjugate pair: H₂O / H₃O⁺.</span><span data-lang="zh">水接受质子形成 $\text{H}_3\text{O}^+$，故 H₂O 是<em>布朗斯特-劳里碱</em>。接受后，$\text{H}_3\text{O}^+$ 是<em>共轭酸</em>。共轭对：H₂O / H₃O⁺。</span></p>
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 2: An amphoteric ion</span><span data-lang="zh">例题 2：两性离子</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">Show that the hydrogen carbonate ion $\mathrm{HCO_3^-}$ is amphoteric. Write one equation in which it acts as a Brønsted-Lowry acid and one in which it acts as a base, with water as the partner each time, and name the conjugate pairs.</span><span data-lang="zh">说明碳酸氢根离子 $\mathrm{HCO_3^-}$ 是两性的。写出它作为布朗斯特-劳里酸的一个方程和作为碱的一个方程，每次都以水为反应对象，并指出各共轭对。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>As an acid</strong> (it donates $\mathrm{H^+}$):</span><span data-lang="zh"><strong>作为酸</strong>（提供 $\mathrm{H^+}$）：</span></p>
+      $$ \mathrm{HCO_3^-(aq) + H_2O(l) \rightleftharpoons CO_3^{2-}(aq) + H_3O^+(aq)} $$
+<p><span data-lang="en">Conjugate pairs: $\mathrm{HCO_3^-/CO_3^{2-}}$ and $\mathrm{H_3O^+/H_2O}$. Atoms and charge balance: $-1 + 0 = -2 + 1$.</span><span data-lang="zh">共轭对：$\mathrm{HCO_3^-/CO_3^{2-}}$ 与 $\mathrm{H_3O^+/H_2O}$。原子与电荷守恒：$-1 + 0 = -2 + 1$。</span></p>
+<p><span data-lang="en"><strong>As a base</strong> (it accepts $\mathrm{H^+}$):</span><span data-lang="zh"><strong>作为碱</strong>（接受 $\mathrm{H^+}$）：</span></p>
+      $$ \mathrm{HCO_3^-(aq) + H_2O(l) \rightleftharpoons H_2CO_3(aq) + OH^-(aq)} $$
+<p><span data-lang="en">Conjugate pairs: $\mathrm{H_2CO_3/HCO_3^-}$ and $\mathrm{H_2O/OH^-}$. Charge balance: $-1 + 0 = 0 + (-1)$.</span><span data-lang="zh">共轭对：$\mathrm{H_2CO_3/HCO_3^-}$ 与 $\mathrm{H_2O/OH^-}$。电荷守恒：$-1 + 0 = 0 + (-1)$。</span></p>
+<p><span data-lang="en">$\mathrm{HCO_3^-}$ has an H it can give away and a lone pair that can take an $\mathrm{H^+}$, so its role depends on its partner. That is what amphoteric means. &check;</span><span data-lang="zh">$\mathrm{HCO_3^-}$ 既有可以给出的 H，又有可以接受 $\mathrm{H^+}$ 的孤对电子，所以它的角色取决于反应对象。这就是两性的含义。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In the Brønsted-Lowry framework, an acid is defined as a substance that:</span><span data-lang="zh">在布朗斯特-劳里框架中，酸被定义为：</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
@@ -582,19 +671,40 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">H₂O</span><span data-lang="zh">H₂O</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">NH₂⁻</span><span data-lang="zh">NH₂⁻</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">NH₃ accepts a proton from H₂O (so NH₃ is the Brønsted-Lowry base). After accepting H⁺, it becomes NH₄⁺ — the conjugate acid. Conjugate acid = base + H⁺.</span><span data-lang="zh">NH₃ 从 H₂O 接受质子（故 NH₃ 是布朗斯特-劳里碱）。接受 H⁺ 后变为 NH₄⁺——共轭酸。共轭酸 = 碱 + H⁺。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">NH₃ accepts a proton from H₂O (so NH₃ is the Brønsted-Lowry base). After accepting H⁺, it becomes NH₄⁺, the conjugate acid. Conjugate acid = base + H⁺.</span><span data-lang="zh">NH₃ 从 H₂O 接受质子（故 NH₃ 是布朗斯特-劳里碱）。接受 H⁺ 后变为 NH₄⁺，共轭酸。共轭酸 = 碱 + H⁺。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Conjugate acid of a base = base + one H⁺. NH₃ + H⁺ = NH₄⁺. OH⁻ is the conjugate base of H₂O (H₂O − H⁺ = OH⁻).</span><span data-lang="zh">碱的共轭酸 = 碱 + 一个 H⁺。NH₃ + H⁺ = NH₄⁺。OH⁻ 是 H₂O 的共轭碱（H₂O − H⁺ = OH⁻）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; amphoteric substances and the auto-ionization of water</span><span data-lang="zh">深入 &mdash; 两性物质与水的自电离</span></summary>
+    <summary><span data-lang="en">Going deeper: amphoteric substances and the auto-ionization of water</span><span data-lang="zh">深入：两性物质与水的自电离</span></summary>
     <div class="detail-body">
       <p><span data-lang="en">Water is the classic <strong>amphoteric</strong> (or amphiprotic) substance: it can act as either a Brønsted-Lowry acid (donating H⁺ to a stronger base, as in the HF example above) or a Brønsted-Lowry base (accepting H⁺ from a stronger acid). In pure water, molecules spontaneously transfer protons to each other in the <em>auto-ionization equilibrium</em>:</span><span data-lang="zh">水是经典的<strong>两性</strong>（或两性质子）物质：它既可以充当布朗斯特-劳里酸（向更强的碱提供 H⁺，如上面的 HF 例子），也可以充当布朗斯特-劳里碱（从更强的酸接受 H⁺）。在纯水中，分子自发地相互转移质子，发生<em>自电离平衡</em>：</span></p>
       $$ \text{H}_2\text{O}(l) + \text{H}_2\text{O}(l) \rightleftharpoons \text{H}_3\text{O}^+(aq) + \text{OH}^-(aq) $$
       <p><span data-lang="en">At 25 °C, the equilibrium constant for this process is $K_w = [\text{H}_3\text{O}^+][\text{OH}^-] = 1.0 \times 10^{-14}$. In pure water, $[\text{H}_3\text{O}^+] = [\text{OH}^-] = 1.0 \times 10^{-7}\ \text{mol/L}$, giving pH = 7. This $K_w$ expression is the foundation for all pH/pOH calculations in &sect;3. SCH4U E3.5 and AB Chemistry 30 GO2 both require using $K_w$ to interconvert pH, pOH, $[\text{H}_3\text{O}^+]$, and $[\text{OH}^-]$.</span><span data-lang="zh">在 25 °C 时，该过程的平衡常数为 $K_w = [\text{H}_3\text{O}^+][\text{OH}^-] = 1.0 \times 10^{-14}$。在纯水中，$[\text{H}_3\text{O}^+] = [\text{OH}^-] = 1.0 \times 10^{-7}\ \text{mol/L}$，pH = 7。这个 $K_w$ 表达式是 &sect;3 中所有 pH/pOH 计算的基础。SCH4U E3.5 和 AB Chemistry 30 GO2 都要求用 $K_w$ 相互转换 pH、pOH、$[\text{H}_3\text{O}^+]$ 和 $[\text{OH}^-]$。</span></p>
     </div>
   </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words here are <em>identify</em>, <em>state</em> and <em>write</em>. A conjugate pair sits on opposite sides of the arrow and the two members differ by exactly one $\mathrm{H^+}$ (and by one unit of charge). A common error is to pair the two species on the same side of the equation. When a question asks for "the definition", name the framework as well: Arrhenius describes what a substance releases in water, Brønsted-Lowry describes proton transfer.</p><p data-lang="zh">本节常见指令词是 <code>identify</code>（识别）、<code>state</code>（陈述）和 <code>write</code>（书写）。共轭对位于箭头两侧，两个成员恰好相差一个 $\mathrm{H^+}$（电荷相差一个单位）。常见错误是把方程同一侧的两个物种配成对。题目要求"定义"时，要同时说明所用框架：阿伦尼乌斯描述物质在水中释放什么，布朗斯特-劳里描述质子转移。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. State two limits of the Arrhenius definition.</span><span data-lang="zh">1. 陈述阿伦尼乌斯定义的两个局限。</span></summary>
+      <div class="sg-a"><p data-lang="en">It applies only to aqueous solutions, and a base must release $\mathrm{OH^-}$ from its own formula, so $\mathrm{NH_3}$ (which has no $\mathrm{OH^-}$ in its formula) does not fit. The Brønsted-Lowry definition covers both cases.</p><p data-lang="zh">它只适用于水溶液；并且碱必须由自身化学式释放 $\mathrm{OH^-}$，所以化学式中没有 $\mathrm{OH^-}$ 的 $\mathrm{NH_3}$ 不符合。布朗斯特-劳里定义两种情况都能涵盖。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Give the conjugate base and the conjugate acid of $\mathrm{H_2PO_4^-}$.</span><span data-lang="zh">2. 写出 $\mathrm{H_2PO_4^-}$ 的共轭碱和共轭酸。</span></summary>
+      <div class="sg-a"><p data-lang="en">Conjugate base: remove one $\mathrm{H^+}$, giving $\mathrm{HPO_4^{2-}}$. Conjugate acid: add one $\mathrm{H^+}$, giving $\mathrm{H_3PO_4}$.</p><p data-lang="zh">共轭碱：去掉一个 $\mathrm{H^+}$，得到 $\mathrm{HPO_4^{2-}}$。共轭酸：加上一个 $\mathrm{H^+}$，得到 $\mathrm{H_3PO_4}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Write the equation for hydrocyanic acid, HCN, reacting with water, and label the acid, base, conjugate acid and conjugate base.</span><span data-lang="zh">3. 写出氢氰酸 HCN 与水反应的方程，并标出酸、碱、共轭酸和共轭碱。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{HCN(aq) + H_2O(l) \rightleftharpoons CN^-(aq) + H_3O^+(aq)}$. Acid: HCN. Base: $\mathrm{H_2O}$. Conjugate base: $\mathrm{CN^-}$. Conjugate acid: $\mathrm{H_3O^+}$. Both charge ($0 = -1 + 1$) and atoms balance.</p><p data-lang="zh">$\mathrm{HCN(aq) + H_2O(l) \rightleftharpoons CN^-(aq) + H_3O^+(aq)}$。酸：HCN。碱：$\mathrm{H_2O}$。共轭碱：$\mathrm{CN^-}$。共轭酸：$\mathrm{H_3O^+}$。电荷（$0 = -1 + 1$）与原子均守恒。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -603,13 +713,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 2 &middot; Strong vs weak acids and bases</span><span data-lang="zh">第 2 节 &middot; 强酸弱酸与强碱弱碱</span></div>
   <h2><span data-lang="en">Strong vs Weak Acids and Bases</span><span data-lang="zh">强酸弱酸与强碱弱碱</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the six common strong acids and the common strong bases.</li><li>Distinguish strong from weak in terms of the extent of ionization, not concentration.</li><li>Write ionization equations with the correct arrow ($\to$ or $\rightleftharpoons$).</li><li>Calculate the pH of a strong acid or strong base solution from its concentration, including a base that releases two $\mathrm{OH^-}$.</li><li>Calculate percent ionization from a measured pH and decide whether an acid is strong or weak.</li></ul>
+    <ul data-lang="zh"><li>陈述六种常见强酸和常见强碱。</li><li>从电离程度（而不是浓度）区分强与弱。</li><li>用正确的箭头（$\to$ 或 $\rightleftharpoons$）书写电离方程。</li><li>由浓度计算强酸或强碱溶液的 pH，包括释放两个 $\mathrm{OH^-}$ 的碱。</li><li>由测得的 pH 计算电离百分数，并判断酸是强酸还是弱酸。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Strong = complete dissociation; weak = partial dissociation.</span><span data-lang="zh">强酸碱 = 完全解离；弱酸碱 = 部分解离。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Strong acid</span><span data-lang="zh">强酸</span></strong> <span data-lang="en">&mdash; essentially 100% dissociated in aqueous solution. The six common ones to memorise: HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄. Example: $\text{HCl}(aq) \to \text{H}^+(aq) + \text{Cl}^-(aq)$ (single arrow, irreversible).</span><span data-lang="zh">&mdash; 在水溶液中基本上 100% 解离。六种常见强酸需背熟：HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄。例如：$\text{HCl}(aq) \to \text{H}^+(aq) + \text{Cl}^-(aq)$（单箭头，不可逆）。</span></li>
-      <li><strong><span data-lang="en">Weak acid</span><span data-lang="zh">弱酸</span></strong> <span data-lang="en">&mdash; only partially dissociates; a dynamic equilibrium exists between the molecular and ionic forms. Example: $\text{CH}_3\text{COOH}(aq) \rightleftharpoons \text{CH}_3\text{COO}^-(aq) + \text{H}^+(aq)$ (double arrow).</span><span data-lang="zh">&mdash; 只部分解离；分子形式与离子形式之间存在动态平衡。例如：$\text{CH}_3\text{COOH}(aq) \rightleftharpoons \text{CH}_3\text{COO}^-(aq) + \text{H}^+(aq)$（双箭头）。</span></li>
-      <li><strong><span data-lang="en">Strong base</span><span data-lang="zh">强碱</span></strong> <span data-lang="en">&mdash; completely dissociates to give OH⁻. Group 1 and heavier Group 2 hydroxides: NaOH, KOH, LiOH, Ca(OH)₂, Ba(OH)₂.</span><span data-lang="zh">&mdash; 完全解离产生 OH⁻。第 1 族和较重的第 2 族氢氧化物：NaOH、KOH、LiOH、Ca(OH)₂、Ba(OH)₂。</span></li>
-      <li><strong><span data-lang="en">Weak base</span><span data-lang="zh">弱碱</span></strong> <span data-lang="en">&mdash; partially reacts with water to produce OH⁻. Example: $\text{NH}_3(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{NH}_4^+(aq) + \text{OH}^-(aq)$.</span><span data-lang="zh">&mdash; 与水部分反应产生 OH⁻。例如：$\text{NH}_3(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{NH}_4^+(aq) + \text{OH}^-(aq)$。</span></li>
+      <li><strong><span data-lang="en">Strong acid</span><span data-lang="zh">强酸</span></strong><span data-lang="en">: essentially 100% dissociated in aqueous solution. The six common ones to memorise: HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄. Example: $\text{HCl}(aq) \to \text{H}^+(aq) + \text{Cl}^-(aq)$ (single arrow, irreversible).</span><span data-lang="zh">：在水溶液中基本上 100% 解离。六种常见强酸需背熟：HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄。例如：$\text{HCl}(aq) \to \text{H}^+(aq) + \text{Cl}^-(aq)$（单箭头，不可逆）。</span></li>
+      <li><strong><span data-lang="en">Weak acid</span><span data-lang="zh">弱酸</span></strong><span data-lang="en">: only partially dissociates; a dynamic equilibrium exists between the molecular and ionic forms. Example: $\text{CH}_3\text{COOH}(aq) \rightleftharpoons \text{CH}_3\text{COO}^-(aq) + \text{H}^+(aq)$ (double arrow).</span><span data-lang="zh">：只部分解离；分子形式与离子形式之间存在动态平衡。例如：$\text{CH}_3\text{COOH}(aq) \rightleftharpoons \text{CH}_3\text{COO}^-(aq) + \text{H}^+(aq)$（双箭头）。</span></li>
+      <li><strong><span data-lang="en">Strong base</span><span data-lang="zh">强碱</span></strong><span data-lang="en">: completely dissociates to give OH⁻. Group 1 and heavier Group 2 hydroxides: NaOH, KOH, LiOH, Ca(OH)₂, Ba(OH)₂.</span><span data-lang="zh">：完全解离产生 OH⁻。第 1 族和较重的第 2 族氢氧化物：NaOH、KOH、LiOH、Ca(OH)₂、Ba(OH)₂。</span></li>
+      <li><strong><span data-lang="en">Weak base</span><span data-lang="zh">弱碱</span></strong><span data-lang="en">: partially reacts with water to produce OH⁻. Example: $\text{NH}_3(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{NH}_4^+(aq) + \text{OH}^-(aq)$.</span><span data-lang="zh">：与水部分反应产生 OH⁻。例如：$\text{NH}_3(aq) + \text{H}_2\text{O}(l) \rightleftharpoons \text{NH}_4^+(aq) + \text{OH}^-(aq)$。</span></li>
     </ul>
     <span data-lang="en">SCH3U E3.6: "explain the difference between strong and weak acids, and between strong and weak bases, in terms of degree of ionization." BC Chemistry 12 Big Idea: "Acid or base strength depends on the degree of ion dissociation." AB Chemistry 20 GO2: "differentiate, qualitatively, between strong and weak acids and bases on the basis of ionization and dissociation."</span><span data-lang="zh">SCH3U E3.6："从电离程度角度解释强酸与弱酸、强碱与弱碱的区别。"BC Chemistry 12 大概念："酸碱强度取决于离子解离程度。"AB Chemistry 20 GO2："定性区分强弱酸碱，依据是电离和解离程度。"</span>
   </div>
@@ -653,6 +769,33 @@ body.lang-zh       [data-lang="en"] { display: none; }
     </table>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 3: pH of strong acid and strong base solutions</span><span data-lang="zh">例题 3：强酸与强碱溶液的 pH</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">Calculate the pH of (a) $0.020\ \mathrm{mol\,L^{-1}}$ HCl and (b) $0.0050\ \mathrm{mol\,L^{-1}}$ $\mathrm{Ba(OH)_2}$ at $25\,{}^{\circ}\mathrm{C}$. Use $\mathrm{pH} = -\log[\mathrm{H^+}]$ (developed in §3).</span><span data-lang="zh">计算 $25\,{}^{\circ}\mathrm{C}$ 时 (a) $0.020\ \mathrm{mol\,L^{-1}}$ HCl 和 (b) $0.0050\ \mathrm{mol\,L^{-1}}$ $\mathrm{Ba(OH)_2}$ 的 pH。使用 $\mathrm{pH} = -\log[\mathrm{H^+}]$（§3 中展开）。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>(a) Strong acid.</strong> HCl ionizes completely, so $[\mathrm{H^+}] = 0.020\ \mathrm{mol\,L^{-1}}$.</span><span data-lang="zh"><strong>(a) 强酸。</strong>HCl 完全电离，所以 $[\mathrm{H^+}] = 0.020\ \mathrm{mol\,L^{-1}}$。</span></p>
+      $$ \mathrm{pH} = -\log(0.020) = 1.70. $$
+<p><span data-lang="en"><strong>(b) Strong base, two hydroxides per formula unit.</strong> $\mathrm{Ba(OH)_2(s) \to Ba^{2+}(aq) + 2\,OH^-(aq)}$, so $[\mathrm{OH^-}] = 2 \times 0.0050 = 0.010\ \mathrm{mol\,L^{-1}}$.</span><span data-lang="zh"><strong>(b) 强碱，每个式量含两个氢氧根。</strong>$\mathrm{Ba(OH)_2(s) \to Ba^{2+}(aq) + 2\,OH^-(aq)}$，所以 $[\mathrm{OH^-}] = 2 \times 0.0050 = 0.010\ \mathrm{mol\,L^{-1}}$。</span></p>
+      $$ \mathrm{pOH} = -\log(0.010) = 2.00, \qquad \mathrm{pH} = 14.00 - 2.00 = 12.00. $$
+<p><span data-lang="en">Both answers have two decimal places because each concentration has two significant figures. &check;</span><span data-lang="zh">两个答案都保留两位小数，因为每个浓度都有两位有效数字。&check;</span></p>
+    </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 4: Is the acid strong or weak?</span><span data-lang="zh">例题 4：该酸是强酸还是弱酸？</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">A $0.100\ \mathrm{mol\,L^{-1}}$ solution of a monoprotic acid HA has pH $2.89$. Find $[\mathrm{H^+}]$ and the percent ionization, and decide whether HA is strong or weak.</span><span data-lang="zh">某一元酸 HA 的 $0.100\ \mathrm{mol\,L^{-1}}$ 溶液 pH 为 $2.89$。求 $[\mathrm{H^+}]$ 和电离百分数，并判断 HA 是强酸还是弱酸。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Hydrogen ion concentration.</strong></span><span data-lang="zh"><strong>氢离子浓度。</strong></span></p>
+      $$ [\mathrm{H^+}] = 10^{-2.89} = 1.3 \times 10^{-3}\ \mathrm{mol\,L^{-1}}. $$
+<p><span data-lang="en"><strong>Percent ionization.</strong></span><span data-lang="zh"><strong>电离百分数。</strong></span></p>
+      $$ \frac{1.3 \times 10^{-3}}{0.100} \times 100\% = 1.3\%. $$
+<p><span data-lang="en"><strong>Decision.</strong> A strong acid of this concentration would give $[\mathrm{H^+}] = 0.100\ \mathrm{mol\,L^{-1}}$ and pH $1.00$. Only $1.3\%$ of HA has ionized, so HA is a <em>weak</em> acid. &check;</span><span data-lang="zh"><strong>判断。</strong>同浓度的强酸会给出 $[\mathrm{H^+}] = 0.100\ \mathrm{mol\,L^{-1}}$，pH 为 $1.00$。HA 只有 $1.3\%$ 电离，所以 HA 是<em>弱</em>酸。&check;</span></p>
+    </div>
+  </details>
+
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is a strong acid?</span><span data-lang="zh">下列哪种是强酸？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
     <div class="quiz-options">
@@ -661,7 +804,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Carbonic acid (H₂CO₃)</span><span data-lang="zh">碳酸（H₂CO₃）</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Hydrofluoric acid (HF)</span><span data-lang="zh">氢氟酸（HF）</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">HNO₃ is one of the six strong acids (HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄) that essentially dissociate completely in water. CH₃COOH, H₂CO₃, and HF are all weak acids — they only partially ionize.</span><span data-lang="zh">HNO₃ 是六种强酸之一（HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄），在水中基本上完全解离。CH₃COOH、H₂CO₃ 和 HF 都是弱酸——它们只部分电离。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">HNO₃ is one of the six strong acids (HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄) that essentially dissociate completely in water. CH₃COOH, H₂CO₃, and HF are all weak acids; they only partially ionize.</span><span data-lang="zh">HNO₃ 是六种强酸之一（HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄），在水中基本上完全解离。CH₃COOH、H₂CO₃ 和 HF 都是弱酸，它们只部分电离。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Strong acids are those that dissociate ~100%. The six to memorise: HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄. HF, despite being a halogen acid, is weak (due to the very strong H-F bond).</span><span data-lang="zh">强酸是那些约 100% 解离的酸。需背熟的六种：HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄。HF 尽管是卤素酸，却是弱酸（因为 H-F 键非常强）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -675,8 +818,29 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">HCl, because it fully dissociates, releasing more H⁺</span><span data-lang="zh">HCl，因为它完全解离，释放更多 H⁺</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">HCl is a strong acid (100% dissociation): 0.10 mol/L HCl gives $[\text{H}^+] = 0.10\ \text{mol/L}$, pH $= 1.0$. CH₃COOH is a weak acid (&lt;2% dissociation at this concentration): its $[\text{H}^+] \ll 0.10\ \text{mol/L}$, so pH $\approx 2.9$. Lower pH means higher $[\text{H}^+]$, so HCl wins.</span><span data-lang="zh">HCl 是强酸（100% 解离）：0.10 mol/L HCl 给出 $[\text{H}^+] = 0.10\ \text{mol/L}$，pH $= 1.0$。CH₃COOH 是弱酸（该浓度下 &lt;2% 解离）：其 $[\text{H}^+] \ll 0.10\ \text{mol/L}$，故 pH $\approx 2.9$。pH 越低代表 $[\text{H}^+]$ 越高，故 HCl 的 pH 更低。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">More hydrogen atoms per molecule does not matter — only the H⁺ actually released in solution sets the pH. HCl releases all its H⁺; CH₃COOH releases only a fraction. Same concentration but different $[\text{H}^+]$ in solution.</span><span data-lang="zh">每个分子含有更多氢原子并不重要——只有实际释放到溶液中的 H⁺ 决定 pH。HCl 释放全部 H⁺；CH₃COOH 只释放一小部分。浓度相同但溶液中 $[\text{H}^+]$ 不同。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">More hydrogen atoms per molecule does not matter: only the H⁺ actually released in solution sets the pH. HCl releases all its H⁺; CH₃COOH releases only a fraction. Same concentration but different $[\text{H}^+]$ in solution.</span><span data-lang="zh">每个分子含有更多氢原子并不重要，只有实际释放到溶液中的 H⁺ 决定 pH。HCl 释放全部 H⁺；CH₃COOH 只释放一小部分。浓度相同但溶液中 $[\text{H}^+]$ 不同。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Use <em>strong</em> and <em>weak</em> only for the extent of ionization, and <em>concentrated</em> and <em>dilute</em> for the amount of solute per litre. They are independent: $0.0010\ \mathrm{mol\,L^{-1}}$ HCl (a dilute strong acid) has pH $3.00$, while $1.0\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COOH}$ (a concentrated weak acid) has pH about $2.4$. Use a single arrow for strong electrolytes and $\rightleftharpoons$ for weak ones, and remember that $\mathrm{Ba(OH)_2}$ and $\mathrm{Ca(OH)_2}$ release two $\mathrm{OH^-}$ per formula unit.</p><p data-lang="zh"><code>strong</code>（强）和 <code>weak</code>（弱）只用于描述电离程度；<code>concentrated</code>（浓）和 <code>dilute</code>（稀）描述每升溶质的量。两者互相独立：$0.0010\ \mathrm{mol\,L^{-1}}$ HCl（稀的强酸）pH 为 $3.00$，而 $1.0\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COOH}$（浓的弱酸）pH 约为 $2.4$。强电解质用单箭头，弱电解质用 $\rightleftharpoons$；并记住 $\mathrm{Ba(OH)_2}$ 和 $\mathrm{Ca(OH)_2}$ 每个式量释放两个 $\mathrm{OH^-}$。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write the ionization equation of $\mathrm{HNO_3}$ and of $\mathrm{NH_3}$ in water.</span><span data-lang="zh">1. 写出 $\mathrm{HNO_3}$ 和 $\mathrm{NH_3}$ 在水中的电离方程。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{HNO_3(aq) \to H^+(aq) + NO_3^-(aq)}$ (single arrow, strong acid). $\mathrm{NH_3(aq) + H_2O(l) \rightleftharpoons NH_4^+(aq) + OH^-(aq)}$ (equilibrium arrow, weak base).</p><p data-lang="zh">$\mathrm{HNO_3(aq) \to H^+(aq) + NO_3^-(aq)}$（单箭头，强酸）。$\mathrm{NH_3(aq) + H_2O(l) \rightleftharpoons NH_4^+(aq) + OH^-(aq)}$（平衡箭头，弱碱）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Which conducts electricity better, $0.10\ \mathrm{mol\,L^{-1}}$ $\mathrm{HNO_3}$ or $0.10\ \mathrm{mol\,L^{-1}}$ HF? Explain.</span><span data-lang="zh">2. $0.10\ \mathrm{mol\,L^{-1}}$ $\mathrm{HNO_3}$ 和 $0.10\ \mathrm{mol\,L^{-1}}$ HF 哪个导电性更好？请解释。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{HNO_3}$ conducts better. It is a strong acid, so nearly every molecule ionizes and the solution holds many ions. HF is a weak acid, so only a small fraction ionizes, even though the concentration is the same.</p><p data-lang="zh">$\mathrm{HNO_3}$ 导电性更好。它是强酸，几乎每个分子都电离，溶液中离子很多。HF 是弱酸，尽管浓度相同，也只有一小部分电离。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Calculate the pH of $0.0020\ \mathrm{mol\,L^{-1}}$ NaOH at $25\,{}^{\circ}\mathrm{C}$.</span><span data-lang="zh">3. 计算 $25\,{}^{\circ}\mathrm{C}$ 时 $0.0020\ \mathrm{mol\,L^{-1}}$ NaOH 的 pH。</span></summary>
+      <div class="sg-a"><p data-lang="en">NaOH is a strong base, so $[\mathrm{OH^-}] = 2.0 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$. $\mathrm{pOH} = -\log(2.0 \times 10^{-3}) = 2.70$, so $\mathrm{pH} = 14.00 - 2.70 = 11.30$.</p><p data-lang="zh">NaOH 是强碱，所以 $[\mathrm{OH^-}] = 2.0 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$。$\mathrm{pOH} = -\log(2.0 \times 10^{-3}) = 2.70$，所以 $\mathrm{pH} = 14.00 - 2.70 = 11.30$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -685,6 +849,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="s-9-3">
   <div class="section-label"><span data-lang="en">Section 3 &middot; The pH and pOH scale</span><span data-lang="zh">第 3 节 &middot; pH 与 pOH 标度</span></div>
   <h2><span data-lang="en">The pH and pOH Scale</span><span data-lang="zh">pH 与 pOH 标度</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define pH and pOH and relate them to $[\mathrm{H^+}]$ and $[\mathrm{OH^-}]$ with logarithms.</li><li>Calculate pH from $[\mathrm{H^+}]$ and $[\mathrm{H^+}]$ from pH.</li><li>Use $\mathrm{pH} + \mathrm{pOH} = 14.00$ (25 °C) to convert between acid and base quantities.</li><li>Classify a solution as acidic, neutral or basic from its pH.</li><li>Explain why one pH unit is a tenfold change in $[\mathrm{H^+}]$ and compare two solutions.</li><li>Report pH with as many decimal places as the concentration has significant figures.</li></ul>
+    <ul data-lang="zh"><li>定义 pH 和 pOH，并用对数把它们与 $[\mathrm{H^+}]$ 和 $[\mathrm{OH^-}]$ 联系起来。</li><li>由 $[\mathrm{H^+}]$ 计算 pH，并由 pH 计算 $[\mathrm{H^+}]$。</li><li>用 $\mathrm{pH} + \mathrm{pOH} = 14.00$（25 °C）在酸性与碱性量之间换算。</li><li>根据 pH 判断溶液是酸性、中性还是碱性。</li><li>解释 pH 每变化一个单位为何是 $[\mathrm{H^+}]$ 的十倍变化，并比较两种溶液。</li><li>pH 的小数位数与浓度的有效数字位数一致。</li></ul>
+  </div>
 
   <div class="cram-cheat">
     <strong><span data-lang="en">pH measures H⁺ concentration on a log scale; pH + pOH = 14 at 25 °C.</span><span data-lang="zh">pH 在对数标度上衡量 H⁺ 浓度；25 °C 时 pH + pOH = 14。</span></strong>
@@ -707,8 +877,50 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">AB Chemistry 20 GO2: "calculate [H₃O⁺] and [OH⁻] and the pH and pOH … based on logarithmic expressions, i.e., pH = −log[H₃O⁺] and pOH = −log[OH⁻]." SCH4U E3.5: "use the ionization constant of water (Kw) to calculate pH, pOH, [H₃O⁺], and [OH⁻]."</span><span data-lang="zh">AB Chemistry 20 GO2："基于对数表达式计算 [H₃O⁺] 和 [OH⁻] 以及 pH 和 pOH，即 pH = −log[H₃O⁺] 和 pOH = −log[OH⁻]。"SCH4U E3.5："用水的电离常数（Kw）计算 pH、pOH、[H₃O⁺] 和 [OH⁻]。"</span>
   </div>
 
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 170" role="img" aria-label="A number line from pH 0 to pH 14 with common substances placed at their approximate pH: lemon juice 2.0, tomato juice 4.5, black coffee 5.0, pure water 7.0, blood 7.4, baking soda solution 8.3, household ammonia 11.5, bleach 12.5.">
+    <rect class="fill1" x="20" y="98" width="206" height="24"/><rect class="fill2" x="226" y="98" width="206" height="24"/>
+    <rect class="ax" x="20" y="98" width="412" height="24"/>
+    <text class="lbl" data-lang="en" x="30" y="115" text-anchor="middle">0</text><text class="lbl" data-lang="zh" x="30" y="115" text-anchor="middle">0</text>
+    <text class="lbl" data-lang="en" x="58" y="115" text-anchor="middle">1</text><text class="lbl" data-lang="zh" x="58" y="115" text-anchor="middle">1</text>
+    <text class="lbl" data-lang="en" x="86" y="115" text-anchor="middle">2</text><text class="lbl" data-lang="zh" x="86" y="115" text-anchor="middle">2</text>
+    <text class="lbl" data-lang="en" x="114" y="115" text-anchor="middle">3</text><text class="lbl" data-lang="zh" x="114" y="115" text-anchor="middle">3</text>
+    <text class="lbl" data-lang="en" x="142" y="115" text-anchor="middle">4</text><text class="lbl" data-lang="zh" x="142" y="115" text-anchor="middle">4</text>
+    <text class="lbl" data-lang="en" x="170" y="115" text-anchor="middle">5</text><text class="lbl" data-lang="zh" x="170" y="115" text-anchor="middle">5</text>
+    <text class="lbl" data-lang="en" x="198" y="115" text-anchor="middle">6</text><text class="lbl" data-lang="zh" x="198" y="115" text-anchor="middle">6</text>
+    <text class="lbl" data-lang="en" x="226" y="115" text-anchor="middle">7</text><text class="lbl" data-lang="zh" x="226" y="115" text-anchor="middle">7</text>
+    <text class="lbl" data-lang="en" x="254" y="115" text-anchor="middle">8</text><text class="lbl" data-lang="zh" x="254" y="115" text-anchor="middle">8</text>
+    <text class="lbl" data-lang="en" x="282" y="115" text-anchor="middle">9</text><text class="lbl" data-lang="zh" x="282" y="115" text-anchor="middle">9</text>
+    <text class="lbl" data-lang="en" x="310" y="115" text-anchor="middle">10</text><text class="lbl" data-lang="zh" x="310" y="115" text-anchor="middle">10</text>
+    <text class="lbl" data-lang="en" x="338" y="115" text-anchor="middle">11</text><text class="lbl" data-lang="zh" x="338" y="115" text-anchor="middle">11</text>
+    <text class="lbl" data-lang="en" x="366" y="115" text-anchor="middle">12</text><text class="lbl" data-lang="zh" x="366" y="115" text-anchor="middle">12</text>
+    <text class="lbl" data-lang="en" x="394" y="115" text-anchor="middle">13</text><text class="lbl" data-lang="zh" x="394" y="115" text-anchor="middle">13</text>
+    <text class="lbl" data-lang="en" x="422" y="115" text-anchor="middle">14</text><text class="lbl" data-lang="zh" x="422" y="115" text-anchor="middle">14</text>
+    <text class="mut" data-lang="en" x="30" y="20">Acidic (pH below 7)</text><text class="mut" data-lang="zh" x="30" y="20">酸性（pH 小于 7）</text>
+    <text class="mut" data-lang="en" x="422" y="20" text-anchor="end">Basic (pH above 7)</text><text class="mut" data-lang="zh" x="422" y="20" text-anchor="end">碱性（pH 大于 7）</text>
+    <line class="ax thin" x1="86.0" y1="63" x2="86.0" y2="98"/><circle class="dot" cx="86.0" cy="98" r="3"/>
+    <text class="lbl" data-lang="en" x="86.0" y="58" text-anchor="middle">Lemon juice</text><text class="lbl" data-lang="zh" x="86.0" y="58" text-anchor="middle">柠檬汁</text>
+    <line class="ax thin" x1="156.0" y1="89" x2="156.0" y2="98"/><circle class="dot" cx="156.0" cy="98" r="3"/>
+    <text class="lbl" data-lang="en" x="156.0" y="84" text-anchor="middle">Tomato juice</text><text class="lbl" data-lang="zh" x="156.0" y="84" text-anchor="middle">番茄汁</text>
+    <line class="ax thin" x1="226.0" y1="63" x2="226.0" y2="98"/><circle class="dot" cx="226.0" cy="98" r="3"/>
+    <text class="lbl" data-lang="en" x="226.0" y="58" text-anchor="middle">Pure water</text><text class="lbl" data-lang="zh" x="226.0" y="58" text-anchor="middle">纯水</text>
+    <line class="ax thin" x1="352.0" y1="89" x2="352.0" y2="98"/><circle class="dot" cx="352.0" cy="98" r="3"/>
+    <text class="lbl" data-lang="en" x="352.0" y="84" text-anchor="middle">Ammonia</text><text class="lbl" data-lang="zh" x="352.0" y="84" text-anchor="middle">家用氨水</text>
+    <line class="ax thin" x1="170.0" y1="122" x2="170.0" y2="134"/><circle class="dot" cx="170.0" cy="122" r="3"/>
+    <text class="lbl" data-lang="en" x="170.0" y="148" text-anchor="middle">Black coffee</text><text class="lbl" data-lang="zh" x="170.0" y="148" text-anchor="middle">黑咖啡</text>
+    <line class="ax thin" x1="237.20000000000002" y1="122" x2="237.20000000000002" y2="134"/><circle class="dot" cx="237.20000000000002" cy="122" r="3"/>
+    <text class="lbl" data-lang="en" x="237.2" y="148" text-anchor="middle">Blood</text><text class="lbl" data-lang="zh" x="237.2" y="148" text-anchor="middle">血液</text>
+    <line class="ax thin" x1="262.40000000000003" y1="122" x2="262.40000000000003" y2="134"/><circle class="dot" cx="262.40000000000003" cy="122" r="3"/>
+    <text class="lbl" data-lang="en" x="268.4" y="148" text-anchor="start">Baking soda</text><text class="lbl" data-lang="zh" x="268.4" y="148" text-anchor="start">小苏打溶液</text>
+    <line class="ax thin" x1="380.0" y1="122" x2="380.0" y2="134"/><circle class="dot" cx="380.0" cy="122" r="3"/>
+    <text class="lbl" data-lang="en" x="380.0" y="148" text-anchor="middle">Bleach</text><text class="lbl" data-lang="zh" x="380.0" y="148" text-anchor="middle">漂白水</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. Approximate pH of common substances at 25 °C (typical values; real samples vary). Note which side of pH 7 each substance sits on and how far from neutral. Every step to the left is a tenfold increase in $[\mathrm{H^+}]$, so lemon juice (about 2) has roughly $10^{5}$ times the $[\mathrm{H^+}]$ of pure water (pH 7).</span><span data-lang="zh">图 1. 常见物质在 25 °C 的近似 pH（典型值，实际样品会有差异）。注意各物质位于 pH 7 的哪一侧，以及离中性有多远。向左每一格 $[\mathrm{H^+}]$ 增大十倍，所以柠檬汁（约 2）的 $[\mathrm{H^+}]$ 约为纯水（pH 7）的 $10^{5}$ 倍。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 5: pH and pOH calculation</span><span data-lang="zh">例题 5：pH 与 pOH 计算</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 3 &middot; pH and pOH calculation</span><span data-lang="zh">例题 3 &middot; pH 与 pOH 计算</span></div>
     <p><span data-lang="en">A solution has $[\text{H}^+] = 3.5 \times 10^{-4}\ \text{mol/L}$. Find (a) the pH, (b) the pOH, and (c) state whether the solution is acidic, basic, or neutral.</span><span data-lang="zh">某溶液 $[\text{H}^+] = 3.5 \times 10^{-4}\ \text{mol/L}$。求 (a) pH，(b) pOH，(c) 判断溶液是酸性、碱性还是中性。</span></p>
   </div>
   <div class="worked-solution">
@@ -718,6 +930,20 @@ body.lang-zh       [data-lang="en"] { display: none; }
     $$ \text{pOH} = 14 - \text{pH} = 14 - 3.46 = 10.54. $$
     <p><strong><span data-lang="en">(c) Classification.</span><span data-lang="zh">(c) 分类。</span></strong> <span data-lang="en">pH $= 3.46 < 7$, so the solution is <em>acidic</em>. &check;</span><span data-lang="zh">pH $= 3.46 < 7$，故溶液为<em>酸性</em>。&check;</span></p>
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 6: From pH to concentrations</span><span data-lang="zh">例题 6：由 pH 求浓度</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">A solution has pH $8.40$ at $25\,{}^{\circ}\mathrm{C}$. Find $[\mathrm{H^+}]$, pOH and $[\mathrm{OH^-}]$, and classify the solution.</span><span data-lang="zh">某溶液在 $25\,{}^{\circ}\mathrm{C}$ 时 pH 为 $8.40$。求 $[\mathrm{H^+}]$、pOH 和 $[\mathrm{OH^-}]$，并判断溶液的酸碱性。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Hydrogen ion concentration.</strong></span><span data-lang="zh"><strong>氢离子浓度。</strong></span></p>
+      $$ [\mathrm{H^+}] = 10^{-8.40} = 4.0 \times 10^{-9}\ \mathrm{mol\,L^{-1}}. $$
+<p><span data-lang="en"><strong>pOH and hydroxide ion concentration.</strong></span><span data-lang="zh"><strong>pOH 与氢氧根离子浓度。</strong></span></p>
+      $$ \mathrm{pOH} = 14.00 - 8.40 = 5.60, \qquad [\mathrm{OH^-}] = 10^{-5.60} = 2.5 \times 10^{-6}\ \mathrm{mol\,L^{-1}}. $$
+<p><span data-lang="en"><strong>Check and classify.</strong> $[\mathrm{H^+}][\mathrm{OH^-}] = (4.0 \times 10^{-9})(2.5 \times 10^{-6}) = 1.0 \times 10^{-14}$, which equals $K_w$. Since $\mathrm{pH} = 8.40 > 7$ and $[\mathrm{OH^-}] > [\mathrm{H^+}]$, the solution is <em>basic</em>. &check;</span><span data-lang="zh"><strong>检验并分类。</strong>$[\mathrm{H^+}][\mathrm{OH^-}] = (4.0 \times 10^{-9})(2.5 \times 10^{-6}) = 1.0 \times 10^{-14}$，等于 $K_w$。由于 $\mathrm{pH} = 8.40 > 7$ 且 $[\mathrm{OH^-}] > [\mathrm{H^+}]$，溶液为<em>碱性</em>。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A solution has $[\text{H}^+] = 1.0 \times 10^{-9}\ \text{mol/L}$. What is its pH?</span><span data-lang="zh">某溶液 $[\text{H}^+] = 1.0 \times 10^{-9}\ \text{mol/L}$。其 pH 是多少？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
@@ -737,12 +963,33 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$; acidic</span><span data-lang="zh">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$；酸性</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">$[\text{OH}^-] = 4.0\ \text{mol/L}$; basic</span><span data-lang="zh">$[\text{OH}^-] = 4.0\ \text{mol/L}$；碱性</span></div>
-      <div class="quiz-opt" data-idx="2"><span data-lang="en">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$; acidic (pH $= 10$, but this solution has low OH⁻, so pH $= 14 - 4 = 10$, basic)</span><span data-lang="zh">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$；酸性（pH $= 10$，但此溶液 OH⁻ 少，故 pH $= 14 - 4 = 10$，碱性）</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$; basic</span><span data-lang="zh">$[\text{OH}^-] = 1.0 \times 10^{-4}\ \text{mol/L}$；碱性</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">$[\text{OH}^-] = 1.0 \times 10^{-10}\ \text{mol/L}$; acidic</span><span data-lang="zh">$[\text{OH}^-] = 1.0 \times 10^{-10}\ \text{mol/L}$；酸性</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">$[\text{OH}^-] = 10^{-\text{pOH}} = 10^{-4} = 1.0 \times 10^{-4}\ \text{mol/L}$. pH $= 14 - 4 = 10 > 7$, so the solution is <em>basic</em>. pOH $= 4$ (relatively low OH⁻ for a base, but still basic). Option (c) stated the correct concentration but then incorrectly said "acidic".</span><span data-lang="zh">$[\text{OH}^-] = 10^{-\text{pOH}} = 10^{-4} = 1.0 \times 10^{-4}\ \text{mol/L}$。pH $= 14 - 4 = 10 > 7$，故溶液为<em>碱性</em>。pOH $= 4$（对于碱来说 OH⁻ 相对较少，但仍为碱性）。选项 (c) 给出了正确的浓度但错误地说"酸性"。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">$[\text{OH}^-] = 10^{-\text{pOH}} = 10^{-4} = 1.0 \times 10^{-4}\ \text{mol/L}$. pH $= 14 - 4.0 = 10.0 > 7$, so the solution is <em>basic</em>. The first option gives the correct concentration but the wrong classification.</span><span data-lang="zh">$[\text{OH}^-] = 10^{-\text{pOH}} = 10^{-4} = 1.0 \times 10^{-4}\ \text{mol/L}$。pH $= 14 - 4.0 = 10.0 > 7$，故溶液为<em>碱性</em>。第一个选项给出了正确的浓度，但酸碱性判断错误。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">$[\text{OH}^-] = 10^{-\text{pOH}}$. For pOH $= 4$: $[\text{OH}^-] = 10^{-4}\ \text{mol/L}$. pH $= 14 - 4 = 10$, which is $> 7$: basic, not acidic.</span><span data-lang="zh">$[\text{OH}^-] = 10^{-\text{pOH}}$。pOH $= 4$ 时：$[\text{OH}^-] = 10^{-4}\ \text{mol/L}$。pH $= 14 - 4 = 10$，大于 7：碱性，而非酸性。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For <em>calculate</em>, show the substitution into $-\log$ and give the concentration with its unit. The digits after the decimal point in a pH equal the significant figures in the concentration, so $3.5 \times 10^{-4}\ \mathrm{mol\,L^{-1}}$ gives $3.46$, not $3.4559$. Common errors: reporting $-\log[\mathrm{OH^-}]$ as the pH (it is the pOH), and dropping the negative sign so that an acid comes out with a negative pH. Finish with a reasonableness check: an acid must have pH below 7.</p><p data-lang="zh">对于 <code>calculate</code>（计算）类题，写出代入 $-\log$ 的过程，并给出带单位的浓度。pH 小数点后的位数等于浓度的有效数字位数，所以 $3.5 \times 10^{-4}\ \mathrm{mol\,L^{-1}}$ 得 $3.46$，而不是 $3.4559$。常见错误：把 $-\log[\mathrm{OH^-}]$ 当作 pH（它是 pOH），以及漏掉负号使酸得出负的 pH。最后做合理性检查：酸的 pH 必须小于 7。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Calculate the pH of $0.0075\ \mathrm{mol\,L^{-1}}$ $\mathrm{HNO_3}$.</span><span data-lang="zh">1. 计算 $0.0075\ \mathrm{mol\,L^{-1}}$ $\mathrm{HNO_3}$ 的 pH。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{HNO_3}$ is a strong acid, so $[\mathrm{H^+}] = 7.5 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$ and $\mathrm{pH} = -\log(7.5 \times 10^{-3}) = 2.12$ (two decimals for two significant figures).</p><p data-lang="zh">$\mathrm{HNO_3}$ 是强酸，所以 $[\mathrm{H^+}] = 7.5 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$，$\mathrm{pH} = -\log(7.5 \times 10^{-3}) = 2.12$（两位有效数字对应两位小数）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Lemon juice has pH $2.0$ and black coffee has pH $5.0$. How many times larger is $[\mathrm{H^+}]$ in the lemon juice?</span><span data-lang="zh">2. 柠檬汁的 pH 为 $2.0$，黑咖啡的 pH 为 $5.0$。柠檬汁中的 $[\mathrm{H^+}]$ 是黑咖啡的多少倍？</span></summary>
+      <div class="sg-a"><p data-lang="en">The pH differs by $3.0$ units, so the ratio is $10^{3.0} = 1000$. The lemon juice has $1000$ times the $[\mathrm{H^+}]$.</p><p data-lang="zh">pH 相差 $3.0$ 个单位，所以比值为 $10^{3.0} = 1000$。柠檬汁的 $[\mathrm{H^+}]$ 是黑咖啡的 $1000$ 倍。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A cleaning solution has $[\mathrm{OH^-}] = 3.2 \times 10^{-4}\ \mathrm{mol\,L^{-1}}$ at $25\,{}^{\circ}\mathrm{C}$. Find its pOH and pH and classify it.</span><span data-lang="zh">3. 某清洁液在 $25\,{}^{\circ}\mathrm{C}$ 时 $[\mathrm{OH^-}] = 3.2 \times 10^{-4}\ \mathrm{mol\,L^{-1}}$。求其 pOH 和 pH，并判断酸碱性。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{pOH} = -\log(3.2 \times 10^{-4}) = 3.49$, so $\mathrm{pH} = 14.00 - 3.49 = 10.51$. Since $\mathrm{pH} > 7$, the solution is basic.</p><p data-lang="zh">$\mathrm{pOH} = -\log(3.2 \times 10^{-4}) = 3.49$，所以 $\mathrm{pH} = 14.00 - 3.49 = 10.51$。由于 $\mathrm{pH} > 7$，溶液为碱性。</p></div>
+    </details>
   </div>
 </section>
 
@@ -752,10 +999,16 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 4 &middot; Neutralization</span><span data-lang="zh">第 4 节 &middot; 中和反应</span></div>
   <h2><span data-lang="en">Neutralization</span><span data-lang="zh">中和反应</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Write balanced molecular and net ionic equations for a strong acid and strong base neutralization.</li><li>Name the salt formed from the cation of the base and the anion of the acid.</li><li>Use mole ratios, including diprotic and triprotic acids, to find the volume or amount of base needed for complete neutralization.</li><li>Calculate the pH of a mixture in which acid or base is left over after partial neutralization.</li></ul>
+    <ul data-lang="zh"><li>书写强酸与强碱中和反应的配平分子方程式和净离子方程式。</li><li>说出由碱的阳离子与酸的阴离子形成的盐。</li><li>利用摩尔比（包括二元酸和三元酸）求完全中和所需碱的体积或物质的量。</li><li>计算部分中和后仍有酸或碱剩余的混合溶液的 pH。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Acid + base → salt + water; H⁺ meets OH⁻.</span><span data-lang="zh">酸 + 碱 → 盐 + 水；H⁺ 与 OH⁻ 结合。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Neutralization reaction</span><span data-lang="zh">中和反应</span></strong> <span data-lang="en">&mdash; a reaction between an acid and a base that produces a salt and water. The net ionic equation for strong acid + strong base is always:</span><span data-lang="zh">&mdash; 酸与碱之间的反应，产生盐和水。强酸 + 强碱的净离子方程式始终为：</span></li>
+      <li><strong><span data-lang="en">Neutralization reaction</span><span data-lang="zh">中和反应</span></strong><span data-lang="en">: a reaction between an acid and a base that produces a salt and water. The net ionic equation for strong acid + strong base is always:</span><span data-lang="zh">：酸与碱之间的反应，产生盐和水。强酸 + 强碱的净离子方程式始终为：</span></li>
     </ul>
     $$ \text{H}^+(aq) + \text{OH}^-(aq) \to \text{H}_2\text{O}(l) $$
     <ul style="margin: 4px 0 0 22px; font-size: 0.94rem;">
@@ -769,8 +1022,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">AB Chemistry 20 GO2: "define neutralization as a reaction between hydronium and hydroxide ions." SCH3U Strand C: C2.1 lists "neutralization" in the assessed terminology list; E2.5 "write balanced net ionic equations to represent neutralization reactions."</span><span data-lang="zh">AB Chemistry 20 GO2："将中和定义为水合氢离子与氢氧根离子之间的反应。"SCH3U C 单元：C2.1 把"中和"列入评估术语列表；E2.5"书写平衡的净离子方程式以表示中和反应。"</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 7: Neutralization stoichiometry</span><span data-lang="zh">例题 7：中和反应计量</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 4 &middot; Neutralization stoichiometry</span><span data-lang="zh">例题 4 &middot; 中和反应计量</span></div>
     <p><span data-lang="en">What volume of 0.250 mol/L NaOH solution is needed to completely neutralize 35.0 mL of 0.150 mol/L H₂SO₄? (H₂SO₄ is diprotic: 2 OH⁻ per H₂SO₄.)</span><span data-lang="zh">需要多少毫升 0.250 mol/L NaOH 溶液才能完全中和 35.0 mL 0.150 mol/L H₂SO₄？（H₂SO₄ 是二元酸：每个 H₂SO₄ 需要 2 个 OH⁻。）</span></p>
   </div>
   <div class="worked-solution">
@@ -781,6 +1035,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p><strong><span data-lang="en">Volume of NaOH solution.</span><span data-lang="zh">NaOH 溶液的体积。</span></strong></p>
     $$ V = \frac{n}{c} = \frac{1.05 \times 10^{-2}}{0.250} = 0.0420\ \text{L} = 42.0\ \text{mL}. \quad \checkmark $$
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 8: A mixture with excess base</span><span data-lang="zh">例题 8：碱过量的混合溶液</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">$25.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ HCl is mixed with $40.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ NaOH. Find the pH of the final solution at $25\,{}^{\circ}\mathrm{C}$. Assume the volumes add.</span><span data-lang="zh">将 $25.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ HCl 与 $40.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ NaOH 混合。求最终溶液在 $25\,{}^{\circ}\mathrm{C}$ 时的 pH。假设体积可加。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Amounts before mixing.</strong></span><span data-lang="zh"><strong>混合前的物质的量。</strong></span></p>
+      $$ n_{\mathrm{HCl}} = (0.0250\ \mathrm{L})(0.100\ \mathrm{mol\,L^{-1}}) = 2.50 \times 10^{-3}\ \mathrm{mol}, \qquad n_{\mathrm{NaOH}} = (0.0400\ \mathrm{L})(0.100\ \mathrm{mol\,L^{-1}}) = 4.00 \times 10^{-3}\ \mathrm{mol}. $$
+<p><span data-lang="en"><strong>Excess.</strong> The reaction is $1:1$, so all the HCl is used and $4.00 \times 10^{-3} - 2.50 \times 10^{-3} = 1.50 \times 10^{-3}\ \mathrm{mol}$ of $\mathrm{OH^-}$ is left in $65.0\ \mathrm{mL}$.</span><span data-lang="zh"><strong>剩余量。</strong>反应为 $1:1$，所以 HCl 全部用完，$65.0\ \mathrm{mL}$ 溶液中剩下 $4.00 \times 10^{-3} - 2.50 \times 10^{-3} = 1.50 \times 10^{-3}\ \mathrm{mol}$ 的 $\mathrm{OH^-}$。</span></p>
+      $$ [\mathrm{OH^-}] = \frac{1.50 \times 10^{-3}\ \mathrm{mol}}{0.0650\ \mathrm{L}} = 2.31 \times 10^{-2}\ \mathrm{mol\,L^{-1}}. $$
+<p><span data-lang="en"><strong>pH.</strong></span><span data-lang="zh"><strong>pH。</strong></span></p>
+      $$ \mathrm{pOH} = -\log(2.31 \times 10^{-2}) = 1.64, \qquad \mathrm{pH} = 14.00 - 1.64 = 12.36. $$
+<p><span data-lang="en">Divide by the <em>total</em> volume ($25.0 + 40.0 = 65.0\ \mathrm{mL}$), not by the volume of one solution. &check;</span><span data-lang="zh">要除以<em>总</em>体积（$25.0 + 40.0 = 65.0\ \mathrm{mL}$），而不是某一种溶液的体积。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is always produced in a neutralization reaction between a strong acid and a strong base?</span><span data-lang="zh">强酸与强碱中和反应中，一定会生成什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
@@ -807,6 +1077,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-explain wrong-exp"><span data-lang="en">Each H⁺ requires one OH⁻. H₃PO₄ has 3 acidic H⁺ to donate, so the mole ratio is 1 H₃PO₄ : 3 NaOH. $n_\text{NaOH} = 3 \times 0.020 = 0.060\ \text{mol}$.</span><span data-lang="zh">每个 H⁺ 需要一个 OH⁻。H₃PO₄ 有 3 个可提供的酸性 H⁺，故摩尔比为 1 H₃PO₄：3 NaOH。$n_\text{NaOH} = 3 \times 0.020 = 0.060\ \text{mol}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Balance the molecular equation first, because its coefficients give the mole ratio you need. For a <em>net ionic equation</em>, cancel the spectator ions (the cation of the base and the anion of the acid). For a mixture, find the amount (mol) of each reactant before combining volumes, decide which is in excess, and divide the leftover amount by the <em>total</em> volume. Common errors: forgetting that a diprotic or triprotic acid needs two or three hydroxides per molecule, and finishing with the pH of a neutral solution when one reactant is in excess.</p><p data-lang="zh">先配平分子方程式，因为其系数给出所需的摩尔比。写<em>净离子方程式</em>（<code>net ionic equation</code>）时，消去旁观离子（碱的阳离子和酸的阴离子）。对于混合溶液，先求各反应物的物质的量（mol），判断哪一种过量，再用剩余的量除以<em>总</em>体积。常见错误：忘记二元酸或三元酸每个分子需要两个或三个氢氧根；以及在某一反应物过量时仍给出中性溶液的 pH。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write the balanced molecular equation and the net ionic equation for $\mathrm{HNO_3}$ reacting with $\mathrm{Ca(OH)_2}$.</span><span data-lang="zh">1. 写出 $\mathrm{HNO_3}$ 与 $\mathrm{Ca(OH)_2}$ 反应的配平分子方程式和净离子方程式。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{2\,HNO_3(aq) + Ca(OH)_2(aq) \to Ca(NO_3)_2(aq) + 2\,H_2O(l)}$. Net ionic: $\mathrm{H^+(aq) + OH^-(aq) \to H_2O(l)}$. The spectator ions are $\mathrm{Ca^{2+}}$ and $\mathrm{NO_3^-}$.</p><p data-lang="zh">$\mathrm{2\,HNO_3(aq) + Ca(OH)_2(aq) \to Ca(NO_3)_2(aq) + 2\,H_2O(l)}$。净离子方程式：$\mathrm{H^+(aq) + OH^-(aq) \to H_2O(l)}$。旁观离子为 $\mathrm{Ca^{2+}}$ 和 $\mathrm{NO_3^-}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What volume of $0.200\ \mathrm{mol\,L^{-1}}$ KOH completely neutralizes $20.0\ \mathrm{mL}$ of $0.150\ \mathrm{mol\,L^{-1}}$ $\mathrm{H_3PO_4}$ (all three protons)?</span><span data-lang="zh">2. 多少体积的 $0.200\ \mathrm{mol\,L^{-1}}$ KOH 能完全中和 $20.0\ \mathrm{mL}$ $0.150\ \mathrm{mol\,L^{-1}}$ $\mathrm{H_3PO_4}$（三个质子全部中和）？</span></summary>
+      <div class="sg-a"><p data-lang="en">$n(\mathrm{H_3PO_4}) = (0.0200\ \mathrm{L})(0.150\ \mathrm{mol\,L^{-1}}) = 3.00 \times 10^{-3}\ \mathrm{mol}$. Three hydroxides per molecule: $n(\mathrm{KOH}) = 9.00 \times 10^{-3}\ \mathrm{mol}$. $V = 9.00 \times 10^{-3} / 0.200 = 0.0450\ \mathrm{L} = 45.0\ \mathrm{mL}$.</p><p data-lang="zh">$n(\mathrm{H_3PO_4}) = (0.0200\ \mathrm{L})(0.150\ \mathrm{mol\,L^{-1}}) = 3.00 \times 10^{-3}\ \mathrm{mol}$。每个分子需要三个氢氧根：$n(\mathrm{KOH}) = 9.00 \times 10^{-3}\ \mathrm{mol}$。$V = 9.00 \times 10^{-3} / 0.200 = 0.0450\ \mathrm{L} = 45.0\ \mathrm{mL}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. $30.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ HCl is mixed with $20.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ NaOH. Is the final solution acidic, neutral or basic? Find its pH.</span><span data-lang="zh">3. 将 $30.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ HCl 与 $20.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ NaOH 混合。最终溶液是酸性、中性还是碱性？求其 pH。</span></summary>
+      <div class="sg-a"><p data-lang="en">$n(\mathrm{HCl}) = 3.00 \times 10^{-3}\ \mathrm{mol}$ and $n(\mathrm{NaOH}) = 2.00 \times 10^{-3}\ \mathrm{mol}$, so $1.00 \times 10^{-3}\ \mathrm{mol}$ of $\mathrm{H^+}$ is left in $50.0\ \mathrm{mL}$. $[\mathrm{H^+}] = 0.0200\ \mathrm{mol\,L^{-1}}$, $\mathrm{pH} = 1.70$: acidic.</p><p data-lang="zh">$n(\mathrm{HCl}) = 3.00 \times 10^{-3}\ \mathrm{mol}$，$n(\mathrm{NaOH}) = 2.00 \times 10^{-3}\ \mathrm{mol}$，所以 $50.0\ \mathrm{mL}$ 溶液中剩下 $1.00 \times 10^{-3}\ \mathrm{mol}$ $\mathrm{H^+}$。$[\mathrm{H^+}] = 0.0200\ \mathrm{mol\,L^{-1}}$，$\mathrm{pH} = 1.70$：酸性。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
@@ -815,20 +1106,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 5 &middot; Titration and the equivalence point</span><span data-lang="zh">第 5 节 &middot; 滴定与终点</span></div>
   <h2><span data-lang="en">Titration and the Equivalence Point</span><span data-lang="zh">滴定与终点</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe a titration and define titrant, analyte, equivalence point and end point.</li><li>Calculate an unknown concentration from titration volumes, using the mole ratio.</li><li>Calculate the pH before, at and after the equivalence point of a strong acid and strong base titration.</li><li>Sketch and interpret the titration curve: starting pH, steep rise, equivalence point.</li><li>Choose an indicator whose colour change lies in the steep part of the curve.</li><li>State how the equivalence point of a weak acid and strong base titration differs, and that the half-equivalence pH equals $\mathrm{p}K_a$.</li></ul>
+    <ul data-lang="zh"><li>描述滴定，并定义滴定液、被分析物、等当点和指示剂变色点。</li><li>利用摩尔比，由滴定体积计算未知浓度。</li><li>计算强酸与强碱滴定在等当点之前、等当点处和等当点之后的 pH。</li><li>画出并解读滴定曲线：起始 pH、陡升段、等当点。</li><li>选择变色范围落在曲线陡升段内的指示剂。</li><li>说明弱酸与强碱滴定的等当点有何不同，并说明半等当点处 pH 等于 $\mathrm{p}K_a$。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Titration measures unknown concentration; the equivalence point is where moles match.</span><span data-lang="zh">滴定测定未知浓度；终点处摩尔数匹配。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Titration</span><span data-lang="zh">滴定</span></strong> <span data-lang="en">&mdash; a technique where a solution of known concentration (the <em>titrant</em>) is added to a solution of unknown concentration (the <em>analyte</em>) until the reaction is complete.</span><span data-lang="zh">&mdash; 将已知浓度溶液（<em>滴定液</em>）加入未知浓度溶液（<em>被分析物</em>）中，直到反应完全的技术。</span></li>
-      <li><strong><span data-lang="en">Equivalence point</span><span data-lang="zh">终点</span></strong> <span data-lang="en">&mdash; the point at which stoichiometrically equivalent amounts of acid and base have been mixed ($n_{\text{H}^+} = n_{\text{OH}^-}$). For strong acid/strong base, the equivalence point is at pH 7. For weak acid/strong base, the equivalence point is at pH $> 7$ (conjugate base is present).</span><span data-lang="zh">&mdash; 酸和碱的化学计量等量混合的点（$n_{\text{H}^+} = n_{\text{OH}^-}$）。对于强酸/强碱，终点在 pH 7。对于弱酸/强碱，终点在 pH $> 7$（共轭碱存在）。</span></li>
-      <li><strong><span data-lang="en">Indicator end point</span><span data-lang="zh">指示剂终点</span></strong> <span data-lang="en">&mdash; the colour change of the indicator. Choose an indicator whose $\text{p}K_a$ is close to the equivalence point pH. AB Chemistry 20 distinguishes end point (indicator change) from equivalence point (stoichiometric point).</span><span data-lang="zh">&mdash; 指示剂的颜色变化。选择 $\text{p}K_a$ 接近终点 pH 的指示剂。AB Chemistry 20 区分指示剂终点（颜色变化）与化学计量终点（等量点）。</span></li>
+      <li><strong><span data-lang="en">Titration</span><span data-lang="zh">滴定</span></strong><span data-lang="en">: a technique where a solution of known concentration (the <em>titrant</em>) is added to a solution of unknown concentration (the <em>analyte</em>) until the reaction is complete.</span><span data-lang="zh">：将已知浓度溶液（<em>滴定液</em>）加入未知浓度溶液（<em>被分析物</em>）中，直到反应完全的技术。</span></li>
+      <li><strong><span data-lang="en">Equivalence point</span><span data-lang="zh">终点</span></strong><span data-lang="en">: the point at which stoichiometrically equivalent amounts of acid and base have been mixed ($n_{\text{H}^+} = n_{\text{OH}^-}$). For strong acid/strong base, the equivalence point is at pH 7. For weak acid/strong base, the equivalence point is at pH $> 7$ (conjugate base is present).</span><span data-lang="zh">：酸和碱的化学计量等量混合的点（$n_{\text{H}^+} = n_{\text{OH}^-}$）。对于强酸/强碱，终点在 pH 7。对于弱酸/强碱，终点在 pH $> 7$（共轭碱存在）。</span></li>
+      <li><strong><span data-lang="en">Indicator end point</span><span data-lang="zh">指示剂终点</span></strong><span data-lang="en">: the colour change of the indicator. Choose an indicator whose $\text{p}K_a$ is close to the equivalence point pH. AB Chemistry 20 distinguishes end point (indicator change) from equivalence point (stoichiometric point).</span><span data-lang="zh">：指示剂的颜色变化。选择 $\text{p}K_a$ 接近终点 pH 的指示剂。AB Chemistry 20 区分指示剂终点（颜色变化）与化学计量终点（等量点）。</span></li>
       <li><strong><span data-lang="en">Key formula:</span><span data-lang="zh">关键公式：</span></strong></li>
     </ul>
     $$ c_a V_a = c_b V_b \quad \text{(for 1:1 monoprotic acid-base)} $$
     <span data-lang="en">SCH3U E2.7: "determine the concentration of an acid or a base in a solution … using the acid–base titration technique." AB Chemistry 20 Unit D GO2: "draw and interpret titration curves, using data from titration experiments involving strong monoprotic acids and strong monoprotic bases; describe the function and choice of indicators in titrations; identify equivalence points."</span><span data-lang="zh">SCH3U E2.7："用酸碱滴定技术测定溶液中酸或碱的浓度。"AB Chemistry 20 D 单元 GO2："用强单质子酸-强单质子碱滴定实验数据绘制和解读滴定曲线；描述指示剂在滴定中的作用和选择；识别等量点。"</span>
   </div>
 
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 262" role="img" aria-label="Titration curve of 25.0 mL of 0.100 M hydrochloric acid with 0.100 M sodium hydroxide. The pH starts at 1.00, rises slowly, jumps steeply through the equivalence point at 25.0 mL and pH 7.00, then levels off near pH 12.5.">
+    <line class="ax" x1="50" y1="210" x2="410" y2="210"/><line class="ax" x1="50" y1="210" x2="50" y2="21"/>
+    <line class="ax" x1="50.0" y1="210" x2="50.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="50.0" y="229" text-anchor="middle">0</text><text class="lbl" data-lang="zh" x="50.0" y="229" text-anchor="middle">0</text>
+    <line class="ax" x1="122.0" y1="210" x2="122.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="122.0" y="229" text-anchor="middle">10</text><text class="lbl" data-lang="zh" x="122.0" y="229" text-anchor="middle">10</text>
+    <line class="ax" x1="194.0" y1="210" x2="194.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="194.0" y="229" text-anchor="middle">20</text><text class="lbl" data-lang="zh" x="194.0" y="229" text-anchor="middle">20</text>
+    <line class="ax" x1="266.0" y1="210" x2="266.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="266.0" y="229" text-anchor="middle">30</text><text class="lbl" data-lang="zh" x="266.0" y="229" text-anchor="middle">30</text>
+    <line class="ax" x1="338.0" y1="210" x2="338.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="338.0" y="229" text-anchor="middle">40</text><text class="lbl" data-lang="zh" x="338.0" y="229" text-anchor="middle">40</text>
+    <line class="ax" x1="410.0" y1="210" x2="410.0" y2="215"/>
+    <text class="lbl" data-lang="en" x="410.0" y="229" text-anchor="middle">50</text><text class="lbl" data-lang="zh" x="410.0" y="229" text-anchor="middle">50</text>
+    <line class="ax" x1="45" y1="210.0" x2="50" y2="210.0"/>
+    <text class="lbl" data-lang="en" x="40" y="214.0" text-anchor="end">0</text><text class="lbl" data-lang="zh" x="40" y="214.0" text-anchor="end">0</text>
+    <line class="ax" x1="45" y1="183.0" x2="50" y2="183.0"/>
+    <text class="lbl" data-lang="en" x="40" y="187.0" text-anchor="end">2</text><text class="lbl" data-lang="zh" x="40" y="187.0" text-anchor="end">2</text>
+    <line class="ax" x1="45" y1="156.0" x2="50" y2="156.0"/>
+    <text class="lbl" data-lang="en" x="40" y="160.0" text-anchor="end">4</text><text class="lbl" data-lang="zh" x="40" y="160.0" text-anchor="end">4</text>
+    <line class="ax" x1="45" y1="129.0" x2="50" y2="129.0"/>
+    <text class="lbl" data-lang="en" x="40" y="133.0" text-anchor="end">6</text><text class="lbl" data-lang="zh" x="40" y="133.0" text-anchor="end">6</text>
+    <line class="ax" x1="45" y1="102.0" x2="50" y2="102.0"/>
+    <text class="lbl" data-lang="en" x="40" y="106.0" text-anchor="end">8</text><text class="lbl" data-lang="zh" x="40" y="106.0" text-anchor="end">8</text>
+    <line class="ax" x1="45" y1="75.0" x2="50" y2="75.0"/>
+    <text class="lbl" data-lang="en" x="40" y="79.0" text-anchor="end">10</text><text class="lbl" data-lang="zh" x="40" y="79.0" text-anchor="end">10</text>
+    <line class="ax" x1="45" y1="48.0" x2="50" y2="48.0"/>
+    <text class="lbl" data-lang="en" x="40" y="52.0" text-anchor="end">12</text><text class="lbl" data-lang="zh" x="40" y="52.0" text-anchor="end">12</text>
+    <line class="ax" x1="45" y1="21.0" x2="50" y2="21.0"/>
+    <text class="lbl" data-lang="en" x="40" y="25.0" text-anchor="end">14</text><text class="lbl" data-lang="zh" x="40" y="25.0" text-anchor="end">14</text>
+    <line class="ax dash thin" x1="50" y1="115.5" x2="230.0" y2="115.5"/><line class="ax dash thin" x1="230.0" y1="115.5" x2="230.0" y2="210"/>
+    <polyline class="c1" points="50.0,196.5 57.2,196.0 64.4,195.6 71.6,195.1 78.8,194.6 86.0,194.1 93.2,193.6 100.4,193.1 107.6,192.6 114.8,192.1 122.0,191.5 129.2,191.0 136.4,190.4 143.6,189.7 150.8,189.1 158.0,188.4 165.2,187.6 172.4,186.8 179.6,185.9 186.8,184.8 194.0,183.6 201.2,182.2 208.4,180.4 215.6,177.9 222.8,173.7 226.4,169.6 228.6,164.2 229.3,160.1 229.6,156.0 230.0,115.5 230.4,75.0 230.7,70.9 231.4,66.9 233.6,61.6 237.2,57.6 244.4,53.6 251.6,51.3 258.8,49.8 266.0,48.6 273.2,47.6 280.4,46.8 287.6,46.1 294.8,45.5 302.0,45.0 309.2,44.5 316.4,44.1 323.6,43.8 330.8,43.4 338.0,43.1 345.2,42.8 352.4,42.5 359.6,42.3 366.8,42.1 374.0,41.8 381.2,41.6 388.4,41.5 395.6,41.3 402.8,41.1 410.0,40.9"/>
+    <circle class="dot" cx="230.0" cy="115.5" r="3.5"/><circle class="dot" cx="50.0" cy="196.5" r="3.5"/>
+    <text class="lbl" data-lang="en" x="238" y="148">Equivalence point</text><text class="lbl" data-lang="zh" x="238" y="148">等当点</text>
+    <text class="lbl" data-lang="en" x="238" y="165">25.0 mL, pH 7.00</text><text class="lbl" data-lang="zh" x="238" y="165">25.0 mL，pH 7.00</text>
+    <text class="lbl" data-lang="en" x="58" y="178">Start: pH 1.00</text><text class="lbl" data-lang="zh" x="58" y="178">起点：pH 1.00</text>
+    <text class="lbl" data-lang="en" x="218" y="56" text-anchor="end">Steep rise: pH 4 to 10</text><text class="lbl" data-lang="zh" x="218" y="56" text-anchor="end">陡升：pH 4 至 10</text>
+    <text class="lbl" data-lang="en" x="218" y="73" text-anchor="end">from 24.95 to 25.05 mL</text><text class="lbl" data-lang="zh" x="218" y="73" text-anchor="end">在 24.95 至 25.05 mL 之间</text>
+    <text class="lbl" data-lang="en" x="56" y="14">pH</text><text class="lbl" data-lang="zh" x="56" y="14">pH</text>
+    <text class="lbl" data-lang="en" x="230" y="253" text-anchor="middle">Volume of NaOH added (mL)</text><text class="lbl" data-lang="zh" x="230" y="253" text-anchor="middle">加入 NaOH 的体积 (mL)</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. Titration of $25.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ HCl with $0.100\ \mathrm{mol\,L^{-1}}$ NaOH. Read the curve against the dashed lines: the equivalence point is at $25.0\ \mathrm{mL}$ and pH $7.00$, and the pH starts at $1.00$. The curve climbs slowly, then rises by six pH units within $0.10\ \mathrm{mL}$ of the equivalence point.</span><span data-lang="zh">图 2. 用 $0.100\ \mathrm{mol\,L^{-1}}$ NaOH 滴定 $25.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ HCl。对照虚线读图：等当点在 $25.0\ \mathrm{mL}$、pH $7.00$ 处，起始 pH 为 $1.00$。曲线先缓慢上升，随后在等当点附近 $0.10\ \mathrm{mL}$ 内上升六个 pH 单位。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 9: Finding unknown acid concentration from titration</span><span data-lang="zh">例题 9：从滴定确定未知酸浓度</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 5 &middot; Finding unknown acid concentration from titration</span><span data-lang="zh">例题 5 &middot; 从滴定确定未知酸浓度</span></div>
     <p><span data-lang="en">In a titration, 24.6 mL of 0.120 mol/L NaOH is required to neutralize 15.0 mL of HCl solution. What is the concentration of the HCl?</span><span data-lang="zh">在一次滴定中，需要 24.6 mL 0.120 mol/L NaOH 才能中和 15.0 mL HCl 溶液。HCl 的浓度是多少？</span></p>
   </div>
   <div class="worked-solution">
@@ -838,6 +1181,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p><strong><span data-lang="en">Concentration of HCl.</span><span data-lang="zh">HCl 的浓度。</span></strong></p>
     $$ c_{\text{HCl}} = \frac{n}{V} = \frac{2.952 \times 10^{-3}}{0.0150} = 0.197\ \text{mol/L}. \quad \checkmark $$
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 10: Points on a titration curve</span><span data-lang="zh">例题 10：滴定曲线上的点</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">$25.0\ \mathrm{mL}$ of $0.100\ \mathrm{mol\,L^{-1}}$ HCl is titrated with $0.100\ \mathrm{mol\,L^{-1}}$ NaOH. Calculate the pH after adding (a) $20.0\ \mathrm{mL}$, (b) $25.0\ \mathrm{mL}$ and (c) $30.0\ \mathrm{mL}$ of NaOH. These are three points on Figure 2.</span><span data-lang="zh">用 $0.100\ \mathrm{mol\,L^{-1}}$ NaOH 滴定 $25.0\ \mathrm{mL}$ $0.100\ \mathrm{mol\,L^{-1}}$ HCl。计算加入 (a) $20.0\ \mathrm{mL}$、(b) $25.0\ \mathrm{mL}$ 和 (c) $30.0\ \mathrm{mL}$ NaOH 后的 pH。这是图 2 上的三个点。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Starting amount.</strong> $n(\mathrm{HCl}) = (0.0250\ \mathrm{L})(0.100\ \mathrm{mol\,L^{-1}}) = 2.50 \times 10^{-3}\ \mathrm{mol}$.</span><span data-lang="zh"><strong>起始物质的量。</strong>$n(\mathrm{HCl}) = (0.0250\ \mathrm{L})(0.100\ \mathrm{mol\,L^{-1}}) = 2.50 \times 10^{-3}\ \mathrm{mol}$。</span></p>
+<p><span data-lang="en"><strong>(a) Before the equivalence point.</strong> $n(\mathrm{NaOH}) = 2.00 \times 10^{-3}\ \mathrm{mol}$, so $5.0 \times 10^{-4}\ \mathrm{mol}$ of $\mathrm{H^+}$ remains in $45.0\ \mathrm{mL}$.</span><span data-lang="zh"><strong>(a) 等当点之前。</strong>$n(\mathrm{NaOH}) = 2.00 \times 10^{-3}\ \mathrm{mol}$，所以 $45.0\ \mathrm{mL}$ 中剩下 $5.0 \times 10^{-4}\ \mathrm{mol}$ $\mathrm{H^+}$。</span></p>
+      $$ [\mathrm{H^+}] = \frac{5.0 \times 10^{-4}}{0.0450} = 1.1 \times 10^{-2}\ \mathrm{mol\,L^{-1}}, \qquad \mathrm{pH} = 1.95. $$
+<p><span data-lang="en"><strong>(b) At the equivalence point.</strong> $n(\mathrm{NaOH}) = n(\mathrm{HCl})$, so only $\mathrm{Na^+}$ and $\mathrm{Cl^-}$ remain. Neither ion reacts with water, so $\mathrm{pH} = 7.00$.</span><span data-lang="zh"><strong>(b) 等当点处。</strong>$n(\mathrm{NaOH}) = n(\mathrm{HCl})$，只剩下 $\mathrm{Na^+}$ 和 $\mathrm{Cl^-}$。这两种离子都不与水反应，所以 $\mathrm{pH} = 7.00$。</span></p>
+<p><span data-lang="en"><strong>(c) After the equivalence point.</strong> $n(\mathrm{NaOH}) = 3.00 \times 10^{-3}\ \mathrm{mol}$, so $5.0 \times 10^{-4}\ \mathrm{mol}$ of $\mathrm{OH^-}$ is in excess in $55.0\ \mathrm{mL}$.</span><span data-lang="zh"><strong>(c) 等当点之后。</strong>$n(\mathrm{NaOH}) = 3.00 \times 10^{-3}\ \mathrm{mol}$，所以 $55.0\ \mathrm{mL}$ 中 $\mathrm{OH^-}$ 过量 $5.0 \times 10^{-4}\ \mathrm{mol}$。</span></p>
+      $$ [\mathrm{OH^-}] = \frac{5.0 \times 10^{-4}}{0.0550} = 9.1 \times 10^{-3}\ \mathrm{mol\,L^{-1}}, \qquad \mathrm{pOH} = 2.04, \qquad \mathrm{pH} = 11.96. $$
+<p><span data-lang="en">The pH is below 7 before the equivalence point, exactly 7 at it, and above 7 after it, matching Figure 2. &check;</span><span data-lang="zh">pH 在等当点之前小于 7，等当点处恰为 7，之后大于 7，与图 2 一致。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">At the equivalence point of a strong acid–strong base titration, the solution pH is:</span><span data-lang="zh">强酸-强碱滴定的终点处，溶液 pH 为：</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
@@ -848,7 +1207,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Equal to 7, because all H⁺ has been neutralized and the salt is neutral</span><span data-lang="zh">等于 7，因为所有 H⁺ 已被中和，盐呈中性</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">At the equivalence point of a strong acid/strong base titration, all H⁺ has been converted to water and all OH⁻ consumed. The only species remaining is the salt (spectator ions). Salts of strong acids and strong bases do not hydrolyze, so pH $= 7$ at 25 °C.</span><span data-lang="zh">在强酸/强碱滴定的终点处，所有 H⁺ 已转化为水，所有 OH⁻ 也被消耗。剩余的唯一物质是盐（旁观离子）。强酸和强碱的盐不会水解，故在 25 °C 时 pH $= 7$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">The equivalence point is where stoichiometric amounts meet — no excess acid or base. For strong/strong, the salt (e.g., NaCl) is neutral. pH = 7. For weak acid/strong base, the equivalence point IS above 7 — but not here.</span><span data-lang="zh">终点是化学计量等量相遇的点——没有过量的酸或碱。对于强酸/强碱，盐（如 NaCl）是中性的。pH = 7。对于弱酸/强碱，终点确实大于 7——但此题不是这种情况。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The equivalence point is where stoichiometric amounts meet, with no excess acid or base. For strong/strong, the salt (e.g., NaCl) is neutral. pH = 7. For weak acid/strong base, the equivalence point IS above 7, but not here.</span><span data-lang="zh">终点是化学计量等量相遇的点，没有过量的酸或碱。对于强酸/强碱，盐（如 NaCl）是中性的。pH = 7。对于弱酸/强碱，终点确实大于 7，但此题不是这种情况。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -866,18 +1225,49 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; the shape of a titration curve and why the equivalence point shifts</span><span data-lang="zh">深入 &mdash; 滴定曲线的形状及终点为何偏移</span></summary>
+    <summary><span data-lang="en">Going deeper: the shape of a titration curve and why the equivalence point shifts</span><span data-lang="zh">深入：滴定曲线的形状及终点为何偏移</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">A strong acid–strong base titration curve has an S-shaped (sigmoidal) pH profile. Far before the equivalence point, pH changes slowly (the acid or base present in excess buffers the solution). Near the equivalence point, the pH jumps sharply (a few drops of titrant span several pH units). Past the equivalence point, pH again changes slowly (now the excess titrant buffers). For a weak acid–strong base titration (e.g., acetic acid + NaOH): (1) The equivalence point is above pH 7 because the conjugate base (CH₃COO⁻) hydrolyzes water: $\text{CH}_3\text{COO}^- + \text{H}_2\text{O} \rightleftharpoons \text{CH}_3\text{COOH} + \text{OH}^-$. (2) The half-equivalence point (where half the weak acid has been neutralized) occurs at pH $= \text{p}K_a$ — a useful fact for extracting Ka from a titration curve. BC Chemistry 12 titration elaboration lists strong acid–strong base, weak acid–strong base, and strong acid–weak base titrations explicitly.</span><span data-lang="zh">强酸-强碱滴定曲线具有 S 形（乙状）pH 曲线。在远离终点之前，pH 变化缓慢（过量的酸或碱缓冲溶液）。在接近终点时，pH 急剧跳变（几滴滴定液就能跨越几个 pH 单位）。过了终点后，pH 再次缓慢变化（此时过量的滴定液缓冲）。对于弱酸-强碱滴定（如乙酸 + NaOH）：(1) 终点高于 pH 7，因为共轭碱（CH₃COO⁻）水解：$\text{CH}_3\text{COO}^- + \text{H}_2\text{O} \rightleftharpoons \text{CH}_3\text{COOH} + \text{OH}^-$。(2) 半等量点（弱酸一半被中和时）发生在 pH $= \text{p}K_a$ 处——这是从滴定曲线提取 Ka 的有用事实。BC Chemistry 12 滴定细化明确列出强酸-强碱、弱酸-强碱和强酸-弱碱滴定。</span></p>
+      <p><span data-lang="en">A strong acid–strong base titration curve has an S-shaped (sigmoidal) pH profile. Far before the equivalence point, pH changes slowly (a large excess of strong acid or strong base sets the pH, so a small addition changes it little). Near the equivalence point, the pH jumps sharply (a few drops of titrant span several pH units). Past the equivalence point, pH again changes slowly (now the excess titrant sets the pH). For a weak acid–strong base titration (e.g., acetic acid + NaOH): (1) The equivalence point is above pH 7 because the conjugate base (CH₃COO⁻) hydrolyzes water: $\text{CH}_3\text{COO}^- + \text{H}_2\text{O} \rightleftharpoons \text{CH}_3\text{COOH} + \text{OH}^-$. (2) The half-equivalence point (where half the weak acid has been neutralized) occurs at pH $= \text{p}K_a$, a useful fact for extracting Ka from a titration curve. BC Chemistry 12 titration elaboration lists strong acid–strong base, weak acid–strong base, and strong acid–weak base titrations explicitly.</span><span data-lang="zh">强酸-强碱滴定曲线具有 S 形（乙状）pH 曲线。在远离终点之前，pH 变化缓慢（大量过量的强酸或强碱决定 pH，少量加入影响很小）。在接近终点时，pH 急剧跳变（几滴滴定液就能跨越几个 pH 单位）。过了终点后，pH 再次缓慢变化（此时过量的滴定液决定 pH）。对于弱酸-强碱滴定（如乙酸 + NaOH）：(1) 终点高于 pH 7，因为共轭碱（CH₃COO⁻）水解：$\text{CH}_3\text{COO}^- + \text{H}_2\text{O} \rightleftharpoons \text{CH}_3\text{COOH} + \text{OH}^-$。(2) 半等量点（弱酸一半被中和时）发生在 pH $= \text{p}K_a$ 处，这是从滴定曲线提取 Ka 的有用事实。BC Chemistry 12 滴定细化明确列出强酸-强碱、弱酸-强碱和强酸-弱碱滴定。</span></p>
     </div>
   </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For <em>calculate</em>, convert volumes to litres, find the amount of the known solution with $n = cV$, and apply the mole ratio from the balanced equation before dividing by the volume of the unknown. For <em>sketch</em>, label the starting pH, the equivalence volume and the equivalence pH, and show the steep section. Common errors: dividing by the <em>total</em> volume instead of the volume of the unknown solution when finding its concentration, forgetting the total volume when finding the pH after the equivalence point, and stating that every equivalence point is at pH 7 (it is only for a strong acid with a strong base).</p><p data-lang="zh">对于 <code>calculate</code>（计算）类题，把体积换成升，用 $n = cV$ 求已知溶液的物质的量，先用配平方程的摩尔比，再除以未知溶液的体积。对于 <code>sketch</code>（画图）类题，标出起始 pH、等当点体积和等当点 pH，并画出陡升段。常见错误：求未知溶液浓度时用了总体积而不是它自己的体积；求等当点之后的 pH 时忘记用总体积；以及声称所有等当点都在 pH 7（只有强酸与强碱才如此）。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Explain the difference between the equivalence point and the end point of a titration.</span><span data-lang="zh">1. 解释滴定的等当点与指示剂变色点之间的区别。</span></summary>
+      <div class="sg-a"><p data-lang="en">The equivalence point is where the amounts of acid and base are in exact stoichiometric ratio. The end point is where the indicator changes colour. A well-chosen indicator makes the two almost coincide.</p><p data-lang="zh">等当点是酸与碱的物质的量恰好符合化学计量比的点。指示剂变色点是指示剂改变颜色的点。选得合适的指示剂能使两者几乎重合。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. $20.0\ \mathrm{mL}$ of $\mathrm{H_2SO_4}$ is neutralized by $30.0\ \mathrm{mL}$ of $0.200\ \mathrm{mol\,L^{-1}}$ NaOH. Find the concentration of the acid.</span><span data-lang="zh">2. $20.0\ \mathrm{mL}$ $\mathrm{H_2SO_4}$ 被 $30.0\ \mathrm{mL}$ $0.200\ \mathrm{mol\,L^{-1}}$ NaOH 中和。求该酸的浓度。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{H_2SO_4 + 2\,NaOH \to Na_2SO_4 + 2\,H_2O}$. $n(\mathrm{NaOH}) = 6.00 \times 10^{-3}\ \mathrm{mol}$, so $n(\mathrm{H_2SO_4}) = 3.00 \times 10^{-3}\ \mathrm{mol}$ and $c = 3.00 \times 10^{-3} / 0.0200 = 0.150\ \mathrm{mol\,L^{-1}}$.</p><p data-lang="zh">$\mathrm{H_2SO_4 + 2\,NaOH \to Na_2SO_4 + 2\,H_2O}$。$n(\mathrm{NaOH}) = 6.00 \times 10^{-3}\ \mathrm{mol}$，所以 $n(\mathrm{H_2SO_4}) = 3.00 \times 10^{-3}\ \mathrm{mol}$，$c = 3.00 \times 10^{-3} / 0.0200 = 0.150\ \mathrm{mol\,L^{-1}}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Bromothymol blue changes colour over pH $6.0$ to $7.6$ and phenolphthalein over pH $8.2$ to $10.0$. Which suits the titration in Figure 2?</span><span data-lang="zh">3. 溴百里酚蓝在 pH $6.0$ 至 $7.6$ 变色，酚酞在 pH $8.2$ 至 $10.0$ 变色。哪一种适用于图 2 的滴定？</span></summary>
+      <div class="sg-a"><p data-lang="en">Both. The pH rises from about $4$ to $10$ within $0.10\ \mathrm{mL}$, so each colour range lies inside the steep section and the colour change occurs within a drop or two of $25.0\ \mathrm{mL}$.</p><p data-lang="zh">两种都适用。pH 在 $0.10\ \mathrm{mL}$ 内从约 $4$ 升到 $10$，两个变色范围都落在陡升段内，变色发生在 $25.0\ \mathrm{mL}$ 附近的一两滴之内。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">4. In a weak acid and strong base titration, the pH at the half-equivalence point is $4.74$. Find $K_a$ of the acid.</span><span data-lang="zh">4. 在弱酸与强碱滴定中，半等当点处的 pH 为 $4.74$。求该酸的 $K_a$。</span></summary>
+      <div class="sg-a"><p data-lang="en">At half-equivalence $\mathrm{pH} = \mathrm{p}K_a = 4.74$, so $K_a = 10^{-4.74} = 1.8 \times 10^{-5}$.</p><p data-lang="zh">半等当点处 $\mathrm{pH} = \mathrm{p}K_a = 4.74$，所以 $K_a = 10^{-4.74} = 1.8 \times 10^{-5}$。</p></div>
+    </details>
+  </div>
 </section>
 
 <hr class="sep">
 
 <section class="section" id="s-9-6">
-  <div class="section-label"><span data-lang="en">Section 6 &middot; Buffers <span class="honors-flag">Honors &mdash; US NGSS / ON SCH3U / AB Chem 20</span></span><span data-lang="zh">第 6 节 &middot; 缓冲溶液 <span class="honors-flag">荣誉 &mdash; US NGSS / ON SCH3U / AB Chem 20</span></span></div>
+  <div class="section-label"><span data-lang="en">Section 6 &middot; Buffers <span class="honors-flag">Honors: US NGSS / ON SCH3U / AB Chem 20</span></span><span data-lang="zh">第 6 节 &middot; 缓冲溶液 <span class="honors-flag">荣誉：US NGSS / ON SCH3U / AB Chem 20</span></span></div>
   <h2><span data-lang="en">Buffers</span><span data-lang="zh">缓冲溶液</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define a buffer and state its composition.</li><li>Explain, with equations, how a buffer resists added acid and added base.</li><li>Calculate the pH of a buffer with the Henderson-Hasselbalch equation.</li><li>Calculate the pH after a small amount of strong acid is added to a buffer.</li><li>Decide whether a given mixture is a buffer.</li></ul>
+    <ul data-lang="zh"><li>定义缓冲溶液并说明其组成。</li><li>用方程解释缓冲溶液如何抵抗加入的酸和碱。</li><li>用亨德森-哈塞尔巴尔赫方程计算缓冲溶液的 pH。</li><li>计算向缓冲溶液加入少量强酸后的 pH。</li><li>判断给定混合物是否是缓冲溶液。</li></ul>
+  </div>
 
   <div class="syllabus-note">
     <strong><span data-lang="en">Curriculum note.</span><span data-lang="zh">课纲提示。</span></strong> <span data-lang="en">Buffers are assessed in ON SCH4U (E3.8), BC Chemistry 12 (Content: "applications of acid-base reactions" with elaboration "buffers"), and AB Chemistry 30 (Unit D GO1: "define a buffer as relatively large amounts of a weak acid or base and its conjugate in equilibrium that maintain a relatively constant pH"). They are not part of the US NGSS assessed floor, ON SCH3U, or AB Chemistry 20. Flag <span class="honors-flag">Honors</span> for those courses.</span><span data-lang="zh">缓冲溶液在 ON SCH4U（E3.8）、BC Chemistry 12（内容："酸碱反应的应用"，细化为"缓冲溶液"）和 AB Chemistry 30（D 单元 GO1："将缓冲溶液定义为在平衡中含有较多弱酸或弱碱及其共轭物、能维持相对恒定 pH 的溶液"）中被评估。它们不在 US NGSS 评估范围、ON SCH3U 或 AB Chemistry 20 中。为这些课程标注 <span class="honors-flag">Honors</span>。</span>
@@ -886,8 +1276,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="cram-cheat">
     <strong><span data-lang="en">A buffer resists pH change when small amounts of acid or base are added.</span><span data-lang="zh">缓冲溶液在加入少量酸或碱时能抵抗 pH 变化。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Composition</span><span data-lang="zh">组成</span></strong> <span data-lang="en">&mdash; a weak acid (HA) and its conjugate base (A⁻) in comparable amounts, or a weak base (B) and its conjugate acid (BH⁺).</span><span data-lang="zh">&mdash; 弱酸（HA）与其共轭碱（A⁻）等量混合，或弱碱（B）与其共轭酸（BH⁺）等量混合。</span></li>
-      <li><strong><span data-lang="en">How it works</span><span data-lang="zh">工作原理</span></strong> <span data-lang="en">&mdash; add H⁺: the base component (A⁻) absorbs it: $\text{A}^- + \text{H}^+ \to \text{HA}$. Add OH⁻: the acid component (HA) neutralizes it: $\text{HA} + \text{OH}^- \to \text{A}^- + \text{H}_2\text{O}$. In both cases, the ratio [A⁻]/[HA] barely changes, so pH barely changes.</span><span data-lang="zh">&mdash; 加入 H⁺：碱性组分（A⁻）吸收它：$\text{A}^- + \text{H}^+ \to \text{HA}$。加入 OH⁻：酸性组分（HA）中和它：$\text{HA} + \text{OH}^- \to \text{A}^- + \text{H}_2\text{O}$。两种情况下，[A⁻]/[HA] 比值几乎不变，故 pH 几乎不变。</span></li>
+      <li><strong><span data-lang="en">Composition</span><span data-lang="zh">组成</span></strong><span data-lang="en">: a weak acid (HA) and its conjugate base (A⁻) in comparable amounts, or a weak base (B) and its conjugate acid (BH⁺).</span><span data-lang="zh">：弱酸（HA）与其共轭碱（A⁻）等量混合，或弱碱（B）与其共轭酸（BH⁺）等量混合。</span></li>
+      <li><strong><span data-lang="en">How it works</span><span data-lang="zh">工作原理</span></strong><span data-lang="en">: add H⁺: the base component (A⁻) absorbs it: $\text{A}^- + \text{H}^+ \to \text{HA}$. Add OH⁻: the acid component (HA) neutralizes it: $\text{HA} + \text{OH}^- \to \text{A}^- + \text{H}_2\text{O}$. In both cases, the ratio [A⁻]/[HA] barely changes, so pH barely changes.</span><span data-lang="zh">：加入 H⁺：碱性组分（A⁻）吸收它：$\text{A}^- + \text{H}^+ \to \text{HA}$。加入 OH⁻：酸性组分（HA）中和它：$\text{HA} + \text{OH}^- \to \text{A}^- + \text{H}_2\text{O}$。两种情况下，[A⁻]/[HA] 比值几乎不变，故 pH 几乎不变。</span></li>
       <li><strong><span data-lang="en">Henderson-Hasselbalch equation:</span><span data-lang="zh">亨德森-哈塞尔巴尔赫方程：</span></strong></li>
     </ul>
     $$ \text{pH} = \text{p}K_a + \log\frac{[\text{A}^-]}{[\text{HA}]} $$
@@ -897,17 +1287,32 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">SCH4U E3.8: "describe the chemical characteristics of buffer solutions." AB Chemistry 30 GO1: "define a buffer as relatively large amounts of a weak acid or base and its conjugate in equilibrium that maintain a relatively constant pH."</span><span data-lang="zh">SCH4U E3.8："描述缓冲溶液的化学特性。"AB Chemistry 30 GO1："将缓冲溶液定义为在平衡中含有较多弱酸或弱碱及其共轭物、能维持相对恒定 pH 的溶液。"</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 11: pH of an acetic acid/acetate buffer</span><span data-lang="zh">例题 11：乙酸/乙酸根缓冲溶液的 pH</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 6 &middot; pH of an acetic acid/acetate buffer</span><span data-lang="zh">例题 6 &middot; 乙酸/乙酸根缓冲溶液的 pH</span></div>
     <p><span data-lang="en">A buffer solution contains 0.150 mol/L acetic acid (CH₃COOH) and 0.250 mol/L sodium acetate (CH₃COONa). Given $K_a = 1.8 \times 10^{-5}$ for acetic acid, calculate the pH of this buffer.</span><span data-lang="zh">某缓冲溶液含 0.150 mol/L 乙酸（CH₃COOH）和 0.250 mol/L 乙酸钠（CH₃COONa）。已知乙酸 $K_a = 1.8 \times 10^{-5}$，计算该缓冲溶液的 pH。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">Find $\text{p}K_a$.</span><span data-lang="zh">求 $\text{p}K_a$。</span></strong></p>
-    $$ \text{p}K_a = -\log(1.8 \times 10^{-5}) = 4.74. $$
+    $$ \text{p}K_a = -\log(1.8 \times 10^{-5}) = 4.745. $$
     <p><strong><span data-lang="en">Apply Henderson-Hasselbalch.</span><span data-lang="zh">应用亨德森-哈塞尔巴尔赫方程。</span></strong></p>
-    $$ \text{pH} = 4.74 + \log\frac{0.250}{0.150} = 4.74 + \log(1.667) = 4.74 + 0.222 = 4.96. $$
-    <p><span data-lang="en">The buffer pH ($4.96$) is above $\text{p}K_a$ ($4.74$) because $[\text{A}^-] > [\text{HA}]$ — more conjugate base than acid shifts pH upward. &check;</span><span data-lang="zh">缓冲溶液 pH（$4.96$）高于 $\text{p}K_a$（$4.74$），因为 $[\text{A}^-] > [\text{HA}]$——共轭碱多于酸使 pH 向上偏移。&check;</span></p>
+    $$ \text{pH} = 4.745 + \log\frac{0.250}{0.150} = 4.745 + \log(1.667) = 4.745 + 0.222 = 4.97. $$
+    <p><span data-lang="en">The buffer pH ($4.97$) is above $\text{p}K_a$ ($4.745$) because $[\text{A}^-] > [\text{HA}]$: more conjugate base than acid shifts pH upward. &check;</span><span data-lang="zh">缓冲溶液 pH（$4.97$）高于 $\text{p}K_a$（$4.745$），因为 $[\text{A}^-] > [\text{HA}]$，共轭碱多于酸使 pH 向上偏移。&check;</span></p>
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 12: Adding strong acid to a buffer</span><span data-lang="zh">例题 12：向缓冲溶液加入强酸</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">To $1.00\ \mathrm{L}$ of the buffer in Worked Example 11 ($0.150\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COOH}$, $0.250\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COO^-}$, $\mathrm{p}K_a = 4.745$) $0.0100\ \mathrm{mol}$ of HCl is added. Find the new pH, and compare with adding the same HCl to $1.00\ \mathrm{L}$ of pure water.</span><span data-lang="zh">向 $1.00\ \mathrm{L}$ 例题 11 中的缓冲溶液（$0.150\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COOH}$，$0.250\ \mathrm{mol\,L^{-1}}$ $\mathrm{CH_3COO^-}$，$\mathrm{p}K_a = 4.745$）加入 $0.0100\ \mathrm{mol}$ HCl。求新的 pH，并与把同样的 HCl 加入 $1.00\ \mathrm{L}$ 纯水的结果比较。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Reaction.</strong> The added $\mathrm{H^+}$ reacts completely with the conjugate base: $\mathrm{CH_3COO^-(aq) + H^+(aq) \to CH_3COOH(aq)}$.</span><span data-lang="zh"><strong>反应。</strong>加入的 $\mathrm{H^+}$ 与共轭碱完全反应：$\mathrm{CH_3COO^-(aq) + H^+(aq) \to CH_3COOH(aq)}$。</span></p>
+      $$ n(\mathrm{CH_3COO^-}) = 0.250 - 0.0100 = 0.240\ \mathrm{mol}, \qquad n(\mathrm{CH_3COOH}) = 0.150 + 0.0100 = 0.160\ \mathrm{mol}. $$
+<p><span data-lang="en"><strong>New pH.</strong> The volume is the same for both species, so the ratio of amounts equals the ratio of concentrations.</span><span data-lang="zh"><strong>新的 pH。</strong>两种物质的体积相同，所以物质的量之比等于浓度之比。</span></p>
+      $$ \mathrm{pH} = 4.745 + \log\frac{0.240}{0.160} = 4.745 + 0.176 = 4.92. $$
+<p><span data-lang="en"><strong>Comparison.</strong> The pH fell from $4.97$ to $4.92$, a change of $0.05$. In pure water $[\mathrm{H^+}] = 0.0100\ \mathrm{mol\,L^{-1}}$, so $\mathrm{pH} = 2.00$, a drop of $5.00$ from $7.00$. &check;</span><span data-lang="zh"><strong>比较。</strong>pH 从 $4.97$ 降到 $4.92$，只变化了 $0.05$。在纯水中 $[\mathrm{H^+}] = 0.0100\ \mathrm{mol\,L^{-1}}$，所以 $\mathrm{pH} = 2.00$，比 $7.00$ 下降了 $5.00$。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is a buffer solution?</span><span data-lang="zh">下列哪种是缓冲溶液？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
@@ -917,7 +1322,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">A mixture of NaOH and NaCl</span><span data-lang="zh">NaOH 和 NaCl 的混合物</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Pure water</span><span data-lang="zh">纯水</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">CH₃COOH (weak acid) + CH₃COONa (its conjugate base, from sodium acetate) is a classic buffer pair. HCl is a strong acid — it has no meaningful equilibrium and does not buffer. NaOH is a strong base — same issue.</span><span data-lang="zh">CH₃COOH（弱酸）+ CH₃COONa（其共轭碱，来自乙酸钠）是经典缓冲对。HCl 是强酸——没有有意义的平衡，不能缓冲。NaOH 是强碱——同样的问题。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CH₃COOH (weak acid) + CH₃COONa (its conjugate base, from sodium acetate) is a classic buffer pair. HCl is a strong acid: it has no meaningful equilibrium and does not buffer. NaOH is a strong base, with the same issue.</span><span data-lang="zh">CH₃COOH（弱酸）+ CH₃COONa（其共轭碱，来自乙酸钠）是经典缓冲对。HCl 是强酸，没有有意义的平衡，不能缓冲。NaOH 是强碱，同样的问题。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">A buffer needs a weak acid + its conjugate base (or weak base + its conjugate acid). HCl is a strong acid (no equilibrium, not a buffer). NaOH is a strong base. NaCl is just a salt. Only acetic acid + acetate forms a true buffer.</span><span data-lang="zh">缓冲溶液需要弱酸 + 其共轭碱（或弱碱 + 其共轭酸）。HCl 是强酸（无平衡，不能缓冲）。NaOH 是强碱。NaCl 只是盐。只有乙酸 + 乙酸根才能形成真正的缓冲溶液。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -930,17 +1335,44 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">5.2</span><span data-lang="zh">5.2</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">2.6</span><span data-lang="zh">2.6</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">When $[\text{A}^-] = [\text{HA}]$, the log term is $\log(1) = 0$, so $\text{pH} = \text{p}K_a + 0 = 5.2$. This is the half-equivalence point condition — the buffer is at its optimal capacity when pH $= \text{p}K_a$.</span><span data-lang="zh">当 $[\text{A}^-] = [\text{HA}]$ 时，对数项为 $\log(1) = 0$，故 $\text{pH} = \text{p}K_a + 0 = 5.2$。这是半等量点条件——缓冲容量最大时 pH $= \text{p}K_a$。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">When $[\text{A}^-] = [\text{HA}]$, the log term is $\log(1) = 0$, so $\text{pH} = \text{p}K_a + 0 = 5.2$. The buffer has its greatest capacity when pH $= \text{p}K_a$, which in a titration happens at the half-equivalence point.</span><span data-lang="zh">当 $[\text{A}^-] = [\text{HA}]$ 时，对数项为 $\log(1) = 0$，故 $\text{pH} = \text{p}K_a + 0 = 5.2$。缓冲容量在 pH $= \text{p}K_a$ 时最大，在滴定中这对应半等当点。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Henderson-Hasselbalch: $\text{pH} = \text{p}K_a + \log([\text{A}^-]/[\text{HA}])$. If the concentrations are equal, $\log(1) = 0$, so pH $= \text{p}K_a = 5.2$.</span><span data-lang="zh">亨德森-哈塞尔巴尔赫：$\text{pH} = \text{p}K_a + \log([\text{A}^-]/[\text{HA}])$。若浓度相等，$\log(1) = 0$，故 pH $= \text{p}K_a = 5.2$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When asked to <em>explain</em> how a buffer works, name both components, write the two neutralization equations ($\mathrm{A^-}$ with added $\mathrm{H^+}$, $\mathrm{HA}$ with added $\mathrm{OH^-}$) and say that the ratio $[\mathrm{A^-}]/[\mathrm{HA}]$ barely changes. Common errors: using Henderson-Hasselbalch for a strong acid with its salt (that mixture is not a buffer), inverting the ratio inside the logarithm, and forgetting to update the amounts of $\mathrm{HA}$ and $\mathrm{A^-}$ after strong acid or base is added.</p><p data-lang="zh">被要求<em>解释</em>（<code>explain</code>）缓冲溶液如何起作用时，要写出两种组分、两个中和方程（$\mathrm{A^-}$ 与加入的 $\mathrm{H^+}$，$\mathrm{HA}$ 与加入的 $\mathrm{OH^-}$），并说明比值 $[\mathrm{A^-}]/[\mathrm{HA}]$ 几乎不变。常见错误：对强酸及其盐使用亨德森-哈塞尔巴尔赫方程（该混合物不是缓冲溶液）；把对数中的比值颠倒；以及加入强酸或强碱后忘记更新 $\mathrm{HA}$ 和 $\mathrm{A^-}$ 的物质的量。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Which of these mixtures is a buffer: $\mathrm{HNO_3}$ with $\mathrm{NaNO_3}$, $\mathrm{NH_3}$ with $\mathrm{NH_4Cl}$, or NaOH with NaCl? Explain.</span><span data-lang="zh">1. 下列哪种混合物是缓冲溶液：$\mathrm{HNO_3}$ 与 $\mathrm{NaNO_3}$、$\mathrm{NH_3}$ 与 $\mathrm{NH_4Cl}$，还是 NaOH 与 NaCl？请解释。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{NH_3}$ with $\mathrm{NH_4Cl}$ is a buffer: a weak base with its conjugate acid $\mathrm{NH_4^+}$. $\mathrm{HNO_3}$ and NaOH are a strong acid and a strong base, which have no conjugate partner able to take up added acid or base.</p><p data-lang="zh">$\mathrm{NH_3}$ 与 $\mathrm{NH_4Cl}$ 是缓冲溶液：弱碱及其共轭酸 $\mathrm{NH_4^+}$。$\mathrm{HNO_3}$ 和 NaOH 分别是强酸和强碱，没有能够吸收所加酸或碱的共轭搭档。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Write the equation showing how an acetic acid and acetate buffer reacts with added $\mathrm{OH^-}$.</span><span data-lang="zh">2. 写出乙酸与乙酸根缓冲溶液与加入的 $\mathrm{OH^-}$ 反应的方程。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{CH_3COOH(aq) + OH^-(aq) \to CH_3COO^-(aq) + H_2O(l)}$. The acid component neutralizes the added base, so $[\mathrm{OH^-}]$ and the pH hardly change.</p><p data-lang="zh">$\mathrm{CH_3COOH(aq) + OH^-(aq) \to CH_3COO^-(aq) + H_2O(l)}$。酸组分中和了所加的碱，所以 $[\mathrm{OH^-}]$ 和 pH 几乎不变。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A buffer contains $0.20\ \mathrm{mol\,L^{-1}}$ formic acid and $0.40\ \mathrm{mol\,L^{-1}}$ sodium formate ($K_a = 1.77 \times 10^{-4}$). Find its pH.</span><span data-lang="zh">3. 某缓冲溶液含 $0.20\ \mathrm{mol\,L^{-1}}$ 甲酸和 $0.40\ \mathrm{mol\,L^{-1}}$ 甲酸钠（$K_a = 1.77 \times 10^{-4}$）。求其 pH。</span></summary>
+      <div class="sg-a"><p data-lang="en">$\mathrm{p}K_a = -\log(1.77 \times 10^{-4}) = 3.752$. $\mathrm{pH} = 3.752 + \log(0.40/0.20) = 3.752 + 0.301 = 4.05$.</p><p data-lang="zh">$\mathrm{p}K_a = -\log(1.77 \times 10^{-4}) = 3.752$。$\mathrm{pH} = 3.752 + \log(0.40/0.20) = 3.752 + 0.301 = 4.05$。</p></div>
+    </details>
   </div>
 </section>
 
 <hr class="sep">
 
 <section class="section" id="s-9-7">
-  <div class="section-label"><span data-lang="en">Section 7 &middot; Ka, Kb and weak-acid equilibria <span class="honors-flag">Honors &mdash; US NGSS / ON SCH3U / AB Chem 20</span></span><span data-lang="zh">第 7 节 &middot; Ka、Kb 与弱酸平衡 <span class="honors-flag">荣誉 &mdash; US NGSS / ON SCH3U / AB Chem 20</span></span></div>
+  <div class="section-label"><span data-lang="en">Section 7 &middot; Ka, Kb and weak-acid equilibria <span class="honors-flag">Honors: US NGSS / ON SCH3U / AB Chem 20</span></span><span data-lang="zh">第 7 节 &middot; Ka、Kb 与弱酸平衡 <span class="honors-flag">荣誉：US NGSS / ON SCH3U / AB Chem 20</span></span></div>
   <h2><span data-lang="en">Ka, Kb and Weak-Acid Equilibria</span><span data-lang="zh">Ka、Kb 与弱酸平衡</span></h2>
+
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Write the $K_a$ and $K_b$ expressions from an ionization equation.</li><li>Use $K_a \times K_b = K_w$ to find $K_b$ of a conjugate base from $K_a$ of its acid.</li><li>Calculate $[\mathrm{H^+}]$ and pH of a weak acid with the square-root approximation, and test it with the 5% rule.</li><li>Calculate $[\mathrm{OH^-}]$ and pH of a weak base from $K_b$.</li><li>Recognize when the approximation fails and solve the quadratic equation.</li><li>Compare acid strengths using $K_a$.</li></ul>
+    <ul data-lang="zh"><li>由电离方程写出 $K_a$ 和 $K_b$ 表达式。</li><li>用 $K_a \times K_b = K_w$ 由酸的 $K_a$ 求其共轭碱的 $K_b$。</li><li>用平方根近似计算弱酸的 $[\mathrm{H^+}]$ 和 pH，并用 5% 规则检验。</li><li>由 $K_b$ 计算弱碱的 $[\mathrm{OH^-}]$ 和 pH。</li><li>识别近似失效的情形并解二次方程。</li><li>用 $K_a$ 比较酸的强弱。</li></ul>
+  </div>
 
   <div class="cram-cheat">
     <strong><span data-lang="en">Ka and Kb quantify the strength of weak acids and bases; larger K = stronger.</span><span data-lang="zh">Ka 和 Kb 量化弱酸弱碱的强度；K 越大 = 越强。</span></strong>
@@ -962,8 +1394,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <span data-lang="en">SCH4U E3.4: "identify common equilibrium constants, including Keq, Ksp, Kw, Ka, Kb" and E2.4: "solve problems … involving Ka, pH, pOH, Kb." AB Chemistry 30 GO2: "define Kw, Ka, Kb and use these to determine pH, pOH, [H₃O⁺] and [OH⁻]." BC Chemistry 12: quantitative Ka/Kb is explicit in the "quantitative relationships" elaboration.</span><span data-lang="zh">SCH4U E3.4："识别常见平衡常数，包括 Keq、Ksp、Kw、Ka、Kb"，以及 E2.4："求解涉及 Ka、pH、pOH、Kb 的问题。"AB Chemistry 30 GO2："定义 Kw、Ka、Kb 并用它们确定 pH、pOH、[H₃O⁺] 和 [OH⁻]。"BC Chemistry 12：Ka/Kb 的定量计算在"定量关系"细化中明确给出。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 13: pH of a weak acid solution from Ka</span><span data-lang="zh">例题 13：从 Ka 计算弱酸溶液的 pH</span></summary>
   <div class="formula-box">
-    <div class="formula-label"><span data-lang="en">Worked Example 7 &middot; pH of a weak acid solution from Ka</span><span data-lang="zh">例题 7 &middot; 从 Ka 计算弱酸溶液的 pH</span></div>
     <p><span data-lang="en">Calculate the pH of 0.100 mol/L formic acid (HCOOH) with $K_a = 1.77 \times 10^{-4}$. Check whether the square-root approximation is valid.</span><span data-lang="zh">计算 0.100 mol/L 甲酸（HCOOH）溶液的 pH，已知 $K_a = 1.77 \times 10^{-4}$。检验平方根近似是否有效。</span></p>
   </div>
   <div class="worked-solution">
@@ -976,6 +1409,22 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p><strong><span data-lang="en">pH.</span><span data-lang="zh">pH。</span></strong></p>
     $$ \text{pH} = -\log(4.21 \times 10^{-3}) = 2.38. $$
   </div>
+  </details>
+  <details open>
+    <summary><span data-lang="en">Worked Example 14: pH of a weak base from Kb</span><span data-lang="zh">例题 14：由 Kb 求弱碱的 pH</span></summary>
+    <div class="formula-box">
+<p><span data-lang="en">Calculate the pH of $0.200\ \mathrm{mol\,L^{-1}}$ ammonia, $\mathrm{NH_3}$, with $K_b = 1.8 \times 10^{-5}$ at $25\,{}^{\circ}\mathrm{C}$, and find $K_a$ of $\mathrm{NH_4^+}$.</span><span data-lang="zh">计算 $25\,{}^{\circ}\mathrm{C}$ 时 $0.200\ \mathrm{mol\,L^{-1}}$ 氨水 $\mathrm{NH_3}$ 的 pH（$K_b = 1.8 \times 10^{-5}$），并求 $\mathrm{NH_4^+}$ 的 $K_a$。</span></p>
+    </div>
+    <div class="worked-solution">
+<p><span data-lang="en"><strong>Equilibrium.</strong> $\mathrm{NH_3(aq) + H_2O(l) \rightleftharpoons NH_4^+(aq) + OH^-(aq)}$. Let $x = [\mathrm{OH^-}]$; then $[\mathrm{NH_4^+}] = x$ and $[\mathrm{NH_3}] = 0.200 - x \approx 0.200$.</span><span data-lang="zh"><strong>平衡。</strong>$\mathrm{NH_3(aq) + H_2O(l) \rightleftharpoons NH_4^+(aq) + OH^-(aq)}$。设 $x = [\mathrm{OH^-}]$，则 $[\mathrm{NH_4^+}] = x$，$[\mathrm{NH_3}] = 0.200 - x \approx 0.200$。</span></p>
+      $$ K_b = \frac{x^2}{0.200} \;\Rightarrow\; x = \sqrt{(1.8 \times 10^{-5})(0.200)} = 1.9 \times 10^{-3}\ \mathrm{mol\,L^{-1}}. $$
+<p><span data-lang="en"><strong>Check.</strong> Percent ionization $= (1.9 \times 10^{-3} / 0.200) \times 100\% = 0.95\%$, below $5\%$, so the approximation is valid.</span><span data-lang="zh"><strong>检验。</strong>电离百分数 $= (1.9 \times 10^{-3} / 0.200) \times 100\% = 0.95\%$，小于 $5\%$，近似有效。</span></p>
+      $$ \mathrm{pOH} = -\log(1.9 \times 10^{-3}) = 2.72, \qquad \mathrm{pH} = 14.00 - 2.72 = 11.28. $$
+<p><span data-lang="en"><strong>Conjugate acid.</strong></span><span data-lang="zh"><strong>共轭酸。</strong></span></p>
+      $$ K_a(\mathrm{NH_4^+}) = \frac{K_w}{K_b} = \frac{1.0 \times 10^{-14}}{1.8 \times 10^{-5}} = 5.6 \times 10^{-10}. $$
+<p><span data-lang="en">For a base, solve for $[\mathrm{OH^-}]$ first, then convert pOH to pH. &check;</span><span data-lang="zh">对于碱，先求 $[\mathrm{OH^-}]$，再把 pOH 换算成 pH。&check;</span></p>
+    </div>
+  </details>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A weak acid HA has $K_a = 4.0 \times 10^{-5}$. What is $K_b$ for its conjugate base A⁻ at 25 °C?</span><span data-lang="zh">弱酸 HA 的 $K_a = 4.0 \times 10^{-5}$。在 25 °C 时，其共轭碱 A⁻ 的 $K_b$ 是多少？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
@@ -1004,9 +1453,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; the full ICE table solution (no approximation)</span><span data-lang="zh">深入 &mdash; 完整 ICE 表格解法（不用近似）</span></summary>
+    <summary><span data-lang="en">Going deeper: the full ICE table solution (no approximation)</span><span data-lang="zh">深入：完整 ICE 表格解法（不用近似）</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">When the percentage ionization exceeds 5%, the square-root approximation fails and you must solve the full quadratic. For $K_a = \frac{x^2}{C_a - x}$, rearranging gives $x^2 + K_a x - K_a C_a = 0$. Using the quadratic formula: $x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C_a}}{2}$ (taking the positive root). AB Chemistry 30 Unit D GO2 note: "Examples that require the application of the quadratic equation are excluded; however, students may use this method when responding to open-ended questions." BC Chemistry 12 and ON SCH4U typically allow the approximation or the quadratic — check your exam board's guidance. The approximation is valid when $C_a / K_a > 100$ (equivalently, ionization $< 5\%$).</span><span data-lang="zh">当电离百分比超过 5% 时，平方根近似失效，必须求解完整的二次方程。对于 $K_a = \frac{x^2}{C_a - x}$，整理得 $x^2 + K_a x - K_a C_a = 0$。使用求根公式：$x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C_a}}{2}$（取正根）。AB Chemistry 30 D 单元 GO2 注释："需要应用二次方程的示例被排除在外；但是，学生可以在回答开放式问题时使用此方法。"BC Chemistry 12 和 ON SCH4U 通常允许使用近似或二次方程——请查看你的考试机构指导。当 $C_a / K_a > 100$ 时（等价于电离 $< 5\%$），近似有效。</span></p>
+      <p><span data-lang="en">When the percentage ionization exceeds 5%, the square-root approximation fails and you must solve the full quadratic. For $K_a = \frac{x^2}{C_a - x}$, rearranging gives $x^2 + K_a x - K_a C_a = 0$. Using the quadratic formula: $x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C_a}}{2}$ (taking the positive root). AB Chemistry 30 Unit D GO2 note: "Examples that require the application of the quadratic equation are excluded; however, students may use this method when responding to open-ended questions." BC Chemistry 12 and ON SCH4U typically allow the approximation or the quadratic; check your exam board's guidance. The approximation is valid when $C_a / K_a > 100$ (equivalently, ionization $< 5\%$).</span><span data-lang="zh">当电离百分比超过 5% 时，平方根近似失效，必须求解完整的二次方程。对于 $K_a = \frac{x^2}{C_a - x}$，整理得 $x^2 + K_a x - K_a C_a = 0$。使用求根公式：$x = \frac{-K_a + \sqrt{K_a^2 + 4K_a C_a}}{2}$（取正根）。AB Chemistry 30 D 单元 GO2 注释："需要应用二次方程的示例被排除在外；但是，学生可以在回答开放式问题时使用此方法。"BC Chemistry 12 和 ON SCH4U 通常允许使用近似或二次方程，请查看你的考试机构指导。当 $C_a / K_a > 100$ 时（等价于电离 $< 5\%$），近似有效。</span></p>
     </div>
 
 <hr class="sep">
@@ -1018,7 +1467,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Setup discipline for every acid-base calculation</span><span data-lang="zh">每道酸碱计算题的解题纪律</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Identify strong vs weak first.</span><span data-lang="zh">首先判断强弱。</span></strong> <span data-lang="en">Strong acids/bases dissociate 100% — concentration directly equals $[\text{H}^+]$ or $[\text{OH}^-]$. Weak acids/bases require an equilibrium expression (Ka or Kb). Mixing these up is the #1 error.</span><span data-lang="zh">强酸/强碱 100% 解离——浓度直接等于 $[\text{H}^+]$ 或 $[\text{OH}^-]$。弱酸/弱碱需要平衡表达式（Ka 或 Kb）。混淆这两者是第一大错误。</span></li>
+      <li><strong><span data-lang="en">Identify strong vs weak first.</span><span data-lang="zh">首先判断强弱。</span></strong> <span data-lang="en">Strong acids/bases dissociate 100%, so concentration directly equals $[\text{H}^+]$ or $[\text{OH}^-]$. Weak acids/bases require an equilibrium expression (Ka or Kb). Mixing these up is a very common error.</span><span data-lang="zh">强酸/强碱 100% 解离，浓度直接等于 $[\text{H}^+]$ 或 $[\text{OH}^-]$。弱酸/弱碱需要平衡表达式（Ka 或 Kb）。混淆这两者是很常见的错误。</span></li>
       <li><strong><span data-lang="en">pH arithmetic: watch the negative sign.</span><span data-lang="zh">pH 算术：注意负号。</span></strong> <span data-lang="en">$\text{pH} = -\log[\text{H}^+]$: the negative sign means that as $[\text{H}^+]$ increases, pH decreases. A pH of 3 has 10× more H⁺ than a pH of 4. Converting back: $[\text{H}^+] = 10^{-\text{pH}}$.</span><span data-lang="zh">$\text{pH} = -\log[\text{H}^+]$：负号意味着随着 $[\text{H}^+]$ 增大，pH 减小。pH 3 的 H⁺ 浓度是 pH 4 的 10 倍。反向转换：$[\text{H}^+] = 10^{-\text{pH}}$。</span></li>
       <li><strong><span data-lang="en">pH + pOH = 14 (at 25 °C only).</span><span data-lang="zh">pH + pOH = 14（仅限 25 °C）。</span></strong> <span data-lang="en">This relationship comes from $K_w = 10^{-14}$ at 25 °C. At other temperatures $K_w$ changes, so pH + pOH $\ne 14$. Most exam questions use 25 °C.</span><span data-lang="zh">此关系来自 25 °C 时 $K_w = 10^{-14}$。在其他温度下 $K_w$ 改变，故 pH + pOH $\ne 14$。大多数考题使用 25 °C。</span></li>
     </ul>
@@ -1035,17 +1484,38 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">Weak acid equilibria (&sect;7) <span class="honors-flag">Honors</span></span><span data-lang="zh">弱酸平衡（&sect;7）<span class="honors-flag">荣誉</span></span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Always check the 5% rule.</span><span data-lang="zh">始终检验 5% 规则。</span></strong> <span data-lang="en">After using $[\text{H}^+] \approx \sqrt{K_a C_a}$, check $\% \text{ ionization} = [\text{H}^+]/C_a \times 100\%$. If it exceeds 5%, use the full quadratic. The 5% check is worth marks in SCH4U and AB Chemistry 30.</span><span data-lang="zh">使用 $[\text{H}^+] \approx \sqrt{K_a C_a}$ 后，检验 $\% \text{ ionization} = [\text{H}^+]/C_a \times 100\%$。若超过 5%，使用完整的二次方程。5% 检验在 SCH4U 和 AB Chemistry 30 中值得分。</span></li>
-      <li><strong><span data-lang="en">Ka tells you how acidic; Ka × Kb = Kw tells you the conjugate.</span><span data-lang="zh">Ka 告诉你酸性强度；Ka × Kb = Kw 告诉你共轭碱的强度。</span></strong> <span data-lang="en">If a weak acid is strong (large Ka), its conjugate base is weak (small Kb). This is why strong acid's conjugate base (e.g., Cl⁻) is inert — its Kb is essentially zero.</span><span data-lang="zh">如果弱酸比较强（Ka 大），其共轭碱就比较弱（Kb 小）。这就是为什么强酸的共轭碱（如 Cl⁻）是惰性的——其 Kb 基本上为零。</span></li>
+      <li><strong><span data-lang="en">Always check the 5% rule.</span><span data-lang="zh">始终检验 5% 规则。</span></strong> <span data-lang="en">After using $[\text{H}^+] \approx \sqrt{K_a C_a}$, check $\% \text{ ionization} = [\text{H}^+]/C_a \times 100\%$. If it exceeds 5%, use the full quadratic. The 5% check shows that the approximation was justified.</span><span data-lang="zh">使用 $[\text{H}^+] \approx \sqrt{K_a C_a}$ 后，检验 $\% \text{ ionization} = [\text{H}^+]/C_a \times 100\%$。若超过 5%，使用完整的二次方程。5% 检验说明所用近似是合理的。</span></li>
+      <li><strong><span data-lang="en">Ka tells you how acidic; Ka × Kb = Kw tells you the conjugate.</span><span data-lang="zh">Ka 告诉你酸性强度；Ka × Kb = Kw 告诉你共轭碱的强度。</span></strong> <span data-lang="en">If an acid is strong (large Ka), its conjugate base is weak (small Kb). This is why strong acid's conjugate base (e.g., Cl⁻) is inert: its Kb is essentially zero.</span><span data-lang="zh">如果酸较强（Ka 大），其共轭碱就比较弱（Kb 小）。这就是为什么强酸的共轭碱（如 Cl⁻）是惰性的，其 Kb 基本上为零。</span></li>
     </ul>
   </div>
 
   <div class="concept-box green">
     <strong style="color: var(--green);"><span data-lang="en">Definitions and answer hygiene</span><span data-lang="zh">定义与作答规范</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">State which framework when asked for "the definition."</span><span data-lang="zh">被要求给出"定义"时，说明是哪个框架。</span></strong> <span data-lang="en">Arrhenius defines by what is produced in water (H⁺ or OH⁻); Brønsted-Lowry defines by proton transfer (donor/acceptor). Specifying the framework gains marks; confusing them loses marks.</span><span data-lang="zh">阿伦尼乌斯通过在水中产生的物质（H⁺ 或 OH⁻）来定义；布朗斯特-劳里通过质子转移（供体/受体）来定义。说明框架得分；混淆两者失分。</span></li>
+      <li><strong><span data-lang="en">State which framework when asked for "the definition."</span><span data-lang="zh">被要求给出"定义"时，说明是哪个框架。</span></strong> <span data-lang="en">Arrhenius defines by what is produced in water (H⁺ or OH⁻); Brønsted-Lowry defines by proton transfer (donor/acceptor). Naming the framework keeps the answer precise; confusing the two gives a wrong definition.</span><span data-lang="zh">阿伦尼乌斯通过在水中产生的物质（H⁺ 或 OH⁻）来定义；布朗斯特-劳里通过质子转移（供体/受体）来定义。说明所用框架能使答案准确；混淆两者会得出错误的定义。</span></li>
       <li><strong><span data-lang="en">Include units and sig figs for pH calculations.</span><span data-lang="zh">pH 计算中包含单位和有效数字。</span></strong> <span data-lang="en">Concentration is in mol/L; pH is dimensionless. The number of decimal places in pH should match the significant figures in the concentration. Example: $0.10\ \text{mol/L}$ HCl → pH $= 1.0$ (2 sig figs).</span><span data-lang="zh">浓度单位为 mol/L；pH 无量纲。pH 的小数位数应与浓度的有效数字相匹配。例如：$0.10\ \text{mol/L}$ HCl → pH $= 1.0$（2 位有效数字）。</span></li>
     </ul>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For <em>calculate</em> problems, state the assumption $x \ll C$ and verify it with the 5% rule. Use $K_a$ for an acid and $K_b$ for a base, and keep two decimals in the pH when $K_a$ or $K_b$ has two significant figures. Common errors: treating a weak acid as if it were strong ($[\mathrm{H^+}] = C$), forgetting that $x$ is a concentration and not a percentage, and using the $K_a$ of the acid when the question asks about its conjugate base (convert with $K_a \times K_b = K_w$).</p><p data-lang="zh">对于 <code>calculate</code>（计算）类题，写明假设 $x \ll C$，并用 5% 规则验证。酸用 $K_a$，碱用 $K_b$；当 $K_a$ 或 $K_b$ 有两位有效数字时，pH 保留两位小数。常见错误：把弱酸当作强酸处理（$[\mathrm{H^+}] = C$）；忘记 $x$ 是浓度而不是百分数；以及题目问共轭碱时却使用酸的 $K_a$（要用 $K_a \times K_b = K_w$ 换算）。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Find $K_b$ of the acetate ion, $\mathrm{CH_3COO^-}$, given $K_a(\mathrm{CH_3COOH}) = 1.8 \times 10^{-5}$.</span><span data-lang="zh">1. 已知 $K_a(\mathrm{CH_3COOH}) = 1.8 \times 10^{-5}$，求乙酸根离子 $\mathrm{CH_3COO^-}$ 的 $K_b$。</span></summary>
+      <div class="sg-a"><p data-lang="en">$K_b = K_w / K_a = (1.0 \times 10^{-14}) / (1.8 \times 10^{-5}) = 5.6 \times 10^{-10}$.</p><p data-lang="zh">$K_b = K_w / K_a = (1.0 \times 10^{-14}) / (1.8 \times 10^{-5}) = 5.6 \times 10^{-10}$。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Calculate the pH of $0.150\ \mathrm{mol\,L^{-1}}$ benzoic acid, $K_a = 6.3 \times 10^{-5}$, and show that the approximation is valid.</span><span data-lang="zh">2. 计算 $0.150\ \mathrm{mol\,L^{-1}}$ 苯甲酸（$K_a = 6.3 \times 10^{-5}$）的 pH，并说明近似有效。</span></summary>
+      <div class="sg-a"><p data-lang="en">$[\mathrm{H^+}] \approx \sqrt{(6.3 \times 10^{-5})(0.150)} = 3.1 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$, so $\mathrm{pH} = 2.51$. Percent ionization $= (3.1 \times 10^{-3}/0.150) \times 100\% = 2.0\%$, below $5\%$, so the approximation is valid.</p><p data-lang="zh">$[\mathrm{H^+}] \approx \sqrt{(6.3 \times 10^{-5})(0.150)} = 3.1 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$，所以 $\mathrm{pH} = 2.51$。电离百分数 $= (3.1 \times 10^{-3}/0.150) \times 100\% = 2.0\%$，小于 $5\%$，近似有效。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For $0.0500\ \mathrm{mol\,L^{-1}}$ HF, $K_a = 6.8 \times 10^{-4}$, show that the approximation fails and find the pH from the quadratic formula.</span><span data-lang="zh">3. 对于 $0.0500\ \mathrm{mol\,L^{-1}}$ HF（$K_a = 6.8 \times 10^{-4}$），说明近似失效，并用求根公式求 pH。</span></summary>
+      <div class="sg-a"><p data-lang="en">Approximation: $x = \sqrt{(6.8 \times 10^{-4})(0.0500)} = 5.8 \times 10^{-3}$, which is $11.7\%$ of $0.0500$, above $5\%$, so it fails. Solve $x^2 + K_a x - K_a C = 0$: $x = \dfrac{-6.8 \times 10^{-4} + \sqrt{(6.8 \times 10^{-4})^2 + 4(6.8 \times 10^{-4})(0.0500)}}{2} = 5.5 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$, so $\mathrm{pH} = 2.26$.</p><p data-lang="zh">近似法：$x = \sqrt{(6.8 \times 10^{-4})(0.0500)} = 5.8 \times 10^{-3}$，占 $0.0500$ 的 $11.7\%$，大于 $5\%$，所以失效。解 $x^2 + K_a x - K_a C = 0$：$x = \dfrac{-6.8 \times 10^{-4} + \sqrt{(6.8 \times 10^{-4})^2 + 4(6.8 \times 10^{-4})(0.0500)}}{2} = 5.5 \times 10^{-3}\ \mathrm{mol\,L^{-1}}$，所以 $\mathrm{pH} = 2.26$。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1067,7 +1537,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Conjugate pair?</span><span data-lang="zh">共轭对？</span></div><div class="flashcard-back"><span data-lang="en">Acid $\rightleftharpoons$ conjugate base + H⁺. Conjugate base = acid − H⁺. Stronger acid → weaker conjugate base.</span><span data-lang="zh">酸 $\rightleftharpoons$ 共轭碱 + H⁺。共轭碱 = 酸 − H⁺。酸越强 → 共轭碱越弱。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Strong vs weak acid?</span><span data-lang="zh">强酸与弱酸？</span></div><div class="flashcard-back"><span data-lang="en">Strong: ~100% dissociation (HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄). Weak: partial dissociation, equilibrium arrow.</span><span data-lang="zh">强酸：约 100% 解离（HCl、HBr、HI、HNO₃、H₂SO₄、HClO₄）。弱酸：部分解离，平衡箭头。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">pH formula?</span><span data-lang="zh">pH 公式？</span></div><div class="flashcard-back">$$\text{pH} = -\log[\text{H}^+]$$ <span data-lang="en">Acidic: pH &lt; 7; Neutral: pH = 7; Basic: pH &gt; 7 (at 25 °C).</span><span data-lang="zh">酸性：pH &lt; 7；中性：pH = 7；碱性：pH &gt; 7（25 °C）。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">pH + pOH = ?</span><span data-lang="zh">pH + pOH = ?</span></div><div class="flashcard-back">$$\text{pH} + \text{pOH} = 14 \quad (25\,^\circ\text{C})$$ <span data-lang="en">From $K_w = [\text{H}^+][\text{OH}^-] = 10^{-14}$.</span><span data-lang="zh">来自 $K_w = [\text{H}^+][\text{OH}^-] = 10^{-14}$。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">pH + pOH = ?</span><span data-lang="zh">pH + pOH = ?</span></div><div class="flashcard-back">$$\text{pH} + \text{pOH} = 14 \quad (25\,{}^{\circ}\text{C})$$ <span data-lang="en">From $K_w = [\text{H}^+][\text{OH}^-] = 10^{-14}$.</span><span data-lang="zh">来自 $K_w = [\text{H}^+][\text{OH}^-] = 10^{-14}$。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Neutralization reaction?</span><span data-lang="zh">中和反应？</span></div><div class="flashcard-back"><span data-lang="en">Acid + base → salt + water. Net ionic: H⁺ + OH⁻ → H₂O. Defined as reaction of hydronium and hydroxide ions (AB Chem 20).</span><span data-lang="zh">酸 + 碱 → 盐 + 水。净离子：H⁺ + OH⁻ → H₂O。定义为水合氢离子与氢氧根离子的反应（AB Chem 20）。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Titration equivalence point?</span><span data-lang="zh">滴定终点？</span></div><div class="flashcard-back"><span data-lang="en">Point where moles H⁺ = moles OH⁻. Strong/strong: pH = 7. Weak acid/strong base: pH &gt; 7.</span><span data-lang="zh">H⁺ 摩尔数 = OH⁻ 摩尔数的点。强酸/强碱：pH = 7。弱酸/强碱：pH &gt; 7。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Titration formula (1:1)?</span><span data-lang="zh">滴定公式（1:1）？</span></div><div class="flashcard-back">$$c_a V_a = c_b V_b$$ <span data-lang="en">For polyprotic acids, multiply $c_a V_a$ by number of H⁺ per formula unit.</span><span data-lang="zh">对多质子酸，将 $c_a V_a$ 乘以每式量的 H⁺ 数。</span></div></div></div>
@@ -1093,7 +1563,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">NaOH</span><span data-lang="zh">NaOH</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">CH₃COOH</span><span data-lang="zh">CH₃COOH</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">NaOH dissociates in water to give Na⁺ and OH⁻ — producing OH⁻ is exactly the Arrhenius base definition. NH₃ is a Brønsted-Lowry base but not an Arrhenius base (it produces OH⁻ indirectly, by reacting with water). HCl and CH₃COOH are acids.</span><span data-lang="zh">NaOH 在水中解离产生 Na⁺ 和 OH⁻——产生 OH⁻ 正是阿伦尼乌斯碱的定义。NH₃ 是布朗斯特-劳里碱，但不是阿伦尼乌斯碱（它通过与水反应间接产生 OH⁻）。HCl 和 CH₃COOH 是酸。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">NaOH dissociates in water to give Na⁺ and OH⁻, and producing OH⁻ is exactly the Arrhenius base definition. NH₃ is a Brønsted-Lowry base but not an Arrhenius base (it produces OH⁻ indirectly, by reacting with water). HCl and CH₃COOH are acids.</span><span data-lang="zh">NaOH 在水中解离产生 Na⁺ 和 OH⁻，产生 OH⁻ 正是阿伦尼乌斯碱的定义。NH₃ 是布朗斯特-劳里碱，但不是阿伦尼乌斯碱（它通过与水反应间接产生 OH⁻）。HCl 和 CH₃COOH 是酸。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Arrhenius base = produces OH⁻ in aqueous solution. NaOH directly yields OH⁻. NH₃ is a Brønsted-Lowry base (proton acceptor) but not Arrhenius. HCl/CH₃COOH are acids.</span><span data-lang="zh">阿伦尼乌斯碱 = 在水溶液中产生 OH⁻。NaOH 直接产生 OH⁻。NH₃ 是布朗斯特-劳里碱（质子受体），但不是阿伦尼乌斯碱。HCl/CH₃COOH 是酸。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1106,8 +1576,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">0.050</span><span data-lang="zh">0.050</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">12.70</span><span data-lang="zh">12.70</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Strong acid: $[\text{H}^+] = 0.050\ \text{mol/L}$. $\text{pH} = -\log(0.050) = -\log(5.0 \times 10^{-2}) = -(log 5.0 + (-2)) = -(0.699 - 2) = 1.30$.</span><span data-lang="zh">强酸：$[\text{H}^+] = 0.050\ \text{mol/L}$。$\text{pH} = -\log(0.050) = -\log(5.0 \times 10^{-2}) = -(log 5.0 + (-2)) = -(0.699 - 2) = 1.30$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Strong acid fully dissociates: $[\text{H}^+] = 0.050\ \text{mol/L}$. pH $= -\log(0.050) = 1.30$. (Not 2.30 — that would be 0.0050 mol/L.)</span><span data-lang="zh">强酸完全解离：$[\text{H}^+] = 0.050\ \text{mol/L}$。pH $= -\log(0.050) = 1.30$。（不是 2.30——那是 0.0050 mol/L。）</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Strong acid: $[\text{H}^+] = 0.050\ \text{mol/L}$. $\text{pH} = -\log(0.050) = -\log(5.0 \times 10^{-2}) = -(\log 5.0 + (-2)) = -(0.699 - 2) = 1.30$.</span><span data-lang="zh">强酸：$[\text{H}^+] = 0.050\ \text{mol/L}$。$\text{pH} = -\log(0.050) = -\log(5.0 \times 10^{-2}) = -(\log 5.0 + (-2)) = -(0.699 - 2) = 1.30$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Strong acid fully dissociates: $[\text{H}^+] = 0.050\ \text{mol/L}$. pH $= -\log(0.050) = 1.30$. (Not 2.30; that would be 0.0050 mol/L.)</span><span data-lang="zh">强酸完全解离：$[\text{H}^+] = 0.050\ \text{mol/L}$。pH $= -\log(0.050) = 1.30$。（不是 2.30，那是 0.0050 mol/L。）</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1146,7 +1616,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="3">$0.074\ \text{mol/L}$</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">$n_\text{NaOH} = 0.0185 \times 0.250 = 4.625 \times 10^{-3}\ \text{mol}$. 1:1 ratio: $n_\text{acid} = 4.625 \times 10^{-3}\ \text{mol}$. $c_\text{acid} = 4.625 \times 10^{-3} / 0.0250 = 0.185\ \text{mol/L}$.</span><span data-lang="zh">$n_\text{NaOH} = 0.0185 \times 0.250 = 4.625 \times 10^{-3}\ \text{mol}$。1:1 比：$n_\text{acid} = 4.625 \times 10^{-3}\ \text{mol}$。$c_\text{acid} = 4.625 \times 10^{-3} / 0.0250 = 0.185\ \text{mol/L}$。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">$n_\text{NaOH} = 0.0185 \times 0.250$. Since acetic acid is monoprotic (1:1 ratio with NaOH), $n_\text{acid} = n_\text{NaOH}$. Then $c_\text{acid} = n/V = /0.0250$.</span><span data-lang="zh">$n_\text{NaOH} = 0.0185 \times 0.250$。由于乙酸是单质子酸（与 NaOH 1:1），$n_\text{acid} = n_\text{NaOH}$。然后 $c_\text{acid} = n/V = /0.0250$。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">$n_\text{NaOH} = 0.0185 \times 0.250$. Since acetic acid is monoprotic (1:1 ratio with NaOH), $n_\text{acid} = n_\text{NaOH}$. Then $c_\text{acid} = n/V = (4.625 \times 10^{-3})/0.0250 = 0.185\ \text{mol/L}$.</span><span data-lang="zh">$n_\text{NaOH} = 0.0185 \times 0.250$。由于乙酸是单质子酸（与 NaOH 1:1），$n_\text{acid} = n_\text{NaOH}$。然后 $c_\text{acid} = n/V = (4.625 \times 10^{-3})/0.0250 = 0.185\ \text{mol/L}$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1158,8 +1628,8 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <div class="quiz-opt" data-idx="2"><span data-lang="en">A concentrated strong acid/base solution that neutralizes added reagents</span><span data-lang="zh">能中和加入试剂的浓强酸/强碱溶液</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">A pure water solution adjusted to pH 7</span><span data-lang="zh">pH 调节为 7 的纯水溶液</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">A buffer is a weak acid + conjugate base mixture that maintains a relatively constant pH when small amounts of acid or base are added. It does not prevent pH change entirely — large additions will overwhelm the buffer capacity. AB Chemistry 30 GO1 definition matches this exactly.</span><span data-lang="zh">缓冲溶液是弱酸 + 共轭碱的混合物，在加入少量酸或碱时能维持相对恒定的 pH。它并非完全阻止 pH 变化——大量加入会超出缓冲容量。AB Chemistry 30 GO1 的定义与此完全吻合。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Buffers resist (not prevent) pH change. They work through the equilibrium of a weak acid and its conjugate base — not through strong acids/bases or pure water.</span><span data-lang="zh">缓冲溶液抵抗（而非阻止）pH 变化。它们通过弱酸与其共轭碱的平衡起作用——而非通过强酸/强碱或纯水。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A buffer is a weak acid + conjugate base mixture that maintains a relatively constant pH when small amounts of acid or base are added. It does not prevent pH change entirely: large additions will overwhelm the buffer capacity. AB Chemistry 30 GO1 definition matches this exactly.</span><span data-lang="zh">缓冲溶液是弱酸 + 共轭碱的混合物，在加入少量酸或碱时能维持相对恒定的 pH。它并非完全阻止 pH 变化，大量加入会超出缓冲容量。AB Chemistry 30 GO1 的定义与此完全吻合。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Buffers resist (not prevent) pH change. They work through the equilibrium of a weak acid and its conjugate base, not through strong acids/bases or pure water.</span><span data-lang="zh">缓冲溶液抵抗（而非阻止）pH 变化。它们通过弱酸与其共轭碱的平衡起作用，而非通过强酸/强碱或纯水。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1167,12 +1637,12 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A 0.200 mol/L solution of weak acid HA has $K_a = 1.0 \times 10^{-5}$. Using the approximation, what is the pH? <span class="region-chip">&#x1F1E8;&#x1F1E6; SCH4U E2.4 / BC Chem 12 / AB Chem 30</span></span><span data-lang="zh">弱酸 HA 的 0.200 mol/L 溶液，$K_a = 1.0 \times 10^{-5}$。用近似法，pH 是多少？<span class="region-chip">&#x1F1E8;&#x1F1E6; SCH4U E2.4 / BC Chem 12 / AB Chem 30</span></span></div><div class="quiz-number">Q7</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">5.00</span><span data-lang="zh">5.00</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">2.00</span><span data-lang="zh">2.00</span></div>
-      <div class="quiz-opt" data-idx="2"><span data-lang="en">3.35</span><span data-lang="zh">3.35</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">3.35</span><span data-lang="zh">3.35</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">5.70</span><span data-lang="zh">5.70</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">0.70</span><span data-lang="zh">0.70</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">2.85</span><span data-lang="zh">2.85</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">$[\text{H}^+] \approx \sqrt{K_a \cdot C_a} = \sqrt{1.0 \times 10^{-5} \times 0.200} = \sqrt{2.0 \times 10^{-6}} = 1.41 \times 10^{-3}\ \text{mol/L}$. pH $= -\log(1.41 \times 10^{-3}) = 2.85$. Check: $\%$ ionization $= 1.41 \times 10^{-3}/0.200 \times 100\% = 0.71\% < 5\%$ — approximation valid.</span><span data-lang="zh">$[\text{H}^+] \approx \sqrt{K_a \cdot C_a} = \sqrt{1.0 \times 10^{-5} \times 0.200} = \sqrt{2.0 \times 10^{-6}} = 1.41 \times 10^{-3}\ \text{mol/L}$。pH $= -\log(1.41 \times 10^{-3}) = 2.85$。检验：$\%$ 电离 $= 1.41 \times 10^{-3}/0.200 \times 100\% = 0.71\% < 5\%$——近似有效。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Use $[\text{H}^+] = \sqrt{K_a C_a} = \sqrt{10^{-5} \times 0.200} = \sqrt{2 \times 10^{-6}} \approx 1.41 \times 10^{-3}$. pH $= -\log(1.41 \times 10^{-3}) \approx 2.85$. The options all show 3.35 — note that the worked example uses a different Ka; the correct answer for THIS question gives pH 2.85.</span><span data-lang="zh">使用 $[\text{H}^+] = \sqrt{K_a C_a} = \sqrt{10^{-5} \times 0.200} = \sqrt{2 \times 10^{-6}} \approx 1.41 \times 10^{-3}$。pH $= -\log(1.41 \times 10^{-3}) \approx 2.85$。所有选项均显示 3.35——注意例题使用不同的 Ka；此题的正确答案给出 pH 2.85。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">$[\text{H}^+] \approx \sqrt{K_a \cdot C_a} = \sqrt{1.0 \times 10^{-5} \times 0.200} = \sqrt{2.0 \times 10^{-6}} = 1.41 \times 10^{-3}\ \text{mol/L}$. pH $= -\log(1.41 \times 10^{-3}) = 2.85$. Check: $\%$ ionization $= 1.41 \times 10^{-3}/0.200 \times 100\% = 0.71\% < 5\%$, so the approximation is valid.</span><span data-lang="zh">$[\text{H}^+] \approx \sqrt{K_a \cdot C_a} = \sqrt{1.0 \times 10^{-5} \times 0.200} = \sqrt{2.0 \times 10^{-6}} = 1.41 \times 10^{-3}\ \text{mol/L}$。pH $= -\log(1.41 \times 10^{-3}) = 2.85$。检验：$\%$ 电离 $= 1.41 \times 10^{-3}/0.200 \times 100\% = 0.71\% < 5\%$，近似有效。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Treating HA as a strong acid gives $[\text{H}^+] = 0.200$ and pH $0.70$, but HA is weak. Forgetting the square root gives $[\text{H}^+] = K_a C_a = 2.0 \times 10^{-6}$ and pH $5.70$. The result pH $= \text{p}K_a = 5.00$ holds only for a buffer with equal HA and A⁻. The correct method gives $[\text{H}^+] = 1.41 \times 10^{-3}\ \text{mol/L}$ and pH $2.85$.</span><span data-lang="zh">把 HA 当作强酸处理会得到 $[\text{H}^+] = 0.200$、pH $0.70$，但 HA 是弱酸。忘记开平方会得到 $[\text{H}^+] = K_a C_a = 2.0 \times 10^{-6}$、pH $5.70$。pH $= \text{p}K_a = 5.00$ 只适用于 HA 与 A⁻ 浓度相等的缓冲溶液。正确方法给出 $[\text{H}^+] = 1.41 \times 10^{-3}\ \text{mol/L}$、pH $2.85$。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1217,11 +1687,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 <section class="section" id="feeders">
   <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
   <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
-  <p><span data-lang="en">Acids and bases underpin a wide swath of advanced chemistry. The quantitative acid-base framework you built here — pH/pOH calculations, Ka/Kb, buffers, titration curves — is prerequisite for Chemical Equilibrium (Unit 12), where the ICE-table method and Le Chatelier's principle extend to all reversible reactions. Redox chemistry (Unit 13) uses oxidation states to classify reactions as electron-transfer events, analogous to the proton-transfer logic of Brønsted-Lowry. At the IB/AP level, the quantitative equilibrium treatment becomes even more sophisticated. The cross-references below point at the college-credit feeder and connections within the HS Chemistry sequence.</span><span data-lang="zh">酸碱化学支撑着大量高级化学内容。你在此建立的定量酸碱框架——pH/pOH 计算、Ka/Kb、缓冲溶液、滴定曲线——是化学平衡（第 12 单元）的先修条件，ICE 表格方法和勒夏特列原理将延伸到所有可逆反应。氧化还原化学（第 13 单元）使用氧化态将反应分类为电子转移事件，类似于布朗斯特-劳里的质子转移逻辑。在 IB/AP 层面，定量平衡处理将变得更加复杂。以下链接指向大学学分衔接和高中化学序列内的联系。</span></p>
+  <p><span data-lang="en">Acids and bases underpin a wide swath of advanced chemistry. The quantitative acid-base framework you built here (pH/pOH calculations, Ka/Kb, buffers, titration curves) is prerequisite for Chemical Equilibrium (Unit 12), where the ICE-table method and Le Chatelier's principle extend to all reversible reactions. Redox chemistry (Unit 13) uses oxidation states to classify reactions as electron-transfer events, analogous to the proton-transfer logic of Brønsted-Lowry. At the IB/AP level, the quantitative equilibrium treatment becomes even more sophisticated. The cross-references below point at the college-credit feeder and connections within the HS Chemistry sequence.</span><span data-lang="zh">酸碱化学支撑着大量高级化学内容。你在此建立的定量酸碱框架（pH/pOH 计算、Ka/Kb、缓冲溶液、滴定曲线）是化学平衡（第 12 单元）的先修条件，ICE 表格方法和勒夏特列原理将延伸到所有可逆反应。氧化还原化学（第 13 单元）使用氧化态将反应分类为电子转移事件，类似于布朗斯特-劳里的质子转移逻辑。在 IB/AP 层面，定量平衡处理将变得更加复杂。以下链接指向大学学分衔接和高中化学序列内的联系。</span></p>
 
   <div style="margin: 20px 0;">
     <p><strong><span data-lang="en">Within High School Chemistry.</span><span data-lang="zh">在 HS Chemistry 内部。</span></strong></p>
-    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Chemical Equilibrium (Unit 12) generalises the Ka/Kb equilibrium approach to the equilibrium constant Keq — the same ICE-table method, broader scope. Solutions and Solubility (Unit 8, which precedes this unit) is the foundation for understanding aqueous concentration and molarity, which drives all titration calculations. Thermochemistry (Unit 10) revisits bond energy and enthalpy changes — the energy-release profile of a neutralization reaction is a direct application of those ideas.</span><span data-lang="zh">化学平衡（第 12 单元）将 Ka/Kb 平衡方法推广到平衡常数 Keq——相同的 ICE 表格方法，范围更广。溶液与溶解度（第 8 单元，本单元的先修单元）是理解水溶液浓度和摩尔浓度的基础，这是所有滴定计算的驱动力。热化学（第 10 单元）重新审视键能和焓变——中和反应的能量释放曲线是这些概念的直接应用。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Chemical Equilibrium (Unit 12) generalises the Ka/Kb equilibrium approach to the equilibrium constant Keq: the same ICE-table method, broader scope. Solutions and Solubility (Unit 8, which precedes this unit) is the foundation for understanding aqueous concentration and molarity, which drives all titration calculations. Thermochemistry (Unit 10) revisits bond energy and enthalpy changes: the energy-release profile of a neutralization reaction is a direct application of those ideas.</span><span data-lang="zh">化学平衡（第 12 单元）将 Ka/Kb 平衡方法推广到平衡常数 Keq，相同的 ICE 表格方法，范围更广。溶液与溶解度（第 8 单元，本单元的先修单元）是理解水溶液浓度和摩尔浓度的基础，这是所有滴定计算的驱动力。热化学（第 10 单元）重新审视键能和焓变，中和反应的能量释放曲线是这些概念的直接应用。</span></p>
   </div>
 
   <div style="margin: 20px 0;">
@@ -1247,7 +1717,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <p class="faq-item__a"><span data-lang="en">A strong acid ionizes completely in water, while a weak acid only partially ionizes and reaches an equilibrium described by its acid dissociation constant Ka.</span><span data-lang="zh">强酸在水中完全电离，而弱酸只部分电离，并达到由其酸解离常数 Ka 描述的平衡状态。</span></p>
   </details>
   <details class="faq-item">
-    <summary><span data-lang="en">What is the equivalence point in a titration?</span><span data-lang="zh">滴定中的等当点（终点）是什么？</span></summary>
+    <summary><span data-lang="en">What is the equivalence point in a titration?</span><span data-lang="zh">滴定中的等当点是什么？</span></summary>
     <p class="faq-item__a"><span data-lang="en">The equivalence point is where the moles of added acid exactly neutralize the moles of base (or vice versa), located using an indicator or pH meter.</span><span data-lang="zh">等当点是所加酸的摩尔数恰好中和碱的摩尔数（或反之）的位置，可用指示剂或 pH 计来确定。</span></p>
   </details>
 </section>
@@ -1303,9 +1773,9 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div>
       <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US NGSS</span><span data-lang="zh">美国 NGSS</span></div>
       <ul>
-        <li><span data-lang="en"><strong>No dedicated PE.</strong> NGSS has no performance expectation for acids, bases, or pH. The NGSS source extract states explicitly: "Unit 9 — Acids, Bases &amp; pH. No dedicated acid–base PE. NGSS treats acid–base reactions only obliquely through HS-PS1-2 (reaction outcomes) and HS-PS1-6 (equilibrium). pH, titration, and acid/base strength are explicit only in the provincial curricula." This is a <em>major divergence</em>. Qualitative acid-base ideas (neutralization as a reaction type) appear under <code>HS-PS1-2</code>, which names "Clarification Statement: Examples … could include the reaction of sodium and chlorine, of carbon and oxygen, or of carbon and hydrogen" — no explicit acid-base example. Quantitative pH and Ka are entirely outside the NGSS assessed floor.</span><span data-lang="zh"><strong>无专用 PE。</strong>NGSS 没有针对酸、碱或 pH 的表现期望。NGSS 来源摘录明确指出："第 9 单元——酸、碱与 pH。无专用酸碱 PE。NGSS 仅通过 HS-PS1-2（反应结果）和 HS-PS1-6（平衡）间接涉及酸碱反应。pH、滴定和酸碱强度仅在省级大纲中有明确要求。"这是一项<em>重大分歧</em>。定性酸碱概念（中和反应作为一种反应类型）出现在 <code>HS-PS1-2</code> 下，该期望未明确列举酸碱实例。定量 pH 和 Ka 完全超出 NGSS 的评估范围。</span></li>
+        <li><span data-lang="en"><strong>No dedicated PE.</strong> NGSS has no performance expectation for acids, bases, or pH. The NGSS source extract states explicitly: "Unit 9: Acids, Bases &amp; pH. No dedicated acid–base PE. NGSS treats acid–base reactions only obliquely through HS-PS1-2 (reaction outcomes) and HS-PS1-6 (equilibrium). pH, titration, and acid/base strength are explicit only in the provincial curricula." This is a <em>major divergence</em>. Qualitative acid-base ideas (neutralization as a reaction type) appear under <code>HS-PS1-2</code>, which names "Clarification Statement: Examples … could include the reaction of sodium and chlorine, of carbon and oxygen, or of carbon and hydrogen", with no explicit acid-base example. Quantitative pH and Ka are entirely outside the NGSS assessed floor.</span><span data-lang="zh"><strong>无专用 PE。</strong>NGSS 没有针对酸、碱或 pH 的表现期望。NGSS 来源摘录明确指出："第 9 单元：酸、碱与 pH。无专用酸碱 PE。NGSS 仅通过 HS-PS1-2（反应结果）和 HS-PS1-6（平衡）间接涉及酸碱反应。pH、滴定和酸碱强度仅在省级大纲中有明确要求。"这是一项<em>重大分歧</em>。定性酸碱概念（中和反应作为一种反应类型）出现在 <code>HS-PS1-2</code> 下，该期望未明确列举酸碱实例。定量 pH 和 Ka 完全超出 NGSS 的评估范围。</span></li>
       </ul>
-      <div class="syllabus-note"><strong><span data-lang="en">NGSS note.</span><span data-lang="zh">NGSS 提示。</span></strong> <span data-lang="en">US NGSS students: &sect;1&ndash;&sect;4 (definitions, strong/weak, pH scale, neutralization) give you useful conceptual grounding even though they are not directly assessed. Flag &sect;5 (titration), &sect;6 (buffers), and &sect;7 (Ka/Kb) with the <span class="honors-flag">Honors</span> chip — these are explicitly assessed in ON SCH4U, BC Chemistry 12, and AB Chemistry 30, but lie beyond the NGSS boundary.</span><span data-lang="zh">美国 NGSS 学生：&sect;1&ndash;&sect;4（定义、强弱、pH 标度、中和）提供有用的概念基础，即使它们未被直接评估。将 &sect;5（滴定）、&sect;6（缓冲溶液）和 &sect;7（Ka/Kb）标注 <span class="honors-flag">Honors</span>——这些在 ON SCH4U、BC Chemistry 12 和 AB Chemistry 30 中有明确评估，但超出了 NGSS 的范围。</span></div>
+      <div class="syllabus-note"><strong><span data-lang="en">NGSS note.</span><span data-lang="zh">NGSS 提示。</span></strong> <span data-lang="en">US NGSS students: &sect;1&ndash;&sect;4 (definitions, strong/weak, pH scale, neutralization) give you useful conceptual grounding even though they are not directly assessed. Flag &sect;5 (titration), &sect;6 (buffers), and &sect;7 (Ka/Kb) with the <span class="honors-flag">Honors</span> chip; these are explicitly assessed in ON SCH4U, BC Chemistry 12, and AB Chemistry 30, but lie beyond the NGSS boundary.</span><span data-lang="zh">美国 NGSS 学生：&sect;1&ndash;&sect;4（定义、强弱、pH 标度、中和）提供有用的概念基础，即使它们未被直接评估。将 &sect;5（滴定）、&sect;6（缓冲溶液）和 &sect;7（Ka/Kb）标注 <span class="honors-flag">Honors</span>，这些在 ON SCH4U、BC Chemistry 12 和 AB Chemistry 30 中有明确评估，但超出了 NGSS 的范围。</span></div>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario</span><span data-lang="zh">安大略</span></div>
@@ -1317,15 +1787,15 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
       <ul>
-        <li><strong>Science 10 / Chemistry 11</strong> <span data-lang="en">Science 10 Content: "acid-base chemistry" (introductory). Chemistry 11 Content: "analysis techniques: e.g., dissolved oxygen, pH, nitrates, phosphorus" — pH appears only under analytical context; full acid-base treatment is in Chemistry 12. BC places the complete acid-base unit in Grade 12.</span><span data-lang="zh">Science 10 内容："酸碱化学"（入门）。Chemistry 11 内容："分析技术：如溶解氧、pH、硝酸盐、磷"——pH 仅出现在分析背景下；完整的酸碱处理在 Chemistry 12。BC 将完整的酸碱单元放在 12 年级。</span></li>
+        <li><strong>Science 10 / Chemistry 11</strong> <span data-lang="en">Science 10 Content: "acid-base chemistry" (introductory). Chemistry 11 Content: "analysis techniques: e.g., dissolved oxygen, pH, nitrates, phosphorus"; pH appears only under analytical context; full acid-base treatment is in Chemistry 12. BC places the complete acid-base unit in Grade 12.</span><span data-lang="zh">Science 10 内容："酸碱化学"（入门）。Chemistry 11 内容："分析技术：如溶解氧、pH、硝酸盐、磷"，pH 仅出现在分析背景下；完整的酸碱处理在 Chemistry 12。BC 将完整的酸碱单元放在 12 年级。</span></li>
         <li><strong>Chemistry 12</strong> <span data-lang="en">Big Idea: "Acid or base strength depends on the degree of ion dissociation." Content: "relative strength of acids and bases in solution"; "water as an equilibrium system"; "weak acids and weak bases"; "titration" (strong acid–strong base, weak acid–strong base, strong acid–weak base); "hydrolysis of ions in salt solutions"; "applications of acid-base reactions" (including buffers). Quantitative Relationships elaboration: "in acid-base systems (e.g., Ka, Kb, [H₃O⁺], [OH⁻], pH and pOH); in a titration (e.g., pH of a solution, Ka of an indicator)." Full quantitative honors depth.</span><span data-lang="zh">Chemistry 12 大概念："酸碱强度取决于离子解离程度。"内容："溶液中酸碱的相对强度"；"水作为平衡体系"；"弱酸和弱碱"；"滴定"（强酸-强碱、弱酸-强碱、强酸-弱碱）；"盐溶液中离子的水解"；"酸碱反应的应用"（包括缓冲溶液）。定量关系细化："酸碱体系（如 Ka、Kb、[H₃O⁺]、[OH⁻]、pH 和 pOH）；滴定（如溶液的 pH、指示剂的 Ka）"。完整的定量荣誉深度。</span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta</span><span data-lang="zh">阿尔伯塔</span></div>
       <ul>
-        <li><strong>Chemistry 20 &mdash; Unit C</strong> <span data-lang="en">General Outcome 2: "describe acidic and basic solutions qualitatively and quantitatively." Key Concepts: strong acids and bases · weak acids and bases · Arrhenius (modified) theory · indicators · hydronium ion/pH · hydroxide ion/pOH · neutralization. Knowledge outcomes: "calculate [H₃O⁺] and [OH⁻] and the pH and pOH of acidic and basic solutions based on logarithmic expressions, i.e., pH = −log[H₃O⁺] and pOH = −log[OH⁻]"; "define Arrhenius (modified) acids … and bases"; "define neutralization as a reaction between hydronium and hydroxide ions"; "differentiate, qualitatively, between strong and weak acids and bases." This is the Grade-11 Arrhenius-level treatment covering &sect;1–&sect;4.</span><span data-lang="zh">Chemistry 20 C 单元，总目标 2："定性和定量地描述酸性和碱性溶液。"关键概念：强酸强碱 · 弱酸弱碱 · 阿伦尼乌斯（修正）理论 · 指示剂 · 水合氢离子/pH · 氢氧根离子/pOH · 中和。知识结果："基于对数表达式计算酸性和碱性溶液的 [H₃O⁺] 和 [OH⁻] 以及 pH 和 pOH，即 pH = −log[H₃O⁺] 和 pOH = −log[OH⁻]"；"定义阿伦尼乌斯（修正）酸和碱"；"将中和定义为水合氢离子与氢氧根离子之间的反应"；"定性区分强弱酸碱"。这是涵盖 &sect;1–&sect;4 的 11 年级阿伦尼乌斯级处理。</span></li>
-        <li><strong>Chemistry 30 &mdash; Unit D</strong> <span data-lang="en">Key Concepts: Brønsted-Lowry acids and bases · equilibrium constants (Kw, Ka, Kb) · titration curves · conjugate pairs · buffers. Knowledge outcomes: "describe Brønsted-Lowry acids as proton donors and bases as proton acceptors"; "define a buffer as relatively large amounts of a weak acid or base and its conjugate in equilibrium that maintain a relatively constant pH"; "define Kw, Ka, Kb and use these to determine pH, pOH, [H₃O⁺] and [OH⁻]"; "calculate equilibrium constants and concentrations for Brønsted-Lowry acids and bases (excluding buffers)" — quadratic excluded from required work. Honors-depth covering &sect;5–&sect;7.</span><span data-lang="zh">Chemistry 30 D 单元关键概念：布朗斯特-劳里酸碱 · 平衡常数（Kw、Ka、Kb）· 滴定曲线 · 共轭对 · 缓冲溶液。知识结果："将布朗斯特-劳里酸描述为质子供体，碱为质子受体"；"将缓冲溶液定义为在平衡中含有较多弱酸或弱碱及其共轭物、能维持相对恒定 pH 的溶液"；"定义 Kw、Ka、Kb 并用它们确定 pH、pOH、[H₃O⁺] 和 [OH⁻]"；"计算布朗斯特-劳里酸碱的平衡常数和浓度（不含缓冲溶液）"——不要求用二次方程。荣誉级涵盖 &sect;5–&sect;7。</span></li>
+        <li><strong>Chemistry 20: Unit C</strong> <span data-lang="en">General Outcome 2: "describe acidic and basic solutions qualitatively and quantitatively." Key Concepts: strong acids and bases · weak acids and bases · Arrhenius (modified) theory · indicators · hydronium ion/pH · hydroxide ion/pOH · neutralization. Knowledge outcomes: "calculate [H₃O⁺] and [OH⁻] and the pH and pOH of acidic and basic solutions based on logarithmic expressions, i.e., pH = −log[H₃O⁺] and pOH = −log[OH⁻]"; "define Arrhenius (modified) acids … and bases"; "define neutralization as a reaction between hydronium and hydroxide ions"; "differentiate, qualitatively, between strong and weak acids and bases." This is the Grade-11 Arrhenius-level treatment covering &sect;1–&sect;4.</span><span data-lang="zh">Chemistry 20 C 单元，总目标 2："定性和定量地描述酸性和碱性溶液。"关键概念：强酸强碱 · 弱酸弱碱 · 阿伦尼乌斯（修正）理论 · 指示剂 · 水合氢离子/pH · 氢氧根离子/pOH · 中和。知识结果："基于对数表达式计算酸性和碱性溶液的 [H₃O⁺] 和 [OH⁻] 以及 pH 和 pOH，即 pH = −log[H₃O⁺] 和 pOH = −log[OH⁻]"；"定义阿伦尼乌斯（修正）酸和碱"；"将中和定义为水合氢离子与氢氧根离子之间的反应"；"定性区分强弱酸碱"。这是涵盖 &sect;1–&sect;4 的 11 年级阿伦尼乌斯级处理。</span></li>
+        <li><strong>Chemistry 30: Unit D</strong> <span data-lang="en">Key Concepts: Brønsted-Lowry acids and bases · equilibrium constants (Kw, Ka, Kb) · titration curves · conjugate pairs · buffers. Knowledge outcomes: "describe Brønsted-Lowry acids as proton donors and bases as proton acceptors"; "define a buffer as relatively large amounts of a weak acid or base and its conjugate in equilibrium that maintain a relatively constant pH"; "define Kw, Ka, Kb and use these to determine pH, pOH, [H₃O⁺] and [OH⁻]"; "calculate equilibrium constants and concentrations for Brønsted-Lowry acids and bases (excluding buffers)"; quadratic is excluded from required work. Honors-depth covering &sect;5–&sect;7.</span><span data-lang="zh">Chemistry 30 D 单元关键概念：布朗斯特-劳里酸碱 · 平衡常数（Kw、Ka、Kb）· 滴定曲线 · 共轭对 · 缓冲溶液。知识结果："将布朗斯特-劳里酸描述为质子供体，碱为质子受体"；"将缓冲溶液定义为在平衡中含有较多弱酸或弱碱及其共轭物、能维持相对恒定 pH 的溶液"；"定义 Kw、Ka、Kb 并用它们确定 pH、pOH、[H₃O⁺] 和 [OH⁻]"；"计算布朗斯特-劳里酸碱的平衡常数和浓度（不含缓冲溶液）"，不要求用二次方程。荣誉级涵盖 &sect;5–&sect;7。</span></li>
       </ul>
     </div>
   </div>
@@ -1334,7 +1804,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
       <section class="section" id="how-to-use">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
-  <p><span data-lang="en">Acids and bases is the most <em>curriculum-divergent</em> topic in the HS Chemistry sequence. The four curricula split sharply on scope. US NGSS has <strong>no dedicated performance expectation</strong> — acid-base chemistry is not an assessed topic at the high-school level and appears only as background context. Ontario splits the topic across two grades: SCH3U Strand E gives Arrhenius theory, strong/weak, and introductory titration (Grade 11); SCH4U Strand E adds Brønsted-Lowry, Kw/Ka/Kb calculations, and buffers (Grade 12). BC places the complete quantitative acid-base unit in Chemistry 12, with only an introductory mention in Chemistry 11 ("analysis techniques: pH"). Alberta Chemistry 20 Unit C is the Grade-11 Arrhenius + pH/pOH calculation layer; Chemistry 30 Unit D is the honors Brønsted-Lowry + Ka/Kb layer. The table below shows your row.</span><span data-lang="zh">酸碱是高中化学序列中课程差异最大的主题。四套大纲在范围上存在明显分歧。US NGSS <strong>没有专用表现期望</strong>——酸碱化学在高中层面不是评估主题，仅作为背景知识出现。安大略将该主题分为两个年级：SCH3U E 单元提供阿伦尼乌斯理论、强弱概念和入门滴定（11 年级）；SCH4U E 单元增加布朗斯特-劳里、Kw/Ka/Kb 计算和缓冲溶液（12 年级）。BC 将完整的定量酸碱单元放在 Chemistry 12，在 Chemistry 11 中仅有简要提及（"分析技术：pH"）。阿尔伯塔 Chemistry 20 C 单元是 11 年级的阿伦尼乌斯 + pH/pOH 计算层；Chemistry 30 D 单元是荣誉级布朗斯特-劳里 + Ka/Kb 层。下表显示你所在的行。</span></p>
+  <p><span data-lang="en">Acids and bases is the most <em>curriculum-divergent</em> topic in the HS Chemistry sequence. The four curricula split sharply on scope. US NGSS has <strong>no dedicated performance expectation</strong>; acid-base chemistry is not an assessed topic at the high-school level and appears only as background context. Ontario splits the topic across two grades: SCH3U Strand E gives Arrhenius theory, strong/weak, and introductory titration (Grade 11); SCH4U Strand E adds Brønsted-Lowry, Kw/Ka/Kb calculations, and buffers (Grade 12). BC places the complete quantitative acid-base unit in Chemistry 12, with only an introductory mention in Chemistry 11 ("analysis techniques: pH"). Alberta Chemistry 20 Unit C is the Grade-11 Arrhenius + pH/pOH calculation layer; Chemistry 30 Unit D is the honors Brønsted-Lowry + Ka/Kb layer. The table below shows your row.</span><span data-lang="zh">酸碱是高中化学序列中课程差异最大的主题。四套大纲在范围上存在明显分歧。US NGSS <strong>没有专用表现期望</strong>，酸碱化学在高中层面不是评估主题，仅作为背景知识出现。安大略将该主题分为两个年级：SCH3U E 单元提供阿伦尼乌斯理论、强弱概念和入门滴定（11 年级）；SCH4U E 单元增加布朗斯特-劳里、Kw/Ka/Kb 计算和缓冲溶液（12 年级）。BC 将完整的定量酸碱单元放在 Chemistry 12，在 Chemistry 11 中仅有简要提及（"分析技术：pH"）。阿尔伯塔 Chemistry 20 C 单元是 11 年级的阿伦尼乌斯 + pH/pOH 计算层；Chemistry 30 D 单元是荣誉级布朗斯特-劳里 + Ka/Kb 层。下表显示你所在的行。</span></p>
 
   <div style="overflow-x: auto; margin: 16px 0 18px;">
   <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
@@ -1349,27 +1819,27 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <tbody>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US NGSS HS Chemistry</span><span data-lang="zh">美国 NGSS 高中化学</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;4 (definitions, strong/weak, pH scale, neutralization) &mdash; qualitative context useful for lab work and HS-PS1-2 reaction framing. No acid-base topic is directly on the NGSS assessed floor.</span><span data-lang="zh">&sect;1&ndash;&sect;4（定义、强弱、pH 标度、中和）&mdash;&mdash; 对实验和 HS-PS1-2 反应框架有用的定性背景知识。没有酸碱主题直接在 NGSS 评估范围内。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;4 (definitions, strong/weak, pH scale, neutralization): qualitative context useful for lab work and HS-PS1-2 reaction framing. No acid-base topic is directly on the NGSS assessed floor.</span><span data-lang="zh">&sect;1&ndash;&sect;4（定义、强弱、pH 标度、中和）：对实验和 HS-PS1-2 反应框架有用的定性背景知识。没有酸碱主题直接在 NGSS 评估范围内。</span></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;5&ndash;&sect;7 (titration, buffers, Ka/Kb): clearly beyond the NGSS assessed floor. Flag all with <span class="honors-flag">Honors</span>.</span><span data-lang="zh">&sect;5&ndash;&sect;7（滴定、缓冲溶液、Ka/Kb）：明显超出 NGSS 评估范围。全部标注 <span class="honors-flag">Honors</span>。</span></td>
-        <td style="padding: 8px 10px;"><code>NGSS HS-PS1 (Chemistry)</code> <span data-lang="en">&mdash; NGSS source extract, Unit 9 note: "No dedicated acid–base PE. Major divergence."</span><span data-lang="zh">&mdash; NGSS 来源摘录，第 9 单元注释："无专用酸碱 PE。重大分歧。"</span></td>
+        <td style="padding: 8px 10px;"><code>NGSS HS-PS1 (Chemistry)</code><span data-lang="en">: NGSS source extract, Unit 9 note: "No dedicated acid–base PE. Major divergence."</span><span data-lang="zh">：NGSS 来源摘录，第 9 单元注释："无专用酸碱 PE。重大分歧。"</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON SCH3U (Grade 11)</span><span data-lang="zh">安大略 SCH3U（11 年级）</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;2 in full (Arrhenius definitions, strong vs weak &mdash; E3.5, E3.6); &sect;3 pH scale and calculations; &sect;4 neutralization; &sect;5 introductory titration technique (E2.7).</span><span data-lang="zh">&sect;1&ndash;&sect;2 完整学习（阿伦尼乌斯定义、强弱 &mdash; E3.5、E3.6）；&sect;3 pH 标度与计算；&sect;4 中和；&sect;5 入门滴定技术（E2.7）。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;6 (buffers) and &sect;7 (Ka/Kb): Grade 12 SCH4U E3.8 / E2.4 honors depth &mdash; flag <span class="honors-flag">Honors</span> for SCH3U students.</span><span data-lang="zh">&sect;6（缓冲溶液）和 &sect;7（Ka/Kb）：12 年级 SCH4U E3.8 / E2.4 荣誉深度 &mdash; SCH3U 学生标 <span class="honors-flag">Honors</span>。</span></td>
-        <td style="padding: 8px 10px;"><code>Ontario SCH3U/4U Chemistry</code> <span data-lang="en">&mdash; SCH3U Strand E E2.1, E2.7, E3.5, E3.6; SCH4U Strand E E2.4, E2.5, E3.5&ndash;E3.8</span><span data-lang="zh">&mdash; SCH3U E 单元 E2.1、E2.7、E3.5、E3.6；SCH4U E 单元 E2.4、E2.5、E3.5&ndash;E3.8</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;2 in full (Arrhenius definitions, strong vs weak: E3.5, E3.6); &sect;3 pH scale and calculations; &sect;4 neutralization; &sect;5 introductory titration technique (E2.7).</span><span data-lang="zh">&sect;1&ndash;&sect;2 完整学习（阿伦尼乌斯定义、强弱：E3.5、E3.6）；&sect;3 pH 标度与计算；&sect;4 中和；&sect;5 入门滴定技术（E2.7）。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;6 (buffers) and &sect;7 (Ka/Kb): Grade 12 SCH4U E3.8 / E2.4 honors depth; flag <span class="honors-flag">Honors</span> for SCH3U students.</span><span data-lang="zh">&sect;6（缓冲溶液）和 &sect;7（Ka/Kb）：12 年级 SCH4U E3.8 / E2.4 荣誉深度；SCH3U 学生标 <span class="honors-flag">Honors</span>。</span></td>
+        <td style="padding: 8px 10px;"><code>Ontario SCH3U/4U Chemistry</code><span data-lang="en">: SCH3U Strand E E2.1, E2.7, E3.5, E3.6; SCH4U Strand E E2.4, E2.5, E3.5&ndash;E3.8</span><span data-lang="zh">：SCH3U E 单元 E2.1、E2.7、E3.5、E3.6；SCH4U E 单元 E2.4、E2.5、E3.5&ndash;E3.8</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC Chemistry 11 / Chemistry 12</span><span data-lang="zh">BC Chemistry 11 / Chemistry 12</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">If you are in <strong>Chemistry 12</strong>: all seven sections. BC Chemistry 12 Big Idea "Acid or base strength depends on the degree of ion dissociation" directly maps to &sect;2; titration content maps to &sect;5; buffers to &sect;6; Ka/Kb to &sect;7. If you are in <strong>Chemistry 11</strong>: &sect;3 (pH as an analysis technique) is your only required anchor; use &sect;1&ndash;&sect;4 for context.</span><span data-lang="zh">如果你在 <strong>Chemistry 12</strong>：全部 7 节。BC Chemistry 12 大概念"酸碱强度取决于离子解离程度"直接对应 &sect;2；滴定内容对应 &sect;5；缓冲溶液对应 &sect;6；Ka/Kb 对应 &sect;7。如果你在 <strong>Chemistry 11</strong>：&sect;3（pH 作为分析技术）是你唯一的必修锚点；用 &sect;1&ndash;&sect;4 作为背景。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">For Chemistry 12: nothing &mdash; the full scope is assessed. For Chemistry 11: &sect;5&ndash;&sect;7 are Grade 12 content.</span><span data-lang="zh">Chemistry 12：无 &mdash; 完整范围均被评估。Chemistry 11：&sect;5&ndash;&sect;7 是 12 年级内容。</span></td>
-        <td style="padding: 8px 10px;"><code>BC Chemistry 11/12</code> <span data-lang="en">&mdash; Chemistry 12 Big Idea, Content bullets: "relative strength of acids and bases"; "weak acids and weak bases"; "titration"; "buffers"; Quantitative Relationships elaboration (Ka, Kb, Kw, pH/pOH)</span><span data-lang="zh">&mdash; Chemistry 12 大概念，内容要点："酸碱的相对强度"；"弱酸和弱碱"；"滴定"；"缓冲溶液"；定量关系细化（Ka、Kb、Kw、pH/pOH）</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">For Chemistry 12: nothing; the full scope is assessed. For Chemistry 11: &sect;5&ndash;&sect;7 are Grade 12 content.</span><span data-lang="zh">Chemistry 12：无；完整范围均被评估。Chemistry 11：&sect;5&ndash;&sect;7 是 12 年级内容。</span></td>
+        <td style="padding: 8px 10px;"><code>BC Chemistry 11/12</code><span data-lang="en">: Chemistry 12 Big Idea, Content bullets: "relative strength of acids and bases"; "weak acids and weak bases"; "titration"; "buffers"; Quantitative Relationships elaboration (Ka, Kb, Kw, pH/pOH)</span><span data-lang="zh">：Chemistry 12 大概念，内容要点："酸碱的相对强度"；"弱酸和弱碱"；"滴定"；"缓冲溶液"；定量关系细化（Ka、Kb、Kw、pH/pOH）</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB Chemistry 20 / Chemistry 30</span><span data-lang="zh">阿尔伯塔 Chemistry 20 / Chemistry 30</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">If you are in <strong>Chemistry 20</strong>: &sect;1&ndash;&sect;4 in full (Arrhenius theory, strong/weak, pH/pOH log calculations, neutralization — Unit C GO2). If you are in <strong>Chemistry 30</strong>: all seven sections (Brønsted-Lowry, Ka/Kb, buffers — Unit D GO1/GO2). Note AB Chemistry 30 excludes quadratic-equation equilibrium problems from required work.</span><span data-lang="zh">如果你在 <strong>Chemistry 20</strong>：&sect;1&ndash;&sect;4 完整学习（阿伦尼乌斯理论、强弱、pH/pOH 对数计算、中和 &mdash; C 单元 GO2）。如果你在 <strong>Chemistry 30</strong>：全部 7 节（布朗斯特-劳里、Ka/Kb、缓冲溶液 &mdash; D 单元 GO1/GO2）。注意 AB Chemistry 30 不要求用二次方程求解平衡问题。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">For Chemistry 20: &sect;5&ndash;&sect;7 are Chemistry 30 Unit D depth. For Chemistry 30: nothing &mdash; full scope assessed.</span><span data-lang="zh">Chemistry 20：&sect;5&ndash;&sect;7 是 Chemistry 30 D 单元深度。Chemistry 30：无 &mdash; 完整范围均被评估。</span></td>
-        <td style="padding: 8px 10px;"><code>Alberta Chemistry 20/30</code> <span data-lang="en">&mdash; Chemistry 20 Unit C GO2 Key Concepts + knowledge outcomes; Chemistry 30 Unit D GO1/GO2 Key Concepts + knowledge outcomes</span><span data-lang="zh">&mdash; Chemistry 20 C 单元 GO2 关键概念 + 知识结果；Chemistry 30 D 单元 GO1/GO2 关键概念 + 知识结果</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">If you are in <strong>Chemistry 20</strong>: &sect;1&ndash;&sect;4 in full (Arrhenius theory, strong/weak, pH/pOH log calculations, neutralization; Unit C GO2). If you are in <strong>Chemistry 30</strong>: all seven sections (Brønsted-Lowry, Ka/Kb, buffers; Unit D GO1/GO2). Note AB Chemistry 30 excludes quadratic-equation equilibrium problems from required work.</span><span data-lang="zh">如果你在 <strong>Chemistry 20</strong>：&sect;1&ndash;&sect;4 完整学习（阿伦尼乌斯理论、强弱、pH/pOH 对数计算、中和；C 单元 GO2）。如果你在 <strong>Chemistry 30</strong>：全部 7 节（布朗斯特-劳里、Ka/Kb、缓冲溶液；D 单元 GO1/GO2）。注意 AB Chemistry 30 不要求用二次方程求解平衡问题。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">For Chemistry 20: &sect;5&ndash;&sect;7 are Chemistry 30 Unit D depth. For Chemistry 30: nothing; full scope assessed.</span><span data-lang="zh">Chemistry 20：&sect;5&ndash;&sect;7 是 Chemistry 30 D 单元深度。Chemistry 30：无；完整范围均被评估。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta Chemistry 20/30</code><span data-lang="en">: Chemistry 20 Unit C GO2 Key Concepts + knowledge outcomes; Chemistry 30 Unit D GO1/GO2 Key Concepts + knowledge outcomes</span><span data-lang="zh">：Chemistry 20 C 单元 GO2 关键概念 + 知识结果；Chemistry 30 D 单元 GO1/GO2 关键概念 + 知识结果</span></td>
       </tr>
     </tbody>
   </table>
@@ -1614,6 +2084,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1757,21 +2243,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>
