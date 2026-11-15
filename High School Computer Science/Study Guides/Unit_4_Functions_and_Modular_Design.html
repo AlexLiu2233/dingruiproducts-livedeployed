@@ -442,6 +442,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
+.sg-fig .dot { fill: var(--text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -540,18 +606,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 1 &middot; Why functions?</span><span data-lang="zh">第 1 节 &middot; 为什么要用函数？</span></div>
   <h2><span data-lang="en">Why Functions? Reuse and Abstraction</span><span data-lang="zh">为什么要用函数？复用与抽象</span></h2>
 
-  <div class="cram-cheat">
-    <strong><span data-lang="en">Three reasons to use a function &mdash; memorise these.</span><span data-lang="zh">使用函数的三个理由 &mdash; 背熟这些。</span></strong>
-    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Reuse</span><span data-lang="zh">复用</span></strong> <span data-lang="en">&mdash; define the logic once; call it anywhere. No copy-paste. If the logic changes, you change one place and all callers get the fix. CSTA 3A-AP-18: "Create artifacts by using procedures within a program."</span><span data-lang="zh">&mdash; 定义逻辑一次，在任何地方调用。无需复制粘贴。如果逻辑需要更改，只需修改一处，所有调用方都获得修复。CSTA 3A-AP-18："通过在程序中使用过程来创建制品。"</span></li>
-      <li><strong><span data-lang="en">Abstraction</span><span data-lang="zh">抽象</span></strong> <span data-lang="en">&mdash; the caller only needs to know <em>what</em> the function does (its name, inputs, output), not <em>how</em> it does it. This hides complexity and lets you think at a higher level. AP CSP LO AAP-3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">&mdash; 调用方只需知道函数<em>做什么</em>（名称、输入、输出），而不需要知道<em>如何做</em>。这隐藏了复杂性，让你在更高层次上思考。AP CSP 学习目标 AAP-3.B："使用抽象管理程序中的复杂性。"</span></li>
-      <li><strong><span data-lang="en">Decomposition</span><span data-lang="zh">分解</span></strong> <span data-lang="en">&mdash; split a big program into small, independently testable functions. Each function solves one clearly-named sub-problem. CSTA 3A-AP-17: "Decompose problems into smaller components … using constructs such as procedures, modules."</span><span data-lang="zh">&mdash; 将大型程序拆分为小型、可独立测试的函数。每个函数解决一个命名清晰的子问题。CSTA 3A-AP-17："通过使用过程、模块等构造将问题分解为更小的组件。"</span></li>
-    </ul>
-    <span data-lang="en"><strong>The one fact that catches people:</strong> a function is an <em>abstraction</em>, not just a shortcut. When you call <code>math.sqrt(9)</code> you do not need to know the algorithm inside &mdash; you just trust the interface. Building your own functions gives the same benefit to whoever calls yours.</span><span data-lang="zh"><strong>最易踩坑的一点：</strong>函数是一种<em>抽象</em>，不仅仅是快捷方式。当你调用 <code>math.sqrt(9)</code> 时，你不需要知道内部算法——只需信任接口。构建自己的函数，就能给调用者带来同样的好处。</span>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State three reasons to use a function: reuse, abstraction and decomposition.</li><li>Rewrite repeated code as one function and call it from each place.</li><li>Explain why a caller needs only a function's name, inputs and output, not its body.</li><li>Count how many edits a rule change needs with and without a function.</li></ul>
+    <ul data-lang="zh"><li>说出使用函数的三个理由：复用、抽象和分解。</li><li>把重复的代码改写为一个函数，并在每个位置调用它。</li><li>解释为什么调用方只需要知道函数的名称、输入和输出，而不需要知道函数体。</li><li>数出有函数和没有函数时，规则改变各需要多少处修改。</li></ul>
   </div>
 
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Three reasons to use a function, memorise these.</span><span data-lang="zh">使用函数的三个理由, 背熟这些。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Reuse</span><span data-lang="zh">复用</span></strong><span data-lang="en">: define the logic once; call it anywhere. No copy-paste. If the logic changes, you change one place and all callers get the fix. CSTA 3A-AP-18: "Create artifacts by using procedures within a program."</span><span data-lang="zh">, 定义逻辑一次，在任何地方调用。无需复制粘贴。如果逻辑需要更改，只需修改一处，所有调用方都获得修复。CSTA 3A-AP-18："通过在程序中使用过程来创建制品。"</span></li>
+      <li><strong><span data-lang="en">Abstraction</span><span data-lang="zh">抽象</span></strong><span data-lang="en">: the caller only needs to know <em>what</em> the function does (its name, inputs, output), not <em>how</em> it does it. This hides complexity and lets you think at a higher level. AP CSP Computational Thinking Practice 3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">, 调用方只需知道函数<em>做什么</em>（名称、输入、输出），而不需要知道<em>如何做</em>。这隐藏了复杂性，让你在更高层次上思考。AP CSP 计算思维实践 3.B："使用抽象管理程序中的复杂性。"</span></li>
+      <li><strong><span data-lang="en">Decomposition</span><span data-lang="zh">分解</span></strong><span data-lang="en">: split a big program into small, independently testable functions. Each function solves one clearly-named sub-problem. CSTA 3A-AP-17: "Decompose problems into smaller components … using constructs such as procedures, modules."</span><span data-lang="zh">, 将大型程序拆分为小型、可独立测试的函数。每个函数解决一个命名清晰的子问题。CSTA 3A-AP-17："通过使用过程、模块等构造将问题分解为更小的组件。"</span></li>
+    </ul>
+    <span data-lang="en"><strong>The one fact that catches people:</strong> a function is an <em>abstraction</em>, not just a shortcut. When you call <code>math.sqrt(9)</code> you do not need to know the algorithm inside, you just trust the interface. Building your own functions gives the same benefit to whoever calls yours.</span><span data-lang="zh"><strong>最易踩坑的一点：</strong>函数是一种<em>抽象</em>，不仅仅是快捷方式。当你调用 <code>math.sqrt(9)</code> 时，你不需要知道内部算法，只需信任接口。构建自己的函数，就能给调用者带来同样的好处。</span>
+  </div>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 1: From repeated code to a function</span><span data-lang="zh">例题 1：从重复代码到函数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; From repeated code to a function</span><span data-lang="zh">例题 1 &middot; 从重复代码到函数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: a program needs to compute the area of a rectangle in three different places. Show the repeated-code version and the function version.</span><span data-lang="zh">问题：一个程序在三处不同地方需要计算矩形面积。展示重复代码版和函数版。</span></p>
   </div>
   <div class="worked-solution">
@@ -581,6 +654,60 @@ area2 = rectangle_area(8, 4)   # 32
 area3 = rectangle_area(12, 7)  # 84</code></pre>
     <p><span data-lang="en">The logic lives in one place. The callers are readable (&ldquo;rectangle area of 5 by 3&rdquo;) without needing to see the multiplication. Ontario ICS3U B2.3: "apply the principle of modularity to design reusable code."</span><span data-lang="zh">逻辑只存在于一处。调用方具有可读性（"5 乘 3 的矩形面积"），无需看到乘法运算。安大略 ICS3U B2.3："应用模块化原则设计可复用代码。"</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 2: Changing a rule in one place</span><span data-lang="zh">例题 2：只在一处修改规则</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: a shop adds 13 percent tax at the till, on the receipt and on the web page. Show the code with the formula copied three times, then as one function, and show what has to change when the rate becomes 15 percent. Use the prices 20.00, 8.00 and 50.00.</span><span data-lang="zh">问题：一家商店在收银台、收据和网页上都要加 13% 的税。展示把公式复制三次的代码，再展示改成一个函数的代码，并说明税率变为 15% 时需要修改什么。使用价格 20.00、8.00 和 50.00。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">Pseudocode.</span><span data-lang="zh">伪代码。</span></strong></p><pre><code>-- Version A: the formula is copied into each place
+SET till    TO ROUND(20.00 * 1.13, 2)
+SET receipt TO ROUND(8.00 * 1.13, 2)
+SET web     TO ROUND(50.00 * 1.13, 2)
+
+-- Version B: the formula lives in one function
+FUNCTION with_tax(price):
+    RETURN ROUND(price * 1.13, 2)
+END FUNCTION
+
+SET till    TO with_tax(20.00)
+SET receipt TO with_tax(8.00)
+SET web     TO with_tax(50.00)</code></pre><p><span data-lang="en">Version A repeats the tax formula three times. When the rate changes you must find and edit every copy, and missing one gives two different prices for the same item. In version B the formula appears once; each caller only writes the function name and the price.</span><span data-lang="zh">版本 A 把税率公式重复了三次。税率改变时必须找到并修改每一处副本，漏掉一处就会让同一商品出现两个不同价格。在版本 B 中公式只出现一次；每个调用方只需写出函数名和价格。</span></p><p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p><pre><code>def with_tax(price):
+    return round(price * 1.13, 2)
+
+print(with_tax(20.00))   # 22.6
+print(with_tax(8.00))    # 9.04
+print(with_tax(50.00))   # 56.5</code></pre><p><span data-lang="en">Each result is the price times 1.13, rounded to 2 decimal places: 20.00 &times; 1.13 = 22.6, 8.00 &times; 1.13 = 9.04, 50.00 &times; 1.13 = 56.5. Python prints <code>22.6</code>, not <code>22.60</code>, because a float does not keep trailing zeros.</span><span data-lang="zh">每个结果都是价格乘以 1.13 后保留 2 位小数：20.00 &times; 1.13 = 22.6，8.00 &times; 1.13 = 9.04，50.00 &times; 1.13 = 56.5。Python 输出 <code>22.6</code> 而不是 <code>22.60</code>，因为浮点数不保留末尾的零。</span></p><p><strong><span data-lang="en">The rate changes to 15 percent.</span><span data-lang="zh">税率改为 15%。</span></strong></p><pre><code>def with_tax(price):
+    return round(price * 1.15, 2)   # the only line that changed
+
+print(with_tax(20.00))   # 23.0
+print(with_tax(8.00))    # 9.2
+print(with_tax(50.00))   # 57.5</code></pre><p><span data-lang="en">Only one line was edited, and every caller is correct without being touched. The callers never needed to know the formula, only the name <code>with_tax</code> and what it returns: that is abstraction. Why this works: a function gives one rule one home, so a change to the rule is one edit.</span><span data-lang="zh">只修改了一行，所有调用方都无需改动就得到正确结果。调用方从来不需要知道公式，只需要知道名称 <code>with_tax</code> 和它返回什么：这就是抽象。原因：函数让一条规则只有一个存放位置，所以规则改变只需一次修改。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question says <em>explain</em> why a function helps, tie the reason to the code you are given: &ldquo;the tax formula is written three times, so a change needs three edits; a function needs one.&rdquo; A bare &ldquo;it is neater&rdquo; is an incomplete answer. Do not write that functions make a program run faster: a function call does not make a program faster.</p><p data-lang="zh">当题目要求<em>解释</em>函数的好处时，要把理由和所给代码联系起来：&ldquo;税率公式写了三次，所以改动需要修改三处；使用函数只需修改一处。&rdquo;只写&ldquo;更整洁&rdquo;是不完整的答案。不要写函数使程序运行更快：调用函数并不会让程序更快。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. State two benefits of replacing five copies of the same 10-line calculation with one function.</span><span data-lang="zh">1. 说出把同一段 10 行计算的五个副本换成一个函数的两个好处。</span></summary>
+      <div class="sg-a"><p data-lang="en">Any two of: a change or bug fix is made in one place instead of five; the program is shorter and easier to read; the function can be tested on its own; it can be reused wherever the calculation is needed.</p><p data-lang="zh">以下任意两点：修改或修复错误只需在一处而不是五处；程序更短、更易读；函数可以单独测试；任何需要该计算的地方都可以复用它。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A program computes <code>price * 0.13</code> in 4 separate places. How many lines must be edited to change the rate to 0.15 (a) as written, and (b) if the formula is moved into one function?</span><span data-lang="zh">2. 一个程序在 4 个不同位置计算 <code>price * 0.13</code>。要把税率改为 0.15，需要修改多少行：(a) 按现有写法，(b) 把公式移入一个函数后？</span></summary>
+      <div class="sg-a"><p data-lang="en">(a) 4 lines, one per copy. (b) 1 line, the one inside the function. The four callers are unchanged.</p><p data-lang="zh">(a) 4 行，每个副本一行。(b) 1 行，即函数内部那一行。四个调用方不变。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Given <code>def with_tax(price): return round(price * 1.13, 2)</code>, what does <code>with_tax(50.00)</code> return, and what does a caller need to know to use it?</span><span data-lang="zh">3. 已知 <code>def with_tax(price): return round(price * 1.13, 2)</code>，<code>with_tax(50.00)</code> 返回什么？调用方需要知道什么才能使用它？</span></summary>
+      <div class="sg-a"><p data-lang="en">It returns 56.5, because 50.00 &times; 1.13 = 56.5. The caller needs only the interface: the name <code>with_tax</code>, that it takes one price, and that it returns the price with tax. It does not need to see the formula.</p><p data-lang="zh">返回 56.5，因为 50.00 &times; 1.13 = 56.5。调用方只需要知道接口：名称 <code>with_tax</code>、它接受一个价格、并返回含税价格。不需要看到公式。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A student copies the same 10-line calculation into five different parts of their program. What is the main problem with this approach?</span><span data-lang="zh">一名学生将同一段 10 行计算复制到程序的五个不同部分。这种做法的主要问题是什么？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
@@ -596,20 +723,20 @@ area3 = rectangle_area(12, 7)  # 84</code></pre>
   </div>
 
   <div class="quiz" data-answer="0">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which AP CSP Learning Objective says "Use abstraction to manage complexity in a program"?</span><span data-lang="zh">哪个 AP CSP 学习目标说"使用抽象管理程序中的复杂性"？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which AP CSP computational thinking practice says "Use abstraction to manage complexity in a program"?</span><span data-lang="zh">哪个 AP CSP 计算思维实践说"使用抽象管理程序中的复杂性"？</span></div><div class="quiz-number">&sect;1 &middot; Q2</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><code>AAP-3.B</code></div>
-      <div class="quiz-opt" data-idx="1"><code>AAP-4.A</code></div>
-      <div class="quiz-opt" data-idx="2"><code>DAT-1.A</code></div>
-      <div class="quiz-opt" data-idx="3"><code>CRD-2.A</code></div>
+      <div class="quiz-opt" data-idx="0"><code>Practice 3.B</code></div>
+      <div class="quiz-opt" data-idx="1"><code>Practice 4.B</code></div>
+      <div class="quiz-opt" data-idx="2"><code>Practice 2.B</code></div>
+      <div class="quiz-opt" data-idx="3"><code>Practice 5.A</code></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">AAP-3.B (verbatim): "Use abstraction to manage complexity in a program." This is the Learning Objective for procedural abstraction in AP CSP Big Idea 3. It maps directly to defining and calling functions/procedures.</span><span data-lang="zh">AAP-3.B（原文）："使用抽象管理程序中的复杂性。"这是 AP CSP 大概念 3 中过程抽象的学习目标。它直接对应定义和调用函数/过程。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">AAP-4.A is about algorithm efficiency. DAT-1.A is about data representation. CRD-2.A is about program design. AAP-3.B is the abstraction and procedures LO.</span><span data-lang="zh">AAP-4.A 关于算法效率。DAT-1.A 关于数据表示。CRD-2.A 关于程序设计。AAP-3.B 是抽象和过程的学习目标。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Practice 3.B (verbatim): "Use abstraction to manage complexity in a program." This is the computational thinking practice (Abstraction in Program Development) that the AP CSP course framework pairs with the learning objectives for calling and developing procedures in Big Idea 3. It maps directly to defining and calling functions/procedures.</span><span data-lang="zh">Practice 3.B（原文）："使用抽象管理程序中的复杂性。"这是 AP CSP 课程框架在大概念 3 中与调用和开发过程的学习目标配对的计算思维实践（程序开发中的抽象）。它直接对应定义和调用函数/过程。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Practice 4.B is code analysis (determine the result of code segments). Practice 2.B is about implementing an algorithm. Practice 5.A belongs to computing innovations. Practice 3.B is the abstraction practice.</span><span data-lang="zh">Practice 4.B 是代码分析（确定代码段的结果）。Practice 2.B 关于实现算法。Practice 5.A 属于计算创新。Practice 3.B 是抽象实践。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; procedural abstraction and the &ldquo;black box&rdquo; model</span><span data-lang="zh">深入 &mdash; 过程抽象与"黑盒"模型</span></summary>
+    <summary><span data-lang="en">Going deeper, procedural abstraction and the &ldquo;black box&rdquo; model</span><span data-lang="zh">深入, 过程抽象与"黑盒"模型</span></summary>
     <div class="detail-body">
       <p><span data-lang="en">Computer scientists describe functions using a <strong>black box model</strong>: inputs go in, outputs come out, and the internal implementation is hidden. This separation of <em>interface</em> (what the function promises) from <em>implementation</em> (how it does it) is what allows large teams to build large systems: one developer writes <code>sort_list(data)</code>; every other developer can use it without understanding the sorting algorithm. BC Computer Programming 12 names this "Management of complexity." Ontario ICS4U C1.3 formalises it as "functional decomposition in subprogram design." Alberta CSE2110 outcome 1.1.5 notes "hiding or protecting the program data" as an advantage of modular programming. The principle scales from a 20-line student project to a million-line operating system.</span><span data-lang="zh">计算机科学家使用<strong>黑盒模型</strong>描述函数：输入进去，输出出来，内部实现被隐藏。<em>接口</em>（函数承诺做什么）与<em>实现</em>（如何做到）的分离，使大型团队能够构建大型系统：一个开发者编写 <code>sort_list(data)</code>；其他所有开发者都可以使用它而无需理解排序算法。BC Computer Programming 12 将此称为"复杂性管理"。安大略 ICS4U C1.3 将其正式化为"子程序设计中的函数分解"。阿尔伯塔 CSE2110 结果 1.1.5 指出"隐藏或保护程序数据"是模块化编程的优势。这个原则适用范围从 20 行的学生项目到百万行的操作系统。</span></p>
     </div>
@@ -622,17 +749,24 @@ area3 = rectangle_area(12, 7)  # 84</code></pre>
   <div class="section-label"><span data-lang="en">Section 2 &middot; Defining and calling functions</span><span data-lang="zh">第 2 节 &middot; 定义与调用函数</span></div>
   <h2><span data-lang="en">Defining and Calling Functions</span><span data-lang="zh">定义与调用函数</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Distinguish a function definition from a function call.</li><li>State that a definition stores the body without running it.</li><li>Trace the order in which lines run when one function calls another.</li><li>Explain why calling a function before its <code>def</code> line has run gives a NameError.</li></ul>
+    <ul data-lang="zh"><li>区分函数定义与函数调用。</li><li>说明定义只存放函数体而不运行它。</li><li>追踪一个函数调用另一个函数时各行的运行顺序。</li><li>解释为什么在 <code>def</code> 行运行之前调用函数会产生 NameError。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Two halves of a function &mdash; know both.</span><span data-lang="zh">函数的两个部分 &mdash; 两者都要掌握。</span></strong>
+    <strong><span data-lang="en">Two halves of a function, know both.</span><span data-lang="zh">函数的两个部分, 两者都要掌握。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Definition (FUNCTION keyword)</span><span data-lang="zh">定义（FUNCTION 关键字）</span></strong> <span data-lang="en">&mdash; creates the named block of code. In pseudocode: <code>FUNCTION name(params): ... END FUNCTION</code>. In Python: <code>def name(params): ...</code>. Defining a function does NOT run it.</span><span data-lang="zh">&mdash; 创建具名代码块。伪代码：<code>FUNCTION name(params): ... END FUNCTION</code>。Python：<code>def name(params): ...</code>。定义函数不会运行它。</span></li>
-      <li><strong><span data-lang="en">Call (invoking the function)</span><span data-lang="zh">调用（调用函数）</span></strong> <span data-lang="en">&mdash; runs the code inside the function. In pseudocode: <code>CALL name(args)</code> or just <code>name(args)</code>. In Python: <code>name(args)</code>. The program jumps into the function body, executes it, then returns to where the call was.</span><span data-lang="zh">&mdash; 运行函数内部的代码。伪代码：<code>CALL name(args)</code> 或直接 <code>name(args)</code>。Python：<code>name(args)</code>。程序跳入函数体，执行后返回调用处。</span></li>
+      <li><strong><span data-lang="en">Definition (FUNCTION keyword)</span><span data-lang="zh">定义（FUNCTION 关键字）</span></strong><span data-lang="en">: creates the named block of code. In pseudocode: <code>FUNCTION name(params): ... END FUNCTION</code>. In Python: <code>def name(params): ...</code>. Defining a function does NOT run it.</span><span data-lang="zh">, 创建具名代码块。伪代码：<code>FUNCTION name(params): ... END FUNCTION</code>。Python：<code>def name(params): ...</code>。定义函数不会运行它。</span></li>
+      <li><strong><span data-lang="en">Call (invoking the function)</span><span data-lang="zh">调用（调用函数）</span></strong><span data-lang="en">: runs the code inside the function. In pseudocode: <code>CALL name(args)</code> or just <code>name(args)</code>. In Python: <code>name(args)</code>. The program jumps into the function body, executes it, then returns to where the call was.</span><span data-lang="zh">, 运行函数内部的代码。伪代码：<code>CALL name(args)</code> 或直接 <code>name(args)</code>。Python：<code>name(args)</code>。程序跳入函数体，执行后返回调用处。</span></li>
     </ul>
     <span data-lang="en"><strong>Execution flow:</strong> definition happens at load time (not run time). Each call jumps into the function, runs it to completion (or to a RETURN statement), then execution continues from the line <em>after</em> the call. AB CSE2110 outcome 3.2 says to "use appropriate types of subprograms … functions." Ontario ICS3U A3.2 says to "write subprograms … to perform tasks within programs."</span><span data-lang="zh"><strong>执行流程：</strong>定义在加载时发生（不是运行时）。每次调用跳入函数，运行到结束（或 RETURN 语句），然后继续执行调用<em>之后</em>的那行。AB CSE2110 结果 3.2 要求"使用适当类型的子程序……函数"。安大略 ICS3U A3.2 要求"编写子程序……在程序中执行任务"。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 3: Defining and calling a greeting function</span><span data-lang="zh">例题 3：定义和调用问候函数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Defining and calling a greeting function</span><span data-lang="zh">例题 2 &middot; 定义和调用问候函数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function that prints a greeting for a given name, then call it twice with different names.</span><span data-lang="zh">问题：编写一个函数，为给定姓名打印问候语，然后用不同姓名调用两次。</span></p>
   </div>
   <div class="worked-solution">
@@ -651,6 +785,63 @@ CALL greet("Bob")</code></pre>
 greet("Alice")   # Output: Hello, Alice!
 greet("Bob")     # Output: Hello, Bob!</code></pre>
     <p><span data-lang="en">The <code>def</code> line defines the function; neither print runs until a call occurs. Each call creates a fresh execution of the function body, with the given argument bound to the parameter <code>name</code>.</span><span data-lang="zh"><code>def</code> 行定义函数；在调用发生之前，两次打印都不会运行。每次调用都会重新执行函数体，将给定的实参绑定到形参 <code>name</code>。</span></p>
+  </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 4: Order of definition and call</span><span data-lang="zh">例题 4：定义与调用的顺序</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: predict the output of the program below, tracing which line runs when. Then explain what goes wrong if the call <code>announce()</code> is moved above its definition.</span><span data-lang="zh">问题：预测下面程序的输出，并追踪每一行何时运行。然后解释如果把调用 <code>announce()</code> 移到它的定义上方会出什么问题。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">Version A: predict the output.</span><span data-lang="zh">版本 A：预测输出。</span></strong></p><pre><code>def announce():
+    print("start")
+    greet("Cy")
+    print("end")
+
+def greet(name):
+    print("Hi " + name)
+
+announce()</code></pre><p><strong><span data-lang="en">Trace, one step at a time.</span><span data-lang="zh">逐步追踪。</span></strong></p><ol><li><span data-lang="en"><code>def announce()</code> runs: Python stores the function under the name <code>announce</code>. Nothing is printed.</span><span data-lang="zh"><code>def announce()</code> 执行：Python 把函数存放在名称 <code>announce</code> 下。不输出任何内容。</span></li><li><span data-lang="en"><code>def greet(name)</code> runs: stored the same way. Nothing is printed.</span><span data-lang="zh"><code>def greet(name)</code> 执行：以同样方式存放。不输出任何内容。</span></li><li><span data-lang="en"><code>announce()</code> is called. Control jumps into its body and prints <code>start</code>.</span><span data-lang="zh">调用 <code>announce()</code>。控制权跳入其函数体并输出 <code>start</code>。</span></li><li><span data-lang="en">Inside it, <code>greet("Cy")</code> is called, so <code>name</code> becomes <code>"Cy"</code> and <code>Hi Cy</code> is printed. <code>greet</code> finishes and control returns to the line after the call.</span><span data-lang="zh">在其中调用 <code>greet("Cy")</code>，于是 <code>name</code> 变为 <code>"Cy"</code>，输出 <code>Hi Cy</code>。<code>greet</code> 结束，控制权回到调用之后的那一行。</span></li><li><span data-lang="en"><code>announce</code> prints <code>end</code> and finishes.</span><span data-lang="zh"><code>announce</code> 输出 <code>end</code> 并结束。</span></li></ol><p><span data-lang="en">Output, in order: <code>start</code>, <code>Hi Cy</code>, <code>end</code>. Notice that <code>greet</code> is defined <em>after</em> <code>announce</code> in the file, yet the program works: <code>announce</code> only <em>runs</em> when it is called, and by then both definitions have executed.</span><span data-lang="zh">输出顺序：<code>start</code>、<code>Hi Cy</code>、<code>end</code>。注意 <code>greet</code> 在文件中定义在 <code>announce</code> <em>之后</em>，程序仍然能运行：<code>announce</code> 只在被调用时才<em>运行</em>，而那时两个定义都已执行。</span></p><p><strong><span data-lang="en">Version B: call before definition.</span><span data-lang="zh">版本 B：先调用后定义。</span></strong></p><pre><code>announce()          # called before the def line has run
+
+def announce():
+    print("start")</code></pre><p><span data-lang="en">This stops with <code>NameError: name 'announce' is not defined</code>. When the first line runs, Python has not yet executed the <code>def</code> line, so the name does not exist. Fix: move the call below the definition. Why this works: <code>def</code> is a statement that creates the name when it executes; it is not a declaration read in advance.</span><span data-lang="zh">这会以 <code>NameError: name 'announce' is not defined</code> 终止。第一行执行时，Python 还没有执行 <code>def</code> 那一行，所以这个名称不存在。修复：把调用移到定义之下。原因：<code>def</code> 是一条在执行时才创建名称的语句，而不是提前读取的声明。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">In a trace question, write the output in the order the <code>print</code> calls <em>run</em>, not the order the lines appear on the page. Definitions print nothing. Use the words <em>define</em> and <em>call</em> precisely: &ldquo;the function is defined on line 1 and called on line 5&rdquo;.</p><p data-lang="zh">在追踪题中，按 <code>print</code> 调用<em>运行</em>的顺序写出输出，而不是按代码在页面上出现的顺序。定义本身不输出任何内容。要准确使用<em>定义</em>和<em>调用</em>这两个词：&ldquo;函数在第 1 行定义，在第 5 行调用&rdquo;。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <pre><code>def show():
+    print("A")
+
+print("B")
+show()
+print("C")</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does the program above print, in order?</span><span data-lang="zh">1. 上面的程序按顺序输出什么？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>B</code>, then <code>A</code>, then <code>C</code>. The <code>def</code> prints nothing; <code>print("B")</code> runs first; <code>show()</code> then prints <code>A</code>; finally <code>print("C")</code> runs.</p><p data-lang="zh">依次输出 <code>B</code>、<code>A</code>、<code>C</code>。<code>def</code> 不输出任何内容；先运行 <code>print("B")</code>；然后 <code>show()</code> 输出 <code>A</code>；最后运行 <code>print("C")</code>。</p></div>
+    </details>
+    <pre><code>def f():
+    print("X")
+
+def g():
+    f()
+    f()
+
+g()</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. How many times does this program print <code>X</code>? Explain.</span><span data-lang="zh">2. 这个程序输出 <code>X</code> 多少次？请解释。</span></summary>
+      <div class="sg-a"><p data-lang="en">Twice. Only <code>g()</code> is called from the main program; it calls <code>f()</code> two times, and each call prints one <code>X</code>.</p><p data-lang="zh">两次。主程序只调用了 <code>g()</code>；它调用 <code>f()</code> 两次，每次调用输出一个 <code>X</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A student writes <code>hello()</code> on line 1 and <code>def hello(): print("hi")</code> on line 3. State the error and one fix.</span><span data-lang="zh">3. 一名学生在第 1 行写 <code>hello()</code>，在第 3 行写 <code>def hello(): print("hi")</code>。指出错误并给出一种修复方法。</span></summary>
+      <div class="sg-a"><p data-lang="en">It is a <code>NameError</code>: the name <code>hello</code> does not exist yet when line 1 runs, because the <code>def</code> on line 3 has not executed. Fix: move the call so it comes after the definition.</p><p data-lang="zh">这是 <code>NameError</code>：第 1 行运行时名称 <code>hello</code> 还不存在，因为第 3 行的 <code>def</code> 尚未执行。修复：把调用移到定义之后。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="1">
@@ -680,7 +871,7 @@ greet("Bob")     # Output: Hello, Bob!</code></pre>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; AP CSP pseudocode: PROCEDURE vs Python def</span><span data-lang="zh">深入 &mdash; AP CSP 伪代码：PROCEDURE 与 Python def 对比</span></summary>
+    <summary><span data-lang="en">Going deeper, AP CSP pseudocode: PROCEDURE vs Python def</span><span data-lang="zh">深入, AP CSP 伪代码：PROCEDURE 与 Python def 对比</span></summary>
     <div class="detail-body">
       <p><span data-lang="en">AP CSP uses its own reference-sheet pseudocode for procedures: <code>PROCEDURE name(param1, param2) { ... }</code>. The call syntax is <code>name(arg1, arg2)</code>. Boolean values are <code>TRUE</code>/<code>FALSE</code>; display uses <code>DISPLAY(value)</code>; assignment uses the arrow <code>x &larr; value</code>. This guide uses the generic pseudocode keywords (FUNCTION / RETURN / OUTPUT) that map to any language. For the AP CSP exam, apply the College Board reference sheet notation directly. The underlying concepts (define once, call many times, parameter binding, return value) are identical in both notations.</span><span data-lang="zh">AP CSP 使用其自己的参考手册伪代码定义过程：<code>PROCEDURE name(param1, param2) { ... }</code>。调用语法是 <code>name(arg1, arg2)</code>。布尔值为 <code>TRUE</code>/<code>FALSE</code>；显示使用 <code>DISPLAY(value)</code>；赋值使用箭头 <code>x &larr; value</code>。本指南使用通用伪代码关键字（FUNCTION / RETURN / OUTPUT），可映射到任何语言。对于 AP CSP 考试，直接应用 College Board 参考手册表示法。底层概念（定义一次、多次调用、参数绑定、返回值）在两种表示法中完全相同。</span></p>
     </div>
@@ -693,18 +884,25 @@ greet("Bob")     # Output: Hello, Bob!</code></pre>
   <div class="section-label"><span data-lang="en">Section 3 &middot; Parameters and arguments</span><span data-lang="zh">第 3 节 &middot; 形参与实参</span></div>
   <h2><span data-lang="en">Parameters and Arguments</span><span data-lang="zh">形参与实参</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Identify the parameters in a definition and the arguments in a call.</li><li>Call a function with positional and with keyword arguments.</li><li>Give a parameter a default value and predict the result when the argument is left out.</li><li>Explain the mutable default argument trap and fix it with <code>None</code>.</li></ul>
+    <ul data-lang="zh"><li>识别定义中的形参和调用中的实参。</li><li>用位置实参和关键字实参调用函数。</li><li>为形参设置默认值，并预测省略实参时的结果。</li><li>解释可变默认实参的陷阱，并用 <code>None</code> 修复它。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Parameter vs argument &mdash; different words, different moments.</span><span data-lang="zh">形参与实参 &mdash; 不同的词，不同的时刻。</span></strong>
+    <strong><span data-lang="en">Parameter vs argument, different words, different moments.</span><span data-lang="zh">形参与实参, 不同的词，不同的时刻。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Parameter</span><span data-lang="zh">形参（parameter）</span></strong> <span data-lang="en">&mdash; the variable name in the function definition. It is a placeholder: it has a name but no value until the function is called. In <code>FUNCTION area(width, height)</code>, <code>width</code> and <code>height</code> are parameters.</span><span data-lang="zh">&mdash; 函数定义中的变量名。它是占位符：有名称但在函数被调用之前没有值。在 <code>FUNCTION area(width, height)</code> 中，<code>width</code> 和 <code>height</code> 是形参。</span></li>
-      <li><strong><span data-lang="en">Argument</span><span data-lang="zh">实参（argument）</span></strong> <span data-lang="en">&mdash; the actual value passed at the call site. In <code>area(5, 3)</code>, <code>5</code> and <code>3</code> are arguments. At call time, <code>width</code> gets <code>5</code> and <code>height</code> gets <code>3</code>.</span><span data-lang="zh">&mdash; 在调用处传递的实际值。在 <code>area(5, 3)</code> 中，<code>5</code> 和 <code>3</code> 是实参。调用时，<code>width</code> 得到 <code>5</code>，<code>height</code> 得到 <code>3</code>。</span></li>
-      <li><strong><span data-lang="en">One-way parameter passing</span><span data-lang="zh">单向参数传递</span></strong> <span data-lang="en">&mdash; the function receives the value; changing the parameter inside the function does not affect the caller's variable. AB CSE2110 outcome 3.3.3 covers "one- and two-way parameter passing."</span><span data-lang="zh">&mdash; 函数接收值；在函数内部更改形参不影响调用方的变量。AB CSE2110 结果 3.3.3 涵盖"单向和双向参数传递"。</span></li>
+      <li><strong><span data-lang="en">Parameter</span><span data-lang="zh">形参（parameter）</span></strong><span data-lang="en">: the variable name in the function definition. It is a placeholder: it has a name but no value until the function is called. In <code>FUNCTION area(width, height)</code>, <code>width</code> and <code>height</code> are parameters.</span><span data-lang="zh">, 函数定义中的变量名。它是占位符：有名称但在函数被调用之前没有值。在 <code>FUNCTION area(width, height)</code> 中，<code>width</code> 和 <code>height</code> 是形参。</span></li>
+      <li><strong><span data-lang="en">Argument</span><span data-lang="zh">实参（argument）</span></strong><span data-lang="en">: the actual value passed at the call site. In <code>area(5, 3)</code>, <code>5</code> and <code>3</code> are arguments. At call time, <code>width</code> gets <code>5</code> and <code>height</code> gets <code>3</code>.</span><span data-lang="zh">, 在调用处传递的实际值。在 <code>area(5, 3)</code> 中，<code>5</code> 和 <code>3</code> 是实参。调用时，<code>width</code> 得到 <code>5</code>，<code>height</code> 得到 <code>3</code>。</span></li>
+      <li><strong><span data-lang="en">One-way parameter passing</span><span data-lang="zh">单向参数传递</span></strong><span data-lang="en">: the function receives the value; changing the parameter inside the function does not affect the caller's variable. AB CSE2110 outcome 3.3.3 covers "one- and two-way parameter passing."</span><span data-lang="zh">, 函数接收值；在函数内部更改形参不影响调用方的变量。AB CSE2110 结果 3.3.3 涵盖"单向和双向参数传递"。</span></li>
     </ul>
     <span data-lang="en"><strong>Memory trick:</strong> <em>Para</em>meters live in the function <em>definition</em>; <em>Arg</em>uments are the <em>actual</em> values at the call. Ontario ICS3U A3.2 says "write subprograms … that use parameter passing."</span><span data-lang="zh"><strong>记忆技巧：</strong><em>形</em>参存在于函数<em>定义</em>中；<em>实</em>参是调用处的<em>实际</em>值。安大略 ICS3U A3.2 要求"编写……使用参数传递的子程序"。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 5: A function with two parameters</span><span data-lang="zh">例题 5：带两个形参的函数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; A function with two parameters</span><span data-lang="zh">例题 3 &middot; 带两个形参的函数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function <code>power(base, exponent)</code> that returns base raised to the exponent, then call it with three different argument pairs.</span><span data-lang="zh">问题：编写函数 <code>power(base, exponent)</code>，返回底数的指数次幂，然后用三对不同的实参调用它。</span></p>
   </div>
   <div class="worked-solution">
@@ -730,19 +928,86 @@ OUTPUT power(5, 2)   -- 25</code></pre>
 print(power(2, 3))   # 8
 print(power(3, 4))   # 81
 print(power(5, 2))   # 25</code></pre>
-    <p><span data-lang="en">Each call creates fresh copies of <code>base</code> and <code>exponent</code> with the given argument values. Changing <code>result</code> inside the function does not affect any variable outside &mdash; that is one-way parameter passing in action.</span><span data-lang="zh">每次调用都会创建 <code>base</code> 和 <code>exponent</code> 的新副本，并绑定给定的实参值。在函数内更改 <code>result</code> 不会影响函数外的任何变量——这就是单向参数传递的实际效果。</span></p>
+    <p><span data-lang="en">Each call creates fresh copies of <code>base</code> and <code>exponent</code> with the given argument values. Changing <code>result</code> inside the function does not affect any variable outside, that is one-way parameter passing in action.</span><span data-lang="zh">每次调用都会创建 <code>base</code> 和 <code>exponent</code> 的新副本，并绑定给定的实参值。在函数内更改 <code>result</code> 不会影响函数外的任何变量，这就是单向参数传递的实际效果。</span></p>
+  </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 6: Default values, keyword arguments and the mutable default trap</span><span data-lang="zh">例题 6：默认值、关键字实参与可变默认值陷阱</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: write <code>make_label(name, greeting, punct)</code> so that the greeting and punctuation can be left out, and call it four ways. Then show why a list used as a default argument misbehaves and how to fix it.</span><span data-lang="zh">问题：编写 <code>make_label(name, greeting, punct)</code>，使问候语和标点可以省略，并用四种方式调用它。然后说明为什么用列表作为默认实参会出错以及如何修复。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">Default and keyword arguments.</span><span data-lang="zh">默认实参与关键字实参。</span></strong></p><pre><code>def make_label(name, greeting="Hello", punct="!"):
+    return greeting + ", " + name + punct
+
+print(make_label("Ana"))                       # Hello, Ana!
+print(make_label("Ana", punct="?"))            # Hello, Ana?
+print(make_label(greeting="Hi", name="Ben"))   # Hi, Ben!
+print(make_label("Cy", "Hey"))                 # Hey, Cy!</code></pre><p><span data-lang="en"><code>name</code> has no default, so every call must supply it. <code>greeting</code> and <code>punct</code> have defaults (<code>"Hello"</code> and <code>"!"</code>), used when the caller leaves them out. The second call uses the keyword <code>punct="?"</code> to change only that one. The third call names both arguments, so their order does not matter. The fourth call is positional: <code>"Cy"</code> goes to <code>name</code> and <code>"Hey"</code> to <code>greeting</code>. A call that mixes the two styles must put positional arguments first.</span><span data-lang="zh"><code>name</code> 没有默认值，所以每次调用都必须提供它。<code>greeting</code> 和 <code>punct</code> 有默认值（<code>"Hello"</code> 和 <code>"!"</code>），调用方省略它们时使用默认值。第二次调用用关键字 <code>punct="?"</code> 只改变这一项。第三次调用写出了两个实参的名称，所以顺序无关紧要。第四次调用是位置实参：<code>"Cy"</code> 给 <code>name</code>，<code>"Hey"</code> 给 <code>greeting</code>。混用两种写法时，位置实参必须在前。</span></p><p><strong><span data-lang="en">Common error: a mutable default argument.</span><span data-lang="zh">常见错误：可变的默认实参。</span></strong></p><pre><code>def add_item(item, bag=[]):      # the default list is created once
+    bag.append(item)
+    return bag
+
+print(add_item("a"))   # ['a']
+print(add_item("b"))   # ['a', 'b']   (surprise: 'a' is still there)</code></pre><p><span data-lang="en">A default value is evaluated <em>once</em>, when the <code>def</code> line runs, not on every call. The empty list <code>[]</code> is therefore created one time and shared by every call that omits <code>bag</code>, so the second call finds <code>'a'</code> already inside. The first line printed <code>['a']</code> only because the list was empty at that point.</span><span data-lang="zh">默认值只在 <code>def</code> 行运行时计算<em>一次</em>，而不是每次调用都计算。因此空列表 <code>[]</code> 只创建一次，被所有省略 <code>bag</code> 的调用共用，所以第二次调用时 <code>'a'</code> 已经在里面了。第一行输出 <code>['a']</code> 只是因为那时列表是空的。</span></p><p><strong><span data-lang="en">The fix: default to None.</span><span data-lang="zh">修复方法：默认值设为 None。</span></strong></p><pre><code>def add_item(item, bag=None):
+    if bag is None:
+        bag = []                 # a new list on every call
+    bag.append(item)
+    return bag
+
+print(add_item("a"))   # ['a']
+print(add_item("b"))   # ['b']</code></pre><p><span data-lang="en">Now each call that omits <code>bag</code> builds its own new list, so the calls no longer affect each other. Why this works: <code>None</code> is immutable and safe to share, and the test <code>bag is None</code> runs on every call, so the new list is made fresh each time. Numbers, strings and <code>None</code> are safe defaults; lists, dictionaries and sets are not.</span><span data-lang="zh">现在每个省略 <code>bag</code> 的调用都会新建自己的列表，调用之间不再互相影响。原因：<code>None</code> 不可变，共用是安全的，而 <code>bag is None</code> 的判断在每次调用时都会运行，所以每次都会新建列表。数字、字符串和 <code>None</code> 是安全的默认值；列表、字典和集合则不是。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Use the words <em>parameter</em> (in the definition) and <em>argument</em> (in the call) precisely. In a call, positional arguments come before keyword arguments: <code>f(greeting="Hi", "Ben")</code> is a SyntaxError. If a question gives a list as a default value and asks for the output of two calls, expect the first call's items to still be in the list on the second call.</p><p data-lang="zh">要准确使用<em>形参</em>（在定义中）和<em>实参</em>（在调用中）这两个词。调用时位置实参必须在关键字实参之前：<code>f(greeting="Hi", "Ben")</code> 是 SyntaxError。如果题目给出以列表作为默认值，并要求写出两次调用的输出，要预料到第二次调用时第一次调用的元素仍在列表中。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <pre><code>def area(w, h=1):
+    return w * h
+
+print(area(5))
+print(area(5, 3))
+print(area(h=4, w=2))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Which parameter has a default value? What does each of the three calls print?</span><span data-lang="zh">1. 哪个形参有默认值？三次调用各输出什么？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>h</code> has the default <code>1</code>. The calls print <code>5</code> (5 &times; 1), <code>15</code> (5 &times; 3) and <code>8</code> (keywords <code>w=2</code>, <code>h=4</code>, so 2 &times; 4).</p><p data-lang="zh"><code>h</code> 的默认值是 <code>1</code>。三次调用分别输出 <code>5</code>（5 &times; 1）、<code>15</code>（5 &times; 3）和 <code>8</code>（关键字 <code>w=2</code>、<code>h=4</code>，所以 2 &times; 4）。</p></div>
+    </details>
+    <pre><code>def collect(x, acc=[]):
+    acc.append(x)
+    return acc
+
+print(collect(1))
+print(collect(2))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What do the two calls print, and what is wrong with the function? Give the fix.</span><span data-lang="zh">2. 两次调用各输出什么？这个函数有什么问题？给出修复方法。</span></summary>
+      <div class="sg-a"><p data-lang="en">They print <code>[1]</code> and then <code>[1, 2]</code>. The default list is created once and shared, so the second call still contains the 1. Fix: use <code>acc=None</code> and, inside the function, <code>if acc is None: acc = []</code>. The second call then prints <code>[2]</code>.</p><p data-lang="zh">先输出 <code>[1]</code>，再输出 <code>[1, 2]</code>。默认列表只创建一次并被共用，所以第二次调用时里面仍有 1。修复：使用 <code>acc=None</code>，并在函数内写 <code>if acc is None: acc = []</code>。这样第二次调用输出 <code>[2]</code>。</p></div>
+    </details>
+    <pre><code>def power(base, exponent):
+    result = 1
+    for i in range(exponent):
+        result = result * base
+    return result</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For the function above, what does <code>power(exponent=3, base=2)</code> return? What happens with <code>power(2)</code>?</span><span data-lang="zh">3. 对于上面的函数，<code>power(exponent=3, base=2)</code> 返回什么？<code>power(2)</code> 会怎样？</span></summary>
+      <div class="sg-a"><p data-lang="en">The first call returns 8 (2 multiplied 3 times; keyword order does not matter). <code>power(2)</code> raises a TypeError saying <code>exponent</code> is a missing required positional argument, because <code>exponent</code> has no default.</p><p data-lang="zh">第一次调用返回 8（2 相乘 3 次；关键字的顺序无关紧要）。<code>power(2)</code> 会引发 TypeError，提示缺少必需的位置实参 <code>exponent</code>，因为 <code>exponent</code> 没有默认值。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In <code>FUNCTION square(n): RETURN n * n</code>, what is <code>n</code>?</span><span data-lang="zh">在 <code>FUNCTION square(n): RETURN n * n</code> 中，<code>n</code> 是什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">A parameter — a placeholder in the definition</span><span data-lang="zh">形参（parameter）——定义中的占位符</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">An argument — the actual value passed at call time</span><span data-lang="zh">实参（argument）——调用时传递的实际值</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">A parameter , a placeholder in the definition</span><span data-lang="zh">形参（parameter），定义中的占位符</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">An argument , the actual value passed at call time</span><span data-lang="zh">实参（argument），调用时传递的实际值</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">A return value</span><span data-lang="zh">返回值（return value）</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">A global variable</span><span data-lang="zh">全局变量（global variable）</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en"><code>n</code> appears in the function definition, so it is a parameter. It is a placeholder that receives the actual value when the function is called. E.g., <code>square(7)</code> binds <code>n = 7</code>; <code>square(9)</code> binds <code>n = 9</code>.</span><span data-lang="zh"><code>n</code> 出现在函数定义中，所以它是形参。它是一个占位符，在函数被调用时接收实际值。例如，<code>square(7)</code> 绑定 <code>n = 7</code>；<code>square(9)</code> 绑定 <code>n = 9</code>。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Parameters are in the definition; arguments are at the call site. <code>n</code> is in the definition &mdash; it is a parameter. The return value is <code>n * n</code>.</span><span data-lang="zh">形参在定义中；实参在调用处。<code>n</code> 在定义中——它是形参。返回值是 <code>n * n</code>。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Parameters are in the definition; arguments are at the call site. <code>n</code> is in the definition, it is a parameter. The return value is <code>n * n</code>.</span><span data-lang="zh">形参在定义中；实参在调用处。<code>n</code> 在定义中，它是形参。返回值是 <code>n * n</code>。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -766,18 +1031,25 @@ print(power(5, 2))   # 25</code></pre>
   <div class="section-label"><span data-lang="en">Section 4 &middot; Return values</span><span data-lang="zh">第 4 节 &middot; 返回值</span></div>
   <h2><span data-lang="en">Return Values</span><span data-lang="zh">返回值</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Distinguish a function that returns a value from a procedure that does not.</li><li>Explain the difference between <code>return</code> and <code>print</code>.</li><li>State that a function with no executed <code>return</code> gives <code>None</code>.</li><li>Use an early <code>return</code> inside a loop or an <code>if</code> and predict which values are never examined.</li></ul>
+    <ul data-lang="zh"><li>区分有返回值的函数与没有返回值的过程。</li><li>解释 <code>return</code> 与 <code>print</code> 的区别。</li><li>说明没有执行 <code>return</code> 的函数得到 <code>None</code>。</li><li>在循环或 <code>if</code> 中使用提前 <code>return</code>，并预测哪些值不会被检查。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">RETURN sends a value out of the function back to the caller.</span><span data-lang="zh">RETURN 将值从函数传回调用方。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Void / procedure (no return)</span><span data-lang="zh">无返回值函数 / 过程</span></strong> <span data-lang="en">&mdash; does something (prints, modifies a structure) but produces no output value. Example: <code>greet("Alice")</code> just prints; nothing comes back to assign. AB CSE2110 outcome 3.2 distinguishes: "functions (subprograms that return a value) and procedures (subprograms that do not return a value)."</span><span data-lang="zh">&mdash; 执行某些操作（打印、修改结构）但不产生输出值。示例：<code>greet("Alice")</code> 只是打印；没有值返回供赋值。AB CSE2110 结果 3.2 区分："函数（有返回值的子程序）和过程（无返回值的子程序）"。</span></li>
-      <li><strong><span data-lang="en">Function with return value</span><span data-lang="zh">有返回值的函数</span></strong> <span data-lang="en">&mdash; produces a result the caller can store or use directly. <code>SET x TO square(5)</code> stores the return value 25 in <code>x</code>. <code>RETURN</code> also exits the function immediately.</span><span data-lang="zh">&mdash; 产生调用方可以存储或直接使用的结果。<code>SET x TO square(5)</code> 将返回值 25 存入 <code>x</code>。<code>RETURN</code> 也立即退出函数。</span></li>
-      <li><strong><span data-lang="en">Early return</span><span data-lang="zh">提前返回</span></strong> <span data-lang="en">&mdash; a RETURN inside an IF statement exits the function early. After the first RETURN that executes, the rest of the function body is skipped.</span><span data-lang="zh">&mdash; IF 语句内的 RETURN 提前退出函数。在第一个执行的 RETURN 之后，函数体的其余部分被跳过。</span></li>
+      <li><strong><span data-lang="en">Void / procedure (no return)</span><span data-lang="zh">无返回值函数 / 过程</span></strong><span data-lang="en">: does something (prints, modifies a structure) but produces no output value. Example: <code>greet("Alice")</code> just prints; nothing comes back to assign. AB CSE2110 outcome 3.2 distinguishes: "functions (subprograms that return a value) and procedures (subprograms that do not return a value)."</span><span data-lang="zh">, 执行某些操作（打印、修改结构）但不产生输出值。示例：<code>greet("Alice")</code> 只是打印；没有值返回供赋值。AB CSE2110 结果 3.2 区分："函数（有返回值的子程序）和过程（无返回值的子程序）"。</span></li>
+      <li><strong><span data-lang="en">Function with return value</span><span data-lang="zh">有返回值的函数</span></strong><span data-lang="en">: produces a result the caller can store or use directly. <code>SET x TO square(5)</code> stores the return value 25 in <code>x</code>. <code>RETURN</code> also exits the function immediately.</span><span data-lang="zh">, 产生调用方可以存储或直接使用的结果。<code>SET x TO square(5)</code> 将返回值 25 存入 <code>x</code>。<code>RETURN</code> 也立即退出函数。</span></li>
+      <li><strong><span data-lang="en">Early return</span><span data-lang="zh">提前返回</span></strong><span data-lang="en">: a RETURN inside an IF statement exits the function early. After the first RETURN that executes, the rest of the function body is skipped.</span><span data-lang="zh">, IF 语句内的 RETURN 提前退出函数。在第一个执行的 RETURN 之后，函数体的其余部分被跳过。</span></li>
     </ul>
     <span data-lang="en"><strong>Key rule:</strong> always capture the return value if you need it: <code>SET result TO my_function(args)</code>. If you call a value-returning function without capturing the result, the value is discarded.</span><span data-lang="zh"><strong>关键规则：</strong>如果需要返回值，务必捕获它：<code>SET result TO my_function(args)</code>。如果调用有返回值的函数时不捕获结果，值将被丢弃。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 7: A grade classifier function with early return</span><span data-lang="zh">例题 7：带提前返回的成绩分类函数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; A grade classifier function with early return</span><span data-lang="zh">例题 4 &middot; 带提前返回的成绩分类函数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a function that takes a score and returns the letter grade ("A", "B", "C", "D", or "F").</span><span data-lang="zh">问题：编写一个函数，接受分数并返回字母等级（"A"、"B"、"C"、"D" 或 "F"）。</span></p>
   </div>
   <div class="worked-solution">
@@ -807,6 +1079,68 @@ print(grade(82))   # B
 print(grade(55))   # F</code></pre>
     <p><span data-lang="en">The caller uses the return value directly in <code>print()</code>. Alternatively: <code>letter = grade(82)</code> stores "B" in the variable <code>letter</code>.</span><span data-lang="zh">调用方在 <code>print()</code> 中直接使用返回值。或者：<code>letter = grade(82)</code> 将 "B" 存入变量 <code>letter</code>。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 8: Return versus print, and the value None</span><span data-lang="zh">例题 8：return 与 print，以及值 None</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: two functions both &ldquo;double&rdquo; a number, one with <code>print</code> and one with <code>return</code>. Predict what happens when each result is stored and used in arithmetic. Then explain what a search function returns when it finds nothing.</span><span data-lang="zh">问题：两个函数都对数字&ldquo;翻倍&rdquo;，一个用 <code>print</code>，一个用 <code>return</code>。预测把各自的结果存储并用于运算时会发生什么。然后解释查找函数在什么都没找到时返回什么。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">print versus return.</span><span data-lang="zh">print 与 return。</span></strong></p><pre><code>def double_print(n):
+    print(n * 2)           # shows a value, returns nothing
+
+def double_ret(n):
+    return n * 2           # sends a value back
+
+x = double_print(4)        # prints 8
+print(x)                   # None
+y = double_ret(4)          # prints nothing
+print(y + 1)               # 9
+# print(x + 1) would stop with:
+# TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'</code></pre><p><span data-lang="en"><code>double_print(4)</code> displays 8 on the screen, but the function has no <code>return</code>, so the call itself produces the value <code>None</code>. Storing it in <code>x</code> and printing <code>x</code> shows <code>None</code>, and adding 1 to it is a TypeError. <code>double_ret(4)</code> prints nothing by itself; it hands 8 back, so <code>y + 1</code> is 9 and the caller can keep using the result.</span><span data-lang="zh"><code>double_print(4)</code> 在屏幕上显示 8，但函数没有 <code>return</code>，所以这次调用本身产生的值是 <code>None</code>。把它存入 <code>x</code> 再输出 <code>x</code> 显示 <code>None</code>，对它加 1 会产生 TypeError。<code>double_ret(4)</code> 自己不输出任何内容；它把 8 交还给调用方，所以 <code>y + 1</code> 是 9，调用方可以继续使用这个结果。</span></p><p><strong><span data-lang="en">A function that sometimes forgets to return.</span><span data-lang="zh">有时忘记返回值的函数。</span></strong></p><pre><code>def first_negative(nums):
+    for v in nums:
+        if v &lt; 0:
+            return v       # leaves the function at once
+    # no return here: falls off the end
+
+print(first_negative([3, 5, -2, -7]))   # -2
+print(first_negative([1, 2]))           # None</code></pre><p><span data-lang="en">The first call reaches <code>return v</code> when <code>v</code> is <code>-2</code> and leaves immediately, so <code>-7</code> is never examined. The second list has no negative number, so the loop ends and the function reaches its last line without a <code>return</code>; Python then returns <code>None</code>. If a caller expects a number, decide what to return in the not-found case and write it explicitly, for example <code>return None</code> on purpose or a value such as <code>0</code>. Why this works: every Python function returns something, and <code>None</code> is what you get when no <code>return</code> runs.</span><span data-lang="zh">第一次调用在 <code>v</code> 为 <code>-2</code> 时执行 <code>return v</code> 并立即退出，所以 <code>-7</code> 从未被检查。第二个列表没有负数，循环结束，函数到达最后一行时没有执行 <code>return</code>；Python 随后返回 <code>None</code>。如果调用方期望得到数字，就要决定未找到时返回什么并明确写出，例如有意写 <code>return None</code>，或返回 <code>0</code> 之类的值。原因：每个 Python 函数都会返回某个值，没有任何 <code>return</code> 运行时得到的就是 <code>None</code>。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><em>Return</em> and <em>display</em> are different command words. If a question says &ldquo;return the average&rdquo;, the function must end with <code>return</code>; a <code>print</code> alone is not a return and leaves the caller holding <code>None</code>. If a question says &ldquo;write a procedure to display the result&rdquo;, do not add a <code>return</code> statement. Always say what the function gives back when no branch matches.</p><p data-lang="zh"><em>返回</em>（return）和<em>显示</em>（display）是不同的指令词。如果题目说&ldquo;返回平均值&rdquo;，函数必须以 <code>return</code> 结尾；只用 <code>print</code> 不是返回，调用方得到的是 <code>None</code>。如果题目说&ldquo;编写一个过程来显示结果&rdquo;，就不要添加 <code>return</code> 语句。始终说明没有任何分支匹配时函数返回什么。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <pre><code>def f(n):
+    n * 2
+
+print(f(3))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does the program print, and why is it not 6?</span><span data-lang="zh">1. 程序输出什么？为什么不是 6？</span></summary>
+      <div class="sg-a"><p data-lang="en">It prints <code>None</code>. The line <code>n * 2</code> computes 6 and throws it away; there is no <code>return</code>. Fix: <code>return n * 2</code>.</p><p data-lang="zh">输出 <code>None</code>。<code>n * 2</code> 这一行算出 6 后就丢弃了；函数中没有 <code>return</code>。修复：写成 <code>return n * 2</code>。</p></div>
+    </details>
+    <pre><code>def sign(n):
+    if n &gt; 0:
+        return "pos"
+    if n &lt; 0:
+        return "neg"
+
+print(sign(5))
+print(sign(0))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What do the two calls print? Add one line so that <code>sign(0)</code> gives <code>"zero"</code>.</span><span data-lang="zh">2. 两次调用各输出什么？添加一行使 <code>sign(0)</code> 得到 <code>"zero"</code>。</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>pos</code> and then <code>None</code>: for 0 neither <code>if</code> is true, so no <code>return</code> runs. Add <code>return "zero"</code> as the last line of the function, at the same indentation as the <code>if</code> lines.</p><p data-lang="zh">输出 <code>pos</code>，然后是 <code>None</code>：对于 0，两个 <code>if</code> 都不成立，所以没有 <code>return</code> 运行。在函数最后一行添加 <code>return "zero"</code>，缩进与 <code>if</code> 行相同。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Write <code>is_even(n)</code> that returns <code>True</code> when <code>n</code> is even and <code>False</code> otherwise. What does <code>is_even(7)</code> return?</span><span data-lang="zh">3. 编写 <code>is_even(n)</code>，当 <code>n</code> 为偶数时返回 <code>True</code>，否则返回 <code>False</code>。<code>is_even(7)</code> 返回什么？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>def is_even(n): return n % 2 == 0</code>. For 7, <code>7 % 2</code> is 1, and <code>1 == 0</code> is false, so it returns <code>False</code>.</p><p data-lang="zh"><code>def is_even(n): return n % 2 == 0</code>。对于 7，<code>7 % 2</code> 是 1，<code>1 == 0</code> 为假，所以返回 <code>False</code>。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">What is the return value of <code>FUNCTION double(n): RETURN n * 2</code> when called as <code>double(6)</code>?</span><span data-lang="zh"><code>FUNCTION double(n): RETURN n * 2</code> 以 <code>double(6)</code> 调用时，返回值是多少？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
@@ -814,7 +1148,7 @@ print(grade(55))   # F</code></pre>
       <div class="quiz-opt" data-idx="0">6</div>
       <div class="quiz-opt" data-idx="1">12</div>
       <div class="quiz-opt" data-idx="2">2</div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Nothing — the function has no output</span><span data-lang="zh">没有——函数没有输出</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Nothing , the function has no output</span><span data-lang="zh">没有，函数没有输出</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">At call <code>double(6)</code>, <code>n</code> is bound to <code>6</code>. The function returns <code>6 * 2 = 12</code>. The return value 12 is sent back to the caller.</span><span data-lang="zh">调用 <code>double(6)</code> 时，<code>n</code> 绑定到 <code>6</code>。函数返回 <code>6 * 2 = 12</code>。返回值 12 被传回调用方。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The parameter <code>n</code> gets the argument value 6. The RETURN statement sends back <code>n * 2 = 6 * 2 = 12</code>.</span><span data-lang="zh">形参 <code>n</code> 获取实参值 6。RETURN 语句将 <code>n * 2 = 6 * 2 = 12</code> 传回。</span></div>
@@ -829,13 +1163,13 @@ print(grade(55))   # F</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Parameter</span><span data-lang="zh">形参（parameter）</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Library</span><span data-lang="zh">库（library）</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">AB CSE2110 outcome 3.2 distinguishes functions (return a value) from procedures (do not return a value). A function that only prints is a procedure or void function &mdash; it does work but sends nothing back to the caller.</span><span data-lang="zh">AB CSE2110 结果 3.2 区分函数（有返回值）和过程（无返回值）。只打印的函数是过程或无返回值函数——它执行工作但不向调用方传回任何值。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">AB CSE2110 outcome 3.2 distinguishes functions (return a value) from procedures (do not return a value). A function that only prints is a procedure or void function, it does work but sends nothing back to the caller.</span><span data-lang="zh">AB CSE2110 结果 3.2 区分函数（有返回值）和过程（无返回值）。只打印的函数是过程或无返回值函数，它执行工作但不向调用方传回任何值。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">No RETURN = procedure (void). A value-returning function uses a RETURN statement to send a result back. Parameters are inputs; libraries are collections of pre-built functions.</span><span data-lang="zh">没有 RETURN = 过程（void）。有返回值函数使用 RETURN 语句将结果传回。形参是输入；库是预建函数的集合。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; functions as expressions and composing calls</span><span data-lang="zh">深入 &mdash; 函数作为表达式与调用的组合</span></summary>
+    <summary><span data-lang="en">Going deeper, functions as expressions and composing calls</span><span data-lang="zh">深入, 函数作为表达式与调用的组合</span></summary>
     <div class="detail-body">
       <p><span data-lang="en">Because a value-returning function produces a value, you can use a call anywhere a value is expected. This means you can <strong>compose</strong> calls: <code>OUTPUT double(square(3))</code> evaluates <code>square(3) = 9</code> first, then passes 9 as the argument to <code>double</code>, giving 18. You can also use a return value in an arithmetic expression: <code>SET total TO price(quantity) + tax(quantity)</code>. This composability is why functions are described as "first-class" building blocks in all of these curricula: Ontario ICS3U A3, AP CSP Big Idea 3 (AAP), BC CP11 "structures," and AB CSE2110 all treat functions as reusable computational units you combine like LEGO bricks. Composition is the heart of modular design (&sect;6).</span><span data-lang="zh">因为有返回值的函数产生一个值，所以你可以在任何需要值的地方使用调用。这意味着你可以<strong>组合</strong>调用：<code>OUTPUT double(square(3))</code> 首先计算 <code>square(3) = 9</code>，然后将 9 作为实参传递给 <code>double</code>，得到 18。你也可以在算术表达式中使用返回值：<code>SET total TO price(quantity) + tax(quantity)</code>。这种可组合性是为什么函数在所有这些大纲中被描述为"一等"构建块：安大略 ICS3U A3、AP CSP 大概念 3（AAP）、BC CP11"结构"和 AB CSE2110 都将函数视为可组合的可复用计算单元，就像乐高积木一样。组合是模块化设计（&sect;6）的核心。</span></p>
     </div>
@@ -848,18 +1182,25 @@ print(grade(55))   # F</code></pre>
   <div class="section-label"><span data-lang="en">Section 5 &middot; Variable scope</span><span data-lang="zh">第 5 节 &middot; 变量作用域</span></div>
   <h2><span data-lang="en">Variable Scope: Local vs Global</span><span data-lang="zh">变量作用域：局部变量与全局变量</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Classify each variable in a program as local or global.</li><li>Predict the output when a function assigns to a name that is also global.</li><li>Explain why assigning to a global name inside a function without <code>global</code> can cause <code>UnboundLocalError</code>.</li><li>Repair such a function with <code>global</code>, or better with a parameter and a return value.</li></ul>
+    <ul data-lang="zh"><li>把程序中的每个变量归类为局部变量或全局变量。</li><li>预测函数对同名全局变量赋值时的输出。</li><li>解释为什么在函数内不使用 <code>global</code> 而对全局名称赋值可能导致 <code>UnboundLocalError</code>。</li><li>用 <code>global</code> 修复这类函数，或更好地改用形参和返回值。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Scope = which parts of the code can see (read/write) a variable.</span><span data-lang="zh">作用域 = 代码的哪些部分可以访问（读/写）一个变量。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Local variable</span><span data-lang="zh">局部变量（local variable）</span></strong> <span data-lang="en">&mdash; created inside a function. Only visible inside that function. Destroyed when the function returns. Two functions can each have a local variable called <code>total</code> without conflict.</span><span data-lang="zh">&mdash; 在函数内创建。只在该函数内可见。函数返回时销毁。两个函数各自都可以有名为 <code>total</code> 的局部变量，互不冲突。</span></li>
-      <li><strong><span data-lang="en">Global variable</span><span data-lang="zh">全局变量（global variable）</span></strong> <span data-lang="en">&mdash; created outside all functions. Visible everywhere in the program. Changing it inside one function affects all other code that reads it. AB CSE2110 outcome 3.3 says to "analyze and determine the type of scope required."</span><span data-lang="zh">&mdash; 在所有函数外创建。在程序的所有地方可见。在一个函数内更改它会影响读取它的所有其他代码。AB CSE2110 结果 3.3 要求"分析并确定所需的作用域类型"。</span></li>
-      <li><strong><span data-lang="en">Best practice</span><span data-lang="zh">最佳实践</span></strong> <span data-lang="en">&mdash; prefer local variables. Pass data in via parameters and get data out via return values. Only use globals for constants or settings that genuinely need to be shared program-wide. Ontario ICS3U A3.2 explicitly says "appropriate variable scope (e.g., local, global)."</span><span data-lang="zh">&mdash; 优先使用局部变量。通过形参传入数据，通过返回值传出数据。只将全局变量用于真正需要程序范围内共享的常量或设置。安大略 ICS3U A3.2 明确要求"适当的变量作用域（如局部、全局）"。</span></li>
+      <li><strong><span data-lang="en">Local variable</span><span data-lang="zh">局部变量（local variable）</span></strong><span data-lang="en">: created inside a function. Only visible inside that function. Destroyed when the function returns. Two functions can each have a local variable called <code>total</code> without conflict.</span><span data-lang="zh">, 在函数内创建。只在该函数内可见。函数返回时销毁。两个函数各自都可以有名为 <code>total</code> 的局部变量，互不冲突。</span></li>
+      <li><strong><span data-lang="en">Global variable</span><span data-lang="zh">全局变量（global variable）</span></strong><span data-lang="en">: created outside all functions. Visible everywhere in the program. Changing it inside one function affects all other code that reads it. AB CSE2110 outcome 3.3 says to "analyze and determine the type of scope required."</span><span data-lang="zh">, 在所有函数外创建。在程序的所有地方可见。在一个函数内更改它会影响读取它的所有其他代码。AB CSE2110 结果 3.3 要求"分析并确定所需的作用域类型"。</span></li>
+      <li><strong><span data-lang="en">Best practice</span><span data-lang="zh">最佳实践</span></strong><span data-lang="en">: prefer local variables. Pass data in via parameters and get data out via return values. Only use globals for constants or settings that genuinely need to be shared program-wide. Ontario ICS3U A3.2 explicitly says "appropriate variable scope (e.g., local, global)."</span><span data-lang="zh">, 优先使用局部变量。通过形参传入数据，通过返回值传出数据。只将全局变量用于真正需要程序范围内共享的常量或设置。安大略 ICS3U A3.2 明确要求"适当的变量作用域（如局部、全局）"。</span></li>
     </ul>
     <span data-lang="en"><strong>Scope rule summary:</strong> Local beats global inside a function. If a local variable and a global variable have the same name, code inside the function sees the local one. Code outside the function sees the global one.</span><span data-lang="zh"><strong>作用域规则摘要：</strong>在函数内部，局部变量优先于全局变量。如果局部变量和全局变量同名，函数内部的代码看到的是局部变量；函数外部的代码看到的是全局变量。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 9: Tracing local vs global scope</span><span data-lang="zh">例题 9：追踪局部作用域与全局作用域</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Tracing local vs global scope</span><span data-lang="zh">例题 5 &middot; 追踪局部作用域与全局作用域</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Trace this program and predict the output for each print statement.</span><span data-lang="zh">追踪此程序，预测每个打印语句的输出。</span></p>
   </div>
   <div class="worked-solution">
@@ -887,6 +1228,82 @@ print(add_five())      # Line B: 105 (modifies the global)
 print(total)           # Line C: 105 (global was changed!)</code></pre>
     <p><span data-lang="en">Without <code>global total</code> inside the function, Python would create a <em>new local variable</em> called <code>total</code>, and the global would remain 100. This is exactly why unintended global modification is a common bug: the behaviour depends on one keyword. Prefer passing <code>total</code> as a parameter and returning the result instead.</span><span data-lang="zh">如果函数内没有 <code>global total</code>，Python 会创建一个名为 <code>total</code> 的<em>新局部变量</em>，全局变量仍为 100。这正是无意的全局变量修改成为常见错误的原因：行为取决于一个关键字。建议改为将 <code>total</code> 作为形参传入，并返回结果。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 10: UnboundLocalError and shadowing</span><span data-lang="zh">例题 10：UnboundLocalError 与变量遮蔽</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: a program keeps a global <code>count</code> and a function <code>bump</code> that adds 1 to it with <code>count = count + 1</code>. Explain why calling <code>bump()</code> fails, show what happens when a function assigns to a name that is also global, and give two fixes.</span><span data-lang="zh">问题：程序有一个全局变量 <code>count</code>，函数 <code>bump</code> 用 <code>count = count + 1</code> 给它加 1。解释为什么调用 <code>bump()</code> 会失败，展示函数对同名全局变量赋值时会发生什么，并给出两种修复方法。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">The failing program.</span><span data-lang="zh">出错的程序。</span></strong></p><pre><code>count = 0
+
+def bump():
+    count = count + 1      # assigns to count, so count is local here
+    return count
+
+bump()
+# UnboundLocalError: cannot access local variable 'count' where it is
+# not associated with a value</code></pre><p><span data-lang="en">Python decides, before running a function, which names are local: any name that is <em>assigned</em> inside the function body is local for the <em>whole</em> body. In <code>bump</code>, <code>count = count + 1</code> assigns to <code>count</code>, so <code>count</code> is local. The right-hand side then reads a local <code>count</code> that has no value yet, and Python raises <code>UnboundLocalError</code>. It does not fall back to the global <code>count = 0</code>. The exact wording of the message differs between Python versions (older versions say &ldquo;local variable 'count' referenced before assignment&rdquo;), but the error name is the same.</span><span data-lang="zh">Python 在运行函数之前就会确定哪些名称是局部的：在函数体内被<em>赋值</em>的名称，在<em>整个</em>函数体中都是局部的。在 <code>bump</code> 中，<code>count = count + 1</code> 对 <code>count</code> 赋值，所以 <code>count</code> 是局部变量。右边随后读取一个尚无值的局部 <code>count</code>，Python 因此引发 <code>UnboundLocalError</code>。它不会退回去使用全局的 <code>count = 0</code>。错误信息的具体措辞随 Python 版本而异（旧版本写作&ldquo;local variable 'count' referenced before assignment&rdquo;），但错误名称相同。</span></p><p><strong><span data-lang="en">A related trap: shadowing.</span><span data-lang="zh">相关陷阱：变量遮蔽。</span></strong></p><pre><code>total = 10
+
+def shadow():
+    total = 99             # a new local variable, not the global
+    return total
+
+print(shadow())   # 99
+print(total)      # 10  (the global was never touched)</code></pre><p><span data-lang="en">Here the function only assigns <code>total</code>, never reads it first, so there is no error: <code>total = 99</code> creates a new local that hides the global inside <code>shadow</code>. After the call the global is still 10.</span><span data-lang="zh">这里函数只对 <code>total</code> 赋值，没有先读取它，所以没有错误：<code>total = 99</code> 创建了一个新的局部变量，在 <code>shadow</code> 内部遮蔽了全局变量。调用之后全局变量仍是 10。</span></p><p><strong><span data-lang="en">Fix 1 (preferred): parameter in, return out.</span><span data-lang="zh">修复 1（推荐）：形参传入，返回值传出。</span></strong></p><pre><code>count = 0
+
+def bump(c):
+    return c + 1           # works only with its parameter
+
+count = bump(count)        # the caller stores the result
+print(count)               # 1</code></pre><p><strong><span data-lang="en">Fix 2: declare the global.</span><span data-lang="zh">修复 2：声明全局变量。</span></strong></p><pre><code>count = 0
+
+def bump():
+    global count           # tell Python: count is the global one
+    count = count + 1
+
+bump()
+bump()
+print(count)               # 2</code></pre><p><span data-lang="en">Both fixes work. Fix 1 keeps the function independent of hidden state: <code>bump(5)</code> always gives 6. Fix 2 changes shared state, so the result of <code>bump()</code> depends on how many times it ran before, which makes bugs harder to find. Why this works: <code>global count</code> tells Python that assignments to <code>count</code> inside this function refer to the module-level variable, so no local is created.</span><span data-lang="zh">两种修复都有效。修复 1 让函数不依赖隐藏状态：<code>bump(5)</code> 总是得到 6。修复 2 会改变共享状态，所以 <code>bump()</code> 的结果取决于之前运行了多少次，这使错误更难发现。原因：<code>global count</code> 告诉 Python，此函数内对 <code>count</code> 的赋值指向模块级变量，因此不会创建局部变量。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">In a scope trace, keep two columns: one for the global variables and one for the current function's locals, and update them line by line. A name that is <em>assigned</em> anywhere in a function is local to that whole function, even on lines before the assignment. Reading a global without assigning to it needs no <code>global</code> keyword.</p><p data-lang="zh">在作用域追踪题中，保留两列：一列记录全局变量，一列记录当前函数的局部变量，并逐行更新。在函数内任何位置被<em>赋值</em>的名称，在整个函数中都是局部的，即使在赋值之前的行也是如此。只读取而不赋值的全局变量不需要 <code>global</code> 关键字。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <pre><code>x = 5
+
+def f():
+    x = 20
+    return x
+
+print(f(), x)</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does the program print? Name the local and the global variable.</span><span data-lang="zh">1. 程序输出什么？指出局部变量和全局变量。</span></summary>
+      <div class="sg-a"><p data-lang="en">It prints <code>20 5</code>. Inside <code>f</code>, <code>x = 20</code> creates a local <code>x</code>; the global <code>x</code> stays 5.</p><p data-lang="zh">输出 <code>20 5</code>。在 <code>f</code> 内，<code>x = 20</code> 创建了局部变量 <code>x</code>；全局变量 <code>x</code> 仍是 5。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A program has <code>n = 1</code> at the top and <code>def up(): n = n + 1</code>. Why does calling <code>up()</code> raise <code>UnboundLocalError</code>, and what are two fixes?</span><span data-lang="zh">2. 程序开头有 <code>n = 1</code>，并有 <code>def up(): n = n + 1</code>。为什么调用 <code>up()</code> 会引发 <code>UnboundLocalError</code>？有哪两种修复方法？</span></summary>
+      <div class="sg-a"><p data-lang="en">Assigning to <code>n</code> makes <code>n</code> local to <code>up</code>, so the right-hand <code>n</code> is read before it has a value. Fixes: add <code>global n</code> as the first line of <code>up</code>; or, better, write <code>def up(n): return n + 1</code> and call <code>n = up(n)</code>.</p><p data-lang="zh">对 <code>n</code> 赋值使 <code>n</code> 成为 <code>up</code> 的局部变量，所以右边的 <code>n</code> 在有值之前就被读取了。修复：在 <code>up</code> 的第一行添加 <code>global n</code>；或者更好的做法是写 <code>def up(n): return n + 1</code> 并调用 <code>n = up(n)</code>。</p></div>
+    </details>
+    <pre><code>n = 1
+
+def show():
+    print(n)
+
+show()
+n = 2
+show()</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. What does this program print? Does <code>show</code> need the <code>global</code> keyword?</span><span data-lang="zh">3. 这个程序输出什么？<code>show</code> 需要 <code>global</code> 关键字吗？</span></summary>
+      <div class="sg-a"><p data-lang="en">It prints <code>1</code> and then <code>2</code>. <code>show</code> only reads <code>n</code>, and a read finds the global, so no <code>global</code> keyword is needed; the second call sees the updated value 2.</p><p data-lang="zh">输出 <code>1</code> 然后是 <code>2</code>。<code>show</code> 只读取 <code>n</code>，读取时会找到全局变量，所以不需要 <code>global</code> 关键字；第二次调用看到更新后的值 2。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A variable created inside a function is called a __________ and is only visible __________ .</span><span data-lang="zh">在函数内部创建的变量称为 __________，只在 __________ 可见。</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
@@ -904,10 +1321,10 @@ print(total)           # Line C: 105 (global was changed!)</code></pre>
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Two functions each have a local variable named <code>count</code>. Can they interfere with each other?</span><span data-lang="zh">两个函数各自都有一个名为 <code>count</code> 的局部变量。它们会互相干扰吗？</span></div><div class="quiz-number">&sect;5 &middot; Q2</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">Yes — they both write to the same memory location</span><span data-lang="zh">会——它们都写入同一内存位置</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">No — each function's local variables are independent; same name is fine</span><span data-lang="zh">不会——每个函数的局部变量是独立的；同名没有问题</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Yes , they both write to the same memory location</span><span data-lang="zh">会，它们都写入同一内存位置</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">No , each function's local variables are independent; same name is fine</span><span data-lang="zh">不会，每个函数的局部变量是独立的；同名没有问题</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Only if the functions call each other</span><span data-lang="zh">只有在函数互相调用时才会</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Yes — Python does not allow two variables with the same name</span><span data-lang="zh">会——Python 不允许两个变量同名</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Yes , Python does not allow two variables with the same name</span><span data-lang="zh">会，Python 不允许两个变量同名</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Local variables are isolated to the function that creates them. Two functions with a local variable called <code>count</code> each have their own independent <code>count</code>. Changing one does not affect the other. This isolation is the main benefit of local scope.</span><span data-lang="zh">局部变量与创建它们的函数隔离。两个函数各自都有名为 <code>count</code> 的局部变量，各自拥有独立的 <code>count</code>。更改一个不会影响另一个。这种隔离是局部作用域的主要优点。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Local variables are isolated per function. The same name in two different functions refers to two completely separate storage locations. Only globals (or shared mutable objects) can create this kind of interference.</span><span data-lang="zh">局部变量按函数隔离。两个不同函数中的相同名称指向两个完全独立的存储位置。只有全局变量（或共享的可变对象）才能造成这种干扰。</span></div>
@@ -915,9 +1332,9 @@ print(total)           # Line C: 105 (global was changed!)</code></pre>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; mutable global state and why it causes hard bugs <span class="honors-flag">Honors &mdash; ICS4U C1.3 / CSE2110</span></span><span data-lang="zh">深入 &mdash; 可变全局状态及其引发难以调试的错误 <span class="honors-flag">荣誉 &mdash; ICS4U C1.3 / CSE2110</span></span></summary>
+    <summary><span data-lang="en">Going deeper, mutable global state and why it causes hard bugs <span class="honors-flag">Honors, ICS4U C1.3 / CSE2110</span></span><span data-lang="zh">深入, 可变全局状态及其引发难以调试的错误 <span class="honors-flag">荣誉, ICS4U C1.3 / CSE2110</span></span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">When a function silently reads and writes a global variable, the function's behaviour depends on hidden state outside its parameters. This creates two problems: (1) <strong>Non-reproducibility</strong> — calling the function twice with the same arguments can produce different results if the global changed between calls. (2) <strong>Tight coupling</strong> — every function that touches the global becomes coupled to every other; changing the global's name, type, or range requires editing all of them. AB CSE2110 outcome 3.4 says to "analyze for, and maintain, an appropriate balance between the coupling or dependency and cohesion or focus of subprograms." Ontario ICS4U C1.3 ("functional decomposition in subprogram design") is assessed precisely on this. The fix is simple: pass the value as a parameter and return the new value &mdash; zero hidden state, zero coupling.</span><span data-lang="zh">当函数静默地读写全局变量时，函数的行为取决于其形参之外的隐藏状态。这带来两个问题：(1) <strong>不可重现性</strong>——如果全局变量在两次调用之间发生了变化，用相同实参调用函数两次可能产生不同结果。(2) <strong>紧耦合</strong>——所有触及全局变量的函数都与彼此耦合；更改全局变量的名称、类型或范围需要编辑所有这些函数。AB CSE2110 结果 3.4 要求"分析并维护子程序之间耦合（依赖）和内聚（专注度）的适当平衡"。安大略 ICS4U C1.3（"子程序设计中的函数分解"）正是针对这一点进行评估。解决方法很简单：将值作为形参传入，将新值作为返回值传出——零隐藏状态，零耦合。</span></p>
+      <p><span data-lang="en">When a function silently reads and writes a global variable, the function's behaviour depends on hidden state outside its parameters. This creates two problems: (1) <strong>Non-reproducibility</strong> , calling the function twice with the same arguments can produce different results if the global changed between calls. (2) <strong>Tight coupling</strong> , every function that touches the global becomes coupled to every other; changing the global's name, type, or range requires editing all of them. AB CSE2110 outcome 3.4 says to "analyze for, and maintain, an appropriate balance between the coupling or dependency and cohesion or focus of subprograms." Ontario ICS4U C1.3 ("functional decomposition in subprogram design") addresses precisely this. The fix is simple: pass the value as a parameter and return the new value, zero hidden state, zero coupling.</span><span data-lang="zh">当函数静默地读写全局变量时，函数的行为取决于其形参之外的隐藏状态。这带来两个问题：(1) <strong>不可重现性</strong>，如果全局变量在两次调用之间发生了变化，用相同实参调用函数两次可能产生不同结果。(2) <strong>紧耦合</strong>，所有触及全局变量的函数都与彼此耦合；更改全局变量的名称、类型或范围需要编辑所有这些函数。AB CSE2110 结果 3.4 要求"分析并维护子程序之间耦合（依赖）和内聚（专注度）的适当平衡"。安大略 ICS4U C1.3（"子程序设计中的函数分解"）正是针对这一点。解决方法很简单：将值作为形参传入，将新值作为返回值传出，零隐藏状态，零耦合。</span></p>
     </div>
   </details>
 </section>
@@ -928,18 +1345,25 @@ print(total)           # Line C: 105 (global was changed!)</code></pre>
   <div class="section-label"><span data-lang="en">Section 6 &middot; Modular design and decomposition</span><span data-lang="zh">第 6 节 &middot; 模块化设计与分解</span></div>
   <h2><span data-lang="en">Modular Design: Decomposing a Program into Functions</span><span data-lang="zh">模块化设计：将程序分解为函数</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Decompose a task into functions, naming each by a verb and noun and stating its parameters and return value.</li><li>Draw the data flow between functions: what goes in and what comes back.</li><li>Trace a recursive call on a call stack and read the values returned.</li><li>Identify the base case of a recursive function and explain what happens without one.</li></ul>
+    <ul data-lang="zh"><li>把任务分解为函数，用动词加名词命名每个函数，并说明其形参和返回值。</li><li>画出函数之间的数据流：什么传入，什么传回。</li><li>在调用栈上追踪递归调用，并读出返回的值。</li><li>识别递归函数的基例，并解释没有基例会发生什么。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Modular design = give each function one clear job; connect them via calls.</span><span data-lang="zh">模块化设计 = 让每个函数只做一件明确的事；通过调用连接它们。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Single-responsibility rule</span><span data-lang="zh">单一职责规则</span></strong> <span data-lang="en">&mdash; every function should do exactly one thing, named by a verb-noun pair (e.g., <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code>, <code>display_report</code>). AB CSE2110 outcome 3.4: "appropriate balance between coupling … and cohesion."</span><span data-lang="zh">&mdash; 每个函数应该只做一件事，用动词-名词组合命名（如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code>、<code>display_report</code>）。AB CSE2110 结果 3.4："耦合……与内聚的适当平衡"。</span></li>
-      <li><strong><span data-lang="en">Top-down design</span><span data-lang="zh">自顶向下设计</span></strong> <span data-lang="en">&mdash; start with the main function (high level); each step becomes a function call; implement each sub-function; repeat. ICS3U B2.3: "apply the principle of modularity to design reusable code." CSTA 3A-AP-17: "using constructs such as procedures, modules."</span><span data-lang="zh">&mdash; 从主函数（高层）开始；每个步骤变成一个函数调用；实现每个子函数；重复。ICS3U B2.3："应用模块化原则设计可复用代码。" CSTA 3A-AP-17："使用过程、模块等构造"。</span></li>
-      <li><strong><span data-lang="en">Independently testable</span><span data-lang="zh">可独立测试</span></strong> <span data-lang="en">&mdash; you can test <code>compute_average([80, 90, 70])</code> alone before hooking it up to the rest. Isolating bugs becomes trivial.</span><span data-lang="zh">&mdash; 你可以在将 <code>compute_average([80, 90, 70])</code> 连接到其余部分之前单独测试它。隔离错误变得轻而易举。</span></li>
+      <li><strong><span data-lang="en">Single-responsibility rule</span><span data-lang="zh">单一职责规则</span></strong><span data-lang="en">: every function should do exactly one thing, named by a verb-noun pair (e.g., <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code>, <code>display_report</code>). AB CSE2110 outcome 3.4: "appropriate balance between coupling … and cohesion."</span><span data-lang="zh">, 每个函数应该只做一件事，用动词-名词组合命名（如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code>、<code>display_report</code>）。AB CSE2110 结果 3.4："耦合……与内聚的适当平衡"。</span></li>
+      <li><strong><span data-lang="en">Top-down design</span><span data-lang="zh">自顶向下设计</span></strong><span data-lang="en">: start with the main function (high level); each step becomes a function call; implement each sub-function; repeat. ICS3U B2.3: "apply the principle of modularity to design reusable code." CSTA 3A-AP-17: "using constructs such as procedures, modules."</span><span data-lang="zh">, 从主函数（高层）开始；每个步骤变成一个函数调用；实现每个子函数；重复。ICS3U B2.3："应用模块化原则设计可复用代码。" CSTA 3A-AP-17："使用过程、模块等构造"。</span></li>
+      <li><strong><span data-lang="en">Independently testable</span><span data-lang="zh">可独立测试</span></strong><span data-lang="en">: you can test <code>compute_average([80, 90, 70])</code> alone before hooking it up to the rest. Isolating bugs becomes trivial.</span><span data-lang="zh">, 你可以在将 <code>compute_average([80, 90, 70])</code> 连接到其余部分之前单独测试它。隔离错误变得轻而易举。</span></li>
     </ul>
-    <span data-lang="en">BC CP11 names "structures" and "ways to modify existing code to meet a particular purpose" as core content — modular design is exactly that pattern.</span><span data-lang="zh">BC CP11 将"结构"和"修改现有代码以满足特定目的的方法"列为核心内容——模块化设计正是这种模式。</span>
+    <span data-lang="en">BC CP11 names "structures" and "ways to modify existing code to meet a particular purpose" as core content , modular design is exactly that pattern.</span><span data-lang="zh">BC CP11 将"结构"和"修改现有代码以满足特定目的的方法"列为核心内容，模块化设计正是这种模式。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 11: A grade-book program in four functions</span><span data-lang="zh">例题 11：用四个函数实现成绩册程序</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; A grade-book program in four functions</span><span data-lang="zh">例题 6 &middot; 用四个函数实现成绩册程序</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: a program reads 5 scores, computes the average, determines the letter grade (A/B/C/D/F), and displays a report. Decompose into functions.</span><span data-lang="zh">问题：程序读取 5 个成绩，计算平均分，确定字母等级（A/B/C/D/F），并显示报告。分解为函数。</span></p>
   </div>
   <div class="worked-solution">
@@ -976,7 +1400,7 @@ SET scores TO get_scores()
 SET avg TO compute_average(scores)
 SET grade TO letter_grade(avg)
 display_report(avg, grade)</code></pre>
-    <p><span data-lang="zh">说明：主程序（main program）只有四行，清晰如故事情节。每个函数（函数，function）只做一件事；可以单独测试每个函数。数据通过形参（parameter，形参）和返回值（return value，返回值）流动，无需全局变量（global variable，全局变量）。</span><span data-lang="en">The main program is four lines — readable as a story. Each function does one thing; each can be tested in isolation. Data flows via parameters and return values, with no global variables needed.</span></p>
+    <p><span data-lang="zh">说明：主程序（main program）只有四行，清晰如故事情节。每个函数（函数，function）只做一件事；可以单独测试每个函数。数据通过形参（parameter，形参）和返回值（return value，返回值）流动，无需全局变量（global variable，全局变量）。</span><span data-lang="en">The main program is four lines , readable as a story. Each function does one thing; each can be tested in isolation. Data flows via parameters and return values, with no global variables needed.</span></p>
     <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
     <pre><code>def get_scores():
     scores = []
@@ -1003,6 +1427,76 @@ avg = compute_average(scores)
 grade = letter_grade(avg)
 display_report(avg, grade)</code></pre>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 12: Recursion and the call stack</span><span data-lang="zh">例题 12：递归与调用栈</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: write a function <code>fact(n)</code> that returns n factorial (n &times; (n &minus; 1) &times; ... &times; 1) by calling itself. Trace <code>fact(4)</code> on the call stack and explain what the base case is for.</span><span data-lang="zh">问题：编写函数 <code>fact(n)</code>，通过调用自身返回 n 的阶乘（n &times; (n &minus; 1) &times; ... &times; 1）。在调用栈上追踪 <code>fact(4)</code>，并解释基例的作用。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p><pre><code>def fact(n):
+    if n == 1:             # base case: stops the recursion
+        return 1
+    return n * fact(n - 1) # recursive case: a smaller copy of the problem
+
+print(fact(4))   # 24</code></pre><p><strong><span data-lang="en">Trace the call stack (see Figure 1).</span><span data-lang="zh">追踪调用栈（见图 1）。</span></strong></p><ol><li><span data-lang="en"><code>fact(4)</code> is called with <code>n = 4</code>. It is not the base case, so it must compute <code>4 * fact(3)</code>; it waits for <code>fact(3)</code>.</span><span data-lang="zh">调用 <code>fact(4)</code>，<code>n = 4</code>。它不是基例，所以必须计算 <code>4 * fact(3)</code>；它等待 <code>fact(3)</code>。</span></li><li><span data-lang="en"><code>fact(3)</code> waits for <code>fact(2)</code>, and <code>fact(2)</code> waits for <code>fact(1)</code>. Each call has its own <code>n</code>, held in its own frame on the stack.</span><span data-lang="zh"><code>fact(3)</code> 等待 <code>fact(2)</code>，<code>fact(2)</code> 等待 <code>fact(1)</code>。每次调用都有自己的 <code>n</code>，保存在栈上自己的帧中。</span></li><li><span data-lang="en"><code>fact(1)</code> is the base case and returns <code>1</code> without calling anything. Its frame is removed.</span><span data-lang="zh"><code>fact(1)</code> 是基例，不再调用任何函数，直接返回 <code>1</code>。它的帧被移除。</span></li><li><span data-lang="en">The waiting frames finish from the top down: <code>fact(2)</code> returns <code>2 * 1 = 2</code>, <code>fact(3)</code> returns <code>3 * 2 = 6</code>, <code>fact(4)</code> returns <code>4 * 6 = 24</code>.</span><span data-lang="zh">等待中的帧从上到下依次完成：<code>fact(2)</code> 返回 <code>2 * 1 = 2</code>，<code>fact(3)</code> 返回 <code>3 * 2 = 6</code>，<code>fact(4)</code> 返回 <code>4 * 6 = 24</code>。</span></li></ol><p><span data-lang="en">Four calls were made, so four frames were on the stack at the deepest point. The answer 24 equals 4 &times; 3 &times; 2 &times; 1.</span><span data-lang="zh">共进行了四次调用，所以在最深处栈上有四个帧。答案 24 等于 4 &times; 3 &times; 2 &times; 1。</span></p><p><strong><span data-lang="en">Common error: forgetting the base case.</span><span data-lang="zh">常见错误：忘记基例。</span></strong></p><pre><code>def fact_bad(n):
+    return n * fact_bad(n - 1)   # no base case
+
+fact_bad(3)
+# RecursionError: maximum recursion depth exceeded</code></pre><p><span data-lang="en">Without the <code>if n == 1</code> test, nothing ever stops the calls, the stack keeps growing, and Python stops the program with a <code>RecursionError</code>. A correct recursive function needs a base case that returns without recursing, and each recursive call must move closer to it (here <code>n - 1</code> moves toward 1). Why this works: each frame remembers its own <code>n</code> and the pending multiplication, so the answers can be combined on the way back. This is also decomposition: <code>fact(4)</code> is solved by trusting a smaller call, <code>fact(3)</code>.</span><span data-lang="zh">如果没有 <code>if n == 1</code> 这个判断，就没有任何东西能停止调用，栈不断增长，Python 会以 <code>RecursionError</code> 终止程序。正确的递归函数需要有一个不再递归就能返回的基例，并且每次递归调用都必须更接近基例（这里 <code>n - 1</code> 朝 1 靠近）。原因：每个帧都记住自己的 <code>n</code> 和待完成的乘法，所以在返回途中可以把各个答案组合起来。这也是分解：<code>fact(4)</code> 通过信任一个更小的调用 <code>fact(3)</code> 来解决。</span></p>
+  </div>
+  </details>
+
+<figure class="sg-fig" role="group">
+<svg viewBox="0 0 440 330" role="img" aria-label="Call stack for print(fact(4)): frames fact(1) n=1 at the top, then fact(2), fact(3), fact(4) and main at the bottom. Up arrows are calls; down arrows are returns carrying 1, 2, 6 and 24.">
+<defs><marker id="csArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="dot" d="M0,0 L8,4 L0,8 z"/></marker></defs>
+<text class="mut" data-lang="en" x="20" y="14">top of stack</text><text class="mut" data-lang="zh" x="20" y="14">栈顶</text>
+<rect class="box" x="20" y="24" width="170" height="38" rx="4"/><text class="mono" data-lang="en" x="105" y="48" text-anchor="middle">fact(1)   n = 1</text><text class="mono" data-lang="zh" x="105" y="48" text-anchor="middle">fact(1)   n = 1</text>
+<rect class="box" x="20" y="82" width="170" height="38" rx="4"/><text class="mono" data-lang="en" x="105" y="106" text-anchor="middle">fact(2)   n = 2</text><text class="mono" data-lang="zh" x="105" y="106" text-anchor="middle">fact(2)   n = 2</text>
+<rect class="box" x="20" y="140" width="170" height="38" rx="4"/><text class="mono" data-lang="en" x="105" y="164" text-anchor="middle">fact(3)   n = 3</text><text class="mono" data-lang="zh" x="105" y="164" text-anchor="middle">fact(3)   n = 3</text>
+<rect class="box" x="20" y="198" width="170" height="38" rx="4"/><text class="mono" data-lang="en" x="105" y="222" text-anchor="middle">fact(4)   n = 4</text><text class="mono" data-lang="zh" x="105" y="222" text-anchor="middle">fact(4)   n = 4</text>
+<rect class="box" x="20" y="256" width="170" height="38" rx="4"/><text class="mono" data-lang="en" x="105" y="280" text-anchor="middle">main program</text><text class="mono" data-lang="zh" x="105" y="280" text-anchor="middle">主程序</text>
+<line class="arrow" x1="60" y1="256" x2="60" y2="238" marker-end="url(#csArrow)"/><line class="arrow" x1="150" y1="238" x2="150" y2="254" marker-end="url(#csArrow)"/>
+<line class="arrow" x1="60" y1="198" x2="60" y2="180" marker-end="url(#csArrow)"/><line class="arrow" x1="150" y1="180" x2="150" y2="196" marker-end="url(#csArrow)"/>
+<line class="arrow" x1="60" y1="140" x2="60" y2="122" marker-end="url(#csArrow)"/><line class="arrow" x1="150" y1="122" x2="150" y2="138" marker-end="url(#csArrow)"/>
+<line class="arrow" x1="60" y1="82" x2="60" y2="64" marker-end="url(#csArrow)"/><line class="arrow" x1="150" y1="64" x2="150" y2="80" marker-end="url(#csArrow)"/>
+<text class="c3t" data-lang="en" x="210" y="48">returns 1 (base case)</text><text class="c3t" data-lang="zh" x="210" y="48">返回 1（基例）</text>
+<text data-lang="en" x="210" y="106">returns 2 × 1 = 2</text><text data-lang="zh" x="210" y="106">返回 2 × 1 = 2</text>
+<text data-lang="en" x="210" y="164">returns 3 × 2 = 6</text><text data-lang="zh" x="210" y="164">返回 3 × 2 = 6</text>
+<text data-lang="en" x="210" y="222">returns 4 × 6 = 24</text><text data-lang="zh" x="210" y="222">返回 4 × 6 = 24</text>
+<text class="c1t" data-lang="en" x="210" y="280">print shows 24</text><text class="c1t" data-lang="zh" x="210" y="280">print 输出 24</text>
+<text class="mut" data-lang="en" x="20" y="320">Up arrows: calls. Down arrows: returns.</text><text class="mut" data-lang="zh" x="20" y="320">向上箭头：调用。向下箭头：返回。</text>
+</svg>
+<figcaption><span data-lang="en">Figure 1. Call stack for <code>print(fact(4))</code>. Each call pushes a frame with its own <code>n</code>; the frame with <code>n = 1</code> is the base case and returns 1, then each frame below returns <code>n</code> times the value that came back: 2, 6, 24. The returned values are printed beside the frames.</span><span data-lang="zh">图 1. <code>print(fact(4))</code> 的调用栈。每次调用压入一个带有自己 <code>n</code> 的帧；<code>n = 1</code> 的帧是基例，返回 1，然后下面每个帧返回 <code>n</code> 乘以传回的值：2、6、24。返回值标在各帧旁边。</span></figcaption>
+</figure>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">For a decomposition question, list each function with its parameters and what it returns, for example <code>compute_average(scores)</code> returns a number. For a recursion trace, name the base case first, then show each call and each return value in order. A recursive function with no base case is an incomplete answer because it never ends.</p><p data-lang="zh">对于分解题，列出每个函数及其形参和返回值，例如 <code>compute_average(scores)</code> 返回一个数。对于递归追踪题，先指出基例，然后按顺序给出每次调用和每个返回值。没有基例的递归函数是不完整的答案，因为它永远不会结束。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A program reads a temperature in degrees Celsius, then prints it in Fahrenheit and warns if it is above 30. Propose three functions with their parameters and return values.</span><span data-lang="zh">1. 一个程序读取摄氏温度，然后输出对应的华氏温度，并在温度高于 30 时发出警告。提出三个函数，并说明它们的形参和返回值。</span></summary>
+      <div class="sg-a"><p data-lang="en">One possible answer: <code>to_fahrenheit(c)</code> returns <code>c * 9 / 5 + 32</code>; <code>is_hot(c)</code> returns <code>True</code> when <code>c &gt; 30</code>; <code>display_report(f, hot)</code> prints the result and returns nothing. The main program calls them in that order, passing each result to the next.</p><p data-lang="zh">一种可能的答案：<code>to_fahrenheit(c)</code> 返回 <code>c * 9 / 5 + 32</code>；<code>is_hot(c)</code> 在 <code>c &gt; 30</code> 时返回 <code>True</code>；<code>display_report(f, hot)</code> 输出结果，不返回值。主程序按此顺序调用它们，并把每个结果传给下一个。</p></div>
+    </details>
+    <pre><code>def total(n):
+    if n == 0:
+        return 0
+    return n + total(n - 1)
+
+print(total(3))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What does the program print? How many calls to <code>total</code> are made, counting the first?</span><span data-lang="zh">2. 程序输出什么？包括第一次在内，一共调用了多少次 <code>total</code>？</span></summary>
+      <div class="sg-a"><p data-lang="en">It prints <code>6</code>. The calls are <code>total(3)</code>, <code>total(2)</code>, <code>total(1)</code> and <code>total(0)</code>, which is the base case: 4 calls. The returns are 0, then 1 + 0 = 1, then 2 + 1 = 3, then 3 + 3 = 6.</p><p data-lang="zh">输出 <code>6</code>。调用依次为 <code>total(3)</code>、<code>total(2)</code>、<code>total(1)</code> 和 <code>total(0)</code>（基例）：共 4 次调用。返回值依次为 0，然后 1 + 0 = 1，然后 2 + 1 = 3，然后 3 + 3 = 6。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Using <code>fact</code> from the worked example, how many frames are on the stack at the deepest point of <code>fact(5)</code>, and what does it return?</span><span data-lang="zh">3. 使用例题中的 <code>fact</code>，<code>fact(5)</code> 在最深处栈上有多少个帧？它返回什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">Five frames from <code>fact(5)</code> down to <code>fact(1)</code>, plus the main program below them. It returns 5 &times; 24 = 120, because <code>fact(4)</code> returns 24.</p><p data-lang="zh">从 <code>fact(5)</code> 到 <code>fact(1)</code> 共五个帧，其下还有主程序。它返回 5 &times; 24 = 120，因为 <code>fact(4)</code> 返回 24。</p></div>
+    </details>
+  </div>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">According to the single-responsibility rule, a function should&hellip;</span><span data-lang="zh">根据单一职责规则，函数应该……</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
@@ -1012,7 +1506,7 @@ display_report(avg, grade)</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Do exactly one clearly-named task</span><span data-lang="zh">只做一件命名清晰的任务</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Always return a numeric value</span><span data-lang="zh">总是返回数值</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">The single-responsibility rule says each function should do exactly one thing, named by a clear verb-noun pair. This makes the function testable, reusable, and easy to understand. AB CSE2110 describes this as "cohesion" — a function with a single clear focus.</span><span data-lang="zh">单一职责规则要求每个函数只做一件事，用清晰的动词-名词组合命名。这使函数可测试、可复用且易于理解。AB CSE2110 将此描述为"内聚"——具有单一明确关注点的函数。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The single-responsibility rule says each function should do exactly one thing, named by a clear verb-noun pair. This makes the function testable, reusable, and easy to understand. AB CSE2110 describes this as "cohesion" , a function with a single clear focus.</span><span data-lang="zh">单一职责规则要求每个函数只做一件事，用清晰的动词-名词组合命名。这使函数可测试、可复用且易于理解。AB CSE2110 将此描述为"内聚"，具有单一明确关注点的函数。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Single responsibility is about focus, not length. A function can be many lines long and still have a single responsibility. Length and parameter usage are separate concerns.</span><span data-lang="zh">单一职责是关于关注点，而不是长度。函数可以有很多行，但仍然只有一个职责。长度和形参使用是独立的关注点。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1037,18 +1531,25 @@ display_report(avg, grade)</code></pre>
   <div class="section-label"><span data-lang="en">Section 7 &middot; Built-in functions and libraries</span><span data-lang="zh">第 7 节 &middot; 内置函数与库</span></div>
   <h2><span data-lang="en">Built-in Functions and Libraries</span><span data-lang="zh">内置函数与库</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Use the built-in functions <code>len</code>, <code>max</code>, <code>min</code>, <code>sum</code>, <code>abs</code> and <code>round</code> without an import.</li><li>Import a module and call <code>math.sqrt</code>, <code>math.floor</code> and <code>math.ceil</code> with the module prefix.</li><li>Explain why <code>round(2.5)</code> is 2 and how <code>floor</code> and <code>int</code> differ for negatives.</li><li>Read a library function's signature and description to decide how to call it.</li></ul>
+    <ul data-lang="zh"><li>不用导入就能使用内置函数 <code>len</code>、<code>max</code>、<code>min</code>、<code>sum</code>、<code>abs</code> 和 <code>round</code>。</li><li>导入模块，并带模块前缀调用 <code>math.sqrt</code>、<code>math.floor</code> 和 <code>math.ceil</code>。</li><li>解释为什么 <code>round(2.5)</code> 是 2，以及 <code>floor</code> 和 <code>int</code> 对负数有何不同。</li><li>阅读库函数的签名和说明，以决定如何调用它。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">A library is a collection of pre-written functions you can call without defining them yourself.</span><span data-lang="zh">库是预编写函数的集合，你可以直接调用，无需自己定义。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Built-in functions</span><span data-lang="zh">内置函数</span></strong> <span data-lang="en">&mdash; available without importing anything. Python examples: <code>len()</code>, <code>print()</code>, <code>input()</code>, <code>abs()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>round()</code>, <code>range()</code>, <code>int()</code>, <code>float()</code>, <code>str()</code>.</span><span data-lang="zh">&mdash; 无需导入即可使用。Python 示例：<code>len()</code>、<code>print()</code>、<code>input()</code>、<code>abs()</code>、<code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>round()</code>、<code>range()</code>、<code>int()</code>、<code>float()</code>、<code>str()</code>。</span></li>
-      <li><strong><span data-lang="en">Standard library modules</span><span data-lang="zh">标准库模块</span></strong> <span data-lang="en">&mdash; import with <code>import module_name</code>, then call <code>module_name.function()</code>. Examples: <code>import math</code> gives <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.pi</code>; <code>import random</code> gives <code>random.randint()</code>. BC CP11 Content: "pre-built libraries and their documentation."</span><span data-lang="zh">&mdash; 用 <code>import module_name</code> 导入，然后调用 <code>module_name.function()</code>。示例：<code>import math</code> 提供 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.pi</code>；<code>import random</code> 提供 <code>random.randint()</code>。BC CP11 内容："预建库及其文档"。</span></li>
-      <li><strong><span data-lang="en">Reading documentation</span><span data-lang="zh">阅读文档</span></strong> <span data-lang="en">&mdash; every library function has a signature (its name, parameters, return type) and a description. You do not need to see the implementation — only the interface. Ontario ICS3U A3.1: "use existing subprograms (e.g., random number generator, substring, absolute value) within computer programs."</span><span data-lang="zh">&mdash; 每个库函数都有签名（名称、形参、返回类型）和说明。你不需要看到实现——只需了解接口。安大略 ICS3U A3.1："在计算机程序中使用现有子程序（如随机数生成器、子字符串、绝对值）"。</span></li>
+      <li><strong><span data-lang="en">Built-in functions</span><span data-lang="zh">内置函数</span></strong><span data-lang="en">: available without importing anything. Python examples: <code>len()</code>, <code>print()</code>, <code>input()</code>, <code>abs()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>round()</code>, <code>range()</code>, <code>int()</code>, <code>float()</code>, <code>str()</code>.</span><span data-lang="zh">, 无需导入即可使用。Python 示例：<code>len()</code>、<code>print()</code>、<code>input()</code>、<code>abs()</code>、<code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>round()</code>、<code>range()</code>、<code>int()</code>、<code>float()</code>、<code>str()</code>。</span></li>
+      <li><strong><span data-lang="en">Standard library modules</span><span data-lang="zh">标准库模块</span></strong><span data-lang="en">: import with <code>import module_name</code>, then call <code>module_name.function()</code>. Examples: <code>import math</code> gives <code>math.sqrt()</code>, <code>math.floor()</code>, <code>math.pi</code>; <code>import random</code> gives <code>random.randint()</code>. BC CP11 Content: "pre-built libraries and their documentation."</span><span data-lang="zh">, 用 <code>import module_name</code> 导入，然后调用 <code>module_name.function()</code>。示例：<code>import math</code> 提供 <code>math.sqrt()</code>、<code>math.floor()</code>、<code>math.pi</code>；<code>import random</code> 提供 <code>random.randint()</code>。BC CP11 内容："预建库及其文档"。</span></li>
+      <li><strong><span data-lang="en">Reading documentation</span><span data-lang="zh">阅读文档</span></strong><span data-lang="en">: every library function has a signature (its name, parameters, return type) and a description. You do not need to see the implementation , only the interface. Ontario ICS3U A3.1: "use existing subprograms (e.g., random number generator, substring, absolute value) within computer programs."</span><span data-lang="zh">, 每个库函数都有签名（名称、形参、返回类型）和说明。你不需要看到实现，只需了解接口。安大略 ICS3U A3.1："在计算机程序中使用现有子程序（如随机数生成器、子字符串、绝对值）"。</span></li>
     </ul>
-    <span data-lang="en">CSTA 3B-AP-16: "Demonstrate code reuse by creating programming solutions using libraries and APIs." AP CSP Big Idea 3 topic 3.14: Libraries. Always check the docs before writing a function — someone may have already written it.</span><span data-lang="zh">CSTA 3B-AP-16："通过使用库和 API 创建编程解决方案来展示代码复用。" AP CSP 大概念 3 主题 3.14：库。在编写函数之前务必查阅文档——可能已经有人写好了。</span>
+    <span data-lang="en">CSTA 3B-AP-16: "Demonstrate code reuse by creating programming solutions using libraries and APIs." AP CSP Big Idea 3 topic 3.14: Libraries. Always check the docs before writing a function , someone may have already written it.</span><span data-lang="zh">CSTA 3B-AP-16："通过使用库和 API 创建编程解决方案来展示代码复用。" AP CSP 大概念 3 主题 3.14：库。在编写函数之前务必查阅文档，可能已经有人写好了。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 13: Using math and random library functions</span><span data-lang="zh">例题 13：使用 math 和 random 库函数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Using math and random library functions</span><span data-lang="zh">例题 7 &middot; 使用 math 和 random 库函数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Problem: write a short program that (a) computes the hypotenuse of a right triangle with legs 3 and 4, and (b) rolls a six-sided die (random integer 1–6).</span><span data-lang="zh">问题：编写一个短程序，(a) 计算腿长为 3 和 4 的直角三角形的斜边，(b) 掷一个六面骰子（随机整数 1–6）。</span></p>
   </div>
   <div class="worked-solution">
@@ -1060,7 +1561,7 @@ OUTPUT hyp   -- 5.0
 -- (b) dice roll
 SET roll TO random.randint(1, 6)
 OUTPUT roll  -- a random integer between 1 and 6 inclusive</code></pre>
-    <p><span data-lang="zh">说明：<code>math.sqrt()</code> 和 <code>random.randint()</code> 是库（library，库）中的内置函数（built-in function，内置函数）。调用方只需知道接口（名称、参数、返回值），不需要知道内部实现——这就是抽象（abstraction，抽象）的体现。</span><span data-lang="en">Callers only need the interface (name, parameters, return value), not the implementation — this is abstraction in action.</span></p>
+    <p><span data-lang="zh">说明：<code>math.sqrt()</code> 和 <code>random.randint()</code> 是库（library，库）中的内置函数（built-in function，内置函数）。调用方只需知道接口（名称、参数、返回值），不需要知道内部实现，这就是抽象（abstraction，抽象）的体现。</span><span data-lang="en">Callers only need the interface (name, parameters, return value), not the implementation , this is abstraction in action.</span></p>
     <p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p>
     <pre><code>import math
 import random
@@ -1072,7 +1573,56 @@ print(f"Hypotenuse: {hyp}")  # 5.0
 # (b) dice roll  骰子
 roll = random.randint(1, 6)
 print(f"Rolled: {roll}")</code></pre>
-    <p><span data-lang="en">The <code>import</code> statement loads the module; after that, every function in the module is callable using <code>module.function()</code> syntax. BC CP11 says "pre-built libraries and their documentation" &mdash; you should know how to read the Python docs to find the signature of any built-in.</span><span data-lang="zh"><code>import</code> 语句加载模块；之后，模块中的所有函数都可以用 <code>module.function()</code> 语法调用。BC CP11 要求"预建库及其文档"——你应该知道如何阅读 Python 文档来查找任何内置函数的签名。</span></p>
+    <p><span data-lang="en">The <code>import</code> statement loads the module; after that, every function in the module is callable using <code>module.function()</code> syntax. BC CP11 says "pre-built libraries and their documentation", you should know how to read the Python docs to find the signature of any built-in.</span><span data-lang="zh"><code>import</code> 语句加载模块；之后，模块中的所有函数都可以用 <code>module.function()</code> 语法调用。BC CP11 要求"预建库及其文档"，你应该知道如何阅读 Python 文档来查找任何内置函数的签名。</span></p>
+  </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 14: Built-in functions, the math module and rounding</span><span data-lang="zh">例题 14：内置函数、math 模块与取整</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Problem: given the scores 72, 85, 91, 68 and 79, find the highest, lowest, total and mean using built-in functions. Then find how many pages 47 items need at 10 per page, and show how <code>round</code>, <code>math.floor</code> and <code>int</code> treat halves and negative numbers.</span><span data-lang="zh">问题：给定分数 72、85、91、68 和 79，用内置函数求最高分、最低分、总分和平均分。然后求每页 10 项时 47 项需要多少页，并展示 <code>round</code>、<code>math.floor</code> 和 <code>int</code> 如何处理一半和负数。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><strong><span data-lang="en">Python rendering.</span><span data-lang="zh">Python 实现。</span></strong></p><pre><code>import math
+
+scores = [72, 85, 91, 68, 79]
+print(max(scores), min(scores))      # 91 68
+print(sum(scores), len(scores))      # 395 5
+print(sum(scores) / len(scores))     # 79.0
+
+pages = math.ceil(47 / 10)           # 47 items, 10 per page
+print(pages)                         # 5
+
+print(round(2.5), round(3.5))        # 2 4
+print(math.floor(-4.7), int(-4.7))   # -5 -4</code></pre><p><span data-lang="en"><code>max</code>, <code>min</code>, <code>sum</code> and <code>len</code> are built-in functions, so no <code>import</code> is needed. The scores add to 72 + 85 + 91 + 68 + 79 = 395, and 395 / 5 = 79.0; the <code>/</code> operator always gives a float, which is why the output is <code>79.0</code> and not <code>79</code>.</span><span data-lang="zh"><code>max</code>、<code>min</code>、<code>sum</code> 和 <code>len</code> 是内置函数，所以不需要 <code>import</code>。分数之和为 72 + 85 + 91 + 68 + 79 = 395，395 / 5 = 79.0；<code>/</code> 运算符总是得到浮点数，所以输出是 <code>79.0</code> 而不是 <code>79</code>。</span></p><p><span data-lang="en"><code>math.ceil</code> rounds <em>up</em>: 47 / 10 = 4.7, so 47 items need 5 pages, because the last page is only partly full. Integer division <code>47 // 10</code> gives 4 and loses the partial page. <code>ceil</code> lives in the <code>math</code> module, so it needs <code>import math</code> and the prefix <code>math.</code>; <code>sum</code> and <code>round</code> do not.</span><span data-lang="zh"><code>math.ceil</code> <em>向上</em>取整：47 / 10 = 4.7，所以 47 项需要 5 页，因为最后一页不满。整数除法 <code>47 // 10</code> 得到 4，丢掉了不满的那一页。<code>ceil</code> 属于 <code>math</code> 模块，所以需要 <code>import math</code> 和前缀 <code>math.</code>；而 <code>sum</code> 和 <code>round</code> 不需要。</span></p><p><strong><span data-lang="en">Common error: how round and int treat halves and negatives.</span><span data-lang="zh">常见错误：round 与 int 如何处理一半和负数。</span></strong></p><p><span data-lang="en">Python 3 <code>round</code> sends an exact half to the nearest <em>even</em> integer: <code>round(2.5)</code> is 2 but <code>round(3.5)</code> is 4. For negatives, <code>math.floor</code> goes down to the next smaller integer (<code>-4.7</code> becomes <code>-5</code>), while <code>int</code> simply cuts off the decimal part (<code>-4.7</code> becomes <code>-4</code>). Why this works: each function is documented by its signature and one sentence; read the documentation instead of guessing what a rounding function does with a half or a negative number.</span><span data-lang="zh">Python 3 的 <code>round</code> 会把恰好一半的数舍入到最近的<em>偶数</em>：<code>round(2.5)</code> 是 2，而 <code>round(3.5)</code> 是 4。对于负数，<code>math.floor</code> 向下取到更小的整数（<code>-4.7</code> 变为 <code>-5</code>），而 <code>int</code> 只是去掉小数部分（<code>-4.7</code> 变为 <code>-4</code>）。原因：每个函数都由其签名和一句说明来记录；不要猜测取整函数如何处理一半或负数，应该阅读文档。</span></p>
+  </div>
+  </details>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Name the module when you use a library function: <code>math.sqrt(144)</code>, not <code>sqrt(144)</code>, and put <code>import math</code> before it. <code>abs</code>, <code>len</code>, <code>max</code>, <code>min</code>, <code>sum</code> and <code>round</code> are built in and need no import. When a question asks for a number of pages or boxes, check whether a partial one still counts: that is the difference between <code>math.ceil</code> and <code>//</code>.</p><p data-lang="zh">使用库函数时要写明模块：写 <code>math.sqrt(144)</code> 而不是 <code>sqrt(144)</code>，并在它之前写 <code>import math</code>。<code>abs</code>、<code>len</code>、<code>max</code>、<code>min</code>、<code>sum</code> 和 <code>round</code> 是内置的，不需要导入。当题目要求页数或箱数时，要检查不满的一页或一箱是否也要计入：这就是 <code>math.ceil</code> 与 <code>//</code> 的区别。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Which of these need <code>import math</code> or another import: <code>abs(-7)</code>, <code>len("hat")</code>, <code>math.ceil(4.1)</code>, <code>random.randint(1, 6)</code>?</span><span data-lang="zh">1. 下列哪些需要 <code>import math</code> 或其他导入：<code>abs(-7)</code>、<code>len("hat")</code>、<code>math.ceil(4.1)</code>、<code>random.randint(1, 6)</code>？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>math.ceil(4.1)</code> needs <code>import math</code> and <code>random.randint(1, 6)</code> needs <code>import random</code>. <code>abs</code> and <code>len</code> are built-in functions and need no import.</p><p data-lang="zh"><code>math.ceil(4.1)</code> 需要 <code>import math</code>，<code>random.randint(1, 6)</code> 需要 <code>import random</code>。<code>abs</code> 和 <code>len</code> 是内置函数，不需要导入。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. A hall seats 30 people per row. For 125 people, how many rows are needed? Write the Python expression and the value.</span><span data-lang="zh">2. 一个大厅每排坐 30 人。125 人需要多少排？写出 Python 表达式及其值。</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>math.ceil(125 / 30)</code>. Since 125 / 30 is about 4.17, rounding up gives 5 rows; the fifth row is only partly used. <code>125 // 30</code> would give 4 and leave people without seats.</p><p data-lang="zh"><code>math.ceil(125 / 30)</code>。125 / 30 约为 4.17，向上取整得 5 排；第五排只坐一部分。<code>125 // 30</code> 会得到 4，使一些人没有座位。</p></div>
+    </details>
+    <pre><code>import math
+
+print(round(3.5))
+print(round(2.5))
+print(int(-3.9))
+print(math.floor(-3.9))</code></pre>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. What does the program print, one value per line?</span><span data-lang="zh">3. 程序逐行输出什么值？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>4</code>, <code>2</code>, <code>-3</code>, <code>-4</code>. Python 3 <code>round</code> sends the half 3.5 to the even 4 and the half 2.5 to the even 2; <code>int(-3.9)</code> cuts off the decimals to give -3; <code>math.floor(-3.9)</code> goes down to -4.</p><p data-lang="zh">依次为 <code>4</code>、<code>2</code>、<code>-3</code>、<code>-4</code>。Python 3 的 <code>round</code> 把一半的 3.5 舍入到偶数 4，把一半的 2.5 舍入到偶数 2；<code>int(-3.9)</code> 去掉小数部分得 -3；<code>math.floor(-3.9)</code> 向下取到 -4。</p></div>
+    </details>
   </div>
 
   <div class="quiz" data-answer="2">
@@ -1096,15 +1646,15 @@ print(f"Rolled: {roll}")</code></pre>
       <div class="quiz-opt" data-idx="2"><code>absolute(-7)</code></div>
       <div class="quiz-opt" data-idx="3"><code>Math.abs(-7)</code></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en"><code>abs()</code> is a Python built-in function — no import needed. <code>abs(-7)</code> returns 7. It is available the same way <code>print()</code> and <code>len()</code> are, without any import statement.</span><span data-lang="zh"><code>abs()</code> 是 Python 内置函数——无需导入。<code>abs(-7)</code> 返回 7。它与 <code>print()</code> 和 <code>len()</code> 一样可用，无需任何 import 语句。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>abs()</code> is a Python built-in function , no import needed. <code>abs(-7)</code> returns 7. It is available the same way <code>print()</code> and <code>len()</code> are, without any import statement.</span><span data-lang="zh"><code>abs()</code> 是 Python 内置函数，无需导入。<code>abs(-7)</code> 返回 7。它与 <code>print()</code> 和 <code>len()</code> 一样可用，无需任何 import 语句。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en"><code>abs()</code> is a built-in (no import). <code>math.abs()</code> does not exist in Python's math module. <code>absolute()</code> and <code>Math.abs()</code> are not valid Python (the latter is JavaScript/Java).</span><span data-lang="zh"><code>abs()</code> 是内置函数（无需导入）。<code>math.abs()</code> 在 Python 的 math 模块中不存在。<code>absolute()</code> 和 <code>Math.abs()</code> 不是有效的 Python（后者是 JavaScript/Java）。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; reading library documentation and writing docstrings</span><span data-lang="zh">深入 &mdash; 阅读库文档和编写文档字符串</span></summary>
+    <summary><span data-lang="en">Going deeper, reading library documentation and writing docstrings</span><span data-lang="zh">深入, 阅读库文档和编写文档字符串</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">Every professional library ships with documentation that follows the same pattern: the function's <strong>signature</strong> (name, parameters, types, return type), a short <strong>description</strong>, and <strong>examples</strong>. For Python's <code>random.randint(a, b)</code>, the docs say: "Return a random integer N such that a &lt;= N &lt;= b." That one sentence tells you everything you need to call the function correctly. You should write the same kind of documentation for your own functions using Python's <strong>docstring</strong> convention: a triple-quoted string immediately after the <code>def</code> line. BC CP11 "pre-built libraries and their documentation" assesses this skill. ICS3U A3.1 implicitly requires you to find and read existing subprogram documentation. Alberta CSE2110 outcome 1.1.4 says a benefit of modular programming is "improving the readability of a program" — a good docstring is the simplest form of readability improvement. Example:</span><span data-lang="zh">每个专业库都附带遵循相同模式的文档：函数的<strong>签名</strong>（名称、形参、类型、返回类型）、简短<strong>描述</strong>和<strong>示例</strong>。对于 Python 的 <code>random.randint(a, b)</code>，文档说："返回一个随机整数 N，使得 a &lt;= N &lt;= b。"这一句话告诉你正确调用该函数所需的一切。你应该使用 Python 的<strong>文档字符串</strong>约定为自己的函数编写同类文档：在 <code>def</code> 行之后立即写一个三引号字符串。BC CP11"预建库及其文档"考查这项技能。ICS3U A3.1 隐含要求你找到并阅读现有子程序文档。阿尔伯塔 CSE2110 结果 1.1.4 指出模块化编程的好处之一是"提高程序的可读性"——好的文档字符串是最简单的可读性改进形式。示例：</span></p>
+      <p><span data-lang="en">Every professional library ships with documentation that follows the same pattern: the function's <strong>signature</strong> (name, parameters, types, return type), a short <strong>description</strong>, and <strong>examples</strong>. For Python's <code>random.randint(a, b)</code>, the docs say: "Return a random integer N such that a &lt;= N &lt;= b." That one sentence tells you everything you need to call the function correctly. You should write the same kind of documentation for your own functions using Python's <strong>docstring</strong> convention: a triple-quoted string immediately after the <code>def</code> line. BC CP11 "pre-built libraries and their documentation" lists this skill. ICS3U A3.1 implicitly requires you to find and read existing subprogram documentation. Alberta CSE2110 outcome 1.1.4 says a benefit of modular programming is "improving the readability of a program" , a good docstring is the simplest form of readability improvement. Example:</span><span data-lang="zh">每个专业库都附带遵循相同模式的文档：函数的<strong>签名</strong>（名称、形参、类型、返回类型）、简短<strong>描述</strong>和<strong>示例</strong>。对于 Python 的 <code>random.randint(a, b)</code>，文档说："返回一个随机整数 N，使得 a &lt;= N &lt;= b。"这一句话告诉你正确调用该函数所需的一切。你应该使用 Python 的<strong>文档字符串</strong>约定为自己的函数编写同类文档：在 <code>def</code> 行之后立即写一个三引号字符串。BC CP11"预建库及其文档"列出了这项技能。ICS3U A3.1 隐含要求你找到并阅读现有子程序文档。阿尔伯塔 CSE2110 结果 1.1.4 指出模块化编程的好处之一是"提高程序的可读性"，好的文档字符串是最简单的可读性改进形式。示例：</span></p>
       <pre><code>def compute_average(scores):
     """Return the arithmetic mean of a list of numbers.
     计算数字列表的算术平均值。
@@ -1136,15 +1686,15 @@ print(f"Rolled: {roll}")</code></pre>
   <div class="concept-box" style="border-left-color: var(--accent);">
     <strong style="color: var(--accent);"><span data-lang="en">Parameter and scope questions (&sect;3–&sect;5)</span><span data-lang="zh">形参与作用域问题（&sect;3–&sect;5）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Parameter vs argument — always use the right word.</span><span data-lang="zh">形参与实参——始终使用正确的词。</span></strong> <span data-lang="en">On Ontario ICS3U A3.2 and AB CSE2110 questions, examiners specifically check whether you can distinguish parameters (in the definition) from arguments (at the call site). Saying "the function takes two parameters" and "I pass two arguments" is precise; saying "inputs" for both loses marks.</span><span data-lang="zh">在安大略 ICS3U A3.2 和 AB CSE2110 题目中，考官会专门检查你是否能区分形参（定义中）和实参（调用处）。说"函数接受两个形参"和"我传递两个实参"是准确的；两者都说"输入"会失分。</span></li>
-      <li><strong><span data-lang="en">For a scope question, always label local vs global.</span><span data-lang="zh">对于作用域问题，始终标注局部变量与全局变量。</span></strong> <span data-lang="en">When tracing a program with both global and local variables, draw two separate columns or sections: one for the global state and one for the current function's local state. Show them separately; examiners award marks for correctly showing that the local variable does not affect the global (or vice versa).</span><span data-lang="zh">当追踪同时包含全局变量和局部变量的程序时，画两个独立的列或区域：一个表示全局状态，一个表示当前函数的局部状态。分开显示；考官会对正确显示局部变量不影响全局变量（反之亦然）的答案给分。</span></li>
+      <li><strong><span data-lang="en">Parameter vs argument , always use the right word.</span><span data-lang="zh">形参与实参，始终使用正确的词。</span></strong> <span data-lang="en">On questions that follow Ontario ICS3U A3.2 and AB CSE2110, distinguish parameters (in the definition) from arguments (at the call site). Saying "the function takes two parameters" and "I pass two arguments" is precise; saying "inputs" for both blurs the two ideas and is an incomplete answer.</span><span data-lang="zh">在遵循安大略 ICS3U A3.2 和 AB CSE2110 的题目中，要区分形参（定义中）和实参（调用处）。说"函数接受两个形参"和"我传递两个实参"是准确的；两者都说"输入"会混淆两个概念，答案不完整。</span></li>
+      <li><strong><span data-lang="en">For a scope question, always label local vs global.</span><span data-lang="zh">对于作用域问题，始终标注局部变量与全局变量。</span></strong> <span data-lang="en">When tracing a program with both global and local variables, draw two separate columns or sections: one for the global state and one for the current function's local state. Show them separately so that it is clear the local variable does not affect the global (or vice versa).</span><span data-lang="zh">当追踪同时包含全局变量和局部变量的程序时，画两个独立的列或区域：一个表示全局状态，一个表示当前函数的局部状态。分开显示，这样可以清楚看出局部变量不影响全局变量（反之亦然）。</span></li>
     </ul>
   </div>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">Modular design questions (&sect;6)</span><span data-lang="zh">模块化设计问题（&sect;6）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Name each sub-function with a verb-noun pair.</span><span data-lang="zh">用动词-名词对命名每个子函数。</span></strong> <span data-lang="en">On CSTA 3A-AP-17 / 3A-AP-18 and ICS3U B2.3 questions about modular design, explicitly name each function. "A function that gets the scores, a function that computes the average, a function that determines the grade" &mdash; with names like <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code> &mdash; scores higher than vague descriptions.</span><span data-lang="zh">在关于模块化设计的 CSTA 3A-AP-17 / 3A-AP-18 和 ICS3U B2.3 题目中，明确命名每个函数。"一个获取成绩的函数、一个计算平均值的函数、一个确定等级的函数"——配以如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code> 的名称——比模糊描述得分更高。</span></li>
+      <li><strong><span data-lang="en">Name each sub-function with a verb-noun pair.</span><span data-lang="zh">用动词-名词对命名每个子函数。</span></strong> <span data-lang="en">On CSTA 3A-AP-17 / 3A-AP-18 and ICS3U B2.3 questions about modular design, explicitly name each function. "A function that gets the scores, a function that computes the average, a function that determines the grade" , with names like <code>get_scores</code>, <code>compute_average</code>, <code>letter_grade</code>, is a clearer answer than a vague description.</span><span data-lang="zh">在关于模块化设计的 CSTA 3A-AP-17 / 3A-AP-18 和 ICS3U B2.3 题目中，明确命名每个函数。"一个获取成绩的函数、一个计算平均值的函数、一个确定等级的函数"，配以如 <code>get_scores</code>、<code>compute_average</code>、<code>letter_grade</code> 的名称，比模糊描述更清晰。</span></li>
       <li><strong><span data-lang="en">Show data flow: what goes in, what comes out.</span><span data-lang="zh">展示数据流：进什么，出什么。</span></strong> <span data-lang="en">For each function in your modular design, state the parameters (input data) and return value (output data). This demonstrates you understand the interface, not just the name.</span><span data-lang="zh">对于模块化设计中的每个函数，说明形参（输入数据）和返回值（输出数据）。这表明你理解接口，而不仅仅是名称。</span></li>
     </ul>
   </div>
@@ -1153,7 +1703,7 @@ print(f"Rolled: {roll}")</code></pre>
     <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li><strong><span data-lang="en">Use pseudocode keywords for function definition questions.</span><span data-lang="zh">函数定义题使用伪代码关键字。</span></strong> <span data-lang="en">AP CSP uses <code>PROCEDURE name(params) { ... }</code> and <code>RETURN(value)</code>. The generic pseudocode is <code>FUNCTION name(params): ... RETURN value</code>. In Python it is <code>def name(params): ... return value</code>. Know all three; use the one the question specifies.</span><span data-lang="zh">AP CSP 使用 <code>PROCEDURE name(params) { ... }</code> 和 <code>RETURN(value)</code>。通用伪代码是 <code>FUNCTION name(params): ... RETURN value</code>。Python 中是 <code>def name(params): ... return value</code>。了解所有三种；使用题目指定的那种。</span></li>
-      <li><strong><span data-lang="en">Distinguish procedures from functions on AB and ON exams.</span><span data-lang="zh">在 AB 和 ON 考试中区分过程和函数。</span></strong> <span data-lang="en">AB CSE2110 outcome 3.2 specifically tests the difference: a <em>function</em> returns a value; a <em>procedure</em> does not. When a question says "write a procedure to display the result," do not add a RETURN statement.</span><span data-lang="zh">AB CSE2110 结果 3.2 专门考查这一区别：<em>函数</em>有返回值；<em>过程</em>没有。当题目说"编写一个过程来显示结果"时，不要添加 RETURN 语句。</span></li>
+      <li><strong><span data-lang="en">Distinguish procedures from functions on AB and ON exams.</span><span data-lang="zh">在 AB 和 ON 考试中区分过程和函数。</span></strong> <span data-lang="en">AB CSE2110 outcome 3.2 names the difference: a <em>function</em> returns a value; a <em>procedure</em> does not. When a question says "write a procedure to display the result," do not add a RETURN statement.</span><span data-lang="zh">AB CSE2110 结果 3.2 明确提出这一区别：<em>函数</em>有返回值；<em>过程</em>没有。当题目说"编写一个过程来显示结果"时，不要添加 RETURN 语句。</span></li>
     </ul>
   </div>
 </section>
@@ -1177,9 +1727,9 @@ print(f"Rolled: {roll}")</code></pre>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Local variable</span><span data-lang="zh">局部变量（local variable）</span></div><div class="flashcard-back"><span data-lang="en">Created inside a function. Visible only inside that function. Destroyed when the function returns. Two functions can each have a local called <code>total</code> without conflict.</span><span data-lang="zh">在函数内部创建。只在该函数内可见。函数返回时销毁。两个函数各自可以有名为 <code>total</code> 的局部变量，互不冲突。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Global variable</span><span data-lang="zh">全局变量（global variable）</span></div><div class="flashcard-back"><span data-lang="en">Created outside all functions. Visible everywhere in the program. Changing it inside one function affects all other code. Prefer local variables; pass data via parameters.</span><span data-lang="zh">在所有函数外创建。在程序的所有地方可见。在一个函数内更改它会影响所有其他代码。优先使用局部变量；通过形参传递数据。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Scope</span><span data-lang="zh">作用域（scope）</span></div><div class="flashcard-back"><span data-lang="en">Which parts of the code can read/write a variable. Local scope = inside one function. Global scope = everywhere. AB CSE2110 outcome 3.3: "analyze and determine the type of scope required."</span><span data-lang="zh">代码的哪些部分可以读/写一个变量。局部作用域 = 函数内部。全局作用域 = 所有地方。AB CSE2110 结果 3.3："分析并确定所需的作用域类型"。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Procedure vs Function (AB CSE2110)</span><span data-lang="zh">过程 vs 函数（AB CSE2110）</span></div><div class="flashcard-back"><span data-lang="en">Procedure = subprogram with no return value (void). Function = subprogram that returns a value. AB CSE2110 outcome 3.2 tests this distinction explicitly.</span><span data-lang="zh">过程（procedure）= 无返回值的子程序（void）。函数（function）= 有返回值的子程序。AB CSE2110 结果 3.2 明确考查这一区别。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Procedure vs Function (AB CSE2110)</span><span data-lang="zh">过程 vs 函数（AB CSE2110）</span></div><div class="flashcard-back"><span data-lang="en">Procedure = subprogram with no return value (void). Function = subprogram that returns a value. AB CSE2110 outcome 3.2 names this distinction explicitly.</span><span data-lang="zh">过程（procedure）= 无返回值的子程序（void）。函数（function）= 有返回值的子程序。AB CSE2110 结果 3.2 明确提出这一区别。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Modular design</span><span data-lang="zh">模块化设计（modular design）</span></div><div class="flashcard-back"><span data-lang="en">Organising a program as a set of functions, each with one clearly-named responsibility. Data flows via parameters and return values. ICS3U B2.3: "apply the principle of modularity."</span><span data-lang="zh">将程序组织为一组函数，每个函数只有一个命名清晰的职责。数据通过形参和返回值流动。ICS3U B2.3："应用模块化原则"。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Abstraction via functions</span><span data-lang="zh">函数的抽象（abstraction）</span></div><div class="flashcard-back"><span data-lang="en">A function hides how it works; the caller only needs the interface (name + parameters + return). AP CSP LO AAP-3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">函数隐藏其工作方式；调用方只需了解接口（名称 + 形参 + 返回值）。AP CSP 学习目标 AAP-3.B："使用抽象管理程序中的复杂性"。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Abstraction via functions</span><span data-lang="zh">函数的抽象（abstraction）</span></div><div class="flashcard-back"><span data-lang="en">A function hides how it works; the caller only needs the interface (name + parameters + return). AP CSP Computational Thinking Practice 3.B: "Use abstraction to manage complexity in a program."</span><span data-lang="zh">函数隐藏其工作方式；调用方只需了解接口（名称 + 形参 + 返回值）。AP CSP 计算思维实践 3.B："使用抽象管理程序中的复杂性"。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Library</span><span data-lang="zh">库（library）</span></div><div class="flashcard-back"><span data-lang="en">A collection of pre-written functions. Use with <code>import</code>. Example: <code>import math</code> gives <code>math.sqrt()</code>. BC CP11: "pre-built libraries and their documentation." CSTA 3B-AP-16: code reuse via libraries.</span><span data-lang="zh">预编写函数的集合。用 <code>import</code> 使用。示例：<code>import math</code> 提供 <code>math.sqrt()</code>。BC CP11："预建库及其文档"。CSTA 3B-AP-16：通过库实现代码复用。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Built-in functions</span><span data-lang="zh">内置函数（built-in function）</span></div><div class="flashcard-back"><span data-lang="en">Available in Python without importing: <code>len()</code>, <code>print()</code>, <code>input()</code>, <code>abs()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>round()</code>, <code>range()</code>, <code>int()</code>, <code>float()</code>, <code>str()</code>.</span><span data-lang="zh">在 Python 中无需导入即可使用：<code>len()</code>、<code>print()</code>、<code>input()</code>、<code>abs()</code>、<code>max()</code>、<code>min()</code>、<code>sum()</code>、<code>round()</code>、<code>range()</code>、<code>int()</code>、<code>float()</code>、<code>str()</code>。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Top-down design</span><span data-lang="zh">自顶向下设计（top-down design）</span></div><div class="flashcard-back"><span data-lang="en">Write the main program first using high-level function calls; then implement each called function. Each step in main becomes a call. Keeps main readable; complexity is in the sub-functions.</span><span data-lang="zh">首先使用高层函数调用编写主程序；然后实现每个被调用的函数。主程序中的每个步骤变成一个调用。主程序保持可读性；复杂性在子函数中。</span></div></div></div>
@@ -1208,15 +1758,15 @@ print(f"Rolled: {roll}")</code></pre>
   </div>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Consider: <code>x = 10</code> (global). Inside a function, <code>x = x + 5</code> runs (without declaring global). What is the global <code>x</code> after the function returns?</span><span data-lang="zh">已知：<code>x = 10</code>（全局）。在函数内部，<code>x = x + 5</code> 运行（未声明 global）。函数返回后全局变量 <code>x</code> 是多少？</span></div><div class="quiz-number">Q2</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Consider: <code>x = 10</code> (global). Inside a function, <code>x = 5</code> runs (without declaring global). What is the global <code>x</code> after the function returns?</span><span data-lang="zh">已知：<code>x = 10</code>（全局）。在函数内部，<code>x = 5</code> 运行（未声明 global）。函数返回后全局变量 <code>x</code> 是多少？</span></div><div class="quiz-number">Q2</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">15</div>
       <div class="quiz-opt" data-idx="1">10</div>
       <div class="quiz-opt" data-idx="2">5</div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Depends on the function name</span><span data-lang="zh">取决于函数名称</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Without <code>global x</code> inside the function, Python creates a new local variable <code>x</code>. The assignment modifies the local, not the global. The global <code>x</code> remains 10.</span><span data-lang="zh">在函数内没有 <code>global x</code>，Python 创建一个新的局部变量 <code>x</code>。赋值修改的是局部变量，而非全局变量。全局 <code>x</code> 仍为 10。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Without <code>global x</code>, Python's assignment creates a local variable. The global is unchanged. This is why modifying globals inside functions requires explicit declaration.</span><span data-lang="zh">没有 <code>global x</code>，Python 的赋值创建一个局部变量。全局变量不变。这就是为什么在函数内修改全局变量需要显式声明。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Without <code>global x</code> inside the function, Python creates a new local variable <code>x</code>. The assignment <code>x = 5</code> sets the local, not the global. The global <code>x</code> remains 10. (Had the line been <code>x = x + 5</code>, Python would raise <code>UnboundLocalError</code>, because assigning makes <code>x</code> local and its value is read before it is set.)</span><span data-lang="zh">在函数内没有 <code>global x</code>，Python 创建一个新的局部变量 <code>x</code>。赋值 <code>x = 5</code> 设置的是局部变量，而非全局变量。全局 <code>x</code> 仍为 10。（如果这一行是 <code>x = x + 5</code>，Python 会引发 <code>UnboundLocalError</code>，因为赋值使 <code>x</code> 成为局部变量，而它的值在被设置之前就被读取了。）</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Without <code>global x</code>, the assignment <code>x = 5</code> creates a local variable. The global is unchanged, so it is still 10, not 15 or 5. This is why modifying globals inside functions requires explicit declaration.</span><span data-lang="zh">没有 <code>global x</code>，赋值 <code>x = 5</code> 创建一个局部变量。全局变量不变，仍是 10，而不是 15 或 5。这就是为什么在函数内修改全局变量需要显式声明。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1281,7 +1831,7 @@ print(f"Rolled: {roll}")</code></pre>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">libraries and APIs</span><span data-lang="zh">库和 API</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">ICS3U A3.2 (verbatim): "write subprograms (e.g., functions, procedures) that use <strong>parameter passing</strong> and <strong>appropriate variable scope</strong> (e.g., local, global), to perform tasks within programs."</span><span data-lang="zh">ICS3U A3.2（原文）："编写使用<strong>参数传递</strong>和<strong>适当变量作用域</strong>（如局部、全局）在程序中执行任务的子程序（如函数、过程）。"</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">A3.2 specifically assesses parameter passing and variable scope. Sections 3, 4, and 5 of this guide cover exactly those two features.</span><span data-lang="zh">A3.2 专门评估参数传递和变量作用域。本指南的第 3、4、5 节正好涵盖这两个特性。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">A3.2 specifically names parameter passing and variable scope. Sections 3, 4, and 5 of this guide cover exactly those two features.</span><span data-lang="zh">A3.2 专门提出参数传递和变量作用域。本指南的第 3、4、5 节正好涵盖这两个特性。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1302,10 +1852,10 @@ print(f"Rolled: {roll}")</code></pre>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain local scope vs global scope: for a given program, identify which variables are local and which are global, and predict what happens when a function modifies a local variable with the same name as a global. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2 / AB CSE2110 outcome 3.3</span></span><span data-lang="zh">解释局部作用域与全局作用域：对于给定程序，识别哪些变量是局部的，哪些是全局的，并预测当函数修改与全局变量同名的局部变量时会发生什么。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2 / AB CSE2110 结果 3.3</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Apply modular design to a medium-complexity problem: name at least three functions using verb-noun pairs, state the parameters and return type of each, and show how the main program calls them in sequence. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.3 / AB CSE2110 outcome 3.4</span></span><span data-lang="zh">将模块化设计应用于中等复杂度的问题：用动词-名词对命名至少三个函数，说明每个函数的形参和返回类型，并展示主程序如何按顺序调用它们。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U B2.3 / AB CSE2110 结果 3.4</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Use a built-in function (e.g., <code>abs()</code>, <code>len()</code>, <code>max()</code>) and a standard library function (e.g., <code>math.sqrt()</code>, <code>random.randint()</code>) correctly in a program. State the purpose of <code>import</code>. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.1 / &#x1F1E8;&#x1F1E6; BC CP11</span></span><span data-lang="zh">在程序中正确使用内置函数（如 <code>abs()</code>、<code>len()</code>、<code>max()</code>）和标准库函数（如 <code>math.sqrt()</code>、<code>random.randint()</code>）。说明 <code>import</code> 的作用。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.1 / &#x1F1E8;&#x1F1E6; BC CP11</span></span></span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain procedural abstraction: state why a caller only needs to know the function's interface (name, parameters, return type) and not its implementation. Give an example. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span><span data-lang="zh">解释过程抽象：说明为什么调用方只需知道函数的接口（名称、形参、返回类型）而不需要知道其实现。举一个例子。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP AAP-3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain procedural abstraction: state why a caller only needs to know the function's interface (name, parameters, return type) and not its implementation. Give an example. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP Practice 3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span><span data-lang="zh">解释过程抽象：说明为什么调用方只需知道函数的接口（名称、形参、返回类型）而不需要知道其实现。举一个例子。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP Practice 3.B / &#x1F1E8;&#x1F1E6; BC CP12</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim (or near-verbatim) CSTA 3A-AP-17 and 3A-AP-18, and explain how each maps to the concept of functions and modular design. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span><span data-lang="zh">逐字（或近逐字）陈述 CSTA 3A-AP-17 和 3A-AP-18，并解释每个标准如何映射到函数与模块化设计的概念。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA Level 3A</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim (or near-verbatim) Ontario ICS3U A3.2, and explain what "parameter passing" and "appropriate variable scope" mean in the context of a function you write. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span><span data-lang="zh">逐字（或近逐字）陈述安大略 ICS3U A3.2，并解释"参数传递"和"适当的变量作用域"在你编写的函数上下文中的含义。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS3U A3.2</span></span></span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; ICS4U C1.3 / CSE2110 / BC CP12</span> Explain the hazards of mutable global state in a modular program: describe what "coupling" means, why modifying globals inside functions increases coupling, and how using parameters and return values eliminates the problem. <span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 outcome 3.4</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; ICS4U C1.3 / CSE2110 / BC CP12</span> 解释模块化程序中可变全局状态的危害：描述"耦合"的含义，为什么在函数内修改全局变量会增加耦合，以及如何使用形参和返回值消除这个问题。<span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 结果 3.4</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors, ICS4U C1.3 / CSE2110 / BC CP12</span> Explain the hazards of mutable global state in a modular program: describe what "coupling" means, why modifying globals inside functions increases coupling, and how using parameters and return values eliminates the problem. <span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 outcome 3.4</span></span><span data-lang="zh"><span class="honors-flag">荣誉, ICS4U C1.3 / CSE2110 / BC CP12</span> 解释模块化程序中可变全局状态的危害：描述"耦合"的含义，为什么在函数内修改全局变量会增加耦合，以及如何使用形参和返回值消除这个问题。<span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C1.3 / AB CSE2110 结果 3.4</span></span></span></li>
   </ul>
 </section>
 
@@ -1318,7 +1868,7 @@ print(f"Rolled: {roll}")</code></pre>
 
   <div style="margin: 20px 0;">
     <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
-    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">The Data Structures guide (Unit 5) assumes you can write functions that accept and return lists. The OOP guide (Unit 8) builds on modular design: an object's methods are functions scoped to the object. The Software Development Process guide shows how the function-per-sub-problem discipline (top-down design) scales to real software projects. The Searching and Sorting guide calls library functions and passes comparison functions as arguments &mdash; both topics require the fluency built here.</span><span data-lang="zh">数据结构指南（Unit 5）假定你能编写接受和返回列表的函数。OOP 指南（Unit 8）以模块化设计为基础：对象的方法是作用域限于对象的函数。软件开发过程指南展示了每个子问题一个函数的原则（自顶向下设计）如何扩展到真实软件项目。搜索与排序指南调用库函数并将比较函数作为实参传递——这两个主题都需要此处建立的流利度。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">The Data Structures guide (Unit 5) assumes you can write functions that accept and return lists. The OOP guide (Unit 8) builds on modular design: an object's methods are functions scoped to the object. The Software Development Process guide shows how the function-per-sub-problem discipline (top-down design) scales to real software projects. The Searching and Sorting guide calls library functions and passes comparison functions as arguments, both topics require the fluency built here.</span><span data-lang="zh">数据结构指南（Unit 5）假定你能编写接受和返回列表的函数。OOP 指南（Unit 8）以模块化设计为基础：对象的方法是作用域限于对象的函数。软件开发过程指南展示了每个子问题一个函数的原则（自顶向下设计）如何扩展到真实软件项目。搜索与排序指南调用库函数并将比较函数作为实参传递，这两个主题都需要此处建立的流利度。</span></p>
   </div>
 
   <div style="margin: 20px 0;">
@@ -1326,7 +1876,7 @@ print(f"Rolled: {roll}")</code></pre>
     <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
       <a class="feeder-link" href="../../AP CSA/Study Guides/Unit_1_Using_Objects_and_Methods.html"><span data-lang="en">AP CSA Unit 1 &middot; Using Objects and Methods (Java methods are functions; calling a method is exactly what you practised here with pseudocode calls)</span><span data-lang="zh">AP CSA Unit 1 &middot; 使用对象和方法（Java 方法就是函数；调用方法与你在这里用伪代码调用所练习的完全相同）</span></a>
     </div>
-    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 topics 3.12–3.14 (Calling Procedures, Developing Procedures, Libraries) directly test the concepts in this guide and account for a significant portion of the 30&ndash;35% AAP exam band. AP CSA (Java-specific) uses methods everywhere from Unit 1; the parameter-passing, return-value, and scope concepts taught here are identical to how Java methods work. Mastering this unit before starting either AP course eliminates the single most common source of confusion in introductory programming.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.12–3.14（调用过程、开发过程、库）直接考查本指南中的概念，占 30–35% AAP 考试段的重要比例。AP CSA（Java 专项）从 Unit 1 起处处使用方法；此处教授的参数传递、返回值和作用域概念与 Java 方法的工作方式完全相同。在开始任一 AP 课程之前掌握本单元，可以消除入门编程中最常见的困惑来源。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 topics 3.12–3.14 (Calling Procedures, Developing Procedures, Libraries) cover the concepts in this guide. AP CSA (Java-specific) uses methods everywhere from Unit 1; the parameter-passing, return-value, and scope concepts taught here are identical to how Java methods work. Mastering this unit before starting either AP course removes a common source of confusion in introductory programming.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.12–3.14（调用过程、开发过程、库）涵盖本指南中的概念。AP CSA（Java 专项）从 Unit 1 起处处使用方法；此处教授的参数传递、返回值和作用域概念与 Java 方法的工作方式完全相同。在开始任一 AP 课程之前掌握本单元，可以消除入门编程中常见的困惑来源。</span></p>
   </div>
   <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
   <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_4_functions_and_modular_design__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
@@ -1402,26 +1952,26 @@ print(f"Rolled: {roll}")</code></pre>
       <ul>
         <li><code>3A-AP-17</code> <span data-lang="en">"Decompose problems into smaller components through systematic analysis, using constructs such as procedures, modules, and/or objects." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"通过系统分析将问题分解为更小的组件，使用过程、模块和/或对象等构造。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
         <li><code>3A-AP-18</code> <span data-lang="en">"Create artifacts by using procedures within a program, combinations of data and procedures, or independent but interrelated programs." (CSTA Level 3A)</span><span data-lang="zh">"通过在程序中使用过程、数据与过程的组合，或相互关联的独立程序来创建制品。"（CSTA 3A 级）</span></li>
-        <li><span data-lang="en">AP CSP Big Idea 3 (AAP — Algorithms &amp; Programming): Topics 3.12 Calling Procedures, 3.13 Developing Procedures, 3.14 Libraries. Learning Objective AAP-3.B: "Use abstraction to manage complexity in a program." Procedural abstraction is a core AP CSP concept (topics 3.12–3.14).</span><span data-lang="zh">AP CSP 大概念 3（AAP — 算法与编程）：主题 3.12 调用过程，3.13 开发过程，3.14 库。学习目标 AAP-3.B："使用抽象管理程序中的复杂性。"过程抽象是 AP CSP 的核心概念（主题 3.12–3.14）。</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 3 (AAP , Algorithms &amp; Programming): Topics 3.12 Calling Procedures, 3.13 Developing Procedures, 3.14 Libraries. Computational Thinking Practice 3.B: "Use abstraction to manage complexity in a program." Procedural abstraction is a core AP CSP concept (topics 3.12–3.14).</span><span data-lang="zh">AP CSP 大概念 3（AAP , 算法与编程）：主题 3.12 调用过程，3.13 开发过程，3.14 库。计算思维实践 3.B："使用抽象管理程序中的复杂性。"过程抽象是 AP CSP 的核心概念（主题 3.12–3.14）。</span></li>
       </ul>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS3U / ICS4U</span><span data-lang="zh">安大略 — ICS3U / ICS4U</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario , ICS3U / ICS4U</span><span data-lang="zh">安大略 , ICS3U / ICS4U</span></div>
       <ul>
         <li><strong>ICS3U</strong> <span data-lang="en">Strand A, Overall Expectation <code>A3</code>: "demonstrate the ability to use subprograms within computer programs." Specific Expectation <code>A3.1</code>: "demonstrate the ability to use existing subprograms (e.g., random number generator, substring, absolute value) within computer programs." <code>A3.2</code>: "write subprograms (e.g., functions, procedures) that use parameter passing and appropriate variable scope (e.g., local, global), to perform tasks within programs."</span><span data-lang="zh">ICS3U A 单元，总体期望 <code>A3</code>："展示在计算机程序中使用子程序的能力。"具体期望 <code>A3.1</code>："展示在计算机程序中使用现有子程序（如随机数生成器、子字符串、绝对值）的能力。" <code>A3.2</code>："编写使用参数传递和适当变量作用域（如局部、全局）在程序中执行任务的子程序（如函数、过程）。"</span></li>
         <li><strong>ICS3U</strong> <code>B2.3</code> <span data-lang="en">"apply the principle of modularity to design reusable code (e.g., subprograms, classes) in computer programs."</span><span data-lang="zh"><code>B2.3</code>："在计算机程序中应用模块化原则设计可复用代码（如子程序、类）。"</span></li>
-        <li><strong>ICS4U</strong> <code>C1.3</code> <span data-lang="en">"demonstrate the ability to apply the process of functional decomposition in subprogram design." <span class="honors-flag">Honors — ICS4U</span></span><span data-lang="zh"><code>C1.3</code>："展示在子程序设计中应用函数分解过程的能力。" <span class="honors-flag">荣誉 — ICS4U</span></span></li>
+        <li><strong>ICS4U</strong> <code>C1.3</code> <span data-lang="en">"demonstrate the ability to apply the process of functional decomposition in subprogram design." <span class="honors-flag">Honors , ICS4U</span></span><span data-lang="zh"><code>C1.3</code>："展示在子程序设计中应用函数分解过程的能力。" <span class="honors-flag">荣誉 , ICS4U</span></span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
       <ul>
-        <li><strong>Computer Programming 11</strong> <span data-lang="en">Content (verbatim): "structures"; "pre-built libraries and their documentation"; "ways to modify existing code to meet a particular purpose" — the core scope of this guide.</span><span data-lang="zh">Computer Programming 11 内容（原文）："结构"；"预建库及其文档"；"修改现有代码以满足特定目的的方法"——本指南的核心范围。</span></li>
-        <li><strong>Computer Programming 12</strong> <span data-lang="en">Content (verbatim): "Advanced programming structures"; "Management of complexity" — deeper modular design. <span class="honors-flag">Honors — CP12</span></span><span data-lang="zh">Computer Programming 12 内容（原文）："高级编程结构"；"复杂性管理"——更深入的模块化设计。<span class="honors-flag">荣誉 — CP12</span></span></li>
+        <li><strong>Computer Programming 11</strong> <span data-lang="en">Content (verbatim): "structures"; "pre-built libraries and their documentation"; "ways to modify existing code to meet a particular purpose" , the core scope of this guide.</span><span data-lang="zh">Computer Programming 11 内容（原文）："结构"；"预建库及其文档"；"修改现有代码以满足特定目的的方法"，本指南的核心范围。</span></li>
+        <li><strong>Computer Programming 12</strong> <span data-lang="en">Content (verbatim): "Advanced programming structures"; "Management of complexity" , deeper modular design. <span class="honors-flag">Honors , CP12</span></span><span data-lang="zh">Computer Programming 12 内容（原文）："高级编程结构"；"复杂性管理"，更深入的模块化设计。<span class="honors-flag">荣誉 , CP12</span></span></li>
       </ul>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE</span><span data-lang="zh">阿尔伯塔 — CSE</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta , CSE</span><span data-lang="zh">阿尔伯塔 , CSE</span></div>
       <ul>
         <li><strong>CSE2110</strong> <span data-lang="en">Procedural Programming 1: "Students develop their understanding of the procedural programming paradigm … from a structured programming approach … to a more formal modular programming approach in which they are handled through subprograms." Outcomes include: "3.2 use appropriate types of subprograms … functions (subprograms that return a value) and procedures (subprograms that do not return a value); 3.3 analyze and determine the type of scope required … use of appropriate parameters for importing and exporting data … one- and two-way parameter passing."</span><span data-lang="zh">CSE2110 过程化编程 1："学生发展对过程化编程范式的理解……从结构化编程方式……到更正式的模块化编程方式，通过子程序处理。"结果包括："3.2 使用适当类型的子程序……函数（有返回值的子程序）和过程（无返回值的子程序）；3.3 分析并确定所需的作用域类型……使用适当参数导入和导出数据……单向和双向参数传递。"</span></li>
       </ul>
@@ -1432,7 +1982,7 @@ print(f"Rolled: {roll}")</code></pre>
       <section class="section" id="how-to-use">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
-  <p><span data-lang="en">Functions and modular design appear in every curriculum we map to. Ontario ICS3U strand A3 explicitly requires students to write subprograms using parameter passing and variable scope. Alberta CSE2110 formalises procedural programming with functions, procedures, scope, and parameter passing. AP CSP Big Idea 3 (topics 3.12–3.14) tests calling and defining procedures and using libraries. BC Computer Programming 11 names "structures" and "pre-built libraries." All four agree on the core concepts covered here. Where curricula diverge is on depth: ICS4U C1.3 adds functional decomposition as a design process (Grade-12 Honors); BC CP12 adds "management of complexity." The table below locates you.</span><span data-lang="zh">函数与模块化设计出现在我们所对应的每个大纲中。安大略 ICS3U A 单元第 3 条（A3）明确要求学生使用参数传递和变量作用域编写子程序。阿尔伯塔 CSE2110 将函数、过程、作用域和参数传递正式化为过程化编程。AP CSP 大概念 3（主题 3.12–3.14）考查调用和定义过程以及使用库。BC Computer Programming 11 点名"结构"和"预建库"。四套大纲在此涵盖的核心概念上高度一致。大纲的分歧在于深度：ICS4U C1.3 将函数分解作为设计过程（12 年级荣誉级别）；BC CP12 增加"复杂性管理"。下表帮助你定位。</span></p>
+  <p><span data-lang="en">Functions and modular design appear in every curriculum we map to. Ontario ICS3U strand A3 explicitly requires students to write subprograms using parameter passing and variable scope. Alberta CSE2110 formalises procedural programming with functions, procedures, scope, and parameter passing. AP CSP Big Idea 3 (topics 3.12–3.14) covers calling and defining procedures and using libraries. BC Computer Programming 11 names "structures" and "pre-built libraries." All four agree on the core concepts covered here. Where curricula diverge is on depth: ICS4U C1.3 adds functional decomposition as a design process (Grade-12 Honors); BC CP12 adds "management of complexity." The table below locates you.</span><span data-lang="zh">函数与模块化设计出现在我们所对应的每个大纲中。安大略 ICS3U A 单元第 3 条（A3）明确要求学生使用参数传递和变量作用域编写子程序。阿尔伯塔 CSE2110 将函数、过程、作用域和参数传递正式化为过程化编程。AP CSP 大概念 3（主题 3.12–3.14）涵盖调用和定义过程以及使用库。BC Computer Programming 11 点名"结构"和"预建库"。四套大纲在此涵盖的核心概念上高度一致。大纲的分歧在于深度：ICS4U C1.3 将函数分解作为设计过程（12 年级荣誉级别）；BC CP12 增加"复杂性管理"。下表帮助你定位。</span></p>
 
   <div style="overflow-x: auto; margin: 16px 0 18px;">
   <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
@@ -1447,27 +1997,27 @@ print(f"Rolled: {roll}")</code></pre>
     <tbody>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSTA 3A-AP-17 (decompose using procedures/modules) and 3A-AP-18 (create artifacts using procedures) both apply. AP CSP topics 3.12–3.14 (calling procedures, developing procedures, libraries) are directly tested.</span><span data-lang="zh">&sect;1 至 &sect;7。CSTA 3A-AP-17（使用过程/模块分解）和 3A-AP-18（使用过程创建制品）均适用。AP CSP 主题 3.12–3.14（调用过程、开发过程、库）直接考查。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;5 scope going-deeper (global state hazards) is enrichment for AP CSP floor students; the exam tests local/global at a conceptual level.</span><span data-lang="zh">&sect;5 作用域深入（全局状态风险）对 AP CSP 基础学生为拓展内容；考试在概念层面考查局部/全局。</span></td>
-        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3A-AP-17, 3A-AP-18; AP CSP Big Idea 3 (AAP) topics 3.12, 3.13, 3.14; LO AAP-3.B</span><span data-lang="zh">&mdash; CSTA 3A-AP-17、3A-AP-18；AP CSP 大概念 3（AAP）主题 3.12、3.13、3.14；学习目标 AAP-3.B</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSTA 3A-AP-17 (decompose using procedures/modules) and 3A-AP-18 (create artifacts using procedures) both apply. AP CSP topics 3.12–3.14 (calling procedures, developing procedures, libraries) are covered.</span><span data-lang="zh">&sect;1 至 &sect;7。CSTA 3A-AP-17（使用过程/模块分解）和 3A-AP-18（使用过程创建制品）均适用。AP CSP 主题 3.12–3.14（调用过程、开发过程、库）涵盖在内。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;5 scope going-deeper (global state hazards) is enrichment for AP CSP floor students; local/global is covered at a conceptual level.</span><span data-lang="zh">&sect;5 作用域深入（全局状态风险）对 AP CSP 基础学生为拓展内容；在概念层面涵盖局部/全局。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">, CSTA 3A-AP-17, 3A-AP-18; AP CSP Big Idea 3 (AAP) topics 3.12, 3.13, 3.14; LO AAP-3.B</span><span data-lang="zh">, CSTA 3A-AP-17、3A-AP-18；AP CSP 大概念 3（AAP）主题 3.12、3.13、3.14；学习目标 AAP-3.B</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11 &mdash; ICS3U</span><span data-lang="zh">安大略 11 年级 &mdash; ICS3U</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. ICS3U A3 (write subprograms using parameter passing and variable scope) and B2.3 (apply modularity for reusable code) are the primary targets. &sect;2–&sect;5 cover the exact skills assessed in A3.2.</span><span data-lang="zh">&sect;1 至 &sect;7。ICS3U A3（使用参数传递和变量作用域编写子程序）和 B2.3（应用模块化设计可复用代码）是主要目标。&sect;2–&sect;5 涵盖 A3.2 考查的确切技能。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Functional decomposition as formal design process (ICS4U C1.3) is Grade 12 &mdash; skip the Honors going-deeper boxes for ICS3U floor.</span><span data-lang="zh">函数分解作为正式设计过程（ICS4U C1.3）属 12 年级&mdash;&mdash;ICS3U 基础学生跳过荣誉深入框。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS3U A3, A3.1, A3.2, B2.3; ICS4U C1.3</span><span data-lang="zh">&mdash; ICS3U A3、A3.1、A3.2、B2.3；ICS4U C1.3</span></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 11, ICS3U</span><span data-lang="zh">安大略 11 年级, ICS3U</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. ICS3U A3 (write subprograms using parameter passing and variable scope) and B2.3 (apply modularity for reusable code) are the primary targets. &sect;2–&sect;5 cover the exact skills named in A3.2.</span><span data-lang="zh">&sect;1 至 &sect;7。ICS3U A3（使用参数传递和变量作用域编写子程序）和 B2.3（应用模块化设计可复用代码）是主要目标。&sect;2–&sect;5 涵盖 A3.2 点名的确切技能。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Functional decomposition as formal design process (ICS4U C1.3) is Grade 12, skip the Honors going-deeper boxes for ICS3U floor.</span><span data-lang="zh">函数分解作为正式设计过程（ICS4U C1.3）属 12 年级，ICS3U 基础学生跳过荣誉深入框。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">, ICS3U A3, A3.1, A3.2, B2.3; ICS4U C1.3</span><span data-lang="zh">, ICS3U A3、A3.1、A3.2、B2.3；ICS4U C1.3</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CP11 / CP12</span><span data-lang="zh">BC &mdash; CP11 / CP12</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC, CP11 / CP12</span><span data-lang="zh">BC, CP11 / CP12</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CP11 names "structures" and "pre-built libraries and their documentation" as core content. Every section here maps to those topics.</span><span data-lang="zh">&sect;1 至 &sect;7。CP11 将"结构"和"预建库及其文档"列为核心内容。本指南每一节均对应这些主题。</span></td>
         <td style="padding: 8px 10px;"><span data-lang="en">"Advanced programming structures" and "Management of complexity" (CP12) are Honors enrichment for BC CP11 floor students.</span><span data-lang="zh">"高级编程结构"和"复杂性管理"（CP12）对 BC CP11 基础学生属荣誉拓展。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CP11 "structures", "pre-built libraries"; CP12 "Advanced programming structures", "Management of complexity"</span><span data-lang="zh">&mdash; BC CP11"结构"、"预建库"；CP12"高级编程结构"、"复杂性管理"</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">, BC CP11 "structures", "pre-built libraries"; CP12 "Advanced programming structures", "Management of complexity"</span><span data-lang="zh">, BC CP11"结构"、"预建库"；CP12"高级编程结构"、"复杂性管理"</span></td>
       </tr>
       <tr>
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE2110</span><span data-lang="zh">阿尔伯塔 &mdash; CSE2110</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB, CSE2110</span><span data-lang="zh">阿尔伯塔, CSE2110</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. CSE2110 Procedural Programming 1 is the best match: subprograms, functions vs procedures, scope, one- and two-way parameter passing. This guide covers exactly CSE2110 outcomes 3.2, 3.3, 3.4.</span><span data-lang="zh">&sect;1 至 &sect;7。CSE2110 过程化编程 1 是最佳匹配：子程序、函数与过程、作用域、单向和双向参数传递。本指南正好涵盖 CSE2110 结果 3.2、3.3、3.4。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Object-oriented modularity (CSE3120) is a later Advanced-level topic &mdash; not covered here.</span><span data-lang="zh">面向对象模块化（CSE3120）是后续高级模块&mdash;&mdash;本指南不涵盖。</span></td>
-        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE2110 outcomes 3.2, 3.3, 3.4</span><span data-lang="zh">&mdash; CSE2110 结果 3.2、3.3、3.4</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Object-oriented modularity (CSE3120) is a later Advanced-level topic, not covered here.</span><span data-lang="zh">面向对象模块化（CSE3120）是后续高级模块,,本指南不涵盖。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">, CSE2110 outcomes 3.2, 3.3, 3.4</span><span data-lang="zh">, CSE2110 结果 3.2、3.3、3.4</span></td>
       </tr>
     </tbody>
   </table>
@@ -1488,7 +2038,7 @@ print(f"Rolled: {roll}")</code></pre>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">Scope and purity note.</span><span data-lang="zh">作用域与纯函数说明。</span></strong>
-    <span data-lang="en">Section 5 (Variable Scope) covers local vs global variables at the assessed level for all four curricula. The going-deeper box discusses the hazards of mutable global state — a concept that maps to Ontario ICS4U C1.3 functional decomposition and AB CSE2110 outcome 3.3.3. For floor students (ICS3U, AP CSP, BC CP11), the rule "prefer local variables; avoid writing to globals inside functions" is the take-away. The Honors box shows why that rule exists.</span><span data-lang="zh">&sect;5（变量作用域）在四套大纲的考查层次上涵盖局部变量与全局变量。深入框讨论可变全局状态的风险——该概念对应安大略 ICS4U C1.3 函数分解和 AB CSE2110 结果 3.3.3。对于基础学生（ICS3U、AP CSP、BC CP11），"优先使用局部变量；避免在函数内写入全局变量"是要点。荣誉框解释该规则存在的原因。</span>
+    <span data-lang="en">Section 5 (Variable Scope) covers local vs global variables at the assessed level for all four curricula. The going-deeper box discusses the hazards of mutable global state , a concept that maps to Ontario ICS4U C1.3 functional decomposition and AB CSE2110 outcome 3.3.3. For floor students (ICS3U, AP CSP, BC CP11), the rule "prefer local variables; avoid writing to globals inside functions" is the take-away. The Honors box shows why that rule exists.</span><span data-lang="zh">&sect;5（变量作用域）在四套大纲的要求层次上涵盖局部变量与全局变量。深入框讨论可变全局状态的风险，该概念对应安大略 ICS4U C1.3 函数分解和 AB CSE2110 结果 3.3.3。对于基础学生（ICS3U、AP CSP、BC CP11），"优先使用局部变量；避免在函数内写入全局变量"是要点。荣誉框解释该规则存在的原因。</span>
   </div>
 </section>
   </div>
@@ -1712,6 +2262,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1855,21 +2421,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

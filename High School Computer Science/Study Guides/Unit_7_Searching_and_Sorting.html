@@ -442,6 +442,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
+.sg-fig .dot { fill: var(--text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -540,19 +606,26 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 1 &middot; Linear search</span><span data-lang="zh">第 1 节 &middot; 线性查找</span></div>
   <h2><span data-lang="en">Linear Search</span><span data-lang="zh">线性查找</span></h2>
 
-  <div class="cram-cheat">
-    <strong><span data-lang="en">Linear search — scan every item in order until the target is found.</span><span data-lang="zh">线性查找（线性查找）——按顺序逐个扫描，直到找到目标。</span></strong>
-    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Works on</span><span data-lang="zh">适用于</span></strong> <span data-lang="en">&mdash; any list, sorted or unsorted. No pre-condition required.</span><span data-lang="zh">&mdash; 任意列表，有序或无序均可，无前提条件。</span></li>
-      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong> <span data-lang="en">&mdash; n steps (item is at the end or not in the list at all).</span><span data-lang="zh">&mdash; n 步（目标在末尾或根本不存在）。</span></li>
-      <li><strong><span data-lang="en">Best case</span><span data-lang="zh">最好情况</span></strong> <span data-lang="en">&mdash; 1 step (target is at index 0).</span><span data-lang="zh">&mdash; 1 步（目标在索引 0 处）。</span></li>
-      <li><strong><span data-lang="en">Return value</span><span data-lang="zh">返回值</span></strong> <span data-lang="en">&mdash; the index where the target was found, or &minus;1 (not found).</span><span data-lang="zh">&mdash; 找到目标的索引，或 &minus;1（未找到）。</span></li>
-    </ul>
-    <span data-lang="en">CSE3110 outcome 1.5.1 names "linear search" explicitly. ICS4U A3.2 says "create linear and binary search algorithms to find data in an array." AP CSP topic 3.11 covers binary search but tests efficiency understanding that requires knowing linear search as the baseline.</span><span data-lang="zh">CSE3110 结果 1.5.1 明确列出"线性查找"。ICS4U A3.2 要求"创建线性和二分查找算法以在数组中查找数据"。AP CSP 主题 3.11 涉及二分查找，但效率理解测试需要以线性查找作为基准。</span>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the pre-condition (none) and the best and worst case of linear search.</li><li>Trace a linear search and count the comparisons, for both a successful and an unsuccessful search.</li><li>Write linear search in pseudocode and Python so that it returns the index or -1.</li><li>Explain why <code>return -1</code> belongs after the loop, not inside it.</li><li>Decide when linear search is the right tool.</li></ul>
+    <ul data-lang="zh"><li>说明线性查找的前提条件（无）以及最好和最坏情况。</li><li>追踪线性查找并统计比较次数，包括查找成功和失败两种情况。</li><li>用伪代码和 Python 编写线性查找，返回索引或 -1。</li><li>解释为什么 <code>return -1</code> 应放在循环之后，而不是循环之内。</li><li>判断何时线性查找是合适的工具。</li></ul>
   </div>
 
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Linear search: scan every item in order until the target is found.</span><span data-lang="zh">线性查找（线性查找），按顺序逐个扫描，直到找到目标。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Works on</span><span data-lang="zh">适用于</span></strong><span data-lang="en">: any list, sorted or unsorted. No pre-condition required.</span><span data-lang="zh">：任意列表，有序或无序均可，无前提条件。</span></li>
+      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong><span data-lang="en">: n steps (item is at the end or not in the list at all).</span><span data-lang="zh">：n 步（目标在末尾或根本不存在）。</span></li>
+      <li><strong><span data-lang="en">Best case</span><span data-lang="zh">最好情况</span></strong><span data-lang="en">: 1 step (target is at index 0).</span><span data-lang="zh">：1 步（目标在索引 0 处）。</span></li>
+      <li><strong><span data-lang="en">Return value</span><span data-lang="zh">返回值</span></strong><span data-lang="en">: the index where the target was found, or &minus;1 (not found).</span><span data-lang="zh">：找到目标的索引，或 &minus;1（未找到）。</span></li>
+    </ul>
+    <span data-lang="en">CSE3110 outcome 1.5.1 names "linear search" explicitly. ICS4U A3.2 says "create linear and binary search algorithms to find data in an array." AP CSP topic 3.11 covers binary search, and comparing efficiency needs linear search as the baseline.</span><span data-lang="zh">CSE3110 结果 1.5.1 明确列出"线性查找"。ICS4U A3.2 要求"创建线性和二分查找算法以在数组中查找数据"。AP CSP 主题 3.11 涉及二分查找，比较效率时需要以线性查找作为基准。</span>
+  </div>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 1: Linear search on a list of temperatures</span><span data-lang="zh">例题 1：在温度列表上线性查找</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-blue">LS</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; Linear search on a list of temperatures</span><span data-lang="zh">例题 1 &middot; 在温度列表上线性查找</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">List: [14, 22, 8, 31, 19, 27, 5]. Search for target = 27. Trace the algorithm step by step.</span><span data-lang="zh">列表：[14, 22, 8, 31, 19, 27, 5]。查找目标 = 27。逐步追踪算法。</span></p>
   </div>
   <div class="worked-solution">
@@ -575,6 +648,41 @@ temps = [14, 22, 8, 31, 19, 27, 5]
 print(linear_search(temps, 27))  # Output: 5</code></pre>
     <p><span data-lang="en">Trace: index 0 (14≠27), index 1 (22≠27), index 2 (8≠27), index 3 (31≠27), index 4 (19≠27), index 5 (27==27) FOUND. Total: 6 comparisons. Worst case for 7 items would be 7.</span><span data-lang="zh">追踪：索引 0（14≠27），索引 1（22≠27），索引 2（8≠27），索引 3（31≠27），索引 4（19≠27），索引 5（27==27）找到。共 6 次比较。7 个元素的最坏情况为 7 次。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 2: Counting comparisons and avoiding a bug</span><span data-lang="zh">例题 2：统计比较次数并避免一个错误</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Search the name list ["Mia", "Raj", "Lee", "Sam", "Ana"] for "Lee" and for "Zoe". Count the comparisons each time, then explain why a version with <code>return -1</code> inside the loop is wrong.</span><span data-lang="zh">在名字列表 ["Mia", "Raj", "Lee", "Sam", "Ana"] 中查找 "Lee" 和 "Zoe"，分别统计比较次数，并解释为什么把 <code>return -1</code> 放在循环内的版本是错误的。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre><code>def linear_search_count(data, target):
+    comparisons = 0
+    for i in range(len(data)):
+        comparisons += 1
+        if data[i] == target:
+            return i, comparisons
+    return -1, comparisons
+
+names = ["Mia", "Raj", "Lee", "Sam", "Ana"]
+print(linear_search_count(names, "Lee"))   # (2, 3)
+print(linear_search_count(names, "Zoe"))   # (-1, 5)
+
+# Common error: return -1 inside the loop
+def bad_search(data, target):
+    for i in range(len(data)):
+        if data[i] == target:
+            return i
+        else:
+            return -1          # runs after the FIRST mismatch
+
+temps = [14, 22, 8, 31, 19, 27, 5]
+print(bad_search(temps, 27))   # -1  (wrong: 27 is at index 5)
+print(bad_search(temps, 14))   # 0   (right only because the target is first)</code></pre>
+<p><span data-lang="en">Searching for <code>"Lee"</code> checks Mia, Raj, Lee: 3 comparisons, index 2. Searching for <code>"Zoe"</code> checks all 5 names without a match, so it makes 5 comparisons and returns -1. Rule of thumb: a target at index <code>k</code> costs <code>k + 1</code> comparisons, and an absent target costs <code>n</code>.</span><span data-lang="zh">查找 <code>"Lee"</code> 依次检查 Mia、Raj、Lee：3 次比较，索引 2。查找 <code>"Zoe"</code> 检查全部 5 个名字都不匹配，所以 5 次比较并返回 -1。经验规则：目标在索引 <code>k</code> 处需要 <code>k + 1</code> 次比较，目标不存在则需要 <code>n</code> 次。</span></p>
+<p><span data-lang="en">Why the bug fails: <code>bad_search</code> puts <code>return -1</code> in the <code>else</code> branch, so the function returns after the very first item that does not match. It can only succeed if the target is at index 0. The correct place for <code>return -1</code> is after the loop, once every item has been checked.</span><span data-lang="zh">错误原因：<code>bad_search</code> 把 <code>return -1</code> 放在 <code>else</code> 分支中，因此遇到第一个不匹配的元素就返回。只有目标恰好在索引 0 时才会成功。正确位置是在循环之后，也就是所有元素都检查完毕之后。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A linear search checks a list of 200 items and the target is the very last item. How many comparisons does it make?</span><span data-lang="zh">线性查找检查含 200 个元素的列表，目标恰好是最后一个元素。需要比较多少次？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
@@ -602,10 +710,32 @@ print(linear_search(temps, 27))  # Output: 5</code></pre>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Command words: <em>trace</em> means show the index and the comparison at every step; <em>write</em> means give complete code including the not-found case; <em>state</em> means one short fact. Common errors: counting by index (a target at index 5 takes 6 comparisons, not 5) and putting <code>return -1</code> inside the loop, which ends the search after the first mismatch.</p>
+    <p data-lang="zh">指令词：<em>trace</em>（追踪）要求写出每一步的索引和比较；<em>write</em>（编写）要求给出完整代码，包括未找到的情况；<em>state</em>（陈述）只需一句简短事实。常见错误：按索引计数（目标在索引 5 需 6 次比较，不是 5 次），以及把 <code>return -1</code> 放在循环内，导致遇到第一个不匹配就结束查找。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A list has 40 items. What is the fewest and the most comparisons a linear search can make?</span><span data-lang="zh">1. 一个列表有 40 个元素。线性查找最少和最多各需多少次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">Fewest: 1, when the target is at index 0. Most: 40, when the target is the last item or is not in the list.</p><p data-lang="zh">最少：1 次，目标在索引 0。最多：40 次，目标是最后一个元素或不在列表中。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Search <code>[14, 22, 8, 31, 19, 27, 5]</code> for 8. What index is returned and how many comparisons are made?</span><span data-lang="zh">2. 在 <code>[14, 22, 8, 31, 19, 27, 5]</code> 中查找 8。返回什么索引，需要多少次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">The index is 2. The comparisons are 14, 22, then 8, so 3 comparisons (index + 1).</p><p data-lang="zh">索引为 2。依次比较 14、22、8，共 3 次比较（索引 + 1）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A function loops over the whole list, adds 1 to a counter each time an item equals the target, and returns the counter. What does it return for <code>[4, 7, 4, 9, 4]</code> and target 4, and how many comparisons does it make?</span><span data-lang="zh">3. 一个函数遍历整个列表，每当元素等于目标就让计数器加 1，最后返回计数器。对 <code>[4, 7, 4, 9, 4]</code> 和目标 4，它返回什么？共做多少次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">It returns 3. It always makes 5 comparisons because it never stops early. A linear search that returns the first matching index would stop after 1 comparison here.</p><p data-lang="zh">返回 3。它总是做 5 次比较，因为从不提前停止。而返回第一个匹配索引的线性查找在这里只需 1 次比较。</p></div>
+    </details>
+  </div>
+
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; when linear search is the right choice</span><span data-lang="zh">深入 &mdash; 何时线性查找是正确选择</span></summary>
+    <summary><span data-lang="en">Going deeper: when linear search is the right choice</span><span data-lang="zh">深入：何时线性查找是正确选择</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">Linear search is optimal for unsorted lists because no faster algorithm exists without pre-sorting. It is also correct for small lists (under ~20 items) where the overhead of sorting to enable binary search is not worth it. CSTA 3B-AP-11 says "Evaluate algorithms in terms of their efficiency" &mdash; the answer here is: linear search is O(n), simple to implement, and the right tool when you cannot guarantee the list is sorted or when you search only once. If you search the same large sorted list many times, sort once and switch to binary search.</span><span data-lang="zh">对于未排序列表，线性查找是最优选择，因为不预先排序就不存在更快的算法。对于小型列表（约 20 个元素以下），为启用二分查找而排序的开销也不值得。CSTA 3B-AP-11 要求"从效率方面评估算法"——此处的答案是：线性查找是 O(n)，实现简单，是列表无法保证有序或只查找一次时的正确工具。若需对同一大型有序列表多次查找，则一次性排序后改用二分查找。</span></p>
+      <p><span data-lang="en">Linear search is optimal for unsorted lists because no faster algorithm exists without pre-sorting. It is also correct for small lists (under ~20 items) where the overhead of sorting to enable binary search is not worth it. CSTA 3B-AP-11 says "Evaluate algorithms in terms of their efficiency", and the answer here is: linear search is O(n), simple to implement, and the right tool when you cannot guarantee the list is sorted or when you search only once. If you search the same large sorted list many times, sort once and switch to binary search.</span><span data-lang="zh">对于未排序列表，线性查找是最优选择，因为不预先排序就不存在更快的算法。对于小型列表（约 20 个元素以下），为启用二分查找而排序的开销也不值得。CSTA 3B-AP-11 要求"从效率方面评估算法"，此处的答案是：线性查找是 O(n)，实现简单，是列表无法保证有序或只查找一次时的正确工具。若需对同一大型有序列表多次查找，则一次性排序后改用二分查找。</span></p>
     </div>
   </details>
 </section>
@@ -616,18 +746,25 @@ print(linear_search(temps, 27))  # Output: 5</code></pre>
   <div class="section-label"><span data-lang="en">Section 2 &middot; Binary search</span><span data-lang="zh">第 2 节 &middot; 二分查找</span></div>
   <h2><span data-lang="en">Binary Search</span><span data-lang="zh">二分查找</span></h2>
 
-  <div class="cram-cheat">
-    <strong><span data-lang="en">Binary search — halve the search space on every comparison. Requires a sorted list.</span><span data-lang="zh">二分查找（二分查找）——每次比较将搜索范围减半。必须是已排序列表。</span></strong>
-    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Pre-condition</span><span data-lang="zh">前提条件</span></strong> <span data-lang="en">&mdash; list must be sorted in ascending order.</span><span data-lang="zh">&mdash; 列表必须按升序排列。</span></li>
-      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong> <span data-lang="en">&mdash; log&#x2082;(n) steps. For 1,024 items: 10 steps. For 1,000,000 items: 20 steps.</span><span data-lang="zh">&mdash; log&#x2082;(n) 步。1024 个元素：10 步。100 万个元素：20 步。</span></li>
-      <li><strong><span data-lang="en">Strategy</span><span data-lang="zh">策略</span></strong> <span data-lang="en">&mdash; compare target to the middle element. If target is smaller, search left half; if larger, search right half; if equal, found.</span><span data-lang="zh">&mdash; 将目标与中间元素比较。若目标较小，搜索左半部分；若较大，搜索右半部分；若相等，找到。</span></li>
-    </ul>
-    <span data-lang="en">CSE3110 outcome 1.5.2 names "binary search." ICS4U A3.2 requires creating it. AP CSP topic 3.11 is "Binary Search" and tests it directly.</span><span data-lang="zh">CSE3110 结果 1.5.2 列出"二分查找"。ICS4U A3.2 要求创建它。AP CSP 主题 3.11 即"二分查找"，直接考查。</span>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>State the pre-condition for binary search (a sorted list) and explain why it is needed.</li><li>Trace <code>low</code>, <code>mid</code> and <code>high</code> at every step, for a successful and an unsuccessful search.</li><li>Write binary search in pseudocode and Python, using integer division for <code>mid</code>.</li><li>Give the worst-case comparison count &lfloor;log&#x2082;(n)&rfloor; + 1 and say how it differs from the number of halvings.</li></ul>
+    <ul data-lang="zh"><li>说明二分查找的前提条件（有序列表）并解释其必要性。</li><li>在查找成功和失败两种情况下，追踪每一步的 <code>low</code>、<code>mid</code> 和 <code>high</code>。</li><li>用伪代码和 Python 编写二分查找，并用整除计算 <code>mid</code>。</li><li>给出最坏情况比较次数 &lfloor;log&#x2082;(n)&rfloor; + 1，并说明它与减半次数的区别。</li></ul>
   </div>
 
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Binary search: halve the search space on every comparison. Requires a sorted list.</span><span data-lang="zh">二分查找（二分查找），每次比较将搜索范围减半。必须是已排序列表。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Pre-condition</span><span data-lang="zh">前提条件</span></strong><span data-lang="en">: list must be sorted in ascending order.</span><span data-lang="zh">：列表必须按升序排列。</span></li>
+      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong><span data-lang="en">: at most &lfloor;log&#x2082;(n)&rfloor; + 1 comparisons (that is &lfloor;log&#x2082;(n)&rfloor; halvings plus the final check). For 1,024 items: 11 comparisons. For 1,000,000 items: 20 comparisons.</span><span data-lang="zh">：最多 &lfloor;log&#x2082;(n)&rfloor; + 1 次比较（即 &lfloor;log&#x2082;(n)&rfloor; 次减半再加最后一次检查）。1024 个元素：11 次比较。100 万个元素：20 次比较。</span></li>
+      <li><strong><span data-lang="en">Strategy</span><span data-lang="zh">策略</span></strong><span data-lang="en">: compare target to the middle element. If target is smaller, search left half; if larger, search right half; if equal, found.</span><span data-lang="zh">：将目标与中间元素比较。若目标较小，搜索左半部分；若较大，搜索右半部分；若相等，找到。</span></li>
+    </ul>
+    <span data-lang="en">CSE3110 outcome 1.5.2 names "binary search." ICS4U A3.2 requires creating it. AP CSP topic 3.11 is "Binary Search."</span><span data-lang="zh">CSE3110 结果 1.5.2 列出"二分查找"。ICS4U A3.2 要求创建它。AP CSP 主题 3.11 即"二分查找"。</span>
+  </div>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 3: Binary search on a sorted list</span><span data-lang="zh">例题 3：在有序列表上二分查找</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">BS</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Binary search on a sorted list</span><span data-lang="zh">例题 2 &middot; 在有序列表上二分查找</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Sorted list: [3, 8, 12, 17, 25, 34, 41, 55, 68, 77]. Target = 34. Trace step by step (indices 0–9).</span><span data-lang="zh">有序列表：[3, 8, 12, 17, 25, 34, 41, 55, 68, 77]。目标 = 34。逐步追踪（索引 0–9）。</span></p>
   </div>
   <div class="worked-solution">
@@ -674,6 +811,137 @@ nums = [3, 8, 12, 17, 25, 34, 41, 55, 68, 77]
 print(binary_search(nums, 34))  # Output: 5</code></pre>
     <p><span data-lang="en">3 comparisons to find 34 in a 10-element list. Linear search would need 6. The advantage grows dramatically for larger lists: a million items takes at most 20 binary-search comparisons vs up to 1,000,000 linear comparisons.</span><span data-lang="zh">在 10 个元素的列表中找到 34 只需 3 次比较；线性查找需要 6 次。对于更大的列表，优势急剧增加：100 万个元素最多需要 20 次二分比较，而线性查找最多需要 100 万次。</span></p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 460 252" role="img" aria-label="Binary search on the sorted list 3, 8, 12, 17, 25, 34, 41, 55, 68, 77 for the target 34: three rows show the low, mid and high pointers narrowing the window to index 5.">
+    <text class="mut" data-lang="en" x="50" y="18" text-anchor="middle">0</text><text class="mut" data-lang="zh" x="50" y="18" text-anchor="middle">0</text>
+    <text class="mut" data-lang="en" x="90" y="18" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="90" y="18" text-anchor="middle">1</text>
+    <text class="mut" data-lang="en" x="130" y="18" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="130" y="18" text-anchor="middle">2</text>
+    <text class="mut" data-lang="en" x="170" y="18" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="170" y="18" text-anchor="middle">3</text>
+    <text class="mut" data-lang="en" x="210" y="18" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="210" y="18" text-anchor="middle">4</text>
+    <text class="mut" data-lang="en" x="250" y="18" text-anchor="middle">5</text><text class="mut" data-lang="zh" x="250" y="18" text-anchor="middle">5</text>
+    <text class="mut" data-lang="en" x="290" y="18" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="290" y="18" text-anchor="middle">6</text>
+    <text class="mut" data-lang="en" x="330" y="18" text-anchor="middle">7</text><text class="mut" data-lang="zh" x="330" y="18" text-anchor="middle">7</text>
+    <text class="mut" data-lang="en" x="370" y="18" text-anchor="middle">8</text><text class="mut" data-lang="zh" x="370" y="18" text-anchor="middle">8</text>
+    <text class="mut" data-lang="en" x="410" y="18" text-anchor="middle">9</text><text class="mut" data-lang="zh" x="410" y="18" text-anchor="middle">9</text>
+    <text data-lang="en" x="30" y="44">Step 1: low 0, high 9, mid 4. 25 &lt; 34, so low = 5</text><text data-lang="zh" x="30" y="44">第 1 步：low 0，high 9，mid 4。25 &lt; 34，所以 low = 5</text>
+    <rect class="box" x="30" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="50" y="70" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="50" y="70" text-anchor="middle">3</text>
+    <rect class="box" x="70" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="90" y="70" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="90" y="70" text-anchor="middle">8</text>
+    <rect class="box" x="110" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="130" y="70" text-anchor="middle">12</text><text class="mono" data-lang="zh" x="130" y="70" text-anchor="middle">12</text>
+    <rect class="box" x="150" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="170" y="70" text-anchor="middle">17</text><text class="mono" data-lang="zh" x="170" y="70" text-anchor="middle">17</text>
+    <rect class="box" x="190" y="52" width="40" height="26"/>
+    <rect class="fill2" x="190" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="210" y="70" text-anchor="middle">25</text><text class="mono" data-lang="zh" x="210" y="70" text-anchor="middle">25</text>
+    <rect class="box" x="230" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="250" y="70" text-anchor="middle">34</text><text class="mono" data-lang="zh" x="250" y="70" text-anchor="middle">34</text>
+    <rect class="box" x="270" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="290" y="70" text-anchor="middle">41</text><text class="mono" data-lang="zh" x="290" y="70" text-anchor="middle">41</text>
+    <rect class="box" x="310" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="330" y="70" text-anchor="middle">55</text><text class="mono" data-lang="zh" x="330" y="70" text-anchor="middle">55</text>
+    <rect class="box" x="350" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="370" y="70" text-anchor="middle">68</text><text class="mono" data-lang="zh" x="370" y="70" text-anchor="middle">68</text>
+    <rect class="box" x="390" y="52" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="410" y="70" text-anchor="middle">77</text><text class="mono" data-lang="zh" x="410" y="70" text-anchor="middle">77</text>
+    <text class="c2t" data-lang="en" x="50" y="98" text-anchor="middle">L</text><text class="c2t" data-lang="zh" x="50" y="98" text-anchor="middle">L</text>
+    <text class="c2t" data-lang="en" x="210" y="98" text-anchor="middle">M</text><text class="c2t" data-lang="zh" x="210" y="98" text-anchor="middle">M</text>
+    <text class="c2t" data-lang="en" x="410" y="98" text-anchor="middle">H</text><text class="c2t" data-lang="zh" x="410" y="98" text-anchor="middle">H</text>
+    <text data-lang="en" x="30" y="116">Step 2: low 5, high 9, mid 7. 55 &gt; 34, so high = 6</text><text data-lang="zh" x="30" y="116">第 2 步：low 5，high 9，mid 7。55 &gt; 34，所以 high = 6</text>
+    <rect class="box dash thin" x="30" y="124" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="50" y="142" text-anchor="middle">3</text><text class="mono mut" data-lang="zh" x="50" y="142" text-anchor="middle">3</text>
+    <rect class="box dash thin" x="70" y="124" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="90" y="142" text-anchor="middle">8</text><text class="mono mut" data-lang="zh" x="90" y="142" text-anchor="middle">8</text>
+    <rect class="box dash thin" x="110" y="124" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="130" y="142" text-anchor="middle">12</text><text class="mono mut" data-lang="zh" x="130" y="142" text-anchor="middle">12</text>
+    <rect class="box dash thin" x="150" y="124" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="170" y="142" text-anchor="middle">17</text><text class="mono mut" data-lang="zh" x="170" y="142" text-anchor="middle">17</text>
+    <rect class="box dash thin" x="190" y="124" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="210" y="142" text-anchor="middle">25</text><text class="mono mut" data-lang="zh" x="210" y="142" text-anchor="middle">25</text>
+    <rect class="box" x="230" y="124" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="250" y="142" text-anchor="middle">34</text><text class="mono" data-lang="zh" x="250" y="142" text-anchor="middle">34</text>
+    <rect class="box" x="270" y="124" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="290" y="142" text-anchor="middle">41</text><text class="mono" data-lang="zh" x="290" y="142" text-anchor="middle">41</text>
+    <rect class="box" x="310" y="124" width="40" height="26"/>
+    <rect class="fill2" x="310" y="124" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="330" y="142" text-anchor="middle">55</text><text class="mono" data-lang="zh" x="330" y="142" text-anchor="middle">55</text>
+    <rect class="box" x="350" y="124" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="370" y="142" text-anchor="middle">68</text><text class="mono" data-lang="zh" x="370" y="142" text-anchor="middle">68</text>
+    <rect class="box" x="390" y="124" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="410" y="142" text-anchor="middle">77</text><text class="mono" data-lang="zh" x="410" y="142" text-anchor="middle">77</text>
+    <text class="c2t" data-lang="en" x="250" y="170" text-anchor="middle">L</text><text class="c2t" data-lang="zh" x="250" y="170" text-anchor="middle">L</text>
+    <text class="c2t" data-lang="en" x="330" y="170" text-anchor="middle">M</text><text class="c2t" data-lang="zh" x="330" y="170" text-anchor="middle">M</text>
+    <text class="c2t" data-lang="en" x="410" y="170" text-anchor="middle">H</text><text class="c2t" data-lang="zh" x="410" y="170" text-anchor="middle">H</text>
+    <text data-lang="en" x="30" y="188">Step 3: low 5, high 6, mid 5. 34 = 34, found at index 5</text><text data-lang="zh" x="30" y="188">第 3 步：low 5，high 6，mid 5。34 = 34，在索引 5 找到</text>
+    <rect class="box dash thin" x="30" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="50" y="214" text-anchor="middle">3</text><text class="mono mut" data-lang="zh" x="50" y="214" text-anchor="middle">3</text>
+    <rect class="box dash thin" x="70" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="90" y="214" text-anchor="middle">8</text><text class="mono mut" data-lang="zh" x="90" y="214" text-anchor="middle">8</text>
+    <rect class="box dash thin" x="110" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="130" y="214" text-anchor="middle">12</text><text class="mono mut" data-lang="zh" x="130" y="214" text-anchor="middle">12</text>
+    <rect class="box dash thin" x="150" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="170" y="214" text-anchor="middle">17</text><text class="mono mut" data-lang="zh" x="170" y="214" text-anchor="middle">17</text>
+    <rect class="box dash thin" x="190" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="210" y="214" text-anchor="middle">25</text><text class="mono mut" data-lang="zh" x="210" y="214" text-anchor="middle">25</text>
+    <rect class="box" x="230" y="196" width="40" height="26"/>
+    <rect class="fill3" x="230" y="196" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="250" y="214" text-anchor="middle">34</text><text class="mono" data-lang="zh" x="250" y="214" text-anchor="middle">34</text>
+    <rect class="box" x="270" y="196" width="40" height="26"/>
+    <text class="mono" data-lang="en" x="290" y="214" text-anchor="middle">41</text><text class="mono" data-lang="zh" x="290" y="214" text-anchor="middle">41</text>
+    <rect class="box dash thin" x="310" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="330" y="214" text-anchor="middle">55</text><text class="mono mut" data-lang="zh" x="330" y="214" text-anchor="middle">55</text>
+    <rect class="box dash thin" x="350" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="370" y="214" text-anchor="middle">68</text><text class="mono mut" data-lang="zh" x="370" y="214" text-anchor="middle">68</text>
+    <rect class="box dash thin" x="390" y="196" width="40" height="26"/>
+    <text class="mono mut" data-lang="en" x="410" y="214" text-anchor="middle">77</text><text class="mono mut" data-lang="zh" x="410" y="214" text-anchor="middle">77</text>
+    <text class="c2t" data-lang="en" x="250" y="242" text-anchor="middle">L,M</text><text class="c2t" data-lang="zh" x="250" y="242" text-anchor="middle">L,M</text>
+    <text class="c2t" data-lang="en" x="290" y="242" text-anchor="middle">H</text><text class="c2t" data-lang="zh" x="290" y="242" text-anchor="middle">H</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. Binary search for 34 in the sorted list from Worked Example 3. Each row is one step: L, M and H mark <code>low</code>, <code>mid</code> and <code>high</code>, and dashed grey cells have been eliminated. The pointer values are printed in the row headings; the window shrinks from 10 cells to 5, then 2, then the found cell.</span><span data-lang="zh">图 1. 在例题 3 的有序列表中二分查找 34。每一行是一步：L、M、H 分别标出 <code>low</code>、<code>mid</code>、<code>high</code>，虚线灰色单元格已被淘汰。指针取值印在各行标题中；窗口从 10 个单元格缩小到 5 个，再到 2 个，最后是找到的单元格。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 4: An unsuccessful search and the worst case</span><span data-lang="zh">例题 4：查找失败与最坏情况</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Binary search the sorted list [2, 5, 9, 14, 20, 27, 33, 41] for the target 30, which is not in the list. Trace every step, then state the worst-case number of comparisons for 8 items.</span><span data-lang="zh">在有序列表 [2, 5, 9, 14, 20, 27, 33, 41] 中二分查找目标 30（不在列表中）。追踪每一步，然后说明 8 个元素的最坏情况比较次数。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><span data-lang="en">Sorted list: <code>[2, 5, 9, 14, 20, 27, 33, 41]</code> (8 items, indices 0 to 7). Target 30.</span><span data-lang="zh">有序列表：<code>[2, 5, 9, 14, 20, 27, 33, 41]</code>（8 个元素，索引 0 至 7）。目标 30。</span></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span data-lang="en">Step</span><span data-lang="zh">步骤</span></th><th>low</th><th>high</th><th>mid</th><th>data[mid]</th><th><span data-lang="en">Action</span><span data-lang="zh">操作</span></th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>0</td><td>7</td><td>3</td><td>14</td><td><span data-lang="en">14 &lt; 30, so low = 4</span><span data-lang="zh">14 &lt; 30, so low = 4</span></td></tr>
+          <tr><td>2</td><td>4</td><td>7</td><td>5</td><td>27</td><td><span data-lang="en">27 &lt; 30, so low = 6</span><span data-lang="zh">27 &lt; 30, so low = 6</span></td></tr>
+          <tr><td>3</td><td>6</td><td>7</td><td>6</td><td>33</td><td><span data-lang="en">33 &gt; 30, so high = 5</span><span data-lang="zh">33 &gt; 30, so high = 5</span></td></tr>
+          <tr><td>4</td><td>6</td><td>5</td><td>-</td><td>-</td><td><span data-lang="en">low &gt; high: window empty, return -1</span><span data-lang="zh">low &gt; high：窗口为空，返回 -1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+<pre><code>def binary_search_trace(data, target):
+    low, high = 0, len(data) - 1
+    probes = 0
+    while low &lt;= high:
+        mid = (low + high) // 2
+        probes += 1
+        print("low", low, "high", high, "mid", mid, "value", data[mid])
+        if data[mid] == target:
+            return mid, probes
+        elif data[mid] &lt; target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1, probes
+
+nums = [2, 5, 9, 14, 20, 27, 33, 41]
+print(binary_search_trace(nums, 30))</code></pre>
+<p><span data-lang="en">The search stops when <code>low &gt; high</code>, which means no item is left to check. It made 3 comparisons. The worst case for 8 items is &lfloor;log&#x2082;(8)&rfloor; + 1 = 4 comparisons: searching for 41 takes 4 (mids 3, 5, 6, 7). In general the worst case is &lfloor;log&#x2082;(n)&rfloor; + 1 comparisons, which is one more than the &lfloor;log&#x2082;(n)&rfloor; halvings.</span><span data-lang="zh">当 <code>low &gt; high</code> 时查找停止，表示没有元素可检查。本例做了 3 次比较。8 个元素的最坏情况是 &lfloor;log&#x2082;(8)&rfloor; + 1 = 4 次比较：查找 41 需要 4 次（mid 依次为 3、5、6、7）。一般地，最坏情况是 &lfloor;log&#x2082;(n)&rfloor; + 1 次比较，比 &lfloor;log&#x2082;(n)&rfloor; 次减半多一次。</span></p>
+<p><span data-lang="en">Two classic bugs: <code>mid = (low + high) / 2</code> gives a float in Python 3, and using it as an index raises <code>TypeError</code>; use <code>//</code>. Writing <code>low = mid</code> instead of <code>low = mid + 1</code> can leave the window unchanged, so the loop never ends.</span><span data-lang="zh">两个经典错误：<code>mid = (low + high) / 2</code> 在 Python 3 中得到浮点数，用作索引会引发 <code>TypeError</code>，应使用 <code>//</code>。把 <code>low = mid + 1</code> 写成 <code>low = mid</code> 可能使窗口保持不变，循环永远不会结束。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which of the following is a requirement for binary search to work correctly?</span><span data-lang="zh">以下哪项是二分查找正确工作的必要条件？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
@@ -683,7 +951,7 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">The list must be sorted in ascending order</span><span data-lang="zh">列表必须按升序排列</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">The target must always be present in the list</span><span data-lang="zh">目标必须一定在列表中</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search works by comparing the target to the middle element and eliminating half the list. This only works if the list is sorted — without ordering, "search the left half" has no meaning. CSE3110 outcome 1.5.4 explicitly requires comparing the "data structures required" for linear vs binary search — the sorted precondition is the key difference.</span><span data-lang="zh">二分查找通过将目标与中间元素比较并淘汰一半列表来工作。只有在列表已排序时才有效——没有顺序，"搜索左半部分"毫无意义。CSE3110 结果 1.5.4 明确要求比较线性与二分查找所需的"数据结构"——已排序前提条件是关键区别。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search works by comparing the target to the middle element and eliminating half the list. This only works if the list is sorted: without ordering, "search the left half" has no meaning. CSE3110 outcome 1.5.4 explicitly requires comparing the "data structures required" for linear vs binary search: the sorted precondition is the key difference.</span><span data-lang="zh">二分查找通过将目标与中间元素比较并淘汰一半列表来工作。只有在列表已排序时才有效，没有顺序，"搜索左半部分"毫无意义。CSE3110 结果 1.5.4 明确要求比较线性与二分查找所需的"数据结构"，已排序前提条件是关键区别。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Binary search requires a sorted list. It works on any comparable type (not just integers), any list length, and correctly returns &minus;1 if the target is absent.</span><span data-lang="zh">二分查找需要已排序列表。它适用于任何可比较类型（不仅仅是整数），任何列表长度，目标不存在时正确返回 &minus;1。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -692,19 +960,41 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A sorted list has 1,024 items. How many comparisons does binary search need in the worst case?</span><span data-lang="zh">一个已排序列表有 1024 个元素。二分查找在最坏情况下需要多少次比较？</span></div><div class="quiz-number">&sect;2 &middot; Q2</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">512</div>
-      <div class="quiz-opt" data-idx="1">10</div>
+      <div class="quiz-opt" data-idx="1">11</div>
       <div class="quiz-opt" data-idx="2">1024</div>
       <div class="quiz-opt" data-idx="3">100</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search halves the search space each step. Starting from 1,024: 1024 &rarr; 512 &rarr; 256 &rarr; 128 &rarr; 64 &rarr; 32 &rarr; 16 &rarr; 8 &rarr; 4 &rarr; 2 &rarr; 1. That is 10 halvings. log&#x2082;(1024) = 10 because 2&#xB9;&#x2070; = 1024.</span><span data-lang="zh">二分查找每步将搜索空间减半。从 1024 开始：1024 &rarr; 512 &rarr; 256 &rarr; 128 &rarr; 64 &rarr; 32 &rarr; 16 &rarr; 8 &rarr; 4 &rarr; 2 &rarr; 1。共 10 次减半。log&#x2082;(1024) = 10，因为 2&#xB9;&#x2070; = 1024。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Binary search takes log&#x2082;(n) steps in the worst case. log&#x2082;(1024) = 10, since 2&#xB9;&#x2070; = 1024.</span><span data-lang="zh">二分查找最坏情况需 log&#x2082;(n) 步。log&#x2082;(1024) = 10，因为 2&#xB9;&#x2070; = 1024。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search halves the search space each step. Starting from 1,024: 1024 &rarr; 512 &rarr; 256 &rarr; 128 &rarr; 64 &rarr; 32 &rarr; 16 &rarr; 8 &rarr; 4 &rarr; 2 &rarr; 1. That is 10 halvings, and one last comparison is still needed on the single item left, so 10 + 1 = 11 comparisons. This is &lfloor;log&#x2082;(1024)&rfloor; + 1, where log&#x2082;(1024) = 10 because 2&#xB9;&#x2070; = 1024.</span><span data-lang="zh">二分查找每步将搜索空间减半。从 1024 开始：1024 &rarr; 512 &rarr; 256 &rarr; 128 &rarr; 64 &rarr; 32 &rarr; 16 &rarr; 8 &rarr; 4 &rarr; 2 &rarr; 1。共 10 次减半，剩下的最后一个元素还要再比较一次，所以是 10 + 1 = 11 次比较，即 &lfloor;log&#x2082;(1024)&rfloor; + 1，其中 log&#x2082;(1024) = 10，因为 2&#xB9;&#x2070; = 1024。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">In the worst case binary search makes &lfloor;log&#x2082;(n)&rfloor; + 1 comparisons. log&#x2082;(1024) = 10 halvings, so 10 + 1 = 11 comparisons.</span><span data-lang="zh">二分查找最坏情况需 &lfloor;log&#x2082;(n)&rfloor; + 1 次比较。log&#x2082;(1024) = 10 次减半，所以是 10 + 1 = 11 次比较。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">State the pre-condition (sorted list) before you describe the steps. In a trace, show <code>low</code>, <code>high</code> and <code>mid</code> on every row, and say which count you give: comparisons (&lfloor;log&#x2082;(n)&rfloor; + 1) or halvings (&lfloor;log&#x2082;(n)&rfloor;). Common errors: computing <code>mid</code> with <code>/</code> instead of <code>//</code>, and writing <code>low = mid</code> instead of <code>low = mid + 1</code>.</p>
+    <p data-lang="zh">先陈述前提条件（有序列表），再描述步骤。追踪时每一行都写出 <code>low</code>、<code>high</code> 和 <code>mid</code>，并说明给出的是哪种计数：比较次数（&lfloor;log&#x2082;(n)&rfloor; + 1）还是减半次数（&lfloor;log&#x2082;(n)&rfloor;）。常见错误：用 <code>/</code> 而不是 <code>//</code> 计算 <code>mid</code>，以及把 <code>low = mid + 1</code> 写成 <code>low = mid</code>。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. List <code>[4, 9, 15, 22, 31, 40, 52, 63, 70]</code>, target 52. Give <code>mid</code> and <code>data[mid]</code> at each step and the result.</span><span data-lang="zh">1. 列表 <code>[4, 9, 15, 22, 31, 40, 52, 63, 70]</code>，目标 52。写出每一步的 <code>mid</code> 和 <code>data[mid]</code> 以及结果。</span></summary>
+      <div class="sg-a"><p data-lang="en">Step 1: low 0, high 8, mid 4, value 31; 31 &lt; 52 so low = 5. Step 2: low 5, high 8, mid 6, value 52, found. The result is index 6 after 2 comparisons.</p><p data-lang="zh">第 1 步：low 0，high 8，mid 4，值 31；31 &lt; 52，所以 low = 5。第 2 步：low 5，high 8，mid 6，值 52，找到。结果是索引 6，共 2 次比较。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Same list, target 10. What is returned and how many comparisons are made?</span><span data-lang="zh">2. 同一列表，目标 10。返回什么，做了多少次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">Mid 4 (31 &gt; 10) so high = 3; mid 1 (9 &lt; 10) so low = 2; mid 2 (15 &gt; 10) so high = 1. Now low 2 &gt; high 1, so it returns -1 after 3 comparisons.</p><p data-lang="zh">mid 4（31 &gt; 10），high = 3；mid 1（9 &lt; 10），low = 2；mid 2（15 &gt; 10），high = 1。此时 low 2 &gt; high 1，共 3 次比较后返回 -1。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. What is the worst-case number of comparisons for 1,000 items, and for 2,000 items?</span><span data-lang="zh">3. 1000 个元素和 2000 个元素的最坏情况比较次数各是多少？</span></summary>
+      <div class="sg-a"><p data-lang="en">For 1,000 items: &lfloor;log&#x2082;(1000)&rfloor; + 1 = 9 + 1 = 10, because 2&#x2079; = 512 &le; 1000 &lt; 1024. For 2,000 items: 10 + 1 = 11, because 1024 &le; 2000 &lt; 2048. Doubling the list adds one comparison.</p><p data-lang="zh">1000 个元素：&lfloor;log&#x2082;(1000)&rfloor; + 1 = 9 + 1 = 10，因为 2&#x2079; = 512 &le; 1000 &lt; 1024。2000 个元素：10 + 1 = 11，因为 1024 &le; 2000 &lt; 2048。列表翻倍只多一次比较。</p></div>
+    </details>
+  </div>
+
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; AP CSP exam pseudocode for binary search</span><span data-lang="zh">深入 &mdash; AP CSP 考试二分查找伪代码</span></summary>
+    <summary><span data-lang="en">Going deeper: AP CSP pseudocode for binary search</span><span data-lang="zh">深入：AP CSP 二分查找伪代码</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">AP CSP topic 3.11 tests binary search using the College Board's own pseudocode notation. Key differences from the pseudocode in this guide: assignment uses <code>&larr;</code> (arrow), lists are 1-indexed (first element is index 1, not 0), and display uses <code>DISPLAY()</code>. The logic is identical; only the surface notation changes. Practice translating the algorithm above into College Board pseudocode as an exam prep exercise. ICS4U C2.2 and CSE3110 outcome 1.5.4 go further: both require formal comparison of computational efficiency (step-count analysis), which maps to the Big-O section (&sect;3) of this guide.</span><span data-lang="zh">AP CSP 主题 3.11 使用 College Board 自己的伪代码表示法考查二分查找。与本指南伪代码的主要区别：赋值用 <code>&larr;</code>（箭头），列表从 1 开始索引（第一个元素索引为 1，不是 0），显示用 <code>DISPLAY()</code>。逻辑相同，仅表面符号不同。将上述算法翻译为 College Board 伪代码作为考试准备练习。ICS4U C2.2 和 CSE3110 结果 1.5.4 更进一步：两者均要求对计算效率进行正式比较（步骤数分析），对应本指南第 3 节（大O）。</span></p>
+      <p><span data-lang="en">AP CSP topic 3.11 presents binary search in the College Board's own pseudocode notation. Key differences from the pseudocode in this guide: assignment uses <code>&larr;</code> (arrow), lists are 1-indexed (first element is index 1, not 0), and display uses <code>DISPLAY()</code>. The logic is identical; only the surface notation changes. Practice translating the algorithm above into College Board pseudocode as practice. ICS4U C2.2 and CSE3110 outcome 1.5.4 go further: both require formal comparison of computational efficiency (step-count analysis), which maps to the Big-O section (&sect;3) of this guide.</span><span data-lang="zh">AP CSP 主题 3.11 使用 College Board 自己的伪代码表示法呈现二分查找。与本指南伪代码的主要区别：赋值用 <code>&larr;</code>（箭头），列表从 1 开始索引（第一个元素索引为 1，不是 0），显示用 <code>DISPLAY()</code>。逻辑相同，仅表面符号不同。将上述算法翻译为 College Board 伪代码作为练习。ICS4U C2.2 和 CSE3110 结果 1.5.4 更进一步：两者均要求对计算效率进行正式比较（步骤数分析），对应本指南第 3 节（大O）。</span></p>
     </div>
   </details>
 </section>
@@ -715,45 +1005,71 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
   <div class="section-label"><span data-lang="en">Section 3 &middot; Algorithm efficiency</span><span data-lang="zh">第 3 节 &middot; 算法效率</span></div>
   <h2><span data-lang="en">Introduction to Algorithm Efficiency (Big-O Concept)</span><span data-lang="zh">算法效率初步（大O概念）</span></h2>
 
-  <div class="cram-cheat">
-    <strong><span data-lang="en">Count steps to compare algorithms — more steps = slower.</span><span data-lang="zh">计步比较算法——步骤越多越慢。</span></strong>
-    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Linear search step count</span><span data-lang="zh">线性查找步骤数</span></strong> <span data-lang="en">&mdash; proportional to n (the list size). Double the list &rarr; double the steps. We say it is <strong>O(n)</strong>.</span><span data-lang="zh">&mdash; 与 n（列表大小）成正比。列表翻倍 &rarr; 步骤翻倍。称为 <strong>O(n)</strong>。</span></li>
-      <li><strong><span data-lang="en">Binary search step count</span><span data-lang="zh">二分查找步骤数</span></strong> <span data-lang="en">&mdash; proportional to log&#x2082;(n). Double the list &rarr; only one extra step. We say it is <strong>O(log n)</strong>.</span><span data-lang="zh">&mdash; 与 log&#x2082;(n) 成正比。列表翻倍 &rarr; 只多一步。称为 <strong>O(log n)</strong>。</span></li>
-      <li><strong><span data-lang="en">Concrete comparison</span><span data-lang="zh">具体比较</span></strong> <span data-lang="en">&mdash; for 1,000,000 items: linear search up to 1,000,000 steps; binary search at most 20 steps. O(log n) is dramatically better for large n.</span><span data-lang="zh">&mdash; 100 万个元素：线性查找最多 100 万步；二分查找最多 20 步。对于大 n，O(log n) 显著更优。</span></li>
-    </ul>
-    <span data-lang="en">AP CSP topic 3.17 (AAP-4.A) and ICS4U C2.2/C2.3 require comparing efficiency. CSE3110 outcomes 1.5.4 and 1.6.5 require "compare and contrast the computational efficiencies." CSTA 3B-AP-11 says "Evaluate algorithms in terms of their efficiency." All four curricula test this.</span><span data-lang="zh">AP CSP 主题 3.17（AAP-4.A）和 ICS4U C2.2/C2.3 要求比较效率。CSE3110 结果 1.5.4 和 1.6.5 要求"比较计算效率"。CSTA 3B-AP-11 要求"从效率方面评估算法"。四套大纲均考查此内容。</span>
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Define algorithm efficiency as how the step count grows with the input size n.</li><li>Classify linear search as O(n), binary search as O(log n) and two nested loops over n items as O(n&sup2;).</li><li>Compare worst-case step counts for linear and binary search for a given n, saying which count is used.</li><li>Decide whether sorting first is worth it by comparing total costs.</li></ul>
+    <ul data-lang="zh"><li>将算法效率定义为步骤数随输入规模 n 增长的方式。</li><li>将线性查找归类为 O(n)，二分查找归类为 O(log n)，对 n 个元素的两层嵌套循环归类为 O(n&sup2;)。</li><li>比较给定 n 时线性查找和二分查找的最坏情况步骤数，并说明使用哪种计数。</li><li>通过比较总代价，判断先排序是否划算。</li></ul>
   </div>
 
+  <div class="cram-cheat">
+    <strong><span data-lang="en">Count steps to compare algorithms: more steps = slower.</span><span data-lang="zh">计步比较算法，步骤越多越慢。</span></strong>
+    <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
+      <li><strong><span data-lang="en">Linear search step count</span><span data-lang="zh">线性查找步骤数</span></strong><span data-lang="en">: proportional to n (the list size). Double the list &rarr; double the steps. We say it is <strong>O(n)</strong>.</span><span data-lang="zh">：与 n（列表大小）成正比。列表翻倍 &rarr; 步骤翻倍。称为 <strong>O(n)</strong>。</span></li>
+      <li><strong><span data-lang="en">Binary search step count</span><span data-lang="zh">二分查找步骤数</span></strong><span data-lang="en">: proportional to log&#x2082;(n). Double the list &rarr; only one extra step. We say it is <strong>O(log n)</strong>.</span><span data-lang="zh">：与 log&#x2082;(n) 成正比。列表翻倍 &rarr; 只多一步。称为 <strong>O(log n)</strong>。</span></li>
+      <li><strong><span data-lang="en">Concrete comparison</span><span data-lang="zh">具体比较</span></strong><span data-lang="en">: for 1,000,000 items: linear search up to 1,000,000 steps; binary search at most 20 steps. O(log n) is dramatically better for large n.</span><span data-lang="zh">：100 万个元素：线性查找最多 100 万步；二分查找最多 20 步。对于大 n，O(log n) 显著更优。</span></li>
+    </ul>
+    <span data-lang="en">AP CSP topic 3.17 (AAP-4.A) and ICS4U C2.2/C2.3 require comparing efficiency. CSE3110 outcomes 1.5.4 and 1.6.5 require "compare and contrast the computational efficiencies." CSTA 3B-AP-11 says "Evaluate algorithms in terms of their efficiency." All four curricula name this.</span><span data-lang="zh">AP CSP 主题 3.17（AAP-4.A）和 ICS4U C2.2/C2.3 要求比较效率。CSE3110 结果 1.5.4 和 1.6.5 要求"比较计算效率"。CSTA 3B-AP-11 要求"从效率方面评估算法"。四套大纲均列出此内容。</span>
+  </div>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 5: Comparing search step counts</span><span data-lang="zh">例题 5：比较查找步骤数</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Comparing search step counts</span><span data-lang="zh">例题 3 &middot; 比较查找步骤数</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">For list sizes n = 8, 16, 64, 1024, 1,000,000, calculate the worst-case step count for linear search and binary search side by side.</span><span data-lang="zh">对于列表大小 n = 8、16、64、1024、1,000,000，分别计算线性查找和二分查找的最坏情况步骤数。</span></p>
   </div>
   <div class="worked-solution">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>n</th><th><span data-lang="en">Linear (worst case)</span><span data-lang="zh">线性（最坏）</span></th><th><span data-lang="en">Binary (worst case)</span><span data-lang="zh">二分（最坏）</span></th><th><span data-lang="en">Ratio</span><span data-lang="zh">比值</span></th></tr></thead>
+        <thead><tr><th>n</th><th><span data-lang="en">Linear (worst case)</span><span data-lang="zh">线性（最坏）</span></th><th><span data-lang="en">Binary (worst case, comparisons)</span><span data-lang="zh">二分（最坏，比较次数）</span></th><th><span data-lang="en">Ratio</span><span data-lang="zh">比值</span></th></tr></thead>
         <tbody>
-          <tr><td>8</td><td>8</td><td>3</td><td>2.7&times;</td></tr>
-          <tr><td>16</td><td>16</td><td>4</td><td>4&times;</td></tr>
-          <tr><td>64</td><td>64</td><td>6</td><td>10.7&times;</td></tr>
-          <tr><td>1,024</td><td>1,024</td><td>10</td><td>102&times;</td></tr>
+          <tr><td>8</td><td>8</td><td>4</td><td>2&times;</td></tr>
+          <tr><td>16</td><td>16</td><td>5</td><td>3.2&times;</td></tr>
+          <tr><td>64</td><td>64</td><td>7</td><td>9.1&times;</td></tr>
+          <tr><td>1,024</td><td>1,024</td><td>11</td><td>93.1&times;</td></tr>
           <tr><td>1,000,000</td><td>1,000,000</td><td>20</td><td>50,000&times;</td></tr>
         </tbody>
       </table>
     </div>
-    <p><span data-lang="en">As n grows, the ratio between linear and binary search becomes enormous. This is the power of O(log n) vs O(n). The cost: binary search requires the list to be sorted first. Sorting itself takes time (O(n&sup2;) for simple sorts, O(n log n) for advanced sorts — see &sect;7).</span><span data-lang="zh">随着 n 增大，线性与二分查找之间的比值变得极大。这就是 O(log n) 对比 O(n) 的威力。代价是：二分查找要求列表必须先排序。排序本身需要时间（简单排序 O(n²)，高级排序 O(n log n)——见 &sect;7）。</span></p>
+    <p><span data-lang="en">As n grows, the ratio between linear and binary search becomes enormous. The binary column counts comparisons (&lfloor;log&#x2082;(n)&rfloor; + 1); the number of halvings is one less. This is the power of O(log n) vs O(n). The cost: binary search requires the list to be sorted first. Sorting itself takes time (O(n&sup2;) for simple sorts, O(n log n) for advanced sorts: see &sect;7).</span><span data-lang="zh">随着 n 增大，线性与二分查找之间的比值变得极大。二分列统计的是比较次数（&lfloor;log&#x2082;(n)&rfloor; + 1）；减半次数比它少一次。这就是 O(log n) 对比 O(n) 的威力。代价是：二分查找要求列表必须先排序。排序本身需要时间（简单排序 O(n²)，高级排序 O(n log n)，见 &sect;7）。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 6: Is sorting first worth it?</span><span data-lang="zh">例题 6：先排序划算吗？</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">A list has 1,000 items. Sorting with bubble sort costs up to 499,500 comparisons. After sorting, binary search can be used. How many lookups are needed before sort-then-binary-search beats repeated linear search?</span><span data-lang="zh">一个列表有 1000 个元素。冒泡排序最多需要 499,500 次比较，排序之后可以使用二分查找。至少要查找多少次，先排序再二分查找才比重复线性查找更省？</span></p>
+  </div>
+  <div class="worked-solution">
+<p><span data-lang="en">Use worst-case counts. Costs: bubble sort on 1,000 items needs 1000 &times; 999 / 2 = 499,500 comparisons, once. Each linear search costs at most 1,000. Each binary search costs at most 10 comparisons (&lfloor;log&#x2082;(1000)&rfloor; + 1). Each lookup therefore saves 1,000 - 10 = 990 comparisons, and the sort pays for itself when 990 &times; k &gt; 499,500.</span><span data-lang="zh">使用最坏情况计数。代价：对 1000 个元素做冒泡排序一次需要 1000 &times; 999 / 2 = 499,500 次比较。每次线性查找最多 1000 次。每次二分查找最多 10 次比较（&lfloor;log&#x2082;(1000)&rfloor; + 1）。因此每次查找节省 1000 - 10 = 990 次比较，当 990 &times; k &gt; 499,500 时排序的代价就收回了。</span></p>
+<pre><code>n = 1000
+sort_cost = n * (n - 1) // 2     # bubble sort, worst-case comparisons
+linear_cost = n                  # linear search, worst case
+binary_cost = n.bit_length()     # binary search comparisons: floor(log2 n) + 1
+saving = linear_cost - binary_cost
+searches = sort_cost // saving + 1
+print(sort_cost, binary_cost, saving, searches)</code></pre>
+<p><span data-lang="en">The output <code>499500 10 990 505</code> means k must be at least 505. With 504 lookups, linear search costs 504,000 and sort-then-binary costs 499,500 + 5,040 = 504,540 (sorting loses). With 505 lookups, linear costs 505,000 and sort-then-binary costs 499,500 + 5,050 = 504,550 (sorting wins). With a faster sort of about n log&#x2082;(n) steps the break-even point comes much sooner, which is why real programs use the built-in sort (section 7).</span><span data-lang="zh">输出 <code>499500 10 990 505</code> 表示 k 至少为 505。查找 504 次时，线性查找共 504,000，先排序再二分共 499,500 + 5,040 = 504,540（排序更差）。查找 505 次时，线性共 505,000，先排序再二分共 499,500 + 5,050 = 504,550（排序更好）。如果用约 n log&#x2082;(n) 步的快速排序，盈亏平衡点会早得多，这就是实际程序使用内置排序的原因（第 7 节）。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="1">
-    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">An algorithm takes 100 steps for a list of 1,000 items. If the list grows to 2,000 items and the algorithm still takes about 101 steps, what growth pattern does this suggest?</span><span data-lang="zh">一个算法在 1000 个元素的列表上需 100 步。若列表增至 2000 个元素，算法仍约需 101 步，这说明什么增长模式？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
+    <div class="quiz-header"><div class="quiz-q"><span data-lang="en">An algorithm takes about 100 steps for a list of 1,000 items. If the list doubles to 2,000 items and the algorithm needs about one extra step, what growth pattern does this suggest?</span><span data-lang="zh">一个算法在 1000 个元素的列表上约需 100 步。若列表翻倍到 2000 个元素，算法只多需约一步，这说明什么增长模式？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">Linear growth — O(n)</span><span data-lang="zh">线性增长 — O(n)</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">Logarithmic growth — O(log n)</span><span data-lang="zh">对数增长 — O(log n)</span></div>
-      <div class="quiz-opt" data-idx="2"><span data-lang="en">Quadratic growth — O(n&sup2;)</span><span data-lang="zh">二次增长 — O(n²)</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Constant growth — O(1)</span><span data-lang="zh">常数增长 — O(1)</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Linear growth: O(n)</span><span data-lang="zh">线性增长：O(n)</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">Logarithmic growth: O(log n)</span><span data-lang="zh">对数增长：O(log n)</span></div>
+      <div class="quiz-opt" data-idx="2"><span data-lang="en">Quadratic growth: O(n&sup2;)</span><span data-lang="zh">二次增长：O(n²)</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Constant growth: O(1)</span><span data-lang="zh">常数增长：O(1)</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">When doubling the input size adds only one extra step (100 &rarr; 101), that matches logarithmic growth: log&#x2082;(1000) &approx; 10 &rarr; log&#x2082;(2000) &approx; 11. Binary search exhibits exactly this pattern — O(log n).</span><span data-lang="zh">当输入大小翻倍只增加一步（100 &rarr; 101）时，符合对数增长：log&#x2082;(1000) &approx; 10 &rarr; log&#x2082;(2000) &approx; 11。二分查找正好表现这种模式——O(log n)。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">When doubling the input size adds only about one extra step, that matches logarithmic growth: log&#x2082;(1000) &approx; 10 &rarr; log&#x2082;(2000) &approx; 11. Binary search exhibits exactly this pattern: O(log n).</span><span data-lang="zh">当输入大小翻倍只增加约一步时，符合对数增长：log&#x2082;(1000) &approx; 10 &rarr; log&#x2082;(2000) &approx; 11。二分查找正好表现这种模式，O(log n)。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Linear: doubling n doubles the steps. Logarithmic: doubling n adds only one step. Quadratic: doubling n quadruples the steps. One extra step when n doubles = O(log n).</span><span data-lang="zh">线性：n 翻倍则步骤翻倍。对数：n 翻倍只多一步。二次：n 翻倍则步骤变为四倍。n 翻倍只多一步 = O(log n)。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -766,15 +1082,37 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Binary search runs out of memory on unsorted data</span><span data-lang="zh">二分查找在未排序数据上会耗尽内存</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Binary search can only be implemented in Java, not Python</span><span data-lang="zh">二分查找只能用 Java 实现，不能用 Python</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search works by deciding "target must be in the left half" or "target must be in the right half" based on the mid-element. This is only valid if the list is sorted — on [7,2,9,1,5], the mid element is 9, but that does not tell you which half contains 2. You would eliminate the wrong half and miss the answer.</span><span data-lang="zh">二分查找通过判断"目标一定在左半"或"目标一定在右半"来运作，这只在列表已排序时才成立。对于 [7,2,9,1,5]，中间元素是 9，但这无法告知哪半包含 2；你会淘汰错误的一半而错过答案。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Binary search works by deciding "target must be in the left half" or "target must be in the right half" based on the mid-element. This is only valid if the list is sorted: on [7,2,9,1,5], the mid element is 9, but that does not tell you which half contains 2. You would eliminate the wrong half and miss the answer.</span><span data-lang="zh">二分查找通过判断"目标一定在左半"或"目标一定在右半"来运作，这只在列表已排序时才成立。对于 [7,2,9,1,5]，中间元素是 9，但这无法告知哪半包含 2；你会淘汰错误的一半而错过答案。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The sorted-list requirement is the key constraint. Binary search works on any length, any language. The issue is correctness, not memory or language.</span><span data-lang="zh">已排序列表的要求是关键约束。二分查找适用于任意长度、任何语言。问题在于正确性，而非内存或语言。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en"><em>Compare</em> means give both algorithms side by side with numbers for the same n; <em>justify</em> means give the count, not only the Big-O label. Say what the pre-condition costs (binary search needs sorted data). Common errors: calling O(log n) better without mentioning that sorting may be needed first, and mixing comparisons and halvings in one table.</p>
+    <p data-lang="zh"><em>Compare</em>（比较）要求把两个算法放在一起，用同一个 n 的数字比较；<em>justify</em>（论证）要求给出具体计数，而不只是大O标签。要说明前提条件的代价（二分查找需要有序数据）。常见错误：只说 O(log n) 更好而不提可能需要先排序，以及在同一张表里混用比较次数和减半次数。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Binary search needs 11 comparisons in the worst case for 2,000 items. How many does it need for 4,000 items, and how many does linear search need for each size?</span><span data-lang="zh">1. 二分查找在 2000 个元素时最坏需要 11 次比较。4000 个元素需要多少次？线性查找在两种规模下各需多少次？</span></summary>
+      <div class="sg-a"><p data-lang="en">Binary search: 12 comparisons for 4,000 items (doubling n adds one). Linear search: up to 2,000 and up to 4,000 comparisons (doubling n doubles the steps).</p><p data-lang="zh">二分查找：4000 个元素需要 12 次比较（n 翻倍只多一次）。线性查找：分别最多 2000 次和 4000 次（n 翻倍则步骤翻倍）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What does <code>count</code> equal at the end, and what is the Big-O class? The code is <code>count = 0</code>, then <code>for i in range(6):</code> containing <code>for j in range(6):</code> containing <code>count += 1</code>.</span><span data-lang="zh">2. 循环结束时 <code>count</code> 等于多少？大O类别是什么？代码：<code>count = 0</code>，然后 <code>for i in range(6):</code> 内含 <code>for j in range(6):</code>，其中含 <code>count += 1</code>。</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>count</code> is 6 &times; 6 = 36. With n in place of 6 the body runs n &times; n times, so the class is O(n&sup2;).</p><p data-lang="zh"><code>count</code> 等于 6 &times; 6 = 36。把 6 换成 n，循环体执行 n &times; n 次，所以类别是 O(n&sup2;)。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A program searches an unsorted list of 1,000 items exactly once. Is it worth bubble-sorting first so that binary search can be used?</span><span data-lang="zh">3. 一个程序只在 1000 个元素的无序列表中查找一次。先用冒泡排序再二分查找划算吗？</span></summary>
+      <div class="sg-a"><p data-lang="en">No. One linear search costs at most 1,000 comparisons. Bubble sort alone costs up to 499,500 comparisons, so sorting first only pays off after many lookups (505 in Worked Example 6).</p><p data-lang="zh">不划算。一次线性查找最多 1000 次比较，而冒泡排序本身最多就要 499,500 次比较，所以要查找很多次才值得先排序（例题 6 中是 505 次）。</p></div>
+    </details>
+  </div>
+
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; Big-O notation formal <span class="honors-flag">Honors &mdash; ICS4U C2 / CSE3110</span></span><span data-lang="zh">深入 &mdash; 大O表示法正式版 <span class="honors-flag">荣誉 &mdash; ICS4U C2 / CSE3110</span></span></summary>
+    <summary><span data-lang="en">Going deeper: Big-O notation formal <span class="honors-flag">Honors: ICS4U C2 / CSE3110</span></span><span data-lang="zh">深入：大O表示法正式版 <span class="honors-flag">荣誉：ICS4U C2 / CSE3110</span></span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">Computer scientists use <strong>Big-O notation</strong> to describe how an algorithm's step count grows with input size n, ignoring constant factors and lower-order terms. Common classes: O(1) constant (same steps regardless of n — e.g., read index 0); O(log n) logarithmic (binary search); O(n) linear (linear search); O(n log n) linearithmic (efficient sorts — merge sort, quicksort); O(n&sup2;) quadratic (simple comparison sorts — bubble, selection, insertion). Ontario ICS4U C2.2/C2.3 and Alberta CSE3110 outcomes 1.5.4/1.6.5 require formal comparison of search and sort efficiencies using this framework. For ICS4U/CSE3110 students: classify each algorithm in this guide by its Big-O, then verify the classification with the step-count table above.</span><span data-lang="zh">计算机科学家使用<strong>大O表示法</strong>描述算法步骤数随输入大小 n 增长的方式，忽略常数因子和低阶项。常见类别：O(1) 常数（步骤数与 n 无关——如读取索引 0）；O(log n) 对数（二分查找）；O(n) 线性（线性查找）；O(n log n) 线性对数（高效排序——归并排序、快速排序）；O(n²) 二次（简单比较排序——冒泡、选择、插入）。安大略 ICS4U C2.2/C2.3 和阿尔伯塔 CSE3110 结果 1.5.4/1.6.5 要求使用此框架对查找和排序效率进行正式比较。ICS4U/CSE3110 学生：为本指南中每个算法分类其大O，然后用上表的步骤数验证分类。</span></p>
+      <p><span data-lang="en">Computer scientists use <strong>Big-O notation</strong> to describe how an algorithm's step count grows with input size n, ignoring constant factors and lower-order terms. Common classes: O(1) constant (same steps regardless of n, e.g., read index 0); O(log n) logarithmic (binary search); O(n) linear (linear search); O(n log n) linearithmic (efficient sorts: merge sort, quicksort); O(n&sup2;) quadratic (simple comparison sorts: bubble, selection, insertion). Ontario ICS4U C2.2/C2.3 and Alberta CSE3110 outcomes 1.5.4/1.6.5 require formal comparison of search and sort efficiencies using this framework. For ICS4U/CSE3110 students: classify each algorithm in this guide by its Big-O, then verify the classification with the step-count table above.</span><span data-lang="zh">计算机科学家使用<strong>大O表示法</strong>描述算法步骤数随输入大小 n 增长的方式，忽略常数因子和低阶项。常见类别：O(1) 常数（步骤数与 n 无关，如读取索引 0）；O(log n) 对数（二分查找）；O(n) 线性（线性查找）；O(n log n) 线性对数（高效排序，归并排序、快速排序）；O(n²) 二次（简单比较排序，冒泡、选择、插入）。安大略 ICS4U C2.2/C2.3 和阿尔伯塔 CSE3110 结果 1.5.4/1.6.5 要求使用此框架对查找和排序效率进行正式比较。ICS4U/CSE3110 学生：为本指南中每个算法分类其大O，然后用上表的步骤数验证分类。</span></p>
     </div>
   </details>
 </section>
@@ -785,18 +1123,25 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
   <div class="section-label"><span data-lang="en">Section 4 &middot; Bubble sort</span><span data-lang="zh">第 4 节 &middot; 冒泡排序</span></div>
   <h2><span data-lang="en">Bubble Sort</span><span data-lang="zh">冒泡排序</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe bubble sort and state what is guaranteed after each pass (the largest unsorted item is in place).</li><li>Trace bubble sort pass by pass, counting comparisons and swaps.</li><li>State the worst case n(n - 1)/2 comparisons and the O(n) best case of the early-exit version.</li><li>Write bubble sort and the early-exit version in Python.</li></ul>
+    <ul data-lang="zh"><li>描述冒泡排序，并说明每遍之后得到的保证（最大的未排序元素已就位）。</li><li>逐遍追踪冒泡排序，并统计比较和交换次数。</li><li>陈述最坏情况 n(n - 1)/2 次比较，以及带提前退出版本的 O(n) 最好情况。</li><li>用 Python 编写冒泡排序及其提前退出版本。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Bubble sort — compare adjacent pairs; swap if out of order; repeat until no swaps occur.</span><span data-lang="zh">冒泡排序（冒泡排序）——比较相邻元素；如果顺序错误则交换；重复直到无交换。</span></strong>
+    <strong><span data-lang="en">Bubble sort: compare adjacent pairs; swap if out of order; repeat until no swaps occur.</span><span data-lang="zh">冒泡排序（冒泡排序），比较相邻元素；如果顺序错误则交换；重复直到无交换。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Passes</span><span data-lang="zh">遍数</span></strong> <span data-lang="en">&mdash; after each pass, the largest unsorted element &ldquo;bubbles up&rdquo; to its correct position at the right end.</span><span data-lang="zh">&mdash; 每遍后，最大的未排序元素"冒泡"到右端的正确位置。</span></li>
-      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong> <span data-lang="en">&mdash; O(n&sup2;) comparisons — for n=10: up to 45 comparisons; for n=100: up to 4,950.</span><span data-lang="zh">&mdash; O(n²) 次比较——n=10 时最多 45 次；n=100 时最多 4950 次。</span></li>
-      <li><strong><span data-lang="en">Swap in Python</span><span data-lang="zh">Python 中的交换</span></strong> <span data-lang="en">&mdash; <code>a, b = b, a</code> swaps two variables. No temporary variable needed.</span><span data-lang="zh">&mdash; <code>a, b = b, a</code> 交换两个变量，无需临时变量。</span></li>
+      <li><strong><span data-lang="en">Passes</span><span data-lang="zh">遍数</span></strong><span data-lang="en">: after each pass, the largest unsorted element &ldquo;bubbles up&rdquo; to its correct position at the right end.</span><span data-lang="zh">：每遍后，最大的未排序元素"冒泡"到右端的正确位置。</span></li>
+      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong><span data-lang="en">: O(n&sup2;) comparisons (for n=10: up to 45 comparisons; for n=100: up to 4,950).</span><span data-lang="zh">：O(n²) 次比较，n=10 时最多 45 次；n=100 时最多 4950 次。</span></li>
+      <li><strong><span data-lang="en">Swap in Python</span><span data-lang="zh">Python 中的交换</span></strong><span data-lang="en">: <code>a, b = b, a</code> swaps two variables. No temporary variable needed.</span><span data-lang="zh">：<code>a, b = b, a</code> 交换两个变量，无需临时变量。</span></li>
     </ul>
     <span data-lang="en">CSE3110 outcome 1.6.1 names "exchange sort; e.g., bubble sort" explicitly. ICS4U A3.4 says "create a sort algorithm (e.g., bubble, insertion, selection)." Bubble sort is the canonical teaching example because its logic is easy to trace by hand.</span><span data-lang="zh">CSE3110 结果 1.6.1 明确列出"交换排序，如冒泡排序"。ICS4U A3.4 要求"创建排序算法（如冒泡、插入、选择排序）"。冒泡排序是典型的教学示例，因为其逻辑易于手工追踪。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 7: Bubble sort on a 5-element list</span><span data-lang="zh">例题 7：5 个元素列表的冒泡排序</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; Bubble sort on a 5-element list</span><span data-lang="zh">例题 4 &middot; 5 个元素列表的冒泡排序</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Sort [5, 3, 8, 1, 4] into ascending order using bubble sort. Trace each pass.</span><span data-lang="zh">用冒泡排序将 [5, 3, 8, 1, 4] 排成升序，追踪每遍。</span></p>
   </div>
   <div class="worked-solution">
@@ -811,7 +1156,7 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
       <table>
         <thead><tr><th><span data-lang="en">Pass</span><span data-lang="zh">遍</span></th><th><span data-lang="en">List after pass</span><span data-lang="zh">该遍后列表</span></th><th><span data-lang="en">Swaps</span><span data-lang="zh">交换次数</span></th></tr></thead>
         <tbody>
-          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>[5, 3, 8, 1, 4]</td><td>—</td></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>[5, 3, 8, 1, 4]</td><td>&ndash;</td></tr>
           <tr><td>1</td><td>[3, 5, 1, 4, <strong>8</strong>]</td><td>3</td></tr>
           <tr><td>2</td><td>[3, 1, 4, <strong>5, 8</strong>]</td><td>2</td></tr>
           <tr><td>3</td><td>[1, 3, <strong>4, 5, 8</strong>]</td><td>1</td></tr>
@@ -831,6 +1176,122 @@ print(binary_search(nums, 34))  # Output: 5</code></pre>
 print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
     <p><span data-lang="en">The <code>data[i], data[i+1] = data[i+1], data[i]</code> is the Python idiom for swapping two elements.</span><span data-lang="zh"><code>data[i], data[i+1] = data[i+1], data[i]</code> 是 Python 交换两个元素的惯用写法。</span></p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 400 214" role="img" aria-label="Bubble sort on 5, 3, 8, 1, 4: five rows show the list at the start and after each pass, with the sorted tail shaded and the number of swaps in each pass.">
+    <text data-lang="en" x="4" y="31">Start</text><text data-lang="zh" x="4" y="31">初始</text>
+    <rect class="box" x="70" y="12" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="92" y="31" text-anchor="middle">5</text><text class="mono" data-lang="zh" x="92" y="31" text-anchor="middle">5</text>
+    <rect class="box" x="114" y="12" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="136" y="31" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="136" y="31" text-anchor="middle">3</text>
+    <rect class="box" x="158" y="12" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="180" y="31" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="180" y="31" text-anchor="middle">8</text>
+    <rect class="box" x="202" y="12" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="224" y="31" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="224" y="31" text-anchor="middle">1</text>
+    <rect class="box" x="246" y="12" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="268" y="31" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="268" y="31" text-anchor="middle">4</text>
+    <text data-lang="en" x="4" y="71">Pass 1</text><text data-lang="zh" x="4" y="71">第 1 遍</text>
+    <rect class="box" x="70" y="52" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="92" y="71" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="92" y="71" text-anchor="middle">3</text>
+    <rect class="box" x="114" y="52" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="136" y="71" text-anchor="middle">5</text><text class="mono" data-lang="zh" x="136" y="71" text-anchor="middle">5</text>
+    <rect class="box" x="158" y="52" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="180" y="71" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="180" y="71" text-anchor="middle">1</text>
+    <rect class="box" x="202" y="52" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="224" y="71" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="224" y="71" text-anchor="middle">4</text>
+    <rect class="box" x="246" y="52" width="44" height="28"/>
+    <rect class="fill3" x="246" y="52" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="268" y="71" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="268" y="71" text-anchor="middle">8</text>
+    <text class="mut" data-lang="en" x="302" y="71">3 swaps</text><text class="mut" data-lang="zh" x="302" y="71">3 次交换</text>
+    <text data-lang="en" x="4" y="111">Pass 2</text><text data-lang="zh" x="4" y="111">第 2 遍</text>
+    <rect class="box" x="70" y="92" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="92" y="111" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="92" y="111" text-anchor="middle">3</text>
+    <rect class="box" x="114" y="92" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="136" y="111" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="136" y="111" text-anchor="middle">1</text>
+    <rect class="box" x="158" y="92" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="180" y="111" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="180" y="111" text-anchor="middle">4</text>
+    <rect class="box" x="202" y="92" width="44" height="28"/>
+    <rect class="fill3" x="202" y="92" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="224" y="111" text-anchor="middle">5</text><text class="mono" data-lang="zh" x="224" y="111" text-anchor="middle">5</text>
+    <rect class="box" x="246" y="92" width="44" height="28"/>
+    <rect class="fill3" x="246" y="92" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="268" y="111" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="268" y="111" text-anchor="middle">8</text>
+    <text class="mut" data-lang="en" x="302" y="111">2 swaps</text><text class="mut" data-lang="zh" x="302" y="111">2 次交换</text>
+    <text data-lang="en" x="4" y="151">Pass 3</text><text data-lang="zh" x="4" y="151">第 3 遍</text>
+    <rect class="box" x="70" y="132" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="92" y="151" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="92" y="151" text-anchor="middle">1</text>
+    <rect class="box" x="114" y="132" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="136" y="151" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="136" y="151" text-anchor="middle">3</text>
+    <rect class="box" x="158" y="132" width="44" height="28"/>
+    <rect class="fill3" x="158" y="132" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="180" y="151" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="180" y="151" text-anchor="middle">4</text>
+    <rect class="box" x="202" y="132" width="44" height="28"/>
+    <rect class="fill3" x="202" y="132" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="224" y="151" text-anchor="middle">5</text><text class="mono" data-lang="zh" x="224" y="151" text-anchor="middle">5</text>
+    <rect class="box" x="246" y="132" width="44" height="28"/>
+    <rect class="fill3" x="246" y="132" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="268" y="151" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="268" y="151" text-anchor="middle">8</text>
+    <text class="mut" data-lang="en" x="302" y="151">1 swap</text><text class="mut" data-lang="zh" x="302" y="151">1 次交换</text>
+    <text data-lang="en" x="4" y="191">Pass 4</text><text data-lang="zh" x="4" y="191">第 4 遍</text>
+    <rect class="box" x="70" y="172" width="44" height="28"/>
+    <rect class="fill3" x="70" y="172" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="92" y="191" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="92" y="191" text-anchor="middle">1</text>
+    <rect class="box" x="114" y="172" width="44" height="28"/>
+    <rect class="fill3" x="114" y="172" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="136" y="191" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="136" y="191" text-anchor="middle">3</text>
+    <rect class="box" x="158" y="172" width="44" height="28"/>
+    <rect class="fill3" x="158" y="172" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="180" y="191" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="180" y="191" text-anchor="middle">4</text>
+    <rect class="box" x="202" y="172" width="44" height="28"/>
+    <rect class="fill3" x="202" y="172" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="224" y="191" text-anchor="middle">5</text><text class="mono" data-lang="zh" x="224" y="191" text-anchor="middle">5</text>
+    <rect class="box" x="246" y="172" width="44" height="28"/>
+    <rect class="fill3" x="246" y="172" width="44" height="28"/>
+    <text class="mono" data-lang="en" x="268" y="191" text-anchor="middle">8</text><text class="mono" data-lang="zh" x="268" y="191" text-anchor="middle">8</text>
+    <text class="mut" data-lang="en" x="302" y="191">0 swaps</text><text class="mut" data-lang="zh" x="302" y="191">0 次交换</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. Bubble sort on [5, 3, 8, 1, 4], matching Worked Example 7: one row per pass. Shaded cells are in their final position (after pass k, the k largest). The swap counts 3, 2, 1, 0 add up to the 6 swaps in the table.</span><span data-lang="zh">图 2. 对 [5, 3, 8, 1, 4] 做冒泡排序，与例题 7 一致：每遍一行。阴影单元格已在最终位置（第 k 遍后是最大的 k 个元素）。交换次数 3、2、1、0 之和为表中的 6 次交换。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 8: Counting work and the early exit</span><span data-lang="zh">例题 8：统计工作量与提前退出</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Run the early-exit bubble sort on [2, 1, 3, 4, 5], on the sorted list [1, 2, 3, 4, 5] and on the reversed list [5, 4, 3, 2, 1]. Record comparisons, swaps and passes, and explain the best and worst cases.</span><span data-lang="zh">对 [2, 1, 3, 4, 5]、已排序列表 [1, 2, 3, 4, 5] 和逆序列表 [5, 4, 3, 2, 1] 运行带提前退出的冒泡排序。记录比较、交换和遍数，并解释最好和最坏情况。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre><code>def bubble_sort_counted(data):
+    data = data[:]                       # work on a copy
+    comparisons = swaps = passes = 0
+    n = len(data)
+    for pass_num in range(n - 1):
+        passes += 1
+        swapped = False
+        for i in range(n - 1 - pass_num):
+            comparisons += 1
+            if data[i] &gt; data[i + 1]:
+                data[i], data[i + 1] = data[i + 1], data[i]
+                swaps += 1
+                swapped = True
+        if not swapped:
+            break                        # no swaps: already sorted
+    return data, comparisons, swaps, passes
+
+for lst in ([2, 1, 3, 4, 5], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]):
+    print(lst, bubble_sort_counted(lst))</code></pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span data-lang="en">List</span><span data-lang="zh">列表</span></th><th><span data-lang="en">Comparisons</span><span data-lang="zh">比较</span></th><th><span data-lang="en">Swaps</span><span data-lang="zh">交换</span></th><th><span data-lang="en">Passes</span><span data-lang="zh">遍数</span></th></tr></thead>
+        <tbody>
+          <tr><td>[2, 1, 3, 4, 5]</td><td>7</td><td>1</td><td>2</td></tr>
+          <tr><td>[1, 2, 3, 4, 5]</td><td>4</td><td>0</td><td>1</td></tr>
+          <tr><td>[5, 4, 3, 2, 1]</td><td>10</td><td>10</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+<p><span data-lang="en">For <code>[2, 1, 3, 4, 5]</code>: pass 1 makes 4 comparisons and 1 swap (2 and 1), giving <code>[1, 2, 3, 4, 5]</code>; pass 2 makes 3 comparisons and no swap, so the loop exits: 4 + 3 = 7 comparisons. For a sorted list one pass of n - 1 = 4 comparisons is enough, which is the O(n) best case. The reversed list is the worst case: every comparison swaps, giving n(n - 1)/2 = 10 comparisons and 10 swaps.</span><span data-lang="zh">对于 <code>[2, 1, 3, 4, 5]</code>：第 1 遍做 4 次比较和 1 次交换（2 与 1），得到 <code>[1, 2, 3, 4, 5]</code>；第 2 遍做 3 次比较且没有交换，循环退出：共 4 + 3 = 7 次比较。已排序的列表只需一遍 n - 1 = 4 次比较，这就是 O(n) 的最好情况。逆序列表是最坏情况：每次比较都交换，共 n(n - 1)/2 = 10 次比较和 10 次交换。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">After one complete pass of bubble sort on [4, 2, 7, 1, 6], which element is guaranteed to be in its final sorted position?</span><span data-lang="zh">对 [4, 2, 7, 1, 6] 完成一次完整的冒泡排序遍历后，哪个元素一定处于最终排序位置？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
@@ -840,7 +1301,7 @@ print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">1 (the smallest element)</span><span data-lang="zh">1（最小元素）</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">6 (the second largest)</span><span data-lang="zh">6（第二大元素）</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">After one pass of bubble sort, the largest element has bubbled all the way to the rightmost position and is in its final sorted location. This is why it's called "bubble" sort — the maximum "floats up" to the top (right end) in each pass.</span><span data-lang="zh">一次冒泡排序遍历后，最大元素已完全冒泡到最右端，处于其最终排序位置。这就是"冒泡"排序名称的由来——每遍中最大值"浮"到顶部（右端）。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">After one pass of bubble sort, the largest element has bubbled all the way to the rightmost position and is in its final sorted location. This is why it's called "bubble" sort: the maximum "floats up" to the top (right end) in each pass.</span><span data-lang="zh">一次冒泡排序遍历后，最大元素已完全冒泡到最右端，处于其最终排序位置。这就是"冒泡"排序名称的由来，每遍中最大值"浮"到顶部（右端）。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Bubble sort moves the largest unsorted element to the right end on each pass. After pass 1, the maximum (7) is at index 4 and is done. After pass 2, the second-largest is done. And so on.</span><span data-lang="zh">冒泡排序每遍将最大的未排序元素移至右端。第 1 遍后，最大值（7）在索引 4 处，已完成。第 2 遍后，第二大值完成。以此类推。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -853,15 +1314,37 @@ print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <div class="quiz-opt" data-idx="2">45</div>
       <div class="quiz-opt" data-idx="3">100</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Bubble sort makes (n-1) + (n-2) + ... + 1 = n(n-1)/2 comparisons in the worst case. For n=10: 10×9/2 = 45. This is O(n&sup2;) growth — for n=100 it would be 4,950 comparisons.</span><span data-lang="zh">冒泡排序最坏情况下比较次数为 (n-1) + (n-2) + ... + 1 = n(n-1)/2。n=10 时：10×9/2 = 45。这是 O(n²) 增长——n=100 时将需要 4950 次比较。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Bubble sort makes (n-1) + (n-2) + ... + 1 = n(n-1)/2 comparisons in the worst case. For n=10: 10×9/2 = 45. This is O(n&sup2;) growth, and for n=100 it would be 4,950 comparisons.</span><span data-lang="zh">冒泡排序最坏情况下比较次数为 (n-1) + (n-2) + ... + 1 = n(n-1)/2。n=10 时：10×9/2 = 45。这是 O(n²) 增长，n=100 时将需要 4950 次比较。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Bubble sort worst case = n(n-1)/2 comparisons. For n=10: 9+8+7+6+5+4+3+2+1 = 45. This is O(n&sup2;).</span><span data-lang="zh">冒泡排序最坏情况 = n(n-1)/2 次比较。n=10 时：9+8+7+6+5+4+3+2+1 = 45。这是 O(n²)。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">A <em>trace</em> question wants the list after every pass, not only the final list. State what is final after pass k: the k largest items. Common errors: forgetting that the inner loop shortens each pass (<code>n - 1 - pass</code>), which gives wrong comparison counts, and calling plain bubble sort O(n) in the best case; only the early-exit version is.</p>
+    <p data-lang="zh"><em>trace</em>（追踪）题要求写出每一遍之后的列表，而不只是最终列表。要说明第 k 遍之后已就位的是什么：最大的 k 个元素。常见错误：忘记内层循环每遍缩短（<code>n - 1 - pass</code>）而得到错误的比较次数，以及把普通冒泡排序的最好情况说成 O(n)；只有带提前退出的版本才是。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Trace one and then two passes of bubble sort on <code>[6, 2, 5, 1, 4]</code>. Give the list after each pass.</span><span data-lang="zh">1. 对 <code>[6, 2, 5, 1, 4]</code> 追踪一遍和两遍冒泡排序，写出每遍之后的列表。</span></summary>
+      <div class="sg-a"><p data-lang="en">Pass 1 swaps 6 with 2, 5, 1, 4 in turn: <code>[2, 5, 1, 4, 6]</code> (4 swaps). Pass 2 compares (2,5) no swap, (5,1) swap, (5,4) swap: <code>[2, 1, 4, 5, 6]</code>. The two largest items, 5 and 6, are now in place.</p><p data-lang="zh">第 1 遍：6 依次与 2、5、1、4 交换，得到 <code>[2, 5, 1, 4, 6]</code>（4 次交换）。第 2 遍：(2,5) 不交换，(5,1) 交换，(5,4) 交换，得到 <code>[2, 1, 4, 5, 6]</code>。最大的两个元素 5 和 6 已就位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. How many comparisons and passes does the early-exit version make on the sorted list <code>[1, 2, 3, 4, 5, 6]</code>?</span><span data-lang="zh">2. 带提前退出的版本对已排序列表 <code>[1, 2, 3, 4, 5, 6]</code> 需要多少次比较和多少遍？</span></summary>
+      <div class="sg-a"><p data-lang="en">5 comparisons in 1 pass (n - 1 comparisons, no swaps), then it exits. This is the O(n) best case.</p><p data-lang="zh">1 遍共 5 次比较（n - 1 次比较，无交换），然后退出。这就是 O(n) 的最好情况。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For n = 8, what is the largest number of comparisons bubble sort can make, and which input gives the same number of swaps?</span><span data-lang="zh">3. n = 8 时，冒泡排序最多做多少次比较？哪种输入的交换次数与之相同？</span></summary>
+      <div class="sg-a"><p data-lang="en">n(n - 1)/2 = 8 &times; 7 / 2 = 28 comparisons. A list in reverse order makes 28 swaps as well, because every comparison finds a pair out of order.</p><p data-lang="zh">n(n - 1)/2 = 8 &times; 7 / 2 = 28 次比较。逆序列表的交换次数也是 28，因为每次比较都发现一对逆序元素。</p></div>
+    </details>
+  </div>
+
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; optimised bubble sort with early-exit flag</span><span data-lang="zh">深入 &mdash; 带提前退出标志的优化冒泡排序</span></summary>
+    <summary><span data-lang="en">Going deeper: optimised bubble sort with early-exit flag</span><span data-lang="zh">深入：带提前退出标志的优化冒泡排序</span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">Standard bubble sort always runs all n-1 passes even if the list becomes sorted early. An optimised version adds a <code>swapped</code> flag: if a whole pass makes zero swaps, the list is sorted and the outer loop can exit early. Best case for optimised bubble sort is O(n) — one pass on an already-sorted list. This is an example of the CSTA 3B-AP-11 principle: "Evaluate algorithms in terms of their efficiency" — and then improve them. CSE3110 outcome 1.6.5 requires comparing sorts by computational efficiency, which includes this kind of optimisation analysis.</span><span data-lang="zh">标准冒泡排序总是运行全部 n-1 遍，即使列表提前已排好。优化版添加 <code>swapped</code>（已交换）标志：若某遍未发生任何交换，列表已排好，外层循环可提前退出。优化冒泡排序最好情况为 O(n)——对已排序列表只需一遍。这是 CSTA 3B-AP-11 原则"从效率方面评估算法"的体现，然后加以改进。CSE3110 结果 1.6.5 要求按计算效率比较排序，包括此类优化分析。</span></p>
+      <p><span data-lang="en">Standard bubble sort always runs all n-1 passes even if the list becomes sorted early. An optimised version adds a <code>swapped</code> flag: if a whole pass makes zero swaps, the list is sorted and the outer loop can exit early. Best case for optimised bubble sort is O(n): one pass on an already-sorted list. This is an example of the CSTA 3B-AP-11 principle: "Evaluate algorithms in terms of their efficiency", and then improve them. CSE3110 outcome 1.6.5 requires comparing sorts by computational efficiency, which includes this kind of optimisation analysis.</span><span data-lang="zh">标准冒泡排序总是运行全部 n-1 遍，即使列表提前已排好。优化版添加 <code>swapped</code>（已交换）标志：若某遍未发生任何交换，列表已排好，外层循环可提前退出。优化冒泡排序最好情况为 O(n)，对已排序列表只需一遍。这是 CSTA 3B-AP-11 原则"从效率方面评估算法"的体现，然后加以改进。CSE3110 结果 1.6.5 要求按计算效率比较排序，包括此类优化分析。</span></p>
       <pre><code>def bubble_sort_optimised(data):
     n = len(data)
     for pass_num in range(n - 1):
@@ -883,18 +1366,25 @@ print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
   <div class="section-label"><span data-lang="en">Section 5 &middot; Selection sort</span><span data-lang="zh">第 5 节 &middot; 选择排序</span></div>
   <h2><span data-lang="en">Selection Sort</span><span data-lang="zh">选择排序</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe selection sort and state what is guaranteed after k passes (the k smallest items are in place).</li><li>Trace selection sort pass by pass, recording the minimum found and its index.</li><li>State that it always makes n(n - 1)/2 comparisons and at most n - 1 exchanges.</li><li>Explain when having fewer exchanges matters.</li></ul>
+    <ul data-lang="zh"><li>描述选择排序，并说明 k 遍之后的保证（最小的 k 个元素已就位）。</li><li>逐遍追踪选择排序，记录找到的最小值及其索引。</li><li>陈述它总是做 n(n - 1)/2 次比较，且最多 n - 1 次交换。</li><li>解释交换次数较少在什么情况下重要。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Selection sort — on each pass, find the minimum of the unsorted portion and place it at the front.</span><span data-lang="zh">选择排序（选择排序）——每遍找出未排序部分的最小值，放到前面。</span></strong>
+    <strong><span data-lang="en">Selection sort: on each pass, find the minimum of the unsorted portion and place it at the front.</span><span data-lang="zh">选择排序（选择排序），每遍找出未排序部分的最小值，放到前面。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Swaps</span><span data-lang="zh">交换次数</span></strong> <span data-lang="en">&mdash; exactly n-1 swaps in the worst case (one per pass) — far fewer swaps than bubble sort.</span><span data-lang="zh">&mdash; 最坏情况下恰好 n-1 次交换（每遍一次）——远少于冒泡排序。</span></li>
-      <li><strong><span data-lang="en">Comparisons</span><span data-lang="zh">比较次数</span></strong> <span data-lang="en">&mdash; still O(n&sup2;) comparisons in all cases (always scans the full remaining portion to find the minimum).</span><span data-lang="zh">&mdash; 所有情况下仍为 O(n²) 次比较（总是扫描完整的剩余部分以找最小值）。</span></li>
-      <li><strong><span data-lang="en">Position</span><span data-lang="zh">定位</span></strong> <span data-lang="en">&mdash; after pass k, the first k elements are in their final sorted positions.</span><span data-lang="zh">&mdash; 第 k 遍后，前 k 个元素处于最终排序位置。</span></li>
+      <li><strong><span data-lang="en">Swaps</span><span data-lang="zh">交换次数</span></strong><span data-lang="en">: at most n-1 swaps (one swap step per pass, and some move nothing), far fewer than bubble sort.</span><span data-lang="zh">：最多 n-1 次交换（每遍一次交换步骤，有些并不移动元素），远少于冒泡排序。</span></li>
+      <li><strong><span data-lang="en">Comparisons</span><span data-lang="zh">比较次数</span></strong><span data-lang="en">: still O(n&sup2;) comparisons in all cases (always scans the full remaining portion to find the minimum).</span><span data-lang="zh">：所有情况下仍为 O(n²) 次比较（总是扫描完整的剩余部分以找最小值）。</span></li>
+      <li><strong><span data-lang="en">Position</span><span data-lang="zh">定位</span></strong><span data-lang="en">: after pass k, the first k elements are in their final sorted positions.</span><span data-lang="zh">：第 k 遍后，前 k 个元素处于最终排序位置。</span></li>
     </ul>
     <span data-lang="en">CSE3110 outcome 1.6.2 names "selection sort" explicitly. ICS4U A3.4 includes selection sort. Selection sort is less stable than insertion sort but makes fewer writes to memory.</span><span data-lang="zh">CSE3110 结果 1.6.2 明确列出"选择排序"。ICS4U A3.4 包含选择排序。选择排序的稳定性不如插入排序，但对内存的写入次数更少。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 9: Selection sort on a 5-element list</span><span data-lang="zh">例题 9：5 个元素列表的选择排序</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Selection sort on a 5-element list</span><span data-lang="zh">例题 5 &middot; 5 个元素列表的选择排序</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Sort [5, 3, 8, 1, 4] using selection sort. Trace each pass.</span><span data-lang="zh">用选择排序将 [5, 3, 8, 1, 4] 排序，追踪每遍。</span></p>
   </div>
   <div class="worked-solution">
@@ -911,7 +1401,7 @@ print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <table>
         <thead><tr><th><span data-lang="en">Pass</span><span data-lang="zh">遍</span></th><th><span data-lang="en">Min found</span><span data-lang="zh">找到最小值</span></th><th><span data-lang="en">List after pass</span><span data-lang="zh">该遍后列表</span></th></tr></thead>
         <tbody>
-          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>—</td><td>[5, 3, 8, 1, 4]</td></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>&ndash;</td><td>[5, 3, 8, 1, 4]</td></tr>
           <tr><td>1 (i=0)</td><td>1 (idx 3)</td><td>[<strong>1</strong>, 3, 8, 5, 4]</td></tr>
           <tr><td>2 (i=1)</td><td>3 (idx 1)</td><td>[1, <strong>3</strong>, 8, 5, 4]</td></tr>
           <tr><td>3 (i=2)</td><td>4 (idx 4)</td><td>[1, 3, <strong>4</strong>, 5, 8]</td></tr>
@@ -931,15 +1421,54 @@ print(bubble_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
     return data
 
 print(selection_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
-    <p><span data-lang="en">Selection sort made exactly 4 swaps for 5 elements (n-1 = 4). Bubble sort on the same list made 3+2+1+0 = 6 swaps. Fewer swaps is better when writes to memory are expensive.</span><span data-lang="zh">选择排序对 5 个元素恰好进行了 4 次交换（n-1 = 4）。相同列表的冒泡排序进行了 3+2+1+0 = 6 次交换。当内存写入代价高时，更少交换更好。</span></p>
+    <p><span data-lang="en">The swap line runs exactly n-1 = 4 times for 5 elements, but passes 2 and 4 swap an element with itself, so only 2 real exchanges happen (5 with 1 in pass 1, 8 with 4 in pass 3) and 4 elements change place. Bubble sort on the same list made 3+2+1+0 = 6 swaps. Fewer swaps is better when writes to memory are expensive.</span><span data-lang="zh">代码中的交换语句对 5 个元素恰好执行 n-1 = 4 次，但第 2 遍和第 4 遍是元素与自身交换，所以实际只发生 2 次真正的交换（第 1 遍 5 与 1，第 3 遍 8 与 4），共有 4 个元素换了位置。相同列表的冒泡排序进行了 3+2+1+0 = 6 次交换。当内存写入代价高时，更少交换更好。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 10: Comparisons versus exchanges</span><span data-lang="zh">例题 10：比较次数与交换次数</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Selection sort [64, 25, 12, 22, 11]. Trace each pass, then count the comparisons and the exchanges. Repeat the count for the already sorted list [1, 2, 3, 4, 5].</span><span data-lang="zh">对 [64, 25, 12, 22, 11] 做选择排序。追踪每一遍，然后统计比较和交换次数。再对已排序列表 [1, 2, 3, 4, 5] 重复统计。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><span data-lang="en">Start: <code>[64, 25, 12, 22, 11]</code>.</span><span data-lang="zh">初始：<code>[64, 25, 12, 22, 11]</code>。</span></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span data-lang="en">Pass</span><span data-lang="zh">遍</span></th><th><span data-lang="en">Min found</span><span data-lang="zh">找到最小值</span></th><th><span data-lang="en">List after pass</span><span data-lang="zh">该遍后列表</span></th><th><span data-lang="en">Exchange?</span><span data-lang="zh">是否交换</span></th></tr></thead>
+        <tbody>
+          <tr><td>1 (i=0)</td><td><span data-lang="en">11 (idx 4)</span><span data-lang="zh">11（索引 4）</span></td><td>[<strong>11</strong>, 25, 12, 22, 64]</td><td><span data-lang="en">yes: 64 and 11</span><span data-lang="zh">是：64 与 11</span></td></tr>
+          <tr><td>2 (i=1)</td><td><span data-lang="en">12 (idx 2)</span><span data-lang="zh">12（索引 2）</span></td><td>[11, <strong>12</strong>, 25, 22, 64]</td><td><span data-lang="en">yes: 25 and 12</span><span data-lang="zh">是：25 与 12</span></td></tr>
+          <tr><td>3 (i=2)</td><td><span data-lang="en">22 (idx 3)</span><span data-lang="zh">22（索引 3）</span></td><td>[11, 12, <strong>22</strong>, 25, 64]</td><td><span data-lang="en">yes: 25 and 22</span><span data-lang="zh">是：25 与 22</span></td></tr>
+          <tr><td>4 (i=3)</td><td><span data-lang="en">25 (idx 3)</span><span data-lang="zh">25（索引 3）</span></td><td>[11, 12, 22, <strong>25</strong>, 64]</td><td><span data-lang="en">no: already in place</span><span data-lang="zh">否：已在原位</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+<pre><code>def selection_sort_counted(data):
+    data = data[:]
+    comparisons = exchanges = 0
+    for i in range(len(data) - 1):
+        min_idx = i
+        for j in range(i + 1, len(data)):
+            comparisons += 1
+            if data[j] &lt; data[min_idx]:
+                min_idx = j
+        if min_idx != i:                 # skip the self-swap
+            data[i], data[min_idx] = data[min_idx], data[i]
+            exchanges += 1
+    return data, comparisons, exchanges
+
+print(selection_sort_counted([64, 25, 12, 22, 11]))  # ([11, 12, 22, 25, 64], 10, 3)
+print(selection_sort_counted([1, 2, 3, 4, 5]))       # ([1, 2, 3, 4, 5], 10, 0)</code></pre>
+<p><span data-lang="en">Each pass scans the whole unsorted part to find the minimum: 4 + 3 + 2 + 1 = 10 comparisons, whatever the order of the data. The sorted list also needs 10 comparisons, because the algorithm cannot know the minimum is already in place until it has looked at every remaining item. Only the exchanges change: 3 here, and 0 for the sorted list.</span><span data-lang="zh">每一遍都要扫描整个未排序部分来找最小值：4 + 3 + 2 + 1 = 10 次比较，与数据顺序无关。已排序列表同样需要 10 次比较，因为算法在看完所有剩余元素之前无法知道最小值已在原位。只有交换次数会变化：本例是 3 次，已排序列表是 0 次。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">After 3 passes of selection sort on a list of 8 elements, how many elements are guaranteed to be in their final sorted positions?</span><span data-lang="zh">对 8 个元素的列表进行 3 遍选择排序后，有多少个元素一定处于最终排序位置？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0">1</div>
       <div class="quiz-opt" data-idx="1">2</div>
-      <div class="quiz-opt" data-idx="2">2</div>
+      <div class="quiz-opt" data-idx="2">4</div>
       <div class="quiz-opt" data-idx="3">3</div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Selection sort places exactly one element in its final position per pass. After 3 passes, the 3 smallest elements are at indices 0, 1, and 2, and will not move again. In general: after k passes, the first k elements are fully sorted.</span><span data-lang="zh">选择排序每遍将恰好一个元素放到最终位置。3 遍后，3 个最小元素位于索引 0、1、2，不会再移动。一般规律：k 遍后，前 k 个元素完全排好。</span></div>
@@ -956,8 +1485,30 @@ print(selection_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">It makes selection sort stable</span><span data-lang="zh">使选择排序稳定</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">Fewer swaps means fewer write operations. On hardware where writes are significantly more expensive than reads (e.g., EEPROM, flash storage, or when data records are large), selection sort's n-1 swaps are preferable to bubble sort's many more swaps. Both are O(n&sup2;) for comparisons.</span><span data-lang="zh">更少交换意味着更少写入操作。在写入远比读取昂贵的硬件上（如 EEPROM、闪存，或数据记录较大时），选择排序的 n-1 次交换优于冒泡排序更多次的交换。两者比较次数均为 O(n²)。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Selection sort still has O(n&sup2;) comparisons — it is not generally faster in terms of comparisons. The advantage is specifically in write operations. It is also not stable by default.</span><span data-lang="zh">选择排序比较次数仍为 O(n²)——在比较方面并不普遍更快。优势具体在于写入操作。默认情况下也不稳定。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Selection sort still has O(n&sup2;) comparisons: it is not generally faster in terms of comparisons. The advantage is specifically in write operations. It is also not stable by default.</span><span data-lang="zh">选择排序比较次数仍为 O(n²)，在比较方面并不普遍更快。优势具体在于写入操作。默认情况下也不稳定。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When asked to trace selection sort, show the minimum found and its index for each pass. Give comparisons and exchanges separately: comparisons are always n(n - 1)/2, exchanges at most n - 1. Common errors: expecting selection sort to run faster on sorted input (it does not) and calling it stable (it is not in general).</p>
+    <p data-lang="zh">被要求追踪选择排序时，写出每一遍找到的最小值及其索引。比较和交换要分开说：比较总是 n(n - 1)/2 次，交换最多 n - 1 次。常见错误：以为选择排序在已排序输入上会更快（不会），以及说它是稳定的（一般不是）。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Trace selection sort on <code>[7, 3, 9, 2]</code>, giving the list after each pass.</span><span data-lang="zh">1. 对 <code>[7, 3, 9, 2]</code> 追踪选择排序，写出每遍之后的列表。</span></summary>
+      <div class="sg-a"><p data-lang="en">Pass 1: minimum 2 at index 3, swap with 7: <code>[2, 3, 9, 7]</code>. Pass 2: minimum 3 is already at index 1: <code>[2, 3, 9, 7]</code>. Pass 3: minimum 7 at index 3, swap with 9: <code>[2, 3, 7, 9]</code>.</p><p data-lang="zh">第 1 遍：最小值 2 在索引 3，与 7 交换：<code>[2, 3, 9, 7]</code>。第 2 遍：最小值 3 已在索引 1：<code>[2, 3, 9, 7]</code>。第 3 遍：最小值 7 在索引 3，与 9 交换：<code>[2, 3, 7, 9]</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. How many comparisons does selection sort make for n = 8, and what is the most exchanges it can make?</span><span data-lang="zh">2. n = 8 时选择排序做多少次比较？最多做多少次交换？</span></summary>
+      <div class="sg-a"><p data-lang="en">8 &times; 7 / 2 = 28 comparisons. At most n - 1 = 7 exchanges, one per pass.</p><p data-lang="zh">8 &times; 7 / 2 = 28 次比较。最多 n - 1 = 7 次交换，每遍一次。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Why does selection sort still make 15 comparisons on an already sorted list of 6 items?</span><span data-lang="zh">3. 为什么选择排序在已排序的 6 个元素列表上仍然做 15 次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">Each pass must scan the whole unsorted part to be sure of the minimum: 5 + 4 + 3 + 2 + 1 = 15. Nothing in the algorithm can stop early, so sorted input saves exchanges (0) but not comparisons.</p><p data-lang="zh">每一遍都必须扫描整个未排序部分才能确定最小值：5 + 4 + 3 + 2 + 1 = 15。算法中没有可以提前停止的机制，所以有序输入只能节省交换（0 次），不能节省比较。</p></div>
+    </details>
   </div>
 </section>
 
@@ -967,18 +1518,25 @@ print(selection_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
   <div class="section-label"><span data-lang="en">Section 6 &middot; Insertion sort</span><span data-lang="zh">第 6 节 &middot; 插入排序</span></div>
   <h2><span data-lang="en">Insertion Sort</span><span data-lang="zh">插入排序</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe insertion sort with the playing-card analogy and explain shifting rather than swapping.</li><li>Trace insertion sort, writing the key, the shifts and the list after each insertion.</li><li>State the best case (sorted: n - 1 comparisons, 0 shifts) and the worst case (reversed: n(n - 1)/2).</li><li>Explain why insertion sort suits nearly sorted data.</li></ul>
+    <ul data-lang="zh"><li>用扑克牌类比描述插入排序，并解释为什么是移位而不是交换。</li><li>追踪插入排序，写出 key、移位情况以及每次插入后的列表。</li><li>陈述最好情况（已排序：n - 1 次比较、0 次移位）和最坏情况（逆序：n(n - 1)/2）。</li><li>解释为什么插入排序适合接近有序的数据。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Insertion sort — build a sorted left portion one element at a time, inserting each new element in the correct position.</span><span data-lang="zh">插入排序（插入排序）——每次将一个新元素插入正确位置，逐步构建左侧有序部分。</span></strong>
+    <strong><span data-lang="en">Insertion sort: build a sorted left portion one element at a time, inserting each new element in the correct position.</span><span data-lang="zh">插入排序（插入排序），每次将一个新元素插入正确位置，逐步构建左侧有序部分。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Analogy</span><span data-lang="zh">类比</span></strong> <span data-lang="en">&mdash; like sorting a hand of playing cards: pick up one card at a time and slide it into the right position among already-sorted cards.</span><span data-lang="zh">&mdash; 如同整理一手扑克牌：一次拿起一张，插入已排好牌的正确位置。</span></li>
-      <li><strong><span data-lang="en">Best case</span><span data-lang="zh">最好情况</span></strong> <span data-lang="en">&mdash; O(n) when the list is already sorted (no shifts needed — just one comparison per element).</span><span data-lang="zh">&mdash; O(n)，当列表已排好时（无需移位——每个元素只需一次比较）。</span></li>
-      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong> <span data-lang="en">&mdash; O(n&sup2;) when the list is in reverse order (every element must shift all the way left).</span><span data-lang="zh">&mdash; O(n²)，当列表完全逆序时（每个元素都需一路向左移位）。</span></li>
+      <li><strong><span data-lang="en">Analogy</span><span data-lang="zh">类比</span></strong><span data-lang="en">: like sorting a hand of playing cards: pick up one card at a time and slide it into the right position among already-sorted cards.</span><span data-lang="zh">：如同整理一手扑克牌：一次拿起一张，插入已排好牌的正确位置。</span></li>
+      <li><strong><span data-lang="en">Best case</span><span data-lang="zh">最好情况</span></strong><span data-lang="en">: O(n) when the list is already sorted (no shifts needed, so just one comparison per element).</span><span data-lang="zh">：O(n)，当列表已排好时（无需移位，因此每个元素只需一次比较）。</span></li>
+      <li><strong><span data-lang="en">Worst case</span><span data-lang="zh">最坏情况</span></strong><span data-lang="en">: O(n&sup2;) when the list is in reverse order (every element must shift all the way left).</span><span data-lang="zh">：O(n²)，当列表完全逆序时（每个元素都需一路向左移位）。</span></li>
     </ul>
     <span data-lang="en">CSE3110 outcome 1.6.3 names "insertion sort" explicitly. ICS4U A3.4 includes it. Insertion sort is the most efficient of the three simple sorts for nearly-sorted data and is used internally by Python's built-in sort for small sub-arrays.</span><span data-lang="zh">CSE3110 结果 1.6.3 明确列出"插入排序"。ICS4U A3.4 包含它。插入排序对近乎有序数据是三种简单排序中最高效的，Python 内置排序在小子数组上内部使用插入排序。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 11: Insertion sort on a 5-element list</span><span data-lang="zh">例题 11：5 个元素列表的插入排序</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; Insertion sort on a 5-element list</span><span data-lang="zh">例题 6 &middot; 5 个元素列表的插入排序</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Sort [5, 3, 8, 1, 4] using insertion sort. Trace each insertion step.</span><span data-lang="zh">用插入排序将 [5, 3, 8, 1, 4] 排序，追踪每次插入。</span></p>
   </div>
   <div class="worked-solution">
@@ -996,7 +1554,7 @@ print(selection_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <table>
         <thead><tr><th>i</th><th>key</th><th><span data-lang="en">List after insertion</span><span data-lang="zh">插入后列表</span></th></tr></thead>
         <tbody>
-          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>—</td><td>[5, 3, 8, 1, 4]</td></tr>
+          <tr><td><span data-lang="en">Start</span><span data-lang="zh">初始</span></td><td>&ndash;</td><td>[5, 3, 8, 1, 4]</td></tr>
           <tr><td>1</td><td>3</td><td>[<strong>3, 5</strong>, 8, 1, 4]</td></tr>
           <tr><td>2</td><td>8</td><td>[3, 5, <strong>8</strong>, 1, 4]</td></tr>
           <tr><td>3</td><td>1</td><td>[<strong>1</strong>, 3, 5, 8, 4]</td></tr>
@@ -1016,8 +1574,49 @@ print(selection_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
     return data
 
 print(insertion_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
-    <p><span data-lang="en">When key=8 (i=2), no shifts were needed because 8 &gt; 5. This means nearly-sorted data has very few shifts, giving O(n) best-case performance — a property bubble sort and selection sort do not have.</span><span data-lang="zh">当 key=8（i=2）时，无需移位，因为 8 &gt; 5。这意味着近乎有序数据的移位极少，达到 O(n) 最好情况性能——这是冒泡排序和选择排序所不具备的特性。</span></p>
+    <p><span data-lang="en">When key=8 (i=2), no shifts were needed because 8 &gt; 5. This means nearly-sorted data has very few shifts, giving O(n) best-case performance: a property that plain bubble sort (without an early exit) and selection sort do not have.</span><span data-lang="zh">当 key=8（i=2）时，无需移位，因为 8 &gt; 5。这意味着近乎有序数据的移位极少，达到 O(n) 最好情况性能，这是没有提前退出的普通冒泡排序和选择排序所不具备的特性。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 12: Best, middle and worst cases</span><span data-lang="zh">例题 12：最好、一般与最坏情况</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Run insertion sort on [2, 4, 6, 8, 10], on [2, 4, 1, 6, 8] and on [5, 4, 3, 2, 1]. Count comparisons and shifts for each and explain the pattern.</span><span data-lang="zh">对 [2, 4, 6, 8, 10]、[2, 4, 1, 6, 8] 和 [5, 4, 3, 2, 1] 运行插入排序。统计每个列表的比较和移位次数，并解释规律。</span></p>
+  </div>
+  <div class="worked-solution">
+<p><span data-lang="en">Count a comparison each time <code>data[j] &gt; key</code> is tested, and a shift each time an item moves one place right.</span><span data-lang="zh">每测试一次 <code>data[j] &gt; key</code> 计一次比较，每有一个元素向右移一位计一次移位。</span></p>
+<pre><code>def insertion_sort_counted(data):
+    data = data[:]
+    comparisons = shifts = 0
+    for i in range(1, len(data)):
+        key = data[i]
+        j = i - 1
+        while j &gt;= 0:
+            comparisons += 1
+            if data[j] &gt; key:
+                data[j + 1] = data[j]    # shift right
+                shifts += 1
+                j -= 1
+            else:
+                break
+        data[j + 1] = key
+    return data, comparisons, shifts
+
+for lst in ([2, 4, 6, 8, 10], [2, 4, 1, 6, 8], [5, 4, 3, 2, 1]):
+    print(lst, insertion_sort_counted(lst))</code></pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th><span data-lang="en">List</span><span data-lang="zh">列表</span></th><th><span data-lang="en">Comparisons</span><span data-lang="zh">比较</span></th><th><span data-lang="en">Shifts</span><span data-lang="zh">移位</span></th></tr></thead>
+        <tbody>
+          <tr><td>[2, 4, 6, 8, 10]</td><td>4</td><td>0</td></tr>
+          <tr><td>[2, 4, 1, 6, 8]</td><td>5</td><td>2</td></tr>
+          <tr><td>[5, 4, 3, 2, 1]</td><td>10</td><td>10</td></tr>
+        </tbody>
+      </table>
+    </div>
+<p><span data-lang="en">Sorted input: each key is compared once with its left neighbour and stays, so n - 1 = 4 comparisons and no shifts (the O(n) best case). For <code>[2, 4, 1, 6, 8]</code> the keys 4, 6 and 8 cost one comparison each (3 in total), while key 1 is compared with 4 and with 2, shifting both, and then reaches index 0 with no further comparison (2 in total): 3 + 2 = 5 comparisons and 2 shifts. Reversed input: the key at position i shifts past all i items before it, so 1 + 2 + 3 + 4 = 10 comparisons and 10 shifts, which is n(n - 1)/2, the O(n&sup2;) worst case.</span><span data-lang="zh">已排序输入：每个 key 只与左邻居比较一次就留在原位，所以 n - 1 = 4 次比较、0 次移位（O(n) 最好情况）。对于 <code>[2, 4, 1, 6, 8]</code>，key 4、6、8 各需 1 次比较（共 3 次），key 1 先与 4 比较、再与 2 比较并使两者右移，然后到达索引 0，不再比较（共 2 次）：3 + 2 = 5 次比较、2 次移位。逆序输入：位置 i 的 key 要越过它前面的全部 i 个元素，所以 1 + 2 + 3 + 4 = 10 次比较和 10 次移位，即 n(n - 1)/2，这是 O(n&sup2;) 的最坏情况。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In insertion sort, what happens to elements that are larger than the key being inserted?</span><span data-lang="zh">在插入排序中，比待插入的 key 大的元素会发生什么？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
@@ -1038,11 +1637,33 @@ print(insertion_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
       <div class="quiz-opt" data-idx="0"><span data-lang="en">A list in reverse order</span><span data-lang="zh">完全逆序的列表</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">A randomly shuffled list</span><span data-lang="zh">随机打乱的列表</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">A list that is already sorted or nearly sorted</span><span data-lang="zh">已排序或近乎有序的列表</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">A list with all identical elements</span><span data-lang="zh">所有元素相同的列表</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">A list that alternates large and small values (9, 1, 8, 2, 7, 3, ...)</span><span data-lang="zh">大小值交替的列表（9, 1, 8, 2, 7, 3, ...）</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">When the list is already sorted, each element's key is greater than or equal to all preceding elements, so the WHILE loop terminates immediately for each i — just one comparison per element, giving O(n) total. A nearly-sorted list has very few shifts needed. This O(n) best-case is insertion sort's key advantage over bubble and selection sort.</span><span data-lang="zh">当列表已排好时，每个元素的 key 都大于等于前面所有元素，因此每个 i 的 WHILE 循环立即终止——每个元素只需一次比较，总计 O(n)。近乎有序的列表只需极少移位。这种 O(n) 最好情况是插入排序相对于冒泡排序和选择排序的关键优势。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">When the list is already sorted, each element's key is greater than or equal to all preceding elements, so the WHILE loop terminates immediately for each i: just one comparison per element, giving O(n) total. A nearly-sorted list has very few shifts needed. This O(n) best-case is insertion sort's key advantage over bubble and selection sort.</span><span data-lang="zh">当列表已排好时，每个元素的 key 都大于等于前面所有元素，因此每个 i 的 WHILE 循环立即终止，每个元素只需一次比较，总计 O(n)。近乎有序的列表只需极少移位。这种 O(n) 最好情况是插入排序相对于冒泡排序和选择排序的关键优势。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Reverse order is the worst case for insertion sort (O(n&sup2;) shifts). A sorted list is the best case because no element needs to shift left at all.</span><span data-lang="zh">逆序是插入排序的最坏情况（O(n²) 次移位）。已排序列表是最好情况，因为没有元素需要向左移位。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Show the key, the shifts and the list after each insertion. Separate shifts (one write each) from swaps (three writes each). Common errors: starting <code>i</code> at 0 instead of 1, using <code>&gt;=</code> instead of <code>&gt;</code> in the <code>while</code> test (equal items then move past each other, so the sort is no longer stable), and forgetting <code>data[j + 1] = key</code>.</p>
+    <p data-lang="zh">写出 key、移位情况以及每次插入后的列表。要区分移位（每次一次写入）和交换（每次三次写入）。常见错误：把 <code>i</code> 从 0 而不是 1 开始，<code>while</code> 判断中用 <code>&gt;=</code> 代替 <code>&gt;</code>（相等元素会互相越过，排序不再稳定），以及漏写 <code>data[j + 1] = key</code>。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Trace insertion sort on <code>[4, 3, 2, 1]</code>. How many shifts are made in total?</span><span data-lang="zh">1. 对 <code>[4, 3, 2, 1]</code> 追踪插入排序。总共移位多少次？</span></summary>
+      <div class="sg-a"><p data-lang="en">i = 1, key 3: <code>[3, 4, 2, 1]</code> (1 shift). i = 2, key 2: <code>[2, 3, 4, 1]</code> (2 shifts). i = 3, key 1: <code>[1, 2, 3, 4]</code> (3 shifts). Total 1 + 2 + 3 = 6 shifts.</p><p data-lang="zh">i = 1，key 3：<code>[3, 4, 2, 1]</code>（1 次移位）。i = 2，key 2：<code>[2, 3, 4, 1]</code>（2 次移位）。i = 3，key 1：<code>[1, 2, 3, 4]</code>（3 次移位）。总计 1 + 2 + 3 = 6 次移位。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. How many comparisons and shifts does insertion sort make on <code>[2, 4, 1, 6, 8]</code>?</span><span data-lang="zh">2. 插入排序对 <code>[2, 4, 1, 6, 8]</code> 做多少次比较和移位？</span></summary>
+      <div class="sg-a"><p data-lang="en">5 comparisons and 2 shifts. Keys 4, 6 and 8 need 1 comparison each, and key 1 shifts 4 and 2 (2 comparisons that shift) with no further comparison once it reaches index 0.</p><p data-lang="zh">5 次比较和 2 次移位。key 4、6、8 各需 1 次比较，key 1 使 4 和 2 右移（2 次导致移位的比较），到达索引 0 后不再比较。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A sorted list has 100 items. How many comparisons and shifts does insertion sort make, and how many comparisons for a reversed list of 100?</span><span data-lang="zh">3. 一个已排序列表有 100 个元素。插入排序做多少次比较和移位？同样 100 个元素的逆序列表需要多少次比较？</span></summary>
+      <div class="sg-a"><p data-lang="en">Sorted: 99 comparisons and 0 shifts (n - 1). Reversed: 100 &times; 99 / 2 = 4,950 comparisons (and 4,950 shifts).</p><p data-lang="zh">已排序：99 次比较、0 次移位（n - 1）。逆序：100 &times; 99 / 2 = 4950 次比较（同时 4950 次移位）。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1052,8 +1673,14 @@ print(insertion_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
   <div class="section-label"><span data-lang="en">Section 7 &middot; Comparing sorts and built-in sort</span><span data-lang="zh">第 7 节 &middot; 排序比较与内置排序</span></div>
   <h2><span data-lang="en">Comparing Sorts and Using Built-in Sort</span><span data-lang="zh">排序比较与内置排序</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Compare linear search, binary search and the three simple sorts by pre-condition, best case and worst case.</li><li>Use <code>sorted()</code> and <code>.sort()</code> correctly, including <code>reverse</code>, <code>key</code> and the <code>None</code> returned by <code>.sort()</code>.</li><li>Combine one sort with repeated binary searches using <code>bisect</code>, with a bounds check.</li><li>Explain what a stable sort is and why it matters.</li></ul>
+    <ul data-lang="zh"><li>按前提条件、最好情况和最坏情况比较线性查找、二分查找和三种简单排序。</li><li>正确使用 <code>sorted()</code> 和 <code>.sort()</code>，包括 <code>reverse</code>、<code>key</code> 以及 <code>.sort()</code> 返回的 <code>None</code>。</li><li>用 <code>bisect</code> 将一次排序与多次二分查找结合，并做边界检查。</li><li>解释什么是稳定排序以及它为什么重要。</li></ul>
+  </div>
+
   <div class="cram-cheat">
-    <strong><span data-lang="en">Algorithm summary — memorise this table.</span><span data-lang="zh">算法摘要——背熟这张表。</span></strong>
+    <strong><span data-lang="en">Algorithm summary: memorise this table.</span><span data-lang="zh">算法摘要，背熟这张表。</span></strong>
     <div class="table-wrap" style="margin-top: 8px;">
       <table style="font-size: 0.88rem;">
         <thead><tr><th><span data-lang="en">Algorithm</span><span data-lang="zh">算法</span></th><th><span data-lang="en">Best</span><span data-lang="zh">最好</span></th><th><span data-lang="en">Worst</span><span data-lang="zh">最坏</span></th><th><span data-lang="en">Pre-condition</span><span data-lang="zh">前提</span></th><th><span data-lang="en">Notes</span><span data-lang="zh">备注</span></th></tr></thead>
@@ -1069,9 +1696,10 @@ print(insertion_sort([5, 3, 8, 1, 4]))  # Output: [1, 3, 4, 5, 8]</code></pre>
     <span data-lang="en">CSE3110 outcome 1.6.5 and ICS4U C2.3 both require "comparing and contrasting computational efficiencies of different classes of sorts." The table above is your answer framework.</span><span data-lang="zh">CSE3110 结果 1.6.5 和 ICS4U C2.3 均要求"比较不同类别排序的计算效率"。上表即你的答题框架。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 13: Using Python's built-in sort</span><span data-lang="zh">例题 13：使用 Python 内置排序</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Using Python's built-in sort</span><span data-lang="zh">例题 7 &middot; 使用 Python 内置排序</span></div></div>
-    <p style="font-size: 0.95rem;"><span data-lang="en">In practice, never use bubble/selection/insertion sort on real data — use Python's built-in <code>sorted()</code> or <code>.sort()</code>. They use Timsort (O(n log n) worst case), which is dramatically faster. Know when to use each method.</span><span data-lang="zh">实践中，切勿对真实数据使用冒泡/选择/插入排序——使用 Python 内置的 <code>sorted()</code> 或 <code>.sort()</code>。它们使用 Timsort（最坏情况 O(n log n)），速度显著更快。了解何时使用各种方法。</span></p>
+    <p style="font-size: 0.95rem;"><span data-lang="en">In practice, never use bubble/selection/insertion sort on real data: use Python's built-in <code>sorted()</code> or <code>.sort()</code>. They use Timsort (O(n log n) worst case), which is dramatically faster. Know when to use each method.</span><span data-lang="zh">实践中，切勿对真实数据使用冒泡/选择/插入排序，使用 Python 内置的 <code>sorted()</code> 或 <code>.sort()</code>。它们使用 Timsort（最坏情况 O(n log n)），速度显著更快。了解何时使用各种方法。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">Python built-in sort examples.</span><span data-lang="zh">Python 内置排序示例。</span></strong></p>
@@ -1103,6 +1731,30 @@ pos = bisect.bisect_left(data, 17)  # binary search for 17
 print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <p><span data-lang="en">The pattern: sort once with O(n log n), then use binary search O(log n) for every lookup. Far faster than repeated linear searches on large data.</span><span data-lang="zh">模式：用 O(n log n) 排序一次，再用 O(log n) 的二分查找进行每次查找。对大数据远快于重复线性查找。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 14: Stable sorting and a safe lookup</span><span data-lang="zh">例题 14：稳定排序与安全查找</span></summary>
+  <div class="card">
+    <p style="font-size: 0.95rem;"><span data-lang="en">Sort the list [("Ana", 85), ("Bob", 72), ("Cara", 91), ("Dev", 85)] by score from high to low so that equal scores keep their original order. Then write a function that reports whether a value is in the sorted list [2, 8, 14, 17, 25, 31], using <code>bisect</code>.</span><span data-lang="zh">把列表 [("Ana", 85), ("Bob", 72), ("Cara", 91), ("Dev", 85)] 按分数从高到低排序，并使相同分数保持原有顺序。然后用 <code>bisect</code> 编写函数，判断某个值是否在有序列表 [2, 8, 14, 17, 25, 31] 中。</span></p>
+  </div>
+  <div class="worked-solution">
+<pre><code>import bisect
+
+students = [("Ana", 85), ("Bob", 72), ("Cara", 91), ("Dev", 85)]
+by_score = sorted(students, key=lambda s: s[1], reverse=True)
+print(by_score)
+# [('Cara', 91), ('Ana', 85), ('Dev', 85), ('Bob', 72)]  Ana stays before Dev
+
+def contains(sorted_list, x):
+    pos = bisect.bisect_left(sorted_list, x)
+    return pos &lt; len(sorted_list) and sorted_list[pos] == x
+
+data = [2, 8, 14, 17, 25, 31]
+print(contains(data, 17), contains(data, 20), contains(data, 40))</code></pre>
+<p><span data-lang="en">Python's sort is <em>stable</em>: items with equal keys keep their original relative order, so Ana (listed first) stays ahead of Dev, even with <code>reverse=True</code>. Stability matters when you sort by one field after another. The helper <code>contains</code> checks <code>pos &lt; len(sorted_list)</code> first: <code>bisect_left</code> returns the position where the value would be inserted, which is <code>len(sorted_list)</code> (past the end) when the value is larger than everything, and the bounds check prevents an <code>IndexError</code>. For 20 it returns position 4, where the item is 25, so the equality test is False.</span><span data-lang="zh">Python 的排序是<em>稳定的</em>（stable）：键相等的元素保持原有的相对顺序，所以先出现的 Ana 仍排在 Dev 前面，即使使用了 <code>reverse=True</code>。依次按多个字段排序时，稳定性很重要。辅助函数 <code>contains</code> 先检查 <code>pos &lt; len(sorted_list)</code>：<code>bisect_left</code> 返回该值应插入的位置，当该值比所有元素都大时位置是 <code>len(sorted_list)</code>（越过末尾），边界检查可避免 <code>IndexError</code>。对于 20，返回位置 4，该处元素是 25，所以相等判断为 False。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">You have a list of 10,000 student names already sorted alphabetically. You need to search it 500 times. What is the most efficient approach?</span><span data-lang="zh">你有一个按字母顺序排好的 10000 名学生姓名列表，需要查找 500 次。最高效的方法是什么？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
@@ -1113,7 +1765,7 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Use binary search directly (list is already sorted) for all 500 searches</span><span data-lang="zh">直接使用二分查找（列表已排好）进行全部 500 次查找</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">The list is already sorted, so binary search applies immediately. Each search takes at most log&#x2082;(10,000) &approx; 14 comparisons. Total: 500 &times; 14 = 7,000 comparisons. Linear search would take 500 &times; 10,000 = 5,000,000 comparisons in the worst case. Binary search wins by over 700&times;.</span><span data-lang="zh">列表已排好，二分查找可直接使用。每次查找最多 log&#x2082;(10,000) &approx; 14 次比较。总计：500 &times; 14 = 7,000 次比较。线性查找最坏情况：500 &times; 10,000 = 500 万次比较。二分查找胜出 700 余倍。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">The list is already sorted — no re-sorting needed. Binary search requires O(log n) per lookup, far cheaper than O(n) linear search for 500 queries on 10,000 items.</span><span data-lang="zh">列表已排好——无需重新排序。二分查找每次查找 O(log n)，远比 10000 个元素 500 次查询的 O(n) 线性查找便宜。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">The list is already sorted: no re-sorting needed. Binary search requires O(log n) per lookup, far cheaper than O(n) linear search for 500 queries on 10,000 items.</span><span data-lang="zh">列表已排好，无需重新排序。二分查找每次查找 O(log n)，远比 10000 个元素 500 次查询的 O(n) 线性查找便宜。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1130,10 +1782,32 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When asked to recommend an approach, give the pre-condition, the cost of each option for the stated n, and the decision. In code questions, decide whether the original list must be kept (<code>sorted()</code>) or not (<code>.sort()</code>), and remember that <code>.sort()</code> returns <code>None</code>. Common errors: <code>print(data.sort())</code> prints <code>None</code>, and indexing the result of <code>bisect_left</code> without a bounds check.</p>
+    <p data-lang="zh">被要求推荐方案时，写出前提条件、在给定 n 下每种方案的代价以及最终决定。在代码题中，要判断是否需要保留原列表（用 <code>sorted()</code>）还是不需要（用 <code>.sort()</code>），并记住 <code>.sort()</code> 返回 <code>None</code>。常见错误：<code>print(data.sort())</code> 会打印 <code>None</code>，以及不做边界检查就用 <code>bisect_left</code> 的结果做索引。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does this print? <code>a = [3, 1, 2]</code>, then <code>b = a.sort()</code>, then <code>print(a, b)</code></span><span data-lang="zh">1. 下面代码输出什么？<code>a = [3, 1, 2]</code>，然后 <code>b = a.sort()</code>，然后 <code>print(a, b)</code></span></summary>
+      <div class="sg-a"><p data-lang="en">It prints <code>[1, 2, 3] None</code>. <code>.sort()</code> sorts <code>a</code> in place and returns <code>None</code>, so <code>b</code> is <code>None</code>.</p><p data-lang="zh">输出 <code>[1, 2, 3] None</code>。<code>.sort()</code> 原地排序 <code>a</code> 并返回 <code>None</code>，所以 <code>b</code> 是 <code>None</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. An unsorted list has 1,024 items and will be searched 500 times. Compare linear search with sorting once and then using binary search (use the estimate n &times; log&#x2082;(n) for the sort).</span><span data-lang="zh">2. 一个无序列表有 1024 个元素，要查找 500 次。比较线性查找与「先排序一次再二分查找」（排序代价用估计值 n &times; log&#x2082;(n)）。</span></summary>
+      <div class="sg-a"><p data-lang="en">Linear search: 500 &times; 1,024 = 512,000 comparisons in the worst case. Sort once: about 1,024 &times; 10 = 10,240 steps, then 500 &times; 11 = 5,500 comparisons, about 15,740 in total. Sorting first needs roughly 30 times fewer steps.</p><p data-lang="zh">线性查找：最坏情况 500 &times; 1024 = 512,000 次比较。先排序一次：约 1024 &times; 10 = 10,240 步，再 500 &times; 11 = 5,500 次比较，合计约 15,740。先排序所需步数大约少 30 倍。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For <code>data = [2, 8, 14, 17, 25, 31]</code>, what do <code>bisect.bisect_left(data, 20)</code> and <code>bisect.bisect_left(data, 40)</code> return, and why is a bounds check needed?</span><span data-lang="zh">3. 对 <code>data = [2, 8, 14, 17, 25, 31]</code>，<code>bisect.bisect_left(data, 20)</code> 和 <code>bisect.bisect_left(data, 40)</code> 各返回什么？为什么需要边界检查？</span></summary>
+      <div class="sg-a"><p data-lang="en">They return 4 and 6. At position 4 the item is 25, not 20, so 20 is absent. Position 6 equals <code>len(data)</code>, so <code>data[6]</code> would raise <code>IndexError</code>; checking <code>pos &lt; len(data)</code> first avoids it.</p><p data-lang="zh">分别返回 4 和 6。位置 4 的元素是 25 而不是 20，所以 20 不存在。位置 6 等于 <code>len(data)</code>，<code>data[6]</code> 会引发 <code>IndexError</code>；先检查 <code>pos &lt; len(data)</code> 可避免。</p></div>
+    </details>
+  </div>
+
   <details>
-    <summary><span data-lang="en">Going deeper &mdash; why Python's sort is O(n log n) not O(n&sup2;) <span class="honors-flag">Honors</span></span><span data-lang="zh">深入 &mdash; 为何 Python 内置排序是 O(n log n) 而非 O(n²) <span class="honors-flag">荣誉</span></span></summary>
+    <summary><span data-lang="en">Going deeper: why Python's sort is O(n log n) not O(n&sup2;) <span class="honors-flag">Honors</span></span><span data-lang="zh">深入：为何 Python 内置排序是 O(n log n) 而非 O(n²) <span class="honors-flag">荣誉</span></span></summary>
     <div class="detail-body">
-      <p><span data-lang="en">Python uses <strong>Timsort</strong> (invented by Tim Peters, 2002), a hybrid of merge sort and insertion sort. Merge sort divides the list in half, recursively sorts each half, then merges them (O(n log n) in all cases). Insertion sort is used on small runs (&lt;64 elements) because its O(n) best case makes it faster than merge sort for nearly-sorted small arrays. The result: Timsort is O(n) on already-sorted data and O(n log n) in the worst case — far better than the O(n&sup2;) algorithms in this guide. ICS4U A3.6 mentions merge sort as a recursive algorithm option. CSE3310 (Recursive Algorithms 1) covers quicksort and merge sort at the Advanced level. For exam purposes, knowing that Python's sort is O(n log n) and why it beats bubble/selection/insertion is sufficient at the ICS4U/CSE3110 level.</span><span data-lang="zh">Python 使用 <strong>Timsort</strong>（Tim Peters，2002 年发明），是归并排序与插入排序的混合体。归并排序将列表分成两半，递归排序各半部分，再合并（所有情况均为 O(n log n)）。对小片段（&lt;64 个元素）使用插入排序，因为其 O(n) 最好情况对近乎有序的小数组比归并排序更快。结果：Timsort 对已排序数据为 O(n)，最坏情况为 O(n log n)——远优于本指南的 O(n²) 算法。ICS4U A3.6 将归并排序列为递归算法选项。CSE3310（递归算法 1）在高级模块涵盖快速排序和归并排序。为考试目的，知道 Python 内置排序是 O(n log n) 以及为何它胜过冒泡/选择/插入排序，在 ICS4U/CSE3110 级别已足够。</span></p>
+      <p><span data-lang="en">Python uses <strong>Timsort</strong> (invented by Tim Peters, 2002), a hybrid of merge sort and insertion sort. Merge sort divides the list in half, recursively sorts each half, then merges them (O(n log n) in all cases). A binary-insertion variant is used on small runs (roughly 32 to 64 elements) because its O(n) best case makes it faster than merge sort for nearly-sorted small arrays. The result: Timsort is O(n) on already-sorted data and O(n log n) in the worst case: far better than the O(n&sup2;) algorithms in this guide. ICS4U A3.6 mentions merge sort as a recursive algorithm option. CSE3310 (Recursive Algorithms 1) covers quicksort and merge sort at the Advanced level. For this course, knowing that Python's sort is O(n log n) and why it beats bubble/selection/insertion is sufficient at the ICS4U/CSE3110 level.</span><span data-lang="zh">Python 使用 <strong>Timsort</strong>（Tim Peters，2002 年发明），是归并排序与插入排序的混合体。归并排序将列表分成两半，递归排序各半部分，再合并（所有情况均为 O(n log n)）。对小片段（约 32 至 64 个元素）使用插入排序的二分变体，因为其 O(n) 最好情况对近乎有序的小数组比归并排序更快。结果：Timsort 对已排序数据为 O(n)，最坏情况为 O(n log n)，远优于本指南的 O(n²) 算法。ICS4U A3.6 将归并排序列为递归算法选项。CSE3310（递归算法 1）在高级模块涵盖快速排序和归并排序。对本课程而言，知道 Python 内置排序是 O(n log n) 以及为何它胜过冒泡/选择/插入排序，在 ICS4U/CSE3110 级别已足够。</span></p>
     </div>
   </details>
 </section>
@@ -1147,17 +1821,17 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Before answering any algorithm question</span><span data-lang="zh">回答任何算法问题前</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">State the pre-condition.</span><span data-lang="zh">陈述前提条件。</span></strong> <span data-lang="en">Binary search requires a sorted list. Forgetting to state this is the most common exam error. CSE3110 outcome 1.5.4 and ICS4U C2.2 both test whether you know the pre-condition.</span><span data-lang="zh">二分查找需要已排序列表。忘记陈述这一点是最常见的考试错误。CSE3110 结果 1.5.4 和 ICS4U C2.2 均考查你是否知道前提条件。</span></li>
+      <li><strong><span data-lang="en">State the pre-condition.</span><span data-lang="zh">陈述前提条件。</span></strong> <span data-lang="en">Binary search requires a sorted list. Forgetting to state this is the most common error. CSE3110 outcome 1.5.4 and ICS4U C2.2 both expect you to know the pre-condition.</span><span data-lang="zh">二分查找需要已排序列表。忘记陈述这一点是最常见的错误。CSE3110 结果 1.5.4 和 ICS4U C2.2 均要求你知道前提条件。</span></li>
       <li><strong><span data-lang="en">Trace the algorithm with a concrete example.</span><span data-lang="zh">用具体例子追踪算法。</span></strong> <span data-lang="en">Always run through your answer with a 5&ndash;8 element list before submitting. A trace table catches most off-by-one boundary errors in sort algorithms.</span><span data-lang="zh">提交前始终用 5&ndash;8 个元素的列表演算答案。追踪表能发现排序算法中大多数"差一"边界错误。</span></li>
-      <li><strong><span data-lang="en">Use the correct algorithm name in Chinese and English.</span><span data-lang="zh">用中英文写出正确算法名称。</span></strong> <span data-lang="en">Examiners expect precise terminology: linear search, binary search, bubble sort, selection sort, insertion sort, algorithm efficiency, time complexity.</span><span data-lang="zh">考官期望精确术语：linear search（线性查找），binary search（二分查找），bubble sort（冒泡排序），selection sort（选择排序），insertion sort（插入排序），algorithm efficiency（算法效率），time complexity（时间复杂度）。</span></li>
+      <li><strong><span data-lang="en">Use the correct algorithm name in Chinese and English.</span><span data-lang="zh">用中英文写出正确算法名称。</span></strong> <span data-lang="en">Use precise terminology: linear search, binary search, bubble sort, selection sort, insertion sort, algorithm efficiency, time complexity.</span><span data-lang="zh">使用精确术语：linear search（线性查找），binary search（二分查找），bubble sort（冒泡排序），selection sort（选择排序），insertion sort（插入排序），algorithm efficiency（算法效率），time complexity（时间复杂度）。</span></li>
     </ul>
   </div>
 
   <div class="concept-box" style="border-left-color: var(--accent);">
     <strong style="color: var(--accent);"><span data-lang="en">Search questions (&sect;1-&sect;2)</span><span data-lang="zh">查找问题（&sect;1-&sect;2）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">State pre-condition, step count, and a number example.</span><span data-lang="zh">陈述前提条件、步骤数和数字例子。</span></strong> <span data-lang="en">"Binary search requires a sorted list. For n=1,024 items, binary search needs at most log&#x2082;(1,024)=10 comparisons, versus 1,024 for linear search." That is two sentences and it scores full marks on a typical efficiency question.</span><span data-lang="zh">"二分查找需要已排序列表。对于 n=1024 个元素，二分查找最多需要 log&#x2082;(1024)=10 次比较，而线性查找最多需要 1024 次。"两句话，典型效率题满分。</span></li>
-      <li><strong><span data-lang="en">Trace binary search step by step when asked.</span><span data-lang="zh">被要求时逐步追踪二分查找。</span></strong> <span data-lang="en">Show the low, high, mid values at each step. Never skip steps on an exam trace question.</span><span data-lang="zh">每步展示 low、high、mid 的值。考试追踪题切勿跳步。</span></li>
+      <li><strong><span data-lang="en">State pre-condition, step count, and a number example.</span><span data-lang="zh">陈述前提条件、步骤数和数字例子。</span></strong> <span data-lang="en">"Binary search requires a sorted list. For n=1,024 items, binary search needs at most 11 comparisons (10 halvings plus the final check), versus 1,024 for linear search." That is two sentences and a complete answer to a typical efficiency question.</span><span data-lang="zh">"二分查找需要已排序列表。对于 n=1024 个元素，二分查找最多需要 11 次比较（10 次减半加最后一次检查），而线性查找最多需要 1024 次。"两句话，就是对典型效率题的完整回答。</span></li>
+      <li><strong><span data-lang="en">Trace binary search step by step when asked.</span><span data-lang="zh">被要求时逐步追踪二分查找。</span></strong> <span data-lang="en">Show the low, high, mid values at each step. Never skip steps on a trace question.</span><span data-lang="zh">每步展示 low、high、mid 的值。追踪题切勿跳步。</span></li>
     </ul>
   </div>
 
@@ -1165,15 +1839,15 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <strong style="color: var(--purple);"><span data-lang="en">Sort questions (&sect;4-&sect;6)</span><span data-lang="zh">排序问题（&sect;4-&sect;6）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li><strong><span data-lang="en">Know what changes after each pass.</span><span data-lang="zh">知道每遍后什么发生了变化。</span></strong> <span data-lang="en">Bubble sort: largest unsorted element moves to its final position. Selection sort: one minimum is placed in final position. Insertion sort: one more element joins the sorted left portion.</span><span data-lang="zh">冒泡排序：最大未排序元素移至最终位置。选择排序：一个最小值放到最终位置。插入排序：多一个元素加入有序左段。</span></li>
-      <li><strong><span data-lang="en">Compare using Big-O when asked for efficiency.</span><span data-lang="zh">被问效率时用大O比较。</span></strong> <span data-lang="en">All three simple sorts are O(n&sup2;) worst case for comparisons. Insertion sort is O(n) best case. Python's built-in is O(n log n) worst case. ICS4U C2.3 and CSE3110 outcome 1.6.5 test this comparison explicitly.</span><span data-lang="zh">三种简单排序比较次数最坏情况均为 O(n²)。插入排序最好情况为 O(n)。Python 内置排序最坏情况为 O(n log n)。ICS4U C2.3 和 CSE3110 结果 1.6.5 明确考查此比较。</span></li>
+      <li><strong><span data-lang="en">Compare using Big-O when asked for efficiency.</span><span data-lang="zh">被问效率时用大O比较。</span></strong> <span data-lang="en">All three simple sorts are O(n&sup2;) worst case for comparisons. Insertion sort is O(n) best case. Python's built-in is O(n log n) worst case. ICS4U C2.3 and CSE3110 outcome 1.6.5 name this comparison explicitly.</span><span data-lang="zh">三种简单排序比较次数最坏情况均为 O(n²)。插入排序最好情况为 O(n)。Python 内置排序最坏情况为 O(n log n)。ICS4U C2.3 和 CSE3110 结果 1.6.5 明确列出此比较。</span></li>
     </ul>
   </div>
 
   <div class="concept-box green">
     <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Show all intermediate states in a sort trace.</span><span data-lang="zh">排序追踪中展示所有中间状态。</span></strong> <span data-lang="en">Draw the list after every pass, not just the final result. Marks are typically awarded per pass on sort-trace questions.</span><span data-lang="zh">每遍后画出列表，不只是最终结果。排序追踪题通常按每遍给分。</span></li>
-      <li><strong><span data-lang="en">For AP CSP: use College Board pseudocode.</span><span data-lang="zh">AP CSP 使用 College Board 伪代码。</span></strong> <span data-lang="en">Assignment uses <code>&larr;</code>, lists are 1-indexed, use <code>DISPLAY()</code>. Topic 3.11 binary search and 3.17 efficiency use this notation on the exam.</span><span data-lang="zh">赋值用 <code>&larr;</code>，列表从 1 索引，用 <code>DISPLAY()</code>。主题 3.11 二分查找和 3.17 效率在考试中使用此表示法。</span></li>
+      <li><strong><span data-lang="en">Show all intermediate states in a sort trace.</span><span data-lang="zh">排序追踪中展示所有中间状态。</span></strong> <span data-lang="en">Draw the list after every pass, not just the final result. Sort-trace questions are about the states between passes.</span><span data-lang="zh">每遍后画出列表，不只是最终结果。排序追踪题关注的正是各遍之间的状态。</span></li>
+      <li><strong><span data-lang="en">For AP CSP: use College Board pseudocode.</span><span data-lang="zh">AP CSP 使用 College Board 伪代码。</span></strong> <span data-lang="en">Assignment uses <code>&larr;</code>, lists are 1-indexed, use <code>DISPLAY()</code>. Topic 3.11 binary search and 3.17 efficiency use this notation in the College Board materials.</span><span data-lang="zh">赋值用 <code>&larr;</code>，列表从 1 索引，用 <code>DISPLAY()</code>。主题 3.11 二分查找和 3.17 效率在 College Board 材料中使用此表示法。</span></li>
     </ul>
   </div>
 </section>
@@ -1192,17 +1866,17 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
   </div>
   <div class="flashcard-grid" id="flashcardGrid">
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Linear search</span><span data-lang="zh">线性查找</span></div><div class="flashcard-back"><span data-lang="en">Scan every item in order. Worst case: n steps. No pre-condition. Returns &minus;1 if not found.</span><span data-lang="zh">按顺序逐个扫描。最坏情况：n 步。无前提条件。未找到返回 &minus;1。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binary search</span><span data-lang="zh">二分查找</span></div><div class="flashcard-back"><span data-lang="en">Halve the search space each step. Worst case: log&#x2082;(n) steps. Pre-condition: sorted list. 1024 items &rarr; 10 steps.</span><span data-lang="zh">每步将搜索空间减半。最坏情况：log&#x2082;(n) 步。前提：已排序列表。1024 个元素 &rarr; 10 步。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Binary search</span><span data-lang="zh">二分查找</span></div><div class="flashcard-back"><span data-lang="en">Halve the search space each step. Worst case: &lfloor;log&#x2082;(n)&rfloor; + 1 comparisons. Pre-condition: sorted list. 1024 items &rarr; 11 comparisons.</span><span data-lang="zh">每步将搜索空间减半。最坏情况：&lfloor;log&#x2082;(n)&rfloor; + 1 次比较。前提：已排序列表。1024 个元素 &rarr; 11 次比较。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Why does binary search need a sorted list?</span><span data-lang="zh">二分查找为何需要有序列表？</span></div><div class="flashcard-back"><span data-lang="en">It eliminates half the list based on whether target is less or greater than mid. Without ordering, this elimination is invalid.</span><span data-lang="zh">它根据目标是否小于/大于中间值来淘汰一半列表。无顺序时淘汰无效。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">O(n) vs O(log n)</span><span data-lang="zh">O(n) 与 O(log n)</span></div><div class="flashcard-back"><span data-lang="en">O(n): linear growth — double n, double steps. O(log n): logarithmic — double n, add only 1 step. For 1M items: 1,000,000 vs 20 steps.</span><span data-lang="zh">O(n)：线性增长——n 翻倍，步骤翻倍。O(log n)：对数——n 翻倍，只多 1 步。100 万元素：100 万步 vs 20 步。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">O(n) vs O(log n)</span><span data-lang="zh">O(n) 与 O(log n)</span></div><div class="flashcard-back"><span data-lang="en">O(n): linear growth, so doubling n doubles the steps. O(log n): logarithmic growth, so doubling n adds only 1 step. For 1M items: 1,000,000 vs 20 steps.</span><span data-lang="zh">O(n)：线性增长，所以 n 翻倍则步骤翻倍。O(log n)：对数增长，所以 n 翻倍只多 1 步。100 万元素：100 万步 vs 20 步。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Bubble sort</span><span data-lang="zh">冒泡排序</span></div><div class="flashcard-back"><span data-lang="en">Compare adjacent pairs; swap if out of order. Each pass bubbles the largest unsorted element to the right. O(n&sup2;) worst case.</span><span data-lang="zh">比较相邻元素；顺序错误则交换。每遍将最大未排序元素冒泡到右端。最坏情况 O(n²)。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Selection sort</span><span data-lang="zh">选择排序</span></div><div class="flashcard-back"><span data-lang="en">Find minimum of unsorted portion; swap it to the front. Exactly n&minus;1 swaps. O(n&sup2;) comparisons always (no early exit).</span><span data-lang="zh">找未排序部分最小值；交换到前面。恰好 n&minus;1 次交换。比较始终 O(n²)（无提前退出）。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Selection sort</span><span data-lang="zh">选择排序</span></div><div class="flashcard-back"><span data-lang="en">Find minimum of unsorted portion; swap it to the front. At most n&minus;1 swaps. O(n&sup2;) comparisons always (no early exit).</span><span data-lang="zh">找未排序部分最小值；交换到前面。最多 n&minus;1 次交换。比较始终 O(n²)（无提前退出）。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Insertion sort</span><span data-lang="zh">插入排序</span></div><div class="flashcard-back"><span data-lang="en">Build sorted left portion one element at a time; shift larger elements right. Best case O(n) on sorted data; worst case O(n&sup2;).</span><span data-lang="zh">每次将一个元素插入有序左段，将较大元素右移。已排序数据最好情况 O(n)；最坏 O(n²)。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Which sort has the best best-case?</span><span data-lang="zh">哪种排序的最好情况最优？</span></div><div class="flashcard-back"><span data-lang="en">Insertion sort: O(n) when already sorted (no shifts needed). Selection sort is always O(n&sup2;). Bubble sort O(n) only with early-exit optimisation.</span><span data-lang="zh">插入排序：已排序时 O(n)（无需移位）。选择排序始终 O(n²)。冒泡排序仅在带提前退出优化时为 O(n)。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">sorted() vs .sort()</span><span data-lang="zh">sorted() 与 .sort()</span></div><div class="flashcard-back"><span data-lang="en">sorted(data) returns a new sorted list; original unchanged. data.sort() modifies original in place; returns None.</span><span data-lang="zh">sorted(data) 返回新排序列表；原列表不变。data.sort() 原地修改原列表；返回 None。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Time complexity of Python's built-in sort?</span><span data-lang="zh">Python 内置排序的时间复杂度？</span></div><div class="flashcard-back"><span data-lang="en">O(n log n) worst case (Timsort). Much better than O(n&sup2;) for large n. Always prefer it over manual bubble/selection/insertion sort in production.</span><span data-lang="zh">最坏情况 O(n log n)（Timsort）。对大 n 远优于 O(n²)。实际项目中始终优先使用它，而非手动实现的冒泡/选择/插入排序。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Algorithm efficiency</span><span data-lang="zh">算法效率</span></div><div class="flashcard-back"><span data-lang="en">How an algorithm's resource use (steps / time) grows with input size n. Compare using step counts or Big-O. CSTA 3B-AP-11; AP CSP 3.17; ICS4U C2; CSE3110 1.5.4.</span><span data-lang="zh">算法资源使用（步骤/时间）随输入大小 n 增长的方式。用步骤数或大O比较。CSTA 3B-AP-11；AP CSP 3.17；ICS4U C2；CSE3110 1.5.4。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">log&#x2082;(1024) = ?</span><span data-lang="zh">log&#x2082;(1024) = ?</span></div><div class="flashcard-back"><span data-lang="en">10. Because 2&#xB9;&#x2070; = 1024. This means binary search on 1024 items takes at most 10 comparisons.</span><span data-lang="zh">10。因为 2&#xB9;&#x2070; = 1024。这意味着对 1024 个元素进行二分查找最多需要 10 次比较。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">log&#x2082;(1024) = ?</span><span data-lang="zh">log&#x2082;(1024) = ?</span></div><div class="flashcard-back"><span data-lang="en">10. Because 2&#xB9;&#x2070; = 1024. Binary search on 1024 items halves the list 10 times and makes at most 11 comparisons.</span><span data-lang="zh">10。因为 2&#xB9;&#x2070; = 1024。对 1024 个元素进行二分查找，列表被减半 10 次，最多需要 11 次比较。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Bubble sort: after k passes, what is guaranteed?</span><span data-lang="zh">冒泡排序：k 遍后保证什么？</span></div><div class="flashcard-back"><span data-lang="en">The k largest elements are in their final positions at the right end of the list.</span><span data-lang="zh">最大的 k 个元素处于列表右端的最终位置。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Selection sort: after k passes, what is guaranteed?</span><span data-lang="zh">选择排序：k 遍后保证什么？</span></div><div class="flashcard-back"><span data-lang="en">The k smallest elements are in their final sorted positions at the left end of the list.</span><span data-lang="zh">最小的 k 个元素处于列表左端的最终排序位置。</span></div></div></div>
   </div>
@@ -1235,8 +1909,8 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
       <div class="quiz-opt" data-idx="2">12</div>
       <div class="quiz-opt" data-idx="3">18</div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">List has 7 elements (indices 0–6). mid = (0+6)//2 = 3. list[3] = 12. Since 9 &lt; 12, we search the left half [0..2] next. Total: 2 comparisons to find 9.</span><span data-lang="zh">列表有 7 个元素（索引 0–6）。mid = (0+6)//2 = 3。list[3] = 12。因为 9 &lt; 12，下一步搜索左半部分 [0..2]。共 2 次比较找到 9。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Binary search starts at mid = (low+high)//2 = (0+6)//2 = 3. list[3] = 12. Not 9 yet — then go left.</span><span data-lang="zh">二分查找从 mid = (low+high)//2 = (0+6)//2 = 3 开始。list[3] = 12。还不是 9——然后向左搜索。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">List has 7 elements (indices 0–6). mid = (0+6)//2 = 3. list[3] = 12. Since 9 &lt; 12, we search the left half [0..2] next. Total: 3 comparisons to find 9 (mid 3 gives 12, mid 1 gives 5, mid 2 gives 9).</span><span data-lang="zh">列表有 7 个元素（索引 0–6）。mid = (0+6)//2 = 3。list[3] = 12。因为 9 &lt; 12，下一步搜索左半部分 [0..2]。共 3 次比较找到 9（mid 3 得 12，mid 1 得 5，mid 2 得 9）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Binary search starts at mid = (low+high)//2 = (0+6)//2 = 3. list[3] = 12. Not 9 yet, so go left.</span><span data-lang="zh">二分查找从 mid = (low+high)//2 = (0+6)//2 = 3 开始。list[3] = 12。还不是 9，所以向左搜索。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -1261,7 +1935,7 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Bubble sort without early exit</span><span data-lang="zh">无提前退出的冒泡排序</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Linear search</span><span data-lang="zh">线性查找</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Insertion sort has O(n) best case when the list is already sorted (zero shifts per element) and O(n&sup2;) worst case when reversed. This makes it optimal for nearly-sorted data. Selection sort is always O(n&sup2;) — it never benefits from existing order.</span><span data-lang="zh">插入排序最好情况为 O(n)（列表已排序时每个元素零移位），最坏情况为 O(n²)（逆序时）。这使其在近乎有序数据上最优。选择排序始终为 O(n²)——从不受益于现有顺序。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Insertion sort has O(n) best case when the list is already sorted (zero shifts per element) and O(n&sup2;) worst case when reversed. This makes it optimal for nearly-sorted data. Selection sort is always O(n&sup2;), so it never benefits from existing order.</span><span data-lang="zh">插入排序最好情况为 O(n)（列表已排序时每个元素零移位），最坏情况为 O(n²)（逆序时）。这使其在近乎有序数据上最优。选择排序始终为 O(n²)，所以从不受益于现有顺序。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Insertion sort: best O(n), worst O(n&sup2;). Selection sort: always O(n&sup2;). These are core facts for ICS4U C2.3 and CSE3110 outcome 1.6.5.</span><span data-lang="zh">插入排序：最好 O(n)，最坏 O(n²)。选择排序：始终 O(n²)。这是 ICS4U C2.3 和 CSE3110 结果 1.6.5 的核心知识点。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1296,11 +1970,11 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">You sort a list of 10,000 items once with Python's built-in sort. You then do 200 binary searches on it. What is the total complexity class for all operations combined?</span><span data-lang="zh">你用 Python 内置排序对 10000 个元素的列表排序一次，然后进行 200 次二分查找。所有操作合并后的总复杂度类别是什么？</span></div><div class="quiz-number">Q7</div></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">O(n&sup2;) because sorting dominates</span><span data-lang="zh">O(n²)，因为排序占主导</span></div>
-      <div class="quiz-opt" data-idx="1"><span data-lang="en">O(n log n) for sorting + O(k log n) for k searches — much better than O(kn) for repeated linear search</span><span data-lang="zh">排序 O(n log n) + k 次查找 O(k log n)——远优于重复线性查找的 O(kn)</span></div>
+      <div class="quiz-opt" data-idx="1"><span data-lang="en">O(n log n) for sorting + O(k log n) for k searches: much better than O(kn) for repeated linear search</span><span data-lang="zh">排序 O(n log n) + k 次查找 O(k log n)，远优于重复线性查找的 O(kn)</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">O(1) because Python is very fast</span><span data-lang="zh">O(1)，因为 Python 非常快</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">O(n&sup2; + k) for sort + searches</span><span data-lang="zh">排序加查找 O(n² + k)</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">Python's built-in sort is O(n log n). Each binary search is O(log n). 200 binary searches = O(200 log n) = O(k log n). Total: O(n log n + k log n). Compare: repeated linear search = O(kn) = 200 × 10,000 = 2,000,000 ops. Sort + binary = roughly 133,000 + 2,800 = 135,800 ops. A 14&times; speedup.</span><span data-lang="zh">Python 内置排序为 O(n log n)。每次二分查找为 O(log n)。200 次二分查找 = O(200 log n) = O(k log n)。总计：O(n log n + k log n)。对比：重复线性查找 = O(kn) = 200 × 10,000 = 200 万次操作。排序 + 二分 ≈ 13.3 万 + 2800 = 13.58 万次操作。约 14 倍加速。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">Python's built-in sort is O(n log n). Each binary search is O(log n). 200 binary searches = O(200 log n) = O(k log n). Total: O(n log n + k log n). Compare: repeated linear search = O(kn) = 200 × 10,000 = 2,000,000 ops. Sort + binary = roughly 133,000 + 2,800 = 135,800 ops. Roughly a 15&times; speedup.</span><span data-lang="zh">Python 内置排序为 O(n log n)。每次二分查找为 O(log n)。200 次二分查找 = O(200 log n) = O(k log n)。总计：O(n log n + k log n)。对比：重复线性查找 = O(kn) = 200 × 10,000 = 200 万次操作。排序 + 二分 ≈ 13.3 万 + 2800 = 13.58 万次操作。约 15 倍加速。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Python's built-in sort uses Timsort: O(n log n). Then binary search is O(log n) per query. The combination is O(n log n + k log n), far cheaper than k linear searches at O(kn).</span><span data-lang="zh">Python 内置排序使用 Timsort：O(n log n)。然后每次查询的二分查找为 O(log n)。组合为 O(n log n + k log n)，远低于 k 次线性查找的 O(kn)。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1317,15 +1991,15 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
   <ul class="checklist" id="checklistUl">
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write pseudocode for linear search: loop through every element, return the index when found, return &minus;1 if not found. Trace it on a 6-element unsorted list. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.2 / AB CSE3110 1.5.1</span></span><span data-lang="zh">编写线性查找的伪代码：遍历每个元素，找到时返回索引，未找到返回 &minus;1。在 6 个元素的未排序列表上追踪。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.2 / AB CSE3110 1.5.1</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write pseudocode for binary search: use low/mid/high pointers, halve the search window each step, handle the not-found case. State the pre-condition (sorted list). <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.2 / AB CSE3110 1.5.2 / AP CSP 3.11</span></span><span data-lang="zh">编写二分查找的伪代码：使用 low/mid/high 指针，每步缩小一半搜索窗口，处理未找到情况。陈述前提条件（已排序列表）。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.2 / AB CSE3110 1.5.2 / AP CSP 3.11</span></span></span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Compare linear and binary search by step count: state worst-case n vs log&#x2082;n steps, give a concrete example (e.g., 1024 items: 1024 vs 10), and state when each is preferred. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 3.17 / &#x1F1E8;&#x1F1E6; ICS4U C2.2 / CSE3110 1.5.4</span></span><span data-lang="zh">按步骤数比较线性查找和二分查找：陈述最坏情况 n vs log&#x2082;n 步，举具体例子（如 1024 个元素：1024 vs 10），说明各自首选场景。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 3.17 / &#x1F1E8;&#x1F1E6; ICS4U C2.2 / CSE3110 1.5.4</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Compare linear and binary search by step count: state worst-case n vs &lfloor;log&#x2082;n&rfloor; + 1 comparisons, give a concrete example (e.g., 1024 items: 1024 vs 11), and state when each is preferred. <span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 3.17 / &#x1F1E8;&#x1F1E6; ICS4U C2.2 / CSE3110 1.5.4</span></span><span data-lang="zh">按步骤数比较线性查找和二分查找：陈述最坏情况 n vs &lfloor;log&#x2082;n&rfloor; + 1 次比较，举具体例子（如 1024 个元素：1024 vs 11），说明各自首选场景。<span class="region-chip">&#x1F1FA;&#x1F1F8; AP CSP 3.17 / &#x1F1E8;&#x1F1E6; ICS4U C2.2 / CSE3110 1.5.4</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write and trace bubble sort on a 5-element list. State what is guaranteed after each pass (largest element moves to its final position). Give worst-case comparison count n(n&minus;1)/2. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.1</span></span><span data-lang="zh">编写并追踪 5 个元素列表的冒泡排序。陈述每遍后的保证（最大元素移至最终位置）。给出最坏情况比较次数 n(n&minus;1)/2。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.1</span></span></span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write and trace selection sort on a 5-element list. State that it makes exactly n&minus;1 swaps (one minimum placed per pass) and is always O(n&sup2;) comparisons. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.2</span></span><span data-lang="zh">编写并追踪 5 个元素列表的选择排序。陈述其恰好进行 n&minus;1 次交换（每遍放置一个最小值），且比较次数始终为 O(n²)。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.2</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write and trace selection sort on a 5-element list. State that it makes at most n&minus;1 swaps (one minimum placed per pass) and is always O(n&sup2;) comparisons. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.2</span></span><span data-lang="zh">编写并追踪 5 个元素列表的选择排序。陈述其最多进行 n&minus;1 次交换（每遍放置一个最小值），且比较次数始终为 O(n²)。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.2</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Write and trace insertion sort on a 5-element list. Explain the shifting operation and state that its best case is O(n) on already-sorted data. <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.3</span></span><span data-lang="zh">编写并追踪 5 个元素列表的插入排序。解释移位操作，说明其在已排序数据上的最好情况为 O(n)。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U A3.4 / AB CSE3110 1.6.3</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain the difference between Python's sorted() and .sort(). Write a one-line call that sorts a list in descending order using .sort(reverse=True). <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-10</span></span><span data-lang="zh">解释 Python 的 sorted() 与 .sort() 的区别。编写一行代码用 .sort(reverse=True) 将列表降序排列。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-10</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">Explain why Python's built-in sort is faster than bubble/selection/insertion sort for large n. State its worst-case complexity (O(n log n)) and name the algorithm it uses (Timsort). <span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE3110 1.6.5 / ON ICS4U C2.3</span></span><span data-lang="zh">解释为何 Python 内置排序对大 n 比冒泡/选择/插入排序更快。陈述其最坏情况复杂度（O(n log n)）并说出它使用的算法名称（Timsort）。<span class="region-chip">&#x1F1E8;&#x1F1E6; AB CSE3110 1.6.5 / ON ICS4U C2.3</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State verbatim (or near-verbatim) the CSTA standard 3B-AP-11 and identify which searching/sorting concept it directly maps to in this guide. <span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-11</span></span><span data-lang="zh">逐字（或近逐字）陈述 CSTA 标准 3B-AP-11，并指出它直接映射到本指南中的哪个查找/排序概念。<span class="region-chip">&#x1F1FA;&#x1F1F8; CSTA 3B-AP-11</span></span></span></li>
     <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en">State the ICS4U expectations for this unit: A3.2 (linear + binary search), A3.4 (bubble, insertion, selection sort), C2.2 (compare search efficiency), C2.3 (compare sort efficiency). <span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U</span></span><span data-lang="zh">陈述本单元的 ICS4U 期望：A3.2（线性+二分查找）、A3.4（冒泡、插入、选择排序）、C2.2（比较查找效率）、C2.3（比较排序效率）。<span class="region-chip">&#x1F1E8;&#x1F1E6; ON ICS4U</span></span></span></li>
-    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors &mdash; ICS4U C2 / CSE3110</span> Classify all 5 algorithms in this guide by Big-O: linear search O(n), binary search O(log n), bubble/selection/insertion sort O(n&sup2;) worst. Explain why insertion sort has O(n) best. <span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C2.2/C2.3 / AB CSE3110 1.5.4/1.6.5</span></span><span data-lang="zh"><span class="honors-flag">荣誉 &mdash; ICS4U C2 / CSE3110</span> 用大O对本指南中全部 5 个算法分类：线性查找 O(n)，二分查找 O(log n)，冒泡/选择/插入排序最坏 O(n²)。解释插入排序为何有 O(n) 最好情况。<span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C2.2/C2.3 / AB CSE3110 1.5.4/1.6.5</span></span></span></li>
+    <li onclick="toggleCheck(this)"><span class="check-icon">&#x2713;</span><span><span data-lang="en"><span class="honors-flag">Honors: ICS4U C2 / CSE3110</span> Classify all 5 algorithms in this guide by Big-O: linear search O(n), binary search O(log n), bubble/selection/insertion sort O(n&sup2;) worst. Explain why insertion sort has O(n) best. <span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C2.2/C2.3 / AB CSE3110 1.5.4/1.6.5</span></span><span data-lang="zh"><span class="honors-flag">荣誉：ICS4U C2 / CSE3110</span> 用大O对本指南中全部 5 个算法分类：线性查找 O(n)，二分查找 O(log n)，冒泡/选择/插入排序最坏 O(n²)。解释插入排序为何有 O(n) 最好情况。<span class="region-chip">&#x1F1E8;&#x1F1E6; ICS4U C2.2/C2.3 / AB CSE3110 1.5.4/1.6.5</span></span></span></li>
   </ul>
 </section>
 
@@ -1334,14 +2008,14 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
 <section class="section" id="feeders">
   <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
   <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
-  <p><span data-lang="en">Searching and sorting are foundational to more advanced algorithm study. The linear and binary search algorithms you learned here feed directly into AP CSA and ICS4U, where you implement them in Java. The sorting algorithm comparison (Big-O efficiency analysis) you practiced here is exactly the ICS4U C2.2/C2.3 and CSE3110 1.5.4/1.6.5 assessed content. The link below points to an existing AP CSA study guide confirmed to exist in this repository.</span><span data-lang="zh">查找与排序是更高级算法学习的基础。你在这里学到的线性查找和二分查找算法直接输入 AP CSA 和 ICS4U，在那里用 Java 实现。你在这里练习的排序算法比较（大O效率分析）正是 ICS4U C2.2/C2.3 和 CSE3110 1.5.4/1.6.5 的评估内容。以下链接指向已确认存在于本仓库的 AP CSA 学习指南。</span></p>
+  <p><span data-lang="en">Searching and sorting are foundational to more advanced algorithm study. The linear and binary search algorithms you learned here feed directly into AP CSA and ICS4U, where you implement them in Java. The sorting algorithm comparison (Big-O efficiency analysis) you practiced here matches the content of ICS4U C2.2/C2.3 and CSE3110 1.5.4/1.6.5. The link below points to the AP CSA study guide that continues this topic in Java.</span><span data-lang="zh">查找与排序是更高级算法学习的基础。你在这里学到的线性查找和二分查找算法直接输入 AP CSA 和 ICS4U，在那里用 Java 实现。你在这里练习的排序算法比较（大O效率分析）正对应 ICS4U C2.2/C2.3 和 CSE3110 1.5.4/1.6.5 的内容。以下链接指向用 Java 继续这一主题的 AP CSA 学习指南。</span></p>
 
   <div style="margin: 20px 0;">
-    <p><strong><span data-lang="en">AP feeder link (existing in this repo).</span><span data-lang="zh">AP 衔接链接（本仓库中已有）。</span></strong></p>
+    <p><strong><span data-lang="en">AP follow-on guide.</span><span data-lang="zh">AP 后续指南。</span></strong></p>
     <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
       <a class="feeder-link" href="../../AP CSA/Study Guides/Unit_4_Data_Collection.html"><span data-lang="en">AP CSA Unit 4 &middot; Data Collections (Java: section 4.14 Searching Algorithms + section 4.15 Sorting Algorithms implement and extend exactly the algorithms in this guide using Java arrays and ArrayLists)</span><span data-lang="zh">AP CSA Unit 4 &middot; 数据集合（Java：第 4.14 节查找算法 + 第 4.15 节排序算法使用 Java 数组和 ArrayList 实现并扩展本指南中的算法）</span></a>
     </div>
-    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 topic 3.11 (Binary Search) and 3.17 (Algorithmic Efficiency) test the same binary search + efficiency concepts from this guide on the AP CSP exam. AP CSA Unit 4 covers searching and sorting formally in Java including recursive merge sort — this HS guide is the conceptual prerequisite. ICS4U and CSE3110 students: the Big-O analysis in the Honors going-deeper boxes is assessed at your level.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.11（二分查找）和 3.17（算法效率）在 AP CSP 考试中考查与本指南相同的二分查找和效率概念。AP CSA Unit 4 在 Java 中正式涵盖查找和排序，包括递归归并排序——本 HS 指南是概念性先修课。ICS4U 和 CSE3110 学生：荣誉深入框中的大O分析在你的水平被评估。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 3 topic 3.11 (Binary Search) and 3.17 (Algorithmic Efficiency) cover the same binary search and efficiency concepts as this guide. AP CSA Unit 4 covers searching and sorting formally in Java including recursive merge sort: this HS guide is the conceptual prerequisite. ICS4U and CSE3110 students: the Big-O analysis in the Honors going-deeper boxes is written for your level.</span><span data-lang="zh">AP CSP 大概念 3 主题 3.11（二分查找）和 3.17（算法效率）涵盖与本指南相同的二分查找和效率概念。AP CSA Unit 4 在 Java 中正式涵盖查找和排序，包括递归归并排序，本 HS 指南是概念性先修课。ICS4U 和 CSE3110 学生：荣誉深入框中的大O分析正是为你的水平而写。</span></p>
   </div>
   <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
   <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_7_searching_and_sorting__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_7_searching_and_sorting__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
@@ -1415,27 +2089,27 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <div>
       <div class="region-header">&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></div>
       <ul>
-        <li><code>3B-AP-11</code> <span class="honors-flag">Honors</span> <span data-lang="en">"Evaluate algorithms in terms of their efficiency, correctness, and clarity." (CSTA K-12 CS Standards, Level 3B — Descriptive Statement: "Examples could include sorting and searching.") Level 3B is for students who wish to pursue CS beyond the all-student requirement.</span><span data-lang="zh">"从效率、正确性和清晰度方面评估算法。"（CSTA K-12 计算机科学标准，3B 级——描述陈述："示例可包括排序和查找。"）3B 级适用于希望在全体学生要求之外深入学习计算机科学的学生。</span></li>
-        <li><span data-lang="en">AP CSP Big Idea 3 (AAP — Algorithms &amp; Programming): Topics <strong>3.11 Binary Search</strong> and <strong>3.17 Algorithmic Efficiency</strong>. Learning Objective <strong>AAP-4.A</strong>: "For determining the efficiency of an algorithm, it may be necessary to determine how long it takes to do a specific task, the size of the data, and the data used in the algorithm." Searching and sorting + efficiency are a core AP CSP exam band.</span><span data-lang="zh">AP CSP 大概念 3（AAP — 算法与编程）：主题 <strong>3.11 二分查找</strong>与 <strong>3.17 算法效率</strong>。学习目标 <strong>AAP-4.A</strong>："确定算法效率时，可能需要确定完成特定任务所需的时间、数据的大小以及算法中使用的数据。"查找、排序与效率是 AP CSP 考试的核心考点。</span></li>
+        <li><code>3B-AP-11</code> <span class="honors-flag">Honors</span> <span data-lang="en">"Evaluate algorithms in terms of their efficiency, correctness, and clarity." (CSTA K-12 CS Standards, Level 3B, Descriptive Statement: "Examples could include sorting and searching.") Level 3B is for students who wish to pursue CS beyond the all-student requirement.</span><span data-lang="zh">"从效率、正确性和清晰度方面评估算法。"（CSTA K-12 计算机科学标准，3B 级，描述陈述："示例可包括排序和查找。"）3B 级适用于希望在全体学生要求之外深入学习计算机科学的学生。</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 3 (AAP: Algorithms &amp; Programming): Topics <strong>3.11 Binary Search</strong> and <strong>3.17 Algorithmic Efficiency</strong>. Learning Objective <strong>AAP-4.A</strong>: "For determining the efficiency of an algorithm, it may be necessary to determine how long it takes to do a specific task, the size of the data, and the data used in the algorithm." Searching and efficiency are a core strand of AP CSP Big Idea 3.</span><span data-lang="zh">AP CSP 大概念 3（AAP：算法与编程）：主题 <strong>3.11 二分查找</strong>与 <strong>3.17 算法效率</strong>。学习目标 <strong>AAP-4.A</strong>："确定算法效率时，可能需要确定完成特定任务所需的时间、数据的大小以及算法中使用的数据。"查找与效率是 AP CSP 大概念 3 的核心内容。</span></li>
       </ul>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS4U</span><span data-lang="zh">安大略 — ICS4U</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario: ICS4U</span><span data-lang="zh">安大略：ICS4U</span></div>
       <ul>
-        <li><strong>ICS4U</strong> <span class="honors-flag">Honors — Grade 12</span> <span data-lang="en">Strand A, Outcome <code>A3.2</code>: "create linear and binary search algorithms to find data in an array." <code>A3.4</code>: "create a sort algorithm (e.g., bubble, insertion, selection) to sort data in an array." Ontario Computer Studies, Grade 12 (university preparation); searching and sorting are ICS4U-only — they do not appear in ICS3U.</span><span data-lang="zh">ICS4U A 单元，结果 <code>A3.2</code>："创建线性和二分查找算法以在数组中查找数据。" <code>A3.4</code>："创建排序算法（如冒泡、插入、选择排序）对数组中的数据进行排序。"安大略计算机学习，12 年级（大学预备）；查找和排序仅属于 ICS4U，不出现在 ICS3U 中。</span></li>
-        <li><strong>ICS4U</strong> <code>C2.2</code> <span data-lang="en">"compare the efficiency of linear and binary searches, using run times and computational complexity analysis." <code>C2.3</code>: "compare the efficiency of sorting algorithms, using run times and computational complexity analysis." (ICS4U Strand C — Algorithm Analysis)</span><span data-lang="zh"><code>C2.2</code>："使用运行时间和计算复杂度分析比较线性和二分查找的效率。" <code>C2.3</code>："使用运行时间和计算复杂度分析比较排序算法的效率。"（ICS4U C 单元——算法分析）</span></li>
+        <li><strong>ICS4U</strong> <span class="honors-flag">Honors: Grade 12</span> <span data-lang="en">Strand A, Outcome <code>A3.2</code>: "create linear and binary search algorithms to find data in an array." <code>A3.4</code>: "create a sort algorithm (e.g., bubble, insertion, selection) to sort data in an array." Ontario Computer Studies, Grade 12 (university preparation); searching and sorting are ICS4U-only: they do not appear in ICS3U.</span><span data-lang="zh">ICS4U A 单元，结果 <code>A3.2</code>："创建线性和二分查找算法以在数组中查找数据。" <code>A3.4</code>："创建排序算法（如冒泡、插入、选择排序）对数组中的数据进行排序。"安大略计算机学习，12 年级（大学预备）；查找和排序仅属于 ICS4U，不出现在 ICS3U 中。</span></li>
+        <li><strong>ICS4U</strong> <code>C2.2</code> <span data-lang="en">"compare the efficiency of linear and binary searches, using run times and computational complexity analysis." <code>C2.3</code>: "compare the efficiency of sorting algorithms, using run times and computational complexity analysis." (ICS4U Strand C: Algorithm Analysis)</span><span data-lang="zh"><code>C2.2</code>："使用运行时间和计算复杂度分析比较线性和二分查找的效率。" <code>C2.3</code>："使用运行时间和计算复杂度分析比较排序算法的效率。"（ICS4U C 单元，算法分析）</span></li>
       </ul>
     </div>
     <div>
       <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia</span><span data-lang="zh">不列颠哥伦比亚</span></div>
       <ul>
-        <li><strong>Computer Programming 12</strong> <span class="honors-flag">Honors — Grade 12</span> <span data-lang="en">Content (verbatim): "Advanced programming structures"; "Management of complexity." BC's ADST computer courses have no explicit searching/sorting or algorithm-efficiency learning standard; these algorithms are implied under "Advanced programming structures." (BC Computer Programming 12 is the grade-12 harder stream.)</span><span data-lang="zh">Computer Programming 12 内容（原文）："高级编程结构"；"复杂度管理"。BC ADST 计算机课程没有明确的查找/排序或算法效率学习标准；这些算法隐含在"高级编程结构"之下。（BC Computer Programming 12 是 12 年级的较深流。）</span></li>
+        <li><strong>Computer Programming 12</strong> <span class="honors-flag">Honors: Grade 12</span> <span data-lang="en">Content (verbatim): "Advanced programming structures"; "Management of complexity." BC's ADST computer courses have no explicit searching/sorting or algorithm-efficiency learning standard; these algorithms are implied under "Advanced programming structures." (BC Computer Programming 12 is the grade-12 harder stream.)</span><span data-lang="zh">Computer Programming 12 内容（原文）："高级编程结构"；"复杂度管理"。BC ADST 计算机课程没有明确的查找/排序或算法效率学习标准；这些算法隐含在"高级编程结构"之下。（BC Computer Programming 12 是 12 年级的较深流。）</span></li>
       </ul>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE</span><span data-lang="zh">阿尔伯塔 — CSE</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta: CSE</span><span data-lang="zh">阿尔伯塔：CSE</span></div>
       <ul>
-        <li><strong>CSE3110</strong> <span class="honors-flag">Honors — Advanced</span> <span data-lang="en">Iterative Algorithm 1 (Advanced; prereq CSE2120). Description (verbatim): "Students learn a number of standard iterative data processing algorithms useful for working with data structures such as arrays. These include an iterative version of the binary search, the three basic sorts — exchange (bubble), insertion and selection, and a simple merge." Outcomes: "1.5 describe and represent iterative search algorithms including: 1.5.1 linear search; 1.5.2 binary search; 1.5.4 compare and contrast the … computational efficiencies of linear and binary searches." "1.6 describe and represent basic iterative sort algorithms including: 1.6.1 exchange sort; e.g., bubble sort; 1.6.2 selection sort; 1.6.3 insertion sort; 1.6.5 comparing and contrasting … computational efficiencies of different classes of sorts."</span><span data-lang="zh">迭代算法 1（高级模块；先修 CSE2120）。描述（原文）："学生学习许多用于处理数组等数据结构的标准迭代数据处理算法，包括二分查找的迭代版本、三种基本排序（交换排序/冒泡排序、插入排序、选择排序）及简单合并。"结果："1.5 描述和表示迭代查找算法：1.5.1 线性查找；1.5.2 二分查找；1.5.4 比较线性和二分查找的……计算效率。" "1.6 描述和表示基本迭代排序算法：1.6.1 交换排序（如冒泡排序）；1.6.2 选择排序；1.6.3 插入排序；1.6.5 比较不同类别排序的……计算效率。"</span></li>
+        <li><strong>CSE3110</strong> <span class="honors-flag">Honors: Advanced</span> <span data-lang="en">Iterative Algorithm 1 (Advanced; prereq CSE2120). Description (verbatim): "Students learn a number of standard iterative data processing algorithms useful for working with data structures such as arrays. These include an iterative version of the binary search, the three basic sorts: exchange (bubble), insertion and selection, and a simple merge." Outcomes: "1.5 describe and represent iterative search algorithms including: 1.5.1 linear search; 1.5.2 binary search; 1.5.4 compare and contrast the … computational efficiencies of linear and binary searches." "1.6 describe and represent basic iterative sort algorithms including: 1.6.1 exchange sort; e.g., bubble sort; 1.6.2 selection sort; 1.6.3 insertion sort; 1.6.5 comparing and contrasting … computational efficiencies of different classes of sorts."</span><span data-lang="zh">迭代算法 1（高级模块；先修 CSE2120）。描述（原文）："学生学习许多用于处理数组等数据结构的标准迭代数据处理算法，包括二分查找的迭代版本、三种基本排序（交换排序/冒泡排序、插入排序、选择排序）及简单合并。"结果："1.5 描述和表示迭代查找算法：1.5.1 线性查找；1.5.2 二分查找；1.5.4 比较线性和二分查找的……计算效率。" "1.6 描述和表示基本迭代排序算法：1.6.1 交换排序（如冒泡排序）；1.6.2 选择排序；1.6.3 插入排序；1.6.5 比较不同类别排序的……计算效率。"</span></li>
       </ul>
     </div>
   </div>
@@ -1459,27 +2133,27 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
     <tbody>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA 3B / AP CSP</span><span data-lang="zh">美国 CSTA 3B / AP CSP</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 core (search + efficiency). AP CSP topic 3.11 tests binary search directly; topic 3.17 tests efficiency. CSTA 3B-AP-10 (classic algorithms) and 3B-AP-11 (evaluate efficiency) are the specialist standards.</span><span data-lang="zh">&sect;1&ndash;&sect;3 核心（查找 + 效率）。AP CSP 主题 3.11 直接考查二分查找；主题 3.17 考查效率。CSTA 3B-AP-10（经典算法）和 3B-AP-11（评估效率）是专业标准。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 core (search + efficiency). AP CSP topic 3.11 covers binary search; topic 3.17 covers efficiency. CSTA 3B-AP-10 (classic algorithms) and 3B-AP-11 (evaluate efficiency) are the specialist standards.</span><span data-lang="zh">&sect;1&ndash;&sect;3 核心（查找 + 效率）。AP CSP 主题 3.11 涵盖二分查找；主题 3.17 涵盖效率。CSTA 3B-AP-10（经典算法）和 3B-AP-11（评估效率）是专业标准。</span></td>
         <td style="padding: 8px 10px;"><span data-lang="en">Sort implementation details (&sect;4&ndash;&sect;6) are enrichment for AP CSP; AP CSA (Java) covers them formally.</span><span data-lang="zh">排序实现细节（&sect;4&ndash;&sect;6）对 AP CSP 为拓展；AP CSA（Java）正式涵盖它们。</span></td>
-        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3B-AP-10, 3B-AP-11; AP CSP 3.11, 3.17; AAP-4.A</span><span data-lang="zh">&mdash; CSTA 3B-AP-10、3B-AP-11；AP CSP 3.11、3.17；AAP-4.A</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">: CSTA 3B-AP-10, 3B-AP-11; AP CSP 3.11, 3.17; AAP-4.A</span><span data-lang="zh">：CSTA 3B-AP-10、3B-AP-11；AP CSP 3.11、3.17；AAP-4.A</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 12 &mdash; ICS4U</span><span data-lang="zh">安大略 12 年级 &mdash; ICS4U</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON Grade 12: ICS4U</span><span data-lang="zh">安大略 12 年级：ICS4U</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. ICS4U A3.2 (linear + binary search), A3.4 (bubble, insertion, selection sorts), C2.2 (compare search efficiency), C2.3 (compare sort efficiency) all map directly.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。ICS4U A3.2（线性+二分查找）、A3.4（冒泡、插入、选择排序）、C2.2（比较查找效率）、C2.3（比较排序效率）均直接对应。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Recursion/merge-sort (A3.6) and formal Big-O derivations (C2.3 full) are ICS4U-only going-deeper material &mdash; flagged Honors.</span><span data-lang="zh">递归/归并排序（A3.6）和正式大O推导（C2.3 完整）属 ICS4U-only 深入内容，标注荣誉标记。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS4U A3.2, A3.4, A3.6, C2.2, C2.3</span><span data-lang="zh">&mdash; ICS4U A3.2、A3.4、A3.6、C2.2、C2.3</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Recursion/merge-sort (A3.6) and formal Big-O derivations (C2.3 full) are ICS4U-only going-deeper material: flagged Honors.</span><span data-lang="zh">递归/归并排序（A3.6）和正式大O推导（C2.3 完整）属 ICS4U-only 深入内容，标注荣誉标记。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">: ICS4U A3.2, A3.4, A3.6, C2.2, C2.3</span><span data-lang="zh">：ICS4U A3.2、A3.4、A3.6、C2.2、C2.3</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CP12</span><span data-lang="zh">BC &mdash; CP12</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC: CP12</span><span data-lang="zh">BC: CP12</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7. Computer Programming 12 "Advanced programming structures" and "Management of complexity" are the closest BC anchors; no explicit sorting/searching standard exists.</span><span data-lang="zh">&sect;1 至 &sect;7。BC Computer Programming 12"高级编程结构"和"复杂度管理"是最接近的 BC 依据；没有明确的排序/查找标准。</span></td>
         <td style="padding: 8px 10px;"><span data-lang="en">Formal Big-O analysis is enrichment for BC CP12 students.</span><span data-lang="zh">正式大O分析对 BC CP12 学生为拓展内容。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CP12 "Advanced programming structures"; "Management of complexity"</span><span data-lang="zh">&mdash; BC CP12"高级编程结构"；"复杂度管理"</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">: BC CP12 "Advanced programming structures"; "Management of complexity"</span><span data-lang="zh">：BC CP12"高级编程结构"；"复杂度管理"</span></td>
       </tr>
       <tr>
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE3110</span><span data-lang="zh">阿尔伯塔 &mdash; CSE3110</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB: CSE3110</span><span data-lang="zh">阿尔伯塔：CSE3110</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. CSE3110 outcomes 1.5 (linear + binary search) and 1.6 (bubble, selection, insertion sort) with efficiency comparison (1.5.4, 1.6.5) are a near-perfect match for this guide.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。CSE3110 结果 1.5（线性+二分查找）和 1.6（冒泡、选择、插入排序）以及效率比较（1.5.4、1.6.5）与本指南高度契合。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Recursive sorts (quicksort, merge sort) are CSE3310 &mdash; outside scope of this guide.</span><span data-lang="zh">递归排序（快速排序、归并排序）属 CSE3310，超出本指南范围。</span></td>
-        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE3110 outcomes 1.5.1&ndash;1.5.4, 1.6.1&ndash;1.6.5</span><span data-lang="zh">&mdash; CSE3110 结果 1.5.1&ndash;1.5.4、1.6.1&ndash;1.6.5</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Recursive sorts (quicksort, merge sort) are CSE3310: outside scope of this guide.</span><span data-lang="zh">递归排序（快速排序、归并排序）属 CSE3310，超出本指南范围。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">: CSE3110 outcomes 1.5.1&ndash;1.5.4, 1.6.1&ndash;1.6.5</span><span data-lang="zh">：CSE3110 结果 1.5.1&ndash;1.5.4、1.6.1&ndash;1.6.5</span></td>
       </tr>
     </tbody>
   </table>
@@ -1490,11 +2164,11 @@ print(data[pos] == 17)          # True  (found at index 3)</code></pre>
   <div class="two-col">
     <div class="card">
       <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
-      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise five things: linear search scans one-by-one (worst case n steps); binary search halves each time (worst case log&#x2082;n steps, sorted list required); bubble sort compares adjacent pairs; selection sort finds the minimum each pass; insertion sort builds a sorted left portion one element at a time. Read every cram-cheat box. Skip the Honors Big-O going-deeper box.</span><span data-lang="zh">背熟五件事：线性查找逐个扫描（最坏 n 步）；二分查找每次减半（最坏 log&#x2082;n 步，需已排序）；冒泡排序比较相邻元素；选择排序每轮找最小值；插入排序逐一将元素插入有序左段。读每个速记框，跳过荣誉大O深入框。</span></p>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise five things: linear search scans one-by-one (worst case n steps); binary search halves each time (worst case &lfloor;log&#x2082;n&rfloor; + 1 comparisons, sorted list required); bubble sort compares adjacent pairs; selection sort finds the minimum each pass; insertion sort builds a sorted left portion one element at a time. Read every cram-cheat box. Skip the Honors Big-O going-deeper box.</span><span data-lang="zh">背熟五件事：线性查找逐个扫描（最坏 n 步）；二分查找每次减半（最坏 &lfloor;log&#x2082;n&rfloor; + 1 次比较，需已排序）；冒泡排序比较相邻元素；选择排序每轮找最小值；插入排序逐一将元素插入有序左段。读每个速记框，跳过荣誉大O深入框。</span></p>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
-      <p style="font-size: 0.95rem;"><span data-lang="en">Trace every algorithm by hand with a concrete 6&ndash;8 element list before moving on. Know the pre-condition, worst-case step count, and best-use scenario for every algorithm. AP CSP Big Idea 3 topic 3.17 (efficiency) and Ontario ICS4U C2.2/C2.3 require you to compare algorithms by step count, not just name them. The Honors going-deeper boxes introduce Big-O notation at the formal level assessed in ICS4U and CSE3110.</span><span data-lang="zh">在继续学习之前，用具体的 6&ndash;8 个元素列表手工追踪每个算法。掌握每个算法的前提条件、最坏情况步骤数和最佳使用场景。AP CSP 大概念 3 主题 3.17（效率）和安大略 ICS4U C2.2/C2.3 要求你按步骤数比较算法，而不仅仅是叫出名字。荣誉深入框在 ICS4U 和 CSE3110 正式评估的级别引入大O表示法。</span></p>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Trace every algorithm by hand with a concrete 6&ndash;8 element list before moving on. Know the pre-condition, worst-case step count, and best-use scenario for every algorithm. AP CSP Big Idea 3 topic 3.17 (efficiency) and Ontario ICS4U C2.2/C2.3 require you to compare algorithms by step count, not just name them. The Honors going-deeper boxes introduce Big-O notation at the formal level named in ICS4U and CSE3110.</span><span data-lang="zh">在继续学习之前，用具体的 6&ndash;8 个元素列表手工追踪每个算法。掌握每个算法的前提条件、最坏情况步骤数和最佳使用场景。AP CSP 大概念 3 主题 3.17（效率）和安大略 ICS4U C2.2/C2.3 要求你按步骤数比较算法，而不仅仅是叫出名字。荣誉深入框在 ICS4U 和 CSE3110 所列的正式级别引入大O表示法。</span></p>
     </div>
   </div>
 
@@ -1724,6 +2398,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1867,21 +2557,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>

@@ -442,6 +442,72 @@ body.lang-zh       [data-lang="en"] { display: none; }
 }
 </style>
 <!-- END toc-course-nav-css -->
+<style id="sg-textbook-css">
+/* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
+.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.sg-objectives { border-top: 4px solid var(--accent); }
+.sg-examtip { border-left: 5px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+.sg-check { border-top: 4px solid var(--green); }
+.sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.sg-examtip .sg-label { color: var(--gold); }
+.sg-check .sg-label { color: var(--green); }
+.sg-objectives ul { margin: 0; padding-left: 1.2em; }
+.sg-objectives li { margin: 4px 0; }
+.sg-examtip p { margin: 0; }
+.sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
+.sg-check details.sg-q summary { font-weight: 600; }
+.sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
+.sg-check .sg-a p { margin: 0 0 6px; }
+/* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
+   a concept-box title takes its box's colour; a formula-box variant colours its top border;
+   .sg-list / .sg-steps space lists inside boxes. Use classes, not style="", in new content. */
+.concept-box > strong:first-child { color: var(--accent); }
+.concept-box.red > strong:first-child { color: var(--red); }
+.concept-box.green > strong:first-child { color: var(--green); }
+.concept-box.orange > strong:first-child { color: var(--orange); }
+.concept-box.purple > strong:first-child { color: var(--purple); }
+.concept-box.gold > strong:first-child { color: var(--gold); }
+.formula-box.red { border-top-color: var(--red); }
+.formula-box.green { border-top-color: var(--green); }
+.formula-box.orange { border-top-color: var(--orange); }
+.formula-box.purple { border-top-color: var(--purple); }
+.formula-box.gold { border-top-color: var(--gold); }
+.sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
+.sg-steps { margin-left: 24px; line-height: 1.8; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+  .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--text); stroke-width: 1.4; fill: var(--bg); }
+.sg-fig .dot { fill: var(--text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 
@@ -540,18 +606,25 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="section-label"><span data-lang="en">Section 1 &middot; Data concepts</span><span data-lang="zh">第 1 节 &middot; 数据概念</span></div>
   <h2><span data-lang="en">Data vs Information</span><span data-lang="zh">数据与信息</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Tell data from information by naming the context (label, unit, comparison) that gives a value meaning.</li><li>Name the Python data types int, float, str and bool, and predict how each behaves in <code>+</code>.</li><li>Turn a list of raw readings into information (an average, a count, the values above average) and describe the pattern it shows.</li></ul>
+    <ul data-lang="zh"><li>通过指出赋予数值含义的上下文（标签、单位、比较）来区分数据与信息。</li><li>说出 Python 的数据类型 int、float、str 和 bool，并预测它们在 <code>+</code> 下的行为。</li><li>把一组原始读数转化为信息（平均值、个数、高于平均的值），并描述其中的规律。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Two definitions to lock in first.</span><span data-lang="zh">先锁定两个定义。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Data</span><span data-lang="zh">数据</span></strong> <span data-lang="en">&mdash; raw, unprocessed facts and symbols. Examples: <code>98.6</code>, <code>"Alice"</code>, <code>true</code>, a pixel value. Data has no inherent meaning on its own.</span><span data-lang="zh">&mdash; 原始、未经处理的事实和符号。例如：<code>98.6</code>、<code>"Alice"</code>、<code>true</code>、一个像素值。数据本身没有固有含义。</span></li>
-      <li><strong><span data-lang="en">Information</span><span data-lang="zh">信息</span></strong> <span data-lang="en">&mdash; data that has been processed, organised, or interpreted so it carries meaning. Example: "Alice's body temperature is 98.6°F, which is normal." Context turns data into information.</span><span data-lang="zh">&mdash; 经过处理、组织或解释后具有含义的数据。例如："Alice 的体温是 98.6°F，属于正常。"上下文将数据转变为信息。</span></li>
-      <li><strong><span data-lang="en">Data types</span><span data-lang="zh">数据类型</span></strong> <span data-lang="en">&mdash; integer, float, string, Boolean, list. Every value stored in a program belongs to a type. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized and where data is stored."</span><span data-lang="zh">&mdash; 整数、浮点数、字符串、布尔值、列表。程序中存储的每个值都属于一种类型。CSTA 3A-DA-10："评估数据元素的组织方式和存储位置的权衡。"</span></li>
+      <li><strong><span data-lang="en">Data</span><span data-lang="zh">数据</span></strong><span data-lang="en">: raw, unprocessed facts and symbols. Examples: <code>98.6</code>, <code>"Alice"</code>, <code>true</code>, a pixel value. Data has no inherent meaning on its own.</span><span data-lang="zh">：原始、未经处理的事实和符号。例如：<code>98.6</code>、<code>"Alice"</code>、<code>true</code>、一个像素值。数据本身没有固有含义。</span></li>
+      <li><strong><span data-lang="en">Information</span><span data-lang="zh">信息</span></strong><span data-lang="en">: data that has been processed, organised, or interpreted so it carries meaning. Example: "Alice's body temperature is 98.6°F, which is normal." Context turns data into information.</span><span data-lang="zh">：经过处理、组织或解释后具有含义的数据。例如："Alice 的体温是 98.6°F，属于正常。"上下文将数据转变为信息。</span></li>
+      <li><strong><span data-lang="en">Data types</span><span data-lang="zh">数据类型</span></strong><span data-lang="en">: integer, float, string, Boolean, list. Every value stored in a program belongs to a type. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized and where data is stored."</span><span data-lang="zh">：整数、浮点数、字符串、布尔值、列表。程序中存储的每个值都属于一种类型。CSTA 3A-DA-10："评估数据元素的组织方式和存储位置的权衡。"</span></li>
     </ul>
     <span data-lang="en"><strong>The AP CSP angle:</strong> Big Idea 2 (DAT) opens with "Data are central to computing innovations because they communicate initial conditions to programs and represent new knowledge." (AP CSP CED, verbatim). The whole Big Idea is built on the data &rarr; information pipeline this section introduces.</span><span data-lang="zh"><strong>AP CSP 视角：</strong>大概念 2（DAT）以"数据是计算创新的核心，因为它们向程序传递初始条件并代表新知识"开篇（AP CSP CED 原文）。整个大概念建立在本节介绍的数据 &rarr; 信息管线之上。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 1: From sensor readings to a weather report</span><span data-lang="zh">例题 1：从传感器读数到天气报告</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-blue">WE</div><div class="card-title"><span data-lang="en">Worked Example 1 &middot; From sensor readings to a weather report</span><span data-lang="zh">例题 1 &middot; 从传感器读数到天气报告</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">A weather station collects three sensor readings every minute: temperature, humidity, pressure. Show the data &rarr; information transformation.</span><span data-lang="zh">气象站每分钟采集三个传感器读数：温度、湿度、气压。展示数据 &rarr; 信息转换过程。</span></p>
   </div>
   <div class="worked-solution">
@@ -559,7 +632,7 @@ body.lang-zh       [data-lang="en"] { display: none; }
     <pre><code>22.4, 65, 1013.2
 22.6, 64, 1013.0
 22.9, 63, 1012.7</code></pre>
-    <p><span data-lang="en"><em>The three columns are temperature (°C), humidity (%), and pressure (hPa) — but without column headers these numbers carry no meaning.</em></span><span data-lang="zh">三列分别是温度（°C）、湿度（%）、气压（hPa）——但如果没有列标题，这些数字毫无意义。</span></p>
+    <p><span data-lang="en"><em>The three columns are temperature (°C), humidity (%), and pressure (hPa), but without column headers these numbers carry no meaning.</em></span><span data-lang="zh">三列分别是温度（°C）、湿度（%）、气压（hPa），但如果没有列标题，这些数字毫无意义。</span></p>
     <p><strong><span data-lang="en">Processing step: label, aggregate, interpret.</span><span data-lang="zh">处理步骤：标注、聚合、解释。</span></strong></p>
     <pre><code># Python: compute average temperature from a list of readings
 readings = [22.4, 22.6, 22.9]
@@ -567,8 +640,44 @@ avg_temp = sum(readings) / len(readings)
 print(f"Average temperature: {avg_temp:.1f} °C")
 # Output: Average temperature: 22.6 °C</code></pre>
     <p><span data-lang="en"><em><code>sum(readings)</code> adds all values; <code>len(readings)</code> returns the list length; <code>f"..."</code> is a formatted string literal (f-string).</em></span><span data-lang="zh"><code>sum(readings)</code> 求和，<code>len(readings)</code> 取列表长度，<code>f"..."</code> 是格式化字符串。</span></p>
-    <p><strong><span data-lang="en">Information.</span><span data-lang="zh">信息。</span></strong> <span data-lang="en">"Average temperature over the last 3 minutes: 22.6 °C. Trend: rising. Humidity dropping. Pressure falling slowly — possible rain within 6 hours." The same raw numbers now carry actionable meaning. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data collected from a phenomenon or process."</span><span data-lang="zh">"过去 3 分钟平均温度：22.6 °C。趋势：上升。湿度下降。气压缓慢下降——6 小时内可能有雨。"同样的原始数字现在具有了可行动的含义。CSTA 3A-DA-12："创建计算模型，表示从现象或过程中收集的数据的不同元素之间的关系。"</span></p>
+    <p><strong><span data-lang="en">Information.</span><span data-lang="zh">信息。</span></strong> <span data-lang="en">"Average temperature over the last 3 minutes: 22.6 °C. Trend: rising. Humidity dropping. Pressure falling slowly, so rain is possible within 6 hours." The same raw numbers now carry actionable meaning. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data collected from a phenomenon or process."</span><span data-lang="zh">"过去 3 分钟平均温度：22.6 °C。趋势：上升。湿度下降。气压缓慢下降，6 小时内可能有雨。"同样的原始数字现在具有了可行动的含义。CSTA 3A-DA-12："创建计算模型，表示从现象或过程中收集的数据的不同元素之间的关系。"</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 2: Data types and a first summary</span><span data-lang="zh">例题 2：数据类型与初步汇总</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Python stores every value with a type. (a) Predict the type of 17, 17.0, "17" and True, and what 17 + 17 and "17" + "17" give. (b) Four test results are stored as [87, 92, 74, 95]. Turn this data into information: find the class average and the scores above it.</span><span data-lang="zh">Python 为每个值存储一个类型。(a) 预测 17、17.0、"17" 和 True 的类型，以及 17 + 17 和 "17" + "17" 的结果。(b) 四个测验成绩存为 [87, 92, 74, 95]。把这些数据转化为信息：求班级平均分以及高于平均分的成绩。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) Types.</strong> The type decides what an operator does, so check it before you predict.</span><span data-lang="zh"><strong>(a) 类型。</strong>类型决定运算符的行为，预测前先确认类型。</span></p>
+    <pre><code>values = [17, 17.0, "17", True]
+for v in values:
+    print(repr(v), type(v).__name__)
+print(17 + 17)
+print("17" + "17")
+
+# Output:
+# 17 int
+# 17.0 float
+# '17' str
+# True bool
+# 34
+# 1717</code></pre>
+    <p><span data-lang="en"><code>17</code> is an int, <code>17.0</code> a float, <code>"17"</code> a str (the quotes make it text) and <code>True</code> a bool. <code>+</code> adds two numbers (34) but joins two strings (<code>"1717"</code>): the same symbols are data of different types, so they behave differently.</span><span data-lang="zh"><code>17</code> 是 int，<code>17.0</code> 是 float，<code>"17"</code> 是 str（引号表示文本），<code>True</code> 是 bool。<code>+</code> 对两个数字做加法（34），对两个字符串做拼接（<code>"1717"</code>）：相同的符号，类型不同的数据，行为也不同。</span></p>
+    <p><span data-lang="en"><strong>(b) From data to information.</strong> The four numbers alone are data. Computing a summary and comparing each value with it adds meaning.</span><span data-lang="zh"><strong>(b) 从数据到信息。</strong>这四个数字本身只是数据。计算一个汇总值并把每个值与它比较，就增加了含义。</span></p>
+    <pre><code>scores = [87, 92, 74, 95]
+average = sum(scores) / len(scores)
+above = [s for s in scores if s &gt; average]
+print(f"Class average: {average}")
+print(f"Above average: {above}")
+
+# Output:
+# Class average: 87.0
+# Above average: [92, 95]</code></pre>
+    <p><span data-lang="en">Information: "The class average on the test is 87.0, and two of the four students (92 and 95) scored above it." The sum is 87 + 92 + 74 + 95 = 348, and 348 / 4 = 87.0. The pattern is that the two highest scores are the only ones above the average, which a bare list does not tell you. Note that <code>/</code> always gives a float, so the average prints as <code>87.0</code>, not <code>87</code>.</span><span data-lang="zh">信息："这次测验的班级平均分是 87.0，四名学生中有两人（92 和 95）高于平均分。"总和为 87 + 92 + 74 + 95 = 348，348 / 4 = 87.0。规律是只有最高的两个成绩高于平均分，这是单纯的列表看不出来的。注意 <code>/</code> 总是得到 float，所以平均分打印为 <code>87.0</code>，而不是 <code>87</code>。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A spreadsheet contains the values <code>87, 92, 74, 95</code> with no labels. Which best describes these values?</span><span data-lang="zh">一张电子表格包含值 <code>87, 92, 74, 95</code>，没有标签。哪个最能描述这些值？</span></div><div class="quiz-number">&sect;1 &middot; Q1</div></div>
@@ -589,11 +698,32 @@ print(f"Average temperature: {avg_temp:.1f} °C")
       <div class="quiz-opt" data-idx="0"><span data-lang="en">Choosing between Python and Java</span><span data-lang="zh">在 Python 和 Java 之间选择</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">Deciding whether to use a loop or recursion</span><span data-lang="zh">决定使用循环还是递归</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Selecting a font for a report</span><span data-lang="zh">为报告选择字体</span></div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Storing student records in a flat CSV vs a relational database — CSV is simpler but harder to query across tables</span><span data-lang="zh">将学生记录存储为平面 CSV 与关系数据库——CSV 更简单但跨表查询更难</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Storing student records in a flat CSV vs a relational database: CSV is simpler but harder to query across tables</span><span data-lang="zh">将学生记录存储为平面 CSV 与关系数据库：CSV 更简单但跨表查询更难</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">3A-DA-10 is about data organisation and storage decisions. Choosing between a flat file (CSV) and a relational database is a classic data-storage tradeoff: CSV is simple and portable but lacks relational querying power; a database is complex to set up but powerful to query.</span><span data-lang="zh">3A-DA-10 关于数据组织和存储决策。在平面文件（CSV）和关系数据库之间选择是经典的数据存储权衡：CSV 简单且可移植，但缺乏关系查询能力；数据库设置复杂，但查询功能强大。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Language choice, loop vs recursion, and fonts are not data organisation tradeoffs. The tradeoff CSTA 3A-DA-10 asks about is how and where to store data — e.g., CSV vs database.</span><span data-lang="zh">语言选择、循环与递归、字体都不是数据组织权衡。CSTA 3A-DA-10 问的权衡是如何以及在哪里存储数据——例如 CSV 与数据库。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Language choice, loop vs recursion, and fonts are not data organisation tradeoffs. The tradeoff CSTA 3A-DA-10 asks about is how and where to store data, for example CSV vs database.</span><span data-lang="zh">语言选择、循环与递归、字体都不是数据组织权衡。CSTA 3A-DA-10 问的权衡是如何以及在哪里存储数据，例如 CSV 与数据库。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question asks whether something is data or information, name the context that was added (a label, a unit, a comparison with an average) and say what it now means. Saying only "it has been processed" is an incomplete answer. A common error is calling every number information; an unlabelled number is data.</p><p data-lang="zh">当题目问某物是数据还是信息时，要指出所添加的上下文（标签、单位、与平均值的比较）并说明它现在表示什么。只说“它被处理过”是不完整的答案。常见错误是把所有数字都叫作信息；没有标签的数字是数据。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Is the value <code>98.6</code> data or information? Is the sentence "Alice's body temperature is 98.6 °F, which is normal" data or information?</span><span data-lang="zh">1. 值 <code>98.6</code> 是数据还是信息？句子“Alice 的体温是 98.6 °F，属于正常”是数据还是信息？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>98.6</code> alone is data: it has no label or unit. The sentence is information because the label (body temperature), the unit (°F) and an interpretation (normal) give it meaning.</p><p data-lang="zh">单独的 <code>98.6</code> 是数据：它没有标签或单位。这个句子是信息，因为标签（体温）、单位（°F）和解释（正常）赋予了它含义。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Predict the output of <code>print("17" + "17")</code> and <code>print(17 + 17)</code>, and explain the difference.</span><span data-lang="zh">2. 预测 <code>print("17" + "17")</code> 和 <code>print(17 + 17)</code> 的输出，并解释区别。</span></summary>
+      <div class="sg-a"><p data-lang="en">The first prints <code>1717</code> (two str values are joined); the second prints <code>34</code> (two int values are added). The operator <code>+</code> depends on the data type.</p><p data-lang="zh">第一个输出 <code>1717</code>（两个 str 被拼接）；第二个输出 <code>34</code>（两个 int 相加）。运算符 <code>+</code> 的行为取决于数据类型。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. For <code>scores = [60, 70, 80, 90]</code>, what do <code>average</code> and <code>[s for s in scores if s &gt; average]</code> give in the code of Worked Example 2?</span><span data-lang="zh">3. 对于 <code>scores = [60, 70, 80, 90]</code>，在例题 2 的代码中 <code>average</code> 和 <code>[s for s in scores if s &gt; average]</code> 分别是什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">The sum is 300 and the length is 4, so <code>average</code> is <code>75.0</code> (a float). The comprehension keeps the scores above 75.0, giving <code>[80, 90]</code>.</p><p data-lang="zh">总和为 300，长度为 4，所以 <code>average</code> 是 <code>75.0</code>（float）。列表推导式保留高于 75.0 的成绩，得到 <code>[80, 90]</code>。</p></div>
+    </details>
   </div>
 </section>
 
@@ -603,18 +733,25 @@ print(f"Average temperature: {avg_temp:.1f} °C")
   <div class="section-label"><span data-lang="en">Section 2 &middot; File input/output</span><span data-lang="zh">第 2 节 &middot; 文件读写</span></div>
   <h2><span data-lang="en">File Input/Output (Reading and Writing Files)</span><span data-lang="zh">文件输入/输出（读写文件）</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Open a text file with mode <code>"r"</code>, <code>"w"</code> or <code>"a"</code> and state what each does to existing content.</li><li>Read lines from a file, convert them with <code>int()</code>, and write results back with <code>f.write()</code>.</li><li>Use a <code>with</code> block so the file is closed automatically, and predict a file's contents after a write and an append.</li></ul>
+    <ul data-lang="zh"><li>用模式 <code>"r"</code>、<code>"w"</code> 或 <code>"a"</code> 打开文本文件，并说明每种模式对已有内容的影响。</li><li>从文件读取行，用 <code>int()</code> 转换，并用 <code>f.write()</code> 把结果写回。</li><li>使用 <code>with</code> 块自动关闭文件，并预测写入和追加之后文件的内容。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Three file operations to memorise.</span><span data-lang="zh">需要记住的三个文件操作。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Open</span><span data-lang="zh">打开</span></strong> <span data-lang="en">&mdash; connect a program to a file on disk. Modes: <code>"r"</code> read, <code>"w"</code> write (overwrites), <code>"a"</code> append. CSE2130 outcome 1.4.2: "opening an existing file."</span><span data-lang="zh">&mdash; 将程序连接到磁盘上的文件。模式：<code>"r"</code> 读取，<code>"w"</code> 写入（覆盖），<code>"a"</code> 追加。CSE2130 结果 1.4.2："打开现有文件。"</span></li>
-      <li><strong><span data-lang="en">Read / Write</span><span data-lang="zh">读取 / 写入</span></strong> <span data-lang="en">&mdash; transfer data between the program and the file. Read brings data in; write sends data out. CSE2130 outcomes 1.4.5 "importing data from a file" and 1.4.4 "exporting data to a file."</span><span data-lang="zh">&mdash; 在程序和文件之间传输数据。读取将数据带入；写入将数据送出。CSE2130 结果 1.4.5"从文件导入数据"和 1.4.4"将数据导出到文件"。</span></li>
-      <li><strong><span data-lang="en">Close</span><span data-lang="zh">关闭</span></strong> <span data-lang="en">&mdash; flush and disconnect. In Python, use <code>with open(...) as f:</code> — the file closes automatically when the block exits. Always close files to avoid data loss.</span><span data-lang="zh">&mdash; 刷新并断开连接。在 Python 中，使用 <code>with open(...) as f:</code>——代码块退出时文件自动关闭。始终关闭文件以避免数据丢失。</span></li>
+      <li><strong><span data-lang="en">Open</span><span data-lang="zh">打开</span></strong><span data-lang="en">: connect a program to a file on disk. Modes: <code>"r"</code> read, <code>"w"</code> write (overwrites), <code>"a"</code> append. CSE2130 outcome 1.4.2: "opening an existing file."</span><span data-lang="zh">：将程序连接到磁盘上的文件。模式：<code>"r"</code> 读取，<code>"w"</code> 写入（覆盖），<code>"a"</code> 追加。CSE2130 结果 1.4.2："打开现有文件。"</span></li>
+      <li><strong><span data-lang="en">Read / Write</span><span data-lang="zh">读取 / 写入</span></strong><span data-lang="en">: transfer data between the program and the file. Read brings data in; write sends data out. CSE2130 outcomes 1.4.5 "importing data from a file" and 1.4.4 "exporting data to a file."</span><span data-lang="zh">：在程序和文件之间传输数据。读取将数据带入；写入将数据送出。CSE2130 结果 1.4.5"从文件导入数据"和 1.4.4"将数据导出到文件"。</span></li>
+      <li><strong><span data-lang="en">Close</span><span data-lang="zh">关闭</span></strong><span data-lang="en">: flush and disconnect. In Python, use <code>with open(...) as f:</code>, and the file closes automatically when the block exits. Always close files to avoid data loss.</span><span data-lang="zh">：刷新并断开连接。在 Python 中，使用 <code>with open(...) as f:</code>，代码块退出时文件自动关闭。始终关闭文件以避免数据丢失。</span></li>
     </ul>
     <span data-lang="en">Ontario ICS4U A3.1 (verbatim): "demonstrate the ability to read from, and write to, an external file (e.g., text file, binary file, database, XML file) from within a computer program."</span><span data-lang="zh">安大略 ICS4U A3.1（原文）："展示从计算机程序内部读写外部文件（如文本文件、二进制文件、数据库、XML 文件）的能力。"</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 3: Reading a text file and writing a summary</span><span data-lang="zh">例题 3：读取文本文件并写入摘要</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 2 &middot; Reading a text file and writing a summary</span><span data-lang="zh">例题 2 &middot; 读取文本文件并写入摘要</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">File <code>scores.txt</code> contains one integer per line. Read all scores, compute the average, and write the result to <code>summary.txt</code>.</span><span data-lang="zh">文件 <code>scores.txt</code> 每行包含一个整数。读取所有成绩，计算平均值，并将结果写入 <code>summary.txt</code>。</span></p>
   </div>
   <div class="worked-solution">
@@ -643,6 +780,45 @@ print("Done. summary.txt written.")</code></pre>
     <pre><code>Count: 5
 Average: 87.2</code></pre>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 4: Appending to a file and the missing-newline trap</span><span data-lang="zh">例题 4：向文件追加数据与缺少换行符的陷阱</span></summary>
+  <div class="card">
+    <p><span data-lang="en">The file <code>scores.txt</code> from Worked Example 3 holds 87, 92, 74, 95 and 88, one per line. A new score, 91, must be added without erasing the old ones. Add it, read the file back, and report the count, the last score and the new average. Then show what goes wrong if the old last line has no newline.</span><span data-lang="zh">例题 3 中的文件 <code>scores.txt</code> 每行一个数，依次为 87、92、74、95、88。需要在不删除旧成绩的前提下加入新成绩 91。添加它，重新读取文件，并报告个数、最后一个成绩和新的平均分。再说明如果旧的最后一行没有换行符会出什么问题。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Step 1: append, then read.</strong> Mode <code>"a"</code> positions the write cursor at the end, so the five old lines stay. The first block recreates the file so that it runs on its own.</span><span data-lang="zh"><strong>第 1 步：追加，再读取。</strong>模式 <code>"a"</code> 把写入位置放在末尾，所以原有的五行保留。第一段代码先重建文件，使其可以独立运行。</span></p>
+    <pre><code># scores.txt holds 87, 92, 74, 95, 88 (one per line, each line ends with a newline)
+with open("scores.txt", "w") as f:
+    f.write("87\n92\n74\n95\n88\n")
+
+with open("scores.txt", "a") as f:       # append: keep the old lines
+    f.write("91\n")
+
+with open("scores.txt", "r") as f:
+    scores = [int(line.strip()) for line in f]
+
+print(len(scores), scores[-1], round(sum(scores) / len(scores), 1))
+
+# Output:
+# 6 91 87.8</code></pre>
+    <p><span data-lang="en">There are now 6 scores, the last one is 91, and the average is (87 + 92 + 74 + 95 + 88 + 91) / 6 = 527 / 6 = 87.83..., which <code>round(..., 1)</code> shows as <code>87.8</code>. Had the append step used <code>"w"</code> instead, the five old lines would have been erased first, leaving only 91.</span><span data-lang="zh">现在有 6 个成绩，最后一个是 91，平均分为 (87 + 92 + 74 + 95 + 88 + 91) / 6 = 527 / 6 = 87.83...，<code>round(..., 1)</code> 显示为 <code>87.8</code>。如果追加这一步改用 <code>"w"</code>，会先清空五行旧内容，只剩 91。</span></p>
+    <p><span data-lang="en"><strong>Step 2: the missing-newline trap.</strong> Append mode adds text exactly where the file ends. If the last line has no <code>\n</code>, the new text joins onto it.</span><span data-lang="zh"><strong>第 2 步：缺少换行符的陷阱。</strong>追加模式把文本恰好加在文件末尾。如果最后一行没有 <code>\n</code>，新文本会接在它后面。</span></p>
+    <pre><code>with open("bad.txt", "w") as f:
+    f.write("87\n88")                   # no newline after 88
+
+with open("bad.txt", "a") as f:
+    f.write("91\n")
+
+with open("bad.txt", "r") as f:
+    print(repr(f.read()))
+
+# Output:
+# '87\n8891\n'</code></pre>
+    <p><span data-lang="en">The file now holds <code>87</code> and <code>8891</code>: the score 88 and the new score 91 have merged into one wrong value. The fix is to write <code>"\n"</code> after every record (as in the first block), so the next append starts on a fresh line.</span><span data-lang="zh">文件现在包含 <code>87</code> 和 <code>8891</code>：成绩 88 与新成绩 91 合并成了一个错误的值。解决办法是在每条记录后写入 <code>"\n"</code>（如第一段代码），这样下一次追加就从新的一行开始。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In Python, which mode string opens a file for <em>appending</em> (adding to the end without erasing existing content)?</span><span data-lang="zh">在 Python 中，哪个模式字符串以<em>追加</em>方式打开文件（在末尾添加内容而不删除现有内容）？</span></div><div class="quiz-number">&sect;2 &middot; Q1</div></div>
@@ -652,8 +828,8 @@ Average: 87.2</code></pre>
       <div class="quiz-opt" data-idx="2"><code>"w"</code></div>
       <div class="quiz-opt" data-idx="3"><code>"x"</code></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en"><code>"a"</code> is append mode — it opens the file and positions the write cursor at the end, so new data is added after existing content. <code>"r"</code> = read only, <code>"w"</code> = write (overwrites everything), <code>"x"</code> = create new file (fails if file exists).</span><span data-lang="zh"><code>"a"</code> 是追加模式——打开文件并将写入游标定位在末尾，因此新数据添加到现有内容之后。<code>"r"</code> = 只读，<code>"w"</code> = 写入（覆盖所有内容），<code>"x"</code> = 创建新文件（文件已存在则失败）。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">File modes: <code>"r"</code> read, <code>"w"</code> write/overwrite, <code>"a"</code> append, <code>"x"</code> exclusive create. Appending means adding to the end without erasing — that is <code>"a"</code>.</span><span data-lang="zh">文件模式：<code>"r"</code> 读取，<code>"w"</code> 写入/覆盖，<code>"a"</code> 追加，<code>"x"</code> 独占创建。追加意味着在末尾添加而不删除——那就是 <code>"a"</code>。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>"a"</code> is append mode: it opens the file and positions the write cursor at the end, so new data is added after existing content. <code>"r"</code> = read only, <code>"w"</code> = write (overwrites everything), <code>"x"</code> = create new file (fails if file exists).</span><span data-lang="zh"><code>"a"</code> 是追加模式：打开文件并将写入游标定位在末尾，因此新数据添加到现有内容之后。<code>"r"</code> = 只读，<code>"w"</code> = 写入（覆盖所有内容），<code>"x"</code> = 创建新文件（文件已存在则失败）。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">File modes: <code>"r"</code> read, <code>"w"</code> write/overwrite, <code>"a"</code> append, <code>"x"</code> exclusive create. Appending means adding to the end without erasing; that is <code>"a"</code>.</span><span data-lang="zh">文件模式：<code>"r"</code> 读取，<code>"w"</code> 写入/覆盖，<code>"a"</code> 追加，<code>"x"</code> 独占创建。追加意味着在末尾添加而不删除，那就是 <code>"a"</code>。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
 
@@ -665,9 +841,30 @@ Average: 87.2</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">The <code>as f</code> clause closes the file when f is reassigned</span><span data-lang="zh"><code>as f</code> 子句在 f 被重新赋值时关闭文件</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Only write-mode files need to be closed</span><span data-lang="zh">只有写入模式的文件需要关闭</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>with</code> statement is a context manager. When execution leaves the <code>with</code> block — normally or via an exception — Python calls the file's <code>__exit__</code> method, which flushes and closes the file. This guarantees no data is lost even if an error occurs mid-write.</span><span data-lang="zh"><code>with</code> 语句是一个上下文管理器。当执行离开 <code>with</code> 块时——正常退出或通过异常——Python 调用文件的 <code>__exit__</code> 方法，该方法刷新并关闭文件。这保证即使写入过程中发生错误，数据也不会丢失。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>with</code> statement is a context manager. When execution leaves the <code>with</code> block (normally or via an exception), Python calls the file's <code>__exit__</code> method, which flushes and closes the file. This guarantees no data is lost even if an error occurs mid-write.</span><span data-lang="zh"><code>with</code> 语句是一个上下文管理器。当执行离开 <code>with</code> 块时（正常退出或通过异常），Python 调用文件的 <code>__exit__</code> 方法，该方法刷新并关闭文件。这保证即使写入过程中发生错误，数据也不会丢失。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Files should always be closed to flush buffers and release the OS file handle. The <code>with</code> block handles this automatically via Python's context manager protocol.</span><span data-lang="zh">文件应始终关闭以刷新缓冲区并释放操作系统文件句柄。<code>with</code> 块通过 Python 的上下文管理器协议自动处理这一点。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Name the mode and say what it does to the existing content: <code>"w"</code> overwrites, <code>"a"</code> appends, <code>"r"</code> only reads. Command words such as "state" and "explain" want that consequence, not just the letter. Common errors: using <code>"w"</code> when the question says "add", forgetting the <code>\n</code> at the end of each written line, and using the file after the <code>with</code> block has closed it.</p><p data-lang="zh">写出模式并说明它对已有内容的影响：<code>"w"</code> 覆盖，<code>"a"</code> 追加，<code>"r"</code> 只读。“说明”“解释”等指令词需要的是这个结果，而不只是字母。常见错误：题目说“添加”时却用 <code>"w"</code>，忘记在每行写入的末尾加 <code>\n</code>，以及在 <code>with</code> 块关闭文件之后继续使用文件。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. <code>notes.txt</code> holds the lines a and b. A program opens it with <code>"w"</code> and writes the line c. What does the file hold afterwards?</span><span data-lang="zh">1. <code>notes.txt</code> 中有 a、b 两行。程序用 <code>"w"</code> 打开它并写入一行 c。之后文件里是什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">Only the line c. Mode <code>"w"</code> erases the old content as soon as the file is opened.</p><p data-lang="zh">只有 c 这一行。模式 <code>"w"</code> 在打开文件时就清除了旧内容。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. The same file (now holding only c) is opened with <code>"a"</code> and the line d is written. What does it hold, and which mode would you use to read it back?</span><span data-lang="zh">2. 同一个文件（现在只有 c）用 <code>"a"</code> 打开并写入一行 d。文件里是什么？读取时用哪种模式？</span></summary>
+      <div class="sg-a"><p data-lang="en">It holds the lines c and d (<code>'c\nd\n'</code>), because append keeps the old content and adds at the end. To read it back use <code>"r"</code>.</p><p data-lang="zh">文件里是 c 和 d 两行（<code>'c\nd\n'</code>），因为追加会保留旧内容并添加到末尾。读取时用 <code>"r"</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A loop <code>for line in f: print(line)</code> prints a blank line between the records. Why, and what are two fixes?</span><span data-lang="zh">3. 循环 <code>for line in f: print(line)</code> 在每条记录之间多打印了一个空行。为什么？有哪两种修复方法？</span></summary>
+      <div class="sg-a"><p data-lang="en">Each <code>line</code> still ends with <code>\n</code>, and <code>print</code> adds another newline. Fix it with <code>print(line.strip())</code> or <code>print(line, end="")</code>.</p><p data-lang="zh">每个 <code>line</code> 末尾仍带着 <code>\n</code>，而 <code>print</code> 又添加了一个换行。用 <code>print(line.strip())</code> 或 <code>print(line, end="")</code> 修复。</p></div>
+    </details>
   </div>
 </section>
 
@@ -677,17 +874,24 @@ Average: 87.2</code></pre>
   <div class="section-label"><span data-lang="en">Section 3 &middot; CSV and structured data</span><span data-lang="zh">第 3 节 &middot; CSV 与结构化数据</span></div>
   <h2><span data-lang="en">CSV and Structured Data</span><span data-lang="zh">CSV 与结构化数据</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe a CSV file in terms of header row, record, field and delimiter, and say why it is an organised, portable format.</li><li>Read a CSV with <code>csv.DictReader</code>, convert string fields to numbers, and group records to find a pattern such as an average per grade.</li><li>Write a CSV with <code>csv.writer</code> and explain why splitting a line on commas by hand fails when a field contains a comma.</li></ul>
+    <ul data-lang="zh"><li>用标题行、记录、字段和分隔符描述 CSV 文件，并说明它为什么是有组织且便于移植的格式。</li><li>用 <code>csv.DictReader</code> 读取 CSV，把字符串字段转换为数字，并对记录分组以发现规律，例如每个年级的平均分。</li><li>用 <code>csv.writer</code> 写 CSV，并解释当字段内含逗号时为什么手动按逗号切分会出错。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">CSV in three facts.</span><span data-lang="zh">CSV 的三个要点。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">CSV = Comma-Separated Values</span><span data-lang="zh">CSV = 逗号分隔值</span></strong> <span data-lang="en">&mdash; a plain-text format where each line is a record and fields within a line are separated by commas. The first line is usually a header row naming each column.</span><span data-lang="zh">&mdash; 一种纯文本格式，每行是一条记录，行内字段用逗号分隔。第一行通常是命名每列的标题行。</span></li>
-      <li><strong><span data-lang="en">Universal exchange format</span><span data-lang="zh">通用交换格式</span></strong> <span data-lang="en">&mdash; spreadsheets, databases, and programs all export/import CSV. It is the most common format for sharing tabular data between systems. CSTA 3A-DA-11 says to "create interactive data visualisations" — CSV is how you get the data in.</span><span data-lang="zh">&mdash; 电子表格、数据库和程序都可以导出/导入 CSV。它是系统间共享表格数据最常见的格式。CSTA 3A-DA-11 要求"创建互动数据可视化"——CSV 就是数据的来源方式。</span></li>
-      <li><strong><span data-lang="en">Python's <code>csv</code> module</span><span data-lang="zh">Python 的 <code>csv</code> 模块</span></strong> <span data-lang="en">&mdash; <code>csv.reader</code> parses each row into a list; <code>csv.DictReader</code> maps each row to a dictionary keyed by column name. Always prefer <code>DictReader</code> for named columns.</span><span data-lang="zh">&mdash; <code>csv.reader</code> 将每行解析为列表；<code>csv.DictReader</code> 将每行映射为以列名为键的字典。对于有名列，始终优先使用 <code>DictReader</code>。</span></li>
+      <li><strong><span data-lang="en">CSV = Comma-Separated Values</span><span data-lang="zh">CSV = 逗号分隔值</span></strong><span data-lang="en">: a plain-text format where each line is a record and fields within a line are separated by commas. The first line is usually a header row naming each column.</span><span data-lang="zh">：一种纯文本格式，每行是一条记录，行内字段用逗号分隔。第一行通常是命名每列的标题行。</span></li>
+      <li><strong><span data-lang="en">Universal exchange format</span><span data-lang="zh">通用交换格式</span></strong><span data-lang="en">: spreadsheets, databases, and programs all export/import CSV. It is the most common format for sharing tabular data between systems. CSTA 3A-DA-11 says to "create interactive data visualisations"; CSV is how you get the data in.</span><span data-lang="zh">：电子表格、数据库和程序都可以导出/导入 CSV。它是系统间共享表格数据最常见的格式。CSTA 3A-DA-11 要求"创建互动数据可视化"；CSV 就是数据的来源方式。</span></li>
+      <li><strong><span data-lang="en">Python's <code>csv</code> module</span><span data-lang="zh">Python 的 <code>csv</code> 模块</span></strong><span data-lang="en">: <code>csv.reader</code> parses each row into a list; <code>csv.DictReader</code> maps each row to a dictionary keyed by column name. Always prefer <code>DictReader</code> for named columns.</span><span data-lang="zh">：<code>csv.reader</code> 将每行解析为列表；<code>csv.DictReader</code> 将每行映射为以列名为键的字典。对于有名列，始终优先使用 <code>DictReader</code>。</span></li>
     </ul>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 5: Reading a CSV of student records</span><span data-lang="zh">例题 5：读取学生记录的 CSV</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 3 &middot; Reading a CSV of student records</span><span data-lang="zh">例题 3 &middot; 读取学生记录的 CSV</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">File <code>students.csv</code> stores name, grade, and score. Read it and print students who scored above 85.</span><span data-lang="zh">文件 <code>students.csv</code> 存储姓名、年级和成绩。读取它并打印成绩高于 85 的学生。</span></p>
   </div>
   <div class="worked-solution">
@@ -713,6 +917,53 @@ with open("students.csv", "r") as f:
 # Eve 88</code></pre>
     <p><span data-lang="en"><em><code>import csv</code> loads the built-in csv module; <code>csv.DictReader(f)</code> reads each row as a dictionary (e.g. <code>{"name": "Alice", "grade": "11", "score": "92"}</code>); <code>int(row["score"])</code> converts the string to an integer before comparing; <code>row["name"]</code> accesses a field by column name.</em></span><span data-lang="zh"><code>import csv</code> 导入内置 csv 模块；<code>csv.DictReader(f)</code> 将每行读为字典（<code>{"name": "Alice", "grade": "11", "score": "92"}</code>）；<code>int(row["score"])</code> 将字符串转为整数后比较；<code>row["name"]</code> 通过列名访问字段。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 6: Averages per grade, and a field that contains a comma</span><span data-lang="zh">例题 6：按年级求平均分，以及含逗号的字段</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Using <code>students.csv</code> from Worked Example 5, find how many students are in each grade and each grade's average score. Then write a new record whose name contains a comma, and show why <code>split(",")</code> cannot read it back.</span><span data-lang="zh">使用例题 5 的 <code>students.csv</code>，求每个年级有多少名学生以及每个年级的平均成绩。然后写入一条姓名含逗号的新记录，并说明为什么 <code>split(",")</code> 无法正确读回它。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Step 1: group the records.</strong> A dictionary maps each grade to a list of its scores. <code>setdefault</code> creates the empty list the first time a grade appears. The first lines recreate the file so the block runs by itself.</span><span data-lang="zh"><strong>第 1 步：对记录分组。</strong>用字典把每个年级映射到该年级的成绩列表。年级第一次出现时，<code>setdefault</code> 会创建空列表。开头几行重建文件，使这段代码可以独立运行。</span></p>
+    <pre><code>import csv
+
+with open("students.csv", "w", newline="") as f:
+    f.write("name,grade,score\nAlice,11,92\nBob,11,78\nCarol,12,95\nDavid,12,82\nEve,11,88\n")
+
+totals = {}
+with open("students.csv", "r", newline="") as f:
+    for row in csv.DictReader(f):
+        totals.setdefault(row["grade"], []).append(int(row["score"]))
+
+for grade in sorted(totals):
+    scores = totals[grade]
+    print(grade, len(scores), sum(scores) / len(scores))
+
+# Output:
+# 11 3 86.0
+# 12 2 88.5</code></pre>
+    <p><span data-lang="en">Grade 11 holds Alice (92), Bob (78) and Eve (88): (92 + 78 + 88) / 3 = 258 / 3 = 86.0. Grade 12 holds Carol (95) and David (82): (95 + 82) / 2 = 88.5. The pattern is that the smaller grade 12 group has the higher average. Each key is a string such as <code>"11"</code>, because every CSV field is read as text; the scores were converted with <code>int()</code> before adding.</span><span data-lang="zh">11 年级有 Alice (92)、Bob (78) 和 Eve (88)：(92 + 78 + 88) / 3 = 258 / 3 = 86.0。12 年级有 Carol (95) 和 David (82)：(95 + 82) / 2 = 88.5。规律是人数较少的 12 年级平均分更高。每个键都是 <code>"11"</code> 这样的字符串，因为 CSV 的每个字段都以文本读取；成绩在相加前已用 <code>int()</code> 转换。</span></p>
+    <p><span data-lang="en"><strong>Step 2: a name with a comma.</strong> <code>csv.writer</code> wraps such a field in quotes. Splitting the line by hand ignores the quotes.</span><span data-lang="zh"><strong>第 2 步：含逗号的姓名。</strong><code>csv.writer</code> 会用引号把这样的字段括起来。手动切分一行时会忽略这些引号。</span></p>
+    <pre><code>import csv
+
+with open("new.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["name", "grade", "score"])
+    writer.writerow(["Lee, Amy", 11, 90])
+
+with open("new.csv", "r", newline="") as f:
+    text = f.read()
+line = text.splitlines()[1]
+print(line)
+print(line.split(","))
+
+# Output:
+# "Lee, Amy",11,90
+# ['"Lee', ' Amy"', '11', '90']</code></pre>
+    <p><span data-lang="en">The file line is <code>"Lee, Amy",11,90</code>: three fields, with the name quoted so its comma is data and not a delimiter. <code>split(",")</code> cuts at every comma and returns four pieces, with the quotes still attached. <code>csv.reader</code> and <code>csv.DictReader</code> understand the quotes and return the three fields <code>Lee, Amy</code>, <code>11</code> and <code>90</code>. Always use the csv module for reading and writing CSV.</span><span data-lang="zh">文件中的这一行是 <code>"Lee, Amy",11,90</code>：三个字段，姓名被加了引号，所以其中的逗号是数据而不是分隔符。<code>split(",")</code> 在每个逗号处切开，得到四段，引号还连在上面。<code>csv.reader</code> 和 <code>csv.DictReader</code> 能识别引号，返回三个字段 <code>Lee, Amy</code>、<code>11</code> 和 <code>90</code>。读写 CSV 时始终使用 csv 模块。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In a CSV file, the first row is <code>name,grade,score</code>. What is this row called?</span><span data-lang="zh">在 CSV 文件中，第一行是 <code>name,grade,score</code>。这一行叫什么？</span></div><div class="quiz-number">&sect;3 &middot; Q1</div></div>
@@ -722,7 +973,7 @@ with open("students.csv", "r") as f:
       <div class="quiz-opt" data-idx="2"><span data-lang="en">A header row</span><span data-lang="zh">标题行</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">A delimiter</span><span data-lang="zh">分隔符</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">The first row of a CSV is the <strong>header row</strong> — it names each column. Every subsequent row is a <strong>record</strong> (one row of data). Each item within a row is a <strong>field</strong>. The comma is the <strong>delimiter</strong> (separator character).</span><span data-lang="zh">CSV 的第一行是<strong>标题行</strong>——它命名每列。之后的每行是一条<strong>记录</strong>（一行数据）。行内每项是一个<strong>字段</strong>。逗号是<strong>分隔符</strong>（分隔字符）。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The first row of a CSV is the <strong>header row</strong>: it names each column. Every subsequent row is a <strong>record</strong> (one row of data). Each item within a row is a <strong>field</strong>. The comma is the <strong>delimiter</strong> (separator character).</span><span data-lang="zh">CSV 的第一行是<strong>标题行</strong>，它命名每列。之后的每行是一条<strong>记录</strong>（一行数据）。行内每项是一个<strong>字段</strong>。逗号是<strong>分隔符</strong>（分隔字符）。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Header row = first row naming columns. Record = a subsequent data row. Field = one value within a row. Delimiter = the comma separator character.</span><span data-lang="zh">标题行 = 命名列的第一行。记录 = 后续数据行。字段 = 行内一个值。分隔符 = 逗号分隔字符。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -730,14 +981,35 @@ with open("students.csv", "r") as f:
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">A program reads a CSV where all values are strings. To compare the <code>score</code> field to <code>85</code> numerically, what must you do first?</span><span data-lang="zh">程序读取一个 CSV，所有值都是字符串。要将 <code>score</code> 字段与 <code>85</code> 进行数值比较，必须先做什么？</span></div><div class="quiz-number">&sect;3 &middot; Q2</div></div>
     <div class="quiz-options">
-      <div class="quiz-opt" data-idx="0"><span data-lang="en">Nothing — Python compares strings and integers automatically</span><span data-lang="zh">什么都不用做——Python 自动比较字符串和整数</span></div>
+      <div class="quiz-opt" data-idx="0"><span data-lang="en">Nothing: Python compares strings and integers automatically</span><span data-lang="zh">什么都不用做：Python 自动比较字符串和整数</span></div>
       <div class="quiz-opt" data-idx="1"><span data-lang="en">Convert the string to an integer using <code>int(row["score"])</code></span><span data-lang="zh">使用 <code>int(row["score"])</code> 将字符串转换为整数</span></div>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Convert 85 to a string using <code>str(85)</code></span><span data-lang="zh">使用 <code>str(85)</code> 将 85 转换为字符串</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Use double equals: <code>row["score"] == 85</code></span><span data-lang="zh">使用双等号：<code>row["score"] == 85</code></span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en">CSV values are always read as strings. Comparing <code>"92" &gt; 85</code> would raise a TypeError in Python 3 (or give wrong results in Python 2). You must first convert: <code>int(row["score"]) &gt; 85</code>. This is the most common bug when processing CSV data.</span><span data-lang="zh">CSV 值始终作为字符串读取。在 Python 3 中，比较 <code>"92" &gt; 85</code> 会引发 TypeError（在 Python 2 中会给出错误结果）。必须先转换：<code>int(row["score"]) &gt; 85</code>。这是处理 CSV 数据时最常见的错误。</span></div>
-    <div class="quiz-explain wrong-exp"><span data-lang="en">Python 3 raises a TypeError if you compare a string to an integer with &gt;. CSV fields are always strings — convert them first with <code>int()</code> or <code>float()</code> before numeric comparison.</span><span data-lang="zh">Python 3 中用 &gt; 比较字符串和整数会引发 TypeError。CSV 字段始终是字符串——在数值比较之前先用 <code>int()</code> 或 <code>float()</code> 转换。</span></div>
+    <div class="quiz-explain wrong-exp"><span data-lang="en">Python 3 raises a TypeError if you compare a string to an integer with &gt;. CSV fields are always strings, so convert them first with <code>int()</code> or <code>float()</code> before numeric comparison.</span><span data-lang="zh">Python 3 中用 &gt; 比较字符串和整数会引发 TypeError。CSV 字段始终是字符串，所以在数值比较之前先用 <code>int()</code> 或 <code>float()</code> 转换。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Use the right words for the parts of a CSV: the first row is the header row, each later row is a record, each value is a field, and the comma is the delimiter. When you compare or add a field, show the <code>int()</code> or <code>float()</code> conversion; without it the value is a string. Common errors: calling the header a record, and splitting a line on commas by hand.</p><p data-lang="zh">用对 CSV 各部分的术语：第一行是标题行，之后每一行是一条记录，每个值是一个字段，逗号是分隔符。比较或相加某个字段时，要写出 <code>int()</code> 或 <code>float()</code> 转换；没有转换，值仍是字符串。常见错误：把标题行叫作记录，以及手动按逗号切分一行。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. A line in a CSV with the header <code>name,grade,score</code> is <code>Lee, Amy,11,90</code> (no quotes). How many fields does <code>split(",")</code> find, and what is wrong with the file?</span><span data-lang="zh">1. 一个 CSV 的标题为 <code>name,grade,score</code>，其中一行是 <code>Lee, Amy,11,90</code>（没有引号）。<code>split(",")</code> 找到几个字段？这个文件有什么问题？</span></summary>
+      <div class="sg-a"><p data-lang="en">It finds four fields, but the header promises three. The name contains a comma, so the field should have been written in quotes, <code>"Lee, Amy"</code>, which <code>csv.writer</code> does automatically.</p><p data-lang="zh">找到四个字段，但标题只有三列。姓名里含逗号，所以该字段应该写成带引号的 <code>"Lee, Amy"</code>，<code>csv.writer</code> 会自动这样做。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. For <code>row = {"name": "Alice", "score": "92"}</code>, what do <code>row["score"] * 2</code> and <code>row["score"] + 5</code> do, and how do you get 97?</span><span data-lang="zh">2. 对于 <code>row = {"name": "Alice", "score": "92"}</code>，<code>row["score"] * 2</code> 和 <code>row["score"] + 5</code> 分别会怎样？如何得到 97？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>row["score"]</code> is the string <code>"92"</code>, so <code>* 2</code> repeats it to give <code>"9292"</code> and <code>+ 5</code> raises a TypeError (a str cannot be added to an int). <code>int(row["score"]) + 5</code> gives 97.</p><p data-lang="zh"><code>row["score"]</code> 是字符串 <code>"92"</code>，所以 <code>* 2</code> 把它重复得到 <code>"9292"</code>，而 <code>+ 5</code> 会引发 TypeError（str 不能与 int 相加）。<code>int(row["score"]) + 5</code> 得到 97。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. In Worked Example 6, which grade has the higher average, and why is it risky to rely on that pattern with only two students in grade 12?</span><span data-lang="zh">3. 在例题 6 中，哪个年级的平均分更高？为什么只有两名 12 年级学生时依赖这个规律有风险？</span></summary>
+      <div class="sg-a"><p data-lang="en">Grade 12 (88.5 against 86.0). With only two students, one more score could change the average a lot, so the pattern is weak evidence.</p><p data-lang="zh">12 年级更高（88.5 对 86.0）。只有两名学生时，多一个成绩就可能大幅改变平均分，所以这个规律的证据很弱。</p></div>
+    </details>
   </div>
 </section>
 
@@ -747,20 +1019,27 @@ with open("students.csv", "r") as f:
   <div class="section-label"><span data-lang="en">Section 4 &middot; Relational databases and tables</span><span data-lang="zh">第 4 节 &middot; 关系数据库与表</span></div>
   <h2><span data-lang="en">Relational Databases and Tables</span><span data-lang="zh">关系数据库与表</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Identify the primary key and the foreign key in a pair of tables, and read which rows are linked by matching key values.</li><li>Explain how normalisation (storing each fact once) keeps data consistent, using an update example.</li><li>Describe what a database with foreign-key checking does when a row refers to a key that does not exist.</li></ul>
+    <ul data-lang="zh"><li>在一对表中识别主键和外键，并通过匹配的键值读出哪些行相关联。</li><li>用更新的例子解释规范化（每个事实只存储一次）如何保持数据一致。</li><li>描述启用外键检查的数据库在某行引用不存在的键时会怎么做。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">Four key terms for relational databases.</span><span data-lang="zh">关系数据库的四个关键术语。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">Table</span><span data-lang="zh">表</span></strong> <span data-lang="en">&mdash; a two-dimensional grid of data: rows (records) and columns (fields/attributes). Like a CSV, but stored in the database engine.</span><span data-lang="zh">&mdash; 二维数据网格：行（记录）和列（字段/属性）。类似 CSV，但存储在数据库引擎中。</span></li>
-      <li><strong><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></strong> <span data-lang="en">&mdash; a column (or set of columns) whose value uniquely identifies each row. Example: <code>student_id</code> in a Students table. No two rows may share the same primary key.</span><span data-lang="zh">&mdash; 唯一标识每行的列（或列集合）。例如：Students 表中的 <code>student_id</code>。任何两行不得共享相同的主键。</span></li>
-      <li><strong><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></strong> <span data-lang="en">&mdash; a column in one table that references the primary key of another table. This is the "relational" part — it links two tables together. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized."</span><span data-lang="zh">&mdash; 一个表中引用另一个表主键的列。这就是"关系"的部分——它将两个表连接在一起。CSTA 3A-DA-10："评估数据元素组织方式的权衡。"</span></li>
-      <li><strong><span data-lang="en">Normalisation</span><span data-lang="zh">规范化</span></strong> <span data-lang="en">&mdash; organising data to reduce duplication. Instead of repeating a student's name in every grade record, store the name once in the Students table and reference it by ID.</span><span data-lang="zh">&mdash; 组织数据以减少重复。与其在每条成绩记录中重复学生姓名，不如在 Students 表中存储一次姓名并通过 ID 引用。</span></li>
+      <li><strong><span data-lang="en">Table</span><span data-lang="zh">表</span></strong><span data-lang="en">: a two-dimensional grid of data: rows (records) and columns (fields/attributes). Like a CSV, but stored in the database engine.</span><span data-lang="zh">：二维数据网格：行（记录）和列（字段/属性）。类似 CSV，但存储在数据库引擎中。</span></li>
+      <li><strong><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></strong><span data-lang="en">: a column (or set of columns) whose value uniquely identifies each row. Example: <code>student_id</code> in a Students table. No two rows may share the same primary key.</span><span data-lang="zh">：唯一标识每行的列（或列集合）。例如：Students 表中的 <code>student_id</code>。任何两行不得共享相同的主键。</span></li>
+      <li><strong><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></strong><span data-lang="en">: a column in one table that references the primary key of another table. This is the "relational" part: it links two tables together. CSTA 3A-DA-10: "Evaluate the tradeoffs in how data elements are organized."</span><span data-lang="zh">：一个表中引用另一个表主键的列。这就是"关系"的部分：它将两个表连接在一起。CSTA 3A-DA-10："评估数据元素组织方式的权衡。"</span></li>
+      <li><strong><span data-lang="en">Normalisation</span><span data-lang="zh">规范化</span></strong><span data-lang="en">: organising data to reduce duplication. Instead of repeating a student's name in every grade record, store the name once in the Students table and reference it by ID.</span><span data-lang="zh">：组织数据以减少重复。与其在每条成绩记录中重复学生姓名，不如在 Students 表中存储一次姓名并通过 ID 引用。</span></li>
     </ul>
     <span data-lang="en">ICS4C A2.2 (verbatim): "demonstrate the ability to read from, and write to, an external file (e.g., sequential file, database, XML file, <strong>relational database via SQL</strong>)." Note: this is the Ontario college stream (Grade 12 ICS4C), not the university stream (ICS4U).</span><span data-lang="zh">ICS4C A2.2（原文）："展示读写外部文件（如顺序文件、数据库、XML 文件、<strong>通过 SQL 的关系数据库</strong>）的能力。"注意：这是安大略学院流（12 年级 ICS4C），而非大学流（ICS4U）。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 7: Two linked tables, Students and Scores</span><span data-lang="zh">例题 7：两个关联表（Students 与 Scores）</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-green">WE</div><div class="card-title"><span data-lang="en">Worked Example 4 &middot; Two linked tables — Students and Grades</span><span data-lang="zh">例题 4 &middot; 两个关联表——Students 与 Grades</span></div></div>
-    <p style="font-size: 0.95rem;"><span data-lang="en">Design a relational database for student grades. One table stores students; another stores assignments. Link them with a foreign key.</span><span data-lang="zh">为学生成绩设计一个关系数据库。一个表存储学生；另一个表存储作业。用外键将它们连接。</span></p>
+    <p style="font-size: 0.95rem;"><span data-lang="en">Design a relational database for student grades. One table stores students; another stores scores. Link them with a foreign key.</span><span data-lang="zh">为学生成绩设计一个关系数据库。一个表存储学生；另一个表存储成绩。用外键将它们连接。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">Table 1: Students (primary key = student_id).</span><span data-lang="zh">表 1：Students（主键 = student_id）。</span></strong></p>
@@ -786,8 +1065,129 @@ with open("students.csv", "r") as f:
         </tbody>
       </table>
     </div>
-    <p><span data-lang="en">Alice's name is stored once in Students. Her two score rows in Scores reference her by <code>student_id = 1</code>. If her name changes, we update it in one place only — that is the benefit of normalisation. Without a relational database, every score row would repeat her full name, wasting space and risking inconsistency.</span><span data-lang="zh">Alice 的姓名在 Students 中只存储一次。她在 Scores 中的两条成绩行通过 <code>student_id = 1</code> 引用她。如果她的姓名变了，只需在一个地方更新——这就是规范化的好处。没有关系数据库，每条成绩行都要重复她的全名，浪费空间且容易出现不一致。</span></p>
+    <p><span data-lang="en">Alice's name is stored once in Students. Her two score rows in Scores reference her by <code>student_id = 1</code>. If her name changes, we update it in one place only, which is the benefit of normalisation. Without a relational design, every score row would repeat her full name, and the copies could disagree after an edit.</span><span data-lang="zh">Alice 的姓名在 Students 中只存储一次。她在 Scores 中的两条成绩行通过 <code>student_id = 1</code> 引用她。如果她的姓名变了，只需在一个地方更新，这就是规范化的好处。没有关系设计，每条成绩行都要重复她的全名，修改后各份副本可能互相矛盾。</span></p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 480 236" role="img" aria-label="Two tables. Students has student_id, name, grade with rows 1 Alice 11, 2 Bob 11, 3 Carol 12. Scores has score_id, student_id, subject, score with rows 1 1 Math 92, 2 1 CS 88, 3 2 Math 78, 4 3 CS 95. Lines join each student_id in Scores to the matching Students row: two lines reach Alice, one reaches Bob, one reaches Carol.">
+    <text data-lang="en" x="10" y="22">Students table</text><text data-lang="zh" x="10" y="22">Students 表</text>
+    <text data-lang="en" x="250" y="22">Scores table</text><text data-lang="zh" x="250" y="22">Scores 表</text>
+    <text class="c1t" data-lang="en" x="43" y="43" text-anchor="middle">PK</text><text class="c1t" data-lang="zh" x="43" y="43" text-anchor="middle">PK</text>
+    <text class="c1t" data-lang="en" x="277" y="43" text-anchor="middle">PK</text><text class="c1t" data-lang="zh" x="277" y="43" text-anchor="middle">PK</text>
+    <text class="c2t" data-lang="en" x="337" y="43" text-anchor="middle">FK</text><text class="c2t" data-lang="zh" x="337" y="43" text-anchor="middle">FK</text>
+    <rect class="box" x="10" y="50" width="66" height="24"/>
+    <text class="mut" data-lang="en" x="43" y="66" text-anchor="middle">student_id</text><text class="mut" data-lang="zh" x="43" y="66" text-anchor="middle">student_id</text>
+    <rect class="box" x="76" y="50" width="50" height="24"/>
+    <text class="mut" data-lang="en" x="101" y="66" text-anchor="middle">name</text><text class="mut" data-lang="zh" x="101" y="66" text-anchor="middle">name</text>
+    <rect class="box" x="126" y="50" width="44" height="24"/>
+    <text class="mut" data-lang="en" x="148" y="66" text-anchor="middle">grade</text><text class="mut" data-lang="zh" x="148" y="66" text-anchor="middle">grade</text>
+    <rect class="box" x="10" y="74" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="43" y="91" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="43" y="91" text-anchor="middle">1</text>
+    <rect class="box" x="76" y="74" width="50" height="26"/>
+    <text class="mono" data-lang="en" x="101" y="91" text-anchor="middle">Alice</text><text class="mono" data-lang="zh" x="101" y="91" text-anchor="middle">Alice</text>
+    <rect class="box" x="126" y="74" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="148" y="91" text-anchor="middle">11</text><text class="mono" data-lang="zh" x="148" y="91" text-anchor="middle">11</text>
+    <rect class="box" x="10" y="100" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="43" y="117" text-anchor="middle">2</text><text class="mono" data-lang="zh" x="43" y="117" text-anchor="middle">2</text>
+    <rect class="box" x="76" y="100" width="50" height="26"/>
+    <text class="mono" data-lang="en" x="101" y="117" text-anchor="middle">Bob</text><text class="mono" data-lang="zh" x="101" y="117" text-anchor="middle">Bob</text>
+    <rect class="box" x="126" y="100" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="148" y="117" text-anchor="middle">11</text><text class="mono" data-lang="zh" x="148" y="117" text-anchor="middle">11</text>
+    <rect class="box" x="10" y="126" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="43" y="143" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="43" y="143" text-anchor="middle">3</text>
+    <rect class="box" x="76" y="126" width="50" height="26"/>
+    <text class="mono" data-lang="en" x="101" y="143" text-anchor="middle">Carol</text><text class="mono" data-lang="zh" x="101" y="143" text-anchor="middle">Carol</text>
+    <rect class="box" x="126" y="126" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="148" y="143" text-anchor="middle">12</text><text class="mono" data-lang="zh" x="148" y="143" text-anchor="middle">12</text>
+    <rect class="box" x="250" y="50" width="54" height="24"/>
+    <text class="mut" data-lang="en" x="277" y="66" text-anchor="middle">score_id</text><text class="mut" data-lang="zh" x="277" y="66" text-anchor="middle">score_id</text>
+    <rect class="box" x="304" y="50" width="66" height="24"/>
+    <text class="mut" data-lang="en" x="337" y="66" text-anchor="middle">student_id</text><text class="mut" data-lang="zh" x="337" y="66" text-anchor="middle">student_id</text>
+    <rect class="box" x="370" y="50" width="52" height="24"/>
+    <text class="mut" data-lang="en" x="396" y="66" text-anchor="middle">subject</text><text class="mut" data-lang="zh" x="396" y="66" text-anchor="middle">subject</text>
+    <rect class="box" x="422" y="50" width="44" height="24"/>
+    <text class="mut" data-lang="en" x="444" y="66" text-anchor="middle">score</text><text class="mut" data-lang="zh" x="444" y="66" text-anchor="middle">score</text>
+    <rect class="box" x="250" y="74" width="54" height="26"/>
+    <text class="mono" data-lang="en" x="277" y="91" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="277" y="91" text-anchor="middle">1</text>
+    <rect class="box" x="304" y="74" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="337" y="91" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="337" y="91" text-anchor="middle">1</text>
+    <rect class="box" x="370" y="74" width="52" height="26"/>
+    <text class="mono" data-lang="en" x="396" y="91" text-anchor="middle">Math</text><text class="mono" data-lang="zh" x="396" y="91" text-anchor="middle">Math</text>
+    <rect class="box" x="422" y="74" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="444" y="91" text-anchor="middle">92</text><text class="mono" data-lang="zh" x="444" y="91" text-anchor="middle">92</text>
+    <rect class="box" x="250" y="100" width="54" height="26"/>
+    <text class="mono" data-lang="en" x="277" y="117" text-anchor="middle">2</text><text class="mono" data-lang="zh" x="277" y="117" text-anchor="middle">2</text>
+    <rect class="box" x="304" y="100" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="337" y="117" text-anchor="middle">1</text><text class="mono" data-lang="zh" x="337" y="117" text-anchor="middle">1</text>
+    <rect class="box" x="370" y="100" width="52" height="26"/>
+    <text class="mono" data-lang="en" x="396" y="117" text-anchor="middle">CS</text><text class="mono" data-lang="zh" x="396" y="117" text-anchor="middle">CS</text>
+    <rect class="box" x="422" y="100" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="444" y="117" text-anchor="middle">88</text><text class="mono" data-lang="zh" x="444" y="117" text-anchor="middle">88</text>
+    <rect class="box" x="250" y="126" width="54" height="26"/>
+    <text class="mono" data-lang="en" x="277" y="143" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="277" y="143" text-anchor="middle">3</text>
+    <rect class="box" x="304" y="126" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="337" y="143" text-anchor="middle">2</text><text class="mono" data-lang="zh" x="337" y="143" text-anchor="middle">2</text>
+    <rect class="box" x="370" y="126" width="52" height="26"/>
+    <text class="mono" data-lang="en" x="396" y="143" text-anchor="middle">Math</text><text class="mono" data-lang="zh" x="396" y="143" text-anchor="middle">Math</text>
+    <rect class="box" x="422" y="126" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="444" y="143" text-anchor="middle">78</text><text class="mono" data-lang="zh" x="444" y="143" text-anchor="middle">78</text>
+    <rect class="box" x="250" y="152" width="54" height="26"/>
+    <text class="mono" data-lang="en" x="277" y="169" text-anchor="middle">4</text><text class="mono" data-lang="zh" x="277" y="169" text-anchor="middle">4</text>
+    <rect class="box" x="304" y="152" width="66" height="26"/>
+    <text class="mono" data-lang="en" x="337" y="169" text-anchor="middle">3</text><text class="mono" data-lang="zh" x="337" y="169" text-anchor="middle">3</text>
+    <rect class="box" x="370" y="152" width="52" height="26"/>
+    <text class="mono" data-lang="en" x="396" y="169" text-anchor="middle">CS</text><text class="mono" data-lang="zh" x="396" y="169" text-anchor="middle">CS</text>
+    <rect class="box" x="422" y="152" width="44" height="26"/>
+    <text class="mono" data-lang="en" x="444" y="169" text-anchor="middle">95</text><text class="mono" data-lang="zh" x="444" y="169" text-anchor="middle">95</text>
+    <rect class="fill2" x="304" y="50" width="66" height="128"/>
+    <polyline class="c2" points="304,77 76,77"/>
+    <circle class="dot" cx="304" cy="77" r="3"/><circle class="dot" cx="76" cy="77" r="3"/>
+    <polyline class="c2" points="304,103 190,103 190,97 76,97"/>
+    <circle class="dot" cx="304" cy="103" r="3"/><circle class="dot" cx="76" cy="97" r="3"/>
+    <polyline class="c2" points="304,129 230,129 230,122 76,122"/>
+    <circle class="dot" cx="304" cy="129" r="3"/><circle class="dot" cx="76" cy="122" r="3"/>
+    <polyline class="c2" points="304,155 210,155 210,148 76,148"/>
+    <circle class="dot" cx="304" cy="155" r="3"/><circle class="dot" cx="76" cy="148" r="3"/>
+    <text data-lang="en" x="10" y="202">Alice (student_id 1) has two lines: two Scores rows.</text><text data-lang="zh" x="10" y="202">Alice（student_id 1）有两条线：两条 Scores 行。</text>
+    <text data-lang="en" x="10" y="224">FK values 1, 1, 2, 3 point to PK values 1, 2, 3.</text><text data-lang="zh" x="10" y="224">外键值 1、1、2、3 指向主键值 1、2、3。</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. The Students and Scores tables of Worked Example 7. Each line joins a foreign key value in Scores.student_id to the primary key it refers to in Students: Alice (1) is reached by score_id 1 and 2 (Math 92, CS 88), Bob (2) by score_id 3 (Math 78) and Carol (3) by score_id 4 (CS 95). Reading across a line gives the JOIN result.</span><span data-lang="zh">图 1. 例题 7 的 Students 表和 Scores 表。每条线把 Scores.student_id 中的外键值连到它在 Students 中引用的主键：Alice (1) 对应 score_id 1 和 2（Math 92、CS 88），Bob (2) 对应 score_id 3（Math 78），Carol (3) 对应 score_id 4（CS 95）。沿着线读取就得到 JOIN 的结果。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 8: Updating one fact, and rejecting a row with no parent</span><span data-lang="zh">例题 8：更新一个事实，以及拒绝没有父记录的行</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Alice (student_id 1) changes her name to Alice Wu. (a) How many rows must change if names are stored once in Students, and how many if every score row repeats the name? (b) What should happen if someone adds a Scores row for student_id 9, who does not exist? Check both with Python's sqlite3 module on the tables of Worked Example 7.</span><span data-lang="zh">Alice（student_id 1）把名字改为 Alice Wu。(a) 如果姓名只在 Students 中存储一次，需要改几行？如果每条成绩行都重复姓名，又需要改几行？(b) 如果有人为不存在的 student_id 9 添加一条 Scores 行，应该发生什么？用 Python 的 sqlite3 模块在例题 7 的表上检验这两点。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Predict first.</strong> Alice has two Scores rows (score_id 1 and 2). With the name stored once, one row changes. If each score row repeated the name, two rows would change, and an update that missed one of them would leave "Alice" and "Alice Wu" in the same table for the same student. For (b), a foreign key must match an existing primary key, so the database should refuse the row.</span><span data-lang="zh"><strong>先预测。</strong>Alice 有两条 Scores 行（score_id 1 和 2）。姓名只存一次时，只需改一行。如果每条成绩行都重复姓名，就要改两行，而且只要漏改其中一行，同一个学生就会在同一个表里同时出现“Alice”和“Alice Wu”。对于 (b)，外键必须匹配已有的主键，所以数据库应拒绝这一行。</span></p>
+    <pre><code>import sqlite3
+
+db = sqlite3.connect(":memory:")
+db.execute("PRAGMA foreign_keys = ON")
+db.execute("CREATE TABLE Students (student_id INTEGER PRIMARY KEY, name TEXT, grade INTEGER)")
+db.execute("CREATE TABLE Scores (score_id INTEGER PRIMARY KEY, student_id INTEGER REFERENCES Students(student_id), subject TEXT, score INTEGER)")
+db.executemany("INSERT INTO Students VALUES (?, ?, ?)", [(1, "Alice", 11), (2, "Bob", 11), (3, "Carol", 12)])
+db.executemany("INSERT INTO Scores VALUES (?, ?, ?, ?)", [(1, 1, "Math", 92), (2, 1, "CS", 88), (3, 2, "Math", 78), (4, 3, "CS", 95)])
+
+changed = db.execute("UPDATE Students SET name = 'Alice Wu' WHERE student_id = 1").rowcount
+print("Rows changed:", changed)
+
+try:
+    db.execute("INSERT INTO Scores VALUES (5, 9, 'Math', 70)")
+except sqlite3.IntegrityError as error:
+    print("Rejected:", error)
+print(db.execute("SELECT COUNT(*) FROM Scores").fetchone()[0])
+
+# Output:
+# Rows changed: 1
+# Rejected: FOREIGN KEY constraint failed
+# 4</code></pre>
+    <p><span data-lang="en">The update reports <code>Rows changed: 1</code>: one edit in Students, and the join in the next section still finds both of Alice's scores. The insert is rejected with <code>FOREIGN KEY constraint failed</code> because student_id 9 is not a primary key in Students, and the table still has 4 rows. SQLite checks foreign keys only after <code>PRAGMA foreign_keys = ON</code> is run; other database systems check them by default. A row whose foreign key points nowhere is called an orphan.</span><span data-lang="zh">更新报告 <code>Rows changed: 1</code>：只在 Students 中改了一处，下一节的连接查询仍能找到 Alice 的两条成绩。插入被拒绝，提示 <code>FOREIGN KEY constraint failed</code>，因为 student_id 9 不是 Students 中的主键，表中仍是 4 行。SQLite 只有在执行 <code>PRAGMA foreign_keys = ON</code> 之后才检查外键；其他数据库系统默认检查。外键指向不存在的行，这样的行称为孤儿行。</span></p>
+    <p><span data-lang="en">The tradeoff: a single flat table (like a CSV) is simpler to read, but it repeats facts and invites inconsistency; linked tables take more design but keep each fact in one place.</span><span data-lang="zh">权衡：单个平面表（如 CSV）更容易阅读，但会重复事实并容易出现不一致；关联表需要更多设计，但让每个事实只存在于一处。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In a relational database, what is the purpose of a <em>primary key</em>?</span><span data-lang="zh">在关系数据库中，<em>主键</em>的作用是什么？</span></div><div class="quiz-number">&sect;4 &middot; Q1</div></div>
@@ -797,7 +1197,7 @@ with open("students.csv", "r") as f:
       <div class="quiz-opt" data-idx="2"><span data-lang="en">To link two tables together</span><span data-lang="zh">将两个表连接在一起</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">To sort the rows alphabetically</span><span data-lang="zh">按字母顺序对行排序</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">A primary key uniquely identifies each row — no two rows can share the same value. It is not necessarily the most important data value (it is often just an auto-incremented ID). A <em>foreign key</em> (not primary key) is what links two tables.</span><span data-lang="zh">主键唯一标识每行——任何两行不能共享相同的值。它不一定是最重要的数据值（通常只是一个自动递增的 ID）。<em>外键</em>（不是主键）才是连接两个表的东西。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A primary key uniquely identifies each row: no two rows can share the same value. It is not necessarily the most important data value (it is often just an auto-incremented ID). A <em>foreign key</em> (not primary key) is what links two tables.</span><span data-lang="zh">主键唯一标识每行：任何两行不能共享相同的值。它不一定是最重要的数据值（通常只是一个自动递增的 ID）。<em>外键</em>（不是主键）才是连接两个表的东西。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Primary key = unique identifier for each row. Foreign key = a column that references the primary key of another table (linking two tables). Sorting is done by ORDER BY in SQL, not by the primary key definition.</span><span data-lang="zh">主键 = 每行的唯一标识符。外键 = 引用另一个表主键的列（连接两个表）。排序由 SQL 中的 ORDER BY 完成，不是由主键定义决定的。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -810,9 +1210,30 @@ with open("students.csv", "r") as f:
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Composite key</span><span data-lang="zh">复合键</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">A column in one table that references the primary key of another table is called a <strong>foreign key</strong>. It is what makes the database "relational" — the Scores table is related to the Students table through this link.</span><span data-lang="zh">一个表中引用另一个表主键的列称为<strong>外键</strong>。这就是使数据库成为"关系型"的原因——Scores 表通过这个链接与 Students 表相关联。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">A column in one table that references the primary key of another table is called a <strong>foreign key</strong>. It is what makes the database "relational": the Scores table is related to the Students table through this link.</span><span data-lang="zh">一个表中引用另一个表主键的列称为<strong>外键</strong>。这就是使数据库成为"关系型"的原因：Scores 表通过这个链接与 Students 表相关联。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Foreign key = a column that references another table's primary key. Primary key = the unique identifier of the current table's rows. An index key is a performance optimisation (not a referential constraint). A composite key is a primary key made of multiple columns.</span><span data-lang="zh">外键 = 引用另一个表主键的列。主键 = 当前表行的唯一标识符。索引键是性能优化（不是引用约束）。复合键是由多列组成的主键。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Define each key in terms of its own table: a primary key uniquely identifies the rows of the table it belongs to, and a foreign key is a column that holds values of another table's primary key. Use the tables in the question to point to the link (for example, Scores.student_id refers to Students.student_id). Common errors: swapping the two keys, and saying a foreign key must be unique (it can repeat, as Alice's student_id does).</p><p data-lang="zh">按各自所在的表来定义每种键：主键唯一标识它所在表的行，外键是存放另一个表主键值的列。用题目中的表指出这个关联（例如 Scores.student_id 引用 Students.student_id）。常见错误：把两种键弄反，以及说外键必须唯一（它可以重复，Alice 的 student_id 就出现了两次）。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. In the Scores table (score_id, student_id, subject, score), which column is the primary key and which is the foreign key?</span><span data-lang="zh">1. 在 Scores 表（score_id、student_id、subject、score）中，哪一列是主键，哪一列是外键？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>score_id</code> is the primary key (it identifies each score row). <code>student_id</code> is the foreign key (it refers to the primary key of Students).</p><p data-lang="zh"><code>score_id</code> 是主键（标识每条成绩行）。<code>student_id</code> 是外键（引用 Students 的主键）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. Using Worked Example 7, how many Scores rows belong to Bob, and who owns the row with score_id 4?</span><span data-lang="zh">2. 根据例题 7，有几条 Scores 行属于 Bob？score_id 为 4 的行属于谁？</span></summary>
+      <div class="sg-a"><p data-lang="en">Bob (student_id 2) has one row (score_id 3, Math 78). The row with score_id 4 has student_id 3, which is Carol (CS 95).</p><p data-lang="zh">Bob（student_id 2）有一条行（score_id 3，Math 78）。score_id 为 4 的行 student_id 为 3，即 Carol（CS 95）。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. A new row <code>(5, 9, 'Math', 70)</code> is added to Scores. What is wrong with it?</span><span data-lang="zh">3. 向 Scores 添加了一行 <code>(5, 9, 'Math', 70)</code>。它有什么问题？</span></summary>
+      <div class="sg-a"><p data-lang="en">Its foreign key 9 matches no student_id in Students, so the row is an orphan. A database that checks foreign keys rejects it.</p><p data-lang="zh">它的外键 9 与 Students 中任何 student_id 都不匹配，所以这行是孤儿行。检查外键的数据库会拒绝它。</p></div>
+    </details>
   </div>
 </section>
 
@@ -822,29 +1243,36 @@ with open("students.csv", "r") as f:
   <div class="section-label"><span data-lang="en">Section 5 &middot; SQL basics</span><span data-lang="zh">第 5 节 &middot; SQL 基础</span></div>
   <h2><span data-lang="en">SQL Basics: SELECT and WHERE</span><span data-lang="zh">SQL 基础：SELECT 与 WHERE</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Write a SELECT statement with WHERE and ORDER BY and predict the rows it returns from a small table.</li><li>Combine two tables with JOIN ... ON a primary key and a foreign key, and group rows with GROUP BY, COUNT and AVG.</li><li>Explain how NULL behaves: it is skipped by <code>COUNT(column)</code> and <code>AVG</code>, never equals anything, and is found with <code>IS NULL</code>.</li></ul>
+    <ul data-lang="zh"><li>编写带 WHERE 和 ORDER BY 的 SELECT 语句，并预测它从小表中返回的行。</li><li>用主键和外键通过 JOIN ... ON 合并两个表，并用 GROUP BY、COUNT 和 AVG 对行分组。</li><li>解释 NULL 的行为：<code>COUNT(列)</code> 和 <code>AVG</code> 会跳过它，它不等于任何值，需用 <code>IS NULL</code> 查找。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">The four SQL keywords you need first.</span><span data-lang="zh">首先需要掌握的四个 SQL 关键字。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><code>SELECT</code></strong> <span data-lang="en">&mdash; choose which columns to return. <code>SELECT *</code> returns all columns; <code>SELECT name, score</code> returns only those two.</span><span data-lang="zh">&mdash; 选择要返回的列。<code>SELECT *</code> 返回所有列；<code>SELECT name, score</code> 只返回那两列。</span></li>
-      <li><strong><code>FROM</code></strong> <span data-lang="en">&mdash; specify the table to query. Every SELECT needs a FROM.</span><span data-lang="zh">&mdash; 指定要查询的表。每个 SELECT 都需要 FROM。</span></li>
-      <li><strong><code>WHERE</code></strong> <span data-lang="en">&mdash; filter rows. Only rows where the condition is true are returned. Operators: <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>LIKE</code>, <code>AND</code>, <code>OR</code>.</span><span data-lang="zh">&mdash; 过滤行。只返回条件为真的行。运算符：<code>=</code>、<code>&lt;</code>、<code>&gt;</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>!=</code>、<code>LIKE</code>、<code>AND</code>、<code>OR</code>。</span></li>
-      <li><strong><code>ORDER BY</code></strong> <span data-lang="en">&mdash; sort the results. <code>ORDER BY score DESC</code> sorts highest-first; <code>ASC</code> is lowest-first (the default).</span><span data-lang="zh">&mdash; 对结果排序。<code>ORDER BY score DESC</code> 按从高到低排序；<code>ASC</code> 从低到高（默认）。</span></li>
+      <li><strong><code>SELECT</code></strong><span data-lang="en">: choose which columns to return. <code>SELECT *</code> returns all columns; <code>SELECT name, score</code> returns only those two.</span><span data-lang="zh">：选择要返回的列。<code>SELECT *</code> 返回所有列；<code>SELECT name, score</code> 只返回那两列。</span></li>
+      <li><strong><code>FROM</code></strong><span data-lang="en">: specify the table to query. Every SELECT needs a FROM.</span><span data-lang="zh">：指定要查询的表。每个 SELECT 都需要 FROM。</span></li>
+      <li><strong><code>WHERE</code></strong><span data-lang="en">: filter rows. Only rows where the condition is true are returned. Operators: <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>LIKE</code>, <code>AND</code>, <code>OR</code>.</span><span data-lang="zh">：过滤行。只返回条件为真的行。运算符：<code>=</code>、<code>&lt;</code>、<code>&gt;</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>!=</code>、<code>LIKE</code>、<code>AND</code>、<code>OR</code>。</span></li>
+      <li><strong><code>ORDER BY</code></strong><span data-lang="en">: sort the results. <code>ORDER BY score DESC</code> sorts highest-first; <code>ASC</code> is lowest-first (the default).</span><span data-lang="zh">：对结果排序。<code>ORDER BY score DESC</code> 按从高到低排序；<code>ASC</code> 从低到高（默认）。</span></li>
     </ul>
-    <span data-lang="en">SQL is not case-sensitive for keywords, but convention capitalises them. SQL statements end with <code>;</code>. ICS4C A2.2 names "relational database via SQL" explicitly. CSTA 3A-DA-10 says to "evaluate the tradeoffs in how data elements are organized and where data is stored" — SQL is the access layer on top of the organised storage.</span><span data-lang="zh">SQL 关键字不区分大小写，但约定大写。SQL 语句以 <code>;</code> 结尾。ICS4C A2.2 明确点名"通过 SQL 的关系数据库"。CSTA 3A-DA-10 要求"评估数据元素组织方式和存储位置的权衡"——SQL 是有组织存储之上的访问层。</span>
+    <span data-lang="en">SQL is not case-sensitive for keywords, but convention capitalises them. SQL statements end with <code>;</code>. ICS4C A2.2 names "relational database via SQL" explicitly. CSTA 3A-DA-10 says to "evaluate the tradeoffs in how data elements are organized and where data is stored"; SQL is the access layer on top of the organised storage.</span><span data-lang="zh">SQL 关键字不区分大小写，但约定大写。SQL 语句以 <code>;</code> 结尾。ICS4C A2.2 明确点名"通过 SQL 的关系数据库"。CSTA 3A-DA-10 要求"评估数据元素组织方式和存储位置的权衡"；SQL 是有组织存储之上的访问层。</span>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 9: Three SQL queries on the Students/Scores tables</span><span data-lang="zh">例题 9：对 Students/Scores 表的三个 SQL 查询</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-purple">WE</div><div class="card-title"><span data-lang="en">Worked Example 5 &middot; Three SQL queries on the Students/Scores tables</span><span data-lang="zh">例题 5 &middot; 对 Students/Scores 表的三个 SQL 查询</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Using the two tables from &sect;4, write SQL queries to answer common questions.</span><span data-lang="zh">使用 &sect;4 中的两个表，编写 SQL 查询来回答常见问题。</span></p>
   </div>
   <div class="worked-solution">
     <p><strong><span data-lang="en">Query 1: Get all students.</span><span data-lang="zh">查询 1：获取所有学生。</span></strong></p>
     <pre><code>SELECT * FROM Students;</code></pre>
     <p><span data-lang="en"><em><code>SELECT *</code> selects all columns; <code>FROM Students</code> specifies the Students table. All three rows are returned.</em></span><span data-lang="zh"><code>SELECT *</code> 选择所有列，<code>FROM Students</code> 从 Students 表查询。返回所有三行。</span></p>
-    <p><strong><span data-lang="en">Query 2: Get names and scores where score &gt; 85.</span><span data-lang="zh">查询 2：获取成绩 &gt; 85 的姓名和成绩。</span></strong></p>
+    <p><strong><span data-lang="en">Query 2: Get the student ID, subject and score where score &gt; 85.</span><span data-lang="zh">查询 2：获取成绩 &gt; 85 的学生 ID、科目和成绩。</span></strong></p>
     <pre><code>SELECT student_id, subject, score
 FROM Scores
-WHERE score > 85
+WHERE score &gt; 85
 ORDER BY score DESC;</code></pre>
     <p><span data-lang="en"><em><code>WHERE score &gt; 85</code> filters rows to those with a score above 85; <code>ORDER BY score DESC</code> sorts the results from highest to lowest (<code>DESC</code> = descending).</em></span><span data-lang="zh"><code>WHERE score &gt; 85</code> 过滤条件；<code>ORDER BY score DESC</code> 按成绩从高到低排序（<code>DESC</code> = descending，降序）。</span></p>
     <p><strong><span data-lang="en">Expected result (from the &sect;4 data):</span><span data-lang="zh">预期结果（来自 &sect;4 数据）：</span></strong></p>
@@ -862,6 +1290,49 @@ ORDER BY score DESC;</code></pre>
     <pre><code>SELECT COUNT(*) FROM Scores WHERE subject = 'CS';</code></pre>
     <p><span data-lang="en"><em><code>COUNT(*)</code> counts the number of matching rows. Result: 2 (Carol and Alice each have one CS record).</em></span><span data-lang="zh"><code>COUNT(*)</code> 计算匹配行的数量。结果：2（Carol 和 Alice 各有一条 CS 记录）。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 10: JOIN, GROUP BY and NULL</span><span data-lang="zh">例题 10：JOIN、GROUP BY 与 NULL</span></summary>
+  <div class="card">
+    <p><span data-lang="en">Use the Students and Scores tables of Worked Example 7. (a) List each score of 88 or more with the student's name, highest first. (b) For each subject, show how many scores there are and their average. (c) A fifth Scores row, (5, 2, 'Art', NULL), is added with no score yet. Show what COUNT, AVG and the conditions do with the NULL.</span><span data-lang="zh">使用例题 7 的 Students 和 Scores 表。(a) 列出所有 88 分及以上的成绩及学生姓名，分数高的在前。(b) 对每个科目，显示成绩条数及平均分。(c) 新增第五条 Scores 行 (5, 2, 'Art', NULL)，尚无成绩。说明 COUNT、AVG 和条件如何处理 NULL。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) JOIN.</strong> The name lives in Students and the score in Scores, so the query joins them where the foreign key equals the primary key. Prefix a column with its table name when both tables could have it.</span><span data-lang="zh"><strong>(a) JOIN。</strong>姓名在 Students，成绩在 Scores，所以查询要在外键等于主键的地方把两表连接起来。当两个表都可能有同名列时，要在列名前加表名。</span></p>
+    <pre><code>SELECT Students.name, Scores.subject, Scores.score
+FROM Scores
+JOIN Students ON Scores.student_id = Students.student_id
+WHERE Scores.score &gt;= 88
+ORDER BY Scores.score DESC;</code></pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>name</th><th>subject</th><th>score</th></tr></thead>
+        <tbody><tr><td>Carol</td><td>CS</td><td>95</td></tr><tr><td>Alice</td><td>Math</td><td>92</td></tr><tr><td>Alice</td><td>CS</td><td>88</td></tr></tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">Bob's 78 is filtered out by <code>WHERE</code>. Alice appears twice because she has two matching Scores rows: a join returns one result row per matching pair.</span><span data-lang="zh">Bob 的 78 被 <code>WHERE</code> 过滤掉了。Alice 出现两次，因为她有两条匹配的 Scores 行：连接对每一对匹配的行返回一行结果。</span></p>
+    <p><span data-lang="en"><strong>(b) GROUP BY.</strong> Rows with the same subject are collapsed into one result row, and the aggregate functions work on each group.</span><span data-lang="zh"><strong>(b) GROUP BY。</strong>科目相同的行被合并为一行结果，聚合函数对每个组分别计算。</span></p>
+    <pre><code>SELECT subject, COUNT(*) AS n, AVG(score) AS avg_score
+FROM Scores
+GROUP BY subject
+ORDER BY subject;</code></pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>subject</th><th>n</th><th>avg_score</th></tr></thead>
+        <tbody><tr><td>CS</td><td>2</td><td>91.5</td></tr><tr><td>Math</td><td>2</td><td>85.0</td></tr></tbody>
+      </table>
+    </div>
+    <p><span data-lang="en">CS has scores 88 and 95: (88 + 95) / 2 = 91.5. Math has 92 and 78: (92 + 78) / 2 = 85.0. The rows are in alphabetical order because of <code>ORDER BY subject</code>.</span><span data-lang="zh">CS 的成绩是 88 和 95：(88 + 95) / 2 = 91.5。Math 的成绩是 92 和 78：(92 + 78) / 2 = 85.0。因为有 <code>ORDER BY subject</code>，结果按字母顺序排列。</span></p>
+    <p><span data-lang="en"><strong>(c) NULL.</strong> NULL means "no value". It is not 0 and not an empty string. Run these on the table after the fifth row is added:</span><span data-lang="zh"><strong>(c) NULL。</strong>NULL 表示“没有值”。它不是 0，也不是空字符串。在加入第五行之后，对该表执行下面的查询：</span></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Query</th><th>Result</th></tr></thead>
+        <tbody><tr><td><code>SELECT COUNT(*), COUNT(score), AVG(score) FROM Scores;</code></td><td><code>5, 4, 88.25</code></td></tr><tr><td><code>SELECT subject, score FROM Scores WHERE score &gt; 85 ORDER BY score DESC;</code></td><td><code>CS 95</code>, <code>Math 92</code>, <code>CS 88</code></td></tr><tr><td><code>SELECT * FROM Scores WHERE score = NULL;</code></td><td><code>no rows</code></td></tr><tr><td><code>SELECT * FROM Scores WHERE score IS NULL;</code></td><td><code>5, 2, Art, NULL</code></td></tr></tbody>
+      </table>
+    </div>
+    <p><span data-lang="en"><code>COUNT(*)</code> counts every row (5) but <code>COUNT(score)</code> counts only rows where score is not NULL (4). <code>AVG(score)</code> skips the NULL: (92 + 88 + 78 + 95) / 4 = 353 / 4 = 88.25, not 353 / 5. A comparison with NULL is never true, so <code>score &gt; 85</code> skips the Art row and <code>score = NULL</code> returns nothing; <code>IS NULL</code> is the test that finds it.</span><span data-lang="zh"><code>COUNT(*)</code> 统计所有行（5），而 <code>COUNT(score)</code> 只统计 score 不为 NULL 的行（4）。<code>AVG(score)</code> 会跳过 NULL：(92 + 88 + 78 + 95) / 4 = 353 / 4 = 88.25，而不是 353 / 5。与 NULL 的比较永远不为真，所以 <code>score &gt; 85</code> 会跳过 Art 这一行，<code>score = NULL</code> 什么也不返回；找到它要用 <code>IS NULL</code>。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">Which SQL query returns only the <code>name</code> column from the <code>Students</code> table where the <code>grade</code> is 11?</span><span data-lang="zh">哪个 SQL 查询从 <code>Students</code> 表中只返回 <code>grade</code> 为 11 的 <code>name</code> 列？</span></div><div class="quiz-number">&sect;5 &middot; Q1</div></div>
@@ -884,9 +1355,30 @@ ORDER BY score DESC;</code></pre>
       <div class="quiz-opt" data-idx="2"><span data-lang="en">Alphabetical order</span><span data-lang="zh">字母顺序</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">Random order</span><span data-lang="zh">随机顺序</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en"><code>DESC</code> stands for descending — highest to lowest. <code>ASC</code> (ascending) is lowest to highest and is the default. So <code>ORDER BY score DESC</code> puts the highest score first in the result set.</span><span data-lang="zh"><code>DESC</code> 代表降序——从高到低。<code>ASC</code>（升序）从低到高，是默认值。所以 <code>ORDER BY score DESC</code> 将最高分放在结果集的第一位。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en"><code>DESC</code> stands for descending: highest to lowest. <code>ASC</code> (ascending) is lowest to highest and is the default. So <code>ORDER BY score DESC</code> puts the highest score first in the result set.</span><span data-lang="zh"><code>DESC</code> 代表降序，即从高到低。<code>ASC</code>（升序）从低到高，是默认值。所以 <code>ORDER BY score DESC</code> 将最高分放在结果集的第一位。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">DESC = descending = highest first. ASC = ascending = lowest first (default). ORDER BY does not produce alphabetical or random ordering unless the column contains strings (for alphabetical) or you use RANDOM().</span><span data-lang="zh">DESC = 降序 = 最高在前。ASC = 升序 = 最低在前（默认）。除非列包含字符串（字母顺序）或使用 RANDOM()，否则 ORDER BY 不产生字母或随机顺序。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">Write the full statement in clause order: SELECT, FROM, JOIN ... ON, WHERE, GROUP BY, ORDER BY. In a JOIN name the table in front of any column that both tables have, and state which key equals which. When you predict output, list the rows in the order the query asks for. Common errors: <code>= NULL</code> instead of <code>IS NULL</code>, forgetting that <code>COUNT(*)</code> and <code>COUNT(column)</code> differ, and leaving out FROM.</p><p data-lang="zh">按子句顺序写出完整语句：SELECT、FROM、JOIN ... ON、WHERE、GROUP BY、ORDER BY。使用 JOIN 时，两个表都有的列要在前面写上表名，并说明哪个键等于哪个键。预测输出时，按查询要求的顺序列出各行。常见错误：用 <code>= NULL</code> 代替 <code>IS NULL</code>，忘记 <code>COUNT(*)</code> 与 <code>COUNT(列)</code> 不同，以及漏写 FROM。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does <code>SELECT name FROM Students WHERE grade = 11 ORDER BY name DESC;</code> return for the Students table of Worked Example 7?</span><span data-lang="zh">1. 对于例题 7 的 Students 表，<code>SELECT name FROM Students WHERE grade = 11 ORDER BY name DESC;</code> 返回什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">Grade 11 has Alice and Bob. Descending alphabetical order puts Bob first: the rows are <code>Bob</code>, then <code>Alice</code>.</p><p data-lang="zh">11 年级有 Alice 和 Bob。按字母降序排列时 Bob 在前：结果依次为 <code>Bob</code>、<code>Alice</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What does <code>SELECT COUNT(*) FROM Scores WHERE subject = 'Math';</code> return, and which rows does it count?</span><span data-lang="zh">2. <code>SELECT COUNT(*) FROM Scores WHERE subject = 'Math';</code> 返回什么？它统计的是哪些行？</span></summary>
+      <div class="sg-a"><p data-lang="en">It returns <code>2</code>: the rows with score_id 1 (Alice, 92) and score_id 3 (Bob, 78).</p><p data-lang="zh">返回 <code>2</code>：score_id 为 1（Alice，92）和 score_id 为 3（Bob，78）的两行。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Write the JOIN query that gives each student's name and score for CS only, lowest score first, and give its result.</span><span data-lang="zh">3. 写出只给出 CS 科目每位学生姓名和成绩、成绩低的在前的 JOIN 查询，并给出其结果。</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>SELECT Students.name, Scores.score FROM Scores JOIN Students ON Scores.student_id = Students.student_id WHERE Scores.subject = 'CS' ORDER BY Scores.score;</code> The result is <code>Alice 88</code> and then <code>Carol 95</code>.</p><p data-lang="zh"><code>SELECT Students.name, Scores.score FROM Scores JOIN Students ON Scores.student_id = Students.student_id WHERE Scores.subject = 'CS' ORDER BY Scores.score;</code> 结果为 <code>Alice 88</code>，然后是 <code>Carol 95</code>。</p></div>
+    </details>
   </div>
 </section>
 
@@ -896,18 +1388,25 @@ ORDER BY score DESC;</code></pre>
   <div class="section-label"><span data-lang="en">Section 6 &middot; HTML and the web</span><span data-lang="zh">第 6 节 &middot; HTML 与网络</span></div>
   <h2><span data-lang="en">HTML and the Web: An Introduction</span><span data-lang="zh">HTML 与网络：入门介绍</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Describe the structure of an HTML page (doctype, head, body) and what the browser does with the file.</li><li>Write headings, paragraphs, links, lists and tables with correctly paired and nested tags.</li><li>Generate HTML from program data and escape the characters <code>&amp;</code>, <code>&lt;</code> and <code>&gt;</code> so they display as text.</li></ul>
+    <ul data-lang="zh"><li>描述 HTML 页面的结构（文档类型、head、body）以及浏览器如何处理该文件。</li><li>用正确成对、正确嵌套的标签编写标题、段落、链接、列表和表格。</li><li>根据程序数据生成 HTML，并对字符 <code>&amp;</code>、<code>&lt;</code> 和 <code>&gt;</code> 进行转义，使其显示为文本。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">HTML in four facts.</span><span data-lang="zh">HTML 的四个要点。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">HTML = HyperText Markup Language</span><span data-lang="zh">HTML = 超文本标记语言</span></strong> <span data-lang="en">&mdash; the standard language for creating web pages. A browser reads an HTML file and renders it visually. Alberta CSE1210: "Students are introduced to Internet computing through the use of one or more Web-specific markup languages."</span><span data-lang="zh">&mdash; 创建网页的标准语言。浏览器读取 HTML 文件并将其可视化渲染。阿尔伯塔 CSE1210："学生通过使用一种或多种网络专用标记语言了解互联网计算。"</span></li>
-      <li><strong><span data-lang="en">Tags</span><span data-lang="zh">标签</span></strong> <span data-lang="en">&mdash; HTML uses paired tags: <code>&lt;tag&gt;content&lt;/tag&gt;</code>. Opening tag + content + closing tag. Self-closing tags (e.g. <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>) have no content.</span><span data-lang="zh">&mdash; HTML 使用成对标签：<code>&lt;标签&gt;内容&lt;/标签&gt;</code>。开始标签 + 内容 + 结束标签。自闭合标签（如 <code>&lt;br&gt;</code>、<code>&lt;img&gt;</code>）没有内容。</span></li>
-      <li><strong><span data-lang="en">Structure: head + body</span><span data-lang="zh">结构：head + body</span></strong> <span data-lang="en">&mdash; every HTML page has a <code>&lt;head&gt;</code> (metadata: title, charset, links to CSS) and a <code>&lt;body&gt;</code> (visible content).</span><span data-lang="zh">&mdash; 每个 HTML 页面都有一个 <code>&lt;head&gt;</code>（元数据：标题、字符集、CSS 链接）和一个 <code>&lt;body&gt;</code>（可见内容）。</span></li>
-      <li><strong><span data-lang="en">Key tags to know</span><span data-lang="zh">需要了解的关键标签</span></strong> <span data-lang="en">&mdash; <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> headings, <code>&lt;p&gt;</code> paragraph, <code>&lt;a href="..."&gt;</code> link, <code>&lt;ul&gt;/&lt;li&gt;</code> list, <code>&lt;table&gt;</code> table, <code>&lt;form&gt;</code> form, <code>&lt;input&gt;</code> input field.</span><span data-lang="zh">&mdash; <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> 标题，<code>&lt;p&gt;</code> 段落，<code>&lt;a href="..."&gt;</code> 链接，<code>&lt;ul&gt;/&lt;li&gt;</code> 列表，<code>&lt;table&gt;</code> 表格，<code>&lt;form&gt;</code> 表单，<code>&lt;input&gt;</code> 输入框。</span></li>
+      <li><strong><span data-lang="en">HTML = HyperText Markup Language</span><span data-lang="zh">HTML = 超文本标记语言</span></strong><span data-lang="en">: the standard language for creating web pages. A browser reads an HTML file and renders it visually. Alberta CSE1210: "Students are introduced to Internet computing through the use of one or more Web-specific markup languages."</span><span data-lang="zh">：创建网页的标准语言。浏览器读取 HTML 文件并将其可视化渲染。阿尔伯塔 CSE1210："学生通过使用一种或多种网络专用标记语言了解互联网计算。"</span></li>
+      <li><strong><span data-lang="en">Tags</span><span data-lang="zh">标签</span></strong><span data-lang="en">: HTML uses paired tags: <code>&lt;tag&gt;content&lt;/tag&gt;</code>. Opening tag + content + closing tag. Self-closing tags (e.g. <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>) have no content.</span><span data-lang="zh">：HTML 使用成对标签：<code>&lt;标签&gt;内容&lt;/标签&gt;</code>。开始标签 + 内容 + 结束标签。自闭合标签（如 <code>&lt;br&gt;</code>、<code>&lt;img&gt;</code>）没有内容。</span></li>
+      <li><strong><span data-lang="en">Structure: head + body</span><span data-lang="zh">结构：head + body</span></strong><span data-lang="en">: every HTML page has a <code>&lt;head&gt;</code> (metadata: title, charset, links to CSS) and a <code>&lt;body&gt;</code> (visible content).</span><span data-lang="zh">：每个 HTML 页面都有一个 <code>&lt;head&gt;</code>（元数据：标题、字符集、CSS 链接）和一个 <code>&lt;body&gt;</code>（可见内容）。</span></li>
+      <li><strong><span data-lang="en">Key tags to know</span><span data-lang="zh">需要了解的关键标签</span></strong><span data-lang="en">: <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> headings, <code>&lt;p&gt;</code> paragraph, <code>&lt;a href="..."&gt;</code> link, <code>&lt;ul&gt;/&lt;li&gt;</code> list, <code>&lt;table&gt;</code> table, <code>&lt;form&gt;</code> form, <code>&lt;input&gt;</code> input field.</span><span data-lang="zh">：<code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code> 标题，<code>&lt;p&gt;</code> 段落，<code>&lt;a href="..."&gt;</code> 链接，<code>&lt;ul&gt;/&lt;li&gt;</code> 列表，<code>&lt;table&gt;</code> 表格，<code>&lt;form&gt;</code> 表单，<code>&lt;input&gt;</code> 输入框。</span></li>
     </ul>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 11: A minimal HTML page displaying a data table</span><span data-lang="zh">例题 11：显示数据表的最小 HTML 页面</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-orange">WE</div><div class="card-title"><span data-lang="en">Worked Example 6 &middot; A minimal HTML page displaying a data table</span><span data-lang="zh">例题 6 &middot; 显示数据表的最小 HTML 页面</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">Write an HTML page that displays the Students table from &sect;4 as a formatted web table.</span><span data-lang="zh">编写一个 HTML 页面，将 &sect;4 的 Students 表显示为格式化的网页表格。</span></p>
   </div>
   <div class="worked-solution">
@@ -931,6 +1430,43 @@ ORDER BY score DESC;</code></pre>
 &lt;/html&gt;</code></pre>
     <p><span data-lang="en"><em><code>&lt;!DOCTYPE html&gt;</code> declares the document type as HTML5; <code>&lt;head&gt;</code> holds metadata (<code>&lt;meta charset="UTF-8"&gt;</code> sets the character encoding; <code>&lt;title&gt;</code> sets the browser-tab title); <code>&lt;body&gt;</code> contains the visible content; <code>&lt;table&gt;</code> creates a table; <code>&lt;tr&gt;</code> is a table row; <code>&lt;th&gt;</code> is a header cell; <code>&lt;td&gt;</code> is a data cell.</em></span><span data-lang="zh"><code>&lt;!DOCTYPE html&gt;</code> 声明文档类型为 HTML5；<code>&lt;head&gt;</code> 含元数据（<code>&lt;meta charset="UTF-8"&gt;</code> 设置字符编码，<code>&lt;title&gt;</code> 设置浏览器标签标题）；<code>&lt;body&gt;</code> 含可见内容；<code>&lt;table&gt;</code> 创建表格；<code>&lt;tr&gt;</code> 是表格行（table row）；<code>&lt;th&gt;</code> 是表头单元格（table header）；<code>&lt;td&gt;</code> 是普通数据单元格（table data）。</span></p>
   </div>
+  </details>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 12: Generating a list from data, and escaping special characters</span><span data-lang="zh">例题 12：根据数据生成列表，并转义特殊字符</span></summary>
+  <div class="card">
+    <p><span data-lang="en">A program holds the club names "R&amp;D Club" and "Chess &lt;Junior&gt;". Produce the list items for a web page, and explain what the browser would do if the special characters were not escaped.</span><span data-lang="zh">程序中有社团名称 "R&amp;D Club" 和 "Chess &lt;Junior&gt;"。为网页生成列表项，并说明如果不转义特殊字符，浏览器会怎么做。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>Step 1: generate the items.</strong> HTML gives <code>&amp;</code> and <code>&lt;</code> special meanings (the start of a character reference, the start of a tag), so text that contains them is converted by <code>html.escape</code> first.</span><span data-lang="zh"><strong>第 1 步：生成列表项。</strong>HTML 赋予 <code>&amp;</code> 和 <code>&lt;</code> 特殊含义（字符引用的开始、标签的开始），所以含有它们的文本要先用 <code>html.escape</code> 转换。</span></p>
+    <pre><code>import html
+
+clubs = ["R&amp;D Club", "Chess &lt;Junior&gt;"]
+for name in clubs:
+    print(f"&lt;li&gt;{html.escape(name)}&lt;/li&gt;")
+
+# Output:
+# &lt;li&gt;R&amp;amp;D Club&lt;/li&gt;
+# &lt;li&gt;Chess &amp;lt;Junior&amp;gt;&lt;/li&gt;</code></pre>
+    <p><span data-lang="en"><strong>Step 2: place the items in a page.</strong> The generated lines go inside a <code>&lt;ul&gt;</code>; the paragraph shows a link with <code>&lt;a href&gt;</code>. Every tag opened is closed in reverse order.</span><span data-lang="zh"><strong>第 2 步：把列表项放入页面。</strong>生成的行放在 <code>&lt;ul&gt;</code> 内；段落中用 <code>&lt;a href&gt;</code> 显示一个链接。每个打开的标签都按相反的顺序关闭。</span></p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Clubs&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;Clubs&lt;/h2&gt;
+  &lt;p&gt;See the &lt;a href="schedule.html"&gt;schedule&lt;/a&gt;.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;R&amp;amp;D Club&lt;/li&gt;
+    &lt;li&gt;Chess &amp;lt;Junior&amp;gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p><span data-lang="en">The browser shows the heading Clubs, the sentence with a clickable link, and a bullet list reading "R&amp;D Club" and "Chess &lt;Junior&gt;" with the original characters restored. Without escaping, the browser would read <code>&lt;Junior&gt;</code> as a tag it does not know and drop it, so the second item would display only as "Chess", and a bare <code>&amp;</code> can be misread as the start of a character reference. Escaping also matters for security: text from users must never be inserted into a page as raw markup.</span><span data-lang="zh">浏览器会显示标题 Clubs、带可点击链接的句子，以及内容为“R&amp;D Club”和“Chess &lt;Junior&gt;”的项目符号列表，原来的字符都被还原。如果不转义，浏览器会把 <code>&lt;Junior&gt;</code> 当作一个不认识的标签而丢弃，第二项就只显示为“Chess”，而单独的 <code>&amp;</code> 也可能被误读为字符引用的开头。转义对安全也很重要：来自用户的文本绝不能作为原始标记插入页面。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In HTML, what does <code>&lt;a href="https://example.com"&gt;Click here&lt;/a&gt;</code> create?</span><span data-lang="zh">在 HTML 中，<code>&lt;a href="https://example.com"&gt;点击这里&lt;/a&gt;</code> 创建什么？</span></div><div class="quiz-number">&sect;6 &middot; Q1</div></div>
@@ -953,9 +1489,30 @@ ORDER BY score DESC;</code></pre>
       <div class="quiz-opt" data-idx="2"><code>&lt;title&gt;</code></div>
       <div class="quiz-opt" data-idx="3"><code>&lt;meta&gt;</code></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>&lt;body&gt;</code> element contains all visible page content. The <code>&lt;head&gt;</code> holds metadata (title, charset, CSS links — not rendered as page content). <code>&lt;title&gt;</code> sets the browser tab title (shown in the tab, not the page). <code>&lt;meta&gt;</code> provides machine-readable metadata.</span><span data-lang="zh"><code>&lt;body&gt;</code> 元素包含所有可见的页面内容。<code>&lt;head&gt;</code> 存放元数据（标题、字符集、CSS 链接——不渲染为页面内容）。<code>&lt;title&gt;</code> 设置浏览器标签标题（显示在标签中，不在页面上）。<code>&lt;meta&gt;</code> 提供机器可读的元数据。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">The <code>&lt;body&gt;</code> element contains all visible page content. The <code>&lt;head&gt;</code> holds metadata (title, charset, CSS links; not rendered as page content). <code>&lt;title&gt;</code> sets the browser tab title (shown in the tab, not the page). <code>&lt;meta&gt;</code> provides machine-readable metadata.</span><span data-lang="zh"><code>&lt;body&gt;</code> 元素包含所有可见的页面内容。<code>&lt;head&gt;</code> 存放元数据（标题、字符集、CSS 链接，不渲染为页面内容）。<code>&lt;title&gt;</code> 设置浏览器标签标题（显示在标签中，不在页面上）。<code>&lt;meta&gt;</code> 提供机器可读的元数据。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">body = visible content. head = metadata (not visible as page content). title = browser tab text. meta = machine-readable metadata.</span><span data-lang="zh">body = 可见内容。head = 元数据（不作为页面内容可见）。title = 浏览器标签文本。meta = 机器可读元数据。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">In a "find the error" HTML question, check four things in order: every opening tag has a closing tag, tags close in reverse order of opening, attribute values are in quotes, and visible content is in the body while metadata is in the head. Say what the browser would show, not only what is wrong. Common errors: crossing tags (<code>&lt;p&gt;&lt;b&gt;...&lt;/p&gt;&lt;/b&gt;</code>) and putting content in the head.</p><p data-lang="zh">在“找出错误”的 HTML 题中，依次检查四点：每个开始标签都有结束标签，标签按开启的相反顺序关闭，属性值带引号，可见内容在 body 中而元数据在 head 中。要说明浏览器会显示什么，而不只是错在哪里。常见错误：标签交叉（<code>&lt;p&gt;&lt;b&gt;...&lt;/p&gt;&lt;/b&gt;</code>）以及把内容放进 head。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. Write the HTML for a link with the text Example that goes to https://example.com.</span><span data-lang="zh">1. 写出文本为 Example、指向 https://example.com 的链接的 HTML。</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>&lt;a href="https://example.com"&gt;Example&lt;/a&gt;</code>. The <code>href</code> attribute holds the address and the text between the tags is what the reader clicks.</p><p data-lang="zh"><code>&lt;a href="https://example.com"&gt;Example&lt;/a&gt;</code>。<code>href</code> 属性存放地址，标签之间的文本是读者点击的内容。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. What does <code>html.escape("5 &lt; 7")</code> return, and why is that needed before the text goes into a page?</span><span data-lang="zh">2. <code>html.escape("5 &lt; 7")</code> 返回什么？为什么文本放入页面前需要这样做？</span></summary>
+      <div class="sg-a"><p data-lang="en">It returns <code>5 &amp;lt; 7</code>. The browser turns <code>&amp;lt;</code> back into a visible <code>&lt;</code>; a raw <code>&lt;</code> could be read as the start of a tag.</p><p data-lang="zh">返回 <code>5 &amp;lt; 7</code>。浏览器会把 <code>&amp;lt;</code> 还原成可见的 <code>&lt;</code>；原始的 <code>&lt;</code> 可能被当作标签的开头。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. Find the error in <code>&lt;p&gt;Hello &lt;b&gt;world&lt;/p&gt;&lt;/b&gt;</code> and correct it.</span><span data-lang="zh">3. 找出 <code>&lt;p&gt;Hello &lt;b&gt;world&lt;/p&gt;&lt;/b&gt;</code> 中的错误并改正。</span></summary>
+      <div class="sg-a"><p data-lang="en">The tags cross: <code>&lt;b&gt;</code> was opened last, so it must close first. Correct: <code>&lt;p&gt;Hello &lt;b&gt;world&lt;/b&gt;&lt;/p&gt;</code>.</p><p data-lang="zh">标签交叉了：<code>&lt;b&gt;</code> 最后打开，所以必须最先关闭。正确写法：<code>&lt;p&gt;Hello &lt;b&gt;world&lt;/b&gt;&lt;/p&gt;</code>。</p></div>
+    </details>
   </div>
 </section>
 
@@ -965,18 +1522,25 @@ ORDER BY score DESC;</code></pre>
   <div class="section-label"><span data-lang="en">Section 7 &middot; Data on the web: JSON and APIs</span><span data-lang="zh">第 7 节 &middot; 网络上的数据：JSON 与接口</span></div>
   <h2><span data-lang="en">Data on the Web: JSON and APIs</span><span data-lang="zh">网络上的数据：JSON 与接口</span></h2>
 
+  <div class="sg-objectives">
+    <div class="sg-label"><span data-lang="en">Learning objectives</span><span data-lang="zh">学习目标</span></div>
+    <ul data-lang="en"><li>Convert between JSON text and Python values with <code>json.loads</code> and <code>json.dumps</code>, including <code>null</code> and <code>None</code>, <code>true</code> and <code>True</code>.</li><li>Read nested JSON by chaining keys and list indexes, and spot invalid JSON (single quotes, unquoted keys, trailing commas).</li><li>Describe how a web request travels from a browser through a server to a database and back as a JSON response.</li></ul>
+    <ul data-lang="zh"><li>用 <code>json.loads</code> 和 <code>json.dumps</code> 在 JSON 文本与 Python 值之间转换，包括 <code>null</code> 与 <code>None</code>、<code>true</code> 与 <code>True</code>。</li><li>通过连续使用键和列表索引读取嵌套 JSON，并识别无效 JSON（单引号、不带引号的键、尾随逗号）。</li><li>描述一个网络请求如何从浏览器经服务器到达数据库，再以 JSON 响应返回。</li></ul>
+  </div>
+
   <div class="cram-cheat">
     <strong><span data-lang="en">JSON and API in four facts.</span><span data-lang="zh">JSON 和接口的四个要点。</span></strong>
     <ul style="margin: 8px 0 0 22px; font-size: 0.94rem;">
-      <li><strong><span data-lang="en">JSON = JavaScript Object Notation</span><span data-lang="zh">JSON = JavaScript 对象表示法</span></strong> <span data-lang="en">&mdash; a lightweight text format for storing and transmitting structured data. Looks like Python dictionaries and lists. Human-readable and machine-parseable. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data" — JSON is how those models travel over the web.</span><span data-lang="zh">&mdash; 用于存储和传输结构化数据的轻量级文本格式。看起来像 Python 字典和列表。人类可读且机器可解析。CSTA 3A-DA-12："创建表示数据不同元素之间关系的计算模型"——JSON 就是这些模型在网络上传输的方式。</span></li>
-      <li><strong><span data-lang="en">JSON syntax</span><span data-lang="zh">JSON 语法</span></strong> <span data-lang="en">&mdash; keys must be double-quoted strings; values can be strings, numbers, booleans (<code>true</code>/<code>false</code>), <code>null</code>, arrays (<code>[]</code>), or nested objects (<code>{}</code>).</span><span data-lang="zh">&mdash; 键必须是双引号字符串；值可以是字符串、数字、布尔值（<code>true</code>/<code>false</code>）、<code>null</code>、数组（<code>[]</code>）或嵌套对象（<code>{}</code>）。</span></li>
-      <li><strong><span data-lang="en">API = Application Programming Interface</span><span data-lang="zh">接口 = 应用程序编程接口</span></strong> <span data-lang="en">&mdash; a set of rules that lets one program request data or actions from another. Web APIs expose data over HTTP; the response is usually JSON. Alberta CSE2210/3210 (Client-side Scripting) and AB CSE1220 introduce this web-programming context.</span><span data-lang="zh">&mdash; 让一个程序向另一个程序请求数据或操作的一组规则。Web 接口通过 HTTP 暴露数据；响应通常是 JSON。阿尔伯塔 CSE2210/3210（客户端脚本）和 AB CSE1220 介绍这种网页编程背景。</span></li>
-      <li><strong><span data-lang="en">Python: <code>json</code> module</span><span data-lang="zh">Python：<code>json</code> 模块</span></strong> <span data-lang="en">&mdash; <code>json.loads(text)</code> parses a JSON string into a Python dict/list; <code>json.dumps(obj)</code> serialises a Python object back to a JSON string.</span><span data-lang="zh">&mdash; <code>json.loads(text)</code> 将 JSON 字符串解析为 Python 字典/列表；<code>json.dumps(obj)</code> 将 Python 对象序列化回 JSON 字符串。</span></li>
+      <li><strong><span data-lang="en">JSON = JavaScript Object Notation</span><span data-lang="zh">JSON = JavaScript 对象表示法</span></strong><span data-lang="en">: a lightweight text format for storing and transmitting structured data. Looks like Python dictionaries and lists. Human-readable and machine-parseable. CSTA 3A-DA-12: "Create computational models that represent the relationships among different elements of data"; JSON is how those models travel over the web.</span><span data-lang="zh">：用于存储和传输结构化数据的轻量级文本格式。看起来像 Python 字典和列表。人类可读且机器可解析。CSTA 3A-DA-12："创建表示数据不同元素之间关系的计算模型"；JSON 就是这些模型在网络上传输的方式。</span></li>
+      <li><strong><span data-lang="en">JSON syntax</span><span data-lang="zh">JSON 语法</span></strong><span data-lang="en">: keys must be double-quoted strings; values can be strings, numbers, booleans (<code>true</code>/<code>false</code>), <code>null</code>, arrays (<code>[]</code>), or nested objects (<code>{}</code>).</span><span data-lang="zh">：键必须是双引号字符串；值可以是字符串、数字、布尔值（<code>true</code>/<code>false</code>）、<code>null</code>、数组（<code>[]</code>）或嵌套对象（<code>{}</code>）。</span></li>
+      <li><strong><span data-lang="en">API = Application Programming Interface</span><span data-lang="zh">接口 = 应用程序编程接口</span></strong><span data-lang="en">: a set of rules that lets one program request data or actions from another. Web APIs expose data over HTTP; the response is usually JSON. Alberta CSE2210/3210 (Client-side Scripting) and AB CSE1220 introduce this web-programming context.</span><span data-lang="zh">：让一个程序向另一个程序请求数据或操作的一组规则。Web 接口通过 HTTP 暴露数据；响应通常是 JSON。阿尔伯塔 CSE2210/3210（客户端脚本）和 AB CSE1220 介绍这种网页编程背景。</span></li>
+      <li><strong><span data-lang="en">Python: <code>json</code> module</span><span data-lang="zh">Python：<code>json</code> 模块</span></strong><span data-lang="en">: <code>json.loads(text)</code> parses a JSON string into a Python dict/list; <code>json.dumps(obj)</code> serialises a Python object back to a JSON string.</span><span data-lang="zh">：<code>json.loads(text)</code> 将 JSON 字符串解析为 Python 字典/列表；<code>json.dumps(obj)</code> 将 Python 对象序列化回 JSON 字符串。</span></li>
     </ul>
   </div>
 
+  <details open>
+    <summary><span data-lang="en">Worked Example 13: Parsing a JSON API response in Python</span><span data-lang="zh">例题 13：在 Python 中解析 JSON 接口响应</span></summary>
   <div class="card">
-    <div class="card-header"><div class="card-icon icon-red">WE</div><div class="card-title"><span data-lang="en">Worked Example 7 &middot; Parsing a JSON API response in Python</span><span data-lang="zh">例题 7 &middot; 在 Python 中解析 JSON 接口响应</span></div></div>
     <p style="font-size: 0.95rem;"><span data-lang="en">A weather API returns this JSON response. Extract the city name and temperature and print them.</span><span data-lang="zh">天气接口返回以下 JSON 响应。提取城市名称和温度并打印。</span></p>
   </div>
   <div class="worked-solution">
@@ -1017,8 +1581,67 @@ tomorrow = data["forecast"]["tomorrow"]
 
 print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
 # Output: Toronto: 22.4°C, tomorrow: rain</code></pre>
-    <p><span data-lang="en"><em><code>import json</code> loads the json module; <code>json.loads(...)</code> parses a JSON string into a Python dictionary (loads = load string); <code>data["city"]</code> accesses a value by key; <code>data["forecast"]["tomorrow"]</code> accesses a nested object by first retrieving the <code>"forecast"</code> dictionary, then its <code>"tomorrow"</code> key.</em></span><span data-lang="zh"><code>import json</code> 导入 json 模块；<code>json.loads(...)</code> 将 JSON 字符串（loads = load string）转为 Python 字典；<code>data["city"]</code> 通过键访问字典值；<code>data["forecast"]["tomorrow"]</code> 访问嵌套对象——先取 <code>"forecast"</code> 字典，再取其 <code>"tomorrow"</code> 键。</span></p>
+    <p><span data-lang="en"><em><code>import json</code> loads the json module; <code>json.loads(...)</code> parses a JSON string into a Python dictionary (loads = load string); <code>data["city"]</code> accesses a value by key; <code>data["forecast"]["tomorrow"]</code> accesses a nested object by first retrieving the <code>"forecast"</code> dictionary, then its <code>"tomorrow"</code> key.</em></span><span data-lang="zh"><code>import json</code> 导入 json 模块；<code>json.loads(...)</code> 将 JSON 字符串（loads = load string）转为 Python 字典；<code>data["city"]</code> 通过键访问字典值；<code>data["forecast"]["tomorrow"]</code> 访问嵌套对象：先取 <code>"forecast"</code> 字典，再取其 <code>"tomorrow"</code> 键。</span></p>
   </div>
+  </details>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 480 228" role="img" aria-label="A web request path. Step 1: the browser sends an HTTP request to the web server. Step 2: the server sends an SQL query to the database. Step 3: the database returns rows to the server. Step 4: the server sends a JSON response back to the browser.">
+    <rect class="box" x="10" y="40" width="90" height="64"/>
+    <text data-lang="en" x="55" y="78" text-anchor="middle">Browser</text><text data-lang="zh" x="55" y="78" text-anchor="middle">浏览器</text>
+    <rect class="box" x="195" y="40" width="90" height="64"/>
+    <text data-lang="en" x="240" y="78" text-anchor="middle">Web server</text><text data-lang="zh" x="240" y="78" text-anchor="middle">网络服务器</text>
+    <rect class="box" x="380" y="40" width="90" height="64"/>
+    <text data-lang="en" x="425" y="78" text-anchor="middle">Database</text><text data-lang="zh" x="425" y="78" text-anchor="middle">数据库</text>
+    <line class="arrow" x1="100" y1="58" x2="189" y2="58"/>
+    <polygon class="dot" points="195,58 187,54 187,62"/>
+    <line class="arrow" x1="285" y1="58" x2="374" y2="58"/>
+    <polygon class="dot" points="380,58 372,54 372,62"/>
+    <line class="arrow" x1="195" y1="90" x2="106" y2="90"/>
+    <polygon class="dot" points="100,90 108,86 108,94"/>
+    <line class="arrow" x1="380" y1="90" x2="291" y2="90"/>
+    <polygon class="dot" points="285,90 293,86 293,94"/>
+    <text class="c2t" data-lang="en" x="147" y="50" text-anchor="middle">1. request</text><text class="c2t" data-lang="zh" x="147" y="50" text-anchor="middle">1. 请求</text>
+    <text class="c2t" data-lang="en" x="332" y="50" text-anchor="middle">2. SQL query</text><text class="c2t" data-lang="zh" x="332" y="50" text-anchor="middle">2. SQL 查询</text>
+    <text class="c3t" data-lang="en" x="332" y="110" text-anchor="middle">3. rows</text><text class="c3t" data-lang="zh" x="332" y="110" text-anchor="middle">3. 数据行</text>
+    <text class="c3t" data-lang="en" x="147" y="110" text-anchor="middle">4. JSON</text><text class="c3t" data-lang="zh" x="147" y="110" text-anchor="middle">4. JSON</text>
+    <text class="mono" data-lang="en" x="10" y="154">1  GET /scores?student=1</text><text class="mono" data-lang="zh" x="10" y="154">1  GET /scores?student=1</text>
+    <text class="mono" data-lang="en" x="10" y="174">2  SELECT score FROM Scores WHERE student_id = 1;</text><text class="mono" data-lang="zh" x="10" y="174">2  SELECT score FROM Scores WHERE student_id = 1;</text>
+    <text class="mono" data-lang="en" x="10" y="194">3  rows: 92, 88</text><text class="mono" data-lang="zh" x="10" y="194">3  行：92、88</text>
+    <text class="mono" data-lang="en" x="10" y="214">4  {"scores": [92, 88]}</text><text class="mono" data-lang="zh" x="10" y="214">4  {"scores": [92, 88]}</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. One web request for Alice's scores (student_id 1 from Worked Example 7). Follow the numbered arrows: the browser asks the server (1), the server asks the database in SQL (2), the database returns the matching rows 92 and 88 (3), and the server sends them back to the browser as JSON text (4). The browser never queries the database directly.</span><span data-lang="zh">图 2. 为查询 Alice 的成绩（例题 7 中 student_id 为 1）而发出的一次网络请求。沿着编号箭头阅读：浏览器向服务器发出请求 (1)，服务器用 SQL 向数据库查询 (2)，数据库返回匹配的行 92 和 88 (3)，服务器再以 JSON 文本把它们发回浏览器 (4)。浏览器从不直接查询数据库。</span></figcaption>
+  </figure>
+
+  <details open>
+    <summary><span data-lang="en">Worked Example 14: Building JSON and rejecting invalid JSON</span><span data-lang="zh">例题 14：生成 JSON 并拒绝无效 JSON</span></summary>
+  <div class="card">
+    <p><span data-lang="en">A server stores a student as a Python dictionary. (a) Convert it to JSON text and back, and check how <code>None</code> and <code>True</code> are written. (b) Show what happens when the text uses single quotes.</span><span data-lang="zh">服务器把一名学生存储为 Python 字典。(a) 把它转换为 JSON 文本再转换回来，并检查 <code>None</code> 和 <code>True</code> 是如何写的。(b) 说明文本使用单引号时会发生什么。</span></p>
+  </div>
+  <div class="worked-solution">
+    <p><span data-lang="en"><strong>(a) dumps then loads.</strong> <code>json.dumps</code> turns a Python value into JSON text (a str); <code>json.loads</code> parses the text back into Python values.</span><span data-lang="zh"><strong>(a) 先 dumps 再 loads。</strong><code>json.dumps</code> 把 Python 值转换为 JSON 文本（str）；<code>json.loads</code> 把文本解析回 Python 值。</span></p>
+    <pre><code>import json
+
+student = {"name": "Bob", "grade": 11, "scores": [78, 85, 91], "club": None, "active": True}
+text = json.dumps(student)
+print(text)
+
+back = json.loads(text)
+print(back["scores"][2], back["club"], back["active"])
+
+try:
+    json.loads("{'name': 'Bob'}")
+except json.JSONDecodeError as error:
+    print("Invalid JSON:", error.msg)
+
+# Output:
+# {"name": "Bob", "grade": 11, "scores": [78, 85, 91], "club": null, "active": true}
+# 91 None True
+# Invalid JSON: Expecting property name enclosed in double quotes</code></pre>
+    <p><span data-lang="en">In the JSON text the keys and strings are in double quotes, <code>None</code> became <code>null</code> and <code>True</code> became <code>true</code> (lower case). After <code>json.loads</code> they are <code>None</code> and <code>True</code> again, and <code>back["scores"][2]</code> is 91: the key picks the list, the index 2 picks its third item.</span><span data-lang="zh">在 JSON 文本中，键和字符串使用双引号，<code>None</code> 变成了 <code>null</code>，<code>True</code> 变成了 <code>true</code>（小写）。经过 <code>json.loads</code> 后又变回 <code>None</code> 和 <code>True</code>，而 <code>back["scores"][2]</code> 是 91：键选出列表，索引 2 选出其中的第三项。</span></p>
+    <p><span data-lang="en"><strong>(b) Invalid JSON.</strong> The text <code>{'name': 'Bob'}</code> is a valid Python dictionary but not valid JSON, because JSON allows only double-quoted keys and strings. <code>json.loads</code> raises <code>json.JSONDecodeError</code>, and the program above catches it and prints the reason (the exact wording is Python's). A server that receives such text should report an error instead of guessing.</span><span data-lang="zh"><strong>(b) 无效 JSON。</strong>文本 <code>{'name': 'Bob'}</code> 是合法的 Python 字典，但不是合法的 JSON，因为 JSON 只允许使用双引号的键和字符串。<code>json.loads</code> 会引发 <code>json.JSONDecodeError</code>，上面的程序捕获它并打印原因（具体措辞由 Python 决定）。收到这类文本的服务器应当报告错误，而不是去猜测。</span></p>
+  </div>
+  </details>
 
   <div class="quiz" data-answer="3">
     <div class="quiz-header"><div class="quiz-q"><span data-lang="en">In JSON, which of the following is a <em>valid</em> key-value pair?</span><span data-lang="zh">在 JSON 中，以下哪个是<em>有效的</em>键值对？</span></div><div class="quiz-number">&sect;7 &middot; Q1</div></div>
@@ -1039,11 +1662,32 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <div class="quiz-opt" data-idx="0">92</div>
       <div class="quiz-opt" data-idx="1">88</div>
       <div class="quiz-opt" data-idx="2">75</div>
-      <div class="quiz-opt" data-idx="3"><span data-lang="en">Error — you cannot index a list inside a dict</span><span data-lang="zh">错误——不能索引字典内的列表</span></div>
+      <div class="quiz-opt" data-idx="3"><span data-lang="en">Error: you cannot index a list inside a dict</span><span data-lang="zh">错误：不能索引字典内的列表</span></div>
     </div>
     <div class="quiz-explain correct-exp"><span data-lang="en"><code>data["scores"]</code> accesses the list <code>[88, 92, 75]</code>. Then <code>[1]</code> accesses index 1 of that list. Python lists are 0-indexed, so index 0 = 88, index 1 = 92, index 2 = 75. Result: 92.</span><span data-lang="zh"><code>data["scores"]</code> 访问列表 <code>[88, 92, 75]</code>。然后 <code>[1]</code> 访问该列表的索引 1。Python 列表从 0 开始索引，所以索引 0 = 88，索引 1 = 92，索引 2 = 75。结果：92。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">Two steps: (1) <code>data["scores"]</code> returns the list <code>[88, 92, 75]</code>. (2) <code>[1]</code> on that list returns the item at index 1. Python is 0-indexed: index 0 = 88, index 1 = 92.</span><span data-lang="zh">两步：(1) <code>data["scores"]</code> 返回列表 <code>[88, 92, 75]</code>。(2) 对该列表 <code>[1]</code> 返回索引 1 处的项。Python 从 0 开始索引：索引 0 = 88，索引 1 = 92。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
+  </div>
+
+  <div class="sg-examtip">
+    <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
+    <p data-lang="en">When a question gives JSON, trace the access path one step at a time: the key chooses a value, an index chooses a list item, and the next key goes inside an object. To judge validity, check double quotes, no trailing comma, and lower-case <code>true</code>, <code>false</code> and <code>null</code>. Common errors: counting list positions from 1 instead of 0, and writing Python's <code>True</code> or <code>None</code> inside JSON.</p><p data-lang="zh">题目给出 JSON 时，一步一步追踪访问路径：键选出一个值，索引选出列表中的一项，下一个键则进入对象内部。判断有效性时，检查双引号、没有尾随逗号，以及小写的 <code>true</code>、<code>false</code> 和 <code>null</code>。常见错误：列表位置从 1 而不是 0 开始数，以及在 JSON 中写 Python 的 <code>True</code> 或 <code>None</code>。</p>
+  </div>
+
+  <div class="sg-check">
+    <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
+    <details class="sg-q">
+      <summary><span data-lang="en">1. What does <code>json.dumps({"ok": True, "n": None})</code> return?</span><span data-lang="zh">1. <code>json.dumps({"ok": True, "n": None})</code> 返回什么？</span></summary>
+      <div class="sg-a"><p data-lang="en">The string <code>{"ok": true, "n": null}</code>: Python's <code>True</code> and <code>None</code> are written as <code>true</code> and <code>null</code>.</p><p data-lang="zh">字符串 <code>{"ok": true, "n": null}</code>：Python 的 <code>True</code> 和 <code>None</code> 被写成 <code>true</code> 和 <code>null</code>。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">2. If <code>data = json.loads('{"a": {"b": [10, 20]}}')</code>, what is <code>data["a"]["b"][1]</code>?</span><span data-lang="zh">2. 如果 <code>data = json.loads('{"a": {"b": [10, 20]}}')</code>，那么 <code>data["a"]["b"][1]</code> 是多少？</span></summary>
+      <div class="sg-a"><p data-lang="en"><code>20</code>. <code>data["a"]</code> is the inner object, <code>["b"]</code> is the list <code>[10, 20]</code>, and index 1 is its second item.</p><p data-lang="zh"><code>20</code>。<code>data["a"]</code> 是内层对象，<code>["b"]</code> 是列表 <code>[10, 20]</code>，索引 1 是它的第二项。</p></div>
+    </details>
+    <details class="sg-q">
+      <summary><span data-lang="en">3. In Figure 2, which of the four steps carries SQL and which carries JSON?</span><span data-lang="zh">3. 在图 2 中，四个步骤里哪一步传送 SQL，哪一步传送 JSON？</span></summary>
+      <div class="sg-a"><p data-lang="en">Step 2 (server to database) carries the SQL query, and step 4 (server to browser) carries the JSON response. The browser never talks to the database directly.</p><p data-lang="zh">第 2 步（服务器到数据库）传送 SQL 查询，第 4 步（服务器到浏览器）传送 JSON 响应。浏览器从不直接访问数据库。</p></div>
+    </details>
   </div>
 </section>
 
@@ -1056,9 +1700,9 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
   <div class="concept-box orange">
     <strong style="color: var(--orange);"><span data-lang="en">Data and file questions (&sect;1&ndash;&sect;3)</span><span data-lang="zh">数据和文件题（&sect;1&ndash;&sect;3）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Data vs information distinction.</span><span data-lang="zh">数据与信息的区别。</span></strong> <span data-lang="en">Examiners frequently ask: "Is this data or information? Explain." The answer always hinges on context: raw unlabelled values are data; values with meaning attached (label, unit, interpretation) are information. State the difference explicitly.</span><span data-lang="zh">考官常问："这是数据还是信息？请解释。"答案总是取决于上下文：未标注的原始值是数据；附有含义（标签、单位、解释）的值是信息。明确说明区别。</span></li>
+      <li><strong><span data-lang="en">Data vs information distinction.</span><span data-lang="zh">数据与信息的区别。</span></strong> <span data-lang="en">Questions often ask: "Is this data or information? Explain." The answer hinges on context: raw unlabelled values are data; values with meaning attached (label, unit, interpretation) are information. State the difference explicitly.</span><span data-lang="zh">题目常问："这是数据还是信息？请解释。"答案取决于上下文：未标注的原始值是数据；附有含义（标签、单位、解释）的值是信息。明确说明区别。</span></li>
       <li><strong><span data-lang="en">CSV type-conversion pitfall.</span><span data-lang="zh">CSV 类型转换陷阱。</span></strong> <span data-lang="en">Every value read from a CSV is a string. Always convert with <code>int()</code> or <code>float()</code> before numeric comparison or arithmetic. Forgetting this is the single most common file-processing bug.</span><span data-lang="zh">从 CSV 读取的每个值都是字符串。在数值比较或算术之前，始终用 <code>int()</code> 或 <code>float()</code> 转换。忘记这一点是最常见的文件处理错误。</span></li>
-      <li><strong><span data-lang="en">File modes.</span><span data-lang="zh">文件模式。</span></strong> <span data-lang="en">Know <code>"r"</code> (read), <code>"w"</code> (write — overwrites), <code>"a"</code> (append). On an exam, if the question says "add a new record without deleting existing ones," the answer is append mode (<code>"a"</code>).</span><span data-lang="zh">了解 <code>"r"</code>（读取）、<code>"w"</code>（写入——覆盖）、<code>"a"</code>（追加）。在考试中，如果题目说"添加新记录而不删除现有记录"，答案是追加模式（<code>"a"</code>）。</span></li>
+      <li><strong><span data-lang="en">File modes.</span><span data-lang="zh">文件模式。</span></strong> <span data-lang="en">Know <code>"r"</code> (read), <code>"w"</code> (write, which overwrites), <code>"a"</code> (append). If a question says "add a new record without deleting existing ones," the answer is append mode (<code>"a"</code>).</span><span data-lang="zh">了解 <code>"r"</code>（读取）、<code>"w"</code>（写入，会覆盖）、<code>"a"</code>（追加）。如果题目说"添加新记录而不删除现有记录"，答案是追加模式（<code>"a"</code>）。</span></li>
     </ul>
   </div>
 
@@ -1066,17 +1710,17 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
     <strong style="color: var(--accent);"><span data-lang="en">Database and SQL questions (&sect;4&ndash;&sect;5)</span><span data-lang="zh">数据库和 SQL 题（&sect;4&ndash;&sect;5）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li><strong><span data-lang="en">Primary vs foreign key.</span><span data-lang="zh">主键与外键。</span></strong> <span data-lang="en">Primary key = unique identifier for rows in its own table. Foreign key = references the primary key in another table. Mixing these up is a common error. Remember: foreign key creates the link between tables.</span><span data-lang="zh">主键 = 本表行的唯一标识符。外键 = 引用另一个表的主键。混淆这两者是常见错误。记住：外键创建表之间的链接。</span></li>
-      <li><strong><span data-lang="en">SQL clause order.</span><span data-lang="zh">SQL 子句顺序。</span></strong> <span data-lang="en">Always: SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY. You cannot write WHERE before FROM. Missing FROM is the most common SQL syntax error on exams.</span><span data-lang="zh">始终：SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY。不能在 FROM 之前写 WHERE。缺少 FROM 是考试中最常见的 SQL 语法错误。</span></li>
-      <li><strong><span data-lang="en">Ontario divergence.</span><span data-lang="zh">安大略分流。</span></strong> <span data-lang="en">If you are in ICS4U (university stream), SQL is ICS4C (college stream) content — you are not assessed on SQL in ICS4U. Your file I/O standard is A3.1. Know which course you are in.</span><span data-lang="zh">如果你在 ICS4U（大学流），SQL 是 ICS4C（学院流）内容——ICS4U 不考查 SQL。你的文件读写标准是 A3.1。了解你在哪门课程中。</span></li>
+      <li><strong><span data-lang="en">SQL clause order.</span><span data-lang="zh">SQL 子句顺序。</span></strong> <span data-lang="en">Always: SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY. You cannot write WHERE before FROM. Missing FROM is a very common SQL syntax error.</span><span data-lang="zh">始终：SELECT &rarr; FROM &rarr; WHERE &rarr; ORDER BY。不能在 FROM 之前写 WHERE。缺少 FROM 是很常见的 SQL 语法错误。</span></li>
+      <li><strong><span data-lang="en">Ontario divergence.</span><span data-lang="zh">安大略分流。</span></strong> <span data-lang="en">If you are in ICS4U (university stream), SQL is ICS4C (college stream) content, and the ICS4U standard does not name SQL. Your file I/O standard is A3.1. Know which course you are in.</span><span data-lang="zh">如果你在 ICS4U（大学流），SQL 是 ICS4C（学院流）内容，ICS4U 的标准没有提到 SQL。你的文件读写标准是 A3.1。了解你在哪门课程中。</span></li>
     </ul>
   </div>
 
   <div class="concept-box purple">
     <strong style="color: var(--purple);"><span data-lang="en">HTML and JSON questions (&sect;6&ndash;&sect;7)</span><span data-lang="zh">HTML 和 JSON 题（&sect;6&ndash;&sect;7）</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
-      <li><strong><span data-lang="en">Paired tags.</span><span data-lang="zh">成对标签。</span></strong> <span data-lang="en">Every opening tag needs a closing tag (except self-closing ones like <code>&lt;br&gt;</code>). On a "find the error in this HTML" question, missing closing tags are the most common planted bug.</span><span data-lang="zh">每个开始标签都需要一个结束标签（除了 <code>&lt;br&gt;</code> 等自闭合标签）。在"找出 HTML 中的错误"题中，缺少结束标签是最常见的预设错误。</span></li>
+      <li><strong><span data-lang="en">Paired tags.</span><span data-lang="zh">成对标签。</span></strong> <span data-lang="en">Every opening tag needs a closing tag (except self-closing ones like <code>&lt;br&gt;</code>). In a "find the error in this HTML" question, a missing closing tag is a common bug.</span><span data-lang="zh">每个开始标签都需要一个结束标签（除了 <code>&lt;br&gt;</code> 等自闭合标签）。在"找出 HTML 中的错误"题中，缺少结束标签是常见的错误。</span></li>
       <li><strong><span data-lang="en">JSON double quotes only.</span><span data-lang="zh">JSON 只用双引号。</span></strong> <span data-lang="en">JSON keys and string values must use double quotes, not single quotes. On a "is this valid JSON?" question, single quotes or unquoted keys make it invalid.</span><span data-lang="zh">JSON 键和字符串值必须使用双引号，而非单引号。在"这是有效的 JSON 吗？"题中，单引号或不带引号的键使其无效。</span></li>
-      <li><strong><span data-lang="en">data vs information for AP CSP.</span><span data-lang="zh">AP CSP 的数据与信息。</span></strong> <span data-lang="en">AP CSP Big Idea 2 (17&ndash;22% of the exam) tests whether you understand that programs can extract knowledge from raw data. When a question shows a JSON payload and asks "what knowledge can be generated from this data?" — apply the data &rarr; information transformation from &sect;1.</span><span data-lang="zh">AP CSP 大概念 2（占考试 17&ndash;22%）测试你是否理解程序可以从原始数据中提取知识。当题目展示 JSON 载荷并问"可以从这些数据中生成什么知识？"——应用 &sect;1 的数据 &rarr; 信息转换。</span></li>
+      <li><strong><span data-lang="en">data vs information for AP CSP.</span><span data-lang="zh">AP CSP 的数据与信息。</span></strong> <span data-lang="en">AP CSP Big Idea 2 covers how programs can extract knowledge from raw data. When a question shows a JSON payload and asks "what knowledge can be generated from this data?", apply the data &rarr; information transformation from &sect;1.</span><span data-lang="zh">AP CSP 大概念 2 涵盖程序如何从原始数据中提取知识。当题目展示 JSON 载荷并问"可以从这些数据中生成什么知识？"时，应用 &sect;1 的数据 &rarr; 信息转换。</span></li>
     </ul>
   </div>
 
@@ -1084,7 +1728,7 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
     <strong style="color: var(--green);"><span data-lang="en">Answer hygiene</span><span data-lang="zh">作答规范</span></strong>
     <ul style="margin-top: 8px; padding-left: 22px;">
       <li><strong><span data-lang="en">State the tradeoff explicitly.</span><span data-lang="zh">明确说明权衡。</span></strong> <span data-lang="en">CSTA 3A-DA-10 says to "evaluate tradeoffs." On a question about CSV vs database, do not just say "databases are better." State both sides: CSV is simpler and portable; a database supports complex queries and avoids duplicate data. Then state the recommendation for the given scenario.</span><span data-lang="zh">CSTA 3A-DA-10 要求"评估权衡"。在关于 CSV 与数据库的题中，不要只说"数据库更好"。说明两方面：CSV 更简单且可移植；数据库支持复杂查询并避免数据重复。然后针对给定场景说明建议。</span></li>
-      <li><strong><span data-lang="en">Show the full SQL statement.</span><span data-lang="zh">展示完整的 SQL 语句。</span></strong> <span data-lang="en">On SQL questions, always write the complete statement including SELECT, FROM, and (if required) WHERE. Partial statements score partial marks at best.</span><span data-lang="zh">在 SQL 题中，始终写出完整语句，包括 SELECT、FROM 和（如需）WHERE。不完整的语句最多得部分分。</span></li>
+      <li><strong><span data-lang="en">Show the full SQL statement.</span><span data-lang="zh">展示完整的 SQL 语句。</span></strong> <span data-lang="en">On SQL questions, always write the complete statement including SELECT, FROM, and (if required) WHERE. A partial statement is an incomplete answer.</span><span data-lang="zh">在 SQL 题中，始终写出完整语句，包括 SELECT、FROM 和（如需）WHERE。不完整的语句是不完整的答案。</span></li>
     </ul>
   </div>
 </section>
@@ -1104,18 +1748,18 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
   <div class="flashcard-grid" id="flashcardGrid">
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Data vs Information</span><span data-lang="zh">数据与信息</span></div><div class="flashcard-back"><span data-lang="en">Data = raw facts without context (e.g., 98.6). Information = data with meaning attached (e.g., "body temperature 98.6°F, normal"). CSTA 3A-DA-10/11/12.</span><span data-lang="zh">数据 = 没有上下文的原始事实（如 98.6）。信息 = 附有含义的数据（如"体温 98.6°F，正常"）。CSTA 3A-DA-10/11/12。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Python file modes</span><span data-lang="zh">Python 文件模式</span></div><div class="flashcard-back"><span data-lang="en">"r" = read only. "w" = write (overwrites). "a" = append (adds to end). Use with open(...) as f: to auto-close. AB CSE2130 outcomes 1.4.2, 1.4.5.</span><span data-lang="zh">"r" = 只读。"w" = 写入（覆盖）。"a" = 追加（在末尾添加）。使用 with open(...) as f: 自动关闭。AB CSE2130 结果 1.4.2、1.4.5。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">CSV header row</span><span data-lang="zh">CSV 标题行</span></div><div class="flashcard-back"><span data-lang="en">The first row of a CSV that names each column. Use csv.DictReader to auto-map rows to column names. All CSV values are read as strings — convert with int() or float() before math.</span><span data-lang="zh">命名每列的 CSV 第一行。使用 csv.DictReader 将行自动映射到列名。所有 CSV 值都作为字符串读取——在数学运算前用 int() 或 float() 转换。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">CSV header row</span><span data-lang="zh">CSV 标题行</span></div><div class="flashcard-back"><span data-lang="en">The first row of a CSV that names each column. Use csv.DictReader to auto-map rows to column names. All CSV values are read as strings, so convert with int() or float() before math.</span><span data-lang="zh">命名每列的 CSV 第一行。使用 csv.DictReader 将行自动映射到列名。所有 CSV 值都作为字符串读取，所以在数学运算前用 int() 或 float() 转换。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Relational database</span><span data-lang="zh">关系数据库</span></div><div class="flashcard-back"><span data-lang="en">A database that organises data in linked tables. Tables are joined by primary keys (unique row IDs) and foreign keys (references to another table's primary key). CSTA 3A-DA-10.</span><span data-lang="zh">将数据组织在关联表中的数据库。表通过主键（唯一行 ID）和外键（对另一个表主键的引用）连接。CSTA 3A-DA-10。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Primary key</span><span data-lang="zh">主键</span></div><div class="flashcard-back"><span data-lang="en">A column whose value uniquely identifies each row in a table. No two rows may share the same primary key value.</span><span data-lang="zh">其值唯一标识表中每行的列。任何两行不得共享相同的主键值。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Foreign key</span><span data-lang="zh">外键</span></div><div class="flashcard-back"><span data-lang="en">A column in one table that references the primary key of another table. Creates the relational link between tables.</span><span data-lang="zh">一个表中引用另一个表主键的列。创建表之间的关系链接。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SQL SELECT syntax</span><span data-lang="zh">SQL SELECT 语法</span></div><div class="flashcard-back"><span data-lang="en">SELECT columns FROM table WHERE condition ORDER BY column DESC; Always: SELECT → FROM → WHERE → ORDER BY. Missing FROM is the most common SQL error.</span><span data-lang="zh">SELECT 列 FROM 表 WHERE 条件 ORDER BY 列 DESC; 始终：SELECT → FROM → WHERE → ORDER BY。缺少 FROM 是最常见的 SQL 错误。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SQL SELECT syntax</span><span data-lang="zh">SQL SELECT 语法</span></div><div class="flashcard-back"><span data-lang="en">SELECT columns FROM table WHERE condition ORDER BY column DESC; Always: SELECT → FROM → WHERE → ORDER BY. Missing FROM is a very common SQL error.</span><span data-lang="zh">SELECT 列 FROM 表 WHERE 条件 ORDER BY 列 DESC; 始终：SELECT → FROM → WHERE → ORDER BY。缺少 FROM 是很常见的 SQL 错误。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">SQL WHERE clause</span><span data-lang="zh">SQL WHERE 子句</span></div><div class="flashcard-back"><span data-lang="en">Filters rows. Only rows where the condition is true are returned. Operators: =, &lt;, &gt;, !=, LIKE, AND, OR. E.g., WHERE score &gt; 85 AND grade = 11.</span><span data-lang="zh">过滤行。只返回条件为真的行。运算符：=、&lt;、&gt;、!=、LIKE、AND、OR。例如：WHERE score &gt; 85 AND grade = 11。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">HTML structure</span><span data-lang="zh">HTML 结构</span></div><div class="flashcard-back"><span data-lang="en">&lt;html&gt; contains &lt;head&gt; (metadata: title, charset, CSS) and &lt;body&gt; (visible content). Every tag has an opening and closing form except self-closing tags like &lt;br&gt; and &lt;img&gt;.</span><span data-lang="zh">&lt;html&gt; 包含 &lt;head&gt;（元数据：标题、字符集、CSS）和 &lt;body&gt;（可见内容）。每个标签都有开始和结束形式，除了 &lt;br&gt; 和 &lt;img&gt; 等自闭合标签。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">HTML table tags</span><span data-lang="zh">HTML 表格标签</span></div><div class="flashcard-back"><span data-lang="en">&lt;table&gt; wraps the table. &lt;tr&gt; = table row. &lt;th&gt; = header cell (bold). &lt;td&gt; = data cell. Nest: table &gt; tr &gt; th/td.</span><span data-lang="zh">&lt;table&gt; 包裹表格。&lt;tr&gt; = 表格行。&lt;th&gt; = 表头单元格（粗体）。&lt;td&gt; = 数据单元格。嵌套：table &gt; tr &gt; th/td。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">JSON format rules</span><span data-lang="zh">JSON 格式规则</span></div><div class="flashcard-back"><span data-lang="en">Keys must be double-quoted strings. Values can be strings, numbers, booleans (true/false), null, arrays [], or objects {}. No single quotes. No trailing commas.</span><span data-lang="zh">键必须是双引号字符串。值可以是字符串、数字、布尔值（true/false）、null、数组 [] 或对象 {}。不允许单引号。不允许尾随逗号。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">json.loads() vs json.dumps()</span><span data-lang="zh">json.loads() 与 json.dumps()</span></div><div class="flashcard-back"><span data-lang="en">json.loads(text) = parse JSON string → Python dict/list. json.dumps(obj) = serialise Python dict/list → JSON string. "loads" = load string; "dumps" = dump string.</span><span data-lang="zh">json.loads(text) = 解析 JSON 字符串 → Python 字典/列表。json.dumps(obj) = 序列化 Python 字典/列表 → JSON 字符串。"loads" = 加载字符串；"dumps" = 转储字符串。</span></div></div></div>
     <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">API (web context)</span><span data-lang="zh">接口（网络背景）</span></div><div class="flashcard-back"><span data-lang="en">Application Programming Interface. A set of rules that lets one program request data from another over HTTP. Response is usually JSON. AB CSE1210/1220/2210/3210 web scripting pathway.</span><span data-lang="zh">应用程序编程接口。让一个程序通过 HTTP 向另一个程序请求数据的一组规则。响应通常是 JSON。AB CSE1210/1220/2210/3210 网页脚本路径。</span></div></div></div>
-    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">AP CSP Big Idea 2 (DAT)</span><span data-lang="zh">AP CSP 大概念 2（DAT）</span></div><div class="flashcard-back"><span data-lang="en">Data is central to computing — it communicates initial conditions and represents new knowledge. Topics 2.3 (extracting information from data) and 2.4 (using programs with data). Weighted 17–22% of the exam.</span><span data-lang="zh">数据是计算的核心——它传递初始条件并代表新知识。主题 2.3（从数据中提取信息）和 2.4（将程序与数据结合使用）。占考试 17–22%。</span></div></div></div>
+    <div class="flashcard" onclick="flipCard(this)"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">AP CSP Big Idea 2 (DAT)</span><span data-lang="zh">AP CSP 大概念 2（DAT）</span></div><div class="flashcard-back"><span data-lang="en">Data is central to computing: it communicates initial conditions and represents new knowledge. Topics 2.3 (extracting information from data) and 2.4 (using programs with data).</span><span data-lang="zh">数据是计算的核心：它传递初始条件并代表新知识。主题 2.3（从数据中提取信息）和 2.4（将程序与数据结合使用）。</span></div></div></div>
   </div>
 </section>
 
@@ -1133,7 +1777,7 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <div class="quiz-opt" data-idx="2"><span data-lang="en">str</span><span data-lang="zh">字符串 str</span></div>
       <div class="quiz-opt" data-idx="3"><span data-lang="en">bool</span><span data-lang="zh">布尔值 bool</span></div>
     </div>
-    <div class="quiz-explain correct-exp"><span data-lang="en">CSV files are plain text. Every value read from a CSV &mdash; including numbers &mdash; is a <strong>string</strong> (str) until you convert it. Use <code>int(row["score"])</code> or <code>float(row["score"])</code> before doing math.</span><span data-lang="zh">CSV 文件是纯文本。从 CSV 读取的每个值——包括数字——都是<strong>字符串</strong>（str），直到你转换它。在进行数学运算之前使用 <code>int(row["score"])</code> 或 <code>float(row["score"])</code>。</span></div>
+    <div class="quiz-explain correct-exp"><span data-lang="en">CSV files are plain text. Every value read from a CSV, including numbers, is a <strong>string</strong> (str) until you convert it. Use <code>int(row["score"])</code> or <code>float(row["score"])</code> before doing math.</span><span data-lang="zh">CSV 文件是纯文本。从 CSV 读取的每个值（包括数字）都是<strong>字符串</strong>（str），直到你转换它。在进行数学运算之前使用 <code>int(row["score"])</code> 或 <code>float(row["score"])</code>。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">CSV values are always strings. Python does not auto-convert CSV text to int or float. You must call int() or float() explicitly.</span><span data-lang="zh">CSV 值始终是字符串。Python 不会自动将 CSV 文本转换为 int 或 float。必须显式调用 int() 或 float()。</span></div>
     <button class="quiz-retry" onclick="retryQuiz(this)"><span data-lang="en">Retry</span><span data-lang="zh">重试</span></button>
   </div>
@@ -1232,16 +1876,16 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
 <section class="section" id="feeders">
   <div class="section-label"><span data-lang="en">Next Steps</span><span data-lang="zh">后续单元</span></div>
   <h2><span data-lang="en">What This Feeds Into</span><span data-lang="zh">本单元的去向</span></h2>
-  <p><span data-lang="en">Data, databases and the web are the infrastructure that every modern program rests on. The skills here — reading files, parsing CSV and JSON, querying a database, building a web page — underpin the AP CSP Create Performance Task (your program must handle real data), the CSTA 3A-DA standards, and the data-handling sections of Ontario's Grade 12 Computer Science courses. No AP CSA database or web guide exists in this repo yet; the section below focuses on within-series and AP CSP connections.</span><span data-lang="zh">数据、数据库和网络是每个现代程序所依赖的基础设施。这里的技能——读取文件、解析 CSV 和 JSON、查询数据库、构建网页——支撑 AP CSP 创作绩效任务（程序必须处理真实数据）、CSTA 3A-DA 标准和安大略 12 年级计算机科学课程的数据处理部分。本仓库中目前没有 AP CSA 数据库或网页指南；以下部分重点介绍系列内和 AP CSP 的连接。</span></p>
+  <p><span data-lang="en">Data, databases and the web are the infrastructure that every modern program rests on. The skills here (reading files, parsing CSV and JSON, querying a database, building a web page) support the data work in AP CSP, the CSTA 3A-DA standards, and the data-handling sections of Ontario's Grade 12 Computer Science courses.</span><span data-lang="zh">数据、数据库和网络是每个现代程序所依赖的基础设施。这里的技能（读取文件、解析 CSV 和 JSON、查询数据库、构建网页）支撑 AP CSP 的数据学习、CSTA 3A-DA 标准和安大略 12 年级计算机科学课程的数据处理部分。</span></p>
 
   <div style="margin: 20px 0;">
     <p><strong><span data-lang="en">Within High School Computer Science.</span><span data-lang="zh">在 HS Computer Science 内部。</span></strong></p>
-    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Unit 2 (Programming Fundamentals) gave you variables, data types, and I/O — this unit shows where that data lives on disk and in databases. Unit 5 (Data Structures) shows how to organise data in memory (lists, dictionaries); this unit shows how to persist it on disk or transmit it over the web. Unit 9 (Boolean Logic) underpins the WHERE clause logic you used in &sect;5. The data skills here synthesise material from across the series into a complete pipeline: file &rarr; parse &rarr; filter &rarr; display.</span><span data-lang="zh">第 2 单元（编程基础）给了你变量、数据类型和 I/O——本单元展示这些数据在磁盘和数据库中的存储位置。第 5 单元（数据结构）展示如何在内存中组织数据（列表、字典）；本单元展示如何将其持久化到磁盘或通过网络传输。第 9 单元（布尔逻辑）支撑你在 &sect;5 中使用的 WHERE 子句逻辑。这里的数据技能将整个系列的材料综合成一个完整的管线：文件 &rarr; 解析 &rarr; 过滤 &rarr; 显示。</span></p>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;"><span data-lang="en">Unit 2 (Programming Fundamentals) gave you variables, data types, and I/O; this unit shows where that data lives on disk and in databases. Unit 5 (Data Structures) shows how to organise data in memory (lists, dictionaries); this unit shows how to persist it on disk or transmit it over the web. Unit 9 (Boolean Logic) underpins the WHERE clause logic you used in &sect;5. The data skills here synthesise material from across the series into a complete pipeline: file &rarr; parse &rarr; filter &rarr; display.</span><span data-lang="zh">第 2 单元（编程基础）给了你变量、数据类型和 I/O；本单元展示这些数据在磁盘和数据库中的存储位置。第 5 单元（数据结构）展示如何在内存中组织数据（列表、字典）；本单元展示如何将其持久化到磁盘或通过网络传输。第 9 单元（布尔逻辑）支撑你在 &sect;5 中使用的 WHERE 子句逻辑。这里的数据技能将整个系列的材料综合成一个完整的管线：文件 &rarr; 解析 &rarr; 过滤 &rarr; 显示。</span></p>
   </div>
 
   <div style="margin: 20px 0;">
-    <p><strong><span data-lang="en">AP CSP feeder (no link — no AP database guide in this repo).</span><span data-lang="zh">AP CSP 衔接（无链接——本仓库中没有 AP 数据库指南）。</span></strong></p>
-    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 2 (Data — DAT) is weighted at 17&ndash;22% of the exam and directly tests the skills in this guide: extracting information from data (topics 2.3, 2.4), understanding how programs generate knowledge from raw inputs, and evaluating tradeoffs in data storage and representation (CSTA 3A-DA-10). The Create Performance Task requires you to write a program that processes data — the CSV-reading and JSON-parsing patterns in &sect;2, &sect;3, and &sect;7 are the practical skills that task demands. There is no AP CSA database or web guide in this repo; students moving to AP CSA should treat this unit as enrichment background for data persistence concepts that AP CSA covers through file I/O and 2D arrays.</span><span data-lang="zh">AP CSP 大概念 2（数据——DAT）占考试 17&ndash;22%，直接考查本指南中的技能：从数据中提取信息（主题 2.3、2.4）、理解程序如何从原始输入生成知识，以及评估数据存储和表示的权衡（CSTA 3A-DA-10）。创作绩效任务要求编写处理数据的程序——&sect;2、&sect;3 和 &sect;7 中的 CSV 读取和 JSON 解析模式是该任务要求的实践技能。本仓库中没有 AP CSA 数据库或网页指南；转向 AP CSA 的学生应将本单元视为 AP CSA 通过文件 I/O 和二维数组涵盖的数据持久化概念的拓展背景。</span></p>
+    <p><strong><span data-lang="en">AP CSP and AP CSA connections.</span><span data-lang="zh">AP CSP 与 AP CSA 的衔接。</span></strong></p>
+    <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 12px;"><span data-lang="en">AP CSP Big Idea 2 (Data, DAT) covers the skills in this guide: extracting information from data (topics 2.3, 2.4), seeing how programs generate knowledge from raw inputs, and weighing tradeoffs in data storage and representation (CSTA 3A-DA-10). The CSV-reading and JSON-parsing patterns in &sect;2, &sect;3, and &sect;7 are the practical skills behind a program that processes data. Students moving to AP CSA will meet data again in Unit 4 (Data Collections), which covers arrays, ArrayList, 2D arrays and reading text files; this unit is background for how data is stored and loaded.</span><span data-lang="zh">AP CSP 大概念 2（数据，DAT）涵盖本指南中的技能：从数据中提取信息（主题 2.3、2.4）、了解程序如何从原始输入生成知识，以及权衡数据存储和表示的利弊（CSTA 3A-DA-10）。&sect;2、&sect;3 和 &sect;7 中的 CSV 读取和 JSON 解析模式，是编写处理数据的程序所需的实践技能。转向 AP CSA 的学生会在第 4 单元（数据集合）再次遇到数据，该单元涵盖数组、ArrayList、二维数组和读取文本文件；本单元是理解数据如何存储和加载的背景知识。</span></p>
   </div>
   <!-- feeder-pitch: soft service-ladder nudge (feeder-as-pitch sprint) -->
   <p class="feeder-pitch"><span data-lang="en">This is the ladder we coach students up: from these high school foundations into AP and IB, and on to first-year university. If you would rather have a guide for the next step than take it on trust, Dingrui Scholars tutors teach exactly this path in one-on-one sessions and small-group classes. A <a href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__feeder_pitch__en" target="_blank" rel="noopener">free assessment</a> is the place to start.</span><span data-lang="zh">这正是我们陪伴学生攀登的阶梯：从这些高中基础，迈入 AP 与 IB，再走向大学一年级。如果你希望在下一步有人引路，而不是凭感觉前行，Dingrui Scholars 的导师正是沿着这条路径，以一对一辅导与小班课授课。欢迎从<a href="https://www.dingruischolars.com/signup-ch?utm_source=notes&utm_medium=cta&utm_campaign=hs_cs&utm_content=unit_10_data_databases_and_the_web__feeder_pitch__zh" target="_blank" rel="noopener">免费评估</a>开始。</span></p>
@@ -1317,12 +1961,12 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <ul>
         <li><code>3A-DA-11</code> <span data-lang="en">"Create interactive data visualizations using software tools to help others better understand real-world phenomena." (CSTA K-12 CS Standards, Level 3A)</span><span data-lang="zh">"使用软件工具创建互动数据可视化，以帮助他人更好地理解现实世界现象。"（CSTA K-12 计算机科学标准，3A 级）</span></li>
         <li><code>3A-DA-12</code> <span data-lang="en">"Create computational models that represent the relationships among different elements of data collected from a phenomenon or process." (CSTA Level 3A)</span><span data-lang="zh">"创建计算模型，表示从现象或过程中收集的数据的不同元素之间的关系。"（CSTA 3A 级）</span></li>
-        <li><code>3A-DA-10</code> <span data-lang="en">"Evaluate the tradeoffs in how data elements are organized and where data is stored." (CSTA Level 3A) — directly addresses database design.</span><span data-lang="zh">"评估数据元素的组织方式和数据存储位置的权衡。"（CSTA 3A 级）——直接涉及数据库设计。</span></li>
-        <li><span data-lang="en">AP CSP Big Idea 2 (Data — DAT): Topics 2.3 Extracting Information from Data, 2.4 Using Programs with Data. Learning Objective DAT-2 family. Skill 5.B "Explain how knowledge can be generated from data."</span><span data-lang="zh">AP CSP 大概念 2（数据——DAT）：主题 2.3 从数据中提取信息，2.4 将程序与数据结合使用。学习目标 DAT-2 系列。技能 5.B"解释如何从数据中生成知识"。</span></li>
+        <li><code>3A-DA-10</code> <span data-lang="en">"Evaluate the tradeoffs in how data elements are organized and where data is stored." (CSTA Level 3A). It addresses database design directly.</span><span data-lang="zh">"评估数据元素的组织方式和数据存储位置的权衡。"（CSTA 3A 级）。它直接涉及数据库设计。</span></li>
+        <li><span data-lang="en">AP CSP Big Idea 2 (Data, DAT): Topics 2.3 Extracting Information from Data, 2.4 Using Programs with Data. Learning Objective DAT-2 family. Skill 5.B "Explain how knowledge can be generated from data."</span><span data-lang="zh">AP CSP 大概念 2（数据，DAT）：主题 2.3 从数据中提取信息，2.4 将程序与数据结合使用。学习目标 DAT-2 系列。技能 5.B"解释如何从数据中生成知识"。</span></li>
       </ul>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario — ICS4U / ICS4C</span><span data-lang="zh">安大略 — ICS4U / ICS4C</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Ontario: ICS4U / ICS4C</span><span data-lang="zh">安大略：ICS4U / ICS4C</span></div>
       <ul>
         <li><strong>ICS4U</strong> <code>A3.1</code> <span data-lang="en">"demonstrate the ability to read from, and write to, an external file (e.g., text file, binary file, database, XML file) from within a computer program." (Grade 12 University)</span><span data-lang="zh">ICS4U A3.1："展示从计算机程序内部读写外部文件（如文本文件、二进制文件、数据库、XML 文件）的能力。"（12 年级大学预科）</span></li>
         <li><strong>ICS4C</strong> <code>A2.2</code> <span data-lang="en">"demonstrate the ability to read from, and write to, an external file (e.g., sequential file, database, XML file, relational database via SQL)." (Grade 12 College)</span><span data-lang="zh">ICS4C A2.2："展示读写外部文件（如顺序文件、数据库、XML 文件、通过 SQL 的关系数据库）的能力。"（12 年级学院预科）</span></li>
@@ -1330,7 +1974,7 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <div class="syllabus-note"><strong>&#9888; Divergence.</strong> <span data-lang="en">Relational databases and SQL appear only in Ontario's college stream (ICS4C), not the university stream (ICS4U). ICS4U covers file I/O (A3.1) but not SQL. Students in the ICS4U track will encounter the file I/O sections most directly; the SQL section is enrichment mapped to ICS4C and CSTA/AP CSP.</span><span data-lang="zh">关系数据库和 SQL 仅出现在安大略学院流（ICS4C），而非大学流（ICS4U）。ICS4U 涵盖文件读写（A3.1）但不涉及 SQL。ICS4U 学生最直接对应文件读写部分；SQL 部分为拓展内容，对应 ICS4C 及 CSTA/AP CSP。</span></div>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia — CIS 11/12</span><span data-lang="zh">不列颠哥伦比亚 — CIS 11/12</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">British Columbia: CIS 11/12</span><span data-lang="zh">不列颠哥伦比亚：CIS 11/12</span></div>
       <ul>
         <li><strong>Computer Studies 10</strong> <span data-lang="en">Content (verbatim): "risks and rewards (data collection, personal information, privacy concerns, remote hacking, information as a commodity, …) associated with big data, multi-device connectivity, and the Internet of Things."</span><span data-lang="zh">Computer Studies 10 内容（原文）："与大数据、多设备连接和物联网相关的风险与回报（数据收集、个人信息、隐私问题、远程入侵、信息作为商品……）"。</span></li>
         <li><strong>Computer Information Systems 11</strong> <span data-lang="en">Content (verbatim): "evolution of computer technology, including hardware, software, networks, and the Internet"; "installation and configuration of operating systems"; "proprietary versus open-source applications."</span><span data-lang="zh">Computer Information Systems 11 内容（原文）："计算机技术的演变，包括硬件、软件、网络和互联网"；"操作系统的安装与配置"；"专有应用与开源应用的对比"。</span></li>
@@ -1339,11 +1983,11 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <div class="syllabus-note"><strong>&#9888; Note.</strong> <span data-lang="en">BC has no relational-database/SQL learning standard in its ADST computer courses. Data appears as big-data/IoT context (CS10) and Internet/online-access shifts (CIS 11/12).</span><span data-lang="zh">BC 的 ADST 计算机课程中没有关系数据库/SQL 学习标准。数据以大数据/物联网背景（CS10）和互联网/在线访问变革（CIS 11/12）的形式出现。</span></div>
     </div>
     <div>
-      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta — CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔 — CSE2130 / 网页路径</span></div>
+      <div class="region-header">&#x1F1E8;&#x1F1E6; <span data-lang="en">Alberta: CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔：CSE2130 / 网页路径</span></div>
       <ul>
         <li><strong>CSE2130</strong> <span data-lang="en">Files &amp; File Structures 1 (Intermediate): "Students learn how to design, code and debug programs that use data files to store and retrieve data on secondary storage devices." Outcomes include 1.4.2 "opening an existing file"; 1.4.5 "importing data from a file"; 1.4.6 "appending data to a file."</span><span data-lang="zh">CSE2130 文件与文件结构 1（中级）："学生学习如何设计、编写和调试使用数据文件在辅助存储设备上存储和检索数据的程序。"结果包括 1.4.2"打开现有文件"；1.4.5"从文件导入数据"；1.4.6"向文件追加数据"。</span></li>
         <li><strong>CSE1210/CSE1220</strong> <span data-lang="en">Client-side Scripting 1 &amp; 2: "Students are introduced to Internet computing through the use of one or more Web-specific markup languages." CSE1220 adds scripting languages.</span><span data-lang="zh">CSE1210/1220 客户端脚本 1 和 2："学生通过使用一种或多种网络专用标记语言了解互联网计算。"CSE1220 增加脚本语言。</span></li>
-        <li><span data-lang="en">Alberta CSE has no relational-database/SQL module — database administration sits in other CTS clusters. The web scripting pathway (CSE1210 → CSE1220 → CSE2210 → CSE3210) is a distinctive Alberta strength.</span><span data-lang="zh">阿尔伯塔 CSE 没有关系数据库/SQL 模块——数据库管理位于其他 CTS 群集。网页脚本路径（CSE1210 → CSE1220 → CSE2210 → CSE3210）是阿尔伯塔的特色优势。</span></li>
+        <li><span data-lang="en">Alberta CSE has no relational-database/SQL module; database administration sits in other CTS clusters. The web scripting pathway (CSE1210 → CSE1220 → CSE2210 → CSE3210) is a distinctive Alberta strength.</span><span data-lang="zh">阿尔伯塔 CSE 没有关系数据库/SQL 模块；数据库管理位于其他 CTS 群集。网页脚本路径（CSE1210 → CSE1220 → CSE2210 → CSE3210）是阿尔伯塔的特色优势。</span></li>
       </ul>
     </div>
   </div>
@@ -1352,7 +1996,7 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
       <section class="section" id="how-to-use">
   <div class="section-label"><span data-lang="en">Read me first</span><span data-lang="zh">先读这里</span></div>
   <h2><span data-lang="en">How to use this guide</span><span data-lang="zh">如何使用本指南</span></h2>
-  <p><span data-lang="en">Data and databases are treated as a core topic by the US frameworks (CSTA 3A-DA family; AP CSP Big Idea 2 at 17&ndash;22% of the exam). Ontario takes a split approach: file I/O sits in ICS4U (university stream, Grade 12), while SQL and web work sit in ICS4C (college stream). BC covers data mainly in the big-data/privacy and Internet-evolution framing of CIS 11/12, with no dedicated SQL standard. Alberta covers files thoroughly in CSE2130 and has a full web-scripting pathway (CSE1210 to CSE3210), but no SQL module in the CSE cluster. Sections &sect;1&ndash;&sect;3 (data, files, CSV) are universal. Sections &sect;4&ndash;&sect;5 (relational databases, SQL) map most directly to US CSTA, AP CSP, and ON ICS4C. Sections &sect;6&ndash;&sect;7 (HTML, JSON/APIs) align with Alberta web scripting and AP CSP Big Idea 2.</span><span data-lang="zh">美国框架将数据和数据库视为核心主题（CSTA 3A-DA 系列；AP CSP 大概念 2 占考试 17&ndash;22%）。安大略采用分流方式：文件读写在 ICS4U（大学预科，12 年级），SQL 和网页工作在 ICS4C（学院预科）。BC 主要在 CIS 11/12 的大数据/隐私和互联网演变框架中涵盖数据，没有专用 SQL 标准。阿尔伯塔在 CSE2130 中详细涵盖文件，并有完整的网页脚本路径（CSE1210 至 CSE3210），但 CSE 群集中没有 SQL 模块。&sect;1&ndash;&sect;3（数据、文件、CSV）是通用的。&sect;4&ndash;&sect;5（关系数据库、SQL）最直接对应美国 CSTA、AP CSP 和安大略 ICS4C。&sect;6&ndash;&sect;7（HTML、JSON/接口）与阿尔伯塔网页脚本和 AP CSP 大概念 2 对齐。</span></p>
+  <p><span data-lang="en">Data and databases are treated as a core topic by the US frameworks (CSTA 3A-DA family; AP CSP Big Idea 2). Ontario takes a split approach: file I/O sits in ICS4U (university stream, Grade 12), while SQL and web work sit in ICS4C (college stream). BC covers data mainly in the big-data/privacy and Internet-evolution framing of CIS 11/12, with no dedicated SQL standard. Alberta covers files thoroughly in CSE2130 and has a full web-scripting pathway (CSE1210 to CSE3210), but no SQL module in the CSE cluster. Sections &sect;1&ndash;&sect;3 (data, files, CSV) are universal. Sections &sect;4&ndash;&sect;5 (relational databases, SQL) map most directly to US CSTA, AP CSP, and ON ICS4C. Sections &sect;6&ndash;&sect;7 (HTML, JSON/APIs) align with Alberta web scripting and AP CSP Big Idea 2.</span><span data-lang="zh">美国框架将数据和数据库视为核心主题（CSTA 3A-DA 系列；AP CSP 大概念 2）。安大略采用分流方式：文件读写在 ICS4U（大学预科，12 年级），SQL 和网页工作在 ICS4C（学院预科）。BC 主要在 CIS 11/12 的大数据/隐私和互联网演变框架中涵盖数据，没有专用 SQL 标准。阿尔伯塔在 CSE2130 中详细涵盖文件，并有完整的网页脚本路径（CSE1210 至 CSE3210），但 CSE 群集中没有 SQL 模块。&sect;1&ndash;&sect;3（数据、文件、CSV）是通用的。&sect;4&ndash;&sect;5（关系数据库、SQL）最直接对应美国 CSTA、AP CSP 和安大略 ICS4C。&sect;6&ndash;&sect;7（HTML、JSON/接口）与阿尔伯塔网页脚本和 AP CSP 大概念 2 对齐。</span></p>
 
   <div style="overflow-x: auto; margin: 16px 0 18px;">
   <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 720px;">
@@ -1367,27 +2011,27 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
     <tbody>
       <tr style="border-bottom: 1px solid var(--border);">
         <td style="padding: 8px 10px;"><strong>&#x1F1FA;&#x1F1F8; <span data-lang="en">US CSTA / AP CSP</span><span data-lang="zh">美国 CSTA / AP CSP</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. CSTA 3A-DA-10/11/12 cover data organisation, visualisation and models. AP CSP Big Idea 2 (DAT) topics 2.3 and 2.4 test extracting information from data and using programs with data.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。CSTA 3A-DA-10/11/12 涵盖数据组织、可视化和模型。AP CSP 大概念 2（DAT）主题 2.3 和 2.4 考查从数据中提取信息以及将程序与数据结合使用。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">Nothing — AP CSP Big Idea 2 (17–22% of exam) makes all seven sections core for AP students.</span><span data-lang="zh">无——AP CSP 大概念 2（占考试 17–22%）使所有七节对 AP 学生都是核心。</span></td>
-        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code> <span data-lang="en">&mdash; CSTA 3A-DA-10, 3A-DA-11, 3A-DA-12; AP CSP Big Idea 2 (DAT) topics 2.3, 2.4</span><span data-lang="zh">&mdash; CSTA 3A-DA-10、3A-DA-11、3A-DA-12；AP CSP 大概念 2（DAT）主题 2.3、2.4</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 through &sect;7 in full. CSTA 3A-DA-10/11/12 cover data organisation, visualisation and models. AP CSP Big Idea 2 (DAT) topics 2.3 and 2.4 cover extracting information from data and using programs with data.</span><span data-lang="zh">&sect;1 至 &sect;7 完整学习。CSTA 3A-DA-10/11/12 涵盖数据组织、可视化和模型。AP CSP 大概念 2（DAT）主题 2.3 和 2.4 涵盖从数据中提取信息以及将程序与数据结合使用。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">Nothing. AP CSP Big Idea 2 covers data, so all seven sections are core for AP students.</span><span data-lang="zh">无。AP CSP 大概念 2 围绕数据，所以七节对 AP 学生都是核心。</span></td>
+        <td style="padding: 8px 10px;"><code>CSTA K-12 and AP CSP</code><span data-lang="en">: CSTA 3A-DA-10, 3A-DA-11, 3A-DA-12; AP CSP Big Idea 2 (DAT) topics 2.3, 2.4</span><span data-lang="zh">：CSTA 3A-DA-10、3A-DA-11、3A-DA-12；AP CSP 大概念 2（DAT）主题 2.3、2.4</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON &mdash; ICS4U (Grade 12 Univ.)</span><span data-lang="zh">安大略 &mdash; ICS4U（12 年级大学预科）</span></strong></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 (data, file I/O, CSV) map directly to ICS4U A3.1. The file I/O worked examples in &sect;2 are the exact skill assessed. &sect;6 (HTML) for context only.</span><span data-lang="zh">&sect;1&ndash;&sect;3（数据、文件读写、CSV）直接对应 ICS4U A3.1。&sect;2 的文件读写例题是被考查的确切技能。&sect;6（HTML）仅作背景。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL) are ICS4C college-stream content — skip for ICS4U floor.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）是 ICS4C 学院流内容——ICS4U 基础学生可跳过。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; ICS4U A3.1 (file I/O); ICS4C A2.2 (SQL)</span><span data-lang="zh">&mdash; ICS4U A3.1（文件读写）；ICS4C A2.2（SQL）</span></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">ON: ICS4U (Grade 12 Univ.)</span><span data-lang="zh">安大略：ICS4U（12 年级大学预科）</span></strong></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 (data, file I/O, CSV) map directly to ICS4U A3.1. The file I/O worked examples in &sect;2 practise the skill that A3.1 names. &sect;6 (HTML) for context only.</span><span data-lang="zh">&sect;1&ndash;&sect;3（数据、文件读写、CSV）直接对应 ICS4U A3.1。&sect;2 的文件读写例题练习 A3.1 所列的技能。&sect;6（HTML）仅作背景。</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL) are ICS4C college-stream content, so an ICS4U student can skip them.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）是 ICS4C 学院流内容，ICS4U 学生可以跳过。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code><span data-lang="en">: ICS4U A3.1 (file I/O); ICS4C A2.2 (SQL)</span><span data-lang="zh">：ICS4U A3.1（文件读写）；ICS4C A2.2（SQL）</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC &mdash; CIS 11 / CIS 12</span><span data-lang="zh">BC &mdash; CIS 11 / CIS 12</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">BC: CIS 11 / CIS 12</span><span data-lang="zh">BC: CIS 11 / CIS 12</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1 (data vs information), &sect;6 (HTML), &sect;7 (JSON/APIs). CIS 11 covers Internet evolution; CIS 12 covers global shifts from online access. File I/O and SQL are enrichment for BC students.</span><span data-lang="zh">&sect;1（数据与信息）、&sect;6（HTML）、&sect;7（JSON/接口）。CIS 11 涵盖互联网演变；CIS 12 涵盖在线访问带来的全球变革。文件读写和 SQL 对 BC 学生为拓展内容。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">BC has no relational-database/SQL standard — &sect;4&ndash;&sect;5 are enrichment, not assessed.</span><span data-lang="zh">BC 没有关系数据库/SQL 标准——&sect;4&ndash;&sect;5 为拓展内容，不被考查。</span></td>
-        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code> <span data-lang="en">&mdash; BC CS10 big-data/IoT Content; CIS11/12 Internet/online Content bullets</span><span data-lang="zh">&mdash; BC CS10 大数据/物联网内容；CIS11/12 互联网/在线内容条目</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">BC has no relational-database/SQL standard, so &sect;4&ndash;&sect;5 are enrichment.</span><span data-lang="zh">BC 没有关系数据库/SQL 标准，所以 &sect;4&ndash;&sect;5 为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><code>ON/BC Computer Studies 11-12</code><span data-lang="en">: BC CS10 big-data/IoT Content; CIS11/12 Internet/online Content bullets</span><span data-lang="zh">：BC CS10 大数据/物联网内容；CIS11/12 互联网/在线内容条目</span></td>
       </tr>
       <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB &mdash; CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔 &mdash; CSE2130 / 网页路径</span></strong></td>
+        <td style="padding: 8px 10px;"><strong>&#x1F1E8;&#x1F1E6; <span data-lang="en">AB: CSE2130 / Web Pathway</span><span data-lang="zh">阿尔伯塔：CSE2130 / 网页路径</span></strong></td>
         <td style="padding: 8px 10px;"><span data-lang="en">&sect;1&ndash;&sect;3 (data, file I/O) align with CSE2130 outcomes. &sect;6 (HTML) maps to CSE1210/1220 client-side scripting. &sect;7 (JSON/APIs) maps to CSE2210/3210.</span><span data-lang="zh">&sect;1&ndash;&sect;3（数据、文件读写）与 CSE2130 结果对齐。&sect;6（HTML）对应 CSE1210/1220 客户端脚本。&sect;7（JSON/接口）对应 CSE2210/3210。</span></td>
-        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL) — no SQL module in the CSE cluster; treat as enrichment.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）——CSE 群集中没有 SQL 模块；作为拓展内容。</span></td>
-        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code> <span data-lang="en">&mdash; CSE2130 outcomes 1.4.2, 1.4.5, 1.4.6; CSE1210/1220 descriptions</span><span data-lang="zh">&mdash; CSE2130 结果 1.4.2、1.4.5、1.4.6；CSE1210/1220 描述</span></td>
+        <td style="padding: 8px 10px;"><span data-lang="en">&sect;4&ndash;&sect;5 (relational databases, SQL): no SQL module in the CSE cluster; treat as enrichment.</span><span data-lang="zh">&sect;4&ndash;&sect;5（关系数据库、SQL）：CSE 群集中没有 SQL 模块；作为拓展内容。</span></td>
+        <td style="padding: 8px 10px;"><code>Alberta CTS Computing Science</code><span data-lang="en">: CSE2130 outcomes 1.4.2, 1.4.5, 1.4.6; CSE1210/1220 descriptions</span><span data-lang="zh">：CSE2130 结果 1.4.2、1.4.5、1.4.6；CSE1210/1220 描述</span></td>
       </tr>
     </tbody>
   </table>
@@ -1398,11 +2042,11 @@ print(f"{city}: {temp}°C, tomorrow: {tomorrow}")
   <div class="two-col">
     <div class="card">
       <div class="card-header"><div class="card-icon icon-orange">!</div><div class="card-title"><span data-lang="en">If you are cramming the night before</span><span data-lang="zh">如果你在临阵磨枪</span></div></div>
-      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise three things: the difference between data and information; how to open, read, and write a file in Python; and what SELECT/WHERE does in SQL. Read every cram-cheat box. For AP CSP, know that Big Idea 2 tests how programs extract knowledge from data — JSON, CSV, and database queries are all fair game.</span><span data-lang="zh">背熟三件事：数据与信息的区别；如何在 Python 中打开、读取和写入文件；SQL 中 SELECT/WHERE 的作用。读每个速记框。对于 AP CSP，要知道大概念 2 考查程序如何从数据中提取知识——JSON、CSV 和数据库查询都可能考到。</span></p>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Memorise three things: the difference between data and information; how to open, read, and write a file in Python; and what SELECT/WHERE does in SQL. Read every cram-cheat box. For AP CSP, know that Big Idea 2 covers how programs extract knowledge from data; JSON, CSV, and database queries are all examples.</span><span data-lang="zh">背熟三件事：数据与信息的区别；如何在 Python 中打开、读取和写入文件；SQL 中 SELECT/WHERE 的作用。读每个速记框。对于 AP CSP，要知道大概念 2 涵盖程序如何从数据中提取知识；JSON、CSV 和数据库查询都是例子。</span></p>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-icon icon-purple">*</div><div class="card-title"><span data-lang="en">If you are going for the top mark</span><span data-lang="zh">如果你目标顶分</span></div></div>
-      <p style="font-size: 0.95rem;"><span data-lang="en">Work through all seven sections in order. The sections build: data &rarr; files &rarr; CSV &rarr; relational tables &rarr; SQL &rarr; HTML &rarr; JSON/APIs. Each concept assumes the previous. For AP CSP, be able to write a program that reads a CSV, filters rows, and outputs a result — that is the synthesis of &sect;2, &sect;3, and &sect;5 combined. For CSTA 3A-DA-11, be able to describe how you would visualise the data you just queried.</span><span data-lang="zh">按顺序学习全部七节。各节层层递进：数据 &rarr; 文件 &rarr; CSV &rarr; 关系表 &rarr; SQL &rarr; HTML &rarr; JSON/接口。每个概念都以前一个为基础。对于 AP CSP，能够编写读取 CSV、过滤行并输出结果的程序——这是 &sect;2、&sect;3 和 &sect;5 的综合。对于 CSTA 3A-DA-11，能够描述如何可视化刚刚查询到的数据。</span></p>
+      <p style="font-size: 0.95rem;"><span data-lang="en">Work through all seven sections in order. The sections build: data &rarr; files &rarr; CSV &rarr; relational tables &rarr; SQL &rarr; HTML &rarr; JSON/APIs. Each concept assumes the previous. For AP CSP, be able to write a program that reads a CSV, filters rows, and outputs a result; that is the synthesis of &sect;2, &sect;3, and &sect;5 combined. For CSTA 3A-DA-11, be able to describe how you would visualise the data you just queried.</span><span data-lang="zh">按顺序学习全部七节。各节层层递进：数据 &rarr; 文件 &rarr; CSV &rarr; 关系表 &rarr; SQL &rarr; HTML &rarr; JSON/接口。每个概念都以前一个为基础。对于 AP CSP，能够编写读取 CSV、过滤行并输出结果的程序，这是 &sect;2、&sect;3 和 &sect;5 的综合。对于 CSTA 3A-DA-11，能够描述如何可视化刚刚查询到的数据。</span></p>
     </div>
   </div>
 </section>
@@ -1627,6 +2271,22 @@ updateScoreBadge();
   .main-wrap > * { max-width: none; margin-left: 0; margin-right: 0; }
 }
 </style>
+<!-- BEGIN dr-toc-history-fix -->
+<script>
+(function() {
+  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+</script>
+<!-- END dr-toc-history-fix -->
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1770,21 +2430,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- BEGIN dr-toc-history-fix -->
-<script>
-(function() {
-  document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      var id = a.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      history.replaceState(null, '', '#' + id);
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-  });
-})();
-</script>
-<!-- END dr-toc-history-fix -->
 </body>
 </html>
