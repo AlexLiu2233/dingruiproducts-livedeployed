@@ -15,7 +15,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | AP CSP | 15 | 6 | 21 |
 | AP Calculus | 9 | 21 | 30 |
 | AP Physics | 9 | 13 | 22 |
-| AP Statistics | 21 | 15 | 36 |
+| AP Statistics | 16 | 18 | 34 |
 | High School Biology | 9 | 27 | 36 |
 | High School Chemistry | 9 | 33 | 42 |
 | High School Computer Science | 9 | 30 | 39 |
@@ -27,7 +27,7 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 | IB Physics HL | 9 | 63 | 72 |
 | SAT Math | 3 | 1 | 4 |
 | University Calculus | 36 | 60 | 96 |
-| **Grand total** | **184** | **407** | **591** |
+| **Grand total** | **179** | **410** | **589** |
 
 ## Legend
 
@@ -294,86 +294,99 @@ Free-preview allotment: **3 units per course** (per course-group for University 
 
 ## AP Statistics
 
-### Unit 1: Exploring One-Variable Data
+### Unit 1: Exploring Data
 
 | Product | Type | Tier |
 |---|---|---|
-| [Unit 1: Exploring One-Variable Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_One_Variable_Data_9U.html) | Study Guide | 🆓 Free preview |
-| [Unit 1: Exploring One-Variable Data and Collecting Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data.html) | Study Guide | 🆓 Free preview |
+| [Unit 1: Exploring Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_1_Exploring_Data.html) | Study Guide | 🆓 Free preview |
 | [Unit 1: Exploring One-Variable Data and Collecting Data Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
 | [Unit 1: Exploring One-Variable Data and Collecting Data Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_1_Exploring_One_Variable_Data_and_Collecting_Data_Solutions.html) | Solutions | 🆓 Free preview |
 | [Unit 1: Commute time: center and spread](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u1-commute-summary.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u1-sampling-bias.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
-### Unit 2: Exploring Two-Variable Data
+### Unit 2: Describing Location and the Normal Distribution
 
 | Product | Type | Tier |
 |---|---|---|
-| [Unit 2: Exploring Two-Variable Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Exploring_Two_Variable_Data_9U.html) | Study Guide | 🆓 Free preview |
-| [Unit 2: Probability, Random Variables, and Probability Distributions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Probability_Random_Variables_and_Probability_Distributions.html) | Study Guide | 🆓 Free preview |
-| [Unit 2: Probability, Random Variables, and Probability Distributions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
-| [Unit 2: Probability, Random Variables, and Probability Distributions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_2_Probability_Random_Variables_and_Probability_Distributions_Solutions.html) | Solutions | 🆓 Free preview |
+| [Unit 2: Describing Location and the Normal Distribution](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_2_Describing_Location_and_the_Normal_Distribution.html) | Study Guide | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-binomial-sampling.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-clt-visualizer.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [Unit 2: Free throws: binomial probability](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-free-throw-binomial.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u2-regression-outlier.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
-### Unit 3: Collecting Data
+### Unit 3: Examining Relationships
 
 | Product | Type | Tier |
 |---|---|---|
-| [Unit 3: Collecting Data](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Collecting_Data_9U.html) | Study Guide | 🆓 Free preview |
-| [Unit 3: Inference for Categorical Data: Proportions](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Inference_for_Categorical_Data_Proportions.html) | Study Guide | 🆓 Free preview |
-| [Unit 3: Inference for Categorical Data: Proportions Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_3_Inference_for_Categorical_Data_Proportions_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
-| [Unit 3: Inference for Categorical Data: Proportions Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_3_Inference_for_Categorical_Data_Proportions_Solutions.html) | Solutions | 🆓 Free preview |
+| [Unit 3: Examining Relationships](https://notes.dingruischolars.com/AP%20Statistics/Study%20Guides/Unit_3_Examining_Relationships.html) | Study Guide | 🆓 Free preview |
+| [Unit 3: Regression Analysis Practice Problems](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Unit_3_Regression_Analysis_Practice_Problems.html) | Practice Questions | 🆓 Free preview |
+| [Unit 3: Regression Analysis Solutions](https://notes.dingruischolars.com/AP%20Statistics/Practice%20Questions/Solutions/Unit_3_Regression_Analysis_Solutions.html) | Solutions | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-ci-capture.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [Unit 3: Transit fares: one-proportion confidence interval](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-one-proportion-ci.html) | TI-84 Worked Stepper | 🆓 Free preview |
 | [AP Statistics](https://notes.dingruischolars.com/AP%20Statistics/Runners/stats-u3-type-errors.html) | TI-84 Worked Stepper | 🆓 Free preview |
 
-### Unit 4: Inference for Quantitative Data: Means
+### Unit 4: Designing Studies
 
 | Product | Type | Tier |
 |---|---|---|
-| Unit 4: Inference for Quantitative Data: Means | Study Guide | 🔒 Unlockable |
-| Unit 4: Probability, Random Variables, and Probability Distributions | Study Guide | 🔒 Unlockable |
-| Unit 4: Inference for Quantitative Data: Means Practice Problems | Practice Questions | 🔒 Unlockable |
-| Unit 4: Inference for Quantitative Data: Means Solutions | Solutions | 🔒 Unlockable |
+| Unit 4: Designing Studies | Study Guide | 🔒 Unlockable |
 | Unit 4: Sleep study: one-sample t confidence interval | TI-84 Worked Stepper | 🔒 Unlockable |
 | AP Statistics | TI-84 Worked Stepper | 🔒 Unlockable |
 
-### Unit 5: Regression Analysis
+### Unit 5: Probability
 
 | Product | Type | Tier |
 |---|---|---|
-| Unit 5: Regression Analysis | Study Guide | 🔒 Unlockable |
-| Unit 5: Sampling Distributions | Study Guide | 🔒 Unlockable |
-| Unit 5: Regression Analysis Practice Problems | Practice Questions | 🔒 Unlockable |
-| Unit 5: Regression Analysis Solutions | Solutions | 🔒 Unlockable |
+| Unit 5: Probability | Study Guide | 🔒 Unlockable |
+| Unit 5: Probability, Random Variables, and Probability Distributions Practice Problems | Practice Questions | 🔒 Unlockable |
+| Unit 5: Probability, Random Variables, and Probability Distributions Solutions | Solutions | 🔒 Unlockable |
 | Unit 5: Cyclist training: linear regression and residuals | TI-84 Worked Stepper | 🔒 Unlockable |
 
-### Unit 6: Inference for Proportions
+### Unit 6: Random Variables
 
 | Product | Type | Tier |
 |---|---|---|
-| Unit 6: Inference for Proportions | Study Guide | 🔒 Unlockable |
+| Unit 6: Random Variables | Study Guide | 🔒 Unlockable |
 
-### Unit 7: Inference for Quantitative Data: Means
-
-| Product | Type | Tier |
-|---|---|---|
-| Unit 7: Inference for Quantitative Data: Means | Study Guide | 🔒 Unlockable |
-
-### Unit 8: Chi-Square Inference
+### Unit 7: Sampling Distributions
 
 | Product | Type | Tier |
 |---|---|---|
-| Unit 8: Chi-Square Inference | Study Guide | 🔒 Unlockable |
+| Unit 7: Sampling Distributions | Study Guide | 🔒 Unlockable |
 
-### Unit 9: Inference for Slopes
+### Unit 8: Estimating with Confidence
 
 | Product | Type | Tier |
 |---|---|---|
-| Unit 9: Inference for Slopes | Study Guide | 🔒 Unlockable |
+| Unit 8: Estimating with Confidence | Study Guide | 🔒 Unlockable |
+| Unit 8: Inference for Categorical Data: Proportions Practice Problems | Practice Questions | 🔒 Unlockable |
+| Unit 8: Inference for Categorical Data: Proportions Solutions | Solutions | 🔒 Unlockable |
+
+### Unit 9: Testing a Claim
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 9: Testing a Claim | Study Guide | 🔒 Unlockable |
+| Unit 9: Inference for Quantitative Data: Means Practice Problems | Practice Questions | 🔒 Unlockable |
+| Unit 9: Inference for Quantitative Data: Means Solutions | Solutions | 🔒 Unlockable |
+
+### Unit 10: Comparing Two Populations
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 10: Comparing Two Populations | Study Guide | 🔒 Unlockable |
+
+### Unit 11: Inference for Categorical Data: Chi-Square
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 11: Inference for Categorical Data: Chi-Square | Study Guide | 🔒 Unlockable |
+
+### Unit 12: Inference for Regression
+
+| Product | Type | Tier |
+|---|---|---|
+| Unit 12: Inference for Regression | Study Guide | 🔒 Unlockable |
 
 ## High School Biology
 
