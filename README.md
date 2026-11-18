@@ -4,7 +4,7 @@
 
 📖 **Read online:** <https://notes.dingruischolars.com>  
 <!-- catalog-stats:start -->
-🗂️ **Full catalog:** [PRODUCTS.md](PRODUCTS.md) lists all 589 products across 17 courses and shows which ones are free.
+🗂️ **Full catalog:** [PRODUCTS.md](PRODUCTS.md) lists all 603 products across 17 courses and shows which ones are free.
 <!-- catalog-stats:end -->
 ✍️ **Get full access:** [Sign up](https://www.dingruischolars.com/signup) · [中文报名](https://www.dingruischolars.com/signup-ch)
 
@@ -49,7 +49,7 @@ Every page is one self-contained web app:
 | AP CSA | 11 | 5 | 16 |
 | AP CSP | 15 | 6 | 21 |
 | AP Physics | 9 | 13 | 22 |
-| AP Statistics | 16 | 18 | 34 |
+| AP Statistics | 18 | 30 | 48 |
 | IB Math HL | 9 | 57 | 66 |
 | IB Math AI HL | 3 | 3 | 6 |
 | IB Physics HL | 9 | 63 | 72 |
@@ -62,7 +62,7 @@ Every page is one self-contained web app:
 | University Calculus | 36 | 60 | 96 |
 | ACT Math | 3 | 1 | 4 |
 | SAT Math | 3 | 1 | 4 |
-| **Total** | **179** | **410** | **589** |
+| **Total** | **181** | **422** | **603** |
 <!-- counts:end -->
 
 The first 3 units of every course are **free**, with no account needed. The rest of the catalog unlocks on the live site with an approved student email. For a unit-by-unit list, see **[PRODUCTS.md](PRODUCTS.md)**.
