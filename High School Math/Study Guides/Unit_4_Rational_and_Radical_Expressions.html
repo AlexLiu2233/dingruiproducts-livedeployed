@@ -2415,10 +2415,6 @@ body.dr-locked{overflow:hidden;}
   function showSent(){
     var first = !sent;
     sent = true;
-    // Filled now (not at build time) so the live region announces it.
-    document.getElementById("dr-ok").innerHTML = bl(
-      "<strong>Check your inbox.</strong> Your unlock address is on its way. Paste it below to open every guide. Not there in a minute? Check Spam or Promotions.",
-      "<strong>请查收邮件。</strong>解锁邮箱已发送，粘贴到下方即可打开全部指南。几分钟内没收到？请查看垃圾邮件或推广邮件。");
     document.getElementById("dr-card").classList.add("dr-sent");
     var btn=document.getElementById("dr-btn");
     btn.querySelector(".dr-lbl-get").classList.add("dr-hidden");
@@ -2426,6 +2422,12 @@ body.dr-locked{overflow:hidden;}
     var em=document.getElementById("dr-email");
     em.value=""; em.placeholder=isZh()?"粘贴解锁邮箱":"Paste your unlock address";
     try{ em.focus(); }catch(e){}
+    // Fill the live region only after it is rendered and focus has moved, so screen
+    // readers announce it (a region that appears already filled is often skipped).
+    var ok=document.getElementById("dr-ok"); ok.innerHTML="";
+    setTimeout(function(){ ok.innerHTML = bl(
+      "<strong>Check your inbox.</strong> Your unlock address is on its way. Paste it below to open every guide. Not there in a minute? Check Spam or Promotions.",
+      "<strong>请查收邮件。</strong>解锁邮箱已发送，粘贴到下方即可打开全部指南。几分钟内没收到？请查看垃圾邮件或推广邮件。"); }, 150);
     if(first && window.gtag){ gtag("event","generate_lead",{method:"gate_wall", source:location.pathname}); }
   }
   function submit(e){
