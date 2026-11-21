@@ -2265,16 +2265,17 @@ body.dr-locked{overflow:hidden;}
       +   '<li>'+bl("Every unit","全部单元")+'</li>'
       +   '<li>'+bl("English + 中文","中英双语")+'</li>'
       + '</ul>'
-      + '<div id="dr-ok" role="status">'+bl(
-          "<strong>Check your inbox.</strong> We sent you an unlock address. Paste it below to open every guide. Not there in a minute? Check Spam or Promotions.",
-          "<strong>请查收邮件。</strong>我们已发送解锁邮箱，粘贴到下方即可打开全部指南。几分钟内没收到？请查看垃圾邮件或推广邮件。")+'</div>'
+      + '<div id="dr-ok" role="status" aria-live="polite"></div>'
       + '<form id="dr-form" novalidate>'
       +   '<input type="email" id="dr-email" required autocomplete="email" placeholder="you@email.com" aria-label="Email">'
       +   '<button type="submit" id="dr-btn"><span class="dr-lbl-get">'+bl("Get free access","免费获取")+'</span>'
       +     '<span class="dr-lbl-unlock dr-hidden">'+bl("Unlock","解锁")+'</span></button>'
       + '</form>'
       + '<div id="dr-err" role="alert"></div>'
-      + '<div id="dr-consent">'+bl("Dingrui student? Use the email you enrolled with.","鼎睿学员？请使用报名邮箱。")
+      + '<div id="dr-consent">'+bl(
+          "We'll email you the unlock address and may follow up about Dingrui tutoring. Reply to any of our emails to opt out.",
+          "我们会通过邮件发送解锁邮箱，并可能就鼎睿辅导与您联系。回复我们的任意邮件即可退订。")
+      +   '<br>'+bl("Dingrui student? Use the email you enrolled with.","鼎睿学员？请使用报名邮箱。")
       +   '<br>'+bl("Want 1-on-1 help?","需要一对一辅导？")+' '+cta("gate_wall_cta")+'</div>'
       + '</div>';
     document.body.appendChild(wall);
@@ -2292,6 +2293,9 @@ body.dr-locked{overflow:hidden;}
   // landing-page form uses: the backend mails the visitor the shared unlock address
   // and mails Dingrui a "[notes lead]" admin notification.
   var sent = false;
+  // Shape of the shared unlock address (backend NOTES_SHARED_ACCESS_EMAIL rule). A 403
+  // for it means the address is paused, so never re-request: the backend 400s it.
+  var KEY_SHAPE = /^[0-9a-f]{16}@gmail\.com$/i;
   function isZh(){
     return document.body.classList.contains("lang-zh") || /^zh/i.test(document.documentElement.lang||"");
   }
@@ -2302,10 +2306,15 @@ body.dr-locked{overflow:hidden;}
   function requestAccess(email){
     return fetch(G.apiBase+"api/notes/request",{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({email:email, language:isZh()?"zh":"en", source:leadSource()})})
-      .then(function(r){ if(!r.ok) throw new Error("http "+r.status); });
+      .then(function(r){ if(!r.ok){ var eh=new Error("http "+r.status); eh.code=r.status; throw eh; } });
   }
   function showSent(){
+    var first = !sent;
     sent = true;
+    // Filled now (not at build time) so the live region announces it.
+    document.getElementById("dr-ok").innerHTML = bl(
+      "<strong>Check your inbox.</strong> Your unlock address is on its way. Paste it below to open every guide. Not there in a minute? Check Spam or Promotions.",
+      "<strong>请查收邮件。</strong>解锁邮箱已发送，粘贴到下方即可打开全部指南。几分钟内没收到？请查看垃圾邮件或推广邮件。");
     document.getElementById("dr-card").classList.add("dr-sent");
     var btn=document.getElementById("dr-btn");
     btn.querySelector(".dr-lbl-get").classList.add("dr-hidden");
@@ -2313,7 +2322,7 @@ body.dr-locked{overflow:hidden;}
     var em=document.getElementById("dr-email");
     em.value=""; em.placeholder=isZh()?"粘贴解锁邮箱":"Paste your unlock address";
     try{ em.focus(); }catch(e){}
-    if(window.gtag){ gtag("event","generate_lead",{method:"gate_wall", source:location.pathname}); }
+    if(first && window.gtag){ gtag("event","generate_lead",{method:"gate_wall", source:location.pathname}); }
   }
   function submit(e){
     e.preventDefault();
@@ -2341,15 +2350,19 @@ body.dr-locked{overflow:hidden;}
       })
       .catch(function(e2){
         btn.disabled=false;
-        if(e2 && e2.code===403 && sent){
-          // Already requested on this visit: they pasted something that isn't active.
-          err.innerHTML = bl("That address didn't unlock. Copy the unlock address from our email exactly, or reply to that email and we'll help.",
-                             "该地址未能解锁。请准确复制邮件中的解锁邮箱，或直接回复该邮件，我们会协助您。");
+        if(e2 && e2.code===403 && KEY_SHAPE.test(email)){
+          // An unlock address that is not active (paused by the owner, or mistyped).
+          err.innerHTML = bl("That unlock address isn't active right now. Check it matches our email exactly, or reply to that email and we'll help.",
+                             "该解锁邮箱当前无效。请核对是否与邮件中完全一致，或直接回复该邮件，我们会协助您。");
         } else if(e2 && e2.code===403){
+          // Any other address, including a corrected typo after "sent": request
+          // (again). The backend dedupes per inbox for 24 h.
           btn.disabled=true;
-          requestAccess(email).then(function(){ btn.disabled=false; showSent(); }, function(){
+          requestAccess(email).then(function(){ btn.disabled=false; showSent(); }, function(e3){
             btn.disabled=false;
-            err.innerHTML = bl("We couldn't send that just now. Please try again.","暂时没能提交，请再试一次。");
+            err.innerHTML = (e3 && e3.code===400)
+              ? bl("Please check that email address and try again.","请核对邮箱地址后重试。")
+              : bl("We couldn't send that just now. Please try again.","暂时没能提交，请再试一次。");
           });
         } else {
           err.innerHTML = bl("Something went wrong. Please try again.","出错了，请重试。");
