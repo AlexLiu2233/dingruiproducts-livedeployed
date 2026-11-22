@@ -35,7 +35,7 @@
   --bg-card: #FFFFFF;
   --text: #0F0F0F;
   --text-secondary: #585858;
-  --accent: #623A39; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F;
+  --link-aa: #006FD6; --accent: #623A39; --pop: #0099FF; --pop-light: #E8F4FF; --ink: #0F0F0F;
   --accent-light: #E8DCD9;
   --accent-dark: #4C2D2C;
   --green: #2E6B4F;
@@ -62,7 +62,7 @@
   --bg-card: #1A1A1A;
   --text: #FAFAFA;
   --text-secondary: #A0A0A0;
-  --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA;
+  --link-aa: #4DB2FF; --accent: #C87070; --pop: #4DB2FF; --pop-light: #12283A; --ink: #FAFAFA;
   --accent-light: #3A1818;
   --accent-dark: #E89090;
   --green: #5CB88A;
@@ -320,6 +320,24 @@ body.lang-zh [data-zh-ready="false"] { display: none; }
   white-space: nowrap;
 }
 
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.card__courses {
+  margin: 2px 0 8px;
+  font-size: 0.78rem; line-height: 1.4;
+  color: var(--text-secondary);
+}
+.card__course { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.subject-group__toggle:has(.subject-group__scope) { flex-wrap: wrap; }
+.subject-group__scope {
+  flex: 1 0 100%;
+  padding-left: 36px;
+  font-size: 0.8rem; line-height: 1.4;
+  color: var(--text-secondary);
+}
+
 .subject-group__body {
   padding: 0 22px 22px;
 }
@@ -550,7 +568,7 @@ footer {
 .hero-cta__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .hero-cta__note { margin: 13px auto 0; max-width: 54ch; font-size: 0.86rem; color: var(--text-secondary); }
 .footer-cta { font-size: 0.92rem; text-transform: none; letter-spacing: 0; margin-bottom: 14px; }
-.footer-cta a { color: var(--pop); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--pop); }
+.footer-cta a { color: var(--link-aa); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--link-aa); }
 .footer-cta a:hover { opacity: 0.8; }
 
 /* Responsive */
@@ -572,6 +590,95 @@ footer {
   .hero-cta { margin-top: 8px; }
   .notes-access__row { flex-direction: column; }
   .notes-access button { width: 100%; }
+}
+/* Skip link (F5): hidden until keyboard focus */
+.skip-link { position: absolute; left: 12px; top: -64px; z-index: 300; padding: 10px 16px; border-radius: var(--catalog-radius); background: var(--ink); color: var(--bg); font-weight: 700; text-decoration: none; }
+.skip-link:focus, .skip-link:focus-visible { top: 8px; outline: 3px solid var(--link-aa); outline-offset: 2px; }
+
+/* Phones (F2): search + tier pills first, then the access form; same DOM order */
+@media (max-width: 520px) {
+  .wrap { padding-top: 64px; }
+  .hero { display: flex; flex-direction: column; padding: 10px 14px; margin-bottom: 8px; }
+  .hero-overline { order: 0; margin-bottom: 0; font-size: .72rem; }
+  .hero h1 { order: 1; font-size: 1.7rem; margin-bottom: 4px; }
+  .hero-sub { order: 2; font-size: .95rem; line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .catalog-search { order: 3; margin-top: 8px; }
+  .catalog-search label { margin-bottom: 4px; }
+  .catalog-search input { padding: 6px 0; }
+  .search-status { margin-top: 4px; min-height: 0; font-size: .8rem; }
+  .tier-nav { order: 4; margin-top: 6px; gap: 6px; }
+  .tier-pill { padding: 4px 10px 4px 8px; }
+  .notes-access { order: 5; margin-top: 10px; }
+  .notes-access label { margin-bottom: 4px; }
+  .notes-access__row { gap: 6px; }
+  .notes-access__help { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; margin-top: 6px; font-size: .8rem; line-height: 1.4; }
+  .notes-access__status { margin-top: 2px; min-height: 0; }
+  .hero-stats { order: 6; display: none; }
+  .hero-cta { order: 7; margin-top: 4px; }
+  .hero .hero-cta__note { display: none; }
+  .hero-cta__btn { padding: 4px 0; }
+  .tier__head { margin-bottom: 14px; padding-bottom: 10px; }
+}
+/* ── Main-site structure over the original palette (owner, 2026-11-15) ──
+   Colours, hero, cards and tiers above are the original design. This layer only swaps the
+   type to Inter and adds the main site's nav links and footer columns. */
+:root {
+  --font-display: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, 'Segoe UI', sans-serif;
+}
+.hero h1, .tier__title { font-style: normal; font-weight: 700; letter-spacing: -0.03em; }
+.subject-group__title, .tier__empty-title, .card__title { font-style: normal; font-weight: 600; }
+body.lang-zh .hero h1, body.lang-zh .tier__title, body.lang-zh .nav-link { letter-spacing: 0; }
+
+.top-nav { height: 64px; }
+.nav-left { min-width: 0; }
+.nav-wordmark {
+  font-style: normal; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.04em;
+  color: var(--accent); text-decoration: none; white-space: nowrap;
+}
+.nav-wordmark:hover { text-decoration: underline; text-underline-offset: 4px; }
+.nav-links { display: flex; align-items: center; gap: 22px; margin-right: 10px; }
+.nav-link {
+  font-size: 0.98rem; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--text-secondary); text-decoration: none; white-space: nowrap;
+  transition: color 0.18s;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.nav-btn { text-decoration: none; white-space: nowrap; }
+.nav-btn--solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+[data-theme="dark"] .nav-btn--solid { color: #0F0F0F; }
+.nav-btn--solid:hover { background: var(--accent); border-color: var(--accent); filter: brightness(1.12); }
+.nav-site-link { display: none; }
+.nav-wordmark:focus-visible, .nav-link:focus-visible, .nav-btn:focus-visible { outline: 2px solid var(--link-aa); outline-offset: 3px; border-radius: 6px; }
+
+footer {
+  padding: 36px 0 0; font-size: 0.95rem;
+  text-align: left; letter-spacing: 0; text-transform: none;
+}
+.footer-cta { margin: 0 0 32px; text-align: center; font-size: 1rem; color: var(--text); }
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 28px; }
+.footer-brand__name { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.03em; color: var(--accent); }
+.footer-col p { margin: 0 0 10px; }
+.footer-col__title { margin: 0 0 14px; font-size: 1rem; font-weight: 600; color: var(--text); }
+.footer-col a { color: inherit; text-decoration: none; }
+.footer-col a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.footer-col a:focus-visible { outline: 2px solid var(--link-aa); outline-offset: 2px; border-radius: 4px; }
+.footer-legal { margin: 28px 0 0; padding-top: 18px; border-top: 1px solid var(--border); font-size: 0.85rem; text-align: center; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-site-link { display: inline-block; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .top-nav { height: 56px; padding: 0 14px; }
+  .nav-group { gap: 6px; }
+  .nav-btn { padding: 6px 10px; }
+}
+@media (max-width: 520px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
 }
 
 </style>
@@ -656,43 +763,45 @@ footer {
       <div class="card__num"><span data-lang="en">Unit 04</span><span data-lang="zh">第 04 单元</span> <span class="card__lock" aria-hidden="true">&#128274;</span></div>
       <h3 class="card__title"><span data-lang="en">Linear Momentum</span><span data-lang="zh">线动量</span></h3>
       <div class="card__docs">
-        <a class="card__doc is-gated" href="Study%20Guides/Unit_4_Linear_Momentum.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Unit_4_Linear_Momentum_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_4_Linear_Momentum_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Study%20Guides/Unit_4_Linear_Momentum.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Unit_4_Linear_Momentum_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_4_Linear_Momentum_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
     <article class="card card--locked">
       <div class="card__num"><span data-lang="en">Unit 05</span><span data-lang="zh">第 05 单元</span> <span class="card__lock" aria-hidden="true">&#128274;</span></div>
       <h3 class="card__title"><span data-lang="en">Torque &amp; Rotational Dynamics</span><span data-lang="zh">力矩与转动动力学</span></h3>
       <div class="card__docs">
-        <a class="card__doc is-gated" href="Study%20Guides/Unit_5_Torque_and_Rotational_Dynamics.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Unit_5_Torque_and_Rotational_Dynamics_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_5_Torque_and_Rotational_Dynamics_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Study%20Guides/Unit_5_Torque_and_Rotational_Dynamics.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Unit_5_Torque_and_Rotational_Dynamics_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_5_Torque_and_Rotational_Dynamics_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
     <article class="card card--locked">
       <div class="card__num"><span data-lang="en">Unit 06</span><span data-lang="zh">第 06 单元</span> <span class="card__lock" aria-hidden="true">&#128274;</span></div>
       <h3 class="card__title"><span data-lang="en">Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">转动系统的能量与动量</span></h3>
       <div class="card__docs">
-        <a class="card__doc is-gated" href="Study%20Guides/Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Unit_6_Energy_and_Momentum_of_Rotating_Systems_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_6_Energy_and_Momentum_of_Rotating_Systems_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Study%20Guides/Unit_6_Energy_and_Momentum_of_Rotating_Systems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Unit_6_Energy_and_Momentum_of_Rotating_Systems_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_6_Energy_and_Momentum_of_Rotating_Systems_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
     <article class="card card--locked">
       <div class="card__num"><span data-lang="en">Unit 07</span><span data-lang="zh">第 07 单元</span> <span class="card__lock" aria-hidden="true">&#128274;</span></div>
       <h3 class="card__title"><span data-lang="en">Oscillations</span><span data-lang="zh">振动</span></h3>
       <div class="card__docs">
-        <a class="card__doc is-gated" href="Study%20Guides/Unit_7_Oscillations.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Unit_7_Oscillations_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_7_Oscillations_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Study%20Guides/Unit_7_Oscillations.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Unit_7_Oscillations_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_7_Oscillations_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
     <article class="card card--locked">
       <div class="card__num"><span data-lang="en">Unit 08</span><span data-lang="zh">第 08 单元</span> <span class="card__lock" aria-hidden="true">&#128274;</span></div>
       <h3 class="card__title"><span data-lang="en">Fluids</span><span data-lang="zh">流体</span></h3>
       <div class="card__docs">
-        <a class="card__doc is-gated" href="Study%20Guides/Unit_8_Fluids.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Study%20Guides/Unit_8_Fluids.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Study guide</span><span data-lang="zh">学习指南</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Unit_8_Fluids_Practice_Problems.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Practice</span><span data-lang="zh">练习</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="card__doc is-gated" href="Practice%20Questions/Solutions/Unit_8_Fluids_Solutions.html"><span class="card__doc-lock" aria-hidden="true">&#128274;</span> <span data-lang="en">Solutions</span><span data-lang="zh">解答</span> <span class="sr-only"><span data-lang="en">(locked, free with email)</span><span data-lang="zh">（需邮箱解锁）</span></span><span class="card__doc-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
 </div>
