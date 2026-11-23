@@ -559,6 +559,16 @@ figure.dr-fig figcaption {
 .sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
+<meta name="dingrui:courses" content="c,p2">
+<style id="course-variant-css">
+/* course_variant.py: one guide, several course views (rag/COURSE_VARIANTS.md) */
+html[data-course="c"] [data-course]:not([data-course~="c"]) { display: none !important; }
+html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !important; }
+.course-flag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
+  border: 1px solid var(--accent); color: var(--accent); }
+#courseToggle [data-course-label][hidden] { display: none; }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content"><span data-lang="en">Skip to content</span><span data-lang="zh">跳到正文</span></a>
@@ -568,10 +578,12 @@ figure.dr-fig figcaption {
     <span class="nav-badge">UNIT 8</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%202/index.html" data-course="p2" aria-label="Back to AP Physics 2 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
+    <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="c"><span data-lang="en">Physics C</span><span data-lang="zh">物理 C</span></span><span data-course-label="p2" hidden><span data-lang="en">Physics 2</span><span data-lang="zh">物理 2</span></span></button>
     <button class="nav-btn" id="themeToggle" onclick="toggleTheme()"><span data-lang="en">Dark</span><span data-lang="zh">深色</span></button>
   </div>
 </nav>
@@ -582,9 +594,9 @@ figure.dr-fig figcaption {
 <!-- END toc-mobile-default -->
   <div class="sidebar-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
   <a href="#hero"><span data-lang="en">Overview</span><span data-lang="zh">单元概览</span></a>
-  <a href="#s8-1"><span data-lang="en">8.1 Electric Charge &amp; Force</span><span data-lang="zh">8.1 电荷与电力</span></a>
-  <a href="#s8-2"><span data-lang="en">8.2 Conservation &amp; Charging</span><span data-lang="zh">8.2 电荷守恒与起电</span></a>
-  <a href="#s8-3"><span data-lang="en">8.3 Electric Fields</span><span data-lang="zh">8.3 电场</span></a>
+  <a href="#s8-1"><span data-course="c"><span data-lang="en">8.1 Electric Charge &amp; Force</span><span data-lang="zh">8.1 电荷与电力</span></span><span data-course="p2"><span data-lang="en">10.1 Electric Charge &amp; Force</span><span data-lang="zh">10.1 电荷与电力</span></span></a>
+  <a href="#s8-2"><span data-course="c"><span data-lang="en">8.2 Conservation &amp; Charging</span><span data-lang="zh">8.2 电荷守恒与起电</span></span><span data-course="p2"><span data-lang="en">10.2 Conservation &amp; Charging</span><span data-lang="zh">10.2 电荷守恒与起电</span></span></a>
+  <a href="#s8-3"><span data-course="c"><span data-lang="en">8.3 Electric Fields</span><span data-lang="zh">8.3 电场</span></span><span data-course="p2"><span data-lang="en">10.3 Electric Fields</span><span data-lang="zh">10.3 电场</span></span></a>
   <a href="#s8-4"><span data-lang="en">8.4 Fields of Charge Distributions</span><span data-lang="zh">8.4 电荷分布的电场</span></a>
   <a href="#s8-5"><span data-lang="en">8.5 Electric Flux</span><span data-lang="zh">8.5 电通量</span></a>
   <a href="#s8-6"><span data-lang="en">8.6 Gauss's Law</span><span data-lang="zh">8.6 高斯定律</span></a>
@@ -613,13 +625,17 @@ figure.dr-fig figcaption {
 <main class="main-wrap" id="main-content">
 
 <section class="hero" id="hero">
-  <div class="hero-overline">AP Physics C: Electricity and Magnetism</div>
+  <div class="hero-overline"><span data-course="c">AP Physics C: Electricity and Magnetism</span><span data-course="p2">AP Physics 2: Algebra-Based</span></div>
   <h1><span data-lang="en">Unit 8: Electric Charges, Fields, and Gauss's Law</span><span data-lang="zh">第 8 单元：电荷、电场与高斯定律</span></h1>
-  <p class="hero-sub" data-lang="en">The foundation of the whole course: how charges exert forces, how a field describes that interaction, how to add up a field from continuous charge with calculus, and how flux and Gauss's law let symmetry do the work.</p>
-  <p class="hero-sub" data-lang="zh">整个课程的基础：电荷如何施加力，电场如何描述这种相互作用，如何用微积分对连续电荷求电场，以及通量与高斯定律（<code>Gauss's law</code>）如何让对称性替你完成计算。</p>
+  <p class="hero-sub" data-lang="en" data-course="c">The foundation of the whole course: how charges exert forces, how a field describes that interaction, how to add up a field from continuous charge with calculus, and how flux and Gauss's law let symmetry do the work.</p>
+  <p class="hero-sub" data-lang="zh" data-course="c">整个课程的基础：电荷如何施加力，电场如何描述这种相互作用，如何用微积分对连续电荷求电场，以及通量与高斯定律（<code>Gauss's law</code>）如何让对称性替你完成计算。</p>
+  <p class="hero-sub" data-lang="en" data-course="p2">The foundation of electricity in AP Physics 2: how charges exert forces, how objects become charged, and how an electric field describes the force on any charge placed in it. This page covers AP Physics 2 Unit 10 (Electric Force, Field, and Potential), Topics 10.1 to 10.3.</p>
+  <p class="hero-sub" data-lang="zh" data-course="p2">AP 物理 2 电学的基础：电荷如何施加力，物体如何带电，以及电场如何描述放入其中的任何电荷所受的力。本页涵盖 AP Physics 2 第 10 单元（电力、电场与电势）的 10.1 至 10.3 专题。</p>
   <div class="hero-meta">
-    <span class="chip chip-maroon"><span data-lang="en">15–25% of MCQ Section</span><span data-lang="zh">选择题部分占 15–25%</span></span>
-    <span class="chip chip-gold"><span data-lang="en">6 Topics</span><span data-lang="zh">6 个专题</span></span>
+    <span class="chip chip-maroon" data-course="c"><span data-lang="en">15–25% of MCQ Section</span><span data-lang="zh">选择题部分占 15–25%</span></span>
+    <span class="chip chip-maroon" data-course="p2"><span data-lang="en">Unit 10: 15–18% of MCQ Section</span><span data-lang="zh">第 10 单元：选择题部分占 15–18%</span></span>
+    <span class="chip chip-gold" data-course="c"><span data-lang="en">6 Topics</span><span data-lang="zh">6 个专题</span></span>
+    <span class="chip chip-gold" data-course="p2"><span data-lang="en">3 Topics</span><span data-lang="zh">3 个专题</span></span>
   </div>
 </section>
 
@@ -636,7 +652,7 @@ figure.dr-fig figcaption {
 
 <!-- ═══════════════ 8.1 ═══════════════ -->
 <section class="section" id="s8-1">
-  <div class="section-label"><span data-lang="en">Topic 8.1</span><span data-lang="zh">专题 8.1</span></div>
+  <div class="section-label"><span data-course="c"><span data-lang="en">Topic 8.1</span><span data-lang="zh">专题 8.1</span></span><span data-course="p2"><span data-lang="en">Topic 10.1</span><span data-lang="zh">专题 10.1</span></span></div>
   <h2><span data-lang="en">Electric Charge and Electric Force</span><span data-lang="zh">电荷与电力</span></h2>
 
   <div class="sg-objectives">
@@ -644,7 +660,8 @@ figure.dr-fig figcaption {
     <ul data-lang="en">
       <li>State that charge is a scalar that can be positive or negative, that the elementary charge $e$ is the smallest indivisible amount, and that the electron has $-e$, the proton $+e$ and the neutron no charge.</li>
       <li>Describe the point-charge model and decide when it is a valid way to treat a charged object.</li>
-      <li>Calculate the magnitude and direction of the electrostatic force between two point charges with Coulomb's law, in scalar and vector form.</li>
+      <li data-course="c">Calculate the magnitude and direction of the electrostatic force between two point charges with Coulomb's law, in scalar and vector form.</li>
+      <li data-course="p2">Calculate the magnitude of the electric force between two point charges with Coulomb's law, and determine its direction from the signs of the charges.</li>
       <li>Determine the net force on one charge from up to four interacting charges (or a highly symmetric array) by vector superposition.</li>
       <li>Compare the electric and gravitational forces between charged masses, and explain why gravity dominates at large scales.</li>
       <li>Describe electric permittivity, including $\epsilon_0$ for free space, as a measure of how a material polarizes in an electric field, and distinguish conductors from insulators.</li>
@@ -653,15 +670,18 @@ figure.dr-fig figcaption {
     <ul data-lang="zh">
       <li>陈述（<code>state</code>）电荷是可正可负的标量，元电荷 $e$ 是最小的不可再分电荷量；电子带 $-e$，质子带 $+e$，中子不带电。</li>
       <li>描述（<code>describe</code>）点电荷模型，并判断何时可以把带电物体当作点电荷。</li>
-      <li>用库仑定律以标量和矢量形式计算（<code>calculate</code>）两个点电荷之间静电力的大小与方向。</li>
+      <li data-course="c">用库仑定律以标量和矢量形式计算（<code>calculate</code>）两个点电荷之间静电力的大小与方向。</li>
+      <li data-course="p2">用库仑定律计算（<code>calculate</code>）两个点电荷之间静电力的大小，并根据电荷的符号确定其方向。</li>
       <li>用矢量叠加求出（<code>determine</code>）一个电荷受到至多四个相互作用电荷（或高度对称排布）的合力。</li>
       <li>比较（<code>compare</code>）带电物体之间的电力与引力，并解释为什么在大尺度上引力占主导。</li>
       <li>描述（<code>describe</code>）电容率（<code>permittivity</code>），包括真空的 $\epsilon_0$：它衡量材料在电场中被极化的程度；并区分导体与绝缘体。</li>
       <li>解释（<code>explain</code>）粒子之间的电力如何形成日常的接触力，例如支持力、摩擦力和张力。</li>
     </ul>
   </div>
-  <p data-lang="en">Every electric phenomenon in this course starts from one fact: matter carries a property called charge, and charged objects push or pull on one another without touching. This topic builds the force law that Units 8 to 13 depend on, and it is the only place where we work with forces between charges before introducing the field that mediates them in Topic 8.3.</p>
-  <p data-lang="zh">本课程中的所有电学现象都始于同一个事实：物质带有一种叫作电荷的属性，带电物体即使不接触也会互相推或拉。本专题建立第 8 至 13 单元都要用到的力的规律；在 8.3 专题引入传递这种作用的电场之前，我们只讨论电荷之间的力。</p>
+  <p data-lang="en" data-course="c">Every electric phenomenon in this course starts from one fact: matter carries a property called charge, and charged objects push or pull on one another without touching. This topic builds the force law that Units 8 to 13 depend on, and it is the only place where we work with forces between charges before introducing the field that mediates them in Topic 8.3.</p>
+  <p data-lang="zh" data-course="c">本课程中的所有电学现象都始于同一个事实：物质带有一种叫作电荷的属性，带电物体即使不接触也会互相推或拉。本专题建立第 8 至 13 单元都要用到的力的规律；在 8.3 专题引入传递这种作用的电场之前，我们只讨论电荷之间的力。</p>
+  <p data-lang="en" data-course="p2">Every electric phenomenon in this course starts from one fact: matter carries a property called charge, and charged objects push or pull on one another without touching. This topic builds the force law that Units 10 to 12 depend on, and it is the only place where we work with forces between charges before introducing the field that mediates them in Topic 10.3.</p>
+  <p data-lang="zh" data-course="p2">本课程中的所有电学现象都始于同一个事实：物质带有一种叫作电荷的属性，带电物体即使不接触也会互相推或拉。本专题建立第 10 至 12 单元都要用到的力的规律；在 10.3 专题引入传递这种作用的电场之前，我们只讨论电荷之间的力。</p>
   <h3><span data-lang="en">Charge and the point-charge model</span><span data-lang="zh">电荷与点电荷模型</span></h3>
   <p data-lang="en">Charge is a fundamental property of matter, like mass, but it comes in two signs. It is a <strong>scalar</strong>: it has a sign and a magnitude but no direction. Charge is <strong>quantized</strong>: the elementary charge $e = 1.60\times10^{-19}\;\text{C}$ is the smallest indivisible amount, an electron carries $-e$, a proton carries $+e$, and a neutron carries none. Any net charge you will meet is therefore $q = Ne$ for an integer $N$, with $N$ counting an excess or a deficit of electrons. A coulomb is enormous: it is about $6.25\times10^{18}$ elementary charges, so everyday static charges are microcoulombs ($10^{-6}\;\text{C}$) or nanocoulombs ($10^{-9}\;\text{C}$).</p>
   <p data-lang="zh">电荷是物质的基本属性，和质量类似，但有两种符号。它是<strong>标量</strong>（<code>scalar</code>）：有正负和大小，没有方向。电荷是<strong>量子化</strong>的（<code>quantized</code>）：元电荷 $e = 1.60\times10^{-19}\;\text{C}$ 是最小的不可再分电荷量，电子带 $-e$，质子带 $+e$，中子不带电。因此你遇到的任何净电荷都等于 $q = Ne$（$N$ 为整数），$N$ 表示多出或缺少的电子数。1 库仑是很大的电荷量，约为 $6.25\times10^{18}$ 个元电荷，所以日常的静电荷只有微库仑（$10^{-6}\;\text{C}$）或纳库仑（$10^{-9}\;\text{C}$）量级。</p>
@@ -676,6 +696,7 @@ figure.dr-fig figcaption {
     <p data-lang="en">$k = 1/(4\pi\epsilon_0) \approx 8.99\times10^{9}\;\text{N}\cdot\text{m}^2/\text{C}^2$ and $\epsilon_0 \approx 8.85\times10^{-12}\;\text{C}^2/(\text{N}\cdot\text{m}^2)$ is the permittivity of free space.</p>
     <p data-lang="zh">$k = 1/(4\pi\epsilon_0) \approx 8.99\times10^{9}\;\text{N}\cdot\text{m}^2/\text{C}^2$，$\epsilon_0 \approx 8.85\times10^{-12}\;\text{C}^2/(\text{N}\cdot\text{m}^2)$ 为真空电容率。</p>
   </div>
+  <div data-course="c">
   <p data-lang="en">The direction rule is a statement about signs. Charges of the <strong>same</strong> sign repel; charges of <strong>opposite</strong> sign attract. The two forces form a Newton's third law pair: equal magnitudes, opposite directions, on different objects, even when $|q_1| \neq |q_2|$. In vector form, with $\vec r_{12} = \vec r_1 - \vec r_2$ pointing from charge 2 to charge 1 and $\hat r_{12} = \vec r_{12}/r$ its unit vector, the force on charge 1 due to charge 2 is</p>
   <p data-lang="zh">方向规则其实是关于符号的陈述：<strong>同号</strong>电荷相斥，<strong>异号</strong>电荷相吸。这两个力构成一对牛顿第三定律的作用力与反作用力：大小相等、方向相反、作用在不同物体上，即使 $|q_1| \neq |q_2|$ 也是如此。用矢量形式表示，设 $\vec r_{12} = \vec r_1 - \vec r_2$ 由电荷 2 指向电荷 1，$\hat r_{12} = \vec r_{12}/r$ 为其单位矢量，则电荷 2 对电荷 1 的力为</p>
   <div class="formula-box green">
@@ -684,6 +705,9 @@ figure.dr-fig figcaption {
     <p data-lang="en">Keep the signs of $q_1$ and $q_2$ here: a positive product points along $\hat r_{12}$ (repulsion), a negative product points opposite (attraction).</p>
     <p data-lang="zh">此处保留 $q_1$ 与 $q_2$ 的正负号：乘积为正则沿 $\hat r_{12}$ 方向（排斥），乘积为负则与之反向（吸引）。</p>
   </div>
+  </div>
+  <p data-lang="en" data-course="p2">The direction rule is a statement about signs. Charges of the <strong>same</strong> sign repel; charges of <strong>opposite</strong> sign attract. The force on each charge is directed along the line joining the two charges. The two forces form a Newton's third law pair: equal magnitudes, opposite directions, on different objects, even when $|q_1| \neq |q_2|$. Use the formula above with the magnitudes of the charges to find the size of the force, then decide the direction from the signs: away from the other charge for repulsion, toward it for attraction.</p>
+  <p data-lang="zh" data-course="p2">方向规则其实是关于符号的陈述：<strong>同号</strong>电荷相斥，<strong>异号</strong>电荷相吸。每个电荷所受的力都沿两电荷的连线。这两个力构成一对牛顿第三定律的作用力与反作用力：大小相等、方向相反、作用在不同物体上，即使 $|q_1| \neq |q_2|$ 也是如此。用上面的公式和电荷的绝对值求力的大小，再根据符号判断方向：排斥时背离另一个电荷，吸引时指向另一个电荷。</p>
   <p data-lang="en">The inverse-square dependence gives quick proportional reasoning. Doubling the separation divides the force by $2^2 = 4$; tripling one charge multiplies the force by $3$; doubling both charges and the separation leaves the force unchanged.</p>
   <p data-lang="zh">平方反比关系便于快速作比例推理：距离加倍，力除以 $2^2 = 4$；一个电荷变为原来的 $3$ 倍时，力也变为 3 倍；两个电荷和距离都加倍，力不变。</p>
   <details class="sg-we">
@@ -718,8 +742,10 @@ figure.dr-fig figcaption {
     </div>
   </details>
   <h3><span data-lang="en">Superposition and the four-charge boundary</span><span data-lang="zh">叠加原理与四电荷的范围</span></h3>
-  <p data-lang="en">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle. AP Physics C: E&amp;M asks you to calculate the electric force from <strong>four or fewer</strong> interacting charged objects; a larger collection is allowed only when it is highly symmetric, for example equal charges at the corners of a regular polygon, where components cancel by symmetry. (Fields of continuous charge distributions are still expected, and they are the subject of Topics 8.4 and 8.6.)</p>
-  <p data-lang="zh">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。AP Physics C: E&amp;M 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称时才会出现，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。（连续电荷分布的电场仍在考查范围内，将在 8.4 和 8.6 专题中讨论。）</p>
+  <p data-lang="en" data-course="c">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle. AP Physics C: E&amp;M asks you to calculate the electric force from <strong>four or fewer</strong> interacting charged objects; a larger collection is allowed only when it is highly symmetric, for example equal charges at the corners of a regular polygon, where components cancel by symmetry. (Fields of continuous charge distributions are still expected, and they are the subject of Topics 8.4 and 8.6.)</p>
+  <p data-lang="zh" data-course="c">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。AP Physics C: E&amp;M 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称时才会出现，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。（连续电荷分布的电场仍在考查范围内，将在 8.4 和 8.6 专题中讨论。）</p>
+  <p data-lang="en" data-course="p2">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle. AP Physics 2 limits calculations of the electric force to <strong>four or fewer</strong> interacting charged objects; a larger collection is allowed only in situations of high symmetry, for example equal charges at the corners of a regular polygon, where components cancel by symmetry.</p>
+  <p data-lang="zh" data-course="p2">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。AP Physics 2 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称的情形下才允许分析，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。</p>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Net force from two charges</span><span data-lang="zh">例题：两个电荷的合力</span></summary>
     <div class="detail-body">
@@ -810,10 +836,14 @@ figure.dr-fig figcaption {
     </div>
   </details>
   <h3><span data-lang="en">Permittivity, polarization, conductors and insulators</span><span data-lang="zh">电容率、极化、导体与绝缘体</span></h3>
-  <p data-lang="en">The constant $\epsilon_0$ in Coulomb's law is the <strong>electric permittivity of free space</strong>. Materials also have a permittivity, and it differs from the free-space value. Permittivity measures how strongly a material <strong>polarizes</strong> in an applied electric field: the field slightly rearranges the electrons, separating positive and negative charge inside the material, and that induced separation partly opposes the applied field. The easier it is for electrons to change configuration, the larger the permittivity. For two point charges embedded in a uniform material, $\epsilon_0$ in Coulomb's law is replaced by the material's permittivity $\epsilon$, which reduces the force.</p>
-  <p data-lang="zh">库仑定律中的常数 $\epsilon_0$ 是<strong>真空电容率</strong>（<code>electric permittivity of free space</code>）。材料也有电容率，其值不同于真空值。电容率衡量材料在外加电场中被<strong>极化</strong>（<code>polarize</code>）的程度：电场使电子发生轻微重排，在材料内部分离出正负电荷，这种感应分离会部分抵消外加电场。电子越容易改变排布，电容率就越大。对于放在均匀材料中的两个点电荷，库仑定律中的 $\epsilon_0$ 要换成该材料的电容率 $\epsilon$，使力减小。</p>
-  <p data-lang="en">In a <strong>conductor</strong> (metals, salt water) charge carriers move easily through the material. In an <strong>insulator</strong> (glass, rubber, plastic) charge carriers cannot move easily, so charge placed on an insulator stays where it was put. Topics 8.2 and 8.3 use this distinction heavily.</p>
-  <p data-lang="zh">在<strong>导体</strong>（<code>conductor</code>，如金属、盐水）中，电荷载流子容易在材料内移动；在<strong>绝缘体</strong>（<code>insulator</code>，如玻璃、橡胶、塑料）中，电荷载流子不易移动，因此放在绝缘体上的电荷会停留在原处。8.2 和 8.3 专题会大量用到这一区别。</p>
+  <p data-lang="en" data-course="c">The constant $\epsilon_0$ in Coulomb's law is the <strong>electric permittivity of free space</strong>. Materials also have a permittivity, and it differs from the free-space value. Permittivity measures how strongly a material <strong>polarizes</strong> in an applied electric field: the field slightly rearranges the electrons, separating positive and negative charge inside the material, and that induced separation partly opposes the applied field. The easier it is for electrons to change configuration, the larger the permittivity. For two point charges embedded in a uniform material, $\epsilon_0$ in Coulomb's law is replaced by the material's permittivity $\epsilon$, which reduces the force.</p>
+  <p data-lang="zh" data-course="c">库仑定律中的常数 $\epsilon_0$ 是<strong>真空电容率</strong>（<code>electric permittivity of free space</code>）。材料也有电容率，其值不同于真空值。电容率衡量材料在外加电场中被<strong>极化</strong>（<code>polarize</code>）的程度：电场使电子发生轻微重排，在材料内部分离出正负电荷，这种感应分离会部分抵消外加电场。电子越容易改变排布，电容率就越大。对于放在均匀材料中的两个点电荷，库仑定律中的 $\epsilon_0$ 要换成该材料的电容率 $\epsilon$，使力减小。</p>
+  <p data-lang="en" data-course="p2">The constant $\epsilon_0$ in Coulomb's law is the <strong>electric permittivity of free space</strong>: free space has a constant value of permittivity that appears in physical relationships. The permittivity of a material or medium measures the degree to which it is <strong>polarized</strong> in the presence of an electric field. Polarization can be modeled as the induced rearrangement of electrons by an external electric field, which separates positive and negative charge within the material. The permittivity of matter differs from the free-space value because of the matter's composition and arrangement: in a given material it is determined by how easily the electrons can change configuration, and the easier that is, the larger the permittivity.</p>
+  <p data-lang="zh" data-course="p2">库仑定律中的常数 $\epsilon_0$ 是<strong>真空电容率</strong>（<code>electric permittivity of free space</code>）：真空的电容率是一个恒定值，会出现在各种物理关系中。材料或介质的电容率衡量它在电场中被<strong>极化</strong>（<code>polarize</code>）的程度。极化可以建模为外电场引起的电子重新排布，使材料内部的正、负电荷分离。物质的电容率与真空值不同，这取决于物质的组成与排列：在给定材料中，它由电子改变排布的难易程度决定，电子越容易改变排布，电容率就越大。</p>
+  <p data-lang="en" data-course="c">In a <strong>conductor</strong> (metals, salt water) charge carriers move easily through the material. In an <strong>insulator</strong> (glass, rubber, plastic) charge carriers cannot move easily, so charge placed on an insulator stays where it was put. Topics 8.2 and 8.3 use this distinction heavily.</p>
+  <p data-lang="zh" data-course="c">在<strong>导体</strong>（<code>conductor</code>，如金属、盐水）中，电荷载流子容易在材料内移动；在<strong>绝缘体</strong>（<code>insulator</code>，如玻璃、橡胶、塑料）中，电荷载流子不易移动，因此放在绝缘体上的电荷会停留在原处。8.2 和 8.3 专题会大量用到这一区别。</p>
+  <p data-lang="en" data-course="p2">In a <strong>conductor</strong> (metals, salt water) charge carriers move easily through the material. In an <strong>insulator</strong> (glass, rubber, plastic) charge carriers cannot move easily, so charge placed on an insulator stays where it was put. Topics 10.2 and 10.3 use this distinction heavily.</p>
+  <p data-lang="zh" data-course="p2">在<strong>导体</strong>（<code>conductor</code>，如金属、盐水）中，电荷载流子容易在材料内移动；在<strong>绝缘体</strong>（<code>insulator</code>，如玻璃、橡胶、塑料）中，电荷载流子不易移动，因此放在绝缘体上的电荷会停留在原处。10.2 和 10.3 专题会大量用到这一区别。</p>
   <p data-lang="en">Finally, nearly every force that you drew in Mechanics, such as the normal force, friction and tension, is an electric force in disguise. Atoms in a table and in a book repel through their electrons; there are so many particle interactions that it is convenient to replace the sum by one <strong>contact force</strong> with a simple model. In this course, only the electric force between charged objects is treated as fundamental.</p>
   <p data-lang="zh">最后，你在力学中画过的几乎所有力，例如支持力、摩擦力和张力，本质上都是电力。桌子和书中的原子通过各自的电子相互排斥；由于粒子间的相互作用数量极大，人们便用一个简单模型的<strong>接触力</strong>（<code>contact force</code>）来代替它们的总和。在本课程中，只把带电物体之间的电力当作基本力。</p>
   <div class="concept-box orange" data-lang="en"><strong>Common Mistake: Squaring the wrong quantity</strong>
@@ -852,7 +882,7 @@ figure.dr-fig figcaption {
 
 <!-- ═══════════════ 8.2 ═══════════════ -->
 <section class="section" id="s8-2">
-  <div class="section-label"><span data-lang="en">Topic 8.2</span><span data-lang="zh">专题 8.2</span></div>
+  <div class="section-label"><span data-course="c"><span data-lang="en">Topic 8.2</span><span data-lang="zh">专题 8.2</span></span><span data-course="p2"><span data-lang="en">Topic 10.2</span><span data-lang="zh">专题 10.2</span></span></div>
   <h2><span data-lang="en">Conservation of Electric Charge and the Process of Charging</span><span data-lang="zh">电荷守恒与起电过程</span></h2>
 
   <div class="sg-objectives">
@@ -874,8 +904,10 @@ figure.dr-fig figcaption {
       <li>把接地描述（<code>describe</code>）为与一个大得多、近似为中性的系统（例如地球）相连。</li>
     </ul>
   </div>
-  <p data-lang="en">Topic 8.1 told us what charges do to each other. Topic 8.2 asks how an object gets charged in the first place and what is conserved while it happens. The answers rest on one bookkeeping rule and on the difference between conductors and insulators.</p>
-  <p data-lang="zh">8.1 专题讲了电荷之间如何相互作用。8.2 专题要问的是：物体最初是怎样带上电的，以及这个过程中什么量守恒。答案建立在一条记账规则以及导体与绝缘体的区别之上。</p>
+  <p data-lang="en" data-course="c">Topic 8.1 told us what charges do to each other. Topic 8.2 asks how an object gets charged in the first place and what is conserved while it happens. The answers rest on one bookkeeping rule and on the difference between conductors and insulators.</p>
+  <p data-lang="zh" data-course="c">8.1 专题讲了电荷之间如何相互作用。8.2 专题要问的是：物体最初是怎样带上电的，以及这个过程中什么量守恒。答案建立在一条记账规则以及导体与绝缘体的区别之上。</p>
+  <p data-lang="en" data-course="p2">Topic 10.1 told us what charges do to each other. Topic 10.2 asks how an object gets charged in the first place and what is conserved while it happens. The answers rest on one bookkeeping rule and on the difference between conductors and insulators.</p>
+  <p data-lang="zh" data-course="p2">10.1 专题讲了电荷之间如何相互作用。10.2 专题要问的是：物体最初是怎样带上电的，以及这个过程中什么量守恒。答案建立在一条记账规则以及导体与绝缘体的区别之上。</p>
   <h3><span data-lang="en">Conservation of charge and the system boundary</span><span data-lang="zh">电荷守恒与系统边界</span></h3>
   <p data-lang="en"><strong>Conservation of charge:</strong> the net charge of a system is constant unless charge is transferred between the system and its surroundings. Charge is never created or destroyed in these processes; it moves. In practice charging a system almost always means moving <strong>electrons</strong> to or from it, because the protons are bound in nuclei. Gaining electrons gives a negative net charge; losing electrons gives a positive net charge.</p>
   <p data-lang="zh"><strong>电荷守恒</strong>（<code>conservation of charge</code>）：除非系统与外界之间发生电荷转移，否则系统的净电荷保持不变。在这些过程中电荷既不会产生也不会消失，只是发生了移动。实际上，让系统带电几乎总是意味着让<strong>电子</strong>流入或流出，因为质子束缚在原子核中。得到电子则净电荷为负；失去电子则净电荷为正。</p>
@@ -957,9 +989,13 @@ figure.dr-fig figcaption {
           <div class="step-text"><span data-lang="en">A's charge dropped from $+6.0\;\mu\text{C}$ to $+2.0\;\mu\text{C}$, so A gained $4.0\;\mu\text{C}$ of electron charge, which means electrons moved from B to A:</span><span data-lang="zh">A 的电荷从 $+6.0\;\mu\text{C}$ 降到 $+2.0\;\mu\text{C}$，所以 A 得到了 $4.0\;\mu\text{C}$ 的电子电荷，即电子从 B 转移到了 A：</span></div>
           <div class="step-math">$$N = \frac{4.0\times10^{-6}}{1.60\times10^{-19}} = 2.5\times10^{13}$$</div>
         </div>
-        <div class="worked-step">
+        <div class="worked-step" data-course="c">
           <div class="step-label"><span data-lang="en">Step 5: Why this works</span><span data-lang="zh">第 5 步：为什么这样做</span></div>
           <div class="step-text"><span data-lang="en">Equal sharing is a result of the spheres being identical; it is not a general law. Spheres of different size divide charge unequally (see Topic 10.2).</span><span data-lang="zh">平分是因为两球完全相同，并不是一般规律；大小不同的球会不均等地分配电荷（见 10.2 专题）。</span></div>
+        </div>
+        <div class="worked-step" data-course="p2">
+          <div class="step-label"><span data-lang="en">Step 5: Why this works</span><span data-lang="zh">第 5 步：为什么这样做</span></div>
+          <div class="step-text"><span data-lang="en">Equal sharing is a result of the spheres being identical (same size and material); it is not a general law. Check: the total before and after is the same, $+4.0\;\mu\text{C}$.</span><span data-lang="zh">平分是因为两球完全相同（大小和材料都相同），并不是一般规律。检验：前后总电荷相同，都是 $+4.0\;\mu\text{C}$。</span></div>
         </div>
       </div>
     </div>
@@ -1029,7 +1065,7 @@ figure.dr-fig figcaption {
 
 <!-- ═══════════════ 8.3 ═══════════════ -->
 <section class="section" id="s8-3">
-  <div class="section-label"><span data-lang="en">Topic 8.3</span><span data-lang="zh">专题 8.3</span></div>
+  <div class="section-label"><span data-course="c"><span data-lang="en">Topic 8.3</span><span data-lang="zh">专题 8.3</span></span><span data-course="p2"><span data-lang="en">Topic 10.3</span><span data-lang="zh">专题 10.3</span></span></div>
   <h2><span data-lang="en">Electric Fields</span><span data-lang="zh">电场</span></h2>
 
   <div class="sg-objectives">
@@ -1051,8 +1087,10 @@ figure.dr-fig figcaption {
       <li>描述（<code>describe</code>）处于静电平衡的导体内部和周围的电场，并与绝缘体作对比。</li>
     </ul>
   </div>
-  <p data-lang="en">Topic 8.1 treated charges as acting directly on each other. The electric field reorganizes that idea: a source charge changes the space around it, and any other charge placed there responds to the local value of that change. The field belongs to the sources and the location; the force depends on the charge you put there as well.</p>
-  <p data-lang="zh">8.1 专题把电荷看成直接相互作用。电场把这一想法重新组织起来：源电荷改变了它周围的空间，放入其中的任何其他电荷都对该处的变化作出响应。电场属于源电荷和空间位置；而力还取决于你放在那里的电荷。</p>
+  <p data-lang="en" data-course="c">Topic 8.1 treated charges as acting directly on each other. The electric field reorganizes that idea: a source charge changes the space around it, and any other charge placed there responds to the local value of that change. The field belongs to the sources and the location; the force depends on the charge you put there as well.</p>
+  <p data-lang="zh" data-course="c">8.1 专题把电荷看成直接相互作用。电场把这一想法重新组织起来：源电荷改变了它周围的空间，放入其中的任何其他电荷都对该处的变化作出响应。电场属于源电荷和空间位置；而力还取决于你放在那里的电荷。</p>
+  <p data-lang="en" data-course="p2">Topic 10.1 treated charges as acting directly on each other. The electric field reorganizes that idea: a source charge changes the space around it, and any other charge placed there responds to the local value of that change. The field belongs to the sources and the location; the force depends on the charge you put there as well.</p>
+  <p data-lang="zh" data-course="p2">10.1 专题把电荷看成直接相互作用。电场把这一想法重新组织起来：源电荷改变了它周围的空间，放入其中的任何其他电荷都对该处的变化作出响应。电场属于源电荷和空间位置；而力还取决于你放在那里的电荷。</p>
   <h3><span data-lang="en">Definition of the electric field</span><span data-lang="zh">电场的定义</span></h3>
   <p data-lang="en">Place a small <strong>test charge</strong> $q$ at a point and measure the electric force $\vec F$ on it. The <strong>electric field</strong> at that point is the ratio of the force to the test charge:</p>
   <p data-lang="zh">在某点放一个小的<strong>试探电荷</strong>（<code>test charge</code>）$q$，测量它所受的电力 $\vec F$。该点的<strong>电场</strong>（<code>electric field</code>）定义为力与试探电荷之比：</p>
@@ -1157,11 +1195,17 @@ figure.dr-fig figcaption {
   <h3><span data-lang="en">Representing electric fields</span><span data-lang="zh">电场的表示方法</span></h3>
   <p data-lang="en">A <strong>vector field map</strong> draws an arrow at many points: the arrow's direction is the field direction there and its length shows the magnitude. <strong>Field-line diagrams</strong> are simplified models of such maps. Their rules are: lines begin on positive charge (or at infinity) and end on negative charge (or at infinity); the tangent to a line at a point gives the field direction there; lines never cross, because the field has one direction at each point; and the <strong>density</strong> of lines (the number per area perpendicular to the lines) shows the relative magnitude, so where the lines crowd together the field is strong. A line diagram does not give magnitudes by itself, only comparisons within the same diagram.</p>
   <p data-lang="zh"><strong>矢量场图</strong>（<code>vector field map</code>）在许多点上画箭头：箭头方向是该处的电场方向，长度表示大小。<strong>电场线图</strong>（<code>field-line diagram</code>）是这类场图的简化模型，规则如下：电场线从正电荷（或无穷远）出发，终止于负电荷（或无穷远）；某点处电场线的切线方向就是该点的电场方向；电场线不会相交，因为每一点的电场只有一个方向；电场线的<strong>疏密</strong>（单位垂直面积上的线数）表示场强的相对大小，线越密的地方场强越大。电场线图本身不给出大小，只能在同一幅图内做比较。</p>
+  <p data-lang="en" data-course="p2">To read a field-line diagram, compare the spacing of the lines. Where the lines are drawn closer together the field is stronger, and where they spread apart the field is weaker. Near a small charged sphere the lines are crowded and the field is strong; far from it the same lines are far apart and the field is weak. The field direction at a point is along the tangent to the line there: away from positive charge and toward negative charge. A vector field map carries the same information with arrow direction and arrow length.</p>
+  <p data-lang="zh" data-course="p2">阅读电场线图时，要比较电场线的疏密。电场线画得越靠近的地方场强越大，电场线越稀疏的地方场强越小。在带电小球附近，电场线密集、场强大；远离小球处，同样的电场线相距很远、场强小。某点的电场方向沿该处电场线的切线：背离正电荷、指向负电荷。矢量场图则用箭头的方向和长度表达同样的信息。</p>
   <h3><span data-lang="en">Fields of conductors and insulators</span><span data-lang="zh">导体与绝缘体的电场</span></h3>
-  <p data-lang="en">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>. At the surface the field is <strong>perpendicular</strong> to the surface: a parallel component would push surface charge along the conductor. For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center (Topic 8.6 proves this with Gauss's law).</p>
-  <p data-lang="zh">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场（8.6 专题将用高斯定律证明这一点）。</p>
+  <p data-lang="en" data-course="c">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>. At the surface the field is <strong>perpendicular</strong> to the surface: a parallel component would push surface charge along the conductor. For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center (Topic 8.6 proves this with Gauss's law).</p>
+  <p data-lang="zh" data-course="c">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场（8.6 专题将用高斯定律证明这一点）。</p>
+  <p data-lang="en" data-course="p2">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>. At the surface the field is <strong>perpendicular</strong> to the surface: a parallel component would push surface charge along the conductor. For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center.</p>
+  <p data-lang="zh" data-course="p2">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场。</p>
   <p data-lang="en">An <strong>insulator</strong> is different. Its charge cannot move freely, so excess charge on an insulator can be spread throughout the interior as well as on the surface, and the electric field inside an insulator can be nonzero.</p>
   <p data-lang="zh"><strong>绝缘体</strong>（<code>insulator</code>）则不同。它的电荷不能自由移动，因此绝缘体上多余的电荷既可以分布在表面，也可以分布在整个内部，绝缘体内部的电场可以不为零。</p>
+  <p data-lang="en" data-course="p2"><strong>Scope.</strong> AP Physics 2 limits electric-field calculations to four or fewer charged objects; an analysis with more charges is allowed only in situations of high symmetry. Electric fields within insulators are analyzed only qualitatively.</p>
+  <p data-lang="zh" data-course="p2"><strong>范围。</strong>AP Physics 2 只要求计算至多四个带电物体产生的电场；电荷更多时，只在高度对称的情形下才允许分析。对绝缘体内部的电场只要求作定性分析（<code>qualitative</code>）。</p>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Motion of a charge in a uniform field</span><span data-lang="zh">例题：电荷在匀强电场中的运动</span></summary>
     <div class="detail-body">
@@ -1222,10 +1266,10 @@ figure.dr-fig figcaption {
   </div>
 </section>
 
-<hr class="sep">
+<hr class="sep" data-course="c">
 
 <!-- ═══════════════ 8.4 ═══════════════ -->
-<section class="section" id="s8-4">
+<section class="section" id="s8-4" data-course="c">
   <div class="section-label"><span data-lang="en">Topic 8.4</span><span data-lang="zh">专题 8.4</span></div>
   <h2><span data-lang="en">Electric Fields of Charge Distributions</span><span data-lang="zh">电荷分布的电场</span></h2>
 
@@ -1456,10 +1500,10 @@ figure.dr-fig figcaption {
   </div>
 </section>
 
-<hr class="sep">
+<hr class="sep" data-course="c">
 
 <!-- ═══════════════ 8.5 ═══════════════ -->
-<section class="section" id="s8-5">
+<section class="section" id="s8-5" data-course="c">
   <div class="section-label"><span data-lang="en">Topic 8.5</span><span data-lang="zh">专题 8.5</span></div>
   <h2><span data-lang="en">Electric Flux</span><span data-lang="zh">电通量</span></h2>
 
@@ -1659,10 +1703,10 @@ figure.dr-fig figcaption {
   </div>
 </section>
 
-<hr class="sep">
+<hr class="sep" data-course="c">
 
 <!-- ═══════════════ 8.6 ═══════════════ -->
-<section class="section" id="s8-6">
+<section class="section" id="s8-6" data-course="c">
   <div class="section-label"><span data-lang="en">Topic 8.6</span><span data-lang="zh">专题 8.6</span></div>
   <h2><span data-lang="en">Gauss's Law</span><span data-lang="zh">高斯定律</span></h2>
 
@@ -1965,17 +2009,22 @@ figure.dr-fig figcaption {
     <p><strong><span data-lang="en">Coulomb's law:</span><span data-lang="zh">库仑定律：</span></strong> $F = k\dfrac{|q_1||q_2|}{r^2},\; k = \dfrac{1}{4\pi\epsilon_0}$</p>
     <p><strong><span data-lang="en">Field and force:</span><span data-lang="zh">电场与力：</span></strong> $\vec E = \dfrac{\vec F}{q},\; \vec F = q\vec E$</p>
     <p><strong><span data-lang="en">Point charge:</span><span data-lang="zh">点电荷：</span></strong> $E = \dfrac{kQ}{r^2}$</p>
-    <p><strong><span data-lang="en">Continuous charge:</span><span data-lang="zh">连续电荷：</span></strong> $\vec E = \int \dfrac{k\,dq}{r^2}\,\hat r$</p>
-    <p><strong><span data-lang="en">Charge elements:</span><span data-lang="zh">电荷元：</span></strong> $dq = \lambda\,d\ell = \sigma\,dA = \rho\,dV$</p>
-    <p><strong><span data-lang="en">Ring on axis:</span><span data-lang="zh">圆环轴线上：</span></strong> $E = \dfrac{kQx}{(a^2+x^2)^{3/2}}$</p>
+    <p data-course="c"><strong><span data-lang="en">Continuous charge:</span><span data-lang="zh">连续电荷：</span></strong> $\vec E = \int \dfrac{k\,dq}{r^2}\,\hat r$</p>
+    <p data-course="c"><strong><span data-lang="en">Charge elements:</span><span data-lang="zh">电荷元：</span></strong> $dq = \lambda\,d\ell = \sigma\,dA = \rho\,dV$</p>
+    <p data-course="c"><strong><span data-lang="en">Ring on axis:</span><span data-lang="zh">圆环轴线上：</span></strong> $E = \dfrac{kQx}{(a^2+x^2)^{3/2}}$</p>
       </div>
       <div>
-    <p><strong><span data-lang="en">Line, bisector:</span><span data-lang="zh">线电荷，中垂线：</span></strong> $E = \dfrac{kQ}{y\sqrt{y^2+L^2/4}}$</p>
-    <p><strong><span data-lang="en">Line, collinear:</span><span data-lang="zh">线电荷，共线点：</span></strong> $E = \dfrac{kQ}{d(L+d)}$</p>
-    <p><strong><span data-lang="en">Semicircle, center:</span><span data-lang="zh">半圆弧，圆心：</span></strong> $E = \dfrac{2kQ}{\pi R^2}$</p>
-    <p><strong><span data-lang="en">Flux:</span><span data-lang="zh">通量：</span></strong> $\Phi_E = \int \vec E\cdot d\vec A = EA\cos\theta$</p>
-    <p><strong><span data-lang="en">Gauss's law:</span><span data-lang="zh">高斯定律：</span></strong> $\oint \vec E\cdot d\vec A = \dfrac{Q_{\text{enc}}}{\epsilon_0}$</p>
-    <p><strong><span data-lang="en">Line / plane:</span><span data-lang="zh">线 / 平面：</span></strong> $E = \dfrac{\lambda}{2\pi\epsilon_0 r},\; E = \dfrac{\sigma}{2\epsilon_0}$</p>
+    <p data-course="c"><strong><span data-lang="en">Line, bisector:</span><span data-lang="zh">线电荷，中垂线：</span></strong> $E = \dfrac{kQ}{y\sqrt{y^2+L^2/4}}$</p>
+    <p data-course="c"><strong><span data-lang="en">Line, collinear:</span><span data-lang="zh">线电荷，共线点：</span></strong> $E = \dfrac{kQ}{d(L+d)}$</p>
+    <p data-course="c"><strong><span data-lang="en">Semicircle, center:</span><span data-lang="zh">半圆弧，圆心：</span></strong> $E = \dfrac{2kQ}{\pi R^2}$</p>
+    <p data-course="c"><strong><span data-lang="en">Flux:</span><span data-lang="zh">通量：</span></strong> $\Phi_E = \int \vec E\cdot d\vec A = EA\cos\theta$</p>
+    <p data-course="c"><strong><span data-lang="en">Gauss's law:</span><span data-lang="zh">高斯定律：</span></strong> $\oint \vec E\cdot d\vec A = \dfrac{Q_{\text{enc}}}{\epsilon_0}$</p>
+    <p data-course="c"><strong><span data-lang="en">Line / plane:</span><span data-lang="zh">线 / 平面：</span></strong> $E = \dfrac{\lambda}{2\pi\epsilon_0 r},\; E = \dfrac{\sigma}{2\epsilon_0}$</p>
+    <p data-course="p2"><strong><span data-lang="en">Elementary charge:</span><span data-lang="zh">元电荷：</span></strong> $q = Ne,\; e = 1.60\times10^{-19}\;\text{C}$<span data-lang="en"> ($N$ is an integer)</span><span data-lang="zh">（$N$ 为整数）</span></p>
+    <p data-course="p2"><strong><span data-lang="en">Constants:</span><span data-lang="zh">常量：</span></strong> $k = 8.99\times10^{9}\;\text{N}\cdot\text{m}^2/\text{C}^2,\; \epsilon_0 = 8.85\times10^{-12}\;\text{C}^2/(\text{N}\cdot\text{m}^2)$</p>
+    <p data-course="p2"><strong><span data-lang="en">Conservation of charge:</span><span data-lang="zh">电荷守恒：</span></strong> $\sum q_i = \sum q_f$<span data-lang="en"> (isolated system; $i$ initial, $f$ final)</span><span data-lang="zh">（孤立系统；$i$ 表示初态，$f$ 表示末态）</span></p>
+    <p data-course="p2"><strong><span data-lang="en">Identical conductors, touch then separate:</span><span data-lang="zh">相同导体接触后分开：</span></strong> $q_A' = q_B' = \dfrac{q_A + q_B}{2}$<span data-lang="en"> ($q_A,\,q_B$ before contact, primes after)</span><span data-lang="zh">（$q_A,\,q_B$ 为接触前的电荷，带撇的为接触后）</span></p>
+    <p data-course="p2"><strong><span data-lang="en">Net field:</span><span data-lang="zh">合电场：</span></strong> $\vec E = \vec E_1 + \vec E_2 + \cdots$<span data-lang="en"> (one term per source charge)</span><span data-lang="zh">（每个源电荷对应一项）</span></p>
       </div>
     </div>
   </div>
@@ -1985,8 +2034,9 @@ figure.dr-fig figcaption {
 
 <section class="section" id="exam-strategy">
   <div class="section-label"><span data-lang="en">Exam Strategy</span><span data-lang="zh">考试策略</span></div>
-  <h2><span data-lang="en">Preparing Unit 8 for the AP Exam</span><span data-lang="zh">为 AP 考试准备第 8 单元</span></h2>
+  <h2><span data-course="c"><span data-lang="en">Preparing Unit 8 for the AP Exam</span><span data-lang="zh">为 AP 考试准备第 8 单元</span></span><span data-course="p2"><span data-lang="en">Preparing Topics 10.1 to 10.3 for the AP Exam</span><span data-lang="zh">为 AP 考试准备 10.1 至 10.3 专题</span></span></h2>
 
+  <div data-course="c">
   <div class="card">
     <div class="card-header"><div class="card-icon icon-accent">EX</div><div class="card-title"><span data-lang="en">Exam Format</span><span data-lang="zh">考试形式</span></div></div>
   <p data-lang="en">AP Physics C: Electricity and Magnetism, May 2027: Section I has 42 multiple-choice questions in 85 minutes and Section II has 4 free-response questions in 95 minutes, weighted equally. A four-function, scientific or graphing calculator is allowed on both sections, and reference materials are provided. Unit 8 is 15–25% of the multiple-choice section.</p>
@@ -2018,12 +2068,53 @@ figure.dr-fig figcaption {
   <p data-lang="en"><strong>Qualitative/quantitative translation:</strong> explain in words why the field of a ring vanishes at its center, or why a Gaussian surface gives the same flux at any radius, and tie the words to an equation.</p>
   <p data-lang="zh"><strong>定性与定量之间的转换：</strong>用文字解释为什么圆环在圆心处电场为零，或为什么高斯面在任何半径上给出相同的通量，并把文字与方程联系起来。</p>
   </div>
+  </div>
 
-  <div class="concept-box red" data-lang="en"><strong>Top Mistakes to Avoid</strong>
+  <div class="concept-box red" data-lang="en" data-course="c"><strong>Top Mistakes to Avoid</strong>
     <ol class="sg-list"><li>Dropping the direction of a force or field because the formula used absolute values.</li><li>Using $kQ/r^2$ for a rod, ring or arc when the distance is not large compared with its size.</li><li>Adding magnitudes instead of components, so cancelling pieces are counted.</li><li>Measuring the flux angle from the surface instead of from the area vector.</li><li>Concluding that zero net flux means zero field.</li><li>Putting charge outside the Gaussian surface into $Q_{\text{enc}}$.</li><li>Applying Gauss's law when no symmetry lets $E$ come out of the integral.</li></ol>
   </div>
-  <div class="concept-box red" data-lang="zh"><strong>最常见的错误</strong>
+  <div class="concept-box red" data-lang="zh" data-course="c"><strong>最常见的错误</strong>
     <ol class="sg-list"><li>因为公式用了绝对值就丢掉力或电场的方向。</li><li>当距离相对于圆环、棒或圆弧的尺寸不够大时，仍使用 $kQ/r^2$。</li><li>把大小而不是分量相加，使相互抵消的部分被计入。</li><li>从曲面而不是从面积矢量量起来确定通量的夹角。</li><li>认为净通量为零就意味着电场为零。</li><li>把高斯面外的电荷计入 $Q_{\text{enc}}$。</li><li>在没有对称性使 $E$ 能提出积分号时使用高斯定律。</li></ol>
+  </div>
+  <div data-course="p2">
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-accent">EX</div><div class="card-title"><span data-lang="en">Exam Format</span><span data-lang="zh">考试形式</span></div></div>
+  <p data-lang="en">The AP Physics 2 exam has two sections. Section I has 42 multiple-choice questions in 85 minutes and counts for 50% of the exam. Section II has 4 free-response questions in 95 minutes and counts for 50% of the exam. A calculator is allowed and an equation sheet is provided. Unit 10 is 15–18% of the multiple-choice section; this page covers Topics 10.1 to 10.3 of that unit.</p>
+  <p data-lang="zh">AP Physics 2 考试分为两部分。第一部分为 42 道选择题，用时 85 分钟，占考试的 50%；第二部分为 4 道自由作答题，用时 95 分钟，占考试的 50%。允许使用计算器，并提供公式表。第 10 单元占选择题部分的 15–18%；本页涵盖该单元的 10.1 至 10.3 专题。</p>
+  <p data-lang="en">The equation sheet does not tell you which relationship to use or how to apply it. Name the law or definition you start from (Coulomb's law, the definition of electric field, conservation of charge) before you substitute numbers.</p>
+  <p data-lang="zh">公式表不会告诉你该用哪个关系，也不会告诉你如何应用。代入数值之前，先写出你所依据的定律或定义（库仑定律、电场的定义、电荷守恒）。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-accent">MC</div><div class="card-title"><span data-lang="en">Multiple-Choice Practice</span><span data-lang="zh">选择题练习（<code>Multiple Choice</code>）</span></div></div>
+  <p data-lang="en"><strong>Scaling:</strong> many multiple-choice questions on these topics can be solved by proportional reasoning. The force between point charges and the field of a point charge both go as $1/r^2$, and the force is proportional to each charge.</p>
+  <p data-lang="zh"><strong>比例关系：</strong>这些专题中的许多选择题可以用比例推理解出。点电荷之间的力与点电荷的电场都按 $1/r^2$ 变化，力与每个电荷成正比。</p>
+  <p data-lang="en"><strong>Direction first:</strong> decide attract or repel, and the field direction, before computing. Many wrong options are right in magnitude and wrong in sign.</p>
+  <p data-lang="zh"><strong>先判断方向：</strong>计算之前先判断是吸引还是排斥，以及电场的方向。许多错误选项的大小是对的，只是符号错了。</p>
+  <p data-lang="en"><strong>Symmetry:</strong> with four or fewer charges, look for components that cancel by symmetry before adding anything.</p>
+  <p data-lang="zh"><strong>对称性：</strong>电荷不超过四个时，先找出因对称而抵消的分量，再进行相加。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon icon-green">FR</div><div class="card-title"><span data-lang="en">Free-Response Practice</span><span data-lang="zh">自由作答题练习（<code>Free Response</code>）</span></div></div>
+  <p data-lang="en">Section II has four question types: Mathematical Routines; Translation Between Representations; Experimental Design and Analysis; Qualitative/Quantitative Translation.</p>
+  <p data-lang="zh">第二部分有四种题型：数学过程（<code>Mathematical Routines</code>）；不同表征之间的转换（<code>Translation Between Representations</code>）；实验设计与分析（<code>Experimental Design and Analysis</code>）；定性与定量之间的转换（<code>Qualitative/Quantitative Translation</code>）。</p>
+  <p data-lang="en"><strong>Mathematical routines:</strong> find the force on a charge from up to four other charges, or the net field at a point, by drawing each contribution, resolving into components and adding; keep units on every line.</p>
+  <p data-lang="zh"><strong>数学过程：</strong>求一个电荷受到至多四个其他电荷的力，或求某点的合电场：画出每个贡献，分解成分量并相加，每一行都带上单位。</p>
+  <p data-lang="en"><strong>Translation between representations:</strong> sketch field lines and vector field maps, draw force diagrams, and relate a diagram to the signs and sizes of the charges.</p>
+  <p data-lang="zh"><strong>不同表征之间的转换：</strong>画出电场线和矢量场图、受力图，并把图与电荷的符号和大小联系起来。</p>
+  <p data-lang="en"><strong>Experimental design and analysis:</strong> design a measurement of the force between charged objects, such as a force against $1/r^2$ graph whose slope gives $kq_1q_2$, and discuss what limits the accuracy (stray charge, humidity, the point-charge approximation).</p>
+  <p data-lang="zh"><strong>实验设计与分析：</strong>设计测量带电物体之间力的实验，例如作力对 $1/r^2$ 的图像，其斜率给出 $kq_1q_2$，并讨论限制精度的因素（杂散电荷、湿度、点电荷近似）。</p>
+  <p data-lang="en"><strong>Qualitative/quantitative translation:</strong> explain in words why a neutral object is attracted to a charged one, or why the field inside a conductor in electrostatic equilibrium is zero, and tie the words to an equation or a diagram.</p>
+  <p data-lang="zh"><strong>定性与定量之间的转换：</strong>用文字解释为什么中性物体会被带电物体吸引，或为什么处于静电平衡的导体内部电场为零，并把文字与方程或图联系起来。</p>
+  </div>
+
+  <div class="concept-box red" data-lang="en"><strong>Top Mistakes to Avoid</strong>
+    <ol class="sg-list"><li>Dropping the direction of a force or field because the formula used absolute values.</li><li>Using $r$ instead of $r^2$ in the denominator, or forgetting to square a changed distance.</li><li>Adding magnitudes instead of components, so canceling pieces are counted.</li><li>Treating charging by induction as charging by contact: induction leaves the sphere with the sign opposite to the rod.</li><li>Saying the field at a negative charge points toward the source because the force does; only the force reverses with the sign of the charge.</li><li>Concluding that a neutral object cannot feel an electric force; polarization lets a charged object attract it.</li></ol>
+  </div>
+  <div class="concept-box red" data-lang="zh"><strong>最常见的错误</strong>
+    <ol class="sg-list"><li>因为公式用了绝对值就丢掉力或电场的方向。</li><li>在分母中使用 $r$ 而不是 $r^2$，或忘记对变化后的距离求平方。</li><li>把大小而不是分量相加，使相互抵消的部分被计入。</li><li>把感应起电当成接触起电：感应起电使球最终带与棒相反的电荷。</li><li>因为力指向源电荷，就说负电荷处的电场指向源电荷；只有力会随电荷符号翻转。</li><li>认为中性物体不会受到电力；极化使带电物体能够吸引它。</li></ol>
+  </div>
   </div>
 </section>
 
@@ -2040,13 +2131,13 @@ figure.dr-fig figcaption {
     <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Final sign after charging by induction?</span><span data-lang="zh">感应起电后的最终电荷符号？</span></div><div class="flashcard-back"><span data-lang="en">Opposite to the inducing object, provided the ground is removed first.</span><span data-lang="zh">与施感物体相反，前提是先断开接地。</span></div></div></div>
     <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Definition of the electric field?</span><span data-lang="zh">电场的定义？</span></div><div class="flashcard-back"><span data-lang="en">$\vec E = \vec F/q$ for a small test charge; unit $\text{N/C}$.</span><span data-lang="zh">小试探电荷的 $\vec E = \vec F/q$；单位 $\text{N/C}$。</span></div></div></div>
     <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Where is the zero-field point of two opposite, unequal charges?</span><span data-lang="zh">两个异号不等量电荷的电场零点在哪里？</span></div><div class="flashcard-back"><span data-lang="en">Outside the pair, on the side of the smaller charge.</span><span data-lang="zh">在这对电荷之外，靠近电量较小的电荷一侧。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Field of a ring on its axis?</span><span data-lang="zh">圆环轴线上的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = kQx/(a^2+x^2)^{3/2}$; zero at the center, maximum at $x = a/\sqrt2$.</span><span data-lang="zh">$E = kQx/(a^2+x^2)^{3/2}$；圆心处为零，在 $x = a/\sqrt2$ 处最大。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Field of a semicircular arc at its center?</span><span data-lang="zh">半圆弧圆心处的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = 2kQ/(\pi R^2)$ along the symmetry axis.</span><span data-lang="zh">$E = 2kQ/(\pi R^2)$，沿对称轴。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Which angle goes in $EA\cos\theta$?</span><span data-lang="zh">$EA\cos\theta$ 中是哪个角？</span></div><div class="flashcard-back"><span data-lang="en">The angle between $\vec E$ and the area vector (the normal), not the surface.</span><span data-lang="zh">$\vec E$ 与面积矢量（法线）之间的夹角，而不是与曲面的夹角。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">State Gauss's law.</span><span data-lang="zh">陈述高斯定律。</span></div><div class="flashcard-back"><span data-lang="en">$\oint \vec E\cdot d\vec A = Q_{\text{enc}}/\epsilon_0$ for any closed surface.</span><span data-lang="zh">对任何闭合曲面，$\oint \vec E\cdot d\vec A = Q_{\text{enc}}/\epsilon_0$。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Does zero net flux imply zero field?</span><span data-lang="zh">净通量为零是否意味着电场为零？</span></div><div class="flashcard-back"><span data-lang="en">No: inward and outward flux can cancel while $E$ is nonzero.</span><span data-lang="zh">不：进入与穿出的通量可以抵消，而 $E$ 不为零。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Field of an infinite plane of charge?</span><span data-lang="zh">无限大带电平面的电场？</span></div><div class="flashcard-back"><span data-lang="en">$\sigma/(2\epsilon_0)$, independent of distance.</span><span data-lang="zh">$\sigma/(2\epsilon_0)$，与距离无关。</span></div></div></div>
-    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">Field of a long line of charge?</span><span data-lang="zh">长直线电荷的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = \lambda/(2\pi\epsilon_0 r)$, falling as $1/r$.</span><span data-lang="zh">$E = \lambda/(2\pi\epsilon_0 r)$，按 $1/r$ 下降。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Field of a ring on its axis?</span><span data-lang="zh">（物理 C）圆环轴线上的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = kQx/(a^2+x^2)^{3/2}$; zero at the center, maximum at $x = a/\sqrt2$.</span><span data-lang="zh">$E = kQx/(a^2+x^2)^{3/2}$；圆心处为零，在 $x = a/\sqrt2$ 处最大。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Field of a semicircular arc at its center?</span><span data-lang="zh">（物理 C）半圆弧圆心处的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = 2kQ/(\pi R^2)$ along the symmetry axis.</span><span data-lang="zh">$E = 2kQ/(\pi R^2)$，沿对称轴。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Which angle goes in $EA\cos\theta$?</span><span data-lang="zh">（物理 C）$EA\cos\theta$ 中是哪个角？</span></div><div class="flashcard-back"><span data-lang="en">The angle between $\vec E$ and the area vector (the normal), not the surface.</span><span data-lang="zh">$\vec E$ 与面积矢量（法线）之间的夹角，而不是与曲面的夹角。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) State Gauss's law.</span><span data-lang="zh">（物理 C）陈述高斯定律。</span></div><div class="flashcard-back"><span data-lang="en">$\oint \vec E\cdot d\vec A = Q_{\text{enc}}/\epsilon_0$ for any closed surface.</span><span data-lang="zh">对任何闭合曲面，$\oint \vec E\cdot d\vec A = Q_{\text{enc}}/\epsilon_0$。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Does zero net flux imply zero field?</span><span data-lang="zh">（物理 C）净通量为零是否意味着电场为零？</span></div><div class="flashcard-back"><span data-lang="en">No: inward and outward flux can cancel while $E$ is nonzero.</span><span data-lang="zh">不：进入与穿出的通量可以抵消，而 $E$ 不为零。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Field of an infinite plane of charge?</span><span data-lang="zh">（物理 C）无限大带电平面的电场？</span></div><div class="flashcard-back"><span data-lang="en">$\sigma/(2\epsilon_0)$, independent of distance.</span><span data-lang="zh">$\sigma/(2\epsilon_0)$，与距离无关。</span></div></div></div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-front"><span data-lang="en">(Physics C) Field of a long line of charge?</span><span data-lang="zh">（物理 C）长直线电荷的电场？</span></div><div class="flashcard-back"><span data-lang="en">$E = \lambda/(2\pi\epsilon_0 r)$, falling as $1/r$.</span><span data-lang="zh">$E = \lambda/(2\pi\epsilon_0 r)$，按 $1/r$ 下降。</span></div></div></div>
   </div>
 </section>
 
@@ -2088,7 +2179,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">Between the charges both fields point in the same direction, so they cannot cancel there. Outside, beyond the smaller charge, the condition $4/x^2 = 1/(x-d)^2$ gives $x = 2d$.</span><span data-lang="zh">在两电荷之间，两个电场方向相同，不可能在那里抵消。在较小电荷的外侧，条件 $4/x^2 = 1/(x-d)^2$ 给出 $x = 2d$。</span></div>
   </div>
   <div class="quiz" data-answer="2">
-    <div class="quiz-q">5. <span data-lang="en">For a uniformly charged ring of radius $a$, the field magnitude on the axis is largest at a distance from the center of:</span><span data-lang="zh">对半径为 $a$ 的均匀带电圆环，轴线上场强最大的位置到圆心的距离为：</span></div>
+    <div class="quiz-q">5. <span data-lang="en">(Physics C) For a uniformly charged ring of radius $a$, the field magnitude on the axis is largest at a distance from the center of:</span><span data-lang="zh">（物理 C）对半径为 $a$ 的均匀带电圆环，轴线上场强最大的位置到圆心的距离为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$0$</span><span data-lang="zh">$0$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$a/2$</span><span data-lang="zh">$a/2$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$a/\sqrt2$</span><span data-lang="zh">$a/\sqrt2$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$a$</span><span data-lang="zh">$a$</span></div>
     </div>
@@ -2096,7 +2187,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">At $x = 0$ the field is zero by symmetry, so $0$ is not the maximum. Differentiating $x(a^2+x^2)^{-3/2}$ gives $a^2 + x^2 = 3x^2$, so $x = a/\sqrt2$.</span><span data-lang="zh">在 $x = 0$ 处由对称性电场为零，所以 $0$ 不是最大值。对 $x(a^2+x^2)^{-3/2}$ 求导得 $a^2 + x^2 = 3x^2$，所以 $x = a/\sqrt2$。</span></div>
   </div>
   <div class="quiz" data-answer="1">
-    <div class="quiz-q">6. <span data-lang="en">A thin semicircular arc of radius $R$ carries uniform charge $Q$. The field magnitude at its center of curvature is:</span><span data-lang="zh">半径为 $R$ 的细半圆弧均匀带电 $Q$。曲率中心处场强的大小为：</span></div>
+    <div class="quiz-q">6. <span data-lang="en">(Physics C) A thin semicircular arc of radius $R$ carries uniform charge $Q$. The field magnitude at its center of curvature is:</span><span data-lang="zh">（物理 C）半径为 $R$ 的细半圆弧均匀带电 $Q$。曲率中心处场强的大小为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$kQ/R^2$</span><span data-lang="zh">$kQ/R^2$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$2kQ/(\pi R^2)$</span><span data-lang="zh">$2kQ/(\pi R^2)$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$kQ/(\pi R^2)$</span><span data-lang="zh">$kQ/(\pi R^2)$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$0$</span><span data-lang="zh">$0$</span></div>
     </div>
@@ -2104,7 +2195,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">$kQ/R^2$ would be right only if all the charge were at one point on the arc; the field components partly cancel, giving $2kQ/(\pi R^2)$.</span><span data-lang="zh">只有当全部电荷集中在圆弧上的一点时 $kQ/R^2$ 才对；电场分量部分抵消，结果是 $2kQ/(\pi R^2)$。</span></div>
   </div>
   <div class="quiz" data-answer="2">
-    <div class="quiz-q">7. <span data-lang="en">A uniform field $E$ passes through a flat surface of area $A$. The field makes $30^{\circ}$ with the plane of the surface. The flux is:</span><span data-lang="zh">匀强电场 $E$ 穿过面积为 $A$ 的平面。电场与该平面的夹角为 $30^{\circ}$。通量为：</span></div>
+    <div class="quiz-q">7. <span data-lang="en">(Physics C) A uniform field $E$ passes through a flat surface of area $A$. The field makes $30^{\circ}$ with the plane of the surface. The flux is:</span><span data-lang="zh">（物理 C）匀强电场 $E$ 穿过面积为 $A$ 的平面。电场与该平面的夹角为 $30^{\circ}$。通量为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$EA$</span><span data-lang="zh">$EA$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$\tfrac{\sqrt3}{2}EA$</span><span data-lang="zh">$\tfrac{\sqrt3}{2}EA$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$\tfrac12 EA$</span><span data-lang="zh">$\tfrac12 EA$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$0$</span><span data-lang="zh">$0$</span></div>
     </div>
@@ -2112,7 +2203,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">$\tfrac{\sqrt3}{2}EA$ uses the angle to the surface directly in the cosine. The angle must be measured from the normal: $\cos60^{\circ} = \tfrac12$.</span><span data-lang="zh">$\tfrac{\sqrt3}{2}EA$ 是把与曲面的夹角直接代入余弦。夹角必须从法线量起：$\cos60^{\circ} = \tfrac12$。</span></div>
   </div>
   <div class="quiz" data-answer="1">
-    <div class="quiz-q">8. <span data-lang="en">A point charge $+Q$ is at the center of a cube. The flux through one face of the cube is:</span><span data-lang="zh">点电荷 $+Q$ 位于立方体中心。通过立方体一个面的通量为：</span></div>
+    <div class="quiz-q">8. <span data-lang="en">(Physics C) A point charge $+Q$ is at the center of a cube. The flux through one face of the cube is:</span><span data-lang="zh">（物理 C）点电荷 $+Q$ 位于立方体中心。通过立方体一个面的通量为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$Q/\epsilon_0$</span><span data-lang="zh">$Q/\epsilon_0$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$Q/(6\epsilon_0)$</span><span data-lang="zh">$Q/(6\epsilon_0)$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$Q/(4\pi\epsilon_0)$</span><span data-lang="zh">$Q/(4\pi\epsilon_0)$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$0$</span><span data-lang="zh">$0$</span></div>
     </div>
@@ -2120,7 +2211,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">$Q/\epsilon_0$ is the flux through the entire cube. Each of the six equivalent faces carries one sixth.</span><span data-lang="zh">$Q/\epsilon_0$ 是通过整个立方体的通量。六个等价的面各承担六分之一。</span></div>
   </div>
   <div class="quiz" data-answer="1">
-    <div class="quiz-q">9. <span data-lang="en">A uniformly charged solid insulating sphere of radius $R$ has surface field $E_R$. The field at $r = R/2$ is:</span><span data-lang="zh">半径为 $R$ 的均匀带电实心绝缘球，表面场强为 $E_R$。$r = R/2$ 处的场强为：</span></div>
+    <div class="quiz-q">9. <span data-lang="en">(Physics C) A uniformly charged solid insulating sphere of radius $R$ has surface field $E_R$. The field at $r = R/2$ is:</span><span data-lang="zh">（物理 C）半径为 $R$ 的均匀带电实心绝缘球，表面场强为 $E_R$。$r = R/2$ 处的场强为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$0$</span><span data-lang="zh">$0$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$E_R/2$</span><span data-lang="zh">$E_R/2$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$E_R/4$</span><span data-lang="zh">$E_R/4$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$2E_R$</span><span data-lang="zh">$2E_R$</span></div>
     </div>
@@ -2128,7 +2219,7 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">$E_R/4$ applies the $1/r^2$ outside-law inside. For an insulating sphere, $E$ increases linearly with $r$ inside, so at $R/2$ it is $E_R/2$.</span><span data-lang="zh">$E_R/4$ 是把外部的 $1/r^2$ 规律用在了内部。对绝缘球，内部 $E$ 随 $r$ 线性增大，所以在 $R/2$ 处是 $E_R/2$。</span></div>
   </div>
   <div class="quiz" data-answer="1">
-    <div class="quiz-q">10. <span data-lang="en">A sphere of radius $R$ has $\rho = \rho_0\,r/R$. The charge enclosed within radius $r&lt;R$ is:</span><span data-lang="zh">半径为 $R$ 的球，$\rho = \rho_0\,r/R$。半径 $r&lt;R$ 内所围的电荷为：</span></div>
+    <div class="quiz-q">10. <span data-lang="en">(Physics C) A sphere of radius $R$ has $\rho = \rho_0\,r/R$. The charge enclosed within radius $r&lt;R$ is:</span><span data-lang="zh">（物理 C）半径为 $R$ 的球，$\rho = \rho_0\,r/R$。半径 $r&lt;R$ 内所围的电荷为：</span></div>
     <div class="quiz-options">
       <div class="quiz-opt" data-idx="0"><span data-lang="en">$\tfrac43\pi\rho_0 r^3$</span><span data-lang="zh">$\tfrac43\pi\rho_0 r^3$</span></div><div class="quiz-opt" data-idx="1"><span data-lang="en">$\pi\rho_0 r^4/R$</span><span data-lang="zh">$\pi\rho_0 r^4/R$</span></div><div class="quiz-opt" data-idx="2"><span data-lang="en">$2\pi\rho_0 r^3/R$</span><span data-lang="zh">$2\pi\rho_0 r^3/R$</span></div><div class="quiz-opt" data-idx="3"><span data-lang="en">$\rho_0 r^2/R$</span><span data-lang="zh">$\rho_0 r^2/R$</span></div>
     </div>
@@ -2146,17 +2237,18 @@ figure.dr-fig figcaption {
     <li><span data-lang="en">Find the force on a charge from up to four other charges with vector superposition, and state the direction.</span><span data-lang="zh">用矢量叠加求一个电荷受到至多四个其他电荷的力，并说明方向。</span></li>
     <li><span data-lang="en">Track charge through friction, contact and induction sequences, with the system named.</span><span data-lang="zh">追踪摩擦、接触和感应起电过程中的电荷，并说明所取系统。</span></li>
     <li><span data-lang="en">Use $\vec E = \vec F/q$ and $E = kQ/r^2$, and locate a zero-field point.</span><span data-lang="zh">使用 $\vec E = \vec F/q$ 和 $E = kQ/r^2$，并确定电场为零的点。</span></li>
-    <li><span data-lang="en">Derive the field of a ring on its axis, a finite rod on its bisector and at a collinear point, and a semicircular arc at its center.</span><span data-lang="zh">推导圆环轴线上、有限长棒的中垂线上和共线点、以及半圆弧圆心处的电场。</span></li>
-    <li><span data-lang="en">Evaluate $\Phi_E = \int \vec E\cdot d\vec A$ with the correct angle and sign.</span><span data-lang="zh">用正确的夹角与符号计算 $\Phi_E = \int \vec E\cdot d\vec A$。</span></li>
-    <li><span data-lang="en">Choose a Gaussian surface from the symmetry and state why $E$ is constant and perpendicular on it.</span><span data-lang="zh">根据对称性选取高斯面，并说明为什么其上 $E$ 恒定且垂直。</span></li>
-    <li><span data-lang="en">Find $Q_{\text{enc}}$ from a charge-density function by integration.</span><span data-lang="zh">由电荷密度函数通过积分求 $Q_{\text{enc}}$。</span></li>
-    <li><span data-lang="en">Sketch $E(r)$ for a shell, a solid sphere, a line and a plane.</span><span data-lang="zh">画出球壳、实心球、直线和平面的 $E(r)$ 草图。</span></li>
+    <li><span data-lang="en">(Physics C) Derive the field of a ring on its axis, a finite rod on its bisector and at a collinear point, and a semicircular arc at its center.</span><span data-lang="zh">（物理 C）推导圆环轴线上、有限长棒的中垂线上和共线点、以及半圆弧圆心处的电场。</span></li>
+    <li><span data-lang="en">(Physics C) Evaluate $\Phi_E = \int \vec E\cdot d\vec A$ with the correct angle and sign.</span><span data-lang="zh">（物理 C）用正确的夹角与符号计算 $\Phi_E = \int \vec E\cdot d\vec A$。</span></li>
+    <li><span data-lang="en">(Physics C) Choose a Gaussian surface from the symmetry and state why $E$ is constant and perpendicular on it.</span><span data-lang="zh">（物理 C）根据对称性选取高斯面，并说明为什么其上 $E$ 恒定且垂直。</span></li>
+    <li><span data-lang="en">(Physics C) Find $Q_{\text{enc}}$ from a charge-density function by integration.</span><span data-lang="zh">（物理 C）由电荷密度函数通过积分求 $Q_{\text{enc}}$。</span></li>
+    <li><span data-lang="en">(Physics C) Sketch $E(r)$ for a shell, a solid sphere, a line and a plane.</span><span data-lang="zh">（物理 C）画出球壳、实心球、直线和平面的 $E(r)$ 草图。</span></li>
   </ul>
 </section>
 
 <div class="u8-foot">
   <p class="u8-brand">鼎睿学苑 · Dingrui Scholars</p>
-  <p><span data-lang="en">AP Physics C: Electricity and Magnetism · Unit 8: Electric Charges, Fields, and Gauss's Law · 2026 Edition</span><span data-lang="zh">AP Physics C: Electricity and Magnetism · 第 8 单元：电荷、电场与高斯定律 · 2026 版</span></p>
+  <p data-course="c"><span data-lang="en">AP Physics C: Electricity and Magnetism · Unit 8: Electric Charges, Fields, and Gauss's Law · 2026 Edition</span><span data-lang="zh">AP Physics C: Electricity and Magnetism · 第 8 单元：电荷、电场与高斯定律 · 2026 版</span></p>
+  <p data-course="p2"><span data-lang="en">AP Physics 2: Algebra-Based · Unit 10: Electric Force, Field, and Potential (Topics 10.1 to 10.3) · 2026 Edition</span><span data-lang="zh">AP Physics 2: Algebra-Based · 第 10 单元：电力、电场与电势（10.1 至 10.3 专题）· 2026 版</span></p>
 </div>
 <!-- consult-cta: lead-gen conversion surface (Sprint A) -->
 <aside class="consult-cta">
@@ -2619,6 +2711,55 @@ body.dr-locked{overflow:hidden;}
   }
   if(document.readyState!=="loading") applyGate();
   else document.addEventListener("DOMContentLoaded", applyGate);
+})();
+</script>
+<script id="course-variant-js">
+/* course_variant.py: course view from ?course=, cycled by #courseToggle; links keep the view */
+(function () {
+  var meta = document.querySelector('meta[name="dingrui:courses"]');
+  if (!meta) return;
+  var codes = meta.getAttribute('content').split(',');
+  var root = document.documentElement;
+  function shownIn(el, c) {
+    var n = el.closest('[data-course]');
+    while (n) {
+      if ((' ' + n.getAttribute('data-course') + ' ').indexOf(' ' + c + ' ') < 0) return false;
+      n = n.parentElement ? n.parentElement.closest('[data-course]') : null;
+    }
+    return true;
+  }
+  function setCourse(c) {
+    if (codes.indexOf(c) < 0) c = codes[0];
+    root.setAttribute('data-course', c);
+    document.querySelectorAll('#courseToggle [data-course-label]').forEach(function (s) {
+      s.hidden = s.getAttribute('data-course-label') !== c;
+    });
+    document.querySelectorAll('.sidebar a[href^="#"]').forEach(function (a) {
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      a.style.display = (t && !shownIn(t, c)) ? 'none' : '';
+    });
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!/\.html(\?|#|$)/.test(h) || /^[a-z]+:/i.test(h)) return;
+      try {
+        var u = new URL(h, location.href);
+        if (c === codes[0]) u.searchParams.delete('course'); else u.searchParams.set('course', c);
+        a.setAttribute('href', h.split(/[?#]/)[0] + u.search + u.hash);
+      } catch (e) {}
+    });
+    try {
+      var here = new URL(location.href);
+      if (c === codes[0]) here.searchParams.delete('course'); else here.searchParams.set('course', c);
+      history.replaceState(null, '', here.pathname + here.search + here.hash);
+    } catch (e) {}
+  }
+  window.toggleCourse = function () {
+    var cur = root.getAttribute('data-course');
+    setCourse(codes[(codes.indexOf(cur) + 1) % codes.length]);
+  };
+  var q = null;
+  try { q = new URLSearchParams(location.search).get('course'); } catch (e) {}
+  setCourse(q || codes[0]);
 })();
 </script>
 </body>
