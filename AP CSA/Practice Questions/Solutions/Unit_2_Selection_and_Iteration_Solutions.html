@@ -26,7 +26,7 @@
 <meta name="twitter:title" content="AP CSA — Unit 2: Selection and Iteration — Solutions | Dingrui Scholars">
 <meta name="twitter:description" content="Worked solutions for Unit 2: Selection and Iteration in AP CSA. Step by step answers from Dingrui Scholars.">
 <meta name="twitter:image" content="https://notes.dingruischolars.com/og-cover.png">
-<!-- dingrui:version v1  dingrui:pair-key AP-CSA-2  dingrui:doc-type solutions -->
+<!-- dingrui:version v2  dingrui:pair-key AP-CSA-2  dingrui:doc-type solutions -->
 <style data-theme="light">
   :root{
     --ink:#141414; --muted:#555; --paper:#ffffff; --rule:#111;
@@ -137,7 +137,7 @@
 }
 </style>
 <style id="dr-csa-frq">/* dr-csa-frq: current-CED free-response solutions. Local extension of the
-   existing .solution system; .insight matches the AP Calculus solution pages. */
+   existing .solution system; .insight follows the shared solution-page callout style. */
   .pill.frq{background:#E8EEF8;color:#1E3F75;border-color:#7E9CC6;}
   .q.frq{border-left-color:#1E3F75;}
   .solution h4{font-family:'Source Sans 3','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-weight:700;font-size:10.5pt;color:var(--sol-ink);margin:14px 0 4px;letter-spacing:.05em;text-transform:uppercase;}
@@ -394,7 +394,7 @@
 <div class="q">
   <div class="q-head"><span class="pill qnum">Q6</span><span class="pill hard">HARD</span><span class="pill mc">AP MC</span><span class="pill topic">2.10 String Traverse — Case Trap</span></div>
   <div class="q-body">
-    <p class="prompt"><span data-lang="en"><code>s = "ProgrAmming"</code>; count chars equal to <code>'a'/'e'/'i'/'o'/'u'</code>.</span><span data-lang="zh"><code>s = "ProgrAmming"</code>；统计等于 <code>'a'/'e'/'i'/'o'/'u'</code> 的字符个数。</span></p>
+    <p class="prompt"><span data-lang="en"><code>s = "ProgrAmming"</code>; count one-letter substrings found in <code>"aeiou"</code> (via <code>indexOf</code>).</span><span data-lang="zh"><code>s = "ProgrAmming"</code>；统计在 <code>"aeiou"</code> 中能找到的单字母子串个数（用 <code>indexOf</code>）。</span></p>
     <ul class="opts cols2">
       <li><span class="lbl">(A)</span> <code>1</code></li>
       <li class="correct"><span class="lbl">(B)</span> <code>2</code></li>
@@ -405,18 +405,18 @@
   <div class="solution">
     <div class="answer-line"><span data-lang="en">Answer:</span><span data-lang="zh">答案：</span> <span class="ans">(B)</span></div>
     <div class="rationale" data-lang="en">
-      Comparing <code>char</code>s with <code>==</code> is <strong>case-sensitive</strong>: <code>'A' == 'a'</code> is <code>false</code>. Walk through the string:
+      Searching <code>"aeiou"</code> with <code>indexOf</code> is <strong>case-sensitive</strong>: <code>"aeiou".indexOf("A")</code> is <code>-1</code>. Walk through the string:
 <pre><code> P  r  o  g  r  A  m  m  i  n  g
  0  1  2  3  4  5  6  7  8  9 10</code></pre>
       Lower-case vowels only: <code>o</code> at 2, <code>i</code> at 8. Count = <code>2</code>. The uppercase <code>A</code> at index 5 is <strong>not</strong> matched.
-      <p><strong>Trap (C)</strong> counts the uppercase <code>A</code> by treating the comparison as case-insensitive. To make this counter case-insensitive you'd normalize: <code>Character.toLowerCase(c) == 'a' || …</code>, or call <code>s.toLowerCase()</code> first.</p>
+      <p><strong>Trap (C)</strong> counts the uppercase <code>A</code> by treating the comparison as case-insensitive. To make this counter case-insensitive you would call <code>s.toLowerCase()</code> first.</p>
     </div>
     <div class="rationale" data-lang="zh">
-      用 <code>==</code> 比较 <code>char</code> 是<strong>区分大小写的</strong>（<code>case-sensitive</code>）：<code>'A' == 'a'</code> 为 <code>false</code>。逐字符走一遍：
+      用 <code>indexOf</code> 在 <code>"aeiou"</code> 中查找是<strong>区分大小写的</strong>（<code>case-sensitive</code>）：<code>"aeiou".indexOf("A")</code> 为 <code>-1</code>。逐字符走一遍：
 <pre><code> P  r  o  g  r  A  m  m  i  n  g
  0  1  2  3  4  5  6  7  8  9 10</code></pre>
       只匹配小写元音：<code>o</code>（下标 2）、<code>i</code>（下标 8）。计数 = <code>2</code>。下标 5 处的大写 <code>A</code> <strong>不</strong>会被匹配。
-      <p><strong>陷阱 (C)</strong> 把大写 <code>A</code> 也算上，相当于把比较当成了不区分大小写。要做成不区分大小写，可以先归一化：<code>Character.toLowerCase(c) == 'a' || …</code>，或先调 <code>s.toLowerCase()</code>。</p>
+      <p><strong>陷阱 (C)</strong> 把大写 <code>A</code> 也算上，相当于把比较当成了不区分大小写。要做成不区分大小写，可以先调用 <code>s.toLowerCase()</code>。</p>
     </div>
   </div>
 </div>
@@ -1140,6 +1140,66 @@ function toggleLang() {
 html, body { overflow-x: hidden; }
 .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 </style>
+<!-- dr-pq-screen-fill (scripts/fit_pq_screen_fill.py) -->
+<style id="dr-pq-screen-fill">
+/* Desktop: use the screen instead of floating an 8.5in page in a sea of
+   whitespace. Screen-only -- print keeps max-width:none under @media print. */
+@media screen and (min-width: 900px){
+  body{ max-width: 1000px; }
+}
+@media screen and (min-width: 1300px){
+  body{ max-width: 1080px; }
+}
+/* Mobile: the letter-spaced .brand heading (e.g. "HIGH SCHOOL PHYSICS") must
+   never force a mid-letter break -- shrink spacing/size before it overflows. */
+@media (max-width: 600px){
+  .brand{ letter-spacing: .32em; }
+}
+@media (max-width: 430px){
+  .brand{ letter-spacing: .16em; font-size: 9pt; }
+}
+/* Mobile: some Practice pages set an inline 4-column style on .syllabus-strip
+   for the desktop curriculum crosswalk; !important is required to win over
+   that inline style and restore the single-column phone fallback. */
+@media (max-width: 600px){
+  .syllabus-strip{ grid-template-columns: 1fr !important; }
+}
+</style>
+<!-- dr-legend-collapse (scripts/collapse_legend_mobile.py) -->
+<style id="dr-legend-collapse">
+/* The checkbox is a pure disclosure mechanism -- never rendered as a visible
+   checkbox at any width, only its paired label/caret is. Kept focusable
+   (not display:none) so keyboard users can still reach and toggle it. */
+.dr-legend-toggle-cb{
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.dr-legend-toggle-label{ display: none; }
+@media (max-width: 600px){
+  .dr-legend-toggle-label{
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    width: fit-content; margin: 8px auto 4px; padding: 6px 14px;
+    font-family: var(--font-sans); font-weight: 700; font-size: 9.5pt;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--maroon);
+    border: 1px solid var(--maroon); border-radius: 999px; cursor: pointer;
+    background: #fff;
+  }
+  .dr-legend-caret{ display: inline-block; transition: transform .2s ease; font-size: 8pt; }
+  .dr-legend-toggle-cb:focus-visible ~ .dr-legend-toggle-label{
+    outline: 2px solid var(--pop, #006FD6); outline-offset: 2px;
+  }
+  .legend{
+    max-height: 0; opacity: 0; margin: 0; overflow: hidden;
+    transition: max-height .25s ease, opacity .2s ease, margin .25s ease;
+  }
+  .dr-legend-toggle-cb:checked ~ .legend{
+    max-height: 400px; opacity: 1; margin: 10px 0 6px;
+  }
+  .dr-legend-toggle-cb:checked ~ .dr-legend-toggle-label .dr-legend-caret{
+    transform: rotate(180deg);
+  }
+}
+</style>
 <!-- dr-freemium-gate (scripts/add_freemium_gate.py) -->
 <style id="dr-freemium-gate-css">
 .dr-hidden{display:none !important;}
@@ -1356,65 +1416,5 @@ body.dr-locked{overflow:hidden;}
   else document.addEventListener("DOMContentLoaded", applyGate);
 })();
 </script>
-<!-- dr-pq-screen-fill (scripts/fit_pq_screen_fill.py) -->
-<style id="dr-pq-screen-fill">
-/* Desktop: use the screen instead of floating an 8.5in page in a sea of
-   whitespace. Screen-only -- print keeps max-width:none under @media print. */
-@media screen and (min-width: 900px){
-  body{ max-width: 1000px; }
-}
-@media screen and (min-width: 1300px){
-  body{ max-width: 1080px; }
-}
-/* Mobile: the letter-spaced .brand heading (e.g. "HIGH SCHOOL PHYSICS") must
-   never force a mid-letter break -- shrink spacing/size before it overflows. */
-@media (max-width: 600px){
-  .brand{ letter-spacing: .32em; }
-}
-@media (max-width: 430px){
-  .brand{ letter-spacing: .16em; font-size: 9pt; }
-}
-/* Mobile: some Practice pages set an inline 4-column style on .syllabus-strip
-   for the desktop curriculum crosswalk; !important is required to win over
-   that inline style and restore the single-column phone fallback. */
-@media (max-width: 600px){
-  .syllabus-strip{ grid-template-columns: 1fr !important; }
-}
-</style>
-<!-- dr-legend-collapse (scripts/collapse_legend_mobile.py) -->
-<style id="dr-legend-collapse">
-/* The checkbox is a pure disclosure mechanism -- never rendered as a visible
-   checkbox at any width, only its paired label/caret is. Kept focusable
-   (not display:none) so keyboard users can still reach and toggle it. */
-.dr-legend-toggle-cb{
-  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
-.dr-legend-toggle-label{ display: none; }
-@media (max-width: 600px){
-  .dr-legend-toggle-label{
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    width: fit-content; margin: 8px auto 4px; padding: 6px 14px;
-    font-family: var(--font-sans); font-weight: 700; font-size: 9.5pt;
-    letter-spacing: .1em; text-transform: uppercase; color: var(--maroon);
-    border: 1px solid var(--maroon); border-radius: 999px; cursor: pointer;
-    background: #fff;
-  }
-  .dr-legend-caret{ display: inline-block; transition: transform .2s ease; font-size: 8pt; }
-  .dr-legend-toggle-cb:focus-visible ~ .dr-legend-toggle-label{
-    outline: 2px solid var(--pop, #006FD6); outline-offset: 2px;
-  }
-  .legend{
-    max-height: 0; opacity: 0; margin: 0; overflow: hidden;
-    transition: max-height .25s ease, opacity .2s ease, margin .25s ease;
-  }
-  .dr-legend-toggle-cb:checked ~ .legend{
-    max-height: 400px; opacity: 1; margin: 10px 0 6px;
-  }
-  .dr-legend-toggle-cb:checked ~ .dr-legend-toggle-label .dr-legend-caret{
-    transform: rotate(180deg);
-  }
-}
-</style>
 </body>
 </html>
