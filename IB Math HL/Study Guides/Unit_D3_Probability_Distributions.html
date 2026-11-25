@@ -583,12 +583,13 @@ body.lang-zh       [data-lang="en"] { display: none; }
 
 .cram-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 18px;
   margin: 20px 0;
 }
-@media (max-width: 700px) { .cram-split { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .cram-split { grid-template-columns: minmax(0, 1fr); } }
 .cram-sub {
+  min-width: 0;
   background: var(--bg-card);
   border-radius: var(--radius);
   padding: 18px 22px;
@@ -828,6 +829,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
+.sg-check { counter-reset: sg-q; }
+.sg-check details.sg-q { counter-increment: sg-q; }
+.sg-check details.sg-q > summary { align-items: baseline; }
+.sg-check details.sg-q > summary::before { order: -2; }
+.sg-check details.sg-q > summary::after { content: counter(sg-q) "."; order: -1; flex: none; }
 .sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
@@ -1199,19 +1205,19 @@ $$ F(x) = P(X \le x) = \sum_{x_i \le x} P(X = x_i). $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. A table gives $P(X = 1) = 0.5$, $P(X = 2) = 0.6$, $P(X = 3) = -0.1$. The probabilities sum to $1$. Is this a probability distribution?</span><span data-lang="zh">1. 某表给出 $P(X = 1) = 0.5$，$P(X = 2) = 0.6$，$P(X = 3) = -0.1$，概率之和为 $1$。这是概率分布吗？</span></summary>
+      <summary><span data-lang="en">A table gives $P(X = 1) = 0.5$, $P(X = 2) = 0.6$, $P(X = 3) = -0.1$. The probabilities sum to $1$. Is this a probability distribution?</span><span data-lang="zh">某表给出 $P(X = 1) = 0.5$，$P(X = 2) = 0.6$，$P(X = 3) = -0.1$，概率之和为 $1$。这是概率分布吗？</span></summary>
       <div class="sg-a"><p data-lang="en">No. Summing to $1$ is only one of the two conditions; every probability must also satisfy $0 \le P(X = x_i) \le 1$, and $P(X = 3) = -0.1$ is negative.</p><p data-lang="zh">不是。和为 $1$ 只是两个条件之一；每个概率还必须满足 $0 \le P(X = x_i) \le 1$，而 $P(X = 3) = -0.1$ 为负。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Two fair coins are tossed and $X$ is the number of heads. Write down the probability distribution of $X$ and find $P(X \ge 1)$.</span><span data-lang="zh">2. 抛两枚均匀硬币，$X$ 为正面朝上的个数。写出 $X$ 的概率分布，并求 $P(X \ge 1)$。</span></summary>
+      <summary><span data-lang="en">Two fair coins are tossed and $X$ is the number of heads. Write down the probability distribution of $X$ and find $P(X \ge 1)$.</span><span data-lang="zh">抛两枚均匀硬币，$X$ 为正面朝上的个数。写出 $X$ 的概率分布，并求 $P(X \ge 1)$。</span></summary>
       <div class="sg-a"><p data-lang="en">The outcomes HH, HT, TH, TT are equally likely, so $P(X = 0) = \tfrac{1}{4}$, $P(X = 1) = \tfrac{2}{4} = \tfrac{1}{2}$, $P(X = 2) = \tfrac{1}{4}$. Then $P(X \ge 1) = 1 - P(X = 0) = \tfrac{3}{4}$.</p><p data-lang="zh">HH、HT、TH、TT 四种结果等可能，故 $P(X = 0) = \tfrac{1}{4}$，$P(X = 1) = \tfrac{2}{4} = \tfrac{1}{2}$，$P(X = 2) = \tfrac{1}{4}$。于是 $P(X \ge 1) = 1 - P(X = 0) = \tfrac{3}{4}$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. $P(X = x) = k x^{2}$ for $x = 1, 2, 3$. Find $k$ and $P(X &gt; 1)$.</span><span data-lang="zh">3. $P(X = x) = k x^{2}$，$x = 1, 2, 3$。求 $k$ 与 $P(X &gt; 1)$。</span></summary>
+      <summary><span data-lang="en">$P(X = x) = k x^{2}$ for $x = 1, 2, 3$. Find $k$ and $P(X &gt; 1)$.</span><span data-lang="zh">$P(X = x) = k x^{2}$，$x = 1, 2, 3$。求 $k$ 与 $P(X &gt; 1)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$k(1 + 4 + 9) = 14k = 1$, so $k = \tfrac{1}{14}$. Then $P(X &gt; 1) = P(X = 2) + P(X = 3) = \tfrac{4}{14} + \tfrac{9}{14} = \tfrac{13}{14}$ (or $1 - \tfrac{1}{14}$).</p><p data-lang="zh">$k(1 + 4 + 9) = 14k = 1$，故 $k = \tfrac{1}{14}$。于是 $P(X &gt; 1) = P(X = 2) + P(X = 3) = \tfrac{4}{14} + \tfrac{9}{14} = \tfrac{13}{14}$（或 $1 - \tfrac{1}{14}$）。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. With the distribution $P(X = x) = \tfrac{x}{10}$ for $x = 1, 2, 3, 4$, find $P(X &lt; 3)$ and $P(X \le 3)$.</span><span data-lang="zh">4. 分布为 $P(X = x) = \tfrac{x}{10}$，$x = 1, 2, 3, 4$。求 $P(X &lt; 3)$ 与 $P(X \le 3)$。</span></summary>
+      <summary><span data-lang="en">With the distribution $P(X = x) = \tfrac{x}{10}$ for $x = 1, 2, 3, 4$, find $P(X &lt; 3)$ and $P(X \le 3)$.</span><span data-lang="zh">分布为 $P(X = x) = \tfrac{x}{10}$，$x = 1, 2, 3, 4$。求 $P(X &lt; 3)$ 与 $P(X \le 3)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$P(X &lt; 3) = P(X = 1) + P(X = 2) = 0.1 + 0.2 = 0.3$. $P(X \le 3)$ also includes $x = 3$: $0.3 + 0.3 = 0.6$ (equivalently $1 - P(X = 4) = 1 - 0.4$).</p><p data-lang="zh">$P(X &lt; 3) = P(X = 1) + P(X = 2) = 0.1 + 0.2 = 0.3$。$P(X \le 3)$ 还包括 $x = 3$：$0.3 + 0.3 = 0.6$（等价于 $1 - P(X = 4) = 1 - 0.4$）。</p></div>
     </details>
   </div>
@@ -1342,19 +1348,19 @@ $$ F(x) = P(X \le x) = \sum_{x_i \le x} P(X = x_i). $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Explain why $E(X) = 3.5$ for a fair die even though $3.5$ can never be rolled.</span><span data-lang="zh">1. 解释为什么均匀骰子的 $E(X) = 3.5$，尽管永远掷不出 $3.5$。</span></summary>
+      <summary><span data-lang="en">Explain why $E(X) = 3.5$ for a fair die even though $3.5$ can never be rolled.</span><span data-lang="zh">解释为什么均匀骰子的 $E(X) = 3.5$，尽管永远掷不出 $3.5$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X)$ is a probability-weighted mean, not a possible outcome: it is the value the average of many rolls approaches. Averages of whole numbers need not be whole numbers.</p><p data-lang="zh">$E(X)$ 是按概率加权的平均值，而不是某个可能的结果：它是大量投掷的平均值所趋近的数。整数的平均值不一定是整数。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X$ takes values $0, 1, 2, 3$ with probabilities $0.1, 0.3, 0.4, 0.2$. Find $E(X)$.</span><span data-lang="zh">2. $X$ 取值 $0, 1, 2, 3$，概率分别为 $0.1, 0.3, 0.4, 0.2$。求 $E(X)$。</span></summary>
+      <summary><span data-lang="en">$X$ takes values $0, 1, 2, 3$ with probabilities $0.1, 0.3, 0.4, 0.2$. Find $E(X)$.</span><span data-lang="zh">$X$ 取值 $0, 1, 2, 3$，概率分别为 $0.1, 0.3, 0.4, 0.2$。求 $E(X)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X) = 0(0.1) + 1(0.3) + 2(0.4) + 3(0.2) = 0 + 0.3 + 0.8 + 0.6 = 1.7$.</p><p data-lang="zh">$E(X) = 0(0.1) + 1(0.3) + 2(0.4) + 3(0.2) = 0 + 0.3 + 0.8 + 0.6 = 1.7$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A game costs 2 dollars. A fair coin is tossed twice; if both are heads the player receives 6 dollars, otherwise nothing. Find the expected net gain and say whether the game is fair.</span><span data-lang="zh">3. 一个游戏收费 2 美元。抛两次均匀硬币；若两次都是正面，玩家得到 6 美元，否则一无所获。求净收益的期望，并判断游戏是否公平。</span></summary>
+      <summary><span data-lang="en">A game costs 2 dollars. A fair coin is tossed twice; if both are heads the player receives 6 dollars, otherwise nothing. Find the expected net gain and say whether the game is fair.</span><span data-lang="zh">一个游戏收费 2 美元。抛两次均匀硬币；若两次都是正面，玩家得到 6 美元，否则一无所获。求净收益的期望，并判断游戏是否公平。</span></summary>
       <div class="sg-a"><p data-lang="en">$P(\text{HH}) = \tfrac{1}{4}$. Net gain $G = 6 - 2 = 4$ with probability $\tfrac{1}{4}$ and $G = -2$ with probability $\tfrac{3}{4}$. $E(G) = \tfrac{1}{4}(4) + \tfrac{3}{4}(-2) = 1 - 1.5 = -0.5$. Not fair: the player loses 0.5 dollars per game on average.</p><p data-lang="zh">$P(\text{HH}) = \tfrac{1}{4}$。净收益 $G = 6 - 2 = 4$ 的概率为 $\tfrac{1}{4}$，$G = -2$ 的概率为 $\tfrac{3}{4}$。$E(G) = \tfrac{1}{4}(4) + \tfrac{3}{4}(-2) = 1 - 1.5 = -0.5$。不公平：玩家平均每局损失 0.5 美元。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. $X$ takes values $1, 2, 4$ with probabilities $0.5, p, 0.5 - p$, and $E(X) = 2$. Find $p$.</span><span data-lang="zh">4. $X$ 取值 $1, 2, 4$，概率分别为 $0.5, p, 0.5 - p$，且 $E(X) = 2$。求 $p$。</span></summary>
+      <summary><span data-lang="en">$X$ takes values $1, 2, 4$ with probabilities $0.5, p, 0.5 - p$, and $E(X) = 2$. Find $p$.</span><span data-lang="zh">$X$ 取值 $1, 2, 4$，概率分别为 $0.5, p, 0.5 - p$，且 $E(X) = 2$。求 $p$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X) = 0.5 + 2p + 4(0.5 - p) = 0.5 + 2p + 2 - 4p = 2.5 - 2p$. Setting $2.5 - 2p = 2$ gives $p = 0.25$. Check: the probabilities $0.5, 0.25, 0.25$ are all in $[0, 1]$ and sum to $1$.</p><p data-lang="zh">$E(X) = 0.5 + 2p + 4(0.5 - p) = 0.5 + 2p + 2 - 4p = 2.5 - 2p$。令 $2.5 - 2p = 2$，得 $p = 0.25$。验算：概率 $0.5, 0.25, 0.25$ 都在 $[0, 1]$ 内，且和为 $1$。</p></div>
     </details>
   </div>
@@ -1499,19 +1505,19 @@ $$ = E(X^{2}) - 2\mu\, E(X) + \mu^{2} = E(X^{2}) - 2\mu \cdot \mu + \mu^{2} = E(
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Explain why $\text{Var}(X) \ge 0$ for every random variable, and when it equals $0$.</span><span data-lang="zh">1. 解释为什么任何随机变量都有 $\text{Var}(X) \ge 0$，以及何时等于 $0$。</span></summary>
+      <summary><span data-lang="en">Explain why $\text{Var}(X) \ge 0$ for every random variable, and when it equals $0$.</span><span data-lang="zh">解释为什么任何随机变量都有 $\text{Var}(X) \ge 0$，以及何时等于 $0$。</span></summary>
       <div class="sg-a"><p data-lang="en">$\text{Var}(X) = \sum (x_i - \mu)^{2} P(X = x_i)$ is a sum of non-negative terms, so it is non-negative. It equals $0$ only when every value with non-zero probability equals $\mu$, i.e. $X$ is constant.</p><p data-lang="zh">$\text{Var}(X) = \sum (x_i - \mu)^{2} P(X = x_i)$ 是非负项之和，所以非负。只有当所有概率不为零的取值都等于 $\mu$（即 $X$ 为常数）时才等于 $0$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X$ is the score on a fair six-sided die. Given $E(X) = 3.5$, find $\text{Var}(X)$.</span><span data-lang="zh">2. $X$ 为均匀六面骰子的点数。已知 $E(X) = 3.5$，求 $\text{Var}(X)$。</span></summary>
+      <summary><span data-lang="en">$X$ is the score on a fair six-sided die. Given $E(X) = 3.5$, find $\text{Var}(X)$.</span><span data-lang="zh">$X$ 为均匀六面骰子的点数。已知 $E(X) = 3.5$，求 $\text{Var}(X)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X^{2}) = \tfrac{1}{6}(1 + 4 + 9 + 16 + 25 + 36) = \tfrac{91}{6}$. $\text{Var}(X) = \tfrac{91}{6} - \tfrac{49}{4} = \tfrac{182 - 147}{12} = \tfrac{35}{12} \approx 2.92$.</p><p data-lang="zh">$E(X^{2}) = \tfrac{1}{6}(1 + 4 + 9 + 16 + 25 + 36) = \tfrac{91}{6}$。$\text{Var}(X) = \tfrac{91}{6} - \tfrac{49}{4} = \tfrac{182 - 147}{12} = \tfrac{35}{12} \approx 2.92$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. $X$ takes values $0$ and $a$ ($a &gt; 0$), each with probability $0.5$, and $\text{Var}(X) = 9$. Find $a$.</span><span data-lang="zh">3. $X$ 取值 $0$ 与 $a$（$a &gt; 0$），概率各为 $0.5$，且 $\text{Var}(X) = 9$。求 $a$。</span></summary>
+      <summary><span data-lang="en">$X$ takes values $0$ and $a$ ($a &gt; 0$), each with probability $0.5$, and $\text{Var}(X) = 9$. Find $a$.</span><span data-lang="zh">$X$ 取值 $0$ 与 $a$（$a &gt; 0$），概率各为 $0.5$，且 $\text{Var}(X) = 9$。求 $a$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X) = \tfrac{a}{2}$ and $E(X^{2}) = \tfrac{a^{2}}{2}$, so $\text{Var}(X) = \tfrac{a^{2}}{2} - \tfrac{a^{2}}{4} = \tfrac{a^{2}}{4} = 9$. Hence $a^{2} = 36$ and, since $a &gt; 0$, $a = 6$.</p><p data-lang="zh">$E(X) = \tfrac{a}{2}$，$E(X^{2}) = \tfrac{a^{2}}{2}$，故 $\text{Var}(X) = \tfrac{a^{2}}{2} - \tfrac{a^{2}}{4} = \tfrac{a^{2}}{4} = 9$。所以 $a^{2} = 36$，又因 $a &gt; 0$，得 $a = 6$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. A student computes $E(X^{2}) = 5$ and $E(X) = 3$ and reports $\text{Var}(X) = -4$. What does this show?</span><span data-lang="zh">4. 某学生算得 $E(X^{2}) = 5$、$E(X) = 3$，并给出 $\text{Var}(X) = -4$。这说明了什么？</span></summary>
+      <summary><span data-lang="en">A student computes $E(X^{2}) = 5$ and $E(X) = 3$ and reports $\text{Var}(X) = -4$. What does this show?</span><span data-lang="zh">某学生算得 $E(X^{2}) = 5$、$E(X) = 3$，并给出 $\text{Var}(X) = -4$。这说明了什么？</span></summary>
       <div class="sg-a"><p data-lang="en">At least one of the two values is wrong. Since $\text{Var}(X) \ge 0$, we always have $E(X^{2}) \ge [E(X)]^{2}$, and $5 &lt; 9$ breaks this. Recheck both sums (a common slip is squaring the probabilities instead of the values).</p><p data-lang="zh">两个值中至少有一个算错了。由于 $\text{Var}(X) \ge 0$，必有 $E(X^{2}) \ge [E(X)]^{2}$，而 $5 &lt; 9$ 违反了这一点。重新检查两个求和（常见错误是把概率而不是取值平方）。</p></div>
     </details>
   </div>
@@ -1739,19 +1745,19 @@ $$ \text{Var}(X) = n \cdot p(1 - p). $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. $3$ cards are drawn without replacement from a standard pack of $52$ and $X$ is the number of hearts. Explain why $X$ is not binomial.</span><span data-lang="zh">1. 从一副 $52$ 张的标准扑克牌中不放回地抽 $3$ 张，$X$ 为红桃张数。解释为什么 $X$ 不服从二项分布。</span></summary>
+      <summary><span data-lang="en">$3$ cards are drawn without replacement from a standard pack of $52$ and $X$ is the number of hearts. Explain why $X$ is not binomial.</span><span data-lang="zh">从一副 $52$ 张的标准扑克牌中不放回地抽 $3$ 张，$X$ 为红桃张数。解释为什么 $X$ 不服从二项分布。</span></summary>
       <div class="sg-a"><p data-lang="en">The draws are not independent. The first card is a heart with probability $\tfrac{13}{52}$, but if it was a heart the second is a heart with probability $\tfrac{12}{51}$, and otherwise $\tfrac{13}{51}$. The success probability depends on earlier results, so condition (4) fails.</p><p data-lang="zh">各次抽取不独立。第一张是红桃的概率为 $\tfrac{13}{52}$；但若第一张是红桃，第二张是红桃的概率为 $\tfrac{12}{51}$，否则为 $\tfrac{13}{51}$。成功概率依赖于前面的结果，所以条件 (4) 不成立。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X \sim B(5, 0.2)$. Find $P(X = 2)$ exactly.</span><span data-lang="zh">2. $X \sim B(5, 0.2)$。求 $P(X = 2)$ 的精确值。</span></summary>
+      <summary><span data-lang="en">$X \sim B(5, 0.2)$. Find $P(X = 2)$ exactly.</span><span data-lang="zh">$X \sim B(5, 0.2)$。求 $P(X = 2)$ 的精确值。</span></summary>
       <div class="sg-a"><p data-lang="en">$P(X = 2) = \binom{5}{2}(0.2)^{2}(0.8)^{3} = 10 \times 0.04 \times 0.512 = 0.2048$.</p><p data-lang="zh">$P(X = 2) = \binom{5}{2}(0.2)^{2}(0.8)^{3} = 10 \times 0.04 \times 0.512 = 0.2048$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A fair coin is tossed $8$ times. Find the probability of at least one head.</span><span data-lang="zh">3. 均匀硬币抛 $8$ 次。求至少出现一次正面的概率。</span></summary>
+      <summary><span data-lang="en">A fair coin is tossed $8$ times. Find the probability of at least one head.</span><span data-lang="zh">均匀硬币抛 $8$ 次。求至少出现一次正面的概率。</span></summary>
       <div class="sg-a"><p data-lang="en">$X \sim B(8, 0.5)$. $P(X \ge 1) = 1 - P(X = 0) = 1 - (0.5)^{8} = 1 - \tfrac{1}{256} = \tfrac{255}{256} \approx 0.996$.</p><p data-lang="zh">$X \sim B(8, 0.5)$。$P(X \ge 1) = 1 - P(X = 0) = 1 - (0.5)^{8} = 1 - \tfrac{1}{256} = \tfrac{255}{256} \approx 0.996$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. $X \sim B(n, p)$ with $E(X) = 6$ and $\text{Var}(X) = 4.2$. Find $n$ and $p$.</span><span data-lang="zh">4. $X \sim B(n, p)$，$E(X) = 6$，$\text{Var}(X) = 4.2$。求 $n$ 与 $p$。</span></summary>
+      <summary><span data-lang="en">$X \sim B(n, p)$ with $E(X) = 6$ and $\text{Var}(X) = 4.2$. Find $n$ and $p$.</span><span data-lang="zh">$X \sim B(n, p)$，$E(X) = 6$，$\text{Var}(X) = 4.2$。求 $n$ 与 $p$。</span></summary>
       <div class="sg-a"><p data-lang="en">Divide: $\dfrac{np(1-p)}{np} = 1 - p = \dfrac{4.2}{6} = 0.7$, so $p = 0.3$ and $n = \dfrac{6}{0.3} = 20$. This is the $B(20, 0.3)$ of the worked example above.</p><p data-lang="zh">两式相除：$\dfrac{np(1-p)}{np} = 1 - p = \dfrac{4.2}{6} = 0.7$，故 $p = 0.3$，$n = \dfrac{6}{0.3} = 20$。这正是上面例题中的 $B(20, 0.3)$。</p></div>
     </details>
   </div>
@@ -1951,19 +1957,19 @@ $$ \text{Var}(X) = n \cdot p(1 - p). $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. $X \sim N(30, 16)$. Without technology, estimate $P(26 &lt; X &lt; 34)$.</span><span data-lang="zh">1. $X \sim N(30, 16)$。不用技术工具，估计 $P(26 &lt; X &lt; 34)$。</span></summary>
+      <summary><span data-lang="en">$X \sim N(30, 16)$. Without technology, estimate $P(26 &lt; X &lt; 34)$.</span><span data-lang="zh">$X \sim N(30, 16)$。不用技术工具，估计 $P(26 &lt; X &lt; 34)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$\sigma = \sqrt{16} = 4$, so $26$ and $34$ are $\mu \mp \sigma$. By the empirical rule, $P(26 &lt; X &lt; 34) \approx 0.68$. (Note $16$ is the variance, not the standard deviation.)</p><p data-lang="zh">$\sigma = \sqrt{16} = 4$，所以 $26$ 与 $34$ 正是 $\mu \mp \sigma$。由经验法则，$P(26 &lt; X &lt; 34) \approx 0.68$。（注意 $16$ 是方差，不是标准差。）</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X \sim N(\mu, \sigma^{2})$ and $P(X &gt; \mu + 5) = 0.12$. Find $P(\mu - 5 &lt; X &lt; \mu + 5)$.</span><span data-lang="zh">2. $X \sim N(\mu, \sigma^{2})$，且 $P(X &gt; \mu + 5) = 0.12$。求 $P(\mu - 5 &lt; X &lt; \mu + 5)$。</span></summary>
+      <summary><span data-lang="en">$X \sim N(\mu, \sigma^{2})$ and $P(X &gt; \mu + 5) = 0.12$. Find $P(\mu - 5 &lt; X &lt; \mu + 5)$.</span><span data-lang="zh">$X \sim N(\mu, \sigma^{2})$，且 $P(X &gt; \mu + 5) = 0.12$。求 $P(\mu - 5 &lt; X &lt; \mu + 5)$。</span></summary>
       <div class="sg-a"><p data-lang="en">By symmetry about $\mu$, $P(X &lt; \mu - 5) = 0.12$ as well. So $P(\mu - 5 &lt; X &lt; \mu + 5) = 1 - 0.12 - 0.12 = 0.76$.</p><p data-lang="zh">由关于 $\mu$ 的对称性，$P(X &lt; \mu - 5) = 0.12$。所以 $P(\mu - 5 &lt; X &lt; \mu + 5) = 1 - 0.12 - 0.12 = 0.76$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Masses of apples are $N(150, 12^{2})$ in grams. Find the probability that an apple weighs less than $135$ g, and the expected number of such apples in a crate of $200$.</span><span data-lang="zh">3. 苹果质量（克）服从 $N(150, 12^{2})$。求一个苹果质量小于 $135$ g 的概率，以及一箱 $200$ 个苹果中这类苹果的期望个数。</span></summary>
+      <summary><span data-lang="en">Masses of apples are $N(150, 12^{2})$ in grams. Find the probability that an apple weighs less than $135$ g, and the expected number of such apples in a crate of $200$.</span><span data-lang="zh">苹果质量（克）服从 $N(150, 12^{2})$。求一个苹果质量小于 $135$ g 的概率，以及一箱 $200$ 个苹果中这类苹果的期望个数。</span></summary>
       <div class="sg-a"><p data-lang="en">$P(X &lt; 135) = \text{normCdf}(-1000, 135, 150, 12) \approx 0.106$ (here $z = -1.25$). Expected number $= 200 \times 0.1056 \approx 21.1$, about $21$ apples.</p><p data-lang="zh">$P(X &lt; 135) = \text{normCdf}(-1000, 135, 150, 12) \approx 0.106$（此处 $z = -1.25$）。期望个数 $= 200 \times 0.1056 \approx 21.1$，约 $21$ 个。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Explain why, for a normal variable, $P(X \le 40) = P(X &lt; 40)$, but for $X \sim B(50, 0.8)$ these can differ.</span><span data-lang="zh">4. 解释为什么正态变量满足 $P(X \le 40) = P(X &lt; 40)$，而对 $X \sim B(50, 0.8)$ 两者可能不同。</span></summary>
+      <summary><span data-lang="en">Explain why, for a normal variable, $P(X \le 40) = P(X &lt; 40)$, but for $X \sim B(50, 0.8)$ these can differ.</span><span data-lang="zh">解释为什么正态变量满足 $P(X \le 40) = P(X &lt; 40)$，而对 $X \sim B(50, 0.8)$ 两者可能不同。</span></summary>
       <div class="sg-a"><p data-lang="en">A normal variable is continuous, so the probability of any single value is $0$ and the endpoint adds nothing. A binomial variable is discrete: $P(X \le 40) = P(X &lt; 40) + P(X = 40)$, and $P(X = 40) &gt; 0$.</p><p data-lang="zh">正态变量是连续的，任一单点的概率为 $0$，端点不增加概率。二项变量是离散的：$P(X \le 40) = P(X &lt; 40) + P(X = 40)$，而 $P(X = 40) &gt; 0$。</p></div>
     </details>
   </div>
@@ -2152,19 +2158,19 @@ $$ \text{Var}(X) = n \cdot p(1 - p). $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. A student scores $78$ in a test that is $N(70, 5^{2})$ and $81$ in a test that is $N(75, 4^{2})$. In which test did the student do relatively better?</span><span data-lang="zh">1. 某学生在 $N(70, 5^{2})$ 的考试中得 $78$ 分，在 $N(75, 4^{2})$ 的考试中得 $81$ 分。哪次考试相对表现更好？</span></summary>
+      <summary><span data-lang="en">A student scores $78$ in a test that is $N(70, 5^{2})$ and $81$ in a test that is $N(75, 4^{2})$. In which test did the student do relatively better?</span><span data-lang="zh">某学生在 $N(70, 5^{2})$ 的考试中得 $78$ 分，在 $N(75, 4^{2})$ 的考试中得 $81$ 分。哪次考试相对表现更好？</span></summary>
       <div class="sg-a"><p data-lang="en">$z_{1} = \tfrac{78 - 70}{5} = 1.6$ and $z_{2} = \tfrac{81 - 75}{4} = 1.5$. The first test: the score is more standard deviations above its mean.</p><p data-lang="zh">$z_{1} = \tfrac{78 - 70}{5} = 1.6$，$z_{2} = \tfrac{81 - 75}{4} = 1.5$。第一次考试更好：该分数高出均值的标准差个数更多。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X \sim N(200, 15^{2})$. Find the value $a$ such that $P(X &gt; a) = 0.25$.</span><span data-lang="zh">2. $X \sim N(200, 15^{2})$。求满足 $P(X &gt; a) = 0.25$ 的 $a$。</span></summary>
+      <summary><span data-lang="en">$X \sim N(200, 15^{2})$. Find the value $a$ such that $P(X &gt; a) = 0.25$.</span><span data-lang="zh">$X \sim N(200, 15^{2})$。求满足 $P(X &gt; a) = 0.25$ 的 $a$。</span></summary>
       <div class="sg-a"><p data-lang="en">Rewrite as $P(X \le a) = 0.75$. $a = \text{invNorm}(0.75, 200, 15) = 200 + 0.6745 \times 15 \approx 210.1$.</p><p data-lang="zh">改写为 $P(X \le a) = 0.75$。$a = \text{invNorm}(0.75, 200, 15) = 200 + 0.6745 \times 15 \approx 210.1$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. $X \sim N(60, 8^{2})$. Find the interval, symmetric about the mean, that contains the middle $90\%$ of the distribution.</span><span data-lang="zh">3. $X \sim N(60, 8^{2})$。求关于均值对称、包含分布中间 $90\%$ 的区间。</span></summary>
+      <summary><span data-lang="en">$X \sim N(60, 8^{2})$. Find the interval, symmetric about the mean, that contains the middle $90\%$ of the distribution.</span><span data-lang="zh">$X \sim N(60, 8^{2})$。求关于均值对称、包含分布中间 $90\%$ 的区间。</span></summary>
       <div class="sg-a"><p data-lang="en">$5\%$ lies in each tail, so the upper limit has $P(X \le x) = 0.95$: $z = 1.6449$, $x = 60 + 1.6449 \times 8 \approx 73.2$. By symmetry the lower limit is $60 - 13.16 \approx 46.8$. Interval: $46.8 &lt; X &lt; 73.2$.</p><p data-lang="zh">两侧尾部各 $5\%$，所以上端点满足 $P(X \le x) = 0.95$：$z = 1.6449$，$x = 60 + 1.6449 \times 8 \approx 73.2$。由对称性，下端点为 $60 - 13.16 \approx 46.8$。区间：$46.8 &lt; X &lt; 73.2$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. $X \sim N(\mu, \sigma^{2})$ with $P(X &lt; 20) = 0.1$ and $P(X &gt; 50) = 0.2$. Find $\mu$ and $\sigma$.</span><span data-lang="zh">4. $X \sim N(\mu, \sigma^{2})$，$P(X &lt; 20) = 0.1$，$P(X &gt; 50) = 0.2$。求 $\mu$ 与 $\sigma$。</span></summary>
+      <summary><span data-lang="en">$X \sim N(\mu, \sigma^{2})$ with $P(X &lt; 20) = 0.1$ and $P(X &gt; 50) = 0.2$. Find $\mu$ and $\sigma$.</span><span data-lang="zh">$X \sim N(\mu, \sigma^{2})$，$P(X &lt; 20) = 0.1$，$P(X &gt; 50) = 0.2$。求 $\mu$ 与 $\sigma$。</span></summary>
       <div class="sg-a"><p data-lang="en">$\text{invNorm}(0.1) \approx -1.2816$ and $\text{invNorm}(0.8) \approx 0.8416$ give $\mu - 1.2816\sigma = 20$ and $\mu + 0.8416\sigma = 50$. Subtracting: $2.1232\sigma = 30$, so $\sigma \approx 14.13$ and $\mu = 20 + 1.2816 \times 14.13 \approx 38.1$.</p><p data-lang="zh">$\text{invNorm}(0.1) \approx -1.2816$，$\text{invNorm}(0.8) \approx 0.8416$，得 $\mu - 1.2816\sigma = 20$ 与 $\mu + 0.8416\sigma = 50$。相减：$2.1232\sigma = 30$，故 $\sigma \approx 14.13$，$\mu = 20 + 1.2816 \times 14.13 \approx 38.1$。</p></div>
     </details>
   </div>
@@ -2343,19 +2349,19 @@ $$ P(X = a) = \int_{a}^{a} f(x)\, dx = 0. $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Is $f(x) = x - 1$ for $0 \le x \le 2$ (and $0$ elsewhere) a PDF? Give a reason.</span><span data-lang="zh">1. $f(x) = x - 1$（$0 \le x \le 2$，其余处为 $0$）是 PDF 吗？说明理由。</span></summary>
+      <summary><span data-lang="en">Is $f(x) = x - 1$ for $0 \le x \le 2$ (and $0$ elsewhere) a PDF? Give a reason.</span><span data-lang="zh">$f(x) = x - 1$（$0 \le x \le 2$，其余处为 $0$）是 PDF 吗？说明理由。</span></summary>
       <div class="sg-a"><p data-lang="en">No. Its integral is $\left[\tfrac{x^{2}}{2} - x\right]_{0}^{2} = 0$, not $1$, and $f(x) &lt; 0$ for $0 \le x &lt; 1$, which breaks $f(x) \ge 0$.</p><p data-lang="zh">不是。它的积分为 $\left[\tfrac{x^{2}}{2} - x\right]_{0}^{2} = 0$，不等于 $1$；而且当 $0 \le x &lt; 1$ 时 $f(x) &lt; 0$，违反 $f(x) \ge 0$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $f(x) = \tfrac{1}{4}$ for $2 \le x \le 6$. Find $E(X)$, $\text{Var}(X)$ and $P(X &gt; 5)$.</span><span data-lang="zh">2. $f(x) = \tfrac{1}{4}$（$2 \le x \le 6$）。求 $E(X)$、$\text{Var}(X)$ 与 $P(X &gt; 5)$。</span></summary>
+      <summary><span data-lang="en">$f(x) = \tfrac{1}{4}$ for $2 \le x \le 6$. Find $E(X)$, $\text{Var}(X)$ and $P(X &gt; 5)$.</span><span data-lang="zh">$f(x) = \tfrac{1}{4}$（$2 \le x \le 6$）。求 $E(X)$、$\text{Var}(X)$ 与 $P(X &gt; 5)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(X) = \int_{2}^{6} \tfrac{x}{4}\,dx = \tfrac{36 - 4}{8} = 4$. $E(X^{2}) = \int_{2}^{6} \tfrac{x^{2}}{4}\,dx = \tfrac{216 - 8}{12} = \tfrac{52}{3}$, so $\text{Var}(X) = \tfrac{52}{3} - 16 = \tfrac{4}{3}$. $P(X &gt; 5) = \tfrac{6 - 5}{4} = 0.25$.</p><p data-lang="zh">$E(X) = \int_{2}^{6} \tfrac{x}{4}\,dx = \tfrac{36 - 4}{8} = 4$。$E(X^{2}) = \int_{2}^{6} \tfrac{x^{2}}{4}\,dx = \tfrac{216 - 8}{12} = \tfrac{52}{3}$，故 $\text{Var}(X) = \tfrac{52}{3} - 16 = \tfrac{4}{3}$。$P(X &gt; 5) = \tfrac{6 - 5}{4} = 0.25$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. $f(x) = \tfrac{x}{8}$ on $[0, 4]$ (the worked example above). Find the median.</span><span data-lang="zh">3. $f(x) = \tfrac{x}{8}$（$[0, 4]$ 上，即上面的例题）。求中位数。</span></summary>
+      <summary><span data-lang="en">$f(x) = \tfrac{x}{8}$ on $[0, 4]$ (the worked example above). Find the median.</span><span data-lang="zh">$f(x) = \tfrac{x}{8}$（$[0, 4]$ 上，即上面的例题）。求中位数。</span></summary>
       <div class="sg-a"><p data-lang="en">$\int_{0}^{m} \tfrac{x}{8}\,dx = \tfrac{m^{2}}{16} = \tfrac{1}{2}$, so $m^{2} = 8$ and $m = 2\sqrt{2} \approx 2.83$ (reject $-2\sqrt{2}$, outside the support).</p><p data-lang="zh">$\int_{0}^{m} \tfrac{x}{8}\,dx = \tfrac{m^{2}}{16} = \tfrac{1}{2}$，故 $m^{2} = 8$，$m = 2\sqrt{2} \approx 2.83$（舍去支撑区间外的 $-2\sqrt{2}$）。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. For $f(x) = \tfrac{x}{8}$ on $[0, 4]$, state the mode and explain why $f'(x) = 0$ does not find it.</span><span data-lang="zh">4. 对 $f(x) = \tfrac{x}{8}$（$[0, 4]$），写出众数，并解释为什么 $f'(x) = 0$ 找不到它。</span></summary>
+      <summary><span data-lang="en">For $f(x) = \tfrac{x}{8}$ on $[0, 4]$, state the mode and explain why $f'(x) = 0$ does not find it.</span><span data-lang="zh">对 $f(x) = \tfrac{x}{8}$（$[0, 4]$），写出众数，并解释为什么 $f'(x) = 0$ 找不到它。</span></summary>
       <div class="sg-a"><p data-lang="en">$f'(x) = \tfrac{1}{8} &gt; 0$, so $f$ is increasing and never has a stationary point. Its maximum on $[0, 4]$ is at the endpoint, so the mode is $x = 4$.</p><p data-lang="zh">$f'(x) = \tfrac{1}{8} &gt; 0$，$f$ 单调递增，没有驻点。它在 $[0, 4]$ 上的最大值在端点处取得，所以众数为 $x = 4$。</p></div>
     </details>
   </div>
@@ -2583,19 +2589,19 @@ $$ = \!\left[E(X^{2}) - [E(X)]^{2}\right] + \!\left[E(Y^{2}) - [E(Y)]^{2}\right]
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Temperatures $C$ in degrees Celsius have mean $20$ and standard deviation $3$. Find the mean and standard deviation of $F = 1.8C + 32$.</span><span data-lang="zh">1. 摄氏温度 $C$ 的均值为 $20$、标准差为 $3$。求 $F = 1.8C + 32$ 的均值与标准差。</span></summary>
+      <summary><span data-lang="en">Temperatures $C$ in degrees Celsius have mean $20$ and standard deviation $3$. Find the mean and standard deviation of $F = 1.8C + 32$.</span><span data-lang="zh">摄氏温度 $C$ 的均值为 $20$、标准差为 $3$。求 $F = 1.8C + 32$ 的均值与标准差。</span></summary>
       <div class="sg-a"><p data-lang="en">$E(F) = 1.8(20) + 32 = 68$. $\text{Var}(F) = 1.8^{2} \times 9 = 29.16$, so $\sigma_{F} = 1.8 \times 3 = 5.4$. The $+32$ does not affect the spread.</p><p data-lang="zh">$E(F) = 1.8(20) + 32 = 68$。$\text{Var}(F) = 1.8^{2} \times 9 = 29.16$，故 $\sigma_{F} = 1.8 \times 3 = 5.4$。$+32$ 不影响离散程度。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. $X$ has variance $4$. Compare $\text{Var}(X_{1} + X_{2})$, where $X_{1}, X_{2}$ are independent copies of $X$, with $\text{Var}(2X)$.</span><span data-lang="zh">2. $X$ 的方差为 $4$。比较 $\text{Var}(X_{1} + X_{2})$（$X_{1}, X_{2}$ 是 $X$ 的独立副本）与 $\text{Var}(2X)$。</span></summary>
+      <summary><span data-lang="en">$X$ has variance $4$. Compare $\text{Var}(X_{1} + X_{2})$, where $X_{1}, X_{2}$ are independent copies of $X$, with $\text{Var}(2X)$.</span><span data-lang="zh">$X$ 的方差为 $4$。比较 $\text{Var}(X_{1} + X_{2})$（$X_{1}, X_{2}$ 是 $X$ 的独立副本）与 $\text{Var}(2X)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$\text{Var}(X_{1} + X_{2}) = 4 + 4 = 8$, but $\text{Var}(2X) = 2^{2} \times 4 = 16$. Two independent values partly offset each other; doubling one value doubles every deviation.</p><p data-lang="zh">$\text{Var}(X_{1} + X_{2}) = 4 + 4 = 8$，而 $\text{Var}(2X) = 2^{2} \times 4 = 16$。两个独立取值会部分相互抵消；把一个取值加倍则会把每个偏差都加倍。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Apple masses are independent and $N(150, 100)$ in grams. Find the distribution of the total mass $T$ of $3$ apples and $P(T &gt; 480)$.</span><span data-lang="zh">3. 苹果质量（克）相互独立，服从 $N(150, 100)$。求 $3$ 个苹果总质量 $T$ 的分布与 $P(T &gt; 480)$。</span></summary>
+      <summary><span data-lang="en">Apple masses are independent and $N(150, 100)$ in grams. Find the distribution of the total mass $T$ of $3$ apples and $P(T &gt; 480)$.</span><span data-lang="zh">苹果质量（克）相互独立，服从 $N(150, 100)$。求 $3$ 个苹果总质量 $T$ 的分布与 $P(T &gt; 480)$。</span></summary>
       <div class="sg-a"><p data-lang="en">$T \sim N(3 \times 150,\; 3 \times 100) = N(450, 300)$, so $\sigma_{T} = \sqrt{300} \approx 17.32$. $P(T &gt; 480) = P\!\left(Z &gt; \tfrac{30}{17.32}\right) = P(Z &gt; 1.732) \approx 0.0416$.</p><p data-lang="zh">$T \sim N(3 \times 150,\; 3 \times 100) = N(450, 300)$，故 $\sigma_{T} = \sqrt{300} \approx 17.32$。$P(T &gt; 480) = P\!\left(Z &gt; \tfrac{30}{17.32}\right) = P(Z &gt; 1.732) \approx 0.0416$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Bolt lengths $B \sim N(50, 0.04)$ and hole depths $H \sim N(50.5, 0.05)$ are independent (mm). A bolt fits if $B &lt; H$. Find the probability that a randomly chosen bolt fits a randomly chosen hole.</span><span data-lang="zh">4. 螺栓长度 $B \sim N(50, 0.04)$ 与孔深 $H \sim N(50.5, 0.05)$（毫米）相互独立。若 $B &lt; H$ 则螺栓合适。求随机选取的螺栓适合随机选取的孔的概率。</span></summary>
+      <summary><span data-lang="en">Bolt lengths $B \sim N(50, 0.04)$ and hole depths $H \sim N(50.5, 0.05)$ are independent (mm). A bolt fits if $B &lt; H$. Find the probability that a randomly chosen bolt fits a randomly chosen hole.</span><span data-lang="zh">螺栓长度 $B \sim N(50, 0.04)$ 与孔深 $H \sim N(50.5, 0.05)$（毫米）相互独立。若 $B &lt; H$ 则螺栓合适。求随机选取的螺栓适合随机选取的孔的概率。</span></summary>
       <div class="sg-a"><p data-lang="en">$D = H - B \sim N(0.5,\; 0.05 + 0.04) = N(0.5, 0.09)$, so $\sigma_{D} = 0.3$. $P(D &gt; 0) = P\!\left(Z &gt; \tfrac{0 - 0.5}{0.3}\right) = P(Z &gt; -1.667) \approx 0.952$.</p><p data-lang="zh">$D = H - B \sim N(0.5,\; 0.05 + 0.04) = N(0.5, 0.09)$，故 $\sigma_{D} = 0.3$。$P(D &gt; 0) = P\!\left(Z &gt; \tfrac{0 - 0.5}{0.3}\right) = P(Z &gt; -1.667) \approx 0.952$。</p></div>
     </details>
   </div>

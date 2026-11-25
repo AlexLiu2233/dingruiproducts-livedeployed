@@ -808,6 +808,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
+.sg-check { counter-reset: sg-q; }
+.sg-check details.sg-q { counter-increment: sg-q; }
+.sg-check details.sg-q > summary { align-items: baseline; }
+.sg-check details.sg-q > summary::before { order: -2; }
+.sg-check details.sg-q > summary::after { content: counter(sg-q) "."; order: -1; flex: none; }
 .sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--sg-text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
@@ -1086,19 +1091,19 @@ $$ 40 + 35 - 15 = 60. $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. A menu has $4$ starters, $6$ mains and $3$ desserts. How many three-course meals (one of each) are possible? How many ways are there to order a single dish that is a starter or a dessert?</span><span data-lang="zh">1. 菜单上有 $4$ 道前菜、$6$ 道主菜和 $3$ 道甜点。三道菜套餐（每类各一道）有多少种？只点一道菜且它是前菜或甜点，有多少种点法？</span></summary>
+      <summary><span data-lang="en">A menu has $4$ starters, $6$ mains and $3$ desserts. How many three-course meals (one of each) are possible? How many ways are there to order a single dish that is a starter or a dessert?</span><span data-lang="zh">菜单上有 $4$ 道前菜、$6$ 道主菜和 $3$ 道甜点。三道菜套餐（每类各一道）有多少种？只点一道菜且它是前菜或甜点，有多少种点法？</span></summary>
       <div class="sg-a"><p data-lang="en">A meal is starter and main and dessert, so multiply: $4 \cdot 6 \cdot 3 = 72$. A single dish that is a starter or a dessert is one of two disjoint cases, so add: $4 + 3 = 7$.</p><p data-lang="zh">套餐是"前菜且主菜且甜点"，相乘：$4 \cdot 6 \cdot 3 = 72$。单点一道前菜或甜点是两个互斥情形，相加：$4 + 3 = 7$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A 4-digit PIN uses the digits $0$ to $9$ with repetition allowed. How many PINs contain at least one $7$?</span><span data-lang="zh">2. 4 位 PIN 码由数字 $0$ 到 $9$ 组成，可重复。至少含一个 $7$ 的 PIN 码有多少个？</span></summary>
+      <summary><span data-lang="en">A 4-digit PIN uses the digits $0$ to $9$ with repetition allowed. How many PINs contain at least one $7$?</span><span data-lang="zh">4 位 PIN 码由数字 $0$ 到 $9$ 组成，可重复。至少含一个 $7$ 的 PIN 码有多少个？</span></summary>
       <div class="sg-a"><p data-lang="en">Count the complement. All PINs: $10^4 = 10\,000$. PINs with no $7$: $9^4 = 6561$. At least one $7$: $10\,000 - 6561 = 3439$.</p><p data-lang="zh">用补集。全部 PIN 码：$10^4 = 10\,000$。不含 $7$ 的：$9^4 = 6561$。至少含一个 $7$：$10\,000 - 6561 = 3439$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. How many integers from $1$ to $100$ inclusive are divisible by $2$ or by $5$?</span><span data-lang="zh">3. $1$ 到 $100$（含）中能被 $2$ 或 $5$ 整除的整数有多少个？</span></summary>
+      <summary><span data-lang="en">How many integers from $1$ to $100$ inclusive are divisible by $2$ or by $5$?</span><span data-lang="zh">$1$ 到 $100$（含）中能被 $2$ 或 $5$ 整除的整数有多少个？</span></summary>
       <div class="sg-a"><p data-lang="en">Divisible by $2$: $50$. Divisible by $5$: $20$. Divisible by both, that is by $10$: $10$. The cases overlap, so use inclusion-exclusion: $50 + 20 - 10 = 60$.</p><p data-lang="zh">被 $2$ 整除：$50$ 个。被 $5$ 整除：$20$ 个。同时被两者整除（即被 $10$ 整除）：$10$ 个。情形有重叠，用容斥原理：$50 + 20 - 10 = 60$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. How many 3-digit even numbers have three different digits?</span><span data-lang="zh">4. 各位数字互不相同的三位偶数有多少个？</span></summary>
+      <summary><span data-lang="en">How many 3-digit even numbers have three different digits?</span><span data-lang="zh">各位数字互不相同的三位偶数有多少个？</span></summary>
       <div class="sg-a"><p data-lang="en">Split by the last digit, because a last digit of $0$ changes the choices for the first digit. Last digit $0$: first digit $9$ choices ($1$ to $9$), middle $8$, giving $9 \cdot 8 = 72$. Last digit $2$, $4$, $6$ or $8$ ($4$ choices): first digit $8$ choices (not $0$, not the last digit), middle $8$ choices, giving $4 \cdot 8 \cdot 8 = 256$. Total $72 + 256 = 328$.</p><p data-lang="zh">按末位分类，因为末位为 $0$ 会改变首位的选法。末位为 $0$：首位 $9$ 种（$1$ 到 $9$），中位 $8$ 种，共 $9 \cdot 8 = 72$。末位为 $2$、$4$、$6$ 或 $8$（$4$ 种）：首位 $8$ 种（不能是 $0$，也不能与末位相同），中位 $8$ 种，共 $4 \cdot 8 \cdot 8 = 256$。合计 $72 + 256 = 328$。</p></div>
     </details>
   </div>
@@ -1268,19 +1273,19 @@ $$ {}^nP_r = \frac{n(n-1)\cdots(n-r+1)\cdot(n-r)!}{(n-r)!} = \frac{n!}{(n-r)!}. 
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Evaluate ${}^7P_3$ and explain what it counts.</span><span data-lang="zh">1. 计算 ${}^7P_3$，并说明它数的是什么。</span></summary>
+      <summary><span data-lang="en">Evaluate ${}^7P_3$ and explain what it counts.</span><span data-lang="zh">计算 ${}^7P_3$，并说明它数的是什么。</span></summary>
       <div class="sg-a"><p data-lang="en">${}^7P_3 = \frac{7!}{4!} = 7 \cdot 6 \cdot 5 = 210$. It counts the ordered ways to fill $3$ distinct positions (for example gold, silver, bronze) from $7$ distinct candidates.</p><p data-lang="zh">${}^7P_3 = \frac{7!}{4!} = 7 \cdot 6 \cdot 5 = 210$。它数的是从 $7$ 个互异候选者中依次填满 $3$ 个不同位置（如金、银、铜牌）的有序方法数。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. How many distinguishable arrangements are there of the letters of LETTER?</span><span data-lang="zh">2. LETTER 的字母有多少种可区分的排列？</span></summary>
+      <summary><span data-lang="en">How many distinguishable arrangements are there of the letters of LETTER?</span><span data-lang="zh">LETTER 的字母有多少种可区分的排列？</span></summary>
       <div class="sg-a"><p data-lang="en">$6$ letters: L, R once each, E twice, T twice. $\frac{6!}{2! \cdot 2!} = \frac{720}{4} = 180$.</p><p data-lang="zh">$6$ 个字母：L、R 各一个，E 两个，T 两个。$\frac{6!}{2! \cdot 2!} = \frac{720}{4} = 180$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. How many arrangements of the letters of ORANGE begin with a vowel?</span><span data-lang="zh">3. ORANGE 的字母排列中，以元音开头的有多少种？</span></summary>
+      <summary><span data-lang="en">How many arrangements of the letters of ORANGE begin with a vowel?</span><span data-lang="zh">ORANGE 的字母排列中，以元音开头的有多少种？</span></summary>
       <div class="sg-a"><p data-lang="en">The first letter is O, A or E ($3$ choices); the other $5$ distinct letters fill the rest in $5! = 120$ ways. Total $3 \cdot 120 = 360$.</p><p data-lang="zh">首字母为 O、A 或 E（$3$ 种）；其余 $5$ 个互异字母排在后面，有 $5! = 120$ 种。合计 $3 \cdot 120 = 360$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Five people stand in a row. In how many arrangements are two particular people, P and Q, not next to each other?</span><span data-lang="zh">4. 五人站成一排。指定的两人 P 与 Q 不相邻的排法有多少种？</span></summary>
+      <summary><span data-lang="en">Five people stand in a row. In how many arrangements are two particular people, P and Q, not next to each other?</span><span data-lang="zh">五人站成一排。指定的两人 P 与 Q 不相邻的排法有多少种？</span></summary>
       <div class="sg-a"><p data-lang="en">Total: $5! = 120$. P and Q adjacent: glue them into one block, $4! = 24$ arrangements, times $2$ internal orders, giving $48$. Not adjacent: $120 - 48 = 72$.</p><p data-lang="zh">总数：$5! = 120$。P、Q 相邻：捆成一块，$4! = 24$ 种，乘块内 $2$ 种顺序，得 $48$。不相邻：$120 - 48 = 72$。</p></div>
     </details>
   </div>
@@ -1428,19 +1433,19 @@ $$ \binom{n}{n-r} = \frac{n!}{(n-r)!\,(n - (n-r))!} = \frac{n!}{(n-r)!\,r!} = \b
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Evaluate $\binom{10}{3}$ and $\binom{10}{7}$. Explain why they are equal.</span><span data-lang="zh">1. 计算 $\binom{10}{3}$ 与 $\binom{10}{7}$，并解释二者为何相等。</span></summary>
+      <summary><span data-lang="en">Evaluate $\binom{10}{3}$ and $\binom{10}{7}$. Explain why they are equal.</span><span data-lang="zh">计算 $\binom{10}{3}$ 与 $\binom{10}{7}$，并解释二者为何相等。</span></summary>
       <div class="sg-a"><p data-lang="en">$\binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 120$, and $\binom{10}{7} = 120$ too. Choosing the $3$ items to take is the same act as choosing the $7$ items to leave, so both count the same selections.</p><p data-lang="zh">$\binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 120$，而 $\binom{10}{7} = 120$，二者相等。选出要拿的 $3$ 个，等同于选出要留下的 $7$ 个，所以二者数的是同一批选法。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A club of $15$ elects a president, a secretary and a treasurer. Separately, it picks $3$ members for a clean-up team. How many ways are there to do each?</span><span data-lang="zh">2. 某社团 $15$ 人，选出主席、秘书和财务各一人；另外再选 $3$ 人组成清洁小组。两件事各有多少种选法？</span></summary>
+      <summary><span data-lang="en">A club of $15$ elects a president, a secretary and a treasurer. Separately, it picks $3$ members for a clean-up team. How many ways are there to do each?</span><span data-lang="zh">某社团 $15$ 人，选出主席、秘书和财务各一人；另外再选 $3$ 人组成清洁小组。两件事各有多少种选法？</span></summary>
       <div class="sg-a"><p data-lang="en">The officers have different roles, so order matters: ${}^{15}P_3 = 15 \cdot 14 \cdot 13 = 2730$. The team has no roles: $\binom{15}{3} = \frac{2730}{3!} = 455$.</p><p data-lang="zh">职务各不相同，与顺序有关：${}^{15}P_3 = 15 \cdot 14 \cdot 13 = 2730$。清洁小组没有职务之分：$\binom{15}{3} = \frac{2730}{3!} = 455$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A committee of $5$ is chosen from $8$ women and $6$ men. How many committees have exactly $3$ women?</span><span data-lang="zh">3. 从 $8$ 名女生和 $6$ 名男生中选 $5$ 人组成委员会。恰好有 $3$ 名女生的委员会有多少种？</span></summary>
+      <summary><span data-lang="en">A committee of $5$ is chosen from $8$ women and $6$ men. How many committees have exactly $3$ women?</span><span data-lang="zh">从 $8$ 名女生和 $6$ 名男生中选 $5$ 人组成委员会。恰好有 $3$ 名女生的委员会有多少种？</span></summary>
       <div class="sg-a"><p data-lang="en">Choose the women and the men separately, then multiply: $\binom{8}{3} \cdot \binom{6}{2} = 56 \cdot 15 = 840$.</p><p data-lang="zh">分别选女生和男生，再相乘：$\binom{8}{3} \cdot \binom{6}{2} = 56 \cdot 15 = 840$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Of $12$ students, $5$ are left-handed. How many groups of $4$ contain at least one left-handed student?</span><span data-lang="zh">4. $12$ 名学生中有 $5$ 名左撇子。至少含一名左撇子的 $4$ 人小组有多少种？</span></summary>
+      <summary><span data-lang="en">Of $12$ students, $5$ are left-handed. How many groups of $4$ contain at least one left-handed student?</span><span data-lang="zh">$12$ 名学生中有 $5$ 名左撇子。至少含一名左撇子的 $4$ 人小组有多少种？</span></summary>
       <div class="sg-a"><p data-lang="en">Complement: all groups minus groups with no left-handed student. $\binom{12}{4} - \binom{7}{4} = 495 - 35 = 460$.</p><p data-lang="zh">补集：全部小组减去不含左撇子的小组。$\binom{12}{4} - \binom{7}{4} = 495 - 35 = 460$。</p></div>
     </details>
   </div>
@@ -1566,19 +1571,19 @@ $$ (a+b)^n = \sum_{r=0}^{n} \binom{n}{r}\, a^{n-r}\, b^{r}. \;\;\blacksquare $$
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Expand $(x + 2)^4$ fully.</span><span data-lang="zh">1. 完全展开 $(x + 2)^4$。</span></summary>
+      <summary><span data-lang="en">Expand $(x + 2)^4$ fully.</span><span data-lang="zh">完全展开 $(x + 2)^4$。</span></summary>
       <div class="sg-a"><p data-lang="en">Row $4$ of Pascal's triangle is $1, 4, 6, 4, 1$. $(x+2)^4 = x^4 + 4x^3(2) + 6x^2(4) + 4x(8) + 16 = x^4 + 8x^3 + 24x^2 + 32x + 16$. Check with $x = 1$: $3^4 = 81 = 1 + 8 + 24 + 32 + 16$.</p><p data-lang="zh">帕斯卡三角第 $4$ 行为 $1, 4, 6, 4, 1$。$(x+2)^4 = x^4 + 4x^3(2) + 6x^2(4) + 4x(8) + 16 = x^4 + 8x^3 + 24x^2 + 32x + 16$。取 $x = 1$ 验算：$3^4 = 81 = 1 + 8 + 24 + 32 + 16$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Find the 4th term in the expansion of $(3 - x)^7$ in ascending powers of $x$.</span><span data-lang="zh">2. 将 $(3 - x)^7$ 按 $x$ 的升幂展开，求第 4 项。</span></summary>
+      <summary><span data-lang="en">Find the 4th term in the expansion of $(3 - x)^7$ in ascending powers of $x$.</span><span data-lang="zh">将 $(3 - x)^7$ 按 $x$ 的升幂展开，求第 4 项。</span></summary>
       <div class="sg-a"><p data-lang="en">The 4th term is $T_4$, so $r = 3$: $T_4 = \binom{7}{3}\, 3^{4}\, (-x)^3 = 35 \cdot 81 \cdot (-1)\, x^3 = -2835x^3$.</p><p data-lang="zh">第 4 项是 $T_4$，所以 $r = 3$：$T_4 = \binom{7}{3}\, 3^{4}\, (-x)^3 = 35 \cdot 81 \cdot (-1)\, x^3 = -2835x^3$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. In the expansion of $(1 + kx)^8$ the coefficient of $x^2$ is $252$. Find the possible values of $k$.</span><span data-lang="zh">3. $(1 + kx)^8$ 展开式中 $x^2$ 的系数为 $252$。求 $k$ 的所有可能值。</span></summary>
+      <summary><span data-lang="en">In the expansion of $(1 + kx)^8$ the coefficient of $x^2$ is $252$. Find the possible values of $k$.</span><span data-lang="zh">$(1 + kx)^8$ 展开式中 $x^2$ 的系数为 $252$。求 $k$ 的所有可能值。</span></summary>
       <div class="sg-a"><p data-lang="en">The $x^2$ term has $r = 2$: $\binom{8}{2} k^2 = 28k^2$. Solve $28k^2 = 252$: $k^2 = 9$, so $k = 3$ or $k = -3$ (both give $+252$ because $k$ is squared).</p><p data-lang="zh">$x^2$ 项对应 $r = 2$：$\binom{8}{2} k^2 = 28k^2$。解 $28k^2 = 252$：$k^2 = 9$，故 $k = 3$ 或 $k = -3$（$k$ 被平方，二者都给出 $+252$）。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Find the constant term in the expansion of $\left(x^2 + \tfrac{1}{x}\right)^6$.</span><span data-lang="zh">4. 求 $\left(x^2 + \tfrac{1}{x}\right)^6$ 展开式中的常数项。</span></summary>
+      <summary><span data-lang="en">Find the constant term in the expansion of $\left(x^2 + \tfrac{1}{x}\right)^6$.</span><span data-lang="zh">求 $\left(x^2 + \tfrac{1}{x}\right)^6$ 展开式中的常数项。</span></summary>
       <div class="sg-a"><p data-lang="en">$T_{r+1} = \binom{6}{r}(x^2)^{6-r}(x^{-1})^r = \binom{6}{r} x^{12 - 3r}$. Constant: $12 - 3r = 0$, so $r = 4$, and the term is $\binom{6}{4} = 15$.</p><p data-lang="zh">$T_{r+1} = \binom{6}{r}(x^2)^{6-r}(x^{-1})^r = \binom{6}{r} x^{12 - 3r}$。常数项：$12 - 3r = 0$，$r = 4$，该项为 $\binom{6}{4} = 15$。</p></div>
     </details>
   </div>
@@ -1810,19 +1815,19 @@ $$ (1 + 1)^n = \sum_{r=0}^{n} \binom{n}{r}\, 1^{n-r}\, 1^{r} = \sum_{r=0}^{n} \b
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Row $5$ of Pascal's triangle is $1, 5, 10, 10, 5, 1$. Write down row $6$ and state the identity you used.</span><span data-lang="zh">1. 帕斯卡三角第 $5$ 行为 $1, 5, 10, 10, 5, 1$。写出第 $6$ 行，并说明所用的恒等式。</span></summary>
+      <summary><span data-lang="en">Row $5$ of Pascal's triangle is $1, 5, 10, 10, 5, 1$. Write down row $6$ and state the identity you used.</span><span data-lang="zh">帕斯卡三角第 $5$ 行为 $1, 5, 10, 10, 5, 1$。写出第 $6$ 行，并说明所用的恒等式。</span></summary>
       <div class="sg-a"><p data-lang="en">Add neighbouring pairs and put $1$ at each end: $1, 6, 15, 20, 15, 6, 1$. This is Pascal's identity $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$ with $n = 6$.</p><p data-lang="zh">相邻两数相加，两端补 $1$：$1, 6, 15, 20, 15, 6, 1$。所用的是帕斯卡恒等式 $\binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}$，其中 $n = 6$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Expand $(1 - x)^5$ using Pascal's triangle.</span><span data-lang="zh">2. 用帕斯卡三角展开 $(1 - x)^5$。</span></summary>
+      <summary><span data-lang="en">Expand $(1 - x)^5$ using Pascal's triangle.</span><span data-lang="zh">用帕斯卡三角展开 $(1 - x)^5$。</span></summary>
       <div class="sg-a"><p data-lang="en">Row $5$ with $b = -x$: $1 - 5x + 10x^2 - 10x^3 + 5x^4 - x^5$. Odd powers are negative because $(-x)^r = (-1)^r x^r$. Check at $x = 1$: $1 - 5 + 10 - 10 + 5 - 1 = 0 = (1 - 1)^5$.</p><p data-lang="zh">用第 $5$ 行，$b = -x$：$1 - 5x + 10x^2 - 10x^3 + 5x^4 - x^5$。由于 $(-x)^r = (-1)^r x^r$，奇数次项为负。取 $x = 1$ 验算：$1 - 5 + 10 - 10 + 5 - 1 = 0 = (1 - 1)^5$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Write $\binom{9}{4} + \binom{9}{5}$ as a single binomial coefficient and evaluate it.</span><span data-lang="zh">3. 把 $\binom{9}{4} + \binom{9}{5}$ 写成一个二项式系数并求值。</span></summary>
+      <summary><span data-lang="en">Write $\binom{9}{4} + \binom{9}{5}$ as a single binomial coefficient and evaluate it.</span><span data-lang="zh">把 $\binom{9}{4} + \binom{9}{5}$ 写成一个二项式系数并求值。</span></summary>
       <div class="sg-a"><p data-lang="en">By Pascal's identity with $n = 10$, $r = 5$: $\binom{9}{4} + \binom{9}{5} = \binom{10}{5} = \frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = 252$. Check: $\binom{9}{4} = \binom{9}{5} = 126$, and $126 + 126 = 252$.</p><p data-lang="zh">由帕斯卡恒等式（$n = 10$，$r = 5$）：$\binom{9}{4} + \binom{9}{5} = \binom{10}{5} = \frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = 252$。验算：$\binom{9}{4} = \binom{9}{5} = 126$，$126 + 126 = 252$。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Find $\binom{7}{1} + \binom{7}{2} + \cdots + \binom{7}{6}$.</span><span data-lang="zh">4. 求 $\binom{7}{1} + \binom{7}{2} + \cdots + \binom{7}{6}$。</span></summary>
+      <summary><span data-lang="en">Find $\binom{7}{1} + \binom{7}{2} + \cdots + \binom{7}{6}$.</span><span data-lang="zh">求 $\binom{7}{1} + \binom{7}{2} + \cdots + \binom{7}{6}$。</span></summary>
       <div class="sg-a"><p data-lang="en">The whole of row $7$ sums to $2^7 = 128$. The sum leaves out the two end entries $\binom{7}{0} = \binom{7}{7} = 1$, so it equals $128 - 2 = 126$.</p><p data-lang="zh">第 $7$ 行全部之和为 $2^7 = 128$。所求和去掉了两端的 $\binom{7}{0} = \binom{7}{7} = 1$，故等于 $128 - 2 = 126$。</p></div>
     </details>
   </div>
@@ -1965,19 +1970,19 @@ $$ \left|\frac{T_{r+2}}{T_{r+1}}\right| = \left|\frac{(n-r)\, x}{r+1}\right| \xr
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Expand $(1 - x)^{-1}$ up to and including the $x^3$ term, and state the values of $x$ for which it is valid.</span><span data-lang="zh">1. 将 $(1 - x)^{-1}$ 展开到 $x^3$ 项（含），并写出成立的 $x$ 范围。</span></summary>
+      <summary><span data-lang="en">Expand $(1 - x)^{-1}$ up to and including the $x^3$ term, and state the values of $x$ for which it is valid.</span><span data-lang="zh">将 $(1 - x)^{-1}$ 展开到 $x^3$ 项（含），并写出成立的 $x$ 范围。</span></summary>
       <div class="sg-a"><p data-lang="en">With $n = -1$ and $-x$ in place of $x$, the coefficients are $\binom{-1}{r} = (-1)^r$, and $(-1)^r(-x)^r = x^r$. So $(1 - x)^{-1} = 1 + x + x^2 + x^3 + \cdots$, valid for $|x| &lt; 1$. This is the geometric series with ratio $x$.</p><p data-lang="zh">取 $n = -1$，并把 $x$ 换成 $-x$，系数为 $\binom{-1}{r} = (-1)^r$，而 $(-1)^r(-x)^r = x^r$。所以 $(1 - x)^{-1} = 1 + x + x^2 + x^3 + \cdots$，在 $|x| &lt; 1$ 时成立。这正是公比为 $x$ 的等比级数。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Expand $(1 + 2x)^{-3}$ up to the $x^2$ term and state the interval of validity.</span><span data-lang="zh">2. 将 $(1 + 2x)^{-3}$ 展开到 $x^2$ 项，并写出成立范围。</span></summary>
+      <summary><span data-lang="en">Expand $(1 + 2x)^{-3}$ up to the $x^2$ term and state the interval of validity.</span><span data-lang="zh">将 $(1 + 2x)^{-3}$ 展开到 $x^2$ 项，并写出成立范围。</span></summary>
       <div class="sg-a"><p data-lang="en">$1 + (-3)(2x) + \frac{(-3)(-4)}{2!}(2x)^2 = 1 - 6x + 6 \cdot 4x^2 = 1 - 6x + 24x^2$. Valid for $|2x| &lt; 1$, that is $|x| &lt; \frac{1}{2}$.</p><p data-lang="zh">$1 + (-3)(2x) + \frac{(-3)(-4)}{2!}(2x)^2 = 1 - 6x + 6 \cdot 4x^2 = 1 - 6x + 24x^2$。在 $|2x| &lt; 1$，即 $|x| &lt; \frac{1}{2}$ 时成立。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Expand $\sqrt{9 - x}$ up to the $x^2$ term and state the interval of validity.</span><span data-lang="zh">3. 将 $\sqrt{9 - x}$ 展开到 $x^2$ 项，并写出成立范围。</span></summary>
+      <summary><span data-lang="en">Expand $\sqrt{9 - x}$ up to the $x^2$ term and state the interval of validity.</span><span data-lang="zh">将 $\sqrt{9 - x}$ 展开到 $x^2$ 项，并写出成立范围。</span></summary>
       <div class="sg-a"><p data-lang="en">Factorize: $\sqrt{9 - x} = 3\left(1 - \frac{x}{9}\right)^{1/2}$. Then $\left(1 - \frac{x}{9}\right)^{1/2} = 1 + \frac{1}{2}\left(-\frac{x}{9}\right) + \frac{(\frac{1}{2})(-\frac{1}{2})}{2!}\left(\frac{x^2}{81}\right) = 1 - \frac{x}{18} - \frac{x^2}{648}$. Multiply by $3$: $3 - \frac{x}{6} - \frac{x^2}{216}$. Valid for $\left|\frac{x}{9}\right| &lt; 1$, that is $|x| &lt; 9$.</p><p data-lang="zh">先提因式：$\sqrt{9 - x} = 3\left(1 - \frac{x}{9}\right)^{1/2}$。则 $\left(1 - \frac{x}{9}\right)^{1/2} = 1 + \frac{1}{2}\left(-\frac{x}{9}\right) + \frac{(\frac{1}{2})(-\frac{1}{2})}{2!}\left(\frac{x^2}{81}\right) = 1 - \frac{x}{18} - \frac{x^2}{648}$。乘以 $3$：$3 - \frac{x}{6} - \frac{x^2}{216}$。在 $\left|\frac{x}{9}\right| &lt; 1$，即 $|x| &lt; 9$ 时成立。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Use the expansion of $\sqrt{1 + x}$ up to the $x^2$ term to estimate $\sqrt{1.04}$.</span><span data-lang="zh">4. 用 $\sqrt{1 + x}$ 展开到 $x^2$ 项的结果估算 $\sqrt{1.04}$。</span></summary>
+      <summary><span data-lang="en">Use the expansion of $\sqrt{1 + x}$ up to the $x^2$ term to estimate $\sqrt{1.04}$.</span><span data-lang="zh">用 $\sqrt{1 + x}$ 展开到 $x^2$ 项的结果估算 $\sqrt{1.04}$。</span></summary>
       <div class="sg-a"><p data-lang="en">Take $x = 0.04$, which satisfies $|x| &lt; 1$: $1 + \frac{1}{2}(0.04) - \frac{1}{8}(0.04)^2 = 1 + 0.02 - 0.0002 = 1.0198$. The true value is $1.019804$ to six decimal places, so the estimate is very close because $x$ is small.</p><p data-lang="zh">取 $x = 0.04$，满足 $|x| &lt; 1$：$1 + \frac{1}{2}(0.04) - \frac{1}{8}(0.04)^2 = 1 + 0.02 - 0.0002 = 1.0198$。真实值保留六位小数为 $1.019804$，因为 $x$ 很小，估计值非常接近。</p></div>
     </details>
   </div>

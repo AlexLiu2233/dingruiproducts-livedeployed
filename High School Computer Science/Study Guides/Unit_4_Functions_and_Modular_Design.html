@@ -458,6 +458,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
+.sg-check { counter-reset: sg-q; }
+.sg-check details.sg-q { counter-increment: sg-q; }
+.sg-check details.sg-q > summary { align-items: baseline; }
+.sg-check details.sg-q > summary::before { order: -2; }
+.sg-check details.sg-q > summary::after { content: counter(sg-q) "."; order: -1; flex: none; }
 .sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
@@ -696,15 +701,15 @@ print(with_tax(50.00))   # 57.5</code></pre><p><span data-lang="en">Only one lin
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. State two benefits of replacing five copies of the same 10-line calculation with one function.</span><span data-lang="zh">1. 说出把同一段 10 行计算的五个副本换成一个函数的两个好处。</span></summary>
+      <summary><span data-lang="en">State two benefits of replacing five copies of the same 10-line calculation with one function.</span><span data-lang="zh">说出把同一段 10 行计算的五个副本换成一个函数的两个好处。</span></summary>
       <div class="sg-a"><p data-lang="en">Any two of: a change or bug fix is made in one place instead of five; the program is shorter and easier to read; the function can be tested on its own; it can be reused wherever the calculation is needed.</p><p data-lang="zh">以下任意两点：修改或修复错误只需在一处而不是五处；程序更短、更易读；函数可以单独测试；任何需要该计算的地方都可以复用它。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A program computes <code>price * 0.13</code> in 4 separate places. How many lines must be edited to change the rate to 0.15 (a) as written, and (b) if the formula is moved into one function?</span><span data-lang="zh">2. 一个程序在 4 个不同位置计算 <code>price * 0.13</code>。要把税率改为 0.15，需要修改多少行：(a) 按现有写法，(b) 把公式移入一个函数后？</span></summary>
+      <summary><span data-lang="en">A program computes <code>price * 0.13</code> in 4 separate places. How many lines must be edited to change the rate to 0.15 (a) as written, and (b) if the formula is moved into one function?</span><span data-lang="zh">一个程序在 4 个不同位置计算 <code>price * 0.13</code>。要把税率改为 0.15，需要修改多少行：(a) 按现有写法，(b) 把公式移入一个函数后？</span></summary>
       <div class="sg-a"><p data-lang="en">(a) 4 lines, one per copy. (b) 1 line, the one inside the function. The four callers are unchanged.</p><p data-lang="zh">(a) 4 行，每个副本一行。(b) 1 行，即函数内部那一行。四个调用方不变。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Given <code>def with_tax(price): return round(price * 1.13, 2)</code>, what does <code>with_tax(50.00)</code> return, and what does a caller need to know to use it?</span><span data-lang="zh">3. 已知 <code>def with_tax(price): return round(price * 1.13, 2)</code>，<code>with_tax(50.00)</code> 返回什么？调用方需要知道什么才能使用它？</span></summary>
+      <summary><span data-lang="en">Given <code>def with_tax(price): return round(price * 1.13, 2)</code>, what does <code>with_tax(50.00)</code> return, and what does a caller need to know to use it?</span><span data-lang="zh">已知 <code>def with_tax(price): return round(price * 1.13, 2)</code>，<code>with_tax(50.00)</code> 返回什么？调用方需要知道什么才能使用它？</span></summary>
       <div class="sg-a"><p data-lang="en">It returns 56.5, because 50.00 &times; 1.13 = 56.5. The caller needs only the interface: the name <code>with_tax</code>, that it takes one price, and that it returns the price with tax. It does not need to see the formula.</p><p data-lang="zh">返回 56.5，因为 50.00 &times; 1.13 = 56.5。调用方只需要知道接口：名称 <code>with_tax</code>、它接受一个价格、并返回含税价格。不需要看到公式。</p></div>
     </details>
   </div>
@@ -823,7 +828,7 @@ print("B")
 show()
 print("C")</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What does the program above print, in order?</span><span data-lang="zh">1. 上面的程序按顺序输出什么？</span></summary>
+      <summary><span data-lang="en">What does the program above print, in order?</span><span data-lang="zh">上面的程序按顺序输出什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>B</code>, then <code>A</code>, then <code>C</code>. The <code>def</code> prints nothing; <code>print("B")</code> runs first; <code>show()</code> then prints <code>A</code>; finally <code>print("C")</code> runs.</p><p data-lang="zh">依次输出 <code>B</code>、<code>A</code>、<code>C</code>。<code>def</code> 不输出任何内容；先运行 <code>print("B")</code>；然后 <code>show()</code> 输出 <code>A</code>；最后运行 <code>print("C")</code>。</p></div>
     </details>
     <pre><code>def f():
@@ -835,11 +840,11 @@ def g():
 
 g()</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">2. How many times does this program print <code>X</code>? Explain.</span><span data-lang="zh">2. 这个程序输出 <code>X</code> 多少次？请解释。</span></summary>
+      <summary><span data-lang="en">How many times does this program print <code>X</code>? Explain.</span><span data-lang="zh">这个程序输出 <code>X</code> 多少次？请解释。</span></summary>
       <div class="sg-a"><p data-lang="en">Twice. Only <code>g()</code> is called from the main program; it calls <code>f()</code> two times, and each call prints one <code>X</code>.</p><p data-lang="zh">两次。主程序只调用了 <code>g()</code>；它调用 <code>f()</code> 两次，每次调用输出一个 <code>X</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A student writes <code>hello()</code> on line 1 and <code>def hello(): print("hi")</code> on line 3. State the error and one fix.</span><span data-lang="zh">3. 一名学生在第 1 行写 <code>hello()</code>，在第 3 行写 <code>def hello(): print("hi")</code>。指出错误并给出一种修复方法。</span></summary>
+      <summary><span data-lang="en">A student writes <code>hello()</code> on line 1 and <code>def hello(): print("hi")</code> on line 3. State the error and one fix.</span><span data-lang="zh">一名学生在第 1 行写 <code>hello()</code>，在第 3 行写 <code>def hello(): print("hi")</code>。指出错误并给出一种修复方法。</span></summary>
       <div class="sg-a"><p data-lang="en">It is a <code>NameError</code>: the name <code>hello</code> does not exist yet when line 1 runs, because the <code>def</code> on line 3 has not executed. Fix: move the call so it comes after the definition.</p><p data-lang="zh">这是 <code>NameError</code>：第 1 行运行时名称 <code>hello</code> 还不存在，因为第 3 行的 <code>def</code> 尚未执行。修复：把调用移到定义之后。</p></div>
     </details>
   </div>
@@ -974,7 +979,7 @@ print(area(5))
 print(area(5, 3))
 print(area(h=4, w=2))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Which parameter has a default value? What does each of the three calls print?</span><span data-lang="zh">1. 哪个形参有默认值？三次调用各输出什么？</span></summary>
+      <summary><span data-lang="en">Which parameter has a default value? What does each of the three calls print?</span><span data-lang="zh">哪个形参有默认值？三次调用各输出什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>h</code> has the default <code>1</code>. The calls print <code>5</code> (5 &times; 1), <code>15</code> (5 &times; 3) and <code>8</code> (keywords <code>w=2</code>, <code>h=4</code>, so 2 &times; 4).</p><p data-lang="zh"><code>h</code> 的默认值是 <code>1</code>。三次调用分别输出 <code>5</code>（5 &times; 1）、<code>15</code>（5 &times; 3）和 <code>8</code>（关键字 <code>w=2</code>、<code>h=4</code>，所以 2 &times; 4）。</p></div>
     </details>
     <pre><code>def collect(x, acc=[]):
@@ -984,7 +989,7 @@ print(area(h=4, w=2))</code></pre>
 print(collect(1))
 print(collect(2))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What do the two calls print, and what is wrong with the function? Give the fix.</span><span data-lang="zh">2. 两次调用各输出什么？这个函数有什么问题？给出修复方法。</span></summary>
+      <summary><span data-lang="en">What do the two calls print, and what is wrong with the function? Give the fix.</span><span data-lang="zh">两次调用各输出什么？这个函数有什么问题？给出修复方法。</span></summary>
       <div class="sg-a"><p data-lang="en">They print <code>[1]</code> and then <code>[1, 2]</code>. The default list is created once and shared, so the second call still contains the 1. Fix: use <code>acc=None</code> and, inside the function, <code>if acc is None: acc = []</code>. The second call then prints <code>[2]</code>.</p><p data-lang="zh">先输出 <code>[1]</code>，再输出 <code>[1, 2]</code>。默认列表只创建一次并被共用，所以第二次调用时里面仍有 1。修复：使用 <code>acc=None</code>，并在函数内写 <code>if acc is None: acc = []</code>。这样第二次调用输出 <code>[2]</code>。</p></div>
     </details>
     <pre><code>def power(base, exponent):
@@ -993,7 +998,7 @@ print(collect(2))</code></pre>
         result = result * base
     return result</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">3. For the function above, what does <code>power(exponent=3, base=2)</code> return? What happens with <code>power(2)</code>?</span><span data-lang="zh">3. 对于上面的函数，<code>power(exponent=3, base=2)</code> 返回什么？<code>power(2)</code> 会怎样？</span></summary>
+      <summary><span data-lang="en">For the function above, what does <code>power(exponent=3, base=2)</code> return? What happens with <code>power(2)</code>?</span><span data-lang="zh">对于上面的函数，<code>power(exponent=3, base=2)</code> 返回什么？<code>power(2)</code> 会怎样？</span></summary>
       <div class="sg-a"><p data-lang="en">The first call returns 8 (2 multiplied 3 times; keyword order does not matter). <code>power(2)</code> raises a TypeError saying <code>exponent</code> is a missing required positional argument, because <code>exponent</code> has no default.</p><p data-lang="zh">第一次调用返回 8（2 相乘 3 次；关键字的顺序无关紧要）。<code>power(2)</code> 会引发 TypeError，提示缺少必需的位置实参 <code>exponent</code>，因为 <code>exponent</code> 没有默认值。</p></div>
     </details>
   </div>
@@ -1121,7 +1126,7 @@ print(first_negative([1, 2]))           # None</code></pre><p><span data-lang="e
 
 print(f(3))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What does the program print, and why is it not 6?</span><span data-lang="zh">1. 程序输出什么？为什么不是 6？</span></summary>
+      <summary><span data-lang="en">What does the program print, and why is it not 6?</span><span data-lang="zh">程序输出什么？为什么不是 6？</span></summary>
       <div class="sg-a"><p data-lang="en">It prints <code>None</code>. The line <code>n * 2</code> computes 6 and throws it away; there is no <code>return</code>. Fix: <code>return n * 2</code>.</p><p data-lang="zh">输出 <code>None</code>。<code>n * 2</code> 这一行算出 6 后就丢弃了；函数中没有 <code>return</code>。修复：写成 <code>return n * 2</code>。</p></div>
     </details>
     <pre><code>def sign(n):
@@ -1133,11 +1138,11 @@ print(f(3))</code></pre>
 print(sign(5))
 print(sign(0))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What do the two calls print? Add one line so that <code>sign(0)</code> gives <code>"zero"</code>.</span><span data-lang="zh">2. 两次调用各输出什么？添加一行使 <code>sign(0)</code> 得到 <code>"zero"</code>。</span></summary>
+      <summary><span data-lang="en">What do the two calls print? Add one line so that <code>sign(0)</code> gives <code>"zero"</code>.</span><span data-lang="zh">两次调用各输出什么？添加一行使 <code>sign(0)</code> 得到 <code>"zero"</code>。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>pos</code> and then <code>None</code>: for 0 neither <code>if</code> is true, so no <code>return</code> runs. Add <code>return "zero"</code> as the last line of the function, at the same indentation as the <code>if</code> lines.</p><p data-lang="zh">输出 <code>pos</code>，然后是 <code>None</code>：对于 0，两个 <code>if</code> 都不成立，所以没有 <code>return</code> 运行。在函数最后一行添加 <code>return "zero"</code>，缩进与 <code>if</code> 行相同。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Write <code>is_even(n)</code> that returns <code>True</code> when <code>n</code> is even and <code>False</code> otherwise. What does <code>is_even(7)</code> return?</span><span data-lang="zh">3. 编写 <code>is_even(n)</code>，当 <code>n</code> 为偶数时返回 <code>True</code>，否则返回 <code>False</code>。<code>is_even(7)</code> 返回什么？</span></summary>
+      <summary><span data-lang="en">Write <code>is_even(n)</code> that returns <code>True</code> when <code>n</code> is even and <code>False</code> otherwise. What does <code>is_even(7)</code> return?</span><span data-lang="zh">编写 <code>is_even(n)</code>，当 <code>n</code> 为偶数时返回 <code>True</code>，否则返回 <code>False</code>。<code>is_even(7)</code> 返回什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>def is_even(n): return n % 2 == 0</code>. For 7, <code>7 % 2</code> is 1, and <code>1 == 0</code> is false, so it returns <code>False</code>.</p><p data-lang="zh"><code>def is_even(n): return n % 2 == 0</code>。对于 7，<code>7 % 2</code> 是 1，<code>1 == 0</code> 为假，所以返回 <code>False</code>。</p></div>
     </details>
   </div>
@@ -1284,11 +1289,11 @@ def f():
 
 print(f(), x)</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What does the program print? Name the local and the global variable.</span><span data-lang="zh">1. 程序输出什么？指出局部变量和全局变量。</span></summary>
+      <summary><span data-lang="en">What does the program print? Name the local and the global variable.</span><span data-lang="zh">程序输出什么？指出局部变量和全局变量。</span></summary>
       <div class="sg-a"><p data-lang="en">It prints <code>20 5</code>. Inside <code>f</code>, <code>x = 20</code> creates a local <code>x</code>; the global <code>x</code> stays 5.</p><p data-lang="zh">输出 <code>20 5</code>。在 <code>f</code> 内，<code>x = 20</code> 创建了局部变量 <code>x</code>；全局变量 <code>x</code> 仍是 5。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A program has <code>n = 1</code> at the top and <code>def up(): n = n + 1</code>. Why does calling <code>up()</code> raise <code>UnboundLocalError</code>, and what are two fixes?</span><span data-lang="zh">2. 程序开头有 <code>n = 1</code>，并有 <code>def up(): n = n + 1</code>。为什么调用 <code>up()</code> 会引发 <code>UnboundLocalError</code>？有哪两种修复方法？</span></summary>
+      <summary><span data-lang="en">A program has <code>n = 1</code> at the top and <code>def up(): n = n + 1</code>. Why does calling <code>up()</code> raise <code>UnboundLocalError</code>, and what are two fixes?</span><span data-lang="zh">程序开头有 <code>n = 1</code>，并有 <code>def up(): n = n + 1</code>。为什么调用 <code>up()</code> 会引发 <code>UnboundLocalError</code>？有哪两种修复方法？</span></summary>
       <div class="sg-a"><p data-lang="en">Assigning to <code>n</code> makes <code>n</code> local to <code>up</code>, so the right-hand <code>n</code> is read before it has a value. Fixes: add <code>global n</code> as the first line of <code>up</code>; or, better, write <code>def up(n): return n + 1</code> and call <code>n = up(n)</code>.</p><p data-lang="zh">对 <code>n</code> 赋值使 <code>n</code> 成为 <code>up</code> 的局部变量，所以右边的 <code>n</code> 在有值之前就被读取了。修复：在 <code>up</code> 的第一行添加 <code>global n</code>；或者更好的做法是写 <code>def up(n): return n + 1</code> 并调用 <code>n = up(n)</code>。</p></div>
     </details>
     <pre><code>n = 1
@@ -1300,7 +1305,7 @@ show()
 n = 2
 show()</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">3. What does this program print? Does <code>show</code> need the <code>global</code> keyword?</span><span data-lang="zh">3. 这个程序输出什么？<code>show</code> 需要 <code>global</code> 关键字吗？</span></summary>
+      <summary><span data-lang="en">What does this program print? Does <code>show</code> need the <code>global</code> keyword?</span><span data-lang="zh">这个程序输出什么？<code>show</code> 需要 <code>global</code> 关键字吗？</span></summary>
       <div class="sg-a"><p data-lang="en">It prints <code>1</code> and then <code>2</code>. <code>show</code> only reads <code>n</code>, and a read finds the global, so no <code>global</code> keyword is needed; the second call sees the updated value 2.</p><p data-lang="zh">输出 <code>1</code> 然后是 <code>2</code>。<code>show</code> 只读取 <code>n</code>，读取时会找到全局变量，所以不需要 <code>global</code> 关键字；第二次调用看到更新后的值 2。</p></div>
     </details>
   </div>
@@ -1479,7 +1484,7 @@ fact_bad(3)
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. A program reads a temperature in degrees Celsius, then prints it in Fahrenheit and warns if it is above 30. Propose three functions with their parameters and return values.</span><span data-lang="zh">1. 一个程序读取摄氏温度，然后输出对应的华氏温度，并在温度高于 30 时发出警告。提出三个函数，并说明它们的形参和返回值。</span></summary>
+      <summary><span data-lang="en">A program reads a temperature in degrees Celsius, then prints it in Fahrenheit and warns if it is above 30. Propose three functions with their parameters and return values.</span><span data-lang="zh">一个程序读取摄氏温度，然后输出对应的华氏温度，并在温度高于 30 时发出警告。提出三个函数，并说明它们的形参和返回值。</span></summary>
       <div class="sg-a"><p data-lang="en">One possible answer: <code>to_fahrenheit(c)</code> returns <code>c * 9 / 5 + 32</code>; <code>is_hot(c)</code> returns <code>True</code> when <code>c &gt; 30</code>; <code>display_report(f, hot)</code> prints the result and returns nothing. The main program calls them in that order, passing each result to the next.</p><p data-lang="zh">一种可能的答案：<code>to_fahrenheit(c)</code> 返回 <code>c * 9 / 5 + 32</code>；<code>is_hot(c)</code> 在 <code>c &gt; 30</code> 时返回 <code>True</code>；<code>display_report(f, hot)</code> 输出结果，不返回值。主程序按此顺序调用它们，并把每个结果传给下一个。</p></div>
     </details>
     <pre><code>def total(n):
@@ -1489,11 +1494,11 @@ fact_bad(3)
 
 print(total(3))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What does the program print? How many calls to <code>total</code> are made, counting the first?</span><span data-lang="zh">2. 程序输出什么？包括第一次在内，一共调用了多少次 <code>total</code>？</span></summary>
+      <summary><span data-lang="en">What does the program print? How many calls to <code>total</code> are made, counting the first?</span><span data-lang="zh">程序输出什么？包括第一次在内，一共调用了多少次 <code>total</code>？</span></summary>
       <div class="sg-a"><p data-lang="en">It prints <code>6</code>. The calls are <code>total(3)</code>, <code>total(2)</code>, <code>total(1)</code> and <code>total(0)</code>, which is the base case: 4 calls. The returns are 0, then 1 + 0 = 1, then 2 + 1 = 3, then 3 + 3 = 6.</p><p data-lang="zh">输出 <code>6</code>。调用依次为 <code>total(3)</code>、<code>total(2)</code>、<code>total(1)</code> 和 <code>total(0)</code>（基例）：共 4 次调用。返回值依次为 0，然后 1 + 0 = 1，然后 2 + 1 = 3，然后 3 + 3 = 6。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Using <code>fact</code> from the worked example, how many frames are on the stack at the deepest point of <code>fact(5)</code>, and what does it return?</span><span data-lang="zh">3. 使用例题中的 <code>fact</code>，<code>fact(5)</code> 在最深处栈上有多少个帧？它返回什么？</span></summary>
+      <summary><span data-lang="en">Using <code>fact</code> from the worked example, how many frames are on the stack at the deepest point of <code>fact(5)</code>, and what does it return?</span><span data-lang="zh">使用例题中的 <code>fact</code>，<code>fact(5)</code> 在最深处栈上有多少个帧？它返回什么？</span></summary>
       <div class="sg-a"><p data-lang="en">Five frames from <code>fact(5)</code> down to <code>fact(1)</code>, plus the main program below them. It returns 5 &times; 24 = 120, because <code>fact(4)</code> returns 24.</p><p data-lang="zh">从 <code>fact(5)</code> 到 <code>fact(1)</code> 共五个帧，其下还有主程序。它返回 5 &times; 24 = 120，因为 <code>fact(4)</code> 返回 24。</p></div>
     </details>
   </div>
@@ -1606,11 +1611,11 @@ print(math.floor(-4.7), int(-4.7))   # -5 -4</code></pre><p><span data-lang="en"
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Which of these need <code>import math</code> or another import: <code>abs(-7)</code>, <code>len("hat")</code>, <code>math.ceil(4.1)</code>, <code>random.randint(1, 6)</code>?</span><span data-lang="zh">1. 下列哪些需要 <code>import math</code> 或其他导入：<code>abs(-7)</code>、<code>len("hat")</code>、<code>math.ceil(4.1)</code>、<code>random.randint(1, 6)</code>？</span></summary>
+      <summary><span data-lang="en">Which of these need <code>import math</code> or another import: <code>abs(-7)</code>, <code>len("hat")</code>, <code>math.ceil(4.1)</code>, <code>random.randint(1, 6)</code>?</span><span data-lang="zh">下列哪些需要 <code>import math</code> 或其他导入：<code>abs(-7)</code>、<code>len("hat")</code>、<code>math.ceil(4.1)</code>、<code>random.randint(1, 6)</code>？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>math.ceil(4.1)</code> needs <code>import math</code> and <code>random.randint(1, 6)</code> needs <code>import random</code>. <code>abs</code> and <code>len</code> are built-in functions and need no import.</p><p data-lang="zh"><code>math.ceil(4.1)</code> 需要 <code>import math</code>，<code>random.randint(1, 6)</code> 需要 <code>import random</code>。<code>abs</code> 和 <code>len</code> 是内置函数，不需要导入。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A hall seats 30 people per row. For 125 people, how many rows are needed? Write the Python expression and the value.</span><span data-lang="zh">2. 一个大厅每排坐 30 人。125 人需要多少排？写出 Python 表达式及其值。</span></summary>
+      <summary><span data-lang="en">A hall seats 30 people per row. For 125 people, how many rows are needed? Write the Python expression and the value.</span><span data-lang="zh">一个大厅每排坐 30 人。125 人需要多少排？写出 Python 表达式及其值。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>math.ceil(125 / 30)</code>. Since 125 / 30 is about 4.17, rounding up gives 5 rows; the fifth row is only partly used. <code>125 // 30</code> would give 4 and leave people without seats.</p><p data-lang="zh"><code>math.ceil(125 / 30)</code>。125 / 30 约为 4.17，向上取整得 5 排；第五排只坐一部分。<code>125 // 30</code> 会得到 4，使一些人没有座位。</p></div>
     </details>
     <pre><code>import math
@@ -1620,7 +1625,7 @@ print(round(2.5))
 print(int(-3.9))
 print(math.floor(-3.9))</code></pre>
     <details class="sg-q">
-      <summary><span data-lang="en">3. What does the program print, one value per line?</span><span data-lang="zh">3. 程序逐行输出什么值？</span></summary>
+      <summary><span data-lang="en">What does the program print, one value per line?</span><span data-lang="zh">程序逐行输出什么值？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>4</code>, <code>2</code>, <code>-3</code>, <code>-4</code>. Python 3 <code>round</code> sends the half 3.5 to the even 4 and the half 2.5 to the even 2; <code>int(-3.9)</code> cuts off the decimals to give -3; <code>math.floor(-3.9)</code> goes down to -4.</p><p data-lang="zh">依次为 <code>4</code>、<code>2</code>、<code>-3</code>、<code>-4</code>。Python 3 的 <code>round</code> 把一半的 3.5 舍入到偶数 4，把一半的 2.5 舍入到偶数 2；<code>int(-3.9)</code> 去掉小数部分得 -3；<code>math.floor(-3.9)</code> 向下取到 -4。</p></div>
     </details>
   </div>

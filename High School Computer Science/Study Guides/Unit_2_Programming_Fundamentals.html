@@ -458,6 +458,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
+.sg-check { counter-reset: sg-q; }
+.sg-check details.sg-q { counter-increment: sg-q; }
+.sg-check details.sg-q > summary { align-items: baseline; }
+.sg-check details.sg-q > summary::before { order: -2; }
+.sg-check details.sg-q > summary::after { content: counter(sg-q) "."; order: -1; flex: none; }
 .sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
@@ -721,15 +726,15 @@ print(a, b, c)   # 12 -4 -48</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. After <code>a = 2</code>, <code>b = a + 3</code>, <code>a = b * 2</code>, <code>b = a - b</code> run in order, what are <code>a</code> and <code>b</code>?</span><span data-lang="zh">1. 依次运行 <code>a = 2</code>、<code>b = a + 3</code>、<code>a = b * 2</code>、<code>b = a - b</code> 后，<code>a</code> 和 <code>b</code> 各是多少？</span></summary>
+      <summary><span data-lang="en">After <code>a = 2</code>, <code>b = a + 3</code>, <code>a = b * 2</code>, <code>b = a - b</code> run in order, what are <code>a</code> and <code>b</code>?</span><span data-lang="zh">依次运行 <code>a = 2</code>、<code>b = a + 3</code>、<code>a = b * 2</code>、<code>b = a - b</code> 后，<code>a</code> 和 <code>b</code> 各是多少？</span></summary>
       <div class="sg-a"><p data-lang="en">Trace: <code>a = 2</code>; <code>b = 2 + 3 = 5</code>; <code>a = 5 * 2 = 10</code>; <code>b = 10 - 5 = 5</code>. So <code>a = 10</code> and <code>b = 5</code>.</p><p data-lang="zh">追踪：<code>a = 2</code>；<code>b = 2 + 3 = 5</code>；<code>a = 5 * 2 = 10</code>；<code>b = 10 - 5 = 5</code>。所以 <code>a = 10</code>，<code>b = 5</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A student swaps <code>a = 3</code> and <code>b = 9</code> with <code>a = b</code> then <code>b = a</code>. What do the variables hold, and what is the fix?</span><span data-lang="zh">2. 一名学生用 <code>a = b</code> 再 <code>b = a</code> 来交换 <code>a = 3</code> 和 <code>b = 9</code>。两个变量各保存什么？如何修正？</span></summary>
+      <summary><span data-lang="en">A student swaps <code>a = 3</code> and <code>b = 9</code> with <code>a = b</code> then <code>b = a</code>. What do the variables hold, and what is the fix?</span><span data-lang="zh">一名学生用 <code>a = b</code> 再 <code>b = a</code> 来交换 <code>a = 3</code> 和 <code>b = 9</code>。两个变量各保存什么？如何修正？</span></summary>
       <div class="sg-a"><p data-lang="en">Both hold 9. After <code>a = b</code> the original 3 is overwritten, so <code>b = a</code> copies 9. Fix: save the value first with <code>temp = a</code>, or write <code>a, b = b, a</code>.</p><p data-lang="zh">两者都保存 9。<code>a = b</code> 之后原来的 3 已被覆盖，所以 <code>b = a</code> 复制的是 9。修正：先用 <code>temp = a</code> 保存，或写 <code>a, b = b, a</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A classmate says <code>x = x + 1</code> must be an error because x cannot equal x + 1. Respond.</span><span data-lang="zh">3. 同学说 <code>x = x + 1</code> 一定是错误，因为 x 不可能等于 x + 1。请回应。</span></summary>
+      <summary><span data-lang="en">A classmate says <code>x = x + 1</code> must be an error because x cannot equal x + 1. Respond.</span><span data-lang="zh">同学说 <code>x = x + 1</code> 一定是错误，因为 x 不可能等于 x + 1。请回应。</span></summary>
       <div class="sg-a"><p data-lang="en">The single <code>=</code> is assignment, not an equation. It reads the current x, adds 1 and stores the result back in x. The test <code>x == x + 1</code> is a different statement and is always False.</p><p data-lang="zh">单个 <code>=</code> 是赋值，不是等式。它读取 x 的当前值，加 1，再把结果存回 x。测试 <code>x == x + 1</code> 是另一回事，结果始终为 False。</p></div>
     </details>
   </div>
@@ -842,15 +847,15 @@ print("3" * 3)         # 333</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. State the type and value of <code>10 / 5</code>, <code>10 // 5</code>, <code>2 * 3.0</code> and <code>"2" * 3</code>.</span><span data-lang="zh">1. 写出 <code>10 / 5</code>、<code>10 // 5</code>、<code>2 * 3.0</code> 和 <code>"2" * 3</code> 的类型和值。</span></summary>
+      <summary><span data-lang="en">State the type and value of <code>10 / 5</code>, <code>10 // 5</code>, <code>2 * 3.0</code> and <code>"2" * 3</code>.</span><span data-lang="zh">写出 <code>10 / 5</code>、<code>10 // 5</code>、<code>2 * 3.0</code> 和 <code>"2" * 3</code> 的类型和值。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>10 / 5</code> is the float <code>2.0</code>; <code>10 // 5</code> is the int <code>2</code>; <code>2 * 3.0</code> is the float <code>6.0</code>; <code>"2" * 3</code> is the str <code>"222"</code>.</p><p data-lang="zh"><code>10 / 5</code> 是浮点数 <code>2.0</code>；<code>10 // 5</code> 是整数 <code>2</code>；<code>2 * 3.0</code> 是浮点数 <code>6.0</code>；<code>"2" * 3</code> 是字符串 <code>"222"</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Which type should store a student number such as 004512, and why?</span><span data-lang="zh">2. 像 004512 这样的学号应该用哪种类型存储？为什么？</span></summary>
+      <summary><span data-lang="en">Which type should store a student number such as 004512, and why?</span><span data-lang="zh">像 004512 这样的学号应该用哪种类型存储？为什么？</span></summary>
       <div class="sg-a"><p data-lang="en">A <code>str</code>. A student number is an identifier that is never used in arithmetic, and as an int it would become 4512 and lose its leading zeros.</p><p data-lang="zh"><code>str</code>。学号是不参与算术运算的标识符，存成整数会变成 4512 并丢掉前导零。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Is <code>"False"</code> (with quotes) a bool? What does <code>bool("False")</code> give?</span><span data-lang="zh">3. 带引号的 <code>"False"</code> 是 bool 吗？<code>bool("False")</code> 的结果是什么？</span></summary>
+      <summary><span data-lang="en">Is <code>"False"</code> (with quotes) a bool? What does <code>bool("False")</code> give?</span><span data-lang="zh">带引号的 <code>"False"</code> 是 bool 吗？<code>bool("False")</code> 的结果是什么？</span></summary>
       <div class="sg-a"><p data-lang="en">No, it is a str, because of the quotes. A non-empty string converts to <code>True</code>, so <code>bool("False")</code> is <code>True</code>.</p><p data-lang="zh">不是，加了引号它是字符串。非空字符串转换后为 <code>True</code>，所以 <code>bool("False")</code> 是 <code>True</code>。</p></div>
     </details>
   </div>
@@ -970,15 +975,15 @@ print("done")                    # the line now reads: Loading...done</code></pr
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. The user types 4. What does <code>n = input()</code> followed by <code>print(n + n)</code> print?</span><span data-lang="zh">1. 用户输入 4。<code>n = input()</code> 后接 <code>print(n + n)</code> 会打印什么？</span></summary>
+      <summary><span data-lang="en">The user types 4. What does <code>n = input()</code> followed by <code>print(n + n)</code> print?</span><span data-lang="zh">用户输入 4。<code>n = input()</code> 后接 <code>print(n + n)</code> 会打印什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>44</code>. The value of <code>n</code> is the string <code>"4"</code>, and <code>+</code> joins two strings.</p><p data-lang="zh"><code>44</code>。<code>n</code> 的值是字符串 <code>"4"</code>，而 <code>+</code> 连接两个字符串。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What is printed by <code>print("Hi", end="!")</code> followed by <code>print("there")</code>?</span><span data-lang="zh">2. <code>print("Hi", end="!")</code> 后接 <code>print("there")</code> 会打印什么？</span></summary>
+      <summary><span data-lang="en">What is printed by <code>print("Hi", end="!")</code> followed by <code>print("there")</code>?</span><span data-lang="zh"><code>print("Hi", end="!")</code> 后接 <code>print("there")</code> 会打印什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>Hi!there</code> on one line. The option <code>end="!"</code> replaces the newline that <code>print</code> normally adds.</p><p data-lang="zh">同一行上打印 <code>Hi!there</code>。选项 <code>end="!"</code> 替换了 <code>print</code> 通常添加的换行。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A program runs <code>int(input())</code> and the user types 3.5. Which error occurs, and what is one fix?</span><span data-lang="zh">3. 程序运行 <code>int(input())</code>，用户输入 3.5。会发生什么错误？有什么修复方法？</span></summary>
+      <summary><span data-lang="en">A program runs <code>int(input())</code> and the user types 3.5. Which error occurs, and what is one fix?</span><span data-lang="zh">程序运行 <code>int(input())</code>，用户输入 3.5。会发生什么错误？有什么修复方法？</span></summary>
       <div class="sg-a"><p data-lang="en">A ValueError, because the text <code>"3.5"</code> is not a whole number. Fix: read it with <code>float(input())</code>, or use <code>int(float(input()))</code> to get 3.</p><p data-lang="zh">ValueError，因为文本 <code>"3.5"</code> 不是整数。修复：用 <code>float(input())</code> 读取，或用 <code>int(float(input()))</code> 得到 3。</p></div>
     </details>
   </div>
@@ -1109,15 +1114,15 @@ print(total // 60, total % 60) # 3 20</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Evaluate <code>2 + 3 * 4 ** 2 // 5</code> and show the order of the steps.</span><span data-lang="zh">1. 求 <code>2 + 3 * 4 ** 2 // 5</code> 的值，并写出步骤顺序。</span></summary>
+      <summary><span data-lang="en">Evaluate <code>2 + 3 * 4 ** 2 // 5</code> and show the order of the steps.</span><span data-lang="zh">求 <code>2 + 3 * 4 ** 2 // 5</code> 的值，并写出步骤顺序。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>4 ** 2 = 16</code>; then <code>3 * 16 = 48</code> and <code>48 // 5 = 9</code> (left to right at the same level); then <code>2 + 9 = 11</code>.</p><p data-lang="zh"><code>4 ** 2 = 16</code>；然后 <code>3 * 16 = 48</code>，<code>48 // 5 = 9</code>（同一级别从左到右）；最后 <code>2 + 9 = 11</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What are <code>-7 // 2</code> and <code>-7 % 2</code>?</span><span data-lang="zh">2. <code>-7 // 2</code> 和 <code>-7 % 2</code> 各是多少？</span></summary>
+      <summary><span data-lang="en">What are <code>-7 // 2</code> and <code>-7 % 2</code>?</span><span data-lang="zh"><code>-7 // 2</code> 和 <code>-7 % 2</code> 各是多少？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>-7 // 2 = -4</code> because <code>-3.5</code> rounds down, and <code>-7 % 2 = 1</code>. Check: <code>(-4) * 2 + 1 = -7</code>.</p><p data-lang="zh"><code>-7 // 2 = -4</code>，因为 <code>-3.5</code> 向下取整；<code>-7 % 2 = 1</code>。验算：<code>(-4) * 2 + 1 = -7</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Write an expression that is <code>True</code> when <code>n</code> is a multiple of 3, and give its value for <code>n = 14</code>.</span><span data-lang="zh">3. 写出一个当 <code>n</code> 是 3 的倍数时为 <code>True</code> 的表达式，并给出 <code>n = 14</code> 时它的值。</span></summary>
+      <summary><span data-lang="en">Write an expression that is <code>True</code> when <code>n</code> is a multiple of 3, and give its value for <code>n = 14</code>.</span><span data-lang="zh">写出一个当 <code>n</code> 是 3 的倍数时为 <code>True</code> 的表达式，并给出 <code>n = 14</code> 时它的值。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>n % 3 == 0</code>. For <code>n = 14</code>, <code>14 % 3 = 2</code>, so the expression is <code>False</code>.</p><p data-lang="zh"><code>n % 3 == 0</code>。当 <code>n = 14</code> 时，<code>14 % 3 = 2</code>，所以表达式为 <code>False</code>。</p></div>
     </details>
   </div>
@@ -1238,15 +1243,15 @@ print(str(5) + str(5), int("5") + int("5")) # 55 10</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What happens with <code>int("7.5")</code>, and how do you get the whole-number part 7 from that text?</span><span data-lang="zh">1. <code>int("7.5")</code> 会发生什么？如何从该文本得到整数部分 7？</span></summary>
+      <summary><span data-lang="en">What happens with <code>int("7.5")</code>, and how do you get the whole-number part 7 from that text?</span><span data-lang="zh"><code>int("7.5")</code> 会发生什么？如何从该文本得到整数部分 7？</span></summary>
       <div class="sg-a"><p data-lang="en">It raises a ValueError. Convert in two steps: <code>int(float("7.5"))</code> gives 7.</p><p data-lang="zh">引发 ValueError。分两步转换：<code>int(float("7.5"))</code> 得到 7。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What are <code>round(6.5)</code> and <code>round(7.5)</code>?</span><span data-lang="zh">2. <code>round(6.5)</code> 和 <code>round(7.5)</code> 各是多少？</span></summary>
+      <summary><span data-lang="en">What are <code>round(6.5)</code> and <code>round(7.5)</code>?</span><span data-lang="zh"><code>round(6.5)</code> 和 <code>round(7.5)</code> 各是多少？</span></summary>
       <div class="sg-a"><p data-lang="en">6 and 8. Both are exact halves, and Python 3 rounds an exact half to the nearest even integer.</p><p data-lang="zh">6 和 8。两者都是恰好一半，Python 3 将恰好一半舍入到最接近的偶数。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Compare <code>str(12) + str(3)</code> with <code>12 + 3</code>.</span><span data-lang="zh">3. 比较 <code>str(12) + str(3)</code> 与 <code>12 + 3</code>。</span></summary>
+      <summary><span data-lang="en">Compare <code>str(12) + str(3)</code> with <code>12 + 3</code>.</span><span data-lang="zh">比较 <code>str(12) + str(3)</code> 与 <code>12 + 3</code>。</span></summary>
       <div class="sg-a"><p data-lang="en">The first joins text and gives the str <code>"123"</code>; the second adds numbers and gives the int 15.</p><p data-lang="zh">前者连接文本，得到字符串 <code>"123"</code>；后者做数字加法，得到整数 15。</p></div>
     </details>
   </div>
@@ -1360,15 +1365,15 @@ print(f"Circumference: {circumference:.2f}") # Circumference: 31.42</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Which of <code>total_2</code>, <code>2_total</code>, <code>total 2</code> and <code>total-2</code> are legal names?</span><span data-lang="zh">1. <code>total_2</code>、<code>2_total</code>、<code>total 2</code> 和 <code>total-2</code> 中哪些是合法名称？</span></summary>
+      <summary><span data-lang="en">Which of <code>total_2</code>, <code>2_total</code>, <code>total 2</code> and <code>total-2</code> are legal names?</span><span data-lang="zh"><code>total_2</code>、<code>2_total</code>、<code>total 2</code> 和 <code>total-2</code> 中哪些是合法名称？</span></summary>
       <div class="sg-a"><p data-lang="en">Only <code>total_2</code>. The second starts with a digit, the third contains a space and the fourth contains a hyphen.</p><p data-lang="zh">只有 <code>total_2</code>。第二个以数字开头，第三个含空格，第四个含连字符。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Rewrite <code>fee = days * 0.25</code> so that the number 0.25 has a meaningful name.</span><span data-lang="zh">2. 改写 <code>fee = days * 0.25</code>，使数字 0.25 有一个有意义的名称。</span></summary>
+      <summary><span data-lang="en">Rewrite <code>fee = days * 0.25</code> so that the number 0.25 has a meaningful name.</span><span data-lang="zh">改写 <code>fee = days * 0.25</code>，使数字 0.25 有一个有意义的名称。</span></summary>
       <div class="sg-a"><p data-lang="en"><code>LATE_FEE_PER_DAY = 0.25</code>, then <code>fee = days * LATE_FEE_PER_DAY</code>. A change of rate is now made in one place.</p><p data-lang="zh"><code>LATE_FEE_PER_DAY = 0.25</code>，然后 <code>fee = days * LATE_FEE_PER_DAY</code>。费率变化时只需在一处修改。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A program sets <code>TAX_RATE = 0.13</code> and later <code>TAX_RATE = 0.15</code>. Does Python report an error?</span><span data-lang="zh">3. 程序设置 <code>TAX_RATE = 0.13</code>，之后又设置 <code>TAX_RATE = 0.15</code>。Python 会报错吗？</span></summary>
+      <summary><span data-lang="en">A program sets <code>TAX_RATE = 0.13</code> and later <code>TAX_RATE = 0.15</code>. Does Python report an error?</span><span data-lang="zh">程序设置 <code>TAX_RATE = 0.13</code>，之后又设置 <code>TAX_RATE = 0.15</code>。Python 会报错吗？</span></summary>
       <div class="sg-a"><p data-lang="en">No. Python allows the reassignment, and the second value is used from then on. The upper-case name is a convention that tells readers not to change it.</p><p data-lang="zh">不会。Python 允许重新赋值，此后使用第二个值。全大写名称只是提示读者不要改动它的约定。</p></div>
     </details>
   </div>
@@ -1504,15 +1509,15 @@ abc       ValueError at int(input(...))</code></pre>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What does the program print for 7384 seconds?</span><span data-lang="zh">1. 对于 7384 秒，程序打印什么？</span></summary>
+      <summary><span data-lang="en">What does the program print for 7384 seconds?</span><span data-lang="zh">对于 7384 秒，程序打印什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>7384 // 3600 = 2</code>, the remainder is <code>184</code>, so minutes are <code>184 // 60 = 3</code> and seconds are <code>184 % 60 = 4</code>. It prints <code>02:03:04</code>.</p><p data-lang="zh"><code>7384 // 3600 = 2</code>，余数为 <code>184</code>，所以分钟是 <code>184 // 60 = 3</code>，秒是 <code>184 % 60 = 4</code>。程序打印 <code>02:03:04</code>。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. What does <code>f"{5:02d}"</code> give, and what does <code>f"{12:02d}"</code> give?</span><span data-lang="zh">2. <code>f"{5:02d}"</code> 的结果是什么？<code>f"{12:02d}"</code> 的结果是什么？</span></summary>
+      <summary><span data-lang="en">What does <code>f"{5:02d}"</code> give, and what does <code>f"{12:02d}"</code> give?</span><span data-lang="zh"><code>f"{5:02d}"</code> 的结果是什么？<code>f"{12:02d}"</code> 的结果是什么？</span></summary>
       <div class="sg-a"><p data-lang="en"><code>"05"</code> and <code>"12"</code>. The field pads with a zero only when the number has fewer than two digits.</p><p data-lang="zh"><code>"05"</code> 和 <code>"12"</code>。只有当数字不足两位时，该字段才用零补齐。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Give two edge-case inputs for the seconds program with the output you expect for each.</span><span data-lang="zh">3. 为秒数换算程序给出两个边界情况输入，并写出各自预期的输出。</span></summary>
+      <summary><span data-lang="en">Give two edge-case inputs for the seconds program with the output you expect for each.</span><span data-lang="zh">为秒数换算程序给出两个边界情况输入，并写出各自预期的输出。</span></summary>
       <div class="sg-a"><p data-lang="en">For example <code>0</code> should print <code>00:00:00</code>, and <code>86399</code> should print <code>23:59:59</code>. Other good choices are <code>59</code> and <code>3600</code>.</p><p data-lang="zh">例如 <code>0</code> 应打印 <code>00:00:00</code>，<code>86399</code> 应打印 <code>23:59:59</code>。其他合适的选择还有 <code>59</code> 和 <code>3600</code>。</p></div>
     </details>
   </div>

@@ -458,6 +458,11 @@ body.lang-zh       [data-lang="en"] { display: none; }
 .sg-examtip p { margin: 0; }
 .sg-check details.sg-q { margin: 8px 0; box-shadow: none; }
 .sg-check details.sg-q summary { font-weight: 600; }
+.sg-check { counter-reset: sg-q; }
+.sg-check details.sg-q { counter-increment: sg-q; }
+.sg-check details.sg-q > summary { align-items: baseline; }
+.sg-check details.sg-q > summary::before { order: -2; }
+.sg-check details.sg-q > summary::after { content: counter(sg-q) "."; order: -1; flex: none; }
 .sg-check .sg-a { padding: 12px 16px; font-size: 0.95rem; color: var(--text); }
 .sg-check .sg-a p { margin: 0 0 6px; }
 /* Shared rules that replace per-element inline styles in older guides (systemized 2026-11-05):
@@ -671,19 +676,19 @@ body.lang-zh       [data-lang="en"] { display: none; }
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Define LAN and WAN, and say which one the Internet is.</span><span data-lang="zh">1. 定义局域网和广域网，并说明互联网属于哪一种。</span></summary>
+      <summary><span data-lang="en">Define LAN and WAN, and say which one the Internet is.</span><span data-lang="zh">定义局域网和广域网，并说明互联网属于哪一种。</span></summary>
       <div class="sg-a"><p data-lang="en">A LAN (local area network) covers a small area such as one building or campus and is usually privately owned. A WAN (wide area network) spans a large area and links LANs together. The Internet is the largest WAN.</p><p data-lang="zh">局域网（LAN）覆盖一栋建筑或一个校园这样的小范围，通常是私有的。广域网（WAN）跨越大范围，把多个局域网连在一起。互联网是最大的广域网。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A hospital has 200 devices in one building, all connected through switches. Is this a LAN or a WAN? Why?</span><span data-lang="zh">2. 一家医院在同一栋楼里有 200 台设备，全部通过交换机相连。这是局域网还是广域网？为什么？</span></summary>
+      <summary><span data-lang="en">A hospital has 200 devices in one building, all connected through switches. Is this a LAN or a WAN? Why?</span><span data-lang="zh">一家医院在同一栋楼里有 200 台设备，全部通过交换机相连。这是局域网还是广域网？为什么？</span></summary>
       <div class="sg-a"><p data-lang="en">It is a LAN. What matters is geographic scope and ownership (one building, privately owned), not the number of devices. If the hospital also linked three buildings across the city with leased lines, those long links would form a WAN.</p><p data-lang="zh">这是局域网。关键是地理范围和所有权（一栋楼、私有），而不是设备数量。如果医院再用专线连接全城的三栋楼，这些远距离链路就构成广域网。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. How many links does a ring of 8 devices need, and how many does a full mesh of 8 devices need? Which one is more expensive?</span><span data-lang="zh">3. 8 台设备的环型拓扑需要多少条链路？8 台设备的全网状拓扑呢？哪个更贵？</span></summary>
+      <summary><span data-lang="en">How many links does a ring of 8 devices need, and how many does a full mesh of 8 devices need? Which one is more expensive?</span><span data-lang="zh">8 台设备的环型拓扑需要多少条链路？8 台设备的全网状拓扑呢？哪个更贵？</span></summary>
       <div class="sg-a"><p data-lang="en">Ring: each device connects to the next and the last connects back to the first, so 8 links. Full mesh: 8 &times; 7 &divide; 2 = 28 links. The mesh is more expensive (3.5 times the links) but has many alternative paths.</p><p data-lang="zh">环型：每台设备连到下一台，最后一台再连回第一台，共 8 条链路。全网状：8 &times; 7 &divide; 2 = 28 条链路。网状更贵（链路是环型的 3.5 倍），但有很多备用路径。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. A small clinic wants to add devices easily, and a broken cable should disconnect only one device. Which topology fits, and what is its weakness?</span><span data-lang="zh">4. 一家小诊所希望方便地增加设备，并且一条线缆断了只应让一台设备断网。哪种拓扑合适？它的弱点是什么？</span></summary>
+      <summary><span data-lang="en">A small clinic wants to add devices easily, and a broken cable should disconnect only one device. Which topology fits, and what is its weakness?</span><span data-lang="zh">一家小诊所希望方便地增加设备，并且一条线缆断了只应让一台设备断网。哪种拓扑合适？它的弱点是什么？</span></summary>
       <div class="sg-a"><p data-lang="en">A star topology. Each device has its own cable to the switch, so adding a device means one new cable and a broken cable affects one device. The weakness is the central switch, a single point of failure.</p><p data-lang="zh">星型拓扑。每台设备都有一条自己的线缆连到交换机，所以增加设备只需一条新线缆，一条线缆断了只影响一台设备。弱点是中央交换机，它是单点故障。</p></div>
     </details>
   </div>
@@ -816,19 +821,19 @@ print("plus 40 ms latency (s):", round(real_s + 0.040, 4))
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. A 12 MB file (1 MB = 1,000,000 bytes) is downloaded over a 96 Mbps connection. What is the ideal download time?</span><span data-lang="zh">1. 一个 12 MB 的文件（1 MB = 1,000,000 字节）通过 96 Mbps 的连接下载。理想下载时间是多少？</span></summary>
+      <summary><span data-lang="en">A 12 MB file (1 MB = 1,000,000 bytes) is downloaded over a 96 Mbps connection. What is the ideal download time?</span><span data-lang="zh">一个 12 MB 的文件（1 MB = 1,000,000 字节）通过 96 Mbps 的连接下载。理想下载时间是多少？</span></summary>
       <div class="sg-a"><p data-lang="en">12 MB = 12,000,000 bytes &times; 8 = 96,000,000 bits. Time = 96,000,000 &divide; 96,000,000 = 1.0 s. (96 Mbps is 12 MB/s, so 12 MB takes 1 s.)</p><p data-lang="zh">12 MB = 12,000,000 字节 &times; 8 = 96,000,000 比特。时间 = 96,000,000 &divide; 96,000,000 = 1.0 秒。（96 Mbps 等于 12 MB/s，所以 12 MB 需要 1 秒。）</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A message of 10,000 bytes is split into packets with at most 1,460 bytes of data each. How many packets are needed, and how big is the last one?</span><span data-lang="zh">2. 一条 10,000 字节的消息被拆成数据包，每个包最多携带 1,460 字节数据。需要多少个数据包？最后一个有多大？</span></summary>
+      <summary><span data-lang="en">A message of 10,000 bytes is split into packets with at most 1,460 bytes of data each. How many packets are needed, and how big is the last one?</span><span data-lang="zh">一条 10,000 字节的消息被拆成数据包，每个包最多携带 1,460 字节数据。需要多少个数据包？最后一个有多大？</span></summary>
       <div class="sg-a"><p data-lang="en">10,000 &divide; 1,460 = 6.85, rounded up to 7 packets. Six full packets carry 6 &times; 1,460 = 8,760 bytes, so the last packet carries 10,000 &minus; 8,760 = 1,240 bytes of data.</p><p data-lang="zh">10,000 &divide; 1,460 = 6.85，向上取整为 7 个数据包。6 个满包携带 6 &times; 1,460 = 8,760 字节，所以最后一个包携带 10,000 &minus; 8,760 = 1,240 字节数据。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. One 1,500-byte packet crosses a link with latency 40 ms. Compare the total delay at 8 Mbps and at 80 Mbps. Does ten times the bandwidth give ten times faster delivery?</span><span data-lang="zh">3. 一个 1,500 字节的数据包通过延迟为 40 ms 的链路。比较 8 Mbps 和 80 Mbps 时的总延迟。带宽增加十倍，送达速度会快十倍吗？</span></summary>
+      <summary><span data-lang="en">One 1,500-byte packet crosses a link with latency 40 ms. Compare the total delay at 8 Mbps and at 80 Mbps. Does ten times the bandwidth give ten times faster delivery?</span><span data-lang="zh">一个 1,500 字节的数据包通过延迟为 40 ms 的链路。比较 8 Mbps 和 80 Mbps 时的总延迟。带宽增加十倍，送达速度会快十倍吗？</span></summary>
       <div class="sg-a"><p data-lang="en">Sending time = 1,500 &times; 8 &divide; bandwidth: 1.5 ms at 8 Mbps and 0.15 ms at 80 Mbps. Total delay = 40 + 1.5 = 41.5 ms versus 40 + 0.15 = 40.15 ms. No: latency dominates for a small message, so the delivery time barely changes.</p><p data-lang="zh">发送时间 = 1,500 &times; 8 &divide; 带宽：8 Mbps 时为 1.5 ms，80 Mbps 时为 0.15 ms。总延迟 = 40 + 1.5 = 41.5 ms 对 40 + 0.15 = 40.15 ms。不会：对小消息来说延迟占主导，所以送达时间几乎不变。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Packets 3, 1, 2 of a file arrive in that order, and packet 2 is damaged and dropped. What does the receiver do?</span><span data-lang="zh">4. 一个文件的数据包按 3、1、2 的顺序到达，其中包 2 损坏并被丢弃。接收方怎么做？</span></summary>
+      <summary><span data-lang="en">Packets 3, 1, 2 of a file arrive in that order, and packet 2 is damaged and dropped. What does the receiver do?</span><span data-lang="zh">一个文件的数据包按 3、1、2 的顺序到达，其中包 2 损坏并被丢弃。接收方怎么做？</span></summary>
       <div class="sg-a"><p data-lang="en">It uses the sequence numbers to put the packets in order, notices that packet 2 is missing or unacknowledged, and the sender retransmits only packet 2. The other packets are not resent.</p><p data-lang="zh">接收方用序列号给数据包排序，发现包 2 缺失或未被确认，发送方只重传包 2。其他数据包不用重发。</p></div>
     </details>
   </div>
@@ -945,19 +950,19 @@ print(int(ipaddress.ip_address("192.168.1.1")))
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What does DNS do, and why can the Internet not simply use domain names to route packets?</span><span data-lang="zh">1. DNS 的作用是什么？为什么互联网不能直接用域名来路由数据包？</span></summary>
+      <summary><span data-lang="en">What does DNS do, and why can the Internet not simply use domain names to route packets?</span><span data-lang="zh">DNS 的作用是什么？为什么互联网不能直接用域名来路由数据包？</span></summary>
       <div class="sg-a"><p data-lang="en">DNS translates a human-readable domain name such as example.com into an IP address. Routers forward packets by IP address, so a browser must look the name up first.</p><p data-lang="zh">DNS 把 example.com 这样便于人读的域名翻译成 IP 地址。路由器按 IP 地址转发数据包，所以浏览器必须先查询域名。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Which of these are valid IPv4 addresses: 172.16.254.1, 10.0.0.256, 192.168.1, 8.8.8.8?</span><span data-lang="zh">2. 下列哪些是有效的 IPv4 地址：172.16.254.1、10.0.0.256、192.168.1、8.8.8.8？</span></summary>
+      <summary><span data-lang="en">Which of these are valid IPv4 addresses: 172.16.254.1, 10.0.0.256, 192.168.1, 8.8.8.8?</span><span data-lang="zh">下列哪些是有效的 IPv4 地址：172.16.254.1、10.0.0.256、192.168.1、8.8.8.8？</span></summary>
       <div class="sg-a"><p data-lang="en">172.16.254.1 and 8.8.8.8 are valid. 10.0.0.256 is invalid because 256 is greater than 255. 192.168.1 is invalid because it has only three numbers instead of four.</p><p data-lang="zh">172.16.254.1 和 8.8.8.8 有效。10.0.0.256 无效，因为 256 大于 255。192.168.1 无效，因为只有三个数字而不是四个。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. How many usable hosts does a /27 subnet have? What is the smallest prefix that fits 50 devices?</span><span data-lang="zh">3. /27 子网有多少个可用主机？能容纳 50 台设备的最小前缀是什么？</span></summary>
+      <summary><span data-lang="en">How many usable hosts does a /27 subnet have? What is the smallest prefix that fits 50 devices?</span><span data-lang="zh">/27 子网有多少个可用主机？能容纳 50 台设备的最小前缀是什么？</span></summary>
       <div class="sg-a"><p data-lang="en">/27 leaves 32 &minus; 27 = 5 host bits: 2<sup>5</sup> &minus; 2 = 30 usable hosts, too few for 50. /26 leaves 6 host bits: 2<sup>6</sup> &minus; 2 = 62 usable hosts, enough. The smallest prefix that fits is /26.</p><p data-lang="zh">/27 留 32 &minus; 27 = 5 个主机位：2<sup>5</sup> &minus; 2 = 30 台可用主机，容不下 50 台。/26 留 6 个主机位：2<sup>6</sup> &minus; 2 = 62 台可用主机，够用。能容纳的最小前缀是 /26。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. A resolver already has www.example.com in its cache. How does the next lookup differ from the first one?</span><span data-lang="zh">4. 解析器的缓存里已经有 www.example.com。下一次查找与第一次有什么不同？</span></summary>
+      <summary><span data-lang="en">A resolver already has www.example.com in its cache. How does the next lookup differ from the first one?</span><span data-lang="zh">解析器的缓存里已经有 www.example.com。下一次查找与第一次有什么不同？</span></summary>
       <div class="sg-a"><p data-lang="en">The resolver answers straight from its cache, so it skips the queries to the root, TLD and authoritative servers. The reply is faster, but it is only valid until the cached record expires.</p><p data-lang="zh">解析器直接用缓存回答，跳过对根服务器、顶级域服务器和权威服务器的查询。回复更快，但只在缓存记录过期之前有效。</p></div>
     </details>
   </div>
@@ -1077,19 +1082,19 @@ print(int(ipaddress.ip_address("192.168.1.1")))
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. What is a port, and why do HTTP and HTTPS use different ones?</span><span data-lang="zh">1. 什么是端口？为什么 HTTP 和 HTTPS 使用不同的端口？</span></summary>
+      <summary><span data-lang="en">What is a port, and why do HTTP and HTTPS use different ones?</span><span data-lang="zh">什么是端口？为什么 HTTP 和 HTTPS 使用不同的端口？</span></summary>
       <div class="sg-a"><p data-lang="en">An IP address finds the machine; a port number says which program on that machine should receive the data. By convention HTTP uses port 80 and HTTPS uses port 443, so the server can tell plain and encrypted web traffic apart.</p><p data-lang="zh">IP 地址找到那台机器；端口号说明该机器上哪个程序应接收数据。按惯例 HTTP 使用 80 端口，HTTPS 使用 443 端口，所以服务器能区分普通和加密的网页流量。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. List the three steps of the TCP handshake in order and say what they achieve.</span><span data-lang="zh">2. 按顺序列出 TCP 握手的三个步骤，并说明它们的作用。</span></summary>
+      <summary><span data-lang="en">List the three steps of the TCP handshake in order and say what they achieve.</span><span data-lang="zh">按顺序列出 TCP 握手的三个步骤，并说明它们的作用。</span></summary>
       <div class="sg-a"><p data-lang="en">SYN (client asks to connect), SYN-ACK (server agrees and acknowledges), ACK (client acknowledges). Both sides now know the other is reachable and have agreed starting sequence numbers, so delivery can be tracked and reordered.</p><p data-lang="zh">SYN（客户端请求连接）、SYN-ACK（服务器同意并确认）、ACK（客户端确认）。双方现在都知道对方可达，并约定了起始序列号，因此可以跟踪送达和重新排序。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A multiplayer game sends each player's position 60 times a second. Should it use TCP or UDP? Explain.</span><span data-lang="zh">3. 一个多人游戏每秒发送 60 次玩家位置。应该用 TCP 还是 UDP？请解释。</span></summary>
+      <summary><span data-lang="en">A multiplayer game sends each player's position 60 times a second. Should it use TCP or UDP? Explain.</span><span data-lang="zh">一个多人游戏每秒发送 60 次玩家位置。应该用 TCP 还是 UDP？请解释。</span></summary>
       <div class="sg-a"><p data-lang="en">UDP. If one position update is lost, the next one arrives 1/60 s later and replaces it. With TCP, newer updates would wait behind the retransmission of the old one, making the game stutter.</p><p data-lang="zh">UDP。如果丢了一次位置更新，1/60 秒后下一次更新就会到达并取代它。用 TCP 的话，较新的更新要排在旧更新的重传后面，游戏会卡顿。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Does HTTPS hide which server you are visiting from the network?</span><span data-lang="zh">4. HTTPS 会向网络隐藏你正在访问哪台服务器吗？</span></summary>
+      <summary><span data-lang="en">Does HTTPS hide which server you are visiting from the network?</span><span data-lang="zh">HTTPS 会向网络隐藏你正在访问哪台服务器吗？</span></summary>
       <div class="sg-a"><p data-lang="en">No. HTTPS encrypts the content of the conversation (pages, passwords, form data), but the network can still see the server's IP address and usually the domain name. Encryption in transit hides what is said, not who is talking.</p><p data-lang="zh">不会。HTTPS 加密的是通信内容（页面、密码、表单数据），但网络仍然能看到服务器的 IP 地址，通常也能看到域名。传输加密隐藏的是说了什么，而不是谁在通信。</p></div>
     </details>
   </div>
@@ -1259,19 +1264,19 @@ print("overhead share:", round((frame - data) / frame * 100, 1), "%")
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. At which OSI layer does a router work, and which address does it read? What about a switch?</span><span data-lang="zh">1. 路由器工作在 OSI 的哪一层？它读取哪种地址？交换机呢？</span></summary>
+      <summary><span data-lang="en">At which OSI layer does a router work, and which address does it read? What about a switch?</span><span data-lang="zh">路由器工作在 OSI 的哪一层？它读取哪种地址？交换机呢？</span></summary>
       <div class="sg-a"><p data-lang="en">A router works at layer 3 (Network) and reads the destination IP address. A switch works at layer 2 (Data Link) and forwards frames by their MAC address.</p><p data-lang="zh">路由器工作在第 3 层（网络层），读取目标 IP 地址。交换机工作在第 2 层（数据链路层），按 MAC 地址转发帧。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. An application sends a 1,000-byte message. TCP adds 20 bytes, IP adds 20 bytes, and Ethernet adds 14 + 4 bytes. How big is the frame?</span><span data-lang="zh">2. 一个应用发送 1,000 字节的消息。TCP 增加 20 字节，IP 增加 20 字节，以太网增加 14 + 4 字节。帧有多大？</span></summary>
+      <summary><span data-lang="en">An application sends a 1,000-byte message. TCP adds 20 bytes, IP adds 20 bytes, and Ethernet adds 14 + 4 bytes. How big is the frame?</span><span data-lang="zh">一个应用发送 1,000 字节的消息。TCP 增加 20 字节，IP 增加 20 字节，以太网增加 14 + 4 字节。帧有多大？</span></summary>
       <div class="sg-a"><p data-lang="en">1,000 + 20 = 1,020 after TCP; 1,020 + 20 = 1,040 after IP; 1,040 + 14 + 4 = 1,058 bytes after Ethernet. The overhead is 58 bytes.</p><p data-lang="zh">TCP 之后 1,000 + 20 = 1,020；IP 之后 1,020 + 20 = 1,040；以太网之后 1,040 + 14 + 4 = 1,058 字节。开销是 58 字节。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Which TCP/IP layer replaces OSI layers 5, 6 and 7, and why is layering useful?</span><span data-lang="zh">3. TCP/IP 的哪一层取代了 OSI 的第 5、6、7 层？分层为什么有用？</span></summary>
+      <summary><span data-lang="en">Which TCP/IP layer replaces OSI layers 5, 6 and 7, and why is layering useful?</span><span data-lang="zh">TCP/IP 的哪一层取代了 OSI 的第 5、6、7 层？分层为什么有用？</span></summary>
       <div class="sg-a"><p data-lang="en">The Application layer. Layering is useful because each layer does one job and talks only to the layers next to it, so one layer (for example Wi-Fi instead of Ethernet) can change without rewriting the others.</p><p data-lang="zh">应用层。分层有用，因为每一层只做一件事，只与相邻的层通信，所以可以更换其中一层（例如用 Wi-Fi 代替以太网）而不用重写其他层。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Give the OSI layer number for DNS, TCP, IP, Wi-Fi and TLS (use this guide's table).</span><span data-lang="zh">4. 写出 DNS、TCP、IP、Wi-Fi 和 TLS 所在的 OSI 层号（按本指南的表格）。</span></summary>
+      <summary><span data-lang="en">Give the OSI layer number for DNS, TCP, IP, Wi-Fi and TLS (use this guide's table).</span><span data-lang="zh">写出 DNS、TCP、IP、Wi-Fi 和 TLS 所在的 OSI 层号（按本指南的表格）。</span></summary>
       <div class="sg-a"><p data-lang="en">DNS: layer 7 (Application). TCP: layer 4 (Transport). IP: layer 3 (Network). Wi-Fi: layer 2 (Data Link). TLS: layer 6 (Presentation).</p><p data-lang="zh">DNS：第 7 层（应用层）。TCP：第 4 层（传输层）。IP：第 3 层（网络层）。Wi-Fi：第 2 层（数据链路层）。TLS：第 6 层（表示层）。</p></div>
     </details>
   </div>
@@ -1425,19 +1430,19 @@ for protocol, port in packets:
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Name the malware: (a) a free game that secretly installs a program, (b) a program that copies itself to other computers across the network with no host file, (c) a program that locks your files and demands payment.</span><span data-lang="zh">1. 说出下列恶意软件的名称：（a）免费游戏，却悄悄安装了另一个程序；（b）无需宿主文件，自己通过网络复制到其他计算机；（c）锁住你的文件并索要赎金。</span></summary>
+      <summary><span data-lang="en">Name the malware: (a) a free game that secretly installs a program, (b) a program that copies itself to other computers across the network with no host file, (c) a program that locks your files and demands payment.</span><span data-lang="zh">说出下列恶意软件的名称：（a）免费游戏，却悄悄安装了另一个程序；（b）无需宿主文件，自己通过网络复制到其他计算机；（c）锁住你的文件并索要赎金。</span></summary>
       <div class="sg-a"><p data-lang="en">(a) Trojan. (b) Worm. (c) Ransomware.</p><p data-lang="zh">（a）木马。（b）蠕虫。（c）勒索软件。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. A page loads over HTTPS. Does that prove the site is trustworthy and safe to download from?</span><span data-lang="zh">2. 一个页面通过 HTTPS 加载。这能证明该网站可信、下载是安全的吗？</span></summary>
+      <summary><span data-lang="en">A page loads over HTTPS. Does that prove the site is trustworthy and safe to download from?</span><span data-lang="zh">一个页面通过 HTTPS 加载。这能证明该网站可信、下载是安全的吗？</span></summary>
       <div class="sg-a"><p data-lang="en">No. HTTPS encrypts the data in transit so eavesdroppers cannot read it, but it does not check what the site does. A harmful site can also use HTTPS, so a Trojan can still arrive over an encrypted connection.</p><p data-lang="zh">不能。HTTPS 加密传输中的数据，窃听者无法读取，但它不检查网站做了什么。有害网站也可以使用 HTTPS，所以木马仍可能通过加密连接到达。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. Recommend one measure against ransomware on a school network and state its tradeoff.</span><span data-lang="zh">3. 针对学校网络上的勒索软件推荐一项措施，并说明其权衡。</span></summary>
+      <summary><span data-lang="en">Recommend one measure against ransomware on a school network and state its tradeoff.</span><span data-lang="zh">针对学校网络上的勒索软件推荐一项措施，并说明其权衡。</span></summary>
       <div class="sg-a"><p data-lang="en">Regular offline backups: after an attack the files can be restored without paying. Tradeoff: storage cost, and restoring takes time, so recent work since the last backup can be lost. Keeping software patched is a second measure that costs staff time.</p><p data-lang="zh">定期离线备份：遭到攻击后无需付赎金即可恢复文件。权衡：存储成本，而且恢复需要时间，上次备份之后的新工作可能丢失。保持软件及时打补丁是第二项措施，需要付出维护人员的时间。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Using the firewall from Worked Example 12, how many of the 5 packets are allowed? How many if "block everything" is moved to the top?</span><span data-lang="zh">4. 使用例题 12 中的防火墙，5 个数据包中有几个被允许？如果把“拦截所有”移到最上面，有几个被允许？</span></summary>
+      <summary><span data-lang="en">Using the firewall from Worked Example 12, how many of the 5 packets are allowed? How many if "block everything" is moved to the top?</span><span data-lang="zh">使用例题 12 中的防火墙，5 个数据包中有几个被允许？如果把“拦截所有”移到最上面，有几个被允许？</span></summary>
       <div class="sg-a"><p data-lang="en">3 are allowed (TCP 443, UDP 53, TCP 80). With "block everything" first, every packet matches it first, so 0 are allowed.</p><p data-lang="zh">3 个被允许（TCP 443、UDP 53、TCP 80）。如果“拦截所有”排在第一位，每个包都先匹配它，所以 0 个被允许。</p></div>
     </details>
   </div>
@@ -1581,19 +1586,19 @@ print("port given:", plain.port)
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
-      <summary><span data-lang="en">1. Which of these are the Web, and which are Internet services that are not the Web: email, a school web page, an online game, file transfer (FTP)?</span><span data-lang="zh">1. 下列哪些属于万维网，哪些是不属于万维网的互联网服务：电子邮件、学校网页、在线游戏、文件传输（FTP）？</span></summary>
+      <summary><span data-lang="en">Which of these are the Web, and which are Internet services that are not the Web: email, a school web page, an online game, file transfer (FTP)?</span><span data-lang="zh">下列哪些属于万维网，哪些是不属于万维网的互联网服务：电子邮件、学校网页、在线游戏、文件传输（FTP）？</span></summary>
       <div class="sg-a"><p data-lang="en">The school web page is the Web (HTTP/HTTPS). Email, the online game and FTP are Internet services that are not the Web; they use their own protocols over the same Internet.</p><p data-lang="zh">学校网页属于万维网（HTTP/HTTPS）。电子邮件、在线游戏和 FTP 是不属于万维网的互联网服务；它们在同一个互联网上使用各自的协议。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">2. Label the parts of <code>http://school.ca/grades?term=1&amp;sort=name#top</code> and give the default port.</span><span data-lang="zh">2. 标出 <code>http://school.ca/grades?term=1&amp;sort=name#top</code> 的各个部分，并给出默认端口。</span></summary>
+      <summary><span data-lang="en">Label the parts of <code>http://school.ca/grades?term=1&amp;sort=name#top</code> and give the default port.</span><span data-lang="zh">标出 <code>http://school.ca/grades?term=1&amp;sort=name#top</code> 的各个部分，并给出默认端口。</span></summary>
       <div class="sg-a"><p data-lang="en">Scheme: http. Host: school.ca. Path: /grades. Query: term=1&amp;sort=name. Fragment: top. No port is written, so the browser uses the default for http, which is 80.</p><p data-lang="zh">协议：http。主机：school.ca。路径：/grades。查询：term=1&amp;sort=name。片段：top。没有写端口，所以浏览器使用 http 的默认端口 80。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">3. A browser shows "404 Not Found". Did the network fail?</span><span data-lang="zh">3. 浏览器显示“404 Not Found”。是网络出了故障吗？</span></summary>
+      <summary><span data-lang="en">A browser shows "404 Not Found". Did the network fail?</span><span data-lang="zh">浏览器显示“404 Not Found”。是网络出了故障吗？</span></summary>
       <div class="sg-a"><p data-lang="en">No. The network worked: the request reached the server and the server answered. The answer says the requested path does not exist on the server. A status of 200 OK would mean the request succeeded.</p><p data-lang="zh">不是。网络是正常的：请求到达了服务器，服务器也作了回应。回应说明请求的路径在服务器上不存在。状态码 200 OK 才表示请求成功。</p></div>
     </details>
     <details class="sg-q">
-      <summary><span data-lang="en">4. Put these in order when you open https://school.ca: HTTP request, TLS handshake, DNS lookup, TCP handshake.</span><span data-lang="zh">4. 打开 https://school.ca 时，把下列步骤排序：HTTP 请求、TLS 握手、DNS 查找、TCP 握手。</span></summary>
+      <summary><span data-lang="en">Put these in order when you open https://school.ca: HTTP request, TLS handshake, DNS lookup, TCP handshake.</span><span data-lang="zh">打开 https://school.ca 时，把下列步骤排序：HTTP 请求、TLS 握手、DNS 查找、TCP 握手。</span></summary>
       <div class="sg-a"><p data-lang="en">1. DNS lookup (find the IP address). 2. TCP handshake (open the connection). 3. TLS handshake (agree on encryption). 4. HTTP request (ask for the page, encrypted).</p><p data-lang="zh">1. DNS 查找（找到 IP 地址）。2. TCP 握手（建立连接）。3. TLS 握手（约定加密）。4. HTTP 请求（请求页面，已加密）。</p></div>
     </details>
   </div>
