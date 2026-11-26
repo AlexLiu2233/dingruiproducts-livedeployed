@@ -736,20 +736,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -778,8 +786,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -803,7 +811,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -824,7 +832,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -837,7 +845,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 1</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -1423,6 +1432,73 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$v_x^2 = v_{x0}^2 + 2a_x(x - x_0)$$
   </div>
 
+  <h3><span data-lang="en">First Principles: Equations 1 and 2 from Constant Acceleration</span><span data-lang="zh">第一性原理：由匀加速得到方程 1 与方程 2</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $\tfrac{1}{2}a_x t^2$ appears</span><span data-lang="zh">第一性原理：为什么会出现 $\tfrac{1}{2}a_x t^2$</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Acceleration is the rate of change of velocity, and velocity is the rate of change of position. Take $a_x$ constant and start the clock at $t=0$.</p>
+    <p data-lang="zh"><strong>原理。</strong>加速度是速度的变化率，速度是位置的变化率。取 $a_x$ 为常数，并从 $t=0$ 开始计时。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Integrate the acceleration: $v_x(t)=v_{x0}+\displaystyle\int_0^t a_x\,dt'=v_{x0}+a_x t$ (Equation 1).</li>
+      <li>Integrate the velocity: $x(t)=x_0+\displaystyle\int_0^t (v_{x0}+a_x t')\,dt'$.</li>
+      <li>The integral of $a_x t'$ is $\tfrac{1}{2}a_x t^2$, so $x=x_0+v_{x0}t+\tfrac{1}{2}a_x t^2$ (Equation 2).</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>对加速度积分：$v_x(t)=v_{x0}+\displaystyle\int_0^t a_x\,dt'=v_{x0}+a_x t$（方程 1）。</li>
+      <li>对速度积分：$x(t)=x_0+\displaystyle\int_0^t (v_{x0}+a_x t')\,dt'$。</li>
+      <li>$a_x t'$ 的积分是 $\tfrac{1}{2}a_x t^2$，所以 $x=x_0+v_{x0}t+\tfrac{1}{2}a_x t^2$（方程 2）。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>Constant $a_x$ makes the $v$-$t$ graph a straight line of slope $a_x$: $a_x=\dfrac{v_x-v_{x0}}{t}$, so $v_x=v_{x0}+a_x t$ (Equation 1).</li>
+      <li>Displacement is the area under that line: a rectangle of height $v_{x0}$ plus a triangle of height $a_x t$, both of width $t$.</li>
+      <li>Add the areas: $\Delta x=v_{x0}t+\tfrac{1}{2}(a_x t)(t)=v_{x0}t+\tfrac{1}{2}a_x t^2$ (Equation 2). The $\tfrac{1}{2}$ is the triangle's.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>$a_x$ 恒定时，$v$-$t$ 图是斜率为 $a_x$ 的直线：$a_x=\dfrac{v_x-v_{x0}}{t}$，所以 $v_x=v_{x0}+a_x t$（方程 1）。</li>
+      <li>位移等于这条直线下方的面积：高为 $v_{x0}$ 的矩形，加上高为 $a_x t$ 的三角形，两者宽度都是 $t$。</li>
+      <li>面积相加：$\Delta x=v_{x0}t+\tfrac{1}{2}(a_x t)(t)=v_{x0}t+\tfrac{1}{2}a_x t^2$（方程 2）。$\tfrac{1}{2}$ 来自三角形。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> Set $a_x=0$: Equation 2 becomes $x=x_0+v_{x0}t$, uniform motion. Units: $(\mathrm{m/s^2})(\mathrm{s^2})=\mathrm{m}$, so every term is a length.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>令 $a_x=0$：方程 2 变为 $x=x_0+v_{x0}t$，即匀速运动。单位：$(\mathrm{m/s^2})(\mathrm{s^2})=\mathrm{m}$，每一项都是长度。</p>
+    <p><a href="https://www.feynmanlectures.caltech.edu/I_08.html" target="_blank" rel="noopener"><span data-lang="en">Feynman Lectures, Vol. I, Ch. 8 (Motion): how speed and distance are defined from timing a moving object</span><span data-lang="zh">费曼物理学讲义第一卷第 8 章（运动）：如何通过给运动物体计时来定义速率与距离</span></a></p>
+  </div>
+
+  <h3><span data-lang="en">First Principles: Equation 3 Without Time</span><span data-lang="zh">第一性原理：不含时间的方程 3</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: eliminating $t$</span><span data-lang="zh">第一性原理：消去 $t$</span></div>
+    <p data-lang="en"><strong>Principle.</strong> With constant $a_x$, velocity changes linearly in time, so the average velocity over an interval is the mean of its end values: $\bar{v}_x=\tfrac{1}{2}(v_{x0}+v_x)$.</p>
+    <p data-lang="zh"><strong>原理。</strong>$a_x$ 恒定时，速度随时间线性变化，所以一段时间内的平均速度等于始末速度的平均值：$\bar{v}_x=\tfrac{1}{2}(v_{x0}+v_x)$。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Chain rule: $a_x=\dfrac{dv_x}{dt}=\dfrac{dv_x}{dx}\dfrac{dx}{dt}=v_x\dfrac{dv_x}{dx}$.</li>
+      <li>Separate and integrate: $\displaystyle\int_{v_{x0}}^{v_x}v'\,dv'=a_x\int_{x_0}^{x}dx'$.</li>
+      <li>So $\tfrac{1}{2}(v_x^2-v_{x0}^2)=a_x(x-x_0)$, which is $v_x^2=v_{x0}^2+2a_x(x-x_0)$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>链式法则（<code>chain rule</code>）：$a_x=\dfrac{dv_x}{dt}=\dfrac{dv_x}{dx}\dfrac{dx}{dt}=v_x\dfrac{dv_x}{dx}$。</li>
+      <li>分离变量并积分：$\displaystyle\int_{v_{x0}}^{v_x}v'\,dv'=a_x\int_{x_0}^{x}dx'$。</li>
+      <li>于是 $\tfrac{1}{2}(v_x^2-v_{x0}^2)=a_x(x-x_0)$，即 $v_x^2=v_{x0}^2+2a_x(x-x_0)$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>Displacement is average velocity times time: $\Delta x=\tfrac{1}{2}(v_{x0}+v_x)\,t$.</li>
+      <li>Equation 1 gives the time: $t=\dfrac{v_x-v_{x0}}{a_x}$.</li>
+      <li>Substitute: $\Delta x=\dfrac{(v_x+v_{x0})(v_x-v_{x0})}{2a_x}=\dfrac{v_x^2-v_{x0}^2}{2a_x}$, so $v_x^2=v_{x0}^2+2a_x\Delta x$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>位移等于平均速度乘时间：$\Delta x=\tfrac{1}{2}(v_{x0}+v_x)\,t$。</li>
+      <li>由方程 1 得时间：$t=\dfrac{v_x-v_{x0}}{a_x}$。</li>
+      <li>代入：$\Delta x=\dfrac{(v_x+v_{x0})(v_x-v_{x0})}{2a_x}=\dfrac{v_x^2-v_{x0}^2}{2a_x}$，所以 $v_x^2=v_{x0}^2+2a_x\Delta x$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> At $\Delta x=0$ the speed is unchanged. To stop ($v_x=0$) needs $\Delta x=\dfrac{v_{x0}^2}{2|a_x|}$: doubling the initial speed quadruples the stopping distance.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$\Delta x=0$ 时速率不变。要停下来（$v_x=0$）需要 $\Delta x=\dfrac{v_{x0}^2}{2|a_x|}$：初速度加倍，制动距离变为四倍。</p>
+  </div>
+
   <h3><span data-lang="en">Graph Relationships</span><span data-lang="zh">图像之间的关系</span></h3>
 <!-- dingrui:fig u1-vt-graph-area -->
 <figure class="dr-fig" id="fig-u1-vt-graph-area">
@@ -1554,6 +1630,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 <img class="dr-fig-dark" src="../../out/figures/Unit_1_Kinematics/u1-freefall-motion_dark.png" alt="Velocity vs. time for an object thrown upward, crossing zero at maximum height / 竖直上抛物体的速度-时间图，在最高点处速度为零">
 <figcaption><span data-lang="en">Velocity vs. time for an object thrown upward, crossing zero at maximum height</span><span data-lang="zh">竖直上抛物体的速度-时间图，在最高点处速度为零</span></figcaption>
 </figure>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Galileo slows down free fall</span><span data-lang="zh">历史：伽利略把自由落体"放慢"</span></div>
+    <p data-lang="en">A falling ball moves too fast to time by hand, so Galileo rolled bronze balls down a long grooved ramp, which "dilutes" gravity. He timed each run by weighing the water that flowed from a vessel while the ball rolled.</p>
+    <p data-lang="zh">落体运动太快，无法用手计时，于是伽利略让铜球沿一条刻有凹槽的长斜面滚下，相当于把重力"冲淡"。他称量球滚动期间从容器中流出的水的重量来计时。</p>
+    <p data-lang="en">He found distance proportional to time squared: the distances covered in successive equal intervals go as 1 : 3 : 5 : 7. That is Equation 2 with $v_{x0}=0$. He published it in <em>Two New Sciences</em> (1638).</p>
+    <p data-lang="zh">他发现距离与时间的平方成正比：在相继相等的时间间隔内走过的距离之比为 1 : 3 : 5 : 7。这正是 $v_{x0}=0$ 时的方程 2。他在 1638 年出版的《关于两门新科学的对话》（<code>Two New Sciences</code>）中发表了这一结果。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Two_New_Sciences" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Two New Sciences (Galileo's 1638 book, including the inclined-plane results)</span><span data-lang="zh">维基百科：Two New Sciences（伽利略 1638 年的著作，包含斜面实验结果）</span></a></p>
+  </div>
 
   <div class="concept-box" data-lang="en">
     <strong style="color: var(--accent);">Gravitational Acceleration</strong>
@@ -1960,6 +2045,26 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Time of Flight</span><span data-lang="zh">飞行时间</span></div>
     $$T = \frac{2v_0\sin\theta}{g}$$
+  </div>
+
+  <h3><span data-lang="en">First Principles: Where the Range Formula Comes From</span><span data-lang="zh">第一性原理：射程公式从何而来</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: independence of horizontal and vertical motion</span><span data-lang="zh">第一性原理：水平运动与竖直运动相互独立</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Gravity acts only vertically, so $a_x=0$ and $a_y=-g$ act independently. The two motions share only the clock $t$. Take level ground and launch from the origin.</p>
+    <p data-lang="zh"><strong>原理。</strong>重力只沿竖直方向作用，所以 $a_x=0$ 与 $a_y=-g$ 互不影响。两个方向的运动只共用时间 $t$。取同高度落地，从原点发射。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Vertical: $y=(v_0\sin\theta)\,t-\tfrac{1}{2}g t^2=0$ at landing, so $T=\dfrac{2v_0\sin\theta}{g}$.</li>
+      <li>Horizontal: constant velocity, so $R=(v_0\cos\theta)\,T=\dfrac{2v_0^2\sin\theta\cos\theta}{g}$.</li>
+      <li>Use $2\sin\theta\cos\theta=\sin 2\theta$: $R=\dfrac{v_0^2\sin 2\theta}{g}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>竖直方向：落地时 $y=(v_0\sin\theta)\,t-\tfrac{1}{2}g t^2=0$，所以 $T=\dfrac{2v_0\sin\theta}{g}$。</li>
+      <li>水平方向：匀速，所以 $R=(v_0\cos\theta)\,T=\dfrac{2v_0^2\sin\theta\cos\theta}{g}$。</li>
+      <li>利用 $2\sin\theta\cos\theta=\sin 2\theta$：$R=\dfrac{v_0^2\sin 2\theta}{g}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> At $\theta=0$ the flight time is zero; at $\theta=90^\circ$ the ball goes straight up and down. Both give $R=0$. $\sin 2\theta$ peaks at $\theta=45^\circ$. Units: $(\mathrm{m^2/s^2})/(\mathrm{m/s^2})=\mathrm{m}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$\theta=0$ 时飞行时间为零；$\theta=90^\circ$ 时球竖直上下。两者都给出 $R=0$。$\sin 2\theta$ 在 $\theta=45^\circ$ 时最大。单位：$(\mathrm{m^2/s^2})/(\mathrm{m/s^2})=\mathrm{m}$。</p>
+    <p><a href="https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion" target="_blank" rel="noopener"><span data-lang="en">OpenStax University Physics Vol. 1, Section 4.3 (Projectile Motion): the same derivation with worked problems</span><span data-lang="zh">OpenStax《大学物理》第一卷 4.3 节（抛体运动）：同一推导及例题</span></a></p>
   </div>
 
   <div class="formula-box" style="border-top-color: var(--purple);">

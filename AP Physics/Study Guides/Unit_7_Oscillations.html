@@ -483,20 +483,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -525,8 +533,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -550,7 +558,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -571,7 +579,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -583,7 +591,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 7</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -728,6 +737,32 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$a_x = -\frac{k}{m}x = -\omega^2 x$$
     <p data-lang="en">The acceleration is proportional to the displacement and opposite to it; any system whose acceleration has this form undergoes SHM with $\omega = \sqrt{k/m}$.</p>
     <p data-lang="zh">加速度与位移成正比、方向相反；凡是加速度具有这种形式的系统都做 SHM，且 $\omega = \sqrt{k/m}$。</p>
+  </div>
+
+  <h3><span data-lang="en">Vertical Springs: Same Period, Shifted Centre</span><span data-lang="zh">竖直弹簧：周期不变，中心下移</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: a hanging spring is still SHM</span><span data-lang="zh">第一性原理：竖直悬挂的弹簧仍做 SHM</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Hooke's law, $F_s = -k\,(\text{stretch})$, plus Newton's second law. Take down as positive and measure $y$ from the new equilibrium.</p>
+    <p data-lang="zh"><strong>原理。</strong>Hooke 定律 $F_s = -k\,(\text{stretch})$，加上 Newton 第二定律。取向下为正，$y$ 从新的平衡位置量起。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>At equilibrium the spring is stretched by $y_0$ and balances gravity: $ky_0 = mg$, so $y_0 = mg/k$.</li>
+      <li>At displacement $y$ the stretch is $y_0 + y$, so $F_\text{net} = mg - k(y_0 + y)$.</li>
+      <li>Substitute $mg = ky_0$: $F_\text{net} = -ky$. Gravity cancels, so $a = -\frac{k}{m}y$ and $\omega = \sqrt{k/m}$, as for a horizontal spring.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>平衡时弹簧伸长 $y_0$ 并与重力平衡：$ky_0 = mg$，故 $y_0 = mg/k$。</li>
+      <li>位移为 $y$ 时伸长量为 $y_0 + y$，所以 $F_\text{net} = mg - k(y_0 + y)$。</li>
+      <li>代入 $mg = ky_0$：$F_\text{net} = -ky$。重力被抵消，故 $a = -\frac{k}{m}y$，$\omega = \sqrt{k/m}$，与水平弹簧相同。</li>
+    </ol>
+    <p data-lang="en"><strong>Check.</strong> As $g \to 0$, $y_0 \to 0$ and we recover the horizontal spring. Gravity shifts the centre, not the period: for $m = 0.50\;\text{kg}$ and $k = 20\;\text{N/m}$, $y_0 = 0.245\;\text{m}$ and $T = 0.993\;\text{s}$ either way.</p>
+    <p data-lang="zh"><strong>检验。</strong>当 $g \to 0$ 时 $y_0 \to 0$，回到水平弹簧。重力只移动振动中心，不改变周期：$m = 0.50\;\text{kg}$、$k = 20\;\text{N/m}$ 时，$y_0 = 0.245\;\text{m}$，两种情形都有 $T = 0.993\;\text{s}$。</p>
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Hooke's anagram</span><span data-lang="zh">历史：Hooke 的字谜</span></div>
+    <p data-lang="en">In 1676 Robert Hooke published his spring law as the Latin anagram "ceiiinosssttuv". In 1678 he revealed it as <em>ut tensio, sic vis</em>: "as the extension, so the force". He tested it on coiled springs, wires and watch springs.</p>
+    <p data-lang="zh">1676 年，Robert Hooke 以拉丁字谜"ceiiinosssttuv"发表了他的弹簧定律。1678 年他揭晓答案：<em>ut tensio, sic vis</em>，即"伸长如何，力就如何"。他用螺旋弹簧、金属丝和表用发条检验了这一规律。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Hooke%27s_law" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Hooke's law (history and limits of the linear spring)</span><span data-lang="zh">维基百科：Hooke 定律（历史与线性弹簧的适用范围）</span></a></p>
   </div>
 
   <div data-course="c">
@@ -916,6 +951,24 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$T_s = 2\pi\sqrt{\frac{m}{k}}$$
     <p style="font-size:.9rem;color:var(--text-secondary);margin-top:8px;" data-lang="en">$\omega = \sqrt{k/m}$ · Independent of amplitude</p>
     <p style="font-size:.9rem;color:var(--text-secondary);margin-top:8px;" data-lang="zh">$\omega = \sqrt{k/m}$ · 与振幅无关</p>
+  </div>
+
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the period from the reference circle</span><span data-lang="zh">第一性原理：由参考圆求周期</span></div>
+    <p data-lang="en"><strong>Principle.</strong> SHM is the shadow of uniform circular motion. A point moving at speed $v$ on a circle of radius $A$ projects onto the $x$-axis as an oscillation of amplitude $A$.</p>
+    <p data-lang="zh"><strong>原理。</strong>SHM 是匀速圆周运动的投影。在半径为 $A$ 的圆上以速率 $v$ 运动的点，投影到 $x$ 轴上就是振幅为 $A$ 的振动。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>The point's centripetal acceleration $v^2/A$ points to the centre. Its $x$-component is $a_x = -\frac{v^2}{A}\cdot\frac{x}{A} = -\frac{v^2}{A^2}x$.</li>
+      <li>Match this to the spring's $a_x = -\frac{k}{m}x$: $\frac{v^2}{A^2} = \frac{k}{m}$, so $v = A\sqrt{k/m}$.</li>
+      <li>One trip round the circle is one cycle: $T = \frac{2\pi A}{v} = 2\pi\sqrt{\frac{m}{k}}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>该点的向心加速度 $v^2/A$ 指向圆心，其 $x$ 分量为 $a_x = -\frac{v^2}{A}\cdot\frac{x}{A} = -\frac{v^2}{A^2}x$。</li>
+      <li>与弹簧的 $a_x = -\frac{k}{m}x$ 对比：$\frac{v^2}{A^2} = \frac{k}{m}$，故 $v = A\sqrt{k/m}$。</li>
+      <li>绕圆一周就是一个周期：$T = \frac{2\pi A}{v} = 2\pi\sqrt{\frac{m}{k}}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Check.</strong> $A$ cancels in step 3, so the period does not depend on amplitude (isochronism). A heavier mass ($m \to$ large) gives a longer period; a stiffer spring gives a shorter one. Units: $\sqrt{\text{kg}/(\text{N/m})} = \sqrt{\text{s}^2} = \text{s}$.</p>
+    <p data-lang="zh"><strong>检验。</strong>第 3 步中 $A$ 被消去，所以周期与振幅无关（等时性，<code>isochronism</code>）。质量越大（$m \to$ 大）周期越长；弹簧越硬周期越短。单位：$\sqrt{\text{kg}/(\text{N/m})} = \sqrt{\text{s}^2} = \text{s}$。</p>
   </div>
 
   <h3><span data-lang="en">Simple Pendulum</span><span data-lang="zh">单摆</span></h3>
@@ -1508,6 +1561,24 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <div class="formula-label" style="color:var(--orange);"><span data-lang="en">Speed at Position x</span><span data-lang="zh">位置 $x$ 处的速率</span></div>
     $$v = \omega\sqrt{A^2 - x^2}$$
   </div>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: speed at any position</span><span data-lang="zh">第一性原理：任意位置的速率</span></div>
+    <p data-lang="en"><strong>Principle.</strong> With no friction, mechanical energy is conserved: $K + U = E$ at every position.</p>
+    <p data-lang="zh"><strong>原理。</strong>无摩擦时机械能守恒：在每个位置都有 $K + U = E$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>At the turning point $x = A$ the block is at rest, so $E = \tfrac{1}{2}kA^2$.</li>
+      <li>At position $x$: $\tfrac{1}{2}mv^2 + \tfrac{1}{2}kx^2 = \tfrac{1}{2}kA^2$.</li>
+      <li>Solve: $v^2 = \frac{k}{m}(A^2 - x^2)$, so $v = \omega\sqrt{A^2 - x^2}$ with $\omega = \sqrt{k/m}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在转折点 $x = A$ 处物块静止，所以 $E = \tfrac{1}{2}kA^2$。</li>
+      <li>在位置 $x$ 处：$\tfrac{1}{2}mv^2 + \tfrac{1}{2}kx^2 = \tfrac{1}{2}kA^2$。</li>
+      <li>解得 $v^2 = \frac{k}{m}(A^2 - x^2)$，故 $v = \omega\sqrt{A^2 - x^2}$，其中 $\omega = \sqrt{k/m}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Check.</strong> At $x = 0$, $v = A\omega = v_\text{max}$; at $x = \pm A$, $v = 0$. Halfway out ($x = A/2$), $v = \tfrac{\sqrt{3}}{2}v_\text{max} \approx 0.87\,v_\text{max}$ and $K = \tfrac{3}{4}E$, matching $K = 3.0\;\text{J}$ of $4.0\;\text{J}$ in the figure below.</p>
+    <p data-lang="zh"><strong>检验。</strong>在 $x = 0$ 处 $v = A\omega = v_\text{max}$；在 $x = \pm A$ 处 $v = 0$。在一半位置（$x = A/2$）处，$v = \tfrac{\sqrt{3}}{2}v_\text{max} \approx 0.87\,v_\text{max}$，$K = \tfrac{3}{4}E$，与下图中 $4.0\;\text{J}$ 里的 $K = 3.0\;\text{J}$ 相符。</p>
+  </div>
+
   <div class="concept-box green" data-lang="en">
     <strong style="color:var(--green);">Key Insight: Energy Graphs</strong>
     If you plot $K$ and $U$ vs. position $x$, you get two parabolas: $U = \frac{1}{2}kx^2$ (opening upward) and $K = \frac{1}{2}k(A^2 - x^2)$ (inverted). Their sum is the constant $E = \frac{1}{2}kA^2$. As functions of time, both oscillate as $\cos^2$ and $\sin^2$ at <em>twice</em> the oscillation frequency.
@@ -1793,6 +1864,34 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   $$\alpha = -\frac{g}{\ell}\,\theta$$
   <p data-lang="en">This has the same form as $a = -\omega^2 x$ for a spring: the angular acceleration is proportional to the angle and opposite to it. So the motion is SHM with $\omega^2 = g/\ell$, which gives $T = 2\pi\sqrt{\ell/g}$. The mass cancels because both the restoring torque and the rotational inertia are proportional to $m$.</p>
   <p data-lang="zh">它与弹簧的 $a = -\omega^2 x$ 形式相同：角加速度与角度成正比、方向相反。所以运动是 SHM，$\omega^2 = g/\ell$，从而 $T = 2\pi\sqrt{\ell/g}$。质量被消去，因为回复力矩和转动惯量都与 $m$ 成正比。</p>
+  <h3><span data-lang="en">The Pendulum as an Effective Spring</span><span data-lang="zh">把单摆看作等效弹簧</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the pendulum as an effective spring</span><span data-lang="zh">第一性原理：把单摆看作等效弹簧</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Only the component of gravity along the arc, $F = -mg\sin\theta$, restores the bob. Measure the displacement as arc length $s = \ell\theta$.</p>
+    <p data-lang="zh"><strong>原理。</strong>只有重力沿圆弧的分量 $F = -mg\sin\theta$ 使摆球回复。位移取弧长 $s = \ell\theta$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>For small angles (in radians), $\sin\theta \approx \theta = s/\ell$.</li>
+      <li>So $F \approx -\frac{mg}{\ell}s$: a Hooke's-law force with effective constant $k_\text{eff} = mg/\ell$.</li>
+      <li>Use the spring result: $T = 2\pi\sqrt{m/k_\text{eff}} = 2\pi\sqrt{\ell/g}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>小角度（弧度制）时 $\sin\theta \approx \theta = s/\ell$。</li>
+      <li>于是 $F \approx -\frac{mg}{\ell}s$：这是 Hooke 定律形式的力，等效劲度系数 $k_\text{eff} = mg/\ell$。</li>
+      <li>套用弹簧结果：$T = 2\pi\sqrt{m/k_\text{eff}} = 2\pi\sqrt{\ell/g}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Check.</strong> $m$ cancels, as it must. As $g \to 0$ the period grows without limit: no gravity, no restoring force. At $15°$ ($0.262\;\text{rad}$), $\theta$ exceeds $\sin\theta$ by only 1.2%, and the true period is about 0.4% longer than $2\pi\sqrt{\ell/g}$.</p>
+    <p data-lang="zh"><strong>检验。</strong>$m$ 被消去，理应如此。当 $g \to 0$ 时周期无限增大：没有重力就没有回复力。在 $15°$（$0.262\;\text{rad}$）时，$\theta$ 只比 $\sin\theta$ 大 1.2%，真实周期只比 $2\pi\sqrt{\ell/g}$ 长约 0.4%。</p>
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Huygens' pendulum clock</span><span data-lang="zh">历史：Huygens 的摆钟</span></div>
+    <p data-lang="en">Christiaan Huygens built the first pendulum clock in 1656, using the near-isochronism of small swings that Galileo had noticed. It cut timekeeping errors from about 15 minutes a day to about 15 seconds.</p>
+    <p data-lang="zh">1656 年，Christiaan Huygens 利用 Galileo 注意到的小摆幅近似等时性，制成了第一台摆钟。它把计时误差从每天约 15 分钟降到约 15 秒。</p>
+    <p data-lang="en">In <em>Horologium Oscillatorium</em> (1673) he derived the small-angle period and showed that a bob guided along a cycloid is exactly isochronous at any amplitude.</p>
+    <p data-lang="zh">在《摆钟论》（<code>Horologium Oscillatorium</code>，1673）中，他推导了小角度周期，并证明沿摆线（<code>cycloid</code>）运动的摆球在任意振幅下都严格等时。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Pendulum_clock" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Pendulum clock (Huygens, 1656)</span><span data-lang="zh">维基百科：摆钟（Huygens，1656 年）</span></a></p>
+  </div>
+
   <div data-course="c">
   <p data-lang="en"><span class="course-flag">Physics C</span> Writing $\alpha = \frac{d^2\theta}{dt^2}$ gives the pendulum's differential equation, $\frac{d^2\theta}{dt^2} = -\frac{g}{\ell}\theta$, with solution $\theta(t) = \theta_{\max}\cos(\omega t + \phi)$ and $\omega = \sqrt{g/\ell}$.</p>
   <p data-lang="zh"><span class="course-flag">Physics C</span> 写出 $\alpha = \frac{d^2\theta}{dt^2}$，就得到单摆的微分方程 $\frac{d^2\theta}{dt^2} = -\frac{g}{\ell}\theta$，其解为 $\theta(t) = \theta_{\max}\cos(\omega t + \phi)$，$\omega = \sqrt{g/\ell}$。</p>
@@ -2282,13 +2381,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
       <span class="unit-nav__title"><span data-lang="en">Unit 6: Energy &amp; Momentum of Rotating Systems</span><span data-lang="zh">第 6 单元：转动系统的能量与动量</span></span>
     </span>
   </a>
-  <a class="unit-nav__link unit-nav__link--next" href="Unit_8_Fluids.html">
-    <span class="unit-nav__arrow" aria-hidden="true">&rarr;</span>
-    <span class="unit-nav__body">
-      <span class="unit-nav__hint"><span data-lang="en">Next unit</span><span data-lang="zh">下一单元</span></span>
-      <span class="unit-nav__title"><span data-lang="en">Unit 8: Fluids</span><span data-lang="zh">第 8 单元：流体</span></span>
-    </span>
-  </a>
+  <div class="unit-nav__placeholder unit-nav__link unit-nav__link--next" aria-hidden="true"></div>
 </nav>
 <!-- END unit-nav -->
 </main>

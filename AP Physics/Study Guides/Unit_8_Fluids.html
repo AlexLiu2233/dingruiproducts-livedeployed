@@ -770,20 +770,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -812,8 +820,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -827,7 +835,7 @@ figure.dr-fig figcaption {
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -848,7 +856,7 @@ figure.dr-fig figcaption {
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -861,7 +869,7 @@ figure.dr-fig figcaption {
     <span class="nav-badge">UNIT 8</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -1189,6 +1197,34 @@ figure.dr-fig figcaption {
     </div>
   </details>
 
+  <h3><span data-lang="en">First Principles: Why Pressure Grows Linearly with Depth</span><span data-lang="zh">第一性原理：压强为何随深度线性增大</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: where $P = P_0 + \rho g h$ comes from</span><span data-lang="zh">第一性原理：$P = P_0 + \rho g h$ 从何而来</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Newton's first law for a thin horizontal slab of fluid at rest: the forces on it add to zero. Take a slab of area $A$ and thickness $\Delta h$, with its top at depth $h$.</p>
+    <p data-lang="zh"><strong>原理。</strong>对一薄层静止的水平流体应用牛顿第一定律：它受到的合力为零。取面积为 $A$、厚度为 $\Delta h$ 的薄层，其顶面位于深度 $h$ 处。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Vertical forces: $P(h+\Delta h)\,A$ up on the bottom, $P(h)\,A$ down on the top, and the weight $\rho A\,\Delta h\,g$ down.</li>
+      <li>Balance and divide by $A$: $P(h+\Delta h) - P(h) = \rho g\,\Delta h$. Each extra metre of depth adds the same $\rho g$.</li>
+      <li>With $\rho$ constant (incompressible), stack the slabs from the surface down to depth $h$: $P = P_0 + \rho g h$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>竖直方向的力：底面受向上的 $P(h+\Delta h)\,A$，顶面受向下的 $P(h)\,A$，以及向下的重力 $\rho A\,\Delta h\,g$。</li>
+      <li>令其平衡并除以 $A$：$P(h+\Delta h) - P(h) = \rho g\,\Delta h$。每多一米深度，压强增加同样的 $\rho g$。</li>
+      <li>$\rho$ 为常数（不可压缩）时，把从液面到深度 $h$ 的薄层逐层叠加：$P = P_0 + \rho g h$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> At $h = 0$ the formula returns $P_0$. For air, $\rho g \approx 12\;\text{Pa}$ per metre against $9800\;\text{Pa}$ per metre for water, so the pressure in a gas tank is uniform to about $0.1\%$ over $10\;\text{m}$. Units: $\mathrm{kg/m^3\cdot m/s^2\cdot m} = \mathrm{N/m^2} = \mathrm{Pa}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$h = 0$ 时公式给出 $P_0$。空气的 $\rho g \approx 12\;\text{Pa}$ 每米，而水为 $9800\;\text{Pa}$ 每米，所以在 $10\;\text{m}$ 范围内储气罐中的压强均匀到约 $0.1\%$。单位：$\mathrm{kg/m^3\cdot m/s^2\cdot m} = \mathrm{N/m^2} = \mathrm{Pa}$。</p>
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Pascal's barrel</span><span data-lang="zh">历史：帕斯卡裂桶实验</span></div>
+    <p data-lang="en">Blaise Pascal is said to have fitted a tall, thin tube into the lid of a sealed barrel full of water, then filled the tube from a balcony. A small amount of water in the tube burst the barrel.</p>
+    <p data-lang="zh">据说布莱兹·帕斯卡在一个装满水的密封木桶盖上插入一根又高又细的管子，然后从阳台往管里灌水。管中少量的水就把木桶撑裂了。</p>
+    <p data-lang="en">Pressure depends on depth, not on how much water sits above. A $10\;\text{m}$ column of $1.0\;\text{cm}$ tube holds only about $0.79\;\text{kg}$ of water, yet it adds $\rho g h = 9.8\times10^4\;\text{Pa}$, a push of about $2.0\times10^4\;\text{N}$ on a $0.20\;\text{m}^2$ lid.</p>
+    <p data-lang="zh">压强取决于深度，而不取决于上方有多少水。一根内径 $1.0\;\text{cm}$、高 $10\;\text{m}$ 的水柱只有约 $0.79\;\text{kg}$ 的水，却使压强增加 $\rho g h = 9.8\times10^4\;\text{Pa}$，对 $0.20\;\text{m}^2$ 的桶盖产生约 $2.0\times10^4\;\text{N}$ 的推力。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Pascal%27s_barrel" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Pascal's barrel (the hydrostatic paradox)</span><span data-lang="zh">维基百科：帕斯卡裂桶实验（静水压强佯谬）</span></a></p>
+  </div>
+
   <h3><span data-lang="en">Pascal's Principle and the Hydraulic Lift</span><span data-lang="zh">帕斯卡原理与液压机</span></h3>
   <p data-lang="en"><strong>Pascal's principle:</strong> a change in pressure applied to an enclosed, incompressible fluid is transmitted undiminished to every part of the fluid and to the walls of its container. This follows from $P = P_0 + \rho g h$: if $P_0$ rises by $\Delta P$, the pressure at every depth rises by the same $\Delta P$.</p>
   <p data-lang="zh"><strong>帕斯卡原理</strong>（<code>Pascal's principle</code>）：施加在封闭的不可压缩流体上的压强变化，会大小不变地传递到流体的每一部分以及容器壁上。这可以由 $P = P_0 + \rho g h$ 得出：如果 $P_0$ 增加 $\Delta P$，每个深度处的压强都增加同样的 $\Delta P$。</p>
@@ -1305,6 +1341,25 @@ figure.dr-fig figcaption {
   <p data-lang="en"><strong>Archimedes' principle:</strong> the buoyant force on an object equals the weight of the fluid it displaces. $V_\text{disp}$ is the volume of the object that is below the fluid surface: the whole volume for a submerged object, only the part under the waterline for a floating one. The density in the formula is the density of the <em>fluid</em>.</p>
   <p data-lang="zh"><strong>阿基米德原理</strong>（<code>Archimedes' principle</code>）：物体受到的浮力等于它排开的流体的重力。$V_\text{disp}$ 是物体位于流体表面以下部分的体积：浸没物体取整个体积，漂浮物体只取水线以下的部分。公式中的密度是<em>流体</em>的密度。</p>
 
+  <h3><span data-lang="en">First Principles: Archimedes' Principle for Any Shape</span><span data-lang="zh">第一性原理：任意形状物体的阿基米德原理</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: where $F_B = \rho_\text{fluid}\,g\,V_\text{disp}$ comes from</span><span data-lang="zh">第一性原理：$F_B = \rho_\text{fluid}\,g\,V_\text{disp}$ 从何而来</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The pressure at each point of a surface depends only on its depth in the surrounding fluid, not on what is inside the surface. The block result above generalizes to any shape.</p>
+    <p data-lang="zh"><strong>原理。</strong>表面上每一点的压强只取决于该点在周围流体中的深度，而与表面内部是什么无关。上面的方块结论可以推广到任意形状。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Replace the object by a "fluid twin": fluid of the same shape. It stays at rest, so the surrounding fluid pushes it up with a force equal to its weight, $\rho_\text{fluid} V g$.</li>
+      <li>Put the object back. The surrounding fluid and every surface pressure are unchanged, so the net push is the same: $F_B = \rho_\text{fluid}\,g\,V_\text{disp}$.</li>
+      <li>For a fully submerged object, the net force is $F_B - mg = (\rho_\text{fluid} - \rho_\text{obj})\,V g$, upward when the fluid is denser.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把物体换成"流体替身"：形状相同的一团流体。它保持静止，所以周围流体对它向上的推力等于它的重力 $\rho_\text{fluid} V g$。</li>
+      <li>把物体放回原处。周围流体和表面各点的压强都没有变，所以净推力相同：$F_B = \rho_\text{fluid}\,g\,V_\text{disp}$。</li>
+      <li>对完全浸没的物体，合力为 $F_B - mg = (\rho_\text{fluid} - \rho_\text{obj})\,V g$，当流体密度更大时向上。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> If $\rho_\text{obj} = \rho_\text{fluid}$ the net force is zero: the object hovers, like the fluid twin. In a vacuum ($\rho_\text{fluid} = 0$) there is no buoyant force. For the block, $V = HA$ returns $\rho g H A$ from the pressure-difference argument.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>若 $\rho_\text{obj} = \rho_\text{fluid}$，合力为零：物体悬浮，就像流体替身一样。在真空中（$\rho_\text{fluid} = 0$）没有浮力。对方块，$V = HA$ 回到压强差推导得到的 $\rho g H A$。</p>
+  </div>
+
   <h3><span data-lang="en">The Buoyant Force as a Collective Particle Effect</span><span data-lang="zh">浮力作为粒子的集体效应</span></h3>
   <p data-lang="en">The pressure-difference account has a particle explanation underneath. A fluid has no single "buoyancy" force pushing on an object. The buoyant force is the net of the ordinary forces from the collisions of the fluid's particles with every part of the object's surface.</p>
   <p data-lang="zh">压强差的解释背后还有粒子层面的解释。流体并没有一个单独的"浮力"在推物体。浮力是流体粒子与物体表面各处碰撞所产生的普通力的合力。</p>
@@ -1346,6 +1401,25 @@ figure.dr-fig figcaption {
     </svg>
     <figcaption><span data-lang="en">Figure 8.2. A wooden cube 0.10 m on a side (ρ = 600 kg/m³, mass 0.60 kg) floating in fresh water, drawn to scale. Since ρ<sub>obj</sub>/ρ<sub>fluid</sub> = 600/1000 = 0.60, the bottom 0.06 m of the cube is under water and 0.04 m is above. The free-body diagram shows the two forces as arrows of equal length: weight W = mg = 5.88 N down and buoyant force F<sub>B</sub> = ρgV<sub>disp</sub> = (1000)(9.8)(6.0 × 10⁻⁴) = 5.88 N up. Read off: equal arrows mean the cube is in equilibrium.</span><span data-lang="zh">图 8.2。一个边长 0.10 m 的木块（ρ = 600 kg/m³，质量 0.60 kg）漂浮在淡水中，按比例绘制。由于 ρ<sub>obj</sub>/ρ<sub>fluid</sub> = 600/1000 = 0.60，木块下方 0.06 m 在水中，上方 0.04 m 露出水面。受力图用等长的箭头表示两个力：向下的重力 W = mg = 5.88 N，向上的浮力 F<sub>B</sub> = ρgV<sub>disp</sub> = (1000)(9.8)(6.0 × 10⁻⁴) = 5.88 N。读图：箭头等长表示木块处于平衡。</span></figcaption>
   </figure>
+
+  <h3><span data-lang="en">Sink, Float or Hover: Comparing Densities</span><span data-lang="zh">下沉、漂浮还是悬浮：比较密度</span></h3>
+  <p data-lang="en">For a solid object released from rest in a fluid, the density comparison alone predicts the outcome.</p>
+  <p data-lang="zh">实心物体在流体中由静止释放时，只需比较密度就能预测结果。</p>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Density comparison</span><span data-lang="zh">密度比较</span></th><th><span data-lang="en">When fully submerged</span><span data-lang="zh">完全浸没时</span></th><th><span data-lang="en">Final state</span><span data-lang="zh">最终状态</span></th><th><span data-lang="en">Fraction below the surface</span><span data-lang="zh">液面以下的比例</span></th></tr>
+    <tr><td>$\rho_\text{obj} &lt; \rho_\text{fluid}$</td><td><span data-lang="en">$F_B &gt; mg$: rises</span><span data-lang="zh">$F_B &gt; mg$：上浮</span></td><td><span data-lang="en">floats, $F_B = mg$</span><span data-lang="zh">漂浮，$F_B = mg$</span></td><td>$\rho_\text{obj}/\rho_\text{fluid}$</td></tr>
+    <tr><td>$\rho_\text{obj} = \rho_\text{fluid}$</td><td><span data-lang="en">$F_B = mg$: no net force</span><span data-lang="zh">$F_B = mg$：合力为零</span></td><td><span data-lang="en">hovers at any depth</span><span data-lang="zh">在任意深度悬浮</span></td><td><span data-lang="en">all of it</span><span data-lang="zh">全部</span></td></tr>
+    <tr><td>$\rho_\text{obj} &gt; \rho_\text{fluid}$</td><td><span data-lang="en">$F_B &lt; mg$: sinks</span><span data-lang="zh">$F_B &lt; mg$：下沉</span></td><td><span data-lang="en">rests on the bottom, $F_N = mg - F_B$</span><span data-lang="zh">沉在底部，$F_N = mg - F_B$</span></td><td><span data-lang="en">all of it</span><span data-lang="zh">全部</span></td></tr>
+  </table></div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Archimedes and the crown</span><span data-lang="zh">历史：阿基米德与王冠</span></div>
+    <p data-lang="en">Archimedes of Syracuse stated the buoyancy principle in his treatise <em>On Floating Bodies</em> (3rd century BC). The famous "Eureka" story, told by the Roman writer Vitruvius two centuries later, has him testing whether King Hiero II's gold crown contained silver.</p>
+    <p data-lang="zh">叙拉古的阿基米德在《论浮体》（<code>On Floating Bodies</code>，公元前 3 世纪）中提出了浮力原理。著名的"尤里卡"故事由两个世纪后的罗马作家维特鲁威记载：阿基米德要检验希伦二世国王的金王冠里是否掺了银。</p>
+    <p data-lang="en">The physics works: $1.00\;\text{kg}$ of gold occupies $51.8\;\text{cm}^3$, but $1.00\;\text{kg}$ of silver occupies $95.2\;\text{cm}^3$, so a mixed crown displaces more water. Galileo later argued that a balance weighed in water (the apparent-weight method of this section) was the more likely method.</p>
+    <p data-lang="zh">其中的物理是成立的：$1.00\;\text{kg}$ 黄金的体积为 $51.8\;\text{cm}^3$，而 $1.00\;\text{kg}$ 白银的体积为 $95.2\;\text{cm}^3$，所以掺银的王冠排开更多的水。伽利略后来认为，更可能的方法是在水中称量的天平（即本节的视重法）。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Archimedes%27_principle" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Archimedes' principle (history and statement)</span><span data-lang="zh">维基百科：阿基米德原理（历史与表述）</span></a></p>
+  </div>
 
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: A Floating Wooden Cube</span><span data-lang="zh">例题：漂浮的木块</span></summary>
@@ -1515,6 +1589,25 @@ figure.dr-fig figcaption {
     $$Q = A_1 v_1 = A_2 v_2$$
   </div>
 
+  <h3><span data-lang="en">First Principles: Continuity from Conservation of Mass</span><span data-lang="zh">第一性原理：由质量守恒得到连续性方程</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: where $A_1 v_1 = A_2 v_2$ comes from</span><span data-lang="zh">第一性原理：$A_1 v_1 = A_2 v_2$ 从何而来</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Mass is conserved. In steady flow, no mass builds up in the stretch of pipe between two cross-sections.</p>
+    <p data-lang="zh"><strong>原理。</strong>质量守恒。在定常流动中，两个截面之间的管段内不会积累质量。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>In a time $\Delta t$, the mass entering at section 1 is $\rho_1 A_1 v_1\,\Delta t$; the mass leaving at section 2 is $\rho_2 A_2 v_2\,\Delta t$.</li>
+      <li>Nothing accumulates, so the two are equal: $\rho_1 A_1 v_1 = \rho_2 A_2 v_2$.</li>
+      <li>An incompressible fluid has $\rho_1 = \rho_2$, which cancels: $A_1 v_1 = A_2 v_2 = Q$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在时间 $\Delta t$ 内，从截面 1 流入的质量为 $\rho_1 A_1 v_1\,\Delta t$；从截面 2 流出的质量为 $\rho_2 A_2 v_2\,\Delta t$。</li>
+      <li>没有质量积累，所以二者相等：$\rho_1 A_1 v_1 = \rho_2 A_2 v_2$。</li>
+      <li>不可压缩流体 $\rho_1 = \rho_2$，可以约去：$A_1 v_1 = A_2 v_2 = Q$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> A pipe of constant area ($A_1 = A_2$) gives $v_1 = v_2$. As $A_2$ shrinks, $v_2$ grows as $1/A_2$. Units: $\mathrm{m^2\cdot m/s} = \mathrm{m^3/s}$, a volume per second.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>截面积不变的管道（$A_1 = A_2$）给出 $v_1 = v_2$。$A_2$ 变小时，$v_2$ 按 $1/A_2$ 增大。单位：$\mathrm{m^2\cdot m/s} = \mathrm{m^3/s}$，即每秒的体积。</p>
+  </div>
+
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: A Garden Hose Nozzle</span><span data-lang="zh">例题：花园水管的喷嘴</span></summary>
     <div class="detail-body">
@@ -1547,6 +1640,44 @@ figure.dr-fig figcaption {
 
   <p data-lang="en">Two special cases are worth knowing. If the fluid is at rest ($v_1 = v_2 = 0$), Bernoulli's equation reduces to $P = P_0 + \rho g h$ from Topic 8.2. If the flow is horizontal ($y_1 = y_2$), then where the speed is higher, the pressure is lower: combined with continuity, the narrow part of a horizontal pipe has the fastest flow and the lowest pressure.</p>
   <p data-lang="zh">有两个特殊情形值得掌握。如果流体静止（$v_1 = v_2 = 0$），伯努利方程就退化为专题 8.2 的 $P = P_0 + \rho g h$。如果流动是水平的（$y_1 = y_2$），那么流速越大的地方压强越小：结合连续性方程，水平管道最窄处流速最快、压强最低。</p>
+
+  <h3><span data-lang="en">Three Pressure Terms in Bernoulli's Equation</span><span data-lang="zh">伯努利方程中的三个压强项</span></h3>
+<figure class="dr-fig" id="fig-u8-venturi-bernoulli-pressure">
+<style>
+  #fig-u8-venturi-bernoulli-pressure img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  #fig-u8-venturi-bernoulli-pressure .dr-fig-dark, #fig-u8-venturi-bernoulli-pressure .dr-fig-light-zh, #fig-u8-venturi-bernoulli-pressure .dr-fig-dark-zh { display: none; }
+  [data-theme="dark"] #fig-u8-venturi-bernoulli-pressure .dr-fig-light { display: none; }
+  [data-theme="dark"] #fig-u8-venturi-bernoulli-pressure .dr-fig-dark { display: block; }
+  body.lang-zh #fig-u8-venturi-bernoulli-pressure .dr-fig-light { display: none; }
+  body.lang-zh #fig-u8-venturi-bernoulli-pressure .dr-fig-light-zh { display: block; }
+  [data-theme="dark"] body.lang-zh #fig-u8-venturi-bernoulli-pressure .dr-fig-dark { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-u8-venturi-bernoulli-pressure .dr-fig-light-zh { display: none; }
+  [data-theme="dark"] body.lang-zh #fig-u8-venturi-bernoulli-pressure .dr-fig-dark-zh { display: block; }
+</style>
+<img class="dr-fig-light" src="../../out/figures/Unit_8_Fluids/u8-venturi-bernoulli-pressure_light.png" alt="A horizontal Venturi tube: slow flow at high pressure in the wide section, fast flow at low pressure in the throat, shown by the lower column in the throat / 水平文丘里管：宽段流速慢、压强高，喉部流速快、压强低，喉部的液柱较低">
+<img class="dr-fig-dark" src="../../out/figures/Unit_8_Fluids/u8-venturi-bernoulli-pressure_dark.png" alt="A horizontal Venturi tube: slow flow at high pressure in the wide section, fast flow at low pressure in the throat, shown by the lower column in the throat / 水平文丘里管：宽段流速慢、压强高，喉部流速快、压强低，喉部的液柱较低">
+<img class="dr-fig-light-zh" src="../../out/figures/Unit_8_Fluids/u8-venturi-bernoulli-pressure_light_zh.png" alt="A horizontal Venturi tube: slow flow at high pressure in the wide section, fast flow at low pressure in the throat, shown by the lower column in the throat / 水平文丘里管：宽段流速慢、压强高，喉部流速快、压强低，喉部的液柱较低">
+<img class="dr-fig-dark-zh" src="../../out/figures/Unit_8_Fluids/u8-venturi-bernoulli-pressure_dark_zh.png" alt="A horizontal Venturi tube: slow flow at high pressure in the wide section, fast flow at low pressure in the throat, shown by the lower column in the throat / 水平文丘里管：宽段流速慢、压强高，喉部流速快、压强低，喉部的液柱较低">
+<figcaption><span data-lang="en">Figure 8.3. A horizontal Venturi tube. Continuity makes the flow faster in the narrow throat ($A_2 &lt; A_1$, so $v_2 &gt; v_1$), and Bernoulli's equation with $y_1 = y_2$ makes the pressure lower there by $\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)$. The open column above the throat stands lower than the one above the wide section by that pressure difference. In the worked example below, the speed doubles from 2.0 to 4.0 m/s and the pressure drops by 6.0 kPa.</span><span data-lang="zh">图 8.3。水平文丘里管（<code>Venturi tube</code>）。连续性方程使狭窄喉部的流速更快（$A_2 &lt; A_1$，所以 $v_2 &gt; v_1$）；在 $y_1 = y_2$ 时，伯努利方程使那里的压强低 $\Delta P = \tfrac{1}{2}\rho(v_2^2 - v_1^2)$。喉部上方开口液柱的高度比宽段上方的低，对应这一压强差。在下面的例题中，流速从 2.0 m/s 加倍到 4.0 m/s，压强下降 6.0 kPa。</span></figcaption>
+</figure>
+
+  <p data-lang="en">Each term in Bernoulli's equation is an energy per unit volume, measured in pascals. The table compares the hydrostatic terms, which a fluid at rest already has, with the hydrodynamic term, which needs motion.</p>
+  <p data-lang="zh">伯努利方程中的每一项都是单位体积的能量，单位为帕斯卡。下表比较静止流体本来就具有的静水项（<code>hydrostatic</code>）与需要运动才出现的动压项（<code>hydrodynamic</code>）。</p>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Term</span><span data-lang="zh">项</span></th><th><span data-lang="en">Physical meaning</span><span data-lang="zh">物理意义</span></th><th><span data-lang="en">Typical size in water</span><span data-lang="zh">水中的典型大小</span></th><th><span data-lang="en">Zero or constant when</span><span data-lang="zh">何时为零或不变</span></th></tr>
+    <tr><td>$P$</td><td><span data-lang="en">static pressure: work done per unit volume by the surrounding fluid</span><span data-lang="zh">静压：周围流体对单位体积所做的功</span></td><td><span data-lang="en">$1.01\times10^5\;\text{Pa}$ at an open surface</span><span data-lang="zh">敞开液面处为 $1.01\times10^5\;\text{Pa}$</span></td><td><span data-lang="en">equal to $P_\text{atm}$ at every point open to the air</span><span data-lang="zh">凡与空气相通的点都等于 $P_\text{atm}$</span></td></tr>
+    <tr><td>$\rho g y$</td><td><span data-lang="en">hydrostatic term: gravitational potential energy per unit volume</span><span data-lang="zh">静水项：单位体积的重力势能</span></td><td><span data-lang="en">$9.8\times10^3\;\text{Pa}$ per metre of height</span><span data-lang="zh">每米高度 $9.8\times10^3\;\text{Pa}$</span></td><td><span data-lang="en">cancels when $y_1 = y_2$ (horizontal flow)</span><span data-lang="zh">$y_1 = y_2$（水平流动）时相消</span></td></tr>
+    <tr><td>$\tfrac{1}{2}\rho v^2$</td><td><span data-lang="en">dynamic pressure: kinetic energy per unit volume</span><span data-lang="zh">动压：单位体积的动能</span></td><td><span data-lang="en">$2.0\times10^3\;\text{Pa}$ at $2.0\;\text{m/s}$</span><span data-lang="zh">$2.0\;\text{m/s}$ 时为 $2.0\times10^3\;\text{Pa}$</span></td><td><span data-lang="en">zero for a fluid at rest; $\approx 0$ at the surface of a wide tank</span><span data-lang="zh">静止流体为零；宽大水箱液面处约为零</span></td></tr>
+  </table></div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Bernoulli's <em>Hydrodynamica</em> (1738)</span><span data-lang="zh">历史：伯努利的《流体动力学》（1738 年）</span></div>
+    <p data-lang="en">Daniel Bernoulli published <em>Hydrodynamica</em> in 1738. Using energy conservation, he concluded that the pressure in a flowing fluid falls where its speed rises.</p>
+    <p data-lang="zh">丹尼尔·伯努利于 1738 年出版了《流体动力学》（<code>Hydrodynamica</code>）。他利用能量守恒得出：流动流体的速度增大处，压强降低。</p>
+    <p data-lang="en">The equation in the form used today was derived by Leonhard Euler in 1752, from Newton's second law applied to a fluid parcel.</p>
+    <p data-lang="zh">今天所用形式的方程是莱昂哈德·欧拉于 1752 年把牛顿第二定律用于流体微团推导出来的。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Bernoulli%27s_principle" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Bernoulli's principle (history and derivations)</span><span data-lang="zh">维基百科：伯努利原理（历史与推导）</span></a></p>
+  </div>
 
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: Pressure in a Narrowing Pipe</span><span data-lang="zh">例题：变窄管道中的压强</span></summary>
@@ -1869,7 +2000,7 @@ figure.dr-fig figcaption {
 
 <!-- BEGIN unit-nav -->
 <nav class="unit-nav" aria-label="Course navigation">
-  <a class="unit-nav__link unit-nav__link--prev" href="Unit_7_Oscillations.html">
+  <a class="unit-nav__link unit-nav__link--prev" href="Unit_7_Oscillations.html?course=p1">
     <span class="unit-nav__arrow" aria-hidden="true">&larr;</span>
     <span class="unit-nav__body">
       <span class="unit-nav__hint"><span data-lang="en">Previous unit</span><span data-lang="zh">上一单元</span></span>

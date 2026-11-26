@@ -483,20 +483,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -525,8 +533,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -540,7 +548,7 @@ figure.dr-fig figcaption {
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -561,7 +569,7 @@ figure.dr-fig figcaption {
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 <meta name="dingrui:courses" content="c,p2">
@@ -696,6 +704,11 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">电荷是<strong>量子化</strong>的（<code>quantized</code>）：元电荷 $e = 1.60\times10^{-19}\;\text{C}$ 是最小的不可再分电荷量，电子带 $-e$，质子带 $+e$，中子不带电。因此你遇到的任何净电荷都等于 $q = Ne$（$N$ 为整数），$N$ 表示多出或缺少的电子数。</p>
   <p data-lang="en">A coulomb is enormous: it is about $6.25\times10^{18}$ elementary charges, so everyday static charges are microcoulombs ($10^{-6}\;\text{C}$) or nanocoulombs ($10^{-9}\;\text{C}$).</p>
   <p data-lang="zh">1 库仑是很大的电荷量，约为 $6.25\times10^{18}$ 个元电荷，所以日常的静电荷只有微库仑（$10^{-6}\;\text{C}$）或纳库仑（$10^{-9}\;\text{C}$）量级。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Millikan's oil drops</span><span data-lang="zh">历史：密立根油滴实验</span></div>
+    <p data-lang="en">In 1909 Robert Millikan and Harvey Fletcher watched tiny charged oil drops fall and rise between two horizontal charged plates, where an electric force could balance gravity. Every drop carried a whole-number multiple of one charge, about $1.6\times10^{-19}\;\text{C}$: direct evidence that charge is quantized. <a href="https://en.wikipedia.org/wiki/Oil_drop_experiment" target="_blank" rel="noopener">Oil drop experiment (Wikipedia)</a> describes the apparatus and the measurement.</p>
+    <p data-lang="zh">1909 年，密立根（<code>Robert Millikan</code>）与弗莱彻（<code>Harvey Fletcher</code>）观察带电小油滴在两块水平带电极板之间下落和上升，极板间的电力可以与重力平衡。每个油滴所带的电荷都是同一个电荷量（约 $1.6\times10^{-19}\;\text{C}$）的整数倍：这是电荷量子化的直接证据。<a href="https://en.wikipedia.org/wiki/Oil_drop_experiment" target="_blank" rel="noopener">油滴实验（维基百科，英文）</a>介绍了实验装置与测量方法。</p>
+  </div>
   <p data-lang="en">A <strong>point charge</strong> is a model: the size of the charged object is negligible compared with the distances in the problem, so all its charge can be treated as sitting at one point.</p>
   <p data-lang="zh"><strong>点电荷</strong>（<code>point charge</code>）是一种模型：带电物体的尺寸与题中涉及的距离相比可以忽略，因此可以把它的全部电荷看作集中在一点。</p>
   <p data-lang="en">A charged sphere of radius $2\;\text{cm}$ is a good point charge when other objects are meters away and a poor one when another object is $3\;\text{cm}$ from its surface. The model depends on the situation, not on the object.</p>
@@ -721,8 +734,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh">此处保留 $q_1$ 与 $q_2$ 的正负号：乘积为正则沿 $\hat r_{12}$ 方向（排斥），乘积为负则与之反向（吸引）。</p>
   </div>
   </div>
-  <p data-lang="en" data-course="p2">The direction rule is a statement about signs. Charges of the <strong>same</strong> sign repel; charges of <strong>opposite</strong> sign attract. The force on each charge is directed along the line joining the two charges. The two forces form a Newton's third law pair: equal magnitudes, opposite directions, on different objects, even when $|q_1| \neq |q_2|$. Use the formula above with the magnitudes of the charges to find the size of the force, then decide the direction from the signs: away from the other charge for repulsion, toward it for attraction.</p>
-  <p data-lang="zh" data-course="p2">方向规则其实是关于符号的陈述：<strong>同号</strong>电荷相斥，<strong>异号</strong>电荷相吸。每个电荷所受的力都沿两电荷的连线。这两个力构成一对牛顿第三定律的作用力与反作用力：大小相等、方向相反、作用在不同物体上，即使 $|q_1| \neq |q_2|$ 也是如此。用上面的公式和电荷的绝对值求力的大小，再根据符号判断方向：排斥时背离另一个电荷，吸引时指向另一个电荷。</p>
+  <p data-lang="en" data-course="p2">The direction rule is a statement about signs. Charges of the <strong>same</strong> sign repel; charges of <strong>opposite</strong> sign attract. The force on each charge is directed along the line joining the two charges.</p>
+  <p data-lang="en" data-course="p2">The two forces form a Newton's third law pair: equal magnitudes, opposite directions, on different objects, even when $|q_1| \neq |q_2|$.</p>
+  <p data-lang="en" data-course="p2">Use the formula above with the magnitudes of the charges to find the size of the force, then decide the direction from the signs: away from the other charge for repulsion, toward it for attraction.</p>
+  <p data-lang="zh" data-course="p2">方向规则其实是关于符号的陈述：<strong>同号</strong>电荷相斥，<strong>异号</strong>电荷相吸。每个电荷所受的力都沿两电荷的连线。</p>
+  <p data-lang="zh" data-course="p2">这两个力构成一对牛顿第三定律的作用力与反作用力：大小相等、方向相反、作用在不同物体上，即使 $|q_1| \neq |q_2|$ 也是如此。</p>
+  <p data-lang="zh" data-course="p2">用上面的公式和电荷的绝对值求力的大小，再根据符号判断方向：排斥时背离另一个电荷，吸引时指向另一个电荷。</p>
   <p data-lang="en">The inverse-square dependence gives quick proportional reasoning. Doubling the separation divides the force by $2^2 = 4$; tripling one charge multiplies the force by $3$; doubling both charges and the separation leaves the force unchanged.</p>
   <p data-lang="zh">平方反比关系便于快速作比例推理：距离加倍，力除以 $2^2 = 4$；一个电荷变为原来的 $3$ 倍时，力也变为 3 倍；两个电荷和距离都加倍，力不变。</p>
   <details class="sg-we">
@@ -756,6 +773,29 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
       </div>
     </div>
   </details>
+  <h3><span data-lang="en">Why the inverse square? A first-principles view</span><span data-lang="zh">为什么是平方反比？第一性原理的视角</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why the force falls as $1/r^2$</span><span data-lang="zh">第一性原理：为什么力按 $1/r^2$ 衰减</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Picture a point charge $Q$ sending out a fixed number of field lines, evenly in all directions; no line starts or stops in empty space.</p>
+    <p data-lang="zh"><strong>原理。</strong>设想点电荷 $Q$ 向各个方向均匀地发出固定数目的电场线；电场线不会在空无一物的空间中出现或消失。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Surround $Q$ with a sphere of radius $r$. Every line crosses it, and its area is $4\pi r^2$.</li>
+      <li>The push on a second charge $q$ follows the line density where it sits: lines per area $\propto 1/(4\pi r^2)$.</li>
+      <li>Writing the constant as $k = 1/(4\pi\epsilon_0)$ puts that sphere area into the law: $F = \dfrac{1}{4\pi\epsilon_0}\dfrac{|Q||q|}{r^2}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>用半径为 $r$ 的球面包围 $Q$。每条电场线都穿过该球面，球面面积为 $4\pi r^2$。</li>
+      <li>第二个电荷 $q$ 所受的推力取决于它所在处的电场线密度：单位面积的线数 $\propto 1/(4\pi r^2)$。</li>
+      <li>把常数写成 $k = 1/(4\pi\epsilon_0)$，就把球面面积写进了定律：$F = \dfrac{1}{4\pi\epsilon_0}\dfrac{|Q||q|}{r^2}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Doubling $r$ spreads the same lines over $4$ times the area, so $F$ drops to $\tfrac14$, the scaling rule above. As $r \to \infty$, $F \to 0$; as $r \to 0$ the point-charge model, not the law, breaks down.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$r$ 加倍时，同样多的电场线分布在 $4$ 倍的面积上，所以 $F$ 降为 $\tfrac14$，与上面的比例规则一致。当 $r \to \infty$ 时 $F \to 0$；当 $r \to 0$ 时失效的是点电荷模型，而不是定律本身。</p>
+  </div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Coulomb's torsion balance</span><span data-lang="zh">历史：库仑扭秤</span></div>
+    <p data-lang="en">In 1785 Charles-Augustin de Coulomb hung a light rod from a thin wire and measured how far the wire twisted when two small charged balls repelled. The twist angle measures the force, and halving the separation made the force about four times larger. <a href="https://en.wikipedia.org/wiki/Coulomb%27s_law" target="_blank" rel="noopener">Coulomb's law (Wikipedia)</a> covers the experiment and the modern statement.</p>
+    <p data-lang="zh">1785 年，库仑（<code>Charles-Augustin de Coulomb</code>）用细金属丝吊起一根轻杆，测量两个带电小球相互排斥时金属丝扭转的角度。扭转角度量出力的大小；距离减半时，力约增大为原来的四倍。<a href="https://en.wikipedia.org/wiki/Coulomb%27s_law" target="_blank" rel="noopener">库仑定律（维基百科，英文）</a>介绍了这个实验和定律的现代表述。</p>
+  </div>
   <h3><span data-lang="en">Superposition and the four-charge boundary</span><span data-lang="zh">叠加原理与四电荷的范围</span></h3>
   <p data-lang="en" data-course="c">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle.</p>
   <p data-lang="zh" data-course="c">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。</p>
@@ -763,8 +803,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh" data-course="c">AP Physics C: E&amp;M 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称时才会出现，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。</p>
   <p data-lang="en" data-course="c">(Fields of continuous charge distributions are still expected, and they are the subject of Topics 8.4 and 8.6.)</p>
   <p data-lang="zh" data-course="c">（连续电荷分布的电场仍在考查范围内，将在 8.4 和 8.6 专题中讨论。）</p>
-  <p data-lang="en" data-course="p2">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle. AP Physics 2 limits calculations of the electric force to <strong>four or fewer</strong> interacting charged objects; a larger collection is allowed only in situations of high symmetry, for example equal charges at the corners of a regular polygon, where components cancel by symmetry.</p>
-  <p data-lang="zh" data-course="p2">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。AP Physics 2 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称的情形下才允许分析，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。</p>
+  <p data-lang="en" data-course="p2">When several charges act on one charge, each pair interacts as if the others were absent, and the net force is the <strong>vector sum</strong> of the individual forces. Draw each force on a diagram first, resolve into components, add the components, and only then combine them into a magnitude and an angle.</p>
+  <p data-lang="en" data-course="p2">AP Physics 2 limits calculations of the electric force to <strong>four or fewer</strong> interacting charged objects; a larger collection is allowed only in situations of high symmetry, for example equal charges at the corners of a regular polygon, where components cancel by symmetry.</p>
+  <p data-lang="zh" data-course="p2">当多个电荷作用在同一个电荷上时，每一对电荷的相互作用都和其他电荷不存在时一样，合力是各个力的<strong>矢量和</strong>（<code>vector sum</code>）。先画出每个力，分解成分量，把分量相加，最后再合成大小与角度。</p>
+  <p data-lang="zh" data-course="p2">AP Physics 2 只要求计算<strong>至多四个</strong>相互作用的带电物体之间的电力；更多的电荷只在高度对称的情形下才允许分析，例如正多边形各顶点上的等量电荷，其分量因对称而抵消。</p>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Net force from two charges</span><span data-lang="zh">例题：两个电荷的合力</span></summary>
     <div class="detail-body">
@@ -829,6 +871,15 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">两种力都按 $1/r^2$ 衰减，但有两点不同。静电力可以吸引也可以排斥，因为电荷有两种符号；质量之间的引力总是吸引。而且对于同时有质量和电荷的两个粒子，电力通常远大于引力。</p>
   <p data-lang="en">Gravity still dominates at large scales (planets, stars) because large objects are almost exactly electrically neutral: positive and negative charge cancel, while mass only adds.</p>
   <p data-lang="zh">在行星、恒星这样的大尺度上引力仍占主导，是因为大物体几乎完全电中性：正负电荷相互抵消，而质量只会累加。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th><span data-lang="en">Feature</span><span data-lang="zh">特征</span></th><th><span data-lang="en">Electric force</span><span data-lang="zh">电力</span></th><th><span data-lang="en">Gravitational force</span><span data-lang="zh">引力</span></th></tr></thead>
+    <tbody>
+    <tr><td><span data-lang="en">Source property</span><span data-lang="zh">来源属性</span></td><td><span data-lang="en">Charge $q$, two signs</span><span data-lang="zh">电荷 $q$，有两种符号</span></td><td><span data-lang="en">Mass $m$, one sign</span><span data-lang="zh">质量 $m$，只有一种符号</span></td></tr>
+    <tr><td><span data-lang="en">Force law</span><span data-lang="zh">力的规律</span></td><td>$F = k\dfrac{|q_1||q_2|}{r^2}$</td><td>$F = G\dfrac{m_1 m_2}{r^2}$</td></tr>
+    <tr><td><span data-lang="en">Direction</span><span data-lang="zh">方向</span></td><td><span data-lang="en">Attract or repel</span><span data-lang="zh">吸引或排斥</span></td><td><span data-lang="en">Always attract</span><span data-lang="zh">总是吸引</span></td></tr>
+    <tr><td><span data-lang="en">Constant</span><span data-lang="zh">常量</span></td><td>$k = 8.99\times10^{9}\;\text{N}\cdot\text{m}^2/\text{C}^2$</td><td>$G = 6.67\times10^{-11}\;\text{N}\cdot\text{m}^2/\text{kg}^2$</td></tr>
+    <tr><td><span data-lang="en">Dominates</span><span data-lang="zh">占主导的尺度</span></td><td><span data-lang="en">Atoms, molecules, contact forces</span><span data-lang="zh">原子、分子、接触力</span></td><td><span data-lang="en">Planets and stars (net charge near zero)</span><span data-lang="zh">行星与恒星（净电荷接近零）</span></td></tr>
+    </tbody></table></div>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Electric versus gravitational force</span><span data-lang="zh">例题：电力与引力</span></summary>
     <div class="detail-body">
@@ -863,12 +914,17 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh" data-course="c">电容率衡量材料在外加电场中被<strong>极化</strong>（<code>polarize</code>）的程度：电场使电子发生轻微重排，在材料内部分离出正负电荷，这种感应分离会部分抵消外加电场。电子越容易改变排布，电容率就越大。</p>
   <p data-lang="en" data-course="c">For two point charges embedded in a uniform material, $\epsilon_0$ in Coulomb's law is replaced by the material's permittivity $\epsilon$, which reduces the force.</p>
   <p data-lang="zh" data-course="c">对于放在均匀材料中的两个点电荷，库仑定律中的 $\epsilon_0$ 要换成该材料的电容率 $\epsilon$，使力减小。</p>
-  <p data-lang="en" data-course="p2">The constant $\epsilon_0$ in Coulomb's law is the <strong>electric permittivity of free space</strong>: free space has a constant value of permittivity that appears in physical relationships. The permittivity of a material or medium measures the degree to which it is <strong>polarized</strong> in the presence of an electric field. Polarization can be modeled as the induced rearrangement of electrons by an external electric field, which separates positive and negative charge within the material. The permittivity of matter differs from the free-space value because of the matter's composition and arrangement: in a given material it is determined by how easily the electrons can change configuration, and the easier that is, the larger the permittivity.</p>
-  <p data-lang="zh" data-course="p2">库仑定律中的常数 $\epsilon_0$ 是<strong>真空电容率</strong>（<code>electric permittivity of free space</code>）：真空的电容率是一个恒定值，会出现在各种物理关系中。材料或介质的电容率衡量它在电场中被<strong>极化</strong>（<code>polarize</code>）的程度。极化可以建模为外电场引起的电子重新排布，使材料内部的正、负电荷分离。物质的电容率与真空值不同，这取决于物质的组成与排列：在给定材料中，它由电子改变排布的难易程度决定，电子越容易改变排布，电容率就越大。</p>
+  <p data-lang="en" data-course="p2">The constant $\epsilon_0$ in Coulomb's law is the <strong>electric permittivity of free space</strong>: free space has a constant value of permittivity that appears in physical relationships.</p>
+  <p data-lang="en" data-course="p2">The permittivity of a material or medium measures the degree to which it is <strong>polarized</strong> in the presence of an electric field. Polarization can be modeled as the induced rearrangement of electrons by an external electric field, which separates positive and negative charge within the material.</p>
+  <p data-lang="en" data-course="p2">The permittivity of matter differs from the free-space value because of the matter's composition and arrangement: in a given material it is determined by how easily the electrons can change configuration, and the easier that is, the larger the permittivity.</p>
+  <p data-lang="zh" data-course="p2">库仑定律中的常数 $\epsilon_0$ 是<strong>真空电容率</strong>（<code>electric permittivity of free space</code>）：真空的电容率是一个恒定值，会出现在各种物理关系中。</p>
+  <p data-lang="zh" data-course="p2">材料或介质的电容率衡量它在电场中被<strong>极化</strong>（<code>polarize</code>）的程度。极化可以建模为外电场引起的电子重新排布，使材料内部的正、负电荷分离。</p>
+  <p data-lang="zh" data-course="p2">物质的电容率与真空值不同，这取决于物质的组成与排列：在给定材料中，它由电子改变排布的难易程度决定，电子越容易改变排布，电容率就越大。</p>
   <p data-lang="en" data-course="c">In a <strong>conductor</strong> (metals, salt water) charge carriers move easily through the material. In an <strong>insulator</strong> (glass, rubber, plastic) charge carriers cannot move easily, so charge placed on an insulator stays where it was put. Topics 8.2 and 8.3 use this distinction heavily.</p>
   <p data-lang="zh" data-course="c">在<strong>导体</strong>（<code>conductor</code>，如金属、盐水）中，电荷载流子容易在材料内移动；在<strong>绝缘体</strong>（<code>insulator</code>，如玻璃、橡胶、塑料）中，电荷载流子不易移动，因此放在绝缘体上的电荷会停留在原处。8.2 和 8.3 专题会大量用到这一区别。</p>
   <p data-lang="en" data-course="p2">In a <strong>conductor</strong> (metals, salt water) charge carriers move easily through the material. In an <strong>insulator</strong> (glass, rubber, plastic) charge carriers cannot move easily, so charge placed on an insulator stays where it was put. Topics 10.2 and 10.3 use this distinction heavily.</p>
   <p data-lang="zh" data-course="p2">在<strong>导体</strong>（<code>conductor</code>，如金属、盐水）中，电荷载流子容易在材料内移动；在<strong>绝缘体</strong>（<code>insulator</code>，如玻璃、橡胶、塑料）中，电荷载流子不易移动，因此放在绝缘体上的电荷会停留在原处。10.2 和 10.3 专题会大量用到这一区别。</p>
+  <h3><span data-lang="en">Contact forces are electric</span><span data-lang="zh">接触力的本质是电力</span></h3>
   <p data-lang="en">Finally, nearly every force that you drew in Mechanics, such as the normal force, friction and tension, is an electric force in disguise. Atoms in a table and in a book repel through their electrons; there are so many particle interactions that it is convenient to replace the sum by one <strong>contact force</strong> with a simple model.</p>
   <p data-lang="zh">最后，你在力学中画过的几乎所有力，例如支持力、摩擦力和张力，本质上都是电力。桌子和书中的原子通过各自的电子相互排斥；由于粒子间的相互作用数量极大，人们便用一个简单模型的<strong>接触力</strong>（<code>contact force</code>）来代替它们的总和。</p>
   <p data-lang="en">In this course, only the electric force between charged objects is treated as fundamental.</p>
@@ -973,6 +1029,24 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
       </div>
     </div>
   </details>
+  <h3><span data-lang="en">Why identical conductors share charge equally</span><span data-lang="zh">为什么相同导体平分电荷</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: sharing charge between identical conductors</span><span data-lang="zh">第一性原理：相同导体之间的电荷分配</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Conservation of charge for an isolated pair, plus symmetry.</p>
+    <p data-lang="zh"><strong>原理。</strong>孤立两球系统的电荷守恒，加上对称性。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>System: spheres A and B only, so $q_A' + q_B' = q_A + q_B$.</li>
+      <li>Touching, they form one conductor and charge flows until equilibrium. Identical spheres are interchangeable, so neither can end with more: $q_A' = q_B'$.</li>
+      <li>Combine the two equations: $q_A' = q_B' = \dfrac{q_A + q_B}{2}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>系统只含 A、B 两球，所以 $q_A' + q_B' = q_A + q_B$。</li>
+      <li>接触时两球构成一个导体，电荷流动直到达到平衡。相同的球可以互换，任何一个都不会分得更多：$q_A' = q_B'$。</li>
+      <li>联立两式：$q_A' = q_B' = \dfrac{q_A + q_B}{2}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> If $q_B = 0$, each ends with $q_A/2$; if $q_B = -q_A$, both end neutral. For $+6.0\;\text{nC}$ and $-2.0\;\text{nC}$, each ends with $+2.0\;\text{nC}$ and the total $+4.0\;\text{nC}$ is unchanged. If the spheres differ in size, the symmetry step fails and the larger sphere takes more.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>若 $q_B = 0$，每个球最终带 $q_A/2$；若 $q_B = -q_A$，两球最终都呈中性。对 $+6.0\;\text{nC}$ 和 $-2.0\;\text{nC}$，每个球最终带 $+2.0\;\text{nC}$，总电荷 $+4.0\;\text{nC}$ 不变。若两球大小不同，对称性这一步不成立，较大的球分得更多。</p>
+  </div>
   <h3><span data-lang="en">Conductors, insulators and induced charge separation</span><span data-lang="zh">导体、绝缘体与感应电荷分离</span></h3>
   <p data-lang="en">Bring a charged rod near a neutral object without touching it. The object's net charge is still zero, yet it is attracted. The reason is <strong>induced charge separation</strong>, also called <strong>polarization</strong>: the electric force from the rod shifts charge within the object, and the object's net charge stays zero.</p>
   <p data-lang="zh">把一根带电棒靠近一个中性物体但不接触。物体的净电荷仍为零，却会被吸引。原因是<strong>感应电荷分离</strong>（<code>induced charge separation</code>），也叫<strong>极化</strong>：棒的电力使物体内部的电荷发生移动，而物体的净电荷仍为零。</p>
@@ -982,6 +1056,23 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">在<strong>绝缘体</strong>中，电子无法离开原子，每个原子或分子只发生轻微形变，在表面留下一层很薄的感应电荷。</p>
   <p data-lang="en">Why is the neutral object <em>attracted</em>? The opposite-sign induced charge is closer to the rod than the same-sign induced charge is. Because the electric force falls with distance, the attraction is stronger than the repulsion, and the net force on the object is toward the rod. This holds whichever sign the rod has.</p>
   <p data-lang="zh">为什么中性物体会被<em>吸引</em>？异号的感应电荷离棒更近，同号的感应电荷离棒更远。由于电力随距离减小，吸引力大于排斥力，物体受到的合力指向棒。无论棒带哪种电荷，结论都一样。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th><span data-lang="en">Property</span><span data-lang="zh">性质</span></th><th><span data-lang="en">Conductor</span><span data-lang="zh">导体</span></th><th><span data-lang="en">Insulator</span><span data-lang="zh">绝缘体</span></th></tr></thead>
+    <tbody>
+    <tr><td><span data-lang="en">Examples</span><span data-lang="zh">例子</span></td><td><span data-lang="en">Metals, salt water</span><span data-lang="zh">金属、盐水</span></td><td><span data-lang="en">Glass, rubber, plastic</span><span data-lang="zh">玻璃、橡胶、塑料</span></td></tr>
+    <tr><td><span data-lang="en">Charge carriers</span><span data-lang="zh">电荷载流子</span></td><td><span data-lang="en">Free electrons move through the material</span><span data-lang="zh">自由电子可在材料中移动</span></td><td><span data-lang="en">Electrons stay bound to their atoms</span><span data-lang="zh">电子束缚在各自的原子上</span></td></tr>
+    <tr><td><span data-lang="en">Near a charged rod</span><span data-lang="zh">靠近带电棒时</span></td><td><span data-lang="en">Charge separates across the whole object</span><span data-lang="zh">电荷在整个物体上分离</span></td><td><span data-lang="en">Each molecule distorts; thin layer of surface charge</span><span data-lang="zh">每个分子轻微形变；表面出现薄层电荷</span></td></tr>
+    <tr><td><span data-lang="en">Excess charge</span><span data-lang="zh">多余电荷</span></td><td><span data-lang="en">Spreads over the surface</span><span data-lang="zh">分布在表面</span></td><td><span data-lang="en">Stays where it was placed</span><span data-lang="zh">停留在放置的位置</span></td></tr>
+    </tbody></table></div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Faraday's ice pail</span><span data-lang="zh">历史：法拉第冰桶实验</span></div>
+    <p data-lang="en">In 1843 Michael Faraday lowered a charged metal ball on a silk thread into a metal ice pail that stood on an insulator and was wired to an electroscope.</p>
+    <p data-lang="en">Once the ball was well inside, the reading did not depend on where it hung, and it did not change when the ball touched the pail: the induced charge equals the ball's charge. <a href="https://en.wikipedia.org/wiki/Faraday%27s_ice_pail_experiment" target="_blank" rel="noopener">Faraday's ice pail experiment (Wikipedia)</a> walks through each step.</p>
+    <p data-lang="zh">1843 年，法拉第（<code>Michael Faraday</code>）用丝线把一个带电金属球放进金属冰桶；冰桶放在绝缘体上，并用导线连到验电器。</p>
+    <p data-lang="zh">金属球深入桶内后，读数与它悬挂的位置无关，球碰到桶壁时读数也不变：感应电荷与球所带的电荷相等。<a href="https://en.wikipedia.org/wiki/Faraday%27s_ice_pail_experiment" target="_blank" rel="noopener">法拉第冰桶实验（维基百科，英文）</a>逐步介绍了这个实验。</p>
+    <p data-lang="en">Faraday also pictured electric forces as "lines of force" filling space, the idea behind the field-line diagrams later in this unit.</p>
+    <p data-lang="zh">法拉第还把电力想象成充满空间的“力线”（<code>lines of force</code>），这正是本单元后面电场线图的思想来源。</p>
+  </div>
   <h3><span data-lang="en">Three ways to charge an object</span><span data-lang="zh">三种起电方式</span></h3>
   <p data-lang="en"><strong>Friction.</strong> Two materials are rubbed together and electrons transfer from one to the other; the two end with equal and opposite charges.</p>
   <p data-lang="zh"><strong>摩擦起电。</strong>两种材料相互摩擦，电子从一个转移到另一个，两者最终带等量异号电荷。</p>
@@ -1147,6 +1238,14 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">试探电荷是电量足够小的点电荷，以至于不会明显扰动产生电场的源电荷；否则它会推动附近导体上的电荷，改变所要测量的电场本身。</p>
   <p data-lang="en">The field points <strong>away</strong> from isolated positive charges and <strong>toward</strong> isolated negative charges. A positive charge feels a force in the <strong>same</strong> direction as $\vec E$; a negative charge feels a force in the direction <strong>opposite</strong> to $\vec E$.</p>
   <p data-lang="zh">电场<strong>背离</strong>孤立的正电荷、<strong>指向</strong>孤立的负电荷。正电荷受力与 $\vec E$ <strong>同向</strong>；负电荷受力与 $\vec E$ <strong>反向</strong>。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th><span data-lang="en">Quantity</span><span data-lang="zh">物理量</span></th><th><span data-lang="en">Electric force $\vec F$</span><span data-lang="zh">电力 $\vec F$</span></th><th><span data-lang="en">Electric field $\vec E$</span><span data-lang="zh">电场 $\vec E$</span></th></tr></thead>
+    <tbody>
+    <tr><td><span data-lang="en">Depends on</span><span data-lang="zh">取决于</span></td><td><span data-lang="en">Sources, position and the charge $q$ placed there</span><span data-lang="zh">源电荷、位置以及放在该处的电荷 $q$</span></td><td><span data-lang="en">Sources and position only</span><span data-lang="zh">只取决于源电荷和位置</span></td></tr>
+    <tr><td><span data-lang="en">Units</span><span data-lang="zh">单位</span></td><td>$\text{N}$</td><td>$\text{N/C}$</td></tr>
+    <tr><td><span data-lang="en">Point source $Q$</span><span data-lang="zh">点电荷源 $Q$</span></td><td>$F = k\dfrac{|Q||q|}{r^2}$</td><td>$E = k\dfrac{|Q|}{r^2}$</td></tr>
+    <tr><td><span data-lang="en">Direction</span><span data-lang="zh">方向</span></td><td><span data-lang="en">Along $\vec E$ if $q &gt; 0$, opposite if $q &lt; 0$</span><span data-lang="zh">$q &gt; 0$ 时沿 $\vec E$，$q &lt; 0$ 时与之相反</span></td><td><span data-lang="en">Away from $+Q$, toward $-Q$</span><span data-lang="zh">背离 $+Q$，指向 $-Q$</span></td></tr>
+    </tbody></table></div>
   <h3><span data-lang="en">Field of a point charge and superposition</span><span data-lang="zh">点电荷的电场与叠加</span></h3>
   <p data-lang="en">Dividing Coulomb's law by the test charge gives the field of a point charge $Q$ at distance $r$, directed along the line from the source:</p>
   <p data-lang="zh">把库仑定律除以试探电荷，得到电荷 $Q$ 在距离 $r$ 处的电场，方向沿源电荷出发的连线：</p>
@@ -1246,8 +1345,67 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">规则如下：电场线从正电荷（或无穷远）出发，终止于负电荷（或无穷远）；某点处电场线的切线方向就是该点的电场方向；电场线不会相交，因为每一点的电场只有一个方向。</p>
   <p data-lang="en">The <strong>density</strong> of lines (the number per area perpendicular to the lines) shows the relative magnitude, so where the lines crowd together the field is strong. A line diagram does not give magnitudes by itself, only comparisons within the same diagram.</p>
   <p data-lang="zh">电场线的<strong>疏密</strong>（单位垂直面积上的线数）表示场强的相对大小，线越密的地方场强越大。电场线图本身不给出大小，只能在同一幅图内做比较。</p>
-  <p data-lang="en" data-course="p2">To read a field-line diagram, compare the spacing of the lines. Where the lines are drawn closer together the field is stronger, and where they spread apart the field is weaker. Near a small charged sphere the lines are crowded and the field is strong; far from it the same lines are far apart and the field is weak. The field direction at a point is along the tangent to the line there: away from positive charge and toward negative charge. A vector field map carries the same information with arrow direction and arrow length.</p>
-  <p data-lang="zh" data-course="p2">阅读电场线图时，要比较电场线的疏密。电场线画得越靠近的地方场强越大，电场线越稀疏的地方场强越小。在带电小球附近，电场线密集、场强大；远离小球处，同样的电场线相距很远、场强小。某点的电场方向沿该处电场线的切线：背离正电荷、指向负电荷。矢量场图则用箭头的方向和长度表达同样的信息。</p>
+  <p data-lang="en" data-course="p2">To read a field-line diagram, compare the spacing of the lines. Where the lines are drawn closer together the field is stronger, and where they spread apart the field is weaker.</p>
+  <p data-lang="en" data-course="p2">Near a small charged sphere the lines are crowded and the field is strong; far from it the same lines are far apart and the field is weak.</p>
+  <p data-lang="en" data-course="p2">The field direction at a point is along the tangent to the line there: away from positive charge and toward negative charge. A vector field map carries the same information with arrow direction and arrow length.</p>
+  <p data-lang="zh" data-course="p2">阅读电场线图时，要比较电场线的疏密。电场线画得越靠近的地方场强越大，电场线越稀疏的地方场强越小。</p>
+  <p data-lang="zh" data-course="p2">在带电小球附近，电场线密集、场强大；远离小球处，同样的电场线相距很远、场强小。</p>
+  <p data-lang="zh" data-course="p2">某点的电场方向沿该处电场线的切线：背离正电荷、指向负电荷。矢量场图则用箭头的方向和长度表达同样的信息。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Electric dipole field lines">
+    <path class="c2" d="M 160.0,114.2 L 163.0,113.3 L 166.0,112.5 L 169.1,111.7 L 172.1,110.9 L 175.1,110.1 L 178.2,109.3 L 181.2,108.6 L 184.3,107.9 L 187.3,107.2 L 190.4,106.5 L 193.5,105.9 L 196.6,105.4 L 199.8,104.8 L 202.9,104.4 L 206.1,104.0 L 209.2,103.7 L 212.4,103.4 L 215.6,103.2 L 218.8,103.1 L 222.0,103.1 L 225.2,103.1 L 228.4,103.3 L 231.6,103.5 L 234.8,103.7 L 237.9,104.1 L 241.1,104.5 L 244.2,105.0 L 247.3,105.6 L 250.4,106.2 L 253.5,106.8 L 256.6,107.5 L 259.6,108.2 L 262.7,109.0 L 265.7,109.8 L 268.7,110.6 L 271.7,111.5 L 274.7,112.3 L 277.7,113.2 L 280.7,114.1"/>
+    <line class="c2" x1="218.8" y1="103.1" x2="225.2" y2="103.1"/>
+    <polyline class="c2" points="217.7,106.7 225.2,103.1 217.7,99.5"/>
+    <path class="c2" d="M 157.4,110.9 L 159.7,109.2 L 162.1,107.6 L 164.5,105.9 L 166.9,104.3 L 169.3,102.7 L 171.7,101.2 L 174.2,99.6 L 176.8,98.1 L 179.3,96.7 L 181.9,95.2 L 184.6,93.9 L 187.3,92.6 L 190.0,91.3 L 192.8,90.2 L 195.7,89.1 L 198.6,88.1 L 201.6,87.2 L 204.6,86.4 L 207.7,85.8 L 210.8,85.2 L 214.0,84.8 L 217.2,84.6 L 220.4,84.4 L 223.6,84.5 L 226.8,84.6 L 229.9,84.9 L 233.1,85.4 L 236.2,85.9 L 239.3,86.6 L 242.3,87.5 L 245.2,88.4 L 248.1,89.4 L 251.0,90.6 L 253.7,91.8 L 256.4,93.1 L 259.1,94.4 L 261.7,95.9 L 264.2,97.4 L 266.7,98.9 L 269.2,100.5 L 271.6,102.1 L 273.9,103.7 L 276.3,105.4 L 278.6,107.1 L 280.8,108.8 L 283.1,110.5"/>
+    <line class="c2" x1="217.2" y1="84.6" x2="223.6" y2="84.5"/>
+    <polyline class="c2" points="216.1,88.2 223.6,84.5 216.0,81.0"/>
+    <path class="c2" d="M 152.6,108.4 L 153.8,106.1 L 155.0,103.9 L 156.2,101.6 L 157.5,99.4 L 158.8,97.2 L 160.1,94.9 L 161.5,92.7 L 162.9,90.6 L 164.4,88.4 L 165.9,86.3 L 167.5,84.1 L 169.2,82.1 L 170.9,80.0 L 172.8,78.0 L 174.7,76.1 L 176.7,74.2 L 178.7,72.3 L 180.9,70.5 L 183.2,68.8 L 185.5,67.1 L 188.0,65.6 L 190.5,64.1 L 193.2,62.7 L 195.9,61.4 L 198.7,60.3 L 201.6,59.3 L 204.6,58.4 L 207.6,57.6 L 210.7,57.0 L 213.9,56.5 L 217.0,56.2 L 220.2,56.1 L 223.4,56.1 L 226.6,56.2 L 229.8,56.6 L 232.9,57.1 L 236.0,57.7 L 239.0,58.5 L 242.0,59.4 L 244.9,60.5 L 247.7,61.7 L 250.4,63.0 L 253.0,64.4 L 255.5,65.9 L 257.9,67.5 L 260.2,69.2 L 262.4,71.0 L 264.5,72.8 L 266.6,74.7 L 268.5,76.6 L 270.3,78.6 L 272.0,80.7 L 273.7,82.8 L 275.3,84.9 L 276.8,87.0 L 278.2,89.2 L 279.6,91.4 L 280.9,93.7 L 282.1,95.9 L 283.3,98.2 L 284.5,100.4 L 285.6,102.7 L 286.6,105.0 L 287.7,107.3 L 288.7,109.6"/>
+    <line class="c2" x1="220.2" y1="56.1" x2="226.6" y2="56.2"/>
+    <polyline class="c2" points="219.0,59.6 226.6,56.2 219.2,52.4"/>
+    <path class="c2" d="M 151.6,106.1 L 152.5,103.2 L 153.5,100.4 L 154.4,97.5 L 155.4,94.7 L 156.5,91.9 L 157.5,89.1 L 158.7,86.3 L 159.8,83.5 L 161.0,80.8 L 162.3,78.0 L 163.6,75.3 L 165.0,72.7 L 166.4,70.0 L 167.9,67.4 L 169.5,64.9 L 171.1,62.4 L 172.8,59.9 L 174.7,57.5 L 176.5,55.2 L 178.5,53.0 L 180.6,50.8 L 182.7,48.7 L 185.0,46.7 L 187.3,44.8 L 189.7,43.0 L 192.2,41.3 L 194.8,39.8 L 197.4,38.4 L 200.1,37.1 L 202.9,36.0 L 205.8,35.1 L 208.7,34.3 L 211.6,33.7 L 214.6,33.3 L 217.6,33.0 L 220.6,33.0 L 223.6,33.1 L 226.5,33.4 L 229.5,33.9 L 232.4,34.6 L 235.3,35.4 L 238.1,36.4 L 240.9,37.6 L 243.6,38.9 L 246.2,40.3 L 248.8,41.9 L 251.2,43.6 L 253.6,45.5 L 255.9,47.4 L 258.1,49.5 L 260.2,51.6 L 262.2,53.8 L 264.2,56.1 L 266.0,58.4 L 267.8,60.8 L 269.5,63.3 L 271.1,65.8 L 272.7,68.4 L 274.2,71.0 L 275.6,73.7 L 276.9,76.3 L 278.2,79.1 L 279.4,81.8 L 280.6,84.5 L 281.8,87.3 L 282.9,90.1 L 283.9,92.9 L 284.9,95.7 L 285.9,98.6 L 286.9,101.4 L 287.8,104.3 L 288.4,106.2"/>
+    <line class="c2" x1="216.8" y1="33.0" x2="223.2" y2="33.0"/>
+    <polyline class="c2" points="215.7,36.6 223.2,33.0 215.7,29.4"/>
+    <path class="c2" d="M 160.0,120.8 L 163.0,121.7 L 166.0,122.5 L 169.1,123.3 L 172.1,124.1 L 175.1,124.9 L 178.2,125.7 L 181.2,126.4 L 184.3,127.1 L 187.3,127.8 L 190.4,128.5 L 193.5,129.1 L 196.6,129.6 L 199.8,130.2 L 202.9,130.6 L 206.1,131.0 L 209.2,131.3 L 212.4,131.6 L 215.6,131.8 L 218.8,131.9 L 222.0,131.9 L 225.2,131.9 L 228.4,131.7 L 231.6,131.5 L 234.8,131.3 L 237.9,130.9 L 241.1,130.5 L 244.2,130.0 L 247.3,129.4 L 250.4,128.8 L 253.5,128.2 L 256.6,127.5 L 259.6,126.8 L 262.7,126.0 L 265.7,125.2 L 268.7,124.4 L 271.7,123.5 L 274.7,122.7 L 277.7,121.8 L 280.7,120.9"/>
+    <line class="c2" x1="218.8" y1="131.9" x2="225.2" y2="131.9"/>
+    <polyline class="c2" points="217.7,135.5 225.2,131.9 217.7,128.3"/>
+    <path class="c2" d="M 157.4,124.1 L 159.7,125.8 L 162.1,127.4 L 164.5,129.1 L 166.9,130.7 L 169.3,132.3 L 171.7,133.8 L 174.2,135.4 L 176.8,136.9 L 179.3,138.3 L 181.9,139.8 L 184.6,141.1 L 187.3,142.4 L 190.0,143.7 L 192.8,144.8 L 195.7,145.9 L 198.6,146.9 L 201.6,147.8 L 204.6,148.6 L 207.7,149.2 L 210.8,149.8 L 214.0,150.2 L 217.2,150.4 L 220.4,150.6 L 223.6,150.5 L 226.8,150.4 L 229.9,150.1 L 233.1,149.6 L 236.2,149.1 L 239.3,148.4 L 242.3,147.5 L 245.2,146.6 L 248.1,145.6 L 251.0,144.4 L 253.7,143.2 L 256.4,141.9 L 259.1,140.6 L 261.7,139.1 L 264.2,137.6 L 266.7,136.1 L 269.2,134.5 L 271.6,132.9 L 273.9,131.3 L 276.3,129.6 L 278.6,127.9 L 280.8,126.2 L 283.1,124.5"/>
+    <line class="c2" x1="217.2" y1="150.4" x2="223.6" y2="150.5"/>
+    <polyline class="c2" points="216.0,154.0 223.6,150.5 216.1,146.8"/>
+    <path class="c2" d="M 152.6,126.6 L 153.8,128.9 L 155.0,131.1 L 156.2,133.4 L 157.5,135.6 L 158.8,137.8 L 160.1,140.1 L 161.5,142.3 L 162.9,144.4 L 164.4,146.6 L 165.9,148.7 L 167.5,150.9 L 169.2,152.9 L 170.9,155.0 L 172.8,157.0 L 174.7,158.9 L 176.7,160.8 L 178.7,162.7 L 180.9,164.5 L 183.2,166.2 L 185.5,167.9 L 188.0,169.4 L 190.5,170.9 L 193.2,172.3 L 195.9,173.6 L 198.7,174.7 L 201.6,175.7 L 204.6,176.6 L 207.6,177.4 L 210.7,178.0 L 213.9,178.5 L 217.0,178.8 L 220.2,178.9 L 223.4,178.9 L 226.6,178.8 L 229.8,178.4 L 232.9,177.9 L 236.0,177.3 L 239.0,176.5 L 242.0,175.6 L 244.9,174.5 L 247.7,173.3 L 250.4,172.0 L 253.0,170.6 L 255.5,169.1 L 257.9,167.5 L 260.2,165.8 L 262.4,164.0 L 264.5,162.2 L 266.6,160.3 L 268.5,158.4 L 270.3,156.4 L 272.0,154.3 L 273.7,152.2 L 275.3,150.1 L 276.8,148.0 L 278.2,145.8 L 279.6,143.6 L 280.9,141.3 L 282.1,139.1 L 283.3,136.8 L 284.5,134.6 L 285.6,132.3 L 286.6,130.0 L 287.7,127.7 L 288.7,125.4"/>
+    <line class="c2" x1="220.2" y1="178.9" x2="226.6" y2="178.8"/>
+    <polyline class="c2" points="219.2,182.6 226.6,178.8 219.0,175.4"/>
+    <path class="c2" d="M 151.6,128.9 L 152.5,131.8 L 153.5,134.6 L 154.4,137.5 L 155.4,140.3 L 156.5,143.1 L 157.5,145.9 L 158.7,148.7 L 159.8,151.5 L 161.0,154.2 L 162.3,157.0 L 163.6,159.7 L 165.0,162.3 L 166.4,165.0 L 167.9,167.6 L 169.5,170.1 L 171.1,172.6 L 172.8,175.1 L 174.7,177.5 L 176.5,179.8 L 178.5,182.0 L 180.6,184.2 L 182.7,186.3 L 185.0,188.3 L 187.3,190.2 L 189.7,192.0 L 192.2,193.7 L 194.8,195.2 L 197.4,196.6 L 200.1,197.9 L 202.9,199.0 L 205.8,199.9 L 208.7,200.7 L 211.6,201.3 L 214.6,201.7 L 217.6,202.0 L 220.6,202.0 L 223.6,201.9 L 226.5,201.6 L 229.5,201.1 L 232.4,200.4 L 235.3,199.6 L 238.1,198.6 L 240.9,197.4 L 243.6,196.1 L 246.2,194.7 L 248.8,193.1 L 251.2,191.4 L 253.6,189.5 L 255.9,187.6 L 258.1,185.5 L 260.2,183.4 L 262.2,181.2 L 264.2,178.9 L 266.0,176.6 L 267.8,174.2 L 269.5,171.7 L 271.1,169.2 L 272.7,166.6 L 274.2,164.0 L 275.6,161.3 L 276.9,158.7 L 278.2,155.9 L 279.4,153.2 L 280.6,150.5 L 281.8,147.7 L 282.9,144.9 L 283.9,142.1 L 284.9,139.3 L 285.9,136.4 L 286.9,133.6 L 287.8,130.7 L 288.4,128.8"/>
+    <line class="c2" x1="216.8" y1="202.0" x2="223.2" y2="202.0"/>
+    <polyline class="c2" points="215.7,205.6 223.2,202.0 215.7,198.4"/>
+    <line class="c2" x1="164.0" y1="117.5" x2="276.0" y2="117.5"/>
+    <polyline class="c2" points="268.5,121.1 276.0,117.5 268.5,113.9"/>
+    <circle class="box" cx="148.0" cy="117.5" r="11.0"/>
+    <circle class="box" cx="292.0" cy="117.5" r="11.0"/>
+    <text class="c1t" data-lang="en" x="148.0" y="122.1" text-anchor="middle">+q</text><text class="c1t" data-lang="zh" x="148.0" y="122.1" text-anchor="middle">+q</text>
+    <text class="c2t" data-lang="en" x="292.0" y="122.1" text-anchor="middle">−q</text><text class="c2t" data-lang="zh" x="292.0" y="122.1" text-anchor="middle">−q</text>
+    <text class="lbl" data-lang="en" x="220.0" y="229.0" text-anchor="middle">Field lines leave +q and terminate on −q</text><text class="lbl" data-lang="zh" x="220.0" y="229.0" text-anchor="middle">电场线从 +q 出发并终止于 −q</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 1. Electric dipole field lines curve from $+q$ to $-q$; tangent vectors give the direction of $\vec{E}$ and line density shows field strength.</span><span data-lang="zh">图 1. 电偶极子电场线从 $+q$ 指向 $-q$；切线方向给出 $\vec{E}$ 的方向，疏密程度表示场强大小。</span></figcaption>
+  </figure>
+
+  <h3><span data-lang="en">Far field of a dipole</span><span data-lang="zh">电偶极子的远场</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the axial field of a dipole</span><span data-lang="zh">第一性原理：电偶极子轴线上的电场</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Superposition of two point-charge fields. Charges $+q$ and $-q$ sit a distance $d$ apart; the field point is on their axis, a distance $x$ from the midpoint on the $+q$ side.</p>
+    <p data-lang="zh"><strong>原理。</strong>两个点电荷电场的叠加。电荷 $+q$ 与 $-q$ 相距 $d$；场点位于二者连线上 $+q$ 一侧，到中点的距离为 $x$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>The two fields point opposite ways: $E = \dfrac{kq}{(x-d/2)^2} - \dfrac{kq}{(x+d/2)^2}$.</li>
+      <li>Use $(x+d/2)^2 - (x-d/2)^2 = 2xd$: $E = \dfrac{2kqxd}{(x^2 - d^2/4)^2}$, pointing away from the dipole.</li>
+      <li>For $x \gg d$, drop $d^2/4$: $E \approx \dfrac{2kqd}{x^3}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>两个电场方向相反：$E = \dfrac{kq}{(x-d/2)^2} - \dfrac{kq}{(x+d/2)^2}$。</li>
+      <li>利用 $(x+d/2)^2 - (x-d/2)^2 = 2xd$：$E = \dfrac{2kqxd}{(x^2 - d^2/4)^2}$，方向背离电偶极子。</li>
+      <li>当 $x \gg d$ 时略去 $d^2/4$：$E \approx \dfrac{2kqd}{x^3}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> The far field falls as $1/x^3$, faster than a point charge's $1/x^2$, because the net charge is zero. As $d \to 0$ the charges overlap and $E \to 0$. At $x = 10d$ the approximation is about $0.5\%$ below the exact value.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>远场按 $1/x^3$ 衰减，比点电荷的 $1/x^2$ 更快，因为净电荷为零。当 $d \to 0$ 时两电荷重合，$E \to 0$。在 $x = 10d$ 处，近似值比精确值约小 $0.5\%$。</p>
+  </div>
   <h3><span data-lang="en">Fields of conductors and insulators</span><span data-lang="zh">导体与绝缘体的电场</span></h3>
   <p data-lang="en" data-course="c">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>.</p>
   <p data-lang="zh" data-course="c">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。</p>
@@ -1255,12 +1413,44 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh" data-course="c">在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。</p>
   <p data-lang="en" data-course="c">For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center (Topic 8.6 proves this with Gauss's law).</p>
   <p data-lang="zh" data-course="c">对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场（8.6 专题将用高斯定律证明这一点）。</p>
-  <p data-lang="en" data-course="p2">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>. At the surface the field is <strong>perpendicular</strong> to the surface: a parallel component would push surface charge along the conductor. For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center.</p>
-  <p data-lang="zh" data-course="p2">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场。</p>
+  <p data-lang="en" data-course="p2">In a <strong>conductor</strong> in electrostatic equilibrium the charge carriers have stopped moving. That can only happen if the net force on each carrier is zero, so the electric field <strong>inside</strong> the conductor is zero, and any excess charge sits on the <strong>surface</strong>.</p>
+  <p data-lang="en" data-course="p2">At the surface the field is <strong>perpendicular</strong> to the surface: a parallel component would push surface charge along the conductor.</p>
+  <p data-lang="en" data-course="p2">For an isolated sphere with a spherically symmetric charge distribution, the field outside equals the field of a point charge with the same net charge located at the center.</p>
+  <p data-lang="zh" data-course="p2">处于静电平衡的<strong>导体</strong>（<code>conductor</code>）中，电荷载流子已停止运动。这只可能在每个载流子所受合力为零时出现，所以导体<strong>内部</strong>的电场为零，多余的电荷分布在<strong>表面</strong>。</p>
+  <p data-lang="zh" data-course="p2">在表面处电场<strong>垂直于</strong>表面：若有平行分量，就会推动表面电荷沿导体移动。</p>
+  <p data-lang="zh" data-course="p2">对于电荷呈球对称分布的孤立球体，球外的电场等于位于球心、带同样净电荷的点电荷的电场。</p>
   <p data-lang="en">An <strong>insulator</strong> is different. Its charge cannot move freely, so excess charge on an insulator can be spread throughout the interior as well as on the surface, and the electric field inside an insulator can be nonzero.</p>
   <p data-lang="zh"><strong>绝缘体</strong>（<code>insulator</code>）则不同。它的电荷不能自由移动，因此绝缘体上多余的电荷既可以分布在表面，也可以分布在整个内部，绝缘体内部的电场可以不为零。</p>
   <p data-lang="en" data-course="p2"><strong>Scope.</strong> AP Physics 2 limits electric-field calculations to four or fewer charged objects; an analysis with more charges is allowed only in situations of high symmetry. Electric fields within insulators are analyzed only qualitatively.</p>
   <p data-lang="zh" data-course="p2"><strong>范围。</strong>AP Physics 2 只要求计算至多四个带电物体产生的电场；电荷更多时，只在高度对称的情形下才允许分析。对绝缘体内部的电场只要求作定性分析（<code>qualitative</code>）。</p>
+  <figure class="sg-fig" role="group" data-course="c">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Electric field vs radius for sphere">
+    <line class="ax" x1="52.0" y1="197.0" x2="416.0" y2="197.0"/>
+    <polyline class="ax" points="408.5,200.6 416.0,197.0 408.5,193.4"/>
+    <line class="ax" x1="52.0" y1="197.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="229.0" text-anchor="middle">Radius r / R</text><text class="lbl" data-lang="zh" x="234.0" y="229.0" text-anchor="middle">半径 r / R</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Field E / E_surf</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">电场 E / E_表面</text>
+    <line class="ax" x1="143.0" y1="193.5" x2="143.0" y2="200.5"/>
+    <text class="mut" data-lang="en" x="143.0" y="212.0" text-anchor="middle">1</text><text class="mut" data-lang="zh" x="143.0" y="212.0" text-anchor="middle">1</text>
+    <line class="ax" x1="234.0" y1="193.5" x2="234.0" y2="200.5"/>
+    <text class="mut" data-lang="en" x="234.0" y="212.0" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="234.0" y="212.0" text-anchor="middle">2</text>
+    <line class="ax" x1="325.0" y1="193.5" x2="325.0" y2="200.5"/>
+    <text class="mut" data-lang="en" x="325.0" y="212.0" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="325.0" y="212.0" text-anchor="middle">3</text>
+    <line class="ax" x1="48.5" y1="162.0" x2="55.5" y2="162.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="166.0" text-anchor="end">0.25</text><text class="mut" data-lang="zh" x="45.0" y="166.0" text-anchor="end">0.25</text>
+    <line class="ax" x1="48.5" y1="57.0" x2="55.5" y2="57.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="61.0" text-anchor="end">1.0</text><text class="mut" data-lang="zh" x="45.0" y="61.0" text-anchor="end">1.0</text>
+    <line class="grid dash" x1="143.0" y1="197.0" x2="143.0" y2="50.0"/>
+    <path class="c1" d="M 52.00,197.00 L 52.76,195.83 L 53.52,194.67 L 54.27,193.50 L 55.03,192.33 L 55.79,191.17 L 56.55,190.00 L 57.31,188.83 L 58.07,187.67 L 58.83,186.50 L 59.58,185.33 L 60.34,184.17 L 61.10,183.00 L 61.86,181.83 L 62.62,180.67 L 63.38,179.50 L 64.13,178.33 L 64.89,177.17 L 65.65,176.00 L 66.41,174.83 L 67.17,173.67 L 67.92,172.50 L 68.68,171.33 L 69.44,170.17 L 70.20,169.00 L 70.96,167.83 L 71.72,166.67 L 72.47,165.50 L 73.23,164.33 L 73.99,163.17 L 74.75,162.00 L 75.51,160.83 L 76.27,159.67 L 77.03,158.50 L 77.78,157.33 L 78.54,156.17 L 79.30,155.00 L 80.06,153.83 L 80.82,152.67 L 81.58,151.50 L 82.33,150.33 L 83.09,149.17 L 83.85,148.00 L 84.61,146.83 L 85.37,145.67 L 86.12,144.50 L 86.88,143.33 L 87.64,142.17 L 88.40,141.00 L 89.16,139.83 L 89.92,138.67 L 90.67,137.50 L 91.43,136.33 L 92.19,135.17 L 92.95,134.00 L 93.71,132.83 L 94.47,131.67 L 95.22,130.50 L 95.98,129.33 L 96.74,128.17 L 97.50,127.00 L 98.26,125.83 L 99.02,124.67 L 99.78,123.50 L 100.53,122.33 L 101.29,121.17 L 102.05,120.00 L 102.81,118.83 L 103.57,117.67 L 104.32,116.50 L 105.08,115.33 L 105.84,114.17 L 106.60,113.00 L 107.36,111.83 L 108.12,110.67 L 108.88,109.50 L 109.63,108.33 L 110.39,107.17 L 111.15,106.00 L 111.91,104.83 L 112.67,103.67 L 113.43,102.50 L 114.18,101.33 L 114.94,100.17 L 115.70,99.00 L 116.46,97.83 L 117.22,96.67 L 117.97,95.50 L 118.73,94.33 L 119.49,93.17 L 120.25,92.00 L 121.01,90.83 L 121.77,89.67 L 122.53,88.50 L 123.28,87.33 L 124.04,86.17 L 124.80,85.00 L 125.56,83.83 L 126.32,82.67 L 127.08,81.50 L 127.83,80.33 L 128.59,79.17 L 129.35,78.00 L 130.11,76.83 L 130.87,75.67 L 131.62,74.50 L 132.38,73.33 L 133.14,72.17 L 133.90,71.00 L 134.66,69.83 L 135.42,68.67 L 136.18,67.50 L 136.93,66.33 L 137.69,65.17 L 138.45,64.00 L 139.21,62.83 L 139.97,61.67 L 140.72,60.50 L 141.48,59.33 L 142.24,58.17 L 143.00,57.00"/>
+    <path class="c1" d="M 143.00,57.00 L 145.20,63.53 L 147.40,69.61 L 149.60,75.29 L 151.80,80.59 L 154.00,85.56 L 156.19,90.21 L 158.39,94.58 L 160.59,98.69 L 162.79,102.55 L 164.99,106.19 L 167.19,109.63 L 169.39,112.87 L 171.59,115.94 L 173.79,118.84 L 175.99,121.59 L 178.19,124.19 L 180.39,126.66 L 182.59,129.01 L 184.78,131.25 L 186.98,133.37 L 189.18,135.40 L 191.38,137.32 L 193.58,139.16 L 195.78,140.92 L 197.98,142.60 L 200.18,144.20 L 202.38,145.73 L 204.58,147.20 L 206.78,148.60 L 208.97,149.95 L 211.17,151.24 L 213.37,152.48 L 215.57,153.67 L 217.77,154.81 L 219.97,155.91 L 222.17,156.96 L 224.37,157.98 L 226.57,158.96 L 228.77,159.90 L 230.97,160.80 L 233.17,161.68 L 235.36,162.52 L 237.56,163.33 L 239.76,164.12 L 241.96,164.87 L 244.16,165.60 L 246.36,166.31 L 248.56,166.99 L 250.76,167.65 L 252.96,168.29 L 255.16,168.91 L 257.36,169.51 L 259.56,170.09 L 261.75,170.65 L 263.95,171.19 L 266.15,171.72 L 268.35,172.23 L 270.55,172.73 L 272.75,173.21 L 274.95,173.68 L 277.15,174.13 L 279.35,174.57 L 281.55,175.00 L 283.75,175.41 L 285.95,175.82 L 288.14,176.21 L 290.34,176.59 L 292.54,176.96 L 294.74,177.32 L 296.94,177.68 L 299.14,178.02 L 301.34,178.35 L 303.54,178.68 L 305.74,178.99 L 307.94,179.30 L 310.14,179.60 L 312.34,179.89 L 314.53,180.18 L 316.73,180.46 L 318.93,180.73 L 321.13,180.99 L 323.33,181.25 L 325.53,181.50 L 327.73,181.75 L 329.93,181.99 L 332.13,182.23 L 334.33,182.46 L 336.53,182.68 L 338.73,182.90 L 340.93,183.11 L 343.12,183.32 L 345.32,183.53 L 347.52,183.73 L 349.72,183.92 L 351.92,184.11 L 354.12,184.30 L 356.32,184.48 L 358.52,184.66 L 360.72,184.84 L 362.92,185.01 L 365.12,185.18 L 367.32,185.34 L 369.51,185.50 L 371.71,185.66 L 373.91,185.81 L 376.11,185.96 L 378.31,186.11 L 380.51,186.26 L 382.71,186.40 L 384.91,186.54 L 387.11,186.68 L 389.31,186.81 L 391.51,186.94 L 393.70,187.07 L 395.90,187.20 L 398.10,187.32 L 400.30,187.44 L 402.50,187.56 L 404.70,187.68 L 406.90,187.80"/>
+    <line class="c2 dash" x1="52.0" y1="194.2" x2="141.2" y2="194.2"/>
+    <line class="c1" x1="262.0" y1="36.0" x2="286.0" y2="36.0"/><line class="c2 dash" x1="262.0" y1="56.0" x2="286.0" y2="56.0"/><text class="c1t" data-lang="en" x="292.0" y="40.0" text-anchor="start">Solid: E ∝ r</text><text class="c1t" data-lang="zh" x="292.0" y="40.0" text-anchor="start">均匀球体：E ∝ r</text>
+    <text class="c2t" data-lang="en" x="292.0" y="60.0" text-anchor="start">Shell: E = 0 inside</text><text class="c2t" data-lang="zh" x="292.0" y="60.0" text-anchor="start">导体球壳：内部 E = 0</text>
+    <text class="lbl" data-lang="en" x="274.9" y="124.2" text-anchor="middle">Outside both: E ∝ 1/r²</text><text class="lbl" data-lang="zh" x="274.9" y="124.2" text-anchor="middle">球外均满足：E ∝ 1/r²</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 2. Inside $r &lt; R$, a conducting shell has $E = 0$ whereas a uniformly charged insulating sphere grows linearly ($E \propto r$); outside $r &gt; R$, both match a point charge ($E \propto 1/r^2$).</span><span data-lang="zh">图 2. 在 $r &lt; R$ 内部，导体球壳满足 $E = 0$，而均匀带电绝缘球体满足 $E \propto r$；在 $r &gt; R$ 外部，两者均等同于中心点电荷（$E \propto 1/r^2$）。</span></figcaption>
+  </figure>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Motion of a charge in a uniform field</span><span data-lang="zh">例题：电荷在匀强电场中的运动</span></summary>
     <div class="detail-body">
@@ -1399,6 +1589,29 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <p data-lang="en">To find the maximum, set $dE/dx = 0$: differentiating $x(a^2+x^2)^{-3/2}$ gives $(a^2+x^2) - 3x^2 = 0$, so $x = a/\sqrt2$. The graph of $E$ against $x$ is an odd function: it starts at zero, rises to a maximum at $x = a/\sqrt2$, then decays as $1/x^2$; on the negative side the field points the opposite way.</p>
   <p data-lang="zh">求最大值时令 $dE/dx = 0$：对 $x(a^2+x^2)^{-3/2}$ 求导得 $(a^2+x^2) - 3x^2 = 0$，所以 $x = a/\sqrt2$。$E$ 随 $x$ 变化的图像是奇函数：从零开始，在 $x = a/\sqrt2$ 处升到最大，然后按 $1/x^2$ 衰减；在负半轴电场方向相反。</p>
+  <figure class="sg-fig" role="group" data-course="c">
+    <svg viewBox="0 0 440 230" role="img" aria-label="Charged ring axial electric field">
+    <line class="ax" x1="52.0" y1="192.0" x2="416.0" y2="192.0"/>
+    <polyline class="ax" points="408.5,195.6 416.0,192.0 408.5,188.4"/>
+    <line class="ax" x1="52.0" y1="192.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="224.0" text-anchor="middle">Axial distance x / a</text><text class="lbl" data-lang="zh" x="234.0" y="224.0" text-anchor="middle">轴向距离 x / a</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">E_x (scaled)</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">轴向场强 E_x（相对值）</text>
+    <line class="ax" x1="125.8" y1="188.5" x2="125.8" y2="195.5"/>
+    <text class="mut" data-lang="en" x="125.8" y="207.0" text-anchor="middle">1/√2</text><text class="mut" data-lang="zh" x="125.8" y="207.0" text-anchor="middle">1/√2</text>
+    <line class="ax" x1="208.0" y1="188.5" x2="208.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="208.0" y="207.0" text-anchor="middle">1.5</text><text class="mut" data-lang="zh" x="208.0" y="207.0" text-anchor="middle">1.5</text>
+    <line class="ax" x1="364.0" y1="188.5" x2="364.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="364.0" y="207.0" text-anchor="middle">3</text><text class="mut" data-lang="zh" x="364.0" y="207.0" text-anchor="middle">3</text>
+    <line class="ax" x1="48.5" y1="55.6" x2="55.5" y2="55.6"/>
+    <text class="mut" data-lang="en" x="45.0" y="59.6" text-anchor="end">E_max</text><text class="mut" data-lang="zh" x="45.0" y="59.6" text-anchor="end">E_max</text>
+    <line class="grid dash" x1="125.5" y1="192.0" x2="125.5" y2="55.6"/>
+    <path class="c3" d="M 52.00,192.00 L 54.99,181.83 L 57.98,171.74 L 60.97,161.79 L 63.96,152.07 L 66.95,142.63 L 69.94,133.54 L 72.93,124.84 L 75.92,116.60 L 78.91,108.85 L 81.90,101.61 L 84.89,94.92 L 87.88,88.78 L 90.87,83.20 L 93.86,78.20 L 96.85,73.74 L 99.84,69.84 L 102.83,66.47 L 105.82,63.61 L 108.81,61.23 L 111.80,59.32 L 114.79,57.85 L 117.78,56.78 L 120.77,56.08 L 123.76,55.74 L 126.75,55.71 L 129.74,55.96 L 132.73,56.49 L 135.72,57.24 L 138.71,58.21 L 141.70,59.36 L 144.69,60.67 L 147.68,62.13 L 150.67,63.71 L 153.66,65.40 L 156.65,67.18 L 159.64,69.03 L 162.63,70.94 L 165.62,72.90 L 168.61,74.90 L 171.60,76.93 L 174.59,78.97 L 177.58,81.03 L 180.57,83.09 L 183.56,85.15 L 186.55,87.20 L 189.54,89.24 L 192.53,91.26 L 195.52,93.26 L 198.51,95.24 L 201.50,97.19 L 204.49,99.11 L 207.48,101.00 L 210.47,102.86 L 213.46,104.69 L 216.45,106.49 L 219.44,108.24 L 222.43,109.97 L 225.42,111.66 L 228.41,113.31 L 231.40,114.93 L 234.39,116.51 L 237.38,118.06 L 240.37,119.57 L 243.36,121.05 L 246.35,122.49 L 249.34,123.89 L 252.33,125.27 L 255.32,126.61 L 258.31,127.92 L 261.30,129.20 L 264.29,130.44 L 267.28,131.66 L 270.27,132.84 L 273.26,134.00 L 276.25,135.13 L 279.24,136.23 L 282.23,137.30 L 285.22,138.35 L 288.21,139.37 L 291.20,140.36 L 294.19,141.33 L 297.18,142.28 L 300.17,143.20 L 303.16,144.11 L 306.15,144.99 L 309.14,145.84 L 312.13,146.68 L 315.12,147.50 L 318.11,148.29 L 321.10,149.07 L 324.09,149.83 L 327.08,150.57 L 330.07,151.29 L 333.06,152.00 L 336.05,152.69 L 339.04,153.36 L 342.03,154.02 L 345.02,154.66 L 348.01,155.29 L 351.00,155.90 L 353.99,156.50 L 356.98,157.08 L 359.97,157.65 L 362.96,158.21 L 365.95,158.76 L 368.94,159.29 L 371.93,159.81 L 374.92,160.32 L 377.91,160.82 L 380.90,161.31 L 383.89,161.78 L 386.88,162.25 L 389.87,162.70 L 392.86,163.15 L 395.85,163.59 L 398.84,164.01 L 401.83,164.43 L 404.82,164.84 L 407.81,165.24 L 410.80,165.64"/>
+    <circle class="dot" cx="125.5" cy="55.6" r="4.0"/>
+    <text class="c3t" data-lang="en" x="265.2" y="50.3" text-anchor="middle">Peak at x = a / √2;  E = 0 at center</text><text class="c3t" data-lang="zh" x="265.2" y="50.3" text-anchor="middle">峰值在 x = a / √2；圆心处 E = 0</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 3. Axial field $E_x = kQx/(a^2+x^2)^{3/2}$ of a uniformly charged ring of radius $a$: zero at the center by symmetry, a maximum at $x = a/\sqrt{2}$, and the point-charge falloff $kQ/x^2$ for $x \gg a$.</span><span data-lang="zh">图 3. 半径为 $a$ 的均匀带电圆环的轴向电场 $E_x = kQx/(a^2+x^2)^{3/2}$：圆心处因对称性为零，在 $x = a/\sqrt{2}$ 处取最大值，$x \gg a$ 时按点电荷规律 $kQ/x^2$ 衰减。</span></figcaption>
+  </figure>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Ring of charge: derive and evaluate</span><span data-lang="zh">例题：带电圆环：推导并计算</span></summary>
     <div class="detail-body">
@@ -2195,6 +2408,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh"><strong>对称性：</strong>电荷不超过四个时，先找出因对称而抵消的分量，再进行相加。</p>
   </div>
 
+  <h3><span data-lang="en">Free response and common mistakes</span><span data-lang="zh">自由作答题与常见错误</span></h3>
   <div class="card">
     <div class="card-header"><div class="card-icon icon-green">FR</div><div class="card-title"><span data-lang="en">Free-Response Practice</span><span data-lang="zh">自由作答题练习（<code>Free Response</code>）</span></div></div>
   <p data-lang="en">Section II has four question types: Mathematical Routines; Translation Between Representations; Experimental Design and Analysis; Qualitative/Quantitative Translation.</p>

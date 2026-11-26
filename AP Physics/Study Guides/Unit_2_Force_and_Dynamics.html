@@ -897,20 +897,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -939,8 +947,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -964,7 +972,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -985,7 +993,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -999,7 +1007,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 2</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -1499,6 +1508,18 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="en">A critical consequence: internal forces within a system always cancel pairwise. Only external forces can change the momentum (or accelerate the center of mass) of a system. This is why choosing your system boundary wisely is so powerful.</p>
   <p data-lang="zh">一个关键推论：系统内部的内力总是成对相互抵消。只有外力能改变系统的动量（或者说让系统质心加速）。这正是聪明地选取系统边界为何如此强大的原因。</p>
 
+  <h3><span data-lang="en">Third-Law Pairs versus Balanced Forces</span><span data-lang="zh">第三定律对偶力与平衡力的区别</span></h3>
+  <p data-lang="en">Two equal and opposite forces are not automatically a third-law pair. The test is which objects they act on.</p>
+  <p data-lang="zh">两个大小相等、方向相反的力不一定是第三定律对偶力。判断标准是它们作用在哪些物体上。</p>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Feature</span><span data-lang="zh">特征</span></th><th><span data-lang="en">Third-law pair</span><span data-lang="zh">第三定律对偶力</span></th><th><span data-lang="en">Balanced forces on one object</span><span data-lang="zh">同一物体上的平衡力</span></th></tr>
+    <tr><td><span data-lang="en">Acts on</span><span data-lang="zh">作用对象</span></td><td><span data-lang="en">two different objects</span><span data-lang="zh">两个不同的物体</span></td><td><span data-lang="en">the same object</span><span data-lang="zh">同一个物体</span></td></tr>
+    <tr><td><span data-lang="en">Type of force</span><span data-lang="zh">力的种类</span></td><td><span data-lang="en">always the same type (both gravitational, both normal)</span><span data-lang="zh">总是同一种力（都是引力，或都是法向力）</span></td><td><span data-lang="en">may be different types (normal force and weight)</span><span data-lang="zh">可以是不同种类（法向力与重力）</span></td></tr>
+    <tr><td><span data-lang="en">Equal magnitudes?</span><span data-lang="zh">大小相等吗？</span></td><td><span data-lang="en">always, even while the objects accelerate</span><span data-lang="zh">总是相等，即使物体在加速</span></td><td><span data-lang="en">only when the object does not accelerate along that line</span><span data-lang="zh">仅当物体沿该方向不加速时</span></td></tr>
+    <tr><td><span data-lang="en">Cancel on one free-body diagram?</span><span data-lang="zh">在一张受力分析图上抵消吗？</span></td><td><span data-lang="en">never: each diagram shows only one of the two</span><span data-lang="zh">绝不：每张图上只出现其中一个</span></td><td><span data-lang="en">yes: they sum to zero</span><span data-lang="zh">是：二者之和为零</span></td></tr>
+    <tr><td><span data-lang="en">Book resting on a table</span><span data-lang="zh">静置在桌上的书</span></td><td><span data-lang="en">Earth pulls the book down; the book pulls Earth up</span><span data-lang="zh">地球把书向下拉；书把地球向上拉</span></td><td><span data-lang="en">table pushes the book up; Earth pulls the book down</span><span data-lang="zh">桌子把书向上推；地球把书向下拉</span></td></tr>
+  </table></div>
+
   <h3><span data-lang="en">Tension in Strings</span><span data-lang="zh">绳中的张力</span></h3>
 <!-- dingrui:fig u2-atwood-machine -->
 <figure class="dr-fig" id="fig-u2-atwood-machine">
@@ -1518,6 +1539,27 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 
   <p data-lang="en">An <em>ideal pulley</em> has negligible mass and frictionless axle. It simply redirects the tension without changing its magnitude. A non-ideal (massive) pulley will be revisited in Unit 5 with rotational dynamics.</p>
   <p data-lang="zh"><em>理想滑轮</em>（<code>ideal pulley</code>）的质量可忽略、轴上无摩擦，只改变张力方向、不改变其大小。有质量的非理想滑轮要等到第 5 单元的转动动力学才会再次出现。</p>
+
+  <h3><span data-lang="en">First Principles: The Atwood Machine Acceleration</span><span data-lang="zh">第一性原理：阿特伍德机的加速度</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: where $a=\dfrac{(m_2-m_1)g}{m_1+m_2}$ comes from</span><span data-lang="zh">第一性原理：$a=\dfrac{(m_2-m_1)g}{m_1+m_2}$ 从何而来</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Apply Newton's second law to each hanging mass ($m_2 > m_1$). An ideal string and pulley give both masses the same tension $T$ and the same size of acceleration $a$.</p>
+    <p data-lang="zh"><strong>原理。</strong>对每个悬挂物体（$m_2 > m_1$）应用牛顿第二定律。理想绳与理想滑轮使两物体受相同的张力 $T$，加速度大小 $a$ 也相同。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Heavier mass, positive downward: $m_2g-T=m_2a$.</li>
+      <li>Lighter mass, positive upward: $T-m_1g=m_1a$.</li>
+      <li>Add the two equations. $T$ is internal to the two-mass system and cancels: $(m_2-m_1)g=(m_1+m_2)a$, so $a=\dfrac{(m_2-m_1)g}{m_1+m_2}$.</li>
+      <li>Substitute back: $T=m_1(g+a)=\dfrac{2m_1m_2g}{m_1+m_2}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>较重物体，取向下为正：$m_2g-T=m_2a$。</li>
+      <li>较轻物体，取向上为正：$T-m_1g=m_1a$。</li>
+      <li>两式相加。$T$ 是两物体系统的内力，相互抵消：$(m_2-m_1)g=(m_1+m_2)a$，所以 $a=\dfrac{(m_2-m_1)g}{m_1+m_2}$。</li>
+      <li>回代：$T=m_1(g+a)=\dfrac{2m_1m_2g}{m_1+m_2}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> Equal masses give $a=0$ and $T=mg$. As $m_1\to0$, $a\to g$ and $T\to0$: $m_2$ falls freely. Units: $\mathrm{kg\cdot(m/s^2)/kg}=\mathrm{m/s^2}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>两质量相等时 $a=0$，$T=mg$。当 $m_1\to0$ 时，$a\to g$，$T\to0$：$m_2$ 自由下落。单位：$\mathrm{kg\cdot(m/s^2)/kg}=\mathrm{m/s^2}$。</p>
+  </div>
 
   <h3><span data-lang="en">Tension in a Rope with Mass</span><span data-lang="zh">有质量的绳中的张力</span></h3>
   <p data-lang="en">The ideal-string rule (the same tension everywhere) fails when a rope, cable or chain has non-negligible mass. Take a chain hanging at rest from a ceiling.</p>
@@ -1671,6 +1713,14 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="zh">牛顿第一定律（<code>Newton's first law</code>）：如果系统所受净力为零，则其速度保持不变。静止物体保持静止，运动物体则沿直线匀速继续。</p>
   <p data-lang="en">This is not just a special case of the second law; it also defines what an <em>inertial reference frame</em> is: one in which Newton's first law holds true. Earth's surface is approximately inertial for most problems; a spinning merry-go-round is not.</p>
   <p data-lang="zh">它不仅是第二定律的特例，同时也定义了<em>惯性参考系</em>（<code>inertial reference frame</code>）：在其中牛顿第一定律成立。地球表面对大多数题目而言可近似为惯性参考系；旋转的旋转木马则不是。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: the <em>Principia</em> (1687)</span><span data-lang="zh">历史：《自然哲学的数学原理》（1687 年）</span></div>
+    <p data-lang="en">In 1687 Isaac Newton published the <em>Philosophiæ Naturalis Principia Mathematica</em>, in Latin. After a set of definitions, it states his three Laws of Motion; Law I is the first law above.</p>
+    <p data-lang="zh">1687 年，牛顿用拉丁文出版了《自然哲学的数学原理》（<code>Principia</code>）。书中在一组定义之后给出了三条运动定律；定律一就是上面的第一定律。</p>
+    <p data-lang="en">Book III applies the same laws to the sky. Its "Moon test" weakens Earth's gravity by $60^2$ at the Moon's distance (about 60 Earth radii), giving about $2.7\times10^{-3}\;\mathrm{m/s^2}$, the Moon's observed centripetal acceleration.</p>
+    <p data-lang="zh">第三卷把同样的定律用于天体。其中的"月球检验"（<code>Moon test</code>）把地球引力在月球距离（约 60 个地球半径）处减弱为 $1/60^2$，得到约 $2.7\times10^{-3}\;\mathrm{m/s^2}$，正是观测到的月球向心加速度。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Philosophi%C3%A6_Naturalis_Principia_Mathematica" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Principia (contents of the three books and the laws of motion)</span><span data-lang="zh">维基百科：《原理》（三卷内容与运动定律）</span></a></p>
+  </div>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Translational Equilibrium</span><span data-lang="zh">平动平衡（<code>translational equilibrium</code>）</span></div>
@@ -2039,6 +2089,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <div class="formula-sub"><span data-lang="en">\(G = 6.674 \times 10^{-11}\;\text{N}\cdot\text{m}^2/\text{kg}^2\). Always attractive, always along the line connecting the centers of mass.</span><span data-lang="zh">\(G = 6.674 \times 10^{-11}\;\text{N}\cdot\text{m}^2/\text{kg}^2\)。始终为吸引力，始终沿两质心连线方向。</span></div>
   </div>
 
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: the Cavendish experiment (1797 to 1798)</span><span data-lang="zh">历史：卡文迪什实验（1797 至 1798 年）</span></div>
+    <p data-lang="en">Henry Cavendish used a torsion balance designed by John Michell. Large lead spheres pulled on small ones hung from a fibre, and the fibre's tiny twist measured the force.</p>
+    <p data-lang="zh">卡文迪什（Henry Cavendish）使用了由 John Michell 设计的扭秤（<code>torsion balance</code>）。大铅球吸引悬在细丝上的小铅球，细丝极小的扭转量给出了这个力。</p>
+    <p data-lang="en">His data give Earth's mean density as 5.448 times that of water (his paper printed 5.48 because of an arithmetic slip). His result is equivalent to $G\approx6.74\times10^{-11}\;\mathrm{N\cdot m^2/kg^2}$, within about 1% of today's value. With $G$ known, $M=gR^2/G$ "weighs the Earth": about $6.0\times10^{24}$ kg.</p>
+    <p data-lang="zh">他的数据给出地球平均密度是水的 5.448 倍（由于一处计算失误，论文中印的是 5.48）。这一结果相当于 $G\approx6.74\times10^{-11}\;\mathrm{N\cdot m^2/kg^2}$，与今天的数值相差约 1%。知道 $G$ 后，$M=gR^2/G$ 就能"称量地球"：约 $6.0\times10^{24}$ kg。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Cavendish_experiment" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Cavendish experiment (apparatus and how G follows from it)</span><span data-lang="zh">维基百科：卡文迪什实验（装置以及如何由它得到 G）</span></a></p>
+  </div>
+
   <h3><span data-lang="en">Gravitational Field</span><span data-lang="zh">引力场</span></h3>
   <p data-lang="en">A field model describes the effect of a non-contact force at various positions in space. The gravitational field strength at distance \(r\) from a mass \(M\) is:</p>
   <p data-lang="zh">场模型用于描述非接触力在空间各点上的作用。在距质量 \(M\) 为 \(r\) 处的引力场强度（<code>gravitational field</code>）为：</p>
@@ -2332,6 +2391,34 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 
   <!-- ═══ NEW: INCLINED PLANE EXPLORER ═══ -->
   <!-- Widget concept: angle vs. friction trade-off setting the down-slope acceleration on an incline. Acceleration $a=g(\sin\theta-\mu\cos\theta)$ is mass-independent — the slider removed in Sprint 6 (DP-7). -->
+  <h3><span data-lang="en">First Principles: The Angle of Repose</span><span data-lang="zh">第一性原理：休止角</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why slipping starts at $\tan\theta_{\max}=\mu_s$</span><span data-lang="zh">第一性原理：为什么在 $\tan\theta_{\max}=\mu_s$ 时开始滑动</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Static friction takes whatever value keeps the block at rest, up to the ceiling $\mu_sF_N$. Slowly tilt a board and find the angle where that ceiling is reached.</p>
+    <p data-lang="zh"><strong>原理。</strong>静摩擦力取使木块保持静止所需的值，上限为 $\mu_sF_N$。缓慢抬高木板，求恰好达到这个上限的角度。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Perpendicular to the slope (no acceleration): $F_N=mg\cos\theta$.</li>
+      <li>Along the slope at rest: the friction needed is $f_s=mg\sin\theta$.</li>
+      <li>Slipping starts when the need meets the ceiling: $mg\sin\theta_{\max}=\mu_smg\cos\theta_{\max}$, so $\tan\theta_{\max}=\mu_s$. The mass cancels.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>垂直斜面方向（无加速度）：$F_N=mg\cos\theta$。</li>
+      <li>静止时沿斜面方向：所需摩擦力为 $f_s=mg\sin\theta$。</li>
+      <li>当所需值达到上限时开始滑动：$mg\sin\theta_{\max}=\mu_smg\cos\theta_{\max}$，所以 $\tan\theta_{\max}=\mu_s$。质量约去。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> As $\mu_s\to0$, $\theta_{\max}\to0$: any tilt makes the block slide. A large $\mu_s$ pushes $\theta_{\max}$ toward $90°$. For $\mu_s=0.50$, $\theta_{\max}=26.6°$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>当 $\mu_s\to0$ 时，$\theta_{\max}\to0$：稍有倾斜木块就会下滑。$\mu_s$ 很大时，$\theta_{\max}$ 趋近 $90°$。若 $\mu_s=0.50$，则 $\theta_{\max}=26.6°$。</p>
+  </div>
+
+  <h3><span data-lang="en">Static versus Kinetic Friction at a Glance</span><span data-lang="zh">静摩擦与动摩擦对照</span></h3>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Feature</span><span data-lang="zh">特征</span></th><th><span data-lang="en">Static friction</span><span data-lang="zh">静摩擦</span></th><th><span data-lang="en">Kinetic friction</span><span data-lang="zh">动摩擦</span></th></tr>
+    <tr><td><span data-lang="en">Surfaces</span><span data-lang="zh">接触面</span></td><td><span data-lang="en">not sliding relative to each other</span><span data-lang="zh">彼此之间没有滑动</span></td><td><span data-lang="en">sliding relative to each other</span><span data-lang="zh">彼此之间正在滑动</span></td></tr>
+    <tr><td><span data-lang="en">Magnitude</span><span data-lang="zh">大小</span></td><td><span data-lang="en">whatever prevents slipping: $0\le f_s\le\mu_sF_N$</span><span data-lang="zh">阻止滑动所需的值：$0\le f_s\le\mu_sF_N$</span></td><td><span data-lang="en">fixed: $f_k=\mu_kF_N$</span><span data-lang="zh">固定值：$f_k=\mu_kF_N$</span></td></tr>
+    <tr><td><span data-lang="en">Direction</span><span data-lang="zh">方向</span></td><td><span data-lang="en">opposite the slip that would occur without friction</span><span data-lang="zh">与没有摩擦时将发生的滑动方向相反</span></td><td><span data-lang="en">opposite the relative velocity of the surfaces</span><span data-lang="zh">与接触面相对速度方向相反</span></td></tr>
+    <tr><td><span data-lang="en">How to find it</span><span data-lang="zh">求法</span></td><td><span data-lang="en">from $\sum F=ma$; use $\mu_sF_N$ only at the point of slipping</span><span data-lang="zh">由 $\sum F=ma$ 求；只有在即将滑动时才用 $\mu_sF_N$</span></td><td><span data-lang="en">always $\mu_kF_N$, with $F_N$ from the perpendicular equation</span><span data-lang="zh">总是 $\mu_kF_N$，其中 $F_N$ 由垂直方向方程求出</span></td></tr>
+  </table></div>
+
   <div class="formula-explorer" id="incline-widget" style="border-color: var(--orange);">
     <div class="explorer-title" style="color: var(--orange);"><span data-lang="en">Inclined Plane Explorer</span><span data-lang="zh">斜面探索器</span></div>
     <div class="explorer-subtitle"><span data-lang="en">Adjust the angle and friction. Watch how acceleration emerges from the angle–friction trade-off.</span><span data-lang="zh">调节角度与摩擦系数，观察"倾角与摩擦"之间的权衡如何决定加速度。</span></div>
@@ -2674,12 +2761,6 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="en">where \(v_T = mg/k\) is the terminal velocity and \(\tau = m/k\) is the time constant.</p>
   <p data-lang="zh">其中 \(v_T = mg/k\) 是终极速度，\(\tau = m/k\) 是时间常数（<code>time constant</code>）。</p>
   </div>
-  <div data-course="p1">
-  <p data-lang="en">For an object falling from rest with linear drag $F_r = kv$ upward, Newton's second law (down positive) gives $ma = mg - kv$, so $a = g - \dfrac{kv}{m}$. At release $v = 0$ and $a = g$. As the object speeds up, the drag grows and the acceleration shrinks. When the drag equals the weight, $kv_T = mg$, the net force is zero and the object falls at the constant terminal velocity $v_T = mg/k$.</p>
-  <p data-lang="zh">对于从静止开始下落、受向上线性阻力 $F_r = kv$ 的物体，取向下为正，牛顿第二定律给出 $ma = mg - kv$，所以 $a = g - \dfrac{kv}{m}$。刚释放时 $v = 0$，$a = g$。物体越落越快，阻力随之增大，加速度随之减小。当阻力等于重力，即 $kv_T = mg$ 时，净力为零，物体以恒定的终极速度 $v_T = mg/k$ 下落。</p>
-  <p data-lang="en">So the $v$-$t$ graph starts with slope $g$ and bends over until it is flat at $v_T$: the slope at any point is the acceleration $g - kv/m$ at that speed.</p>
-  <p data-lang="zh">因此 $v$-$t$ 图起始斜率为 $g$，随后逐渐弯平，最终在 $v_T$ 处变为水平：图上任一点的斜率就是该速率下的加速度 $g - kv/m$。</p>
-  </div>
 
   <h3><span data-lang="en">Terminal Velocity</span><span data-lang="zh">终极速度</span></h3>
 
@@ -2940,6 +3021,39 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="zh">不存在单独的"向心力（<code>centripetal force</code>）"。向心加速度是由那些恰好指向圆心的真实力（或其分量）造成的：张力、重力、法向力、摩擦力或它们的组合。沿径向写出牛顿第二定律即可：</p>
 
   <p>$$\sum F_{\text{toward center}} = \frac{mv^2}{r}$$</p>
+
+  <h3><span data-lang="en">First Principles: Where $v^2/r$ Comes From</span><span data-lang="zh">第一性原理：$v^2/r$ 从何而来</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: centripetal acceleration from the definition of acceleration</span><span data-lang="zh">第一性原理：由加速度的定义得到向心加速度</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Acceleration is the rate of change of the velocity vector, $\vec a=\Delta\vec v/\Delta t$. At constant speed $v$ on a circle of radius $r$, only the direction of $\vec v$ changes.</p>
+    <p data-lang="zh"><strong>原理。</strong>加速度是速度矢量的变化率，$\vec a=\Delta\vec v/\Delta t$。以恒定速率 $v$ 沿半径 $r$ 的圆周运动时，只有 $\vec v$ 的方向在变化。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Position: $\vec r(t)=r\left(\cos\omega t,\ \sin\omega t\right)$, with $\omega=v/r$.</li>
+      <li>Differentiate once: $\vec v(t)=r\omega\left(-\sin\omega t,\ \cos\omega t\right)$, of size $r\omega=v$.</li>
+      <li>Differentiate again: $\vec a(t)=-\omega^2\vec r(t)$. It points toward the center, with size $\omega^2r=\dfrac{v^2}{r}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>位置：$\vec r(t)=r\left(\cos\omega t,\ \sin\omega t\right)$，其中 $\omega=v/r$。</li>
+      <li>求一次导数：$\vec v(t)=r\omega\left(-\sin\omega t,\ \cos\omega t\right)$，大小为 $r\omega=v$。</li>
+      <li>再求一次导数：$\vec a(t)=-\omega^2\vec r(t)$。它指向圆心，大小为 $\omega^2r=\dfrac{v^2}{r}$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>In a short time $\Delta t$ the object moves an arc of length $v\Delta t$. Its position vector turns through a small angle $\Delta\theta$.</li>
+      <li>The velocity stays perpendicular to the radius, so it turns through the same $\Delta\theta$. The two vector triangles are similar: $\dfrac{|\Delta\vec v|}{v}=\dfrac{v\Delta t}{r}$.</li>
+      <li>So $|\Delta\vec v|=\dfrac{v^2\Delta t}{r}$ and $a=\dfrac{|\Delta\vec v|}{\Delta t}=\dfrac{v^2}{r}$. As $\Delta t\to0$, $\Delta\vec v$ points toward the center.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在很短的时间 $\Delta t$ 内，物体走过长为 $v\Delta t$ 的弧，位置矢量转过一个小角 $\Delta\theta$。</li>
+      <li>速度始终垂直于半径，所以也转过同样的 $\Delta\theta$。两个矢量三角形相似：$\dfrac{|\Delta\vec v|}{v}=\dfrac{v\Delta t}{r}$。</li>
+      <li>于是 $|\Delta\vec v|=\dfrac{v^2\Delta t}{r}$，$a=\dfrac{|\Delta\vec v|}{\Delta t}=\dfrac{v^2}{r}$。当 $\Delta t\to0$ 时，$\Delta\vec v$ 指向圆心。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> As $r\to\infty$ at fixed $v$, the path straightens and $a\to0$, as the first law requires. Units: $\mathrm{(m/s)^2/m}=\mathrm{m/s^2}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$v$ 不变而 $r\to\infty$ 时，路径变直，$a\to0$，与第一定律一致。单位：$\mathrm{(m/s)^2/m}=\mathrm{m/s^2}$。</p>
+  </div>
 
   <h3><span data-lang="en">Key Scenarios</span><span data-lang="zh">几个关键情景</span></h3>
 <!-- dingrui:fig u2-banked-curve-fbd -->

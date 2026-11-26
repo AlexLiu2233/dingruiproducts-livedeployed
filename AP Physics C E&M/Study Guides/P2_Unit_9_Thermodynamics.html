@@ -768,20 +768,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -810,8 +818,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -948,16 +956,30 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">Atoms in a Gas: Collisions and Momentum</span><span data-lang="zh">气体中的原子：碰撞与动量</span></h3>
-  <p data-lang="en">Kinetic theory explains the large-scale behavior of a gas from the motion of its atoms. In a gas the atoms are far apart compared with their own size, and they move in straight lines at high speed until they hit something. At room temperature a typical air molecule travels several hundred meters per second and undergoes billions of collisions every second, either with another atom or with the container wall. Each collision is a brief interaction in which the atoms exert forces on each other, so we can analyze it with the same tools as any other collision.</p>
-  <p data-lang="zh">分子动理论（<code>kinetic theory</code>）从原子的运动出发解释气体的宏观行为。气体中原子之间的距离远大于原子自身的尺寸，原子沿直线高速运动，直到撞上别的东西。室温下，典型的空气分子每秒运动几百米，每秒要经历数十亿次碰撞，对象不是另一个原子就是容器壁。每次碰撞都是一次短暂的相互作用，原子之间互相施力，所以我们可以用分析其他碰撞时用的同样工具来处理它。</p>
-  <p data-lang="en">The key tool is <strong>conservation of momentum</strong>. For a pair of atoms colliding with no outside force on them, the total momentum vector before the collision equals the total momentum vector after it. In one dimension this is a single equation, $m_1 v_{1,i} + m_2 v_{2,i} = m_1 v_{1,f} + m_2 v_{2,f}$. In two dimensions the $x$ components and the $y$ components are each conserved separately, giving two equations. When the collision is also elastic, the total kinetic energy is conserved as well, which supplies one more equation. AP Physics 2 expects both qualitative and quantitative analysis of collisions in one and two dimensions, and the two worked examples below show what that looks like for atoms.</p>
-  <p data-lang="zh">关键工具是<strong>动量守恒</strong>（<code>conservation of momentum</code>）。一对原子碰撞时若不受外力，碰撞前的总动量矢量等于碰撞后的总动量矢量。一维时这是一个方程：$m_1 v_{1,i} + m_2 v_{2,i} = m_1 v_{1,f} + m_2 v_{2,f}$。二维时 $x$ 分量和 $y$ 分量分别守恒，得到两个方程。如果碰撞还是弹性的，总动能也守恒，这又多提供一个方程。AP Physics 2 要求对一维和二维碰撞做定性和定量分析，下面两个例题展示了原子碰撞的分析方式。</p>
-  <p data-lang="en">A collision with the container wall is the same idea with one partner so massive that it hardly moves. An atom of mass $m$ that bounces straight back from a fixed wall with perpendicular speed $v$ reverses its velocity, so its momentum changes from $+mv$ to $-mv$, a change of magnitude $2mv$. By Newton's third law the atom pushes on the wall with an average force equal to that momentum change divided by the time over which it happens. One atom's push is far too small to notice, but a container holds an enormous number of atoms, so the wall receives a nearly steady push.</p>
-  <p data-lang="zh">与容器壁的碰撞是同一思路，只是碰撞的另一方质量大到几乎不动。质量为 $m$ 的原子以垂直速率 $v$ 从固定的器壁上原路弹回，速度反向，动量从 $+mv$ 变为 $-mv$，变化量的大小为 $2mv$。根据牛顿第三定律，原子对器壁的平均推力等于这个动量变化除以所用的时间。单个原子的推力小到无法察觉，但容器里的原子数量极多，所以器壁受到的是几乎稳定的推力。</p>
+  <p data-lang="en">Kinetic theory explains the large-scale behavior of a gas from the motion of its atoms. In a gas the atoms are far apart compared with their own size, and they move in straight lines at high speed until they hit something.</p>
+  <p data-lang="zh">分子动理论（<code>kinetic theory</code>）从原子的运动出发解释气体的宏观行为。气体中原子之间的距离远大于原子自身的尺寸，原子沿直线高速运动，直到撞上别的东西。</p>
+  <p data-lang="en">At room temperature a typical air molecule travels several hundred meters per second and undergoes billions of collisions every second, either with another atom or with the container wall.</p>
+  <p data-lang="zh">室温下，典型的空气分子每秒运动几百米，每秒要经历数十亿次碰撞，对象不是另一个原子就是容器壁。</p>
+  <p data-lang="en">Each collision is a brief interaction in which the atoms exert forces on each other, so we can analyze it with the same tools as any other collision.</p>
+  <p data-lang="zh">每次碰撞都是一次短暂的相互作用，原子之间互相施力，所以我们可以用分析其他碰撞时用的同样工具来处理它。</p>
+  <p data-lang="en">The key tool is <strong>conservation of momentum</strong>. For a pair of atoms colliding with no outside force on them, the total momentum vector before the collision equals the total momentum vector after it. In one dimension this is a single equation, $m_1 v_{1,i} + m_2 v_{2,i} = m_1 v_{1,f} + m_2 v_{2,f}$.</p>
+  <p data-lang="zh">关键工具是<strong>动量守恒</strong>（<code>conservation of momentum</code>）。一对原子碰撞时若不受外力，碰撞前的总动量矢量等于碰撞后的总动量矢量。一维时这是一个方程：$m_1 v_{1,i} + m_2 v_{2,i} = m_1 v_{1,f} + m_2 v_{2,f}$。</p>
+  <p data-lang="en">In two dimensions the $x$ components and the $y$ components are each conserved separately, giving two equations. When the collision is also elastic, the total kinetic energy is conserved as well, which supplies one more equation.</p>
+  <p data-lang="zh">二维时 $x$ 分量和 $y$ 分量分别守恒，得到两个方程。如果碰撞还是弹性的，总动能也守恒，这又多提供一个方程。</p>
+  <p data-lang="en">AP Physics 2 expects both qualitative and quantitative analysis of collisions in one and two dimensions, and the two worked examples below show what that looks like for atoms.</p>
+  <p data-lang="zh">AP Physics 2 要求对一维和二维碰撞做定性和定量分析，下面两个例题展示了原子碰撞的分析方式。</p>
+  <p data-lang="en">A collision with the container wall is the same idea with one partner so massive that it hardly moves. An atom of mass $m$ that bounces straight back from a fixed wall with perpendicular speed $v$ reverses its velocity, so its momentum changes from $+mv$ to $-mv$, a change of magnitude $2mv$.</p>
+  <p data-lang="zh">与容器壁的碰撞是同一思路，只是碰撞的另一方质量大到几乎不动。质量为 $m$ 的原子以垂直速率 $v$ 从固定的器壁上原路弹回，速度反向，动量从 $+mv$ 变为 $-mv$，变化量的大小为 $2mv$。</p>
+  <p data-lang="en">By Newton's third law the atom pushes on the wall with an average force equal to that momentum change divided by the time over which it happens.</p>
+  <p data-lang="zh">根据牛顿第三定律，原子对器壁的平均推力等于这个动量变化除以所用的时间。</p>
+  <p data-lang="en">One atom's push is far too small to notice, but a container holds an enormous number of atoms, so the wall receives a nearly steady push.</p>
+  <p data-lang="zh">单个原子的推力小到无法察觉，但容器里的原子数量极多，所以器壁受到的是几乎稳定的推力。</p>
 
   <h3><span data-lang="en">Pressure: Force Spread over an Area</span><span data-lang="zh">压强：分布在面积上的力</span></h3>
-  <p data-lang="en">The <strong>pressure</strong> a gas exerts on a surface is the ratio of the sum of the magnitudes of the perpendicular components of the forces exerted by the gas's atoms on that surface to the area of the surface. Only the component perpendicular to the surface counts, because an atom that glances sideways along the wall adds nothing to the push on it. Pressure is a scalar with SI unit the pascal, $1\,\mathrm{Pa} = 1\,\mathrm{N/m^2}$.</p>
-  <p data-lang="zh">气体对某个表面的<strong>压强</strong>（<code>pressure</code>）是气体原子对该表面施加的力的垂直分量大小之和与该表面面积之比。只有垂直于表面的分量才起作用，因为沿器壁擦过的原子对器壁的推力没有贡献。压强是标量，国际单位是帕斯卡：$1\,\mathrm{Pa} = 1\,\mathrm{N/m^2}$。</p>
+  <p data-lang="en">The <strong>pressure</strong> a gas exerts on a surface is the ratio of the sum of the magnitudes of the perpendicular components of the forces exerted by the gas's atoms on that surface to the area of the surface.</p>
+  <p data-lang="zh">气体对某个表面的<strong>压强</strong>（<code>pressure</code>）是气体原子对该表面施加的力的垂直分量大小之和与该表面面积之比。</p>
+  <p data-lang="en">Only the component perpendicular to the surface counts, because an atom that glances sideways along the wall adds nothing to the push on it. Pressure is a scalar with SI unit the pascal, $1\,\mathrm{Pa} = 1\,\mathrm{N/m^2}$.</p>
+  <p data-lang="zh">只有垂直于表面的分量才起作用，因为沿器壁擦过的原子对器壁的推力没有贡献。压强是标量，国际单位是帕斯卡：$1\,\mathrm{Pa} = 1\,\mathrm{N/m^2}$。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Pressure</span><span data-lang="zh">压强</span></div>
@@ -967,14 +989,20 @@ figure.dr-fig figcaption {
   <p data-lang="en">$P$ is the pressure in Pa, $F_\perp$ is the sum of the magnitudes of the perpendicular force components in N, and $A$ is the surface area in m².</p>
   <p data-lang="zh">$P$ 为压强，单位 Pa；$F_\perp$ 为垂直力分量大小之和，单位 N；$A$ 为表面面积，单位 m²。</p>
 
-  <p data-lang="en">Pressure rises when the atoms hit the surface more often (more atoms in the same volume, so a larger number density) or hit it harder (higher speeds, so larger momentum changes per collision). That is why squeezing a gas into a smaller volume, or heating it in a rigid box, both raise the pressure on the walls. Topic 9.2 turns these two observations into the ideal gas law.</p>
-  <p data-lang="zh">原子撞击表面更频繁（相同体积内原子更多，即数密度更大）或撞得更猛（速率更大，每次碰撞的动量变化更大）时，压强升高。所以把气体压进更小的体积，或在刚性容器中加热气体，都会使器壁受到的压强升高。专题 9.2 会把这两点观察变成理想气体定律。</p>
-  <p data-lang="en">Pressure exists throughout the gas itself, not just at the boundary between the gas and the container. Imagine a thin, tiny, massless sheet placed in the middle of the gas. Atoms strike both of its faces, so it feels the same perpendicular forces per unit area that a real wall would. The gas inside a sealed container therefore has a pressure at every point, and a pressure sensor works the same way whether it sits on the wall or floats in the middle.</p>
-  <p data-lang="zh">压强存在于整个气体内部，而不只是在气体与容器的边界上。设想在气体中间放一块极薄、极小、没有质量的薄片：原子撞击它的两个面，所以它每单位面积受到的垂直力与真实器壁一样。因此密闭容器内的气体在每一点都有压强，压强传感器无论装在器壁上还是悬在气体中间，工作原理都一样。</p>
+  <p data-lang="en">Pressure rises when the atoms hit the surface more often (more atoms in the same volume, so a larger number density) or hit it harder (higher speeds, so larger momentum changes per collision).</p>
+  <p data-lang="zh">原子撞击表面更频繁（相同体积内原子更多，即数密度更大）或撞得更猛（速率更大，每次碰撞的动量变化更大）时，压强升高。</p>
+  <p data-lang="en">That is why squeezing a gas into a smaller volume, or heating it in a rigid box, both raise the pressure on the walls. Topic 9.2 turns these two observations into the ideal gas law.</p>
+  <p data-lang="zh">所以把气体压进更小的体积，或在刚性容器中加热气体，都会使器壁受到的压强升高。专题 9.2 会把这两点观察变成理想气体定律。</p>
+  <p data-lang="en">Pressure exists throughout the gas itself, not just at the boundary between the gas and the container. Imagine a thin, tiny, massless sheet placed in the middle of the gas. Atoms strike both of its faces, so it feels the same perpendicular forces per unit area that a real wall would.</p>
+  <p data-lang="zh">压强存在于整个气体内部，而不只是在气体与容器的边界上。设想在气体中间放一块极薄、极小、没有质量的薄片：原子撞击它的两个面，所以它每单位面积受到的垂直力与真实器壁一样。</p>
+  <p data-lang="en">The gas inside a sealed container therefore has a pressure at every point, and a pressure sensor works the same way whether it sits on the wall or floats in the middle.</p>
+  <p data-lang="zh">因此密闭容器内的气体在每一点都有压强，压强传感器无论装在器壁上还是悬在气体中间，工作原理都一样。</p>
 
   <h3><span data-lang="en">Temperature and Average Kinetic Energy</span><span data-lang="zh">温度与平均动能</span></h3>
-  <p data-lang="en">The atoms in a gas do not all move at the same speed. Collisions constantly speed some atoms up and slow others down, so at any instant there is a spread of speeds. The <strong>temperature</strong> of a system is characterized by the average kinetic energy of the atoms within that system. A hotter gas has atoms with a larger average kinetic energy. For an ideal gas the average translational kinetic energy per atom is proportional to the absolute temperature, and the same constant relates it to the root-mean-square speed.</p>
-  <p data-lang="zh">气体中的原子并不都以同一速率运动。碰撞不断使一些原子加速、另一些减速，所以任一时刻速率都有一个分布。系统的<strong>温度</strong>（<code>temperature</code>）以系统内原子的平均动能为特征。温度更高的气体，原子的平均动能更大。对于理想气体，每个原子的平均平动动能与绝对温度成正比，同一个常数还把它与方均根速率联系起来。</p>
+  <p data-lang="en">The atoms in a gas do not all move at the same speed. Collisions constantly speed some atoms up and slow others down, so at any instant there is a spread of speeds. The <strong>temperature</strong> of a system is characterized by the average kinetic energy of the atoms within that system.</p>
+  <p data-lang="zh">气体中的原子并不都以同一速率运动。碰撞不断使一些原子加速、另一些减速，所以任一时刻速率都有一个分布。系统的<strong>温度</strong>（<code>temperature</code>）以系统内原子的平均动能为特征。</p>
+  <p data-lang="en">A hotter gas has atoms with a larger average kinetic energy. For an ideal gas the average translational kinetic energy per atom is proportional to the absolute temperature, and the same constant relates it to the root-mean-square speed.</p>
+  <p data-lang="zh">温度更高的气体，原子的平均动能更大。对于理想气体，每个原子的平均平动动能与绝对温度成正比，同一个常数还把它与方均根速率联系起来。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Average kinetic energy and rms speed</span><span data-lang="zh">平均动能与方均根速率</span></div>
@@ -984,14 +1012,51 @@ figure.dr-fig figcaption {
   <p data-lang="en">$K_\text{avg}$ is the average kinetic energy per atom in J, $k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ is Boltzmann's constant, $T$ is the temperature in K, $m$ is the mass of one atom in kg, and $v_\text{rms}$ is the root-mean-square speed in m/s.</p>
   <p data-lang="zh">$K_\text{avg}$ 为每个原子的平均动能，单位 J；$k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ 为玻尔兹曼常数；$T$ 为温度，单位 K；$m$ 为单个原子的质量，单位 kg；$v_\text{rms}$ 为方均根速率，单位 m/s。</p>
 
-  <p data-lang="en">The <strong>root-mean-square speed</strong> is found by squaring every speed, averaging the squares, and taking the square root. It is the speed that corresponds to the average kinetic energy, and it is a little larger than the plain average speed. Solving the formula gives $v_\text{rms} = \sqrt{3k_B T/m}$. Three consequences follow directly. First, $T$ must be in kelvin, since a temperature of zero on the kelvin scale is the one with zero average kinetic energy. Second, doubling the kelvin temperature doubles $K_\text{avg}$ but multiplies $v_\text{rms}$ only by $\sqrt{2}$. Third, at the same temperature all ideal gases have the same $K_\text{avg}$, so lighter atoms must move faster: helium atoms are much quicker than nitrogen molecules in the same room.</p>
-  <p data-lang="zh"><strong>方均根速率</strong>（<code>root-mean-square speed</code>）的求法是：先把每个速率平方，再求平方的平均值，最后开方。它是与平均动能对应的速率，比普通的平均速率略大。解这个公式得 $v_\text{rms} = \sqrt{3k_B T/m}$。由此直接得到三个结论。第一，$T$ 必须用开尔文，因为开尔文温标的零点对应平均动能为零。第二，开尔文温度加倍时，$K_\text{avg}$ 加倍，而 $v_\text{rms}$ 只变为 $\sqrt{2}$ 倍。第三，同一温度下所有理想气体的 $K_\text{avg}$ 相同，所以质量小的原子必然运动得更快：同一房间里氦原子比氮分子快得多。</p>
-  <p data-lang="en">Kelvin and Celsius degrees are the same size, so $T(\mathrm{K}) = T(^\circ\mathrm{C}) + 273$. Use this conversion in every kinetic-theory and gas-law calculation. Temperature is also not the same thing as the total energy of a sample: a bathtub of warm water holds far more energy than a cup of hot tea, even though the tea has the higher temperature, because temperature tracks the energy per particle and not the sum.</p>
-  <p data-lang="zh">开尔文与摄氏度的每一格大小相同，所以 $T(\mathrm{K}) = T(^\circ\mathrm{C}) + 273$。每个分子动理论和气体定律的计算都要用这个换算。温度也不等于样品的总能量：一浴缸温水所含的能量远多于一杯热茶，尽管茶的温度更高，因为温度反映的是每个粒子的能量，而不是总和。</p>
+  <p data-lang="en">The <strong>root-mean-square speed</strong> is found by squaring every speed, averaging the squares, and taking the square root. It is the speed that corresponds to the average kinetic energy, and it is a little larger than the plain average speed.</p>
+  <p data-lang="zh"><strong>方均根速率</strong>（<code>root-mean-square speed</code>）的求法是：先把每个速率平方，再求平方的平均值，最后开方。它是与平均动能对应的速率，比普通的平均速率略大。</p>
+  <p data-lang="en">Solving the formula gives $v_\text{rms} = \sqrt{3k_B T/m}$. Three consequences follow directly. First, $T$ must be in kelvin, since a temperature of zero on the kelvin scale is the one with zero average kinetic energy.</p>
+  <p data-lang="zh">解这个公式得 $v_\text{rms} = \sqrt{3k_B T/m}$。由此直接得到三个结论。第一，$T$ 必须用开尔文，因为开尔文温标的零点对应平均动能为零。</p>
+  <p data-lang="en">Second, doubling the kelvin temperature doubles $K_\text{avg}$ but multiplies $v_\text{rms}$ only by $\sqrt{2}$. Third, at the same temperature all ideal gases have the same $K_\text{avg}$, so lighter atoms must move faster: helium atoms are much quicker than nitrogen molecules in the same room.</p>
+  <p data-lang="zh">第二，开尔文温度加倍时，$K_\text{avg}$ 加倍，而 $v_\text{rms}$ 只变为 $\sqrt{2}$ 倍。第三，同一温度下所有理想气体的 $K_\text{avg}$ 相同，所以质量小的原子必然运动得更快：同一房间里氦原子比氮分子快得多。</p>
+  <p data-lang="en">Kelvin and Celsius degrees are the same size, so $T(\mathrm{K}) = T(^\circ\mathrm{C}) + 273$. Use this conversion in every kinetic-theory and gas-law calculation.</p>
+  <p data-lang="zh">开尔文与摄氏度的每一格大小相同，所以 $T(\mathrm{K}) = T(^\circ\mathrm{C}) + 273$。每个分子动理论和气体定律的计算都要用这个换算。</p>
+  <p data-lang="en">Temperature is also not the same thing as the total energy of a sample: a bathtub of warm water holds far more energy than a cup of hot tea, even though the tea has the higher temperature, because temperature tracks the energy per particle and not the sum.</p>
+  <p data-lang="zh">温度也不等于样品的总能量：一浴缸温水所含的能量远多于一杯热茶，尽管茶的温度更高，因为温度反映的是每个粒子的能量，而不是总和。</p>
+
+  <h3><span data-lang="en">First Principles: Pressure and Temperature from Atomic Collisions</span><span data-lang="zh">第一性原理：由原子碰撞得到压强与温度</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: pressure from momentum transfer</span><span data-lang="zh">第一性原理：由动量传递得到压强</span></div>
+    <p data-lang="en">Start from the impulse-momentum theorem and Newton's third law. The wall changes each atom's momentum, so the atom pushes back on the wall with an equal and opposite force.</p>
+    <p data-lang="zh">从冲量-动量定理（<code>impulse-momentum theorem</code>）和牛顿第三定律出发。器壁改变每个原子的动量，所以原子对器壁施加大小相等、方向相反的力。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>One atom bounces between two walls a distance $L$ apart. Each hit reverses $v_x$, so $\Delta p = 2mv_x$.</li>
+      <li>It returns to the same wall every $\Delta t = 2L/v_x$, so its average force on that wall is $F = \Delta p/\Delta t = mv_x^2/L$.</li>
+      <li>Add $N$ atoms in a box of volume $V = AL$. Random motion has no special direction, so $\overline{v_x^2} = v_\text{rms}^2/3$ and $P = F/A = Nmv_\text{rms}^2/(3V)$.</li>
+      <li>Compare with $PV = Nk_B T$ (Topic 9.2): $\frac{1}{3}Nmv_\text{rms}^2 = Nk_B T$, so $\frac{1}{2}mv_\text{rms}^2 = \frac{3}{2}k_B T$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>一个原子在相距 $L$ 的两面器壁之间来回弹跳。每次撞击使 $v_x$ 反向，所以 $\Delta p = 2mv_x$。</li>
+      <li>它每隔 $\Delta t = 2L/v_x$ 回到同一面器壁，所以它对这面器壁的平均作用力为 $F = \Delta p/\Delta t = mv_x^2/L$。</li>
+      <li>把 $N$ 个原子放进体积 $V = AL$ 的盒子。无规则运动没有特殊方向，所以 $\overline{v_x^2} = v_\text{rms}^2/3$，于是 $P = F/A = Nmv_\text{rms}^2/(3V)$。</li>
+      <li>与 $PV = Nk_B T$（专题 9.2）比较：$\frac{1}{3}Nmv_\text{rms}^2 = Nk_B T$，所以 $\frac{1}{2}mv_\text{rms}^2 = \frac{3}{2}k_B T$。</li>
+    </ol>
+    <p data-lang="en">Limiting check: if the atoms stop ($v_\text{rms} \to 0$, so $T \to 0$), the pressure falls to zero, as the absolute-zero graph of Topic 9.2 shows. Doubling $N$ at fixed $V$ and $T$ doubles $P$. Units: $\mathrm{kg\,(m/s)^2/m^3} = \mathrm{N/m^2} = \mathrm{Pa}$.</p>
+    <p data-lang="zh">极限检验：原子停止运动（$v_\text{rms} \to 0$，即 $T \to 0$）时压强降为零，与专题 9.2 的绝对零度图像一致。$V$ 和 $T$ 不变时 $N$ 加倍，$P$ 也加倍。单位：$\mathrm{kg\,(m/s)^2/m^3} = \mathrm{N/m^2} = \mathrm{Pa}$。</p>
+  </div>
 
   <h3><span data-lang="en">The Maxwell-Boltzmann Distribution</span><span data-lang="zh">麦克斯韦-玻尔兹曼分布</span></h3>
-  <p data-lang="en">The <strong>Maxwell-Boltzmann distribution</strong> is a graphical representation of the speeds (or energies) of the atoms of a gas at a given temperature. The horizontal axis is speed and the height of the curve shows how many atoms, as a fraction of the total, have speeds near that value. You are not expected to know the functional form of the Maxwell-Boltzmann distribution, only to recognize how the features of its graph are related to the temperature of the gas.</p>
-  <p data-lang="zh"><strong>麦克斯韦-玻尔兹曼分布</strong>（<code>Maxwell-Boltzmann distribution</code>）是以图像表示一定温度下气体原子速率（或能量）的分布。横轴是速率，曲线的高度表示速率在该值附近的原子占总数的比例。不要求知道麦克斯韦-玻尔兹曼分布的函数形式（<code>functional form</code>），只需要认识这条曲线的各个特征如何与气体的温度相联系。</p>
+  <p data-lang="en">The <strong>Maxwell-Boltzmann distribution</strong> is a graphical representation of the speeds (or energies) of the atoms of a gas at a given temperature. The horizontal axis is speed and the height of the curve shows how many atoms, as a fraction of the total, have speeds near that value.</p>
+  <p data-lang="zh"><strong>麦克斯韦-玻尔兹曼分布</strong>（<code>Maxwell-Boltzmann distribution</code>）是以图像表示一定温度下气体原子速率（或能量）的分布。横轴是速率，曲线的高度表示速率在该值附近的原子占总数的比例。</p>
+  <p data-lang="en">You are not expected to know the functional form of the Maxwell-Boltzmann distribution, only to recognize how the features of its graph are related to the temperature of the gas.</p>
+  <p data-lang="zh">不要求知道麦克斯韦-玻尔兹曼分布的函数形式（<code>functional form</code>），只需要认识这条曲线的各个特征如何与气体的温度相联系。</p>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Maxwell, Boltzmann and the speed distribution</span><span data-lang="zh">历史：麦克斯韦、玻尔兹曼与速率分布</span></div>
+    <p data-lang="en">James Clerk Maxwell derived the speed distribution in 1860, assuming only that molecular motion is random with no preferred direction. Ludwig Boltzmann extended the argument from 1868 onward by tying it to the energy of each molecule, so the curve carries both names.</p>
+    <p data-lang="zh">詹姆斯·克拉克·麦克斯韦在 1860 年推导出速率分布，他只假设分子运动是无规则的、没有优先方向。路德维希·玻尔兹曼从 1868 年起把这一论证与每个分子的能量联系起来并加以推广，所以这条曲线以两人的名字命名。</p>
+    <p data-lang="en">Molecular-beam experiments in the 20th century confirmed the predicted shape. Read more: <a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution" target="_blank" rel="noopener">Maxwell-Boltzmann distribution (Wikipedia: the formula, its derivation and history)</a>.</p>
+    <p data-lang="zh">20 世纪的分子束实验证实了预言的曲线形状。延伸阅读：<a href="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution" target="_blank" rel="noopener">麦克斯韦-玻尔兹曼分布（维基百科英文条目：公式、推导与历史）</a>。</p>
+  </div>
 
   <figure class="sg-fig" role="group">
     <svg viewBox="0 0 460 290" role="img" aria-label="Two Maxwell-Boltzmann speed distributions drawn for nitrogen on the same axes. The cooler curve at 300 K rises from the origin to a tall peak near 420 metres per second and falls to nearly zero by 1500 metres per second. The hotter curve at 600 K also starts at the origin, has a lower and broader peak near 600 metres per second, and has a longer tail toward high speeds. Both curves enclose the same area.">
@@ -1011,8 +1076,15 @@ figure.dr-fig figcaption {
     <figcaption><span data-lang="en">Figure 9.1. Maxwell-Boltzmann speed distributions for nitrogen at 300 K (cooler, taller curve) and 600 K (hotter, lower curve). Each curve starts at the origin, is asymmetric with a long tail toward high speeds, and encloses the same total area because the total number of atoms is fixed. Raising the temperature moves the peak to a higher speed, lowers it and widens the curve.</span><span data-lang="zh">图 9.1。氮气在 300 K（较冷，较高的曲线）和 600 K（较热，较低的曲线）时的麦克斯韦-玻尔兹曼速率分布。每条曲线都从原点出发，不对称，向高速一侧有一条长尾，并且围成的总面积相同，因为原子总数不变。温度升高时，峰移向更高的速率，峰变低，曲线变宽。</span></figcaption>
   </figure>
 
-  <p data-lang="en">Read these features from Figure 9.1. Each curve starts at the origin, because essentially no atoms are at rest. Each is asymmetric: it rises steeply to a peak and then falls slowly into a long tail, because there is a lower limit of zero on the speed but no sharp upper limit, so a few atoms are always very fast. The area under each curve is the same, because it represents all the atoms and the number of atoms is fixed. When the temperature rises, the average kinetic energy rises, so the peak moves to a higher speed. The area must stay the same, so the curve spreads out into a broader shape, and its peak is lower. The fraction of atoms with very high speeds grows a great deal, which matters for anything that needs a minimum energy to happen.</p>
-  <p data-lang="zh">从图 9.1 读出这些特征。每条曲线都从原点出发，因为几乎没有原子处于静止状态。每条曲线都不对称：它陡直上升到峰值，然后缓慢下降成一条长尾，因为速率有下限零而没有明确的上限，所以总会有少数原子速率很大。每条曲线下的面积相同，因为它代表全部原子，而原子总数不变。温度升高时平均动能增大，峰移向更高的速率；面积必须保持不变，所以曲线向两侧展开，变得更宽，峰值更低。速率很大的原子所占比例大幅增加，这对任何需要最低能量才能发生的过程都很重要。</p>
+  <h3><span data-lang="en">Reading the Distribution Graph</span><span data-lang="zh">读懂分布图</span></h3>
+  <p data-lang="en">Read these features from Figure 9.1. Each curve starts at the origin, because essentially no atoms are at rest.</p>
+  <p data-lang="zh">从图 9.1 读出这些特征。每条曲线都从原点出发，因为几乎没有原子处于静止状态。</p>
+  <p data-lang="en">Each is asymmetric: it rises steeply to a peak and then falls slowly into a long tail, because there is a lower limit of zero on the speed but no sharp upper limit, so a few atoms are always very fast.</p>
+  <p data-lang="zh">每条曲线都不对称：它陡直上升到峰值，然后缓慢下降成一条长尾，因为速率有下限零而没有明确的上限，所以总会有少数原子速率很大。</p>
+  <p data-lang="en">The area under each curve is the same, because it represents all the atoms and the number of atoms is fixed. When the temperature rises, the average kinetic energy rises, so the peak moves to a higher speed. The area must stay the same, so the curve spreads out into a broader shape, and its peak is lower.</p>
+  <p data-lang="zh">每条曲线下的面积相同，因为它代表全部原子，而原子总数不变。温度升高时平均动能增大，峰移向更高的速率；面积必须保持不变，所以曲线向两侧展开，变得更宽，峰值更低。</p>
+  <p data-lang="en">The fraction of atoms with very high speeds grows a great deal, which matters for anything that needs a minimum energy to happen.</p>
+  <p data-lang="zh">速率很大的原子所占比例大幅增加，这对任何需要最低能量才能发生的过程都很重要。</p>
 
   <div class="concept-box red" data-lang="en">
     <strong>Common Mistake: Treating every atom as having the average speed</strong>
@@ -1125,15 +1197,17 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">Convert every temperature to kelvin before using $K_\text{avg} = \frac{3}{2}k_B T$. For a question that compares two gases or two temperatures, use proportional reasoning: $K_\text{avg} \propto T$ and $v_\text{rms} \propto \sqrt{T/m}$. When you sketch a Maxwell-Boltzmann graph for a higher temperature, draw the peak lower and to the right, a longer tail, the same starting point at the origin and the same area. For a collision question, write the momentum equation for each direction before anything else.</p>
-    <p data-lang="zh">使用 $K_\text{avg} = \frac{3}{2}k_B T$ 之前，先把每个温度换算成开尔文。比较两种气体或两个温度的题目，用比例推理：$K_\text{avg} \propto T$，$v_\text{rms} \propto \sqrt{T/m}$。为更高温度画麦克斯韦-玻尔兹曼图时，要把峰画得更低、更靠右，尾部更长，起点仍在原点，面积保持不变。碰撞类题目先分别写出每个方向的动量方程。</p>
+    <p data-lang="en">Convert every temperature to kelvin before using $K_\text{avg} = \frac{3}{2}k_B T$. For a question that compares two gases or two temperatures, use proportional reasoning: $K_\text{avg} \propto T$ and $v_\text{rms} \propto \sqrt{T/m}$.</p>
+    <p data-lang="zh">使用 $K_\text{avg} = \frac{3}{2}k_B T$ 之前，先把每个温度换算成开尔文。比较两种气体或两个温度的题目，用比例推理：$K_\text{avg} \propto T$，$v_\text{rms} \propto \sqrt{T/m}$。</p>
+    <p data-lang="en">When you sketch a Maxwell-Boltzmann graph for a higher temperature, draw the peak lower and to the right, a longer tail, the same starting point at the origin and the same area. For a collision question, write the momentum equation for each direction before anything else.</p>
+    <p data-lang="zh">为更高温度画麦克斯韦-玻尔兹曼图时，要把峰画得更低、更靠右，尾部更长，起点仍在原点，面积保持不变。碰撞类题目先分别写出每个方向的动量方程。</p>
   </div>
 
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
     <details class="sg-q">
       <summary><span data-lang="en">Describe how the atoms of a gas produce a steady pressure on the walls of a container, even though each collision is brief and tiny.</span><span data-lang="zh">描述（<code>describe</code>）气体原子如何对容器壁产生稳定的压强，尽管每次碰撞既短暂又微小。</span></summary>
-      <div class="sg-a"><p data-lang="en">Each atom that hits the wall reverses the perpendicular component of its momentum, so the wall exerts an impulse on it and, by Newton's third law, the atom exerts an equal and opposite impulse on the wall. A container holds an enormous number of atoms, so collisions on any patch of wall happen so often that the sum of the perpendicular forces is essentially constant. Dividing that total perpendicular force by the area gives the pressure.</p><p data-lang="zh">每个撞到器壁的原子，其动量的垂直分量都会反向，所以器壁对它施加冲量，根据牛顿第三定律，原子对器壁施加大小相等、方向相反的冲量。容器里的原子数量极多，任何一小块器壁上的碰撞都极其频繁，垂直力之和基本是恒定的。用这个总的垂直力除以面积就得到压强。</p></div>
+      <div class="sg-a"><p data-lang="en">Each atom that hits the wall reverses the perpendicular component of its momentum, so the wall exerts an impulse on it and, by Newton's third law, the atom exerts an equal and opposite impulse on the wall.</p><p data-lang="zh">每个撞到器壁的原子，其动量的垂直分量都会反向，所以器壁对它施加冲量，根据牛顿第三定律，原子对器壁施加大小相等、方向相反的冲量。</p><p data-lang="en">A container holds an enormous number of atoms, so collisions on any patch of wall happen so often that the sum of the perpendicular forces is essentially constant. Dividing that total perpendicular force by the area gives the pressure.</p><p data-lang="zh">容器里的原子数量极多，任何一小块器壁上的碰撞都极其频繁，垂直力之和基本是恒定的。用这个总的垂直力除以面积就得到压强。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A small pressure sensor is moved from the wall of a sealed rigid box to the middle of the gas. Predict its reading and justify it.</span><span data-lang="zh">把一个小型压强传感器从密闭刚性盒子的器壁移到气体中间。预测（<code>predict</code>）它的读数并说明理由。</span></summary>
@@ -1149,7 +1223,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A gas is heated from $300\,\mathrm{K}$ to $600\,\mathrm{K}$. Explain how its Maxwell-Boltzmann distribution changes, and justify why the peak height falls although the gas has the same number of atoms.</span><span data-lang="zh">一种气体从 $300\,\mathrm{K}$ 加热到 $600\,\mathrm{K}$。说明（<code>explain</code>）它的麦克斯韦-玻尔兹曼分布如何变化，并论证（<code>justify</code>）为什么原子数不变而峰值却降低。</span></summary>
-      <div class="sg-a"><p data-lang="en">The average kinetic energy doubles, so the peak moves to a higher speed and the curve gets broader, with more atoms in the high-speed tail. The area under the curve represents all the atoms, and the number of atoms has not changed, so the area is fixed. A curve that is wider with the same area has to be lower at its peak.</p><p data-lang="zh">平均动能加倍，所以峰移向更高的速率，曲线变宽，高速尾部的原子更多。曲线下的面积代表全部原子，原子数没有变，所以面积固定。面积相同而曲线更宽，峰值必然更低。</p></div>
+      <div class="sg-a"><p data-lang="en">The average kinetic energy doubles, so the peak moves to a higher speed and the curve gets broader, with more atoms in the high-speed tail.</p><p data-lang="zh">平均动能加倍，所以峰移向更高的速率，曲线变宽，高速尾部的原子更多。</p><p data-lang="en">The area under the curve represents all the atoms, and the number of atoms has not changed, so the area is fixed. A curve that is wider with the same area has to be lower at its peak.</p><p data-lang="zh">曲线下的面积代表全部原子，原子数没有变，所以面积固定。面积相同而曲线更宽，峰值必然更低。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">The perpendicular components of the forces of the atoms on a wall of area $0.25\,\mathrm{m^2}$ add up to $2.5\times10^{4}\,\mathrm{N}$. Find the pressure and compare it with atmospheric pressure, $1.0\times10^{5}\,\mathrm{Pa}$.</span><span data-lang="zh">原子对一块面积为 $0.25\,\mathrm{m^2}$ 的器壁的力的垂直分量之和为 $2.5\times10^{4}\,\mathrm{N}$。求压强，并与大气压强 $1.0\times10^{5}\,\mathrm{Pa}$ 比较。</span></summary>
@@ -1186,22 +1260,34 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">The Classical Model of an Ideal Gas</span><span data-lang="zh">理想气体的经典模型</span></h3>
-  <p data-lang="en">An <strong>ideal gas</strong> is a model that makes the atoms of a gas as simple as possible so that the physics can be worked out exactly. The classical model assumes four things. First, the instantaneous velocities of the atoms are <strong>random</strong>: at any moment the atoms move in every direction with a spread of speeds, and no direction is favoured. Second, the volumes of the atoms are <strong>negligible</strong> compared with the total volume occupied by the gas, so the atoms behave as points in a mostly empty container. Third, the atoms collide <strong>elastically</strong>, so collisions do not change the total kinetic energy. Fourth, the only appreciable forces on the atoms are those that occur during collisions: between collisions each atom moves in a straight line at constant velocity.</p>
-  <p data-lang="zh"><strong>理想气体</strong>（<code>ideal gas</code>）是把气体原子尽量简化的模型，这样物理规律就可以精确求出。经典模型作四个假设。第一，原子的瞬时速度是<strong>随机的</strong>（<code>random</code>）：任一时刻原子朝各个方向运动，速率各不相同，没有哪个方向占优。第二，原子本身的体积与气体占据的总体积相比<strong>可以忽略</strong>（<code>negligible</code>），所以原子可以看作一个基本是空的容器里的点。第三，原子之间的碰撞是<strong>弹性的</strong>（<code>elastic</code>），碰撞不改变总动能。第四，作用在原子上的明显的力只出现在碰撞过程中：两次碰撞之间，每个原子沿直线匀速运动。</p>
-  <p data-lang="en">These assumptions are good for real gases at low density and moderate or high temperature, where the atoms are far apart and collisions are brief. They are poor when a gas is squeezed so tightly or cooled so far that the attractions between atoms start to matter. The model also has a consequence for energy that Topic 9.4 will use: since the atoms exert no appreciable forces on each other between collisions, there is no energy stored in the interactions, and the energy of the gas is all kinetic.</p>
-  <p data-lang="zh">对于低密度、温度适中或较高的真实气体，这些假设是很好的近似，此时原子相距很远，碰撞很短暂。当气体被压得很紧或冷却到很低、原子间的吸引力开始起作用时，这些假设就不好了。这个模型对能量还有一个推论，专题 9.4 会用到：原子在两次碰撞之间没有明显的相互作用力，所以相互作用中没有储存能量，气体的能量全部是动能。</p>
+  <p data-lang="en">An <strong>ideal gas</strong> is a model that makes the atoms of a gas as simple as possible so that the physics can be worked out exactly. The classical model assumes four things.</p>
+  <p data-lang="zh"><strong>理想气体</strong>（<code>ideal gas</code>）是把气体原子尽量简化的模型，这样物理规律就可以精确求出。经典模型作四个假设。</p>
+  <p data-lang="en">First, the instantaneous velocities of the atoms are <strong>random</strong>: at any moment the atoms move in every direction with a spread of speeds, and no direction is favoured. Second, the volumes of the atoms are <strong>negligible</strong> compared with the total volume occupied by the gas, so the atoms behave as points in a mostly empty container.</p>
+  <p data-lang="zh">第一，原子的瞬时速度是<strong>随机的</strong>（<code>random</code>）：任一时刻原子朝各个方向运动，速率各不相同，没有哪个方向占优。第二，原子本身的体积与气体占据的总体积相比<strong>可以忽略</strong>（<code>negligible</code>），所以原子可以看作一个基本是空的容器里的点。</p>
+  <p data-lang="en">Third, the atoms collide <strong>elastically</strong>, so collisions do not change the total kinetic energy. Fourth, the only appreciable forces on the atoms are those that occur during collisions: between collisions each atom moves in a straight line at constant velocity.</p>
+  <p data-lang="zh">第三，原子之间的碰撞是<strong>弹性的</strong>（<code>elastic</code>），碰撞不改变总动能。第四，作用在原子上的明显的力只出现在碰撞过程中：两次碰撞之间，每个原子沿直线匀速运动。</p>
+  <p data-lang="en">These assumptions are good for real gases at low density and moderate or high temperature, where the atoms are far apart and collisions are brief. They are poor when a gas is squeezed so tightly or cooled so far that the attractions between atoms start to matter.</p>
+  <p data-lang="zh">对于低密度、温度适中或较高的真实气体，这些假设是很好的近似，此时原子相距很远，碰撞很短暂。当气体被压得很紧或冷却到很低、原子间的吸引力开始起作用时，这些假设就不好了。</p>
+  <p data-lang="en">The model also has a consequence for energy that Topic 9.4 will use: since the atoms exert no appreciable forces on each other between collisions, there is no energy stored in the interactions, and the energy of the gas is all kinetic.</p>
+  <p data-lang="zh">这个模型对能量还有一个推论，专题 9.4 会用到：原子在两次碰撞之间没有明显的相互作用力，所以相互作用中没有储存能量，气体的能量全部是动能。</p>
 
   <h3><span data-lang="en">The Ideal Gas Law</span><span data-lang="zh">理想气体定律</span></h3>
-  <p data-lang="en">An ideal gas is one in which the relationships among the pressure, volume, temperature and the amount of gas can be modeled with a single equation. The amount of gas can be counted in <strong>moles</strong>, $n$, or as a number of atoms, $N$. One mole contains Avogadro's number of atoms, $N_A = 6.02\times10^{23}\,\mathrm{mol^{-1}}$, so $N = nN_A$. The two forms of the law are connected by $R = N_A k_B$, since $(6.02\times10^{23})(1.38\times10^{-23}) = 8.31$.</p>
-  <p data-lang="zh">理想气体是这样一种气体：压强、体积、温度和气体的量之间的关系可以用一个方程来描述。气体的量可以用<strong>物质的量</strong>（<code>moles</code>）$n$ 计量，也可以用原子数 $N$ 计量。一摩尔含有阿伏伽德罗常数个原子，$N_A = 6.02\times10^{23}\,\mathrm{mol^{-1}}$，所以 $N = nN_A$。两种形式由 $R = N_A k_B$ 联系起来，因为 $(6.02\times10^{23})(1.38\times10^{-23}) = 8.31$。</p>
+  <p data-lang="en">An ideal gas is one in which the relationships among the pressure, volume, temperature and the amount of gas can be modeled with a single equation.</p>
+  <p data-lang="zh">理想气体是这样一种气体：压强、体积、温度和气体的量之间的关系可以用一个方程来描述。</p>
+  <p data-lang="en">The amount of gas can be counted in <strong>moles</strong>, $n$, or as a number of atoms, $N$. One mole contains Avogadro's number of atoms, $N_A = 6.02\times10^{23}\,\mathrm{mol^{-1}}$, so $N = nN_A$. The two forms of the law are connected by $R = N_A k_B$, since $(6.02\times10^{23})(1.38\times10^{-23}) = 8.31$.</p>
+  <p data-lang="zh">气体的量可以用<strong>物质的量</strong>（<code>moles</code>）$n$ 计量，也可以用原子数 $N$ 计量。一摩尔含有阿伏伽德罗常数个原子，$N_A = 6.02\times10^{23}\,\mathrm{mol^{-1}}$，所以 $N = nN_A$。两种形式由 $R = N_A k_B$ 联系起来，因为 $(6.02\times10^{23})(1.38\times10^{-23}) = 8.31$。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Ideal gas law</span><span data-lang="zh">理想气体定律</span></div>
     $$PV = nRT = Nk_B T$$
   </div>
 
-  <p data-lang="en">Here $P$ is the absolute pressure in Pa, $V$ is the volume of the container in m³, $n$ is the number of moles, $R = 8.31\,\mathrm{J/(mol\,K)}$ is the gas constant, $N$ is the number of atoms, $k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ is Boltzmann's constant, and $T$ is the temperature in kelvin. Use $PV = nRT$ when the amount is in moles and $PV = Nk_B T$ when it is a count of atoms. The law agrees with Topic 9.1: the pressure grows with the number of atoms per unit volume, $N/V$, and with the temperature, which sets how hard each atom hits the wall.</p>
-  <p data-lang="zh">其中 $P$ 为绝对压强，单位 Pa；$V$ 为容器体积，单位 m³；$n$ 为物质的量，单位 mol；$R = 8.31\,\mathrm{J/(mol\,K)}$ 为气体常量；$N$ 为原子数；$k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ 为玻尔兹曼常数；$T$ 为开尔文温度。物质的量以摩尔计时用 $PV = nRT$，以原子个数计时用 $PV = Nk_B T$。这个定律与专题 9.1 一致：压强随单位体积内的原子数 $N/V$ 增大，也随温度升高而增大，因为温度决定每个原子撞击器壁的力度。</p>
+  <p data-lang="en">Here $P$ is the absolute pressure in Pa, $V$ is the volume of the container in m³, $n$ is the number of moles, $R = 8.31\,\mathrm{J/(mol\,K)}$ is the gas constant, $N$ is the number of atoms, $k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ is Boltzmann's constant, and $T$ is the temperature in kelvin.</p>
+  <p data-lang="zh">其中 $P$ 为绝对压强，单位 Pa；$V$ 为容器体积，单位 m³；$n$ 为物质的量，单位 mol；$R = 8.31\,\mathrm{J/(mol\,K)}$ 为气体常量；$N$ 为原子数；$k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ 为玻尔兹曼常数；$T$ 为开尔文温度。</p>
+  <p data-lang="en">Use $PV = nRT$ when the amount is in moles and $PV = Nk_B T$ when it is a count of atoms.</p>
+  <p data-lang="zh">物质的量以摩尔计时用 $PV = nRT$，以原子个数计时用 $PV = Nk_B T$。</p>
+  <p data-lang="en">The law agrees with Topic 9.1: the pressure grows with the number of atoms per unit volume, $N/V$, and with the temperature, which sets how hard each atom hits the wall.</p>
+  <p data-lang="zh">这个定律与专题 9.1 一致：压强随单位体积内的原子数 $N/V$ 增大，也随温度升高而增大，因为温度决定每个原子撞击器壁的力度。</p>
   <p data-lang="en">For a fixed amount of gas, $nR$ is a constant, so $PV/T$ has the same value in any two states. The ratio form follows:</p>
   <p data-lang="zh">对一定量的气体，$nR$ 是常量，所以任意两个状态下 $PV/T$ 的值相同。由此得到比值形式：</p>
   <div class="formula-box green">
@@ -1221,14 +1307,26 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">Graphs of Pressure, Volume and Temperature</span><span data-lang="zh">压强、体积与温度的图像</span></h3>
-  <p data-lang="en">Graphs let you read the properties of a gas from data, and the shape of each graph follows from the ideal gas law. At constant temperature and amount, $PV = nRT$ is a constant, so a graph of $P$ against $V$ is a curve in which pressure and volume are inversely proportional (an isotherm, as Topic 9.4 will name it). Plotting $P$ against $1/V$ straightens it into a line through the origin whose slope is $nRT$. At constant volume and amount, $P = (nR/V)\,T$, so a graph of $P$ against the kelvin temperature is a straight line through the origin with slope $nR/V$. At constant pressure and amount, $V = (nR/P)\,T$, so $V$ against $T$ is also a straight line through the origin, and the volume is directly proportional to $T$.</p>
-  <p data-lang="zh">图像能让你从数据中读出气体的性质，而每种图像的形状都由理想气体定律决定。温度和物质的量不变时，$PV = nRT$ 是常量，所以 $P$-$V$ 图像是一条曲线，压强与体积成反比（这就是专题 9.4 要命名的等温线）。把 $P$ 对 $1/V$ 作图则变成过原点的直线，斜率为 $nRT$。体积和物质的量不变时，$P = (nR/V)\,T$，所以 $P$ 对开尔文温度的图像是过原点的直线，斜率为 $nR/V$。压强和物质的量不变时，$V = (nR/P)\,T$，所以 $V$ 对 $T$ 的图像也是过原点的直线，体积与 $T$ 成正比。</p>
-  <p data-lang="en">The slope of a straight-line graph is therefore a measuring tool. From a $P$ against $T$ line at known volume you can find $n$; from a $P$ against $1/V$ line at known temperature you can find $n$ or $T$. Look at which variable is on each axis and whether the temperature scale is kelvin before you interpret a slope or an intercept.</p>
-  <p data-lang="zh">因此直线图像的斜率是一种测量工具。由体积已知时的 $P$-$T$ 直线可以求出 $n$；由温度已知时的 $P$-$1/V$ 直线可以求出 $n$ 或 $T$。解读斜率或截距之前，先看清每个坐标轴是什么变量，以及温度是否用开尔文。</p>
+  <p data-lang="en">Graphs let you read the properties of a gas from data, and the shape of each graph follows from the ideal gas law.</p>
+  <p data-lang="zh">图像能让你从数据中读出气体的性质，而每种图像的形状都由理想气体定律决定。</p>
+  <p data-lang="en">At constant temperature and amount, $PV = nRT$ is a constant, so a graph of $P$ against $V$ is a curve in which pressure and volume are inversely proportional (an isotherm, as Topic 9.4 will name it). Plotting $P$ against $1/V$ straightens it into a line through the origin whose slope is $nRT$.</p>
+  <p data-lang="zh">温度和物质的量不变时，$PV = nRT$ 是常量，所以 $P$-$V$ 图像是一条曲线，压强与体积成反比（这就是专题 9.4 要命名的等温线）。把 $P$ 对 $1/V$ 作图则变成过原点的直线，斜率为 $nRT$。</p>
+  <p data-lang="en">At constant volume and amount, $P = (nR/V)\,T$, so a graph of $P$ against the kelvin temperature is a straight line through the origin with slope $nR/V$. At constant pressure and amount, $V = (nR/P)\,T$, so $V$ against $T$ is also a straight line through the origin, and the volume is directly proportional to $T$.</p>
+  <p data-lang="zh">体积和物质的量不变时，$P = (nR/V)\,T$，所以 $P$ 对开尔文温度的图像是过原点的直线，斜率为 $nR/V$。压强和物质的量不变时，$V = (nR/P)\,T$，所以 $V$ 对 $T$ 的图像也是过原点的直线，体积与 $T$ 成正比。</p>
+  <p data-lang="en">The slope of a straight-line graph is therefore a measuring tool. From a $P$ against $T$ line at known volume you can find $n$; from a $P$ against $1/V$ line at known temperature you can find $n$ or $T$.</p>
+  <p data-lang="zh">因此直线图像的斜率是一种测量工具。由体积已知时的 $P$-$T$ 直线可以求出 $n$；由温度已知时的 $P$-$1/V$ 直线可以求出 $n$ 或 $T$。</p>
+  <p data-lang="en">Look at which variable is on each axis and whether the temperature scale is kelvin before you interpret a slope or an intercept.</p>
+  <p data-lang="zh">解读斜率或截距之前，先看清每个坐标轴是什么变量，以及温度是否用开尔文。</p>
 
   <h3><span data-lang="en">Extrapolating to Absolute Zero</span><span data-lang="zh">外推到绝对零度</span></h3>
-  <p data-lang="en">In a rigid container the pressure falls in step with the temperature. Suppose you measure the pressure of a fixed amount of gas at several temperatures above the freezing point of water and plot $P$ against the Celsius temperature. The points lie on a straight line. If you extend that line to lower temperatures, it reaches zero pressure at $-273^\circ\mathrm{C}$, and the extension is called an <strong>extrapolation</strong>. A temperature at which an ideal gas has zero pressure can therefore be found from a graph of pressure as a function of temperature. At this temperature the atoms have no translational kinetic energy left to hit the wall with. It defines <strong>absolute zero</strong>, $0\,\mathrm{K}$, the zero of the kelvin scale. A real gas condenses to a liquid before it gets that cold, so the line is an extrapolation of measurements made at higher temperatures, not a measurement at $0\,\mathrm{K}$.</p>
-  <p data-lang="zh">在刚性容器中，压强随温度同步下降。设你测量了一定量气体在水的冰点以上若干温度下的压强，并以摄氏温度为横轴画出 $P$。这些点落在一条直线上。把这条直线向低温方向延长，它在 $-273^\circ\mathrm{C}$ 处达到零压强，这种延长叫做<strong>外推</strong>（<code>extrapolation</code>）。因此，理想气体压强为零的温度可以由压强随温度变化的图像求出。在这个温度下，原子已没有平动动能可以用来撞击器壁。它定义了<strong>绝对零度</strong>（<code>absolute zero</code>），即 $0\,\mathrm{K}$，开尔文温标的零点。真实气体在冷到这个程度之前就会凝结成液体，所以这条线是对较高温度下测量结果的外推，而不是在 $0\,\mathrm{K}$ 的测量。</p>
+  <p data-lang="en">In a rigid container the pressure falls in step with the temperature. Suppose you measure the pressure of a fixed amount of gas at several temperatures above the freezing point of water and plot $P$ against the Celsius temperature.</p>
+  <p data-lang="zh">在刚性容器中，压强随温度同步下降。设你测量了一定量气体在水的冰点以上若干温度下的压强，并以摄氏温度为横轴画出 $P$。</p>
+  <p data-lang="en">The points lie on a straight line. If you extend that line to lower temperatures, it reaches zero pressure at $-273^\circ\mathrm{C}$, and the extension is called an <strong>extrapolation</strong>.</p>
+  <p data-lang="zh">这些点落在一条直线上。把这条直线向低温方向延长，它在 $-273^\circ\mathrm{C}$ 处达到零压强，这种延长叫做<strong>外推</strong>（<code>extrapolation</code>）。</p>
+  <p data-lang="en">A temperature at which an ideal gas has zero pressure can therefore be found from a graph of pressure as a function of temperature. At this temperature the atoms have no translational kinetic energy left to hit the wall with.</p>
+  <p data-lang="zh">因此，理想气体压强为零的温度可以由压强随温度变化的图像求出。在这个温度下，原子已没有平动动能可以用来撞击器壁。</p>
+  <p data-lang="en">It defines <strong>absolute zero</strong>, $0\,\mathrm{K}$, the zero of the kelvin scale. A real gas condenses to a liquid before it gets that cold, so the line is an extrapolation of measurements made at higher temperatures, not a measurement at $0\,\mathrm{K}$.</p>
+  <p data-lang="zh">它定义了<strong>绝对零度</strong>（<code>absolute zero</code>），即 $0\,\mathrm{K}$，开尔文温标的零点。真实气体在冷到这个程度之前就会凝结成液体，所以这条线是对较高温度下测量结果的外推，而不是在 $0\,\mathrm{K}$ 的测量。</p>
 
   <figure class="sg-fig" role="group">
     <svg viewBox="0 0 460 290" role="img" aria-label="Graph of pressure against Celsius temperature for a fixed amount of gas in a rigid container. Five measured points lie on a straight line rising from 1.00 times 10 to the 5 pascals at 0 degrees Celsius to 1.37 times 10 to the 5 pascals at 100 degrees. A dashed extension of the line reaches zero pressure at minus 273 degrees Celsius, the point labelled absolute zero.">
@@ -1344,8 +1442,10 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">Before substituting into the gas law, convert $T$ to kelvin, $V$ to m³ (or keep $P$ and $V$ in a consistent pair such as kPa and L when only a ratio is needed) and $P$ to absolute pressure. For a comparison question, write the ratio form and state which quantities are fixed, then reason with the proportions. When a graph is given, say which quantities are on the axes before you claim anything about its slope or intercept.</p>
-    <p data-lang="zh">代入气体定律之前，先把 $T$ 换成开尔文，$V$ 换成 m³（只需要比值时，也可以把 $P$ 和 $V$ 保持在一致的单位组合里，例如 kPa 和 L），并把 $P$ 换成绝对压强。比较类题目要写出比值形式，说明哪些量保持不变，然后用比例关系推理。题目给出图像时，先说明坐标轴是哪两个量，再对斜率或截距下结论。</p>
+    <p data-lang="en">Before substituting into the gas law, convert $T$ to kelvin, $V$ to m³ (or keep $P$ and $V$ in a consistent pair such as kPa and L when only a ratio is needed) and $P$ to absolute pressure.</p>
+    <p data-lang="zh">代入气体定律之前，先把 $T$ 换成开尔文，$V$ 换成 m³（只需要比值时，也可以把 $P$ 和 $V$ 保持在一致的单位组合里，例如 kPa 和 L），并把 $P$ 换成绝对压强。</p>
+    <p data-lang="en">For a comparison question, write the ratio form and state which quantities are fixed, then reason with the proportions. When a graph is given, say which quantities are on the axes before you claim anything about its slope or intercept.</p>
+    <p data-lang="zh">比较类题目要写出比值形式，说明哪些量保持不变，然后用比例关系推理。题目给出图像时，先说明坐标轴是哪两个量，再对斜率或截距下结论。</p>
   </div>
 
   <div class="sg-check">
@@ -1368,7 +1468,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Explain why a graph of pressure against temperature for a gas in a rigid sealed container can be used to find absolute zero, and why the measured line never has to reach it.</span><span data-lang="zh">解释（<code>explain</code>）为什么刚性密封容器中气体的压强-温度图像可以用来求绝对零度，以及为什么测量得到的直线不必真的到达它。</span></summary>
-      <div class="sg-a"><p data-lang="en">For fixed $n$ and $V$, $P = (nR/V)T$ is a straight line in kelvin, so the data points fall on a line that can be extended to $P = 0$. The kinetic energy of the atoms is proportional to $T$, so zero pressure corresponds to $T = 0\,\mathrm{K}$, which is $-273\,{}^\circ\mathrm{C}$. The line is an extrapolation of data taken at accessible temperatures: a real gas condenses before it reaches this temperature, so the ideal-gas line is never measured all the way down.</p><p data-lang="zh">$n$ 和 $V$ 固定时，$P = (nR/V)T$ 在开尔文温标下是一条直线，所以数据点落在一条可以延长到 $P = 0$ 的直线上。原子的动能与 $T$ 成正比，所以压强为零对应 $T = 0\,\mathrm{K}$，即 $-273\,{}^\circ\mathrm{C}$。这条线是对可达温度下数据的外推：真实气体在到达这个温度之前就会凝结，所以理想气体的直线从来不会一直测到底。</p></div>
+      <div class="sg-a"><p data-lang="en">For fixed $n$ and $V$, $P = (nR/V)T$ is a straight line in kelvin, so the data points fall on a line that can be extended to $P = 0$. The kinetic energy of the atoms is proportional to $T$, so zero pressure corresponds to $T = 0\,\mathrm{K}$, which is $-273\,{}^\circ\mathrm{C}$.</p><p data-lang="zh">$n$ 和 $V$ 固定时，$P = (nR/V)T$ 在开尔文温标下是一条直线，所以数据点落在一条可以延长到 $P = 0$ 的直线上。原子的动能与 $T$ 成正比，所以压强为零对应 $T = 0\,\mathrm{K}$，即 $-273\,{}^\circ\mathrm{C}$。</p><p data-lang="en">The line is an extrapolation of data taken at accessible temperatures: a real gas condenses before it reaches this temperature, so the ideal-gas line is never measured all the way down.</p><p data-lang="zh">这条线是对可达温度下数据的外推：真实气体在到达这个温度之前就会凝结，所以理想气体的直线从来不会一直测到底。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A rigid sealed container of gas at $20^\circ\mathrm{C}$ and $1.00\times10^{5}\,\mathrm{Pa}$ is heated to $100^\circ\mathrm{C}$. Find the final pressure and justify why the result is not five times the starting pressure.</span><span data-lang="zh">一个密闭刚性容器中的气体，初始为 $20^\circ\mathrm{C}$、$1.00\times10^{5}\,\mathrm{Pa}$，被加热到 $100^\circ\mathrm{C}$。求末态压强，并论证（<code>justify</code>）为什么结果不是起始压强的五倍。</span></summary>
@@ -1405,10 +1505,29 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">Thermal Contact, Heating and Cooling</span><span data-lang="zh">热接触、加热与冷却</span></h3>
-  <p data-lang="en">Two systems are in <strong>thermal contact</strong> if they may transfer energy by thermal processes. A cup of coffee and the air around it are in thermal contact, and so are two gases separated by a thin metal wall, or a thermometer and the liquid it is dipped into. A system sealed inside a perfectly insulating shell would not be in thermal contact with anything outside it.</p>
-  <p data-lang="zh">如果两个系统可以通过热过程传递能量，它们就处于<strong>热接触</strong>（<code>thermal contact</code>）。一杯咖啡和周围的空气处于热接触，被一层薄金属壁隔开的两种气体也是，温度计和它所插入的液体同样如此。封在理想绝热外壳里的系统与外界不处于热接触。</p>
-  <p data-lang="en"><strong>Heating</strong> is the transfer of energy into a system by thermal processes, and <strong>cooling</strong> is the transfer of energy out of a system by thermal processes. These words name a process of energy transfer, not a stored quantity. A body does not contain "heat" in the way it contains mass. What a body does contain is internal energy, the sum of the kinetic and potential energies of its particles, and heating is one way of changing it. Three quantities are easy to confuse: <strong>temperature</strong> is a property of the state of a system and characterises the average kinetic energy of its atoms; <strong>heating</strong> is energy in transit by thermal processes between systems at different temperatures; and <strong>internal energy</strong> is the total energy of the particles in the system. The symbol $Q$ will stand for the energy transferred by heating, taken as positive when energy enters the system.</p>
-  <p data-lang="zh"><strong>加热</strong>（<code>heating</code>）是通过热过程把能量传入系统，<strong>冷却</strong>（<code>cooling</code>）是通过热过程把能量传出系统。这两个词指的是能量传递的过程，而不是某种储存的量。物体并不像含有质量那样"含有热"。物体含有的是内能，即其中粒子的动能与势能之和，加热只是改变内能的一种方式。三个量很容易混淆：<strong>温度</strong>是系统状态的性质，表征原子的平均动能；<strong>加热</strong>是温度不同的系统之间通过热过程传递中的能量；<strong>内能</strong>（<code>internal energy</code>）是系统中粒子的总能量。符号 $Q$ 表示通过加热传递的能量，能量流入系统时取为正。</p>
+  <p data-lang="en">Two systems are in <strong>thermal contact</strong> if they may transfer energy by thermal processes. A cup of coffee and the air around it are in thermal contact, and so are two gases separated by a thin metal wall, or a thermometer and the liquid it is dipped into.</p>
+  <p data-lang="zh">如果两个系统可以通过热过程传递能量，它们就处于<strong>热接触</strong>（<code>thermal contact</code>）。一杯咖啡和周围的空气处于热接触，被一层薄金属壁隔开的两种气体也是，温度计和它所插入的液体同样如此。</p>
+  <p data-lang="en">A system sealed inside a perfectly insulating shell would not be in thermal contact with anything outside it.</p>
+  <p data-lang="zh">封在理想绝热外壳里的系统与外界不处于热接触。</p>
+  <p data-lang="en"><strong>Heating</strong> is the transfer of energy into a system by thermal processes, and <strong>cooling</strong> is the transfer of energy out of a system by thermal processes.</p>
+  <p data-lang="zh"><strong>加热</strong>（<code>heating</code>）是通过热过程把能量传入系统，<strong>冷却</strong>（<code>cooling</code>）是通过热过程把能量传出系统。</p>
+  <p data-lang="en">These words name a process of energy transfer, not a stored quantity. A body does not contain "heat" in the way it contains mass. What a body does contain is internal energy, the sum of the kinetic and potential energies of its particles, and heating is one way of changing it.</p>
+  <p data-lang="zh">这两个词指的是能量传递的过程，而不是某种储存的量。物体并不像含有质量那样"含有热"。物体含有的是内能，即其中粒子的动能与势能之和，加热只是改变内能的一种方式。</p>
+  <p data-lang="en">Three quantities are easy to confuse: <strong>temperature</strong> is a property of the state of a system and characterises the average kinetic energy of its atoms; <strong>heating</strong> is energy in transit by thermal processes between systems at different temperatures; and <strong>internal energy</strong> is the total energy of the particles in the system.</p>
+  <p data-lang="zh">三个量很容易混淆：<strong>温度</strong>是系统状态的性质，表征原子的平均动能；<strong>加热</strong>是温度不同的系统之间通过热过程传递中的能量；<strong>内能</strong>（<code>internal energy</code>）是系统中粒子的总能量。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span data-lang="en">Quantity</span><span data-lang="zh">物理量</span></th><th><span data-lang="en">What it describes</span><span data-lang="zh">描述的内容</span></th><th><span data-lang="en">Depends on the amount?</span><span data-lang="zh">与物质的量有关吗？</span></th><th><span data-lang="en">Unit</span><span data-lang="zh">单位</span></th></tr></thead>
+      <tbody>
+        <tr><td><span data-lang="en">Temperature $T$</span><span data-lang="zh">温度 $T$</span></td><td><span data-lang="en">Average kinetic energy per atom; a property of the state</span><span data-lang="zh">每个原子的平均动能；状态的性质</span></td><td><span data-lang="en">No: a cup and a bathtub of water can share one temperature</span><span data-lang="zh">无关：一杯水和一浴缸水可以温度相同</span></td><td><span data-lang="en">K</span><span data-lang="zh">K</span></td></tr>
+        <tr><td><span data-lang="en">Internal energy $U$</span><span data-lang="zh">内能 $U$</span></td><td><span data-lang="en">Total kinetic and potential energy of all the particles; a property of the state</span><span data-lang="zh">所有粒子的动能与势能之和；状态的性质</span></td><td><span data-lang="en">Yes: twice the gas at the same $T$ has twice the $U$</span><span data-lang="zh">有关：同一 $T$ 下气体加倍，$U$ 也加倍</span></td><td><span data-lang="en">J</span><span data-lang="zh">J</span></td></tr>
+        <tr><td><span data-lang="en">Energy transferred by heating $Q$</span><span data-lang="zh">通过加热传递的能量 $Q$</span></td><td><span data-lang="en">Energy crossing the boundary because of a temperature difference; a process, not a stored amount</span><span data-lang="zh">因温差而穿过边界的能量；是过程，不是储存的量</span></td><td><span data-lang="en">Yes: twice the mass heated through the same ΔT needs twice the Q; Q also depends on the process, not only on the two states</span><span data-lang="zh">有关：同样的 ΔT 下质量加倍，Q 也加倍；Q 还取决于过程，而不只取决于始末状态</span></td><td><span data-lang="en">J</span><span data-lang="zh">J</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p data-lang="en">The symbol $Q$ will stand for the energy transferred by heating, taken as positive when energy enters the system.</p>
+  <p data-lang="zh">符号 $Q$ 表示通过加热传递的能量，能量流入系统时取为正。</p>
 
   <h3><span data-lang="en">Conduction, Convection and Radiation</span><span data-lang="zh">热传导、对流与辐射</span></h3>
   <p data-lang="en">There are three thermal processes by which energy is transferred between systems at different temperatures.</p>
@@ -1427,14 +1546,24 @@ figure.dr-fig figcaption {
   <p data-lang="zh">同一个情境常常同时包含三种过程：篝火通过辐射使你的手变暖，火上方的空气通过对流把能量带向上方，留在余烬中的木棍则沿着自身长度传导能量。给一个过程分类时，问一问能量是靠相邻原子相互碰撞（传导）、靠流体运动（对流）还是靠电磁波（辐射）传递的。</p>
 
   <h3><span data-lang="en">Why Energy Flows from Hot to Cold</span><span data-lang="zh">能量为什么从热处流向冷处</span></h3>
-  <p data-lang="en">Energy is transferred through thermal processes <strong>spontaneously</strong> from a higher-temperature system to a lower-temperature system: no outside agent is needed, and the reverse does not happen by itself. The reason comes from the atoms. When atoms from two different systems collide, the energy is most likely to be transferred from the higher-energy atom to the lower-energy atom. A fast atom hitting a slow one usually leaves with less kinetic energy and the slow one leaves with more. A single collision can go the other way, but over a very large number of collisions the net transfer is from the higher-energy atoms to the lower-energy atoms, which means from the system with the higher average kinetic energy to the one with the lower.</p>
-  <p data-lang="zh">通过热过程传递能量时，能量<strong>自发地</strong>（<code>spontaneously</code>）从高温系统流向低温系统：不需要任何外界推动，反过来的过程不会自己发生。原因在于原子。两个不同系统的原子相撞时，能量最可能从能量较高的原子传向能量较低的原子。快的原子撞上慢的原子，通常是快的原子带着较少的动能离开，慢的原子则带着较多的动能离开。单次碰撞也可能是相反的情形，但在极大数量的碰撞之后，净传递是从能量较高的原子到能量较低的原子，也就是从平均动能较大的系统到平均动能较小的系统。</p>
-  <p data-lang="en">After many collisions, the energy is shared out among the atoms of both systems in the arrangement that is most probable. That most probable state is the one in which the two systems have the same temperature. It is not that energy is forbidden to flow the other way, but that the arrangements with equal average energy per atom are overwhelmingly more numerous than the arrangements in which one system holds a lopsided share. Worked Example 2 below counts the arrangements in a small model.</p>
-  <p data-lang="zh">经过许多次碰撞后，能量以最可能（<code>probable</code>）的方式在两个系统的原子之间分配。这个最可能的状态就是两个系统温度相同的状态。并不是不允许能量反向流动，而是每个原子平均能量相等的分配方式，在数量上压倒性地多于某一个系统占有不均衡份额的分配方式。下面的例题 2 在一个小模型中数出了这些分配方式。</p>
+  <p data-lang="en">Energy is transferred through thermal processes <strong>spontaneously</strong> from a higher-temperature system to a lower-temperature system: no outside agent is needed, and the reverse does not happen by itself. The reason comes from the atoms.</p>
+  <p data-lang="zh">通过热过程传递能量时，能量<strong>自发地</strong>（<code>spontaneously</code>）从高温系统流向低温系统：不需要任何外界推动，反过来的过程不会自己发生。原因在于原子。</p>
+  <p data-lang="en">When atoms from two different systems collide, the energy is most likely to be transferred from the higher-energy atom to the lower-energy atom. A fast atom hitting a slow one usually leaves with less kinetic energy and the slow one leaves with more.</p>
+  <p data-lang="zh">两个不同系统的原子相撞时，能量最可能从能量较高的原子传向能量较低的原子。快的原子撞上慢的原子，通常是快的原子带着较少的动能离开，慢的原子则带着较多的动能离开。</p>
+  <p data-lang="en">A single collision can go the other way, but over a very large number of collisions the net transfer is from the higher-energy atoms to the lower-energy atoms, which means from the system with the higher average kinetic energy to the one with the lower.</p>
+  <p data-lang="zh">单次碰撞也可能是相反的情形，但在极大数量的碰撞之后，净传递是从能量较高的原子到能量较低的原子，也就是从平均动能较大的系统到平均动能较小的系统。</p>
+  <p data-lang="en">After many collisions, the energy is shared out among the atoms of both systems in the arrangement that is most probable. That most probable state is the one in which the two systems have the same temperature.</p>
+  <p data-lang="zh">经过许多次碰撞后，能量以最可能（<code>probable</code>）的方式在两个系统的原子之间分配。这个最可能的状态就是两个系统温度相同的状态。</p>
+  <p data-lang="en">It is not that energy is forbidden to flow the other way, but that the arrangements with equal average energy per atom are overwhelmingly more numerous than the arrangements in which one system holds a lopsided share. Worked Example 2 below counts the arrangements in a small model.</p>
+  <p data-lang="zh">并不是不允许能量反向流动，而是每个原子平均能量相等的分配方式，在数量上压倒性地多于某一个系统占有不均衡份额的分配方式。下面的例题 2 在一个小模型中数出了这些分配方式。</p>
 
   <h3><span data-lang="en">Thermal Equilibrium</span><span data-lang="zh">热平衡</span></h3>
-  <p data-lang="en"><strong>Thermal equilibrium</strong> results when no net energy is transferred by thermal processes between two systems in thermal contact with each other. Atoms still collide and trade energy in both directions, but the flows balance, so the average kinetic energy of each system stays constant. Two systems in thermal equilibrium are at the same temperature. This is why a thermometer works: it is left in thermal contact with an object until the two reach the same temperature, and then the reading of the thermometer is the temperature of the object. Figure 9.3 shows the approach to equilibrium of two identical blocks, one initially hot and one cold. The temperature of the hot block falls and that of the cold block rises, quickly at first while the difference is large, and then more slowly, until the curves meet.</p>
-  <p data-lang="zh"><strong>热平衡</strong>（<code>thermal equilibrium</code>）是指两个相互热接触的系统之间没有净能量通过热过程传递。原子仍然相互碰撞并双向交换能量，但两个方向的流动相互抵消，所以每个系统的平均动能保持不变。处于热平衡的两个系统温度相同。这就是温度计的工作原理：把它与物体保持热接触，直到两者温度相同，此时温度计的读数就是物体的温度。图 9.3 显示了两块相同的物块趋向平衡的过程，一块起初较热，一块起初较冷。热块的温度下降，冷块的温度上升，温差大时变化较快，随后变慢，直到两条曲线相遇。</p>
+  <p data-lang="en"><strong>Thermal equilibrium</strong> results when no net energy is transferred by thermal processes between two systems in thermal contact with each other. Atoms still collide and trade energy in both directions, but the flows balance, so the average kinetic energy of each system stays constant.</p>
+  <p data-lang="zh"><strong>热平衡</strong>（<code>thermal equilibrium</code>）是指两个相互热接触的系统之间没有净能量通过热过程传递。原子仍然相互碰撞并双向交换能量，但两个方向的流动相互抵消，所以每个系统的平均动能保持不变。</p>
+  <p data-lang="en">Two systems in thermal equilibrium are at the same temperature. This is why a thermometer works: it is left in thermal contact with an object until the two reach the same temperature, and then the reading of the thermometer is the temperature of the object.</p>
+  <p data-lang="zh">处于热平衡的两个系统温度相同。这就是温度计的工作原理：把它与物体保持热接触，直到两者温度相同，此时温度计的读数就是物体的温度。</p>
+  <p data-lang="en">Figure 9.3 shows the approach to equilibrium of two identical blocks, one initially hot and one cold. The temperature of the hot block falls and that of the cold block rises, quickly at first while the difference is large, and then more slowly, until the curves meet.</p>
+  <p data-lang="zh">图 9.3 显示了两块相同的物块趋向平衡的过程，一块起初较热，一块起初较冷。热块的温度下降，冷块的温度上升，温差大时变化较快，随后变慢，直到两条曲线相遇。</p>
 
   <figure class="sg-fig" role="group">
     <svg viewBox="0 0 460 290" role="img" aria-label="Graph of temperature against time for two identical blocks placed in thermal contact. The hot block starts at 400 kelvin and falls, the cold block starts at 300 kelvin and rises. Both curves change steeply at first and then flatten, and both approach the same final temperature of 350 kelvin, shown by a dashed horizontal line.">
@@ -1490,8 +1619,10 @@ figure.dr-fig figcaption {
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: Counting Arrangements to Find the Most Probable State</span><span data-lang="zh">例题：数出分配方式以求最可能的状态</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A simple model has system A with 2 atoms and system B with 2 atoms in thermal contact, sharing 4 identical units of energy. Each atom can hold any number of units. For a given number $q_A$ of units in A, the number of arrangements is $(q_A + 1)(q_B + 1)$, where $q_B = 4 - q_A$. Find which split of energy is most probable and the probability that all the energy is in A.</p>
-      <p class="worked-problem" data-lang="zh">一个简单模型中，系统 A 有 2 个原子，系统 B 有 2 个原子，两者热接触，共享 4 个相同的能量单位。每个原子可以持有任意数量的单位。A 中有 $q_A$ 个单位时，分配方式的数目为 $(q_A + 1)(q_B + 1)$，其中 $q_B = 4 - q_A$。求哪种能量分配最可能，以及全部能量都在 A 中的概率。</p>
+      <p class="worked-problem" data-lang="en">A simple model has system A with 2 atoms and system B with 2 atoms in thermal contact, sharing 4 identical units of energy. Each atom can hold any number of units.</p>
+      <p class="worked-problem" data-lang="zh">一个简单模型中，系统 A 有 2 个原子，系统 B 有 2 个原子，两者热接触，共享 4 个相同的能量单位。每个原子可以持有任意数量的单位。</p>
+      <p class="worked-problem" data-lang="en">For a given number $q_A$ of units in A, the number of arrangements is $(q_A + 1)(q_B + 1)$, where $q_B = 4 - q_A$. Find which split of energy is most probable and the probability that all the energy is in A.</p>
+      <p class="worked-problem" data-lang="zh">A 中有 $q_A$ 个单位时，分配方式的数目为 $(q_A + 1)(q_B + 1)$，其中 $q_B = 4 - q_A$。求哪种能量分配最可能，以及全部能量都在 A 中的概率。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Count each split</span><span data-lang="zh">第 1 步：数出每种分配的方式</span></div>
@@ -1532,8 +1663,10 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">When a question asks which way energy goes, answer with temperatures, not with the amount of energy: energy flows spontaneously from the higher-temperature system to the lower-temperature system until they are at the same temperature. Always name the process (conduction, convection or radiation) and say what carries the energy. In a justification, link the macroscopic statement to the atoms: collisions most likely pass energy from higher-energy atoms to lower-energy atoms, so the most probable final state is one temperature for both systems.</p>
-    <p data-lang="zh">题目问能量朝哪个方向传递时，要用温度而不是能量的多少来回答：能量自发地从高温系统流向低温系统，直到两者温度相同。一定要说出过程的名称（传导、对流或辐射），并说明是什么携带了能量。作论证时，要把宏观陈述与原子联系起来：碰撞最可能把能量从能量较高的原子传给能量较低的原子，所以最可能的末态是两个系统温度相同。</p>
+    <p data-lang="en">When a question asks which way energy goes, answer with temperatures, not with the amount of energy: energy flows spontaneously from the higher-temperature system to the lower-temperature system until they are at the same temperature.</p>
+    <p data-lang="zh">题目问能量朝哪个方向传递时，要用温度而不是能量的多少来回答：能量自发地从高温系统流向低温系统，直到两者温度相同。</p>
+    <p data-lang="en">Always name the process (conduction, convection or radiation) and say what carries the energy. In a justification, link the macroscopic statement to the atoms: collisions most likely pass energy from higher-energy atoms to lower-energy atoms, so the most probable final state is one temperature for both systems.</p>
+    <p data-lang="zh">一定要说出过程的名称（传导、对流或辐射），并说明是什么携带了能量。作论证时，要把宏观陈述与原子联系起来：碰撞最可能把能量从能量较高的原子传给能量较低的原子，所以最可能的末态是两个系统温度相同。</p>
   </div>
 
   <div class="sg-check">
@@ -1548,7 +1681,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Explain, using collisions between atoms, why energy flows from a hot object to a cold object placed in contact with it.</span><span data-lang="zh">利用原子间的碰撞，解释（<code>explain</code>）为什么能量会从与冷物体接触的热物体流向冷物体。</span></summary>
-      <div class="sg-a"><p data-lang="en">The atoms of the hot object have a higher average kinetic energy. When atoms from the two objects collide, the energy is most likely to be transferred from the higher-energy atom to the lower-energy atom. Over a very large number of collisions the net transfer is from the hot object to the cold one, until the average kinetic energies, and so the temperatures, are equal.</p><p data-lang="zh">热物体的原子平均动能较高。两个物体的原子相撞时，能量最可能从能量较高的原子传给能量较低的原子。经过极大数量的碰撞，净传递是从热物体到冷物体，直到平均动能（也就是温度）相等。</p></div>
+      <div class="sg-a"><p data-lang="en">The atoms of the hot object have a higher average kinetic energy. When atoms from the two objects collide, the energy is most likely to be transferred from the higher-energy atom to the lower-energy atom.</p><p data-lang="zh">热物体的原子平均动能较高。两个物体的原子相撞时，能量最可能从能量较高的原子传给能量较低的原子。</p><p data-lang="en">Over a very large number of collisions the net transfer is from the hot object to the cold one, until the average kinetic energies, and so the temperatures, are equal.</p><p data-lang="zh">经过极大数量的碰撞，净传递是从热物体到冷物体，直到平均动能（也就是温度）相等。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Equal numbers of atoms of two ideal monatomic gases at $500\,\mathrm{K}$ and $300\,\mathrm{K}$ are put in thermal contact inside an isolated container. Find the final temperature and the final average kinetic energy per atom.</span><span data-lang="zh">把原子数相同的两种理想单原子气体（温度分别为 $500\,\mathrm{K}$ 和 $300\,\mathrm{K}$）放入一个孤立容器中使其热接触。求最终温度和最终每个原子的平均动能。</span></summary>
@@ -1556,7 +1689,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">In the counting model of Worked Example 2, find the probability that system A has exactly one unit of energy, and justify why the equal split is the most probable state.</span><span data-lang="zh">在例题 2 的计数模型中，求系统 A 恰好有一个能量单位的概率，并论证（<code>justify</code>）为什么平均分配是最可能的状态。</span></summary>
-      <div class="sg-a"><p data-lang="en">For $q_A = 1$ the number of arrangements is $(2)(4) = 8$, so $P = 8/35 = 23\%$. The equal split $q_A = 2$ has $(3)(3) = 9$ arrangements, the largest count of all the splits, so it has the highest probability. In real systems the count for equal sharing is overwhelmingly larger than for any lopsided split, which is why systems in thermal contact most probably end up at the same temperature.</p><p data-lang="zh">$q_A = 1$ 时，分配方式的数目为 $(2)(4) = 8$，所以 $P = 8/35 = 23\%$。平均分配 $q_A = 2$ 有 $(3)(3) = 9$ 种方式，在所有分配中最多，所以概率最大。在真实系统中，平均分配的方式数目比任何不均衡分配都大得多，这就是热接触的系统最可能最终温度相同的原因。</p></div>
+      <div class="sg-a"><p data-lang="en">For $q_A = 1$ the number of arrangements is $(2)(4) = 8$, so $P = 8/35 = 23\%$. The equal split $q_A = 2$ has $(3)(3) = 9$ arrangements, the largest count of all the splits, so it has the highest probability.</p><p data-lang="zh">$q_A = 1$ 时，分配方式的数目为 $(2)(4) = 8$，所以 $P = 8/35 = 23\%$。平均分配 $q_A = 2$ 有 $(3)(3) = 9$ 种方式，在所有分配中最多，所以概率最大。</p><p data-lang="en">In real systems the count for equal sharing is overwhelmingly larger than for any lopsided split, which is why systems in thermal contact most probably end up at the same temperature.</p><p data-lang="zh">在真实系统中，平均分配的方式数目比任何不均衡分配都大得多，这就是热接触的系统最可能最终温度相同的原因。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A thermometer is placed in a cup of tea and settles at $60^\circ\mathrm{C}$. What does this say about the tea, and why can the reading not be taken the instant the thermometer goes in?</span><span data-lang="zh">把温度计放进一杯茶里，它稳定在 $60^\circ\mathrm{C}$。这说明了茶的什么情况？为什么读数前必须等待？</span></summary>
@@ -1593,42 +1726,92 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">Internal Energy</span><span data-lang="zh">内能</span></h3>
-  <p data-lang="en">The <strong>internal energy</strong> of a system is the sum of the kinetic energy of the objects that make up the system and the potential energy of the configuration of those objects. For a gas the objects are its atoms or molecules, and the kinetic energy is their motion relative to the container. The potential energy comes from the forces between the particles.</p>
-  <p data-lang="zh">系统的<strong>内能</strong>是组成该系统的物体的动能与这些物体所处构型的势能之和。对气体来说，这些物体就是原子或分子，动能是它们相对于容器的运动能量，势能来自粒子之间的相互作用力。</p>
-  <p data-lang="en">The atoms in an ideal gas do not interact with each other through conservative forces, and the internal structure of the atoms is not considered. Therefore an ideal gas has no internal potential energy, and the internal energy of an ideal monatomic gas is just the sum of the kinetic energies of its atoms. Using $K_\text{avg} = \frac{3}{2}k_B T$ from Topic 9.1 and multiplying by the number of atoms $N$ gives the result below. Since $N = nN_A$ and $R = N_A k_B$, the two forms are equal.</p>
-  <p data-lang="zh">理想气体中的原子之间没有通过保守力（<code>conservative forces</code>）的相互作用，原子的内部结构也不考虑。因此，理想气体没有内部势能，理想单原子气体的内能就是各原子动能之和。把专题 9.1 中的 $K_\text{avg} = \frac{3}{2}k_B T$ 乘以原子数 $N$，得到下面的结果。由于 $N = nN_A$，$R = N_A k_B$，两种形式相等。</p>
+  <p data-lang="en">The <strong>internal energy</strong> of a system is the sum of the kinetic energy of the objects that make up the system and the potential energy of the configuration of those objects.</p>
+  <p data-lang="zh">系统的<strong>内能</strong>是组成该系统的物体的动能与这些物体所处构型的势能之和。</p>
+  <p data-lang="en">For a gas the objects are its atoms or molecules, and the kinetic energy is their motion relative to the container. The potential energy comes from the forces between the particles.</p>
+  <p data-lang="zh">对气体来说，这些物体就是原子或分子，动能是它们相对于容器的运动能量，势能来自粒子之间的相互作用力。</p>
+  <p data-lang="en">The atoms in an ideal gas do not interact with each other through conservative forces, and the internal structure of the atoms is not considered.</p>
+  <p data-lang="zh">理想气体中的原子之间没有通过保守力（<code>conservative forces</code>）的相互作用，原子的内部结构也不考虑。</p>
+  <p data-lang="en">Therefore an ideal gas has no internal potential energy, and the internal energy of an ideal monatomic gas is just the sum of the kinetic energies of its atoms. Using $K_\text{avg} = \frac{3}{2}k_B T$ from Topic 9.1 and multiplying by the number of atoms $N$ gives the result below. Since $N = nN_A$ and $R = N_A k_B$, the two forms are equal.</p>
+  <p data-lang="zh">因此，理想气体没有内部势能，理想单原子气体的内能就是各原子动能之和。把专题 9.1 中的 $K_\text{avg} = \frac{3}{2}k_B T$ 乘以原子数 $N$，得到下面的结果。由于 $N = nN_A$，$R = N_A k_B$，两种形式相等。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Internal energy of an ideal monatomic gas</span><span data-lang="zh">理想单原子气体的内能</span></div>
     $$U = \frac{3}{2}nRT = \frac{3}{2}Nk_B T$$
   </div>
-  <p data-lang="en">Here $U$ is the internal energy in J, $n$ is the number of moles, $R = 8.31\,\mathrm{J/(mol\,K)}$, $N$ is the number of atoms, $k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ and $T$ is the kelvin temperature. Because $nRT = PV$, the same result can be written $U = \frac{3}{2}PV$, which is often the quickest form when a PV diagram supplies $P$ and $V$. The result shows that for an ideal monatomic gas the internal energy depends on the temperature alone: it is unchanged in any process in which $T$ is constant, and it rises or falls in step with $T$.</p>
-  <p data-lang="zh">其中 $U$ 为内能，单位 J；$n$ 为物质的量；$R = 8.31\,\mathrm{J/(mol\,K)}$；$N$ 为原子数；$k_B = 1.38\times10^{-23}\,\mathrm{J/K}$；$T$ 为开尔文温度。因为 $nRT = PV$，同一个结果也可以写成 $U = \frac{3}{2}PV$，当 PV 图提供 $P$ 和 $V$ 时，这往往是最快的形式。这个结果表明，理想单原子气体的内能只取决于温度：凡是 $T$ 不变的过程中内能不变，内能随 $T$ 同步升降。</p>
-  <p data-lang="en">Changes to a system's internal energy can result in changes to the internal structure and internal behavior of that system without changing the motion of the system's center of mass. A sealed box of gas sitting on a table has a stationary center of mass, yet when it is heated the atoms move faster and its internal energy rises. When a car brakes to a stop, the kinetic energy of the car's motion becomes internal energy of the brakes, the tires and the road, which warm up. Keep these two kinds of energy apart: the energy of bulk motion of the whole object is not part of the internal energy.</p>
-  <p data-lang="zh">系统内能的变化可以引起系统内部结构和内部行为的变化，而不改变系统质心（<code>center of mass</code>）的运动。放在桌上的密封气体盒子，质心静止，但加热时原子运动更快，内能升高。汽车刹车停下时，汽车运动的动能变成了刹车片、轮胎和路面的内能，它们因此变热。要把这两种能量分开：整个物体整体运动的能量不属于内能。</p>
+  <p data-lang="en">Here $U$ is the internal energy in J, $n$ is the number of moles, $R = 8.31\,\mathrm{J/(mol\,K)}$, $N$ is the number of atoms, $k_B = 1.38\times10^{-23}\,\mathrm{J/K}$ and $T$ is the kelvin temperature. Because $nRT = PV$, the same result can be written $U = \frac{3}{2}PV$, which is often the quickest form when a PV diagram supplies $P$ and $V$.</p>
+  <p data-lang="zh">其中 $U$ 为内能，单位 J；$n$ 为物质的量；$R = 8.31\,\mathrm{J/(mol\,K)}$；$N$ 为原子数；$k_B = 1.38\times10^{-23}\,\mathrm{J/K}$；$T$ 为开尔文温度。因为 $nRT = PV$，同一个结果也可以写成 $U = \frac{3}{2}PV$，当 PV 图提供 $P$ 和 $V$ 时，这往往是最快的形式。</p>
+  <p data-lang="en">The result shows that for an ideal monatomic gas the internal energy depends on the temperature alone: it is unchanged in any process in which $T$ is constant, and it rises or falls in step with $T$.</p>
+  <p data-lang="zh">这个结果表明，理想单原子气体的内能只取决于温度：凡是 $T$ 不变的过程中内能不变，内能随 $T$ 同步升降。</p>
+  <h3><span data-lang="en">Internal Energy versus Motion of the Whole System</span><span data-lang="zh">内能与整个系统的运动</span></h3>
+  <p data-lang="en">Changes to a system's internal energy can result in changes to the internal structure and internal behavior of that system without changing the motion of the system's center of mass.</p>
+  <p data-lang="zh">系统内能的变化可以引起系统内部结构和内部行为的变化，而不改变系统质心（<code>center of mass</code>）的运动。</p>
+  <p data-lang="en">A sealed box of gas sitting on a table has a stationary center of mass, yet when it is heated the atoms move faster and its internal energy rises.</p>
+  <p data-lang="zh">放在桌上的密封气体盒子，质心静止，但加热时原子运动更快，内能升高。</p>
+  <p data-lang="en">When a car brakes to a stop, the kinetic energy of the car's motion becomes internal energy of the brakes, the tires and the road, which warm up. Keep these two kinds of energy apart: the energy of bulk motion of the whole object is not part of the internal energy.</p>
+  <p data-lang="zh">汽车刹车停下时，汽车运动的动能变成了刹车片、轮胎和路面的内能，它们因此变热。要把这两种能量分开：整个物体整体运动的能量不属于内能。</p>
+
+  <h3><span data-lang="en">First Principles: Internal Energy from Kinetic Theory</span><span data-lang="zh">第一性原理：由分子动理论得到内能</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the internal energy of a monatomic ideal gas</span><span data-lang="zh">第一性原理：理想单原子气体的内能</span></div>
+    <p data-lang="en">Internal energy is the sum of the particles' kinetic and potential energies, and kinetic theory (Topic 9.1) gives each atom an average kinetic energy $\frac{3}{2}k_B T$.</p>
+    <p data-lang="zh">内能是粒子动能与势能之和，而分子动理论（专题 9.1）给出每个原子的平均动能为 $\frac{3}{2}k_B T$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Ideal-gas atoms exert no conservative forces on each other, so the potential-energy term is zero and $U = NK_\text{avg}$.</li>
+      <li>Substitute $K_\text{avg} = \frac{3}{2}k_B T$: $U = \frac{3}{2}Nk_B T$.</li>
+      <li>Use $Nk_B = nR$ and $nRT = PV$ from the ideal gas law: $U = \frac{3}{2}nRT = \frac{3}{2}PV$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>理想气体的原子之间没有保守力作用，势能项为零，所以 $U = NK_\text{avg}$。</li>
+      <li>代入 $K_\text{avg} = \frac{3}{2}k_B T$：$U = \frac{3}{2}Nk_B T$。</li>
+      <li>利用理想气体定律中的 $Nk_B = nR$ 和 $nRT = PV$：$U = \frac{3}{2}nRT = \frac{3}{2}PV$。</li>
+    </ol>
+    <p data-lang="en">Limiting check: $U \to 0$ as $T \to 0$, and doubling the amount at fixed $T$ doubles $U$. Units: $\mathrm{Pa\,m^3} = \mathrm{N\,m} = \mathrm{J}$. Example: $1.00\,\mathrm{mol}$ at $300\,\mathrm{K}$ has $U = \frac{3}{2}(1.00)(8.31)(300) = 3.74\times10^{3}\,\mathrm{J}$.</p>
+    <p data-lang="zh">极限检验：$T \to 0$ 时 $U \to 0$；$T$ 不变时物质的量加倍，$U$ 也加倍。单位：$\mathrm{Pa\,m^3} = \mathrm{N\,m} = \mathrm{J}$。例：$300\,\mathrm{K}$ 下 $1.00\,\mathrm{mol}$ 气体的 $U = \frac{3}{2}(1.00)(8.31)(300) = 3.74\times10^{3}\,\mathrm{J}$。</p>
+  </div>
 
   <h3><span data-lang="en">The First Law of Thermodynamics</span><span data-lang="zh">热力学第一定律</span></h3>
-  <p data-lang="en">The <strong>first law of thermodynamics</strong> is a restatement of conservation of energy that accounts for energy transferred into or out of a system by work, heating or cooling. For an isolated system, which exchanges nothing with its surroundings, the total energy is constant. For a closed system, the change in internal energy is the sum of the energy transferred to or from the system by heating, and the work done on the system.</p>
-  <p data-lang="zh"><strong>热力学第一定律</strong>（<code>first law of thermodynamics</code>）是能量守恒的另一种表述，它考虑了通过做功、加热或冷却传入或传出系统的能量。孤立系统（<code>isolated system</code>）与周围环境没有任何交换，其总能量保持不变。对封闭系统，内能的变化等于通过加热传入（或传出）系统的能量与外界对系统所做的功之和。</p>
+  <p data-lang="en">The <strong>first law of thermodynamics</strong> is a restatement of conservation of energy that accounts for energy transferred into or out of a system by work, heating or cooling. For an isolated system, which exchanges nothing with its surroundings, the total energy is constant.</p>
+  <p data-lang="zh"><strong>热力学第一定律</strong>（<code>first law of thermodynamics</code>）是能量守恒的另一种表述，它考虑了通过做功、加热或冷却传入或传出系统的能量。孤立系统（<code>isolated system</code>）与周围环境没有任何交换，其总能量保持不变。</p>
+  <p data-lang="en">For a closed system, the change in internal energy is the sum of the energy transferred to or from the system by heating, and the work done on the system.</p>
+  <p data-lang="zh">对封闭系统，内能的变化等于通过加热传入（或传出）系统的能量与外界对系统所做的功之和。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">First law of thermodynamics</span><span data-lang="zh">热力学第一定律</span></div>
     $$\Delta U = Q + W$$
   </div>
-  <p data-lang="en">$\Delta U$ is the change in the internal energy of the system, $Q$ is the energy transferred to the system by heating, and $W$ is the work done on the system, all in joules. The sign convention used throughout this guide is the one in the equation: $Q$ is positive when energy enters the system by heating, and $Q$ is negative when it leaves by cooling; $W$ is positive when the surroundings do work on the system (for example, a piston compresses the gas), and $W$ is negative when the system does work on its surroundings (for example, the gas expands and pushes the piston outward). A positive $\Delta U$ means the system gained internal energy, which for an ideal gas means its temperature rose.</p>
-  <p data-lang="zh">$\Delta U$ 为系统内能的变化，$Q$ 为通过加热传给系统的能量，$W$ 为外界对系统所做的功，单位均为焦耳。本指南始终使用方程中的符号约定：能量通过加热进入系统时 $Q$ 为正，通过冷却离开系统时 $Q$ 为负；外界对系统做功时 $W$ 为正（例如活塞压缩气体），系统对外界做功时 $W$ 为负（例如气体膨胀推动活塞向外运动）。$\Delta U$ 为正表示系统内能增加，对理想气体来说就是温度升高。</p>
+  <p data-lang="en">$\Delta U$ is the change in the internal energy of the system, $Q$ is the energy transferred to the system by heating, and $W$ is the work done on the system, all in joules.</p>
+  <p data-lang="zh">$\Delta U$ 为系统内能的变化，$Q$ 为通过加热传给系统的能量，$W$ 为外界对系统所做的功，单位均为焦耳。</p>
+  <p data-lang="en">The sign convention used throughout this guide is the one in the equation. $Q$ is positive when energy enters the system by heating, and $Q$ is negative when it leaves by cooling.</p>
+  <p data-lang="zh">本指南始终使用方程中的符号约定。能量通过加热进入系统时 $Q$ 为正，通过冷却离开系统时 $Q$ 为负。</p>
+  <p data-lang="en">$W$ is positive when the surroundings do work on the system (for example, a piston compresses the gas), and $W$ is negative when the system does work on its surroundings (for example, the gas expands and pushes the piston outward).</p>
+  <p data-lang="zh">外界对系统做功时 $W$ 为正（例如活塞压缩气体），系统对外界做功时 $W$ 为负（例如气体膨胀推动活塞向外运动）。</p>
+  <p data-lang="en">A positive $\Delta U$ means the system gained internal energy, which for an ideal gas means its temperature rose.</p>
+  <p data-lang="zh">$\Delta U$ 为正表示系统内能增加，对理想气体来说就是温度升高。</p>
   <p data-lang="en">For an isolated system $Q = 0$ and $W = 0$, so $\Delta U = 0$: the energy may be redistributed inside the system but the total stays fixed.</p>
   <p data-lang="zh">对孤立系统，$Q = 0$，$W = 0$，所以 $\Delta U = 0$：能量可以在系统内部重新分配，但总量保持不变。</p>
 
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Joule's paddle wheel</span><span data-lang="zh">历史：焦耳的桨轮实验</span></div>
+    <p data-lang="en">In the 1840s James Prescott Joule let falling weights turn a paddle wheel inside an insulated tank of water. The work done by the weights warmed the water slightly, and the same amount of work always gave the same temperature rise.</p>
+    <p data-lang="zh">19 世纪 40 年代，詹姆斯·普雷斯科特·焦耳让下落的重物带动隔热水箱中的桨轮转动。重物做的功使水略微升温，而且同样多的功总是产生同样的温升。</p>
+    <p data-lang="en">This showed that work and heating are two ways of transferring the same energy, the idea behind $\Delta U = Q + W$. Read more: <a href="https://en.wikipedia.org/wiki/Mechanical_equivalent_of_heat" target="_blank" rel="noopener">Mechanical equivalent of heat (Wikipedia: Joule's apparatus and measurements)</a>.</p>
+    <p data-lang="zh">这表明做功和加热是传递同一种能量的两种方式，这正是 $\Delta U = Q + W$ 背后的思想。延伸阅读：<a href="https://en.wikipedia.org/wiki/Mechanical_equivalent_of_heat" target="_blank" rel="noopener">热功当量（维基百科英文条目：焦耳的装置与测量）</a>。</p>
+  </div>
+
   <h3><span data-lang="en">Work Done on a Gas</span><span data-lang="zh">外界对气体做的功</span></h3>
-  <p data-lang="en">A gas does not simply sit in its container: when it expands it pushes a boundary outward, and when a piston compresses it the piston pushes inward. The work done on a system by a constant or average external pressure that changes the volume of the system, for example a piston compressing a gas in a container, is defined as follows.</p>
-  <p data-lang="zh">气体并不只是待在容器里：它膨胀时会把边界向外推，活塞压缩它时则是活塞向内推。恒定的或平均的外界压强使系统体积发生变化时（例如活塞压缩容器中的气体），外界对系统所做的功定义如下。</p>
+  <p data-lang="en">A gas does not simply sit in its container: when it expands it pushes a boundary outward, and when a piston compresses it the piston pushes inward.</p>
+  <p data-lang="zh">气体并不只是待在容器里：它膨胀时会把边界向外推，活塞压缩它时则是活塞向内推。</p>
+  <p data-lang="en">The work done on a system by a constant or average external pressure that changes the volume of the system, for example a piston compressing a gas in a container, is defined as follows.</p>
+  <p data-lang="zh">恒定的或平均的外界压强使系统体积发生变化时（例如活塞压缩容器中的气体），外界对系统所做的功定义如下。</p>
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Work done on a gas at constant pressure</span><span data-lang="zh">恒压下外界对气体做的功</span></div>
     $$W = -P\Delta V$$
   </div>
-  <p data-lang="en">$P$ is the external pressure in Pa and $\Delta V = V_f - V_i$ is the change in the volume of the gas in m³. If the gas is compressed, $\Delta V \lt 0$, so $W \gt 0$: the surroundings put energy into the gas. If the gas expands, $\Delta V \gt 0$, so $W \lt 0$: the gas gives up energy by pushing on its surroundings. If the volume is constant, $\Delta V = 0$ and $W = 0$, since a boundary that does not move does no work. Pressure times volume has units of $\mathrm{N/m^2 \times m^3 = N\,m = J}$.</p>
-  <p data-lang="zh">$P$ 为外界压强，单位 Pa；$\Delta V = V_f - V_i$ 为气体体积的变化，单位 m³。气体被压缩时 $\Delta V \lt 0$，所以 $W \gt 0$：外界向气体输入能量。气体膨胀时 $\Delta V \gt 0$，所以 $W \lt 0$：气体推动周围环境而失去能量。体积不变时 $\Delta V = 0$，$W = 0$，因为不移动的边界不做功。压强乘体积的单位是 $\mathrm{N/m^2 \times m^3 = N\,m = J}$。</p>
+  <p data-lang="en">$P$ is the external pressure in Pa and $\Delta V = V_f - V_i$ is the change in the volume of the gas in m³. If the gas is compressed, $\Delta V \lt 0$, so $W \gt 0$: the surroundings put energy into the gas.</p>
+  <p data-lang="zh">$P$ 为外界压强，单位 Pa；$\Delta V = V_f - V_i$ 为气体体积的变化，单位 m³。气体被压缩时 $\Delta V \lt 0$，所以 $W \gt 0$：外界向气体输入能量。</p>
+  <p data-lang="en">If the gas expands, $\Delta V \gt 0$, so $W \lt 0$: the gas gives up energy by pushing on its surroundings. If the volume is constant, $\Delta V = 0$ and $W = 0$, since a boundary that does not move does no work. Pressure times volume has units of $\mathrm{N/m^2 \times m^3 = N\,m = J}$.</p>
+  <p data-lang="zh">气体膨胀时 $\Delta V \gt 0$，所以 $W \lt 0$：气体推动周围环境而失去能量。体积不变时 $\Delta V = 0$，$W = 0$，因为不移动的边界不做功。压强乘体积的单位是 $\mathrm{N/m^2 \times m^3 = N\,m = J}$。</p>
 
   <div class="concept-box red" data-lang="en">
     <strong>Common Mistake: Mixing sign conventions for work</strong>
@@ -1639,11 +1822,38 @@ figure.dr-fig figcaption {
     有些教材把第一定律写成 $\Delta U = Q - W$，其中 $W$ 是气体对外做的功。本指南以及方程 $W = -P\Delta V$ 使用的是外界对气体做的功。选定一种约定后，每一步都要用同一种：用 $\Delta U = Q + W$ 时，膨胀的气体 $W$ 为负，被压缩的气体 $W$ 为正。写出最后答案之前，要用物理图像检查它的符号。
   </div>
 
+  <h3><span data-lang="en">First Principles: Work from Force and Displacement</span><span data-lang="zh">第一性原理：由力和位移得到功</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the work done on a gas</span><span data-lang="zh">第一性原理：外界对气体做的功</span></div>
+    <p data-lang="en">Work is force times displacement along the force. The gas pushes on a piston of area $A$ with force $F = PA$.</p>
+    <p data-lang="zh">功等于力乘以沿力方向的位移。气体以 $F = PA$ 的力推面积为 $A$ 的活塞。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Let the gas expand at constant pressure and push the piston out a distance $d$. The volume grows by $\Delta V = Ad$.</li>
+      <li>The gas does work $PAd = P\Delta V$ on the piston.</li>
+      <li>By Newton's third law the piston pushes on the gas with an equal force opposite to the motion, so the work done on the gas is $W = -PAd = -P\Delta V$.</li>
+      <li>For a compression the piston moves inward, $\Delta V \lt 0$, and $W = -P\Delta V \gt 0$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>让气体在恒压下膨胀，把活塞向外推出距离 $d$。体积增加 $\Delta V = Ad$。</li>
+      <li>气体对活塞做功 $PAd = P\Delta V$。</li>
+      <li>根据牛顿第三定律，活塞以大小相等、方向与运动相反的力推气体，所以外界对气体做的功为 $W = -PAd = -P\Delta V$。</li>
+      <li>压缩时活塞向内运动，$\Delta V \lt 0$，于是 $W = -P\Delta V \gt 0$。</li>
+    </ol>
+    <p data-lang="en">Limiting check: a rigid container has $d = 0$, so $W = 0$, the isovolumetric case. Units: $(\mathrm{N/m^2})(\mathrm{m^3}) = \mathrm{N\,m} = \mathrm{J}$. On a PV diagram $P|\Delta V|$ is the rectangle under a horizontal path, which is the area rule below.</p>
+    <p data-lang="zh">极限检验：刚性容器中 $d = 0$，所以 $W = 0$，即等容情形。单位：$(\mathrm{N/m^2})(\mathrm{m^3}) = \mathrm{N\,m} = \mathrm{J}$。在 PV 图上，$P|\Delta V|$ 是水平路径下方的矩形面积，这就是下面的面积法则。</p>
+  </div>
+
   <h3><span data-lang="en">PV Diagrams and the Work Done</span><span data-lang="zh">PV 图与功</span></h3>
-  <p data-lang="en">A <strong>pressure-volume graph</strong>, also called a PV diagram, plots the pressure of a gas against its volume and represents a thermodynamic process as a path from one state to another. Lines of constant temperature on a PV diagram are called <strong>isotherms</strong>. For an ideal gas $PV = nRT$ is constant on an isotherm, so an isotherm is an inverse curve, and the higher the temperature, the farther the isotherm lies from the axes.</p>
-  <p data-lang="zh"><strong>压强-体积图</strong>（<code>pressure-volume graph</code>），也叫 PV 图，以气体的体积为横轴、压强为纵轴，把热力学过程表示为从一个状态到另一个状态的路径。PV 图上温度恒定的线叫做<strong>等温线</strong>（<code>isotherm</code>）。对理想气体，等温线上 $PV = nRT$ 为常量，所以等温线是反比曲线，温度越高，等温线离坐标轴越远。</p>
-  <p data-lang="en">The absolute value of the work done on a gas when it expands or compresses is equal to the <strong>area under the curve</strong> of a plot of pressure against volume for the gas. For a constant pressure that is a rectangle of height $P$ and width $\Delta V$, which is just $P|\Delta V|$. For a path that changes the pressure, find the area under the path by splitting it into rectangles and triangles or by counting squares. The direction decides the sign: moving to the right (expansion) means the gas does work on its surroundings, so $W$ is negative; moving to the left (compression) means $W$ is positive. A vertical path has no width and no area under it, so it involves no work.</p>
-  <p data-lang="zh">气体膨胀或被压缩时，外界对气体做的功的绝对值等于该气体压强-体积曲线<strong>下方的面积</strong>（<code>area under the curve</code>）。压强恒定时，它是高为 $P$、宽为 $\Delta V$ 的矩形，面积就是 $P|\Delta V|$。路径上压强变化时，把曲线下方的面积拆成矩形和三角形，或者数格子来求。方向决定符号：向右（膨胀）意味着气体对周围环境做功，所以 $W$ 为负；向左（压缩）意味着 $W$ 为正。竖直的路径没有宽度，下方也没有面积，所以不涉及功。</p>
+  <p data-lang="en">A <strong>pressure-volume graph</strong>, also called a PV diagram, plots the pressure of a gas against its volume and represents a thermodynamic process as a path from one state to another.</p>
+  <p data-lang="zh"><strong>压强-体积图</strong>（<code>pressure-volume graph</code>），也叫 PV 图，以气体的体积为横轴、压强为纵轴，把热力学过程表示为从一个状态到另一个状态的路径。</p>
+  <p data-lang="en">Lines of constant temperature on a PV diagram are called <strong>isotherms</strong>. For an ideal gas $PV = nRT$ is constant on an isotherm, so an isotherm is an inverse curve, and the higher the temperature, the farther the isotherm lies from the axes.</p>
+  <p data-lang="zh">PV 图上温度恒定的线叫做<strong>等温线</strong>（<code>isotherm</code>）。对理想气体，等温线上 $PV = nRT$ 为常量，所以等温线是反比曲线，温度越高，等温线离坐标轴越远。</p>
+  <p data-lang="en">The absolute value of the work done on a gas when it expands or compresses is equal to the <strong>area under the curve</strong> of a plot of pressure against volume for the gas.</p>
+  <p data-lang="zh">气体膨胀或被压缩时，外界对气体做的功的绝对值等于该气体压强-体积曲线<strong>下方的面积</strong>（<code>area under the curve</code>）。</p>
+  <p data-lang="en">For a constant pressure that is a rectangle of height $P$ and width $\Delta V$, which is just $P|\Delta V|$. For a path that changes the pressure, find the area under the path by splitting it into rectangles and triangles or by counting squares.</p>
+  <p data-lang="zh">压强恒定时，它是高为 $P$、宽为 $\Delta V$ 的矩形，面积就是 $P|\Delta V|$。路径上压强变化时，把曲线下方的面积拆成矩形和三角形，或者数格子来求。</p>
+  <p data-lang="en">The direction decides the sign: moving to the right (expansion) means the gas does work on its surroundings, so $W$ is negative; moving to the left (compression) means $W$ is positive. A vertical path has no width and no area under it, so it involves no work.</p>
+  <p data-lang="zh">方向决定符号：向右（膨胀）意味着气体对周围环境做功，所以 $W$ 为负；向左（压缩）意味着 $W$ 为正。竖直的路径没有宽度，下方也没有面积，所以不涉及功。</p>
 
   <h3><span data-lang="en">Special Processes</span><span data-lang="zh">几种特殊过程</span></h3>
   <p data-lang="en">Special cases of thermal processes depend on the relationship between the configuration of the system, the nature of the work done on it and the system's surroundings. Each one fixes one quantity or one transfer, and that simplifies the first law.</p>
@@ -1660,6 +1870,18 @@ figure.dr-fig figcaption {
     <li><strong>压强恒定（等压，<code>isobaric</code>）。</strong>功为 $W = -P\Delta V$，第一定律为 $\Delta U = Q - P\Delta V$。在 PV 图上它是一条水平线。</li>
     <li><strong>没有通过热过程的能量传递（绝热，<code>adiabatic</code>）。</strong>$Q = 0$，所以 $\Delta U = W$。被绝热压缩的气体内能增加、温度升高；绝热膨胀的气体以消耗自身内能为代价对外做功，温度降低。因为温度在变化，绝热路径会穿过等温线，从同一起点出发，膨胀时它位于等温线下方。</li>
   </ul>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span data-lang="en">Process</span><span data-lang="zh">过程</span></th><th><span data-lang="en">Held fixed / PV path</span><span data-lang="zh">保持不变的量 / PV 路径</span></th><th><span data-lang="en">Work on the gas $W$</span><span data-lang="zh">外界对气体做的功 $W$</span></th><th><span data-lang="en">First law becomes</span><span data-lang="zh">第一定律变为</span></th></tr></thead>
+      <tbody>
+        <tr><td><span data-lang="en">Isovolumetric (isochoric)</span><span data-lang="zh">等容</span></td><td><span data-lang="en">$V$ constant; vertical line</span><span data-lang="zh">$V$ 不变；竖直线</span></td><td><span data-lang="en">$W = 0$</span><span data-lang="zh">$W = 0$</span></td><td><span data-lang="en">$\Delta U = Q$</span><span data-lang="zh">$\Delta U = Q$</span></td></tr>
+        <tr><td><span data-lang="en">Isobaric</span><span data-lang="zh">等压</span></td><td><span data-lang="en">$P$ constant; horizontal line</span><span data-lang="zh">$P$ 不变；水平线</span></td><td><span data-lang="en">$W = -P\Delta V$</span><span data-lang="zh">$W = -P\Delta V$</span></td><td><span data-lang="en">$\Delta U = Q - P\Delta V$</span><span data-lang="zh">$\Delta U = Q - P\Delta V$</span></td></tr>
+        <tr><td><span data-lang="en">Isothermal (ideal gas)</span><span data-lang="zh">等温（理想气体）</span></td><td><span data-lang="en">$T$ constant; along an isotherm</span><span data-lang="zh">$T$ 不变；沿等温线</span></td><td><span data-lang="en">$|W|$ = area under the isotherm; $W \lt 0$ on expansion</span><span data-lang="zh">$|W|$ = 等温线下方的面积；膨胀时 $W \lt 0$</span></td><td><span data-lang="en">$\Delta U = 0$, so $Q = -W$</span><span data-lang="zh">$\Delta U = 0$，所以 $Q = -W$</span></td></tr>
+        <tr><td><span data-lang="en">Adiabatic</span><span data-lang="zh">绝热</span></td><td><span data-lang="en">$Q = 0$; steeper than the isotherm</span><span data-lang="zh">$Q = 0$；比等温线更陡</span></td><td><span data-lang="en">$|W|$ = area under the path; $W \gt 0$ on compression</span><span data-lang="zh">$|W|$ = 路径下方的面积；压缩时 $W \gt 0$</span></td><td><span data-lang="en">$\Delta U = W$</span><span data-lang="zh">$\Delta U = W$</span></td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <figure class="sg-fig" role="group">
     <svg viewBox="0 0 460 290" role="img" aria-label="Pressure-volume diagram with four processes starting from the same state at 2.0 times 10 to the 5 pascals and 1.0 litres. The isobaric process runs horizontally to 2.0 litres, with the region under it shaded and labelled 200 joules. The isochoric process runs vertically down to 1.0 times 10 to the 5 pascals. The isothermal expansion follows a curve down to 1.0 times 10 to the 5 pascals at 2.0 litres. The adiabatic expansion falls more steeply, ending below the isotherm at 0.63 times 10 to the 5 pascals at 2.0 litres.">
@@ -1776,8 +1998,10 @@ figure.dr-fig figcaption {
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: A Closed Cycle</span><span data-lang="zh">例题：一个闭合循环</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A gas goes around the cycle A, B, C, D, A: A ($2.0\times10^{5}\,\mathrm{Pa}$, $1.0\,\mathrm{L}$) to B ($2.0\times10^{5}\,\mathrm{Pa}$, $2.0\,\mathrm{L}$) at constant pressure; B to C ($1.0\times10^{5}\,\mathrm{Pa}$, $2.0\,\mathrm{L}$) at constant volume; C to D ($1.0\times10^{5}\,\mathrm{Pa}$, $1.0\,\mathrm{L}$) at constant pressure; and D back to A at constant volume. Find the work done on the gas along each leg, the net work, and the net energy transferred by heating over one cycle.</p>
-      <p class="worked-problem" data-lang="zh">气体沿循环 A、B、C、D、A 变化：A（$2.0\times10^{5}\,\mathrm{Pa}$，$1.0\,\mathrm{L}$）经等压过程到 B（$2.0\times10^{5}\,\mathrm{Pa}$，$2.0\,\mathrm{L}$）；B 经等容过程到 C（$1.0\times10^{5}\,\mathrm{Pa}$，$2.0\,\mathrm{L}$）；C 经等压过程到 D（$1.0\times10^{5}\,\mathrm{Pa}$，$1.0\,\mathrm{L}$）；D 经等容过程回到 A。求每一段上外界对气体做的功、净功，以及一个循环中通过加热传递的净能量。</p>
+      <p class="worked-problem" data-lang="en">A gas goes around the cycle A, B, C, D, A: A ($2.0\times10^{5}\,\mathrm{Pa}$, $1.0\,\mathrm{L}$) to B ($2.0\times10^{5}\,\mathrm{Pa}$, $2.0\,\mathrm{L}$) at constant pressure; B to C ($1.0\times10^{5}\,\mathrm{Pa}$, $2.0\,\mathrm{L}$) at constant volume; C to D ($1.0\times10^{5}\,\mathrm{Pa}$, $1.0\,\mathrm{L}$) at constant pressure; and D back to A at constant volume.</p>
+      <p class="worked-problem" data-lang="zh">气体沿循环 A、B、C、D、A 变化：A（$2.0\times10^{5}\,\mathrm{Pa}$，$1.0\,\mathrm{L}$）经等压过程到 B（$2.0\times10^{5}\,\mathrm{Pa}$，$2.0\,\mathrm{L}$）；B 经等容过程到 C（$1.0\times10^{5}\,\mathrm{Pa}$，$2.0\,\mathrm{L}$）；C 经等压过程到 D（$1.0\times10^{5}\,\mathrm{Pa}$，$1.0\,\mathrm{L}$）；D 经等容过程回到 A。</p>
+      <p class="worked-problem" data-lang="en">Find the work done on the gas along each leg, the net work, and the net energy transferred by heating over one cycle.</p>
+      <p class="worked-problem" data-lang="zh">求每一段上外界对气体做的功、净功，以及一个循环中通过加热传递的净能量。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Work on each leg</span><span data-lang="zh">第 1 步：每一段上的功</span></div>
@@ -1796,8 +2020,10 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">Start every first-law question by writing $\Delta U = Q + W$ and assigning a sign to each term from the physical picture (compressed or expanded, heated or cooled). Use $W = -P\Delta V$ only for constant pressure, and the area under a path otherwise. Name the process, because it fixes a term: $W = 0$ for constant volume, $\Delta U = 0$ for an isothermal ideal gas, $Q = 0$ for an adiabatic process. State your sign convention in a free-response answer so the reader can follow your signs.</p>
-    <p data-lang="zh">每道第一定律题都先写出 $\Delta U = Q + W$，再根据物理图像（被压缩还是膨胀、被加热还是冷却）为每一项确定符号。只在压强恒定时使用 $W = -P\Delta V$，其余情形用路径下方的面积。要点明过程的名称，因为它确定了其中一项：等容时 $W = 0$，理想气体等温时 $\Delta U = 0$，绝热时 $Q = 0$。在自由作答题中写明你的符号约定，方便阅卷人看懂你的符号。</p>
+    <p data-lang="en">Start every first-law question by writing $\Delta U = Q + W$ and assigning a sign to each term from the physical picture (compressed or expanded, heated or cooled). Use $W = -P\Delta V$ only for constant pressure, and the area under a path otherwise.</p>
+    <p data-lang="zh">每道第一定律题都先写出 $\Delta U = Q + W$，再根据物理图像（被压缩还是膨胀、被加热还是冷却）为每一项确定符号。只在压强恒定时使用 $W = -P\Delta V$，其余情形用路径下方的面积。</p>
+    <p data-lang="en">Name the process, because it fixes a term: $W = 0$ for constant volume, $\Delta U = 0$ for an isothermal ideal gas, $Q = 0$ for an adiabatic process. State your sign convention in a free-response answer so the reader can follow your signs.</p>
+    <p data-lang="zh">要点明过程的名称，因为它确定了其中一项：等容时 $W = 0$，理想气体等温时 $\Delta U = 0$，绝热时 $Q = 0$。在自由作答题中写明你的符号约定，方便阅卷人看懂你的符号。</p>
   </div>
 
   <div class="sg-check">
@@ -1824,7 +2050,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A gas in a rigid, insulated container is separated from an empty region by a partition. The partition is removed and the gas fills the whole container. Find $Q$, $W$ and $\Delta U$ for the gas, and predict its final temperature if it is ideal.</span><span data-lang="zh">刚性隔热容器中的气体与一个真空区域被隔板隔开。拿走隔板后，气体充满整个容器。求气体的 $Q$、$W$ 和 $\Delta U$，并预测（<code>predict</code>）若它是理想气体，末态温度如何。</span></summary>
-      <div class="sg-a"><p data-lang="en">The container is insulated, so $Q = 0$. It is rigid and the gas moves into an empty region, so no boundary is pushed outward and $W = 0$. The gas and container form an isolated system, so the total energy is constant: $\Delta U = Q + W = 0$. An ideal gas has no internal potential energy, so unchanged $U$ means unchanged $T$: the final temperature equals the initial temperature.</p><p data-lang="zh">容器隔热，所以 $Q = 0$。容器是刚性的，气体进入的是真空区域，没有边界被向外推，所以 $W = 0$。气体与容器构成孤立系统，总能量不变：$\Delta U = Q + W = 0$。理想气体没有内部势能，所以 $U$ 不变就意味着 $T$ 不变：末态温度等于初态温度。</p></div>
+      <div class="sg-a"><p data-lang="en">The container is insulated, so $Q = 0$. It is rigid and the gas moves into an empty region, so no boundary is pushed outward and $W = 0$.</p><p data-lang="zh">容器隔热，所以 $Q = 0$。容器是刚性的，气体进入的是真空区域，没有边界被向外推，所以 $W = 0$。</p><p data-lang="en">The gas and container form an isolated system, so the total energy is constant: $\Delta U = Q + W = 0$. An ideal gas has no internal potential energy, so unchanged $U$ means unchanged $T$: the final temperature equals the initial temperature.</p><p data-lang="zh">气体与容器构成孤立系统，总能量不变：$\Delta U = Q + W = 0$。理想气体没有内部势能，所以 $U$ 不变就意味着 $T$ 不变：末态温度等于初态温度。</p></div>
     </details>
   </div>
 
@@ -1857,23 +2083,56 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">Specific Heat: Energy to Change a Temperature</span><span data-lang="zh">比热容：改变温度所需的能量</span></h3>
-  <p data-lang="en">Different objects need different amounts of energy to warm up by the same number of degrees. A kilogram of water takes about eleven times as much energy to warm by one kelvin as a kilogram of copper. The energy required to change the temperature of a material is related to the material's <strong>specific heat</strong> $c$, the energy needed to raise the temperature of one kilogram of the material by one kelvin. It scales with how much material there is and with how large a temperature change you want.</p>
-  <p data-lang="zh">不同的物体升高相同的温度需要的能量不同。把一千克水升高一开尔文所需的能量，大约是一千克铜的十一倍。改变材料温度所需的能量与该材料的<strong>比热容</strong>（<code>specific heat</code>）$c$ 有关，比热容是使一千克该材料温度升高一开尔文所需的能量。所需能量与材料的多少以及想要的温度变化量成正比。</p>
+  <p data-lang="en">Different objects need different amounts of energy to warm up by the same number of degrees. A kilogram of water takes about eleven times as much energy to warm by one kelvin as a kilogram of copper.</p>
+  <p data-lang="zh">不同的物体升高相同的温度需要的能量不同。把一千克水升高一开尔文所需的能量，大约是一千克铜的十一倍。</p>
+  <p data-lang="en">The energy required to change the temperature of a material is related to the material's <strong>specific heat</strong> $c$, the energy needed to raise the temperature of one kilogram of the material by one kelvin. It scales with how much material there is and with how large a temperature change you want.</p>
+  <p data-lang="zh">改变材料温度所需的能量与该材料的<strong>比热容</strong>（<code>specific heat</code>）$c$ 有关，比热容是使一千克该材料温度升高一开尔文所需的能量。所需能量与材料的多少以及想要的温度变化量成正比。</p>
 
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Energy to change the temperature</span><span data-lang="zh">改变温度所需的能量</span></div>
     $$Q = mc\Delta T$$
   </div>
-  <p data-lang="en">$Q$ is the energy transferred to the object by heating in J (negative when energy leaves), $m$ is its mass in kg, $c$ is the specific heat in $\mathrm{J/(kg\,K)}$, and $\Delta T = T_f - T_i$ is the change in temperature. A change of one degree Celsius is the same size as a change of one kelvin, so $\Delta T$ may be taken in either unit; the temperatures $T_i$ and $T_f$ themselves must be on the same scale. Typical values, given as data in a problem when needed, are about $4.19\times10^{3}\,\mathrm{J/(kg\,K)}$ for liquid water, $900$ for aluminum and $385$ for copper. The sign of $Q$ follows the sign of $\Delta T$: heating a substance that stays at one specific heat gives $Q \gt 0$ and $\Delta T \gt 0$, and cooling gives both negative.</p>
-  <p data-lang="zh">$Q$ 为通过加热传给物体的能量，单位 J（能量流出时为负）；$m$ 为物体的质量，单位 kg；$c$ 为比热容，单位 $\mathrm{J/(kg\,K)}$；$\Delta T = T_f - T_i$ 为温度的变化。摄氏度的一格与开尔文的一格大小相同，所以 $\Delta T$ 用哪个单位都可以；而 $T_i$ 和 $T_f$ 本身必须在同一温标上。需要时题目会给出典型数值：液态水约为 $4.19\times10^{3}\,\mathrm{J/(kg\,K)}$，铝为 $900$，铜为 $385$。$Q$ 的符号与 $\Delta T$ 一致：加热时 $Q \gt 0$、$\Delta T \gt 0$，冷却时两者都为负。</p>
+  <p data-lang="en">$Q$ is the energy transferred to the object by heating in J (negative when energy leaves), $m$ is its mass in kg, $c$ is the specific heat in $\mathrm{J/(kg\,K)}$, and $\Delta T = T_f - T_i$ is the change in temperature.</p>
+  <p data-lang="zh">$Q$ 为通过加热传给物体的能量，单位 J（能量流出时为负）；$m$ 为物体的质量，单位 kg；$c$ 为比热容，单位 $\mathrm{J/(kg\,K)}$；$\Delta T = T_f - T_i$ 为温度的变化。</p>
+  <p data-lang="en">A change of one degree Celsius is the same size as a change of one kelvin, so $\Delta T$ may be taken in either unit; the temperatures $T_i$ and $T_f$ themselves must be on the same scale.</p>
+  <p data-lang="zh">摄氏度的一格与开尔文的一格大小相同，所以 $\Delta T$ 用哪个单位都可以；而 $T_i$ 和 $T_f$ 本身必须在同一温标上。</p>
+  <p data-lang="en">Typical values, given as data in a problem when needed, are about $4.19\times10^{3}\,\mathrm{J/(kg\,K)}$ for liquid water, $900$ for aluminum and $385$ for copper. The sign of $Q$ follows the sign of $\Delta T$: heating a substance that stays at one specific heat gives $Q \gt 0$ and $\Delta T \gt 0$, and cooling gives both negative.</p>
+  <p data-lang="zh">需要时题目会给出典型数值：液态水约为 $4.19\times10^{3}\,\mathrm{J/(kg\,K)}$，铝为 $900$，铜为 $385$。$Q$ 的符号与 $\Delta T$ 一致：加热时 $Q \gt 0$、$\Delta T \gt 0$，冷却时两者都为负。</p>
   <p data-lang="en">AP Physics 2 models specific heat as independent of temperature: the value of $c$ is treated as constant over the range of temperatures in a problem, so a single multiplication gives the energy for the whole change.</p>
   <p data-lang="zh">AP Physics 2 把比热容当作与温度无关来建模：在题目涉及的温度范围内，$c$ 的值视为常量，所以一次乘法就能得到整个变化过程所需的能量。</p>
-  <p data-lang="en">The specific heat of a material is an <strong>intrinsic property</strong> of that material: it depends on the type of material, and on the arrangement and interactions of the atoms that make it up, not on how much of it you have. A tiny copper pin and a huge copper beam have the same $c$, although the beam has a much larger heat capacity $mc$. The atoms explain the differences. In an ideal monatomic gas held at constant volume all the energy supplied goes into kinetic energy, since $Q = \Delta U = \frac{3}{2}nR\Delta T$, which is $\frac{3}{2}R = 12.5\,\mathrm{J/(mol\,K)}$ per mole. In a solid the atoms are bound to their neighbors, and part of the energy goes into the potential energy of the configuration as well, so more energy is needed per degree: copper takes about $385 \times 0.0635 = 24\,\mathrm{J/(mol\,K)}$, nearly twice the gas value.</p>
-  <p data-lang="zh">材料的比热容是该材料的<strong>内在性质</strong>（<code>intrinsic property</code>）：它取决于材料的种类以及构成材料的原子的排列与相互作用，而与材料有多少无关。一根小铜针和一根巨大的铜梁 $c$ 相同，尽管铜梁的热容 $mc$ 大得多。原子层面的图像解释了这些差别。体积保持不变的理想单原子气体中，供给的能量全部变成动能，因为 $Q = \Delta U = \frac{3}{2}nR\Delta T$，即每摩尔 $\frac{3}{2}R = 12.5\,\mathrm{J/(mol\,K)}$。固体中原子与邻近原子相互束缚，供给的能量有一部分还变成了构型的势能，所以每升高一度需要更多的能量：铜约为 $385 \times 0.0635 = 24\,\mathrm{J/(mol\,K)}$，几乎是气体值的两倍。</p>
+  <h3><span data-lang="en">Specific Heat as an Intrinsic Property</span><span data-lang="zh">比热容是物质的固有性质</span></h3>
+  <p data-lang="en">The specific heat of a material is an <strong>intrinsic property</strong> of that material: it depends on the type of material, and on the arrangement and interactions of the atoms that make it up, not on how much of it you have.</p>
+  <p data-lang="zh">材料的比热容是该材料的<strong>内在性质</strong>（<code>intrinsic property</code>）：它取决于材料的种类以及构成材料的原子的排列与相互作用，而与材料有多少无关。</p>
+  <p data-lang="en">A tiny copper pin and a huge copper beam have the same $c$, although the beam has a much larger heat capacity $mc$. The atoms explain the differences. In an ideal monatomic gas held at constant volume all the energy supplied goes into kinetic energy, since $Q = \Delta U = \frac{3}{2}nR\Delta T$, which is $\frac{3}{2}R = 12.5\,\mathrm{J/(mol\,K)}$ per mole.</p>
+  <p data-lang="zh">一根小铜针和一根巨大的铜梁 $c$ 相同，尽管铜梁的热容 $mc$ 大得多。原子层面的图像解释了这些差别。体积保持不变的理想单原子气体中，供给的能量全部变成动能，因为 $Q = \Delta U = \frac{3}{2}nR\Delta T$，即每摩尔 $\frac{3}{2}R = 12.5\,\mathrm{J/(mol\,K)}$。</p>
+  <p data-lang="en">In a solid the atoms are bound to their neighbors, and part of the energy goes into the potential energy of the configuration as well, so more energy is needed per degree: copper takes about $385 \times 0.0635 = 24\,\mathrm{J/(mol\,K)}$, nearly twice the gas value.</p>
+  <p data-lang="zh">固体中原子与邻近原子相互束缚，供给的能量有一部分还变成了构型的势能，所以每升高一度需要更多的能量：铜约为 $385 \times 0.0635 = 24\,\mathrm{J/(mol\,K)}$，几乎是气体值的两倍。</p>
 
   <h3><span data-lang="en">Reaching Equilibrium: Mixing at Different Temperatures</span><span data-lang="zh">趋向平衡：不同温度的物体混合</span></h3>
-  <p data-lang="en">When two objects at different temperatures are placed in thermal contact inside an insulated container, energy flows from the hotter to the cooler until the temperatures are equal. The two objects together form an isolated system, so the total energy is constant: the energy lost by one equals the energy gained by the other. Writing this with the sign convention of the first law, $Q_1 + Q_2 = 0$, so $m_1 c_1 (T_f - T_{1,i}) + m_2 c_2 (T_f - T_{2,i}) = 0$ with a single final temperature $T_f$, which lies between the two starting temperatures. Because the object with the larger heat capacity $mc$ changes temperature less, $T_f$ lies closer to its starting temperature.</p>
-  <p data-lang="zh">把两个温度不同的物体放入隔热容器中使其热接触，能量从较热的物体流向较冷的物体，直到温度相等。这两个物体合起来构成孤立系统，所以总能量守恒：一个物体失去的能量等于另一个物体得到的能量。按第一定律的符号约定来写就是 $Q_1 + Q_2 = 0$，即 $m_1 c_1 (T_f - T_{1,i}) + m_2 c_2 (T_f - T_{2,i}) = 0$，其中末温 $T_f$ 只有一个，介于两个初温之间。热容 $mc$ 较大的物体温度变化较小，所以 $T_f$ 更接近它的初温。</p>
+  <p data-lang="en">When two objects at different temperatures are placed in thermal contact inside an insulated container, energy flows from the hotter to the cooler until the temperatures are equal.</p>
+  <p data-lang="zh">把两个温度不同的物体放入隔热容器中使其热接触，能量从较热的物体流向较冷的物体，直到温度相等。</p>
+  <p data-lang="en">The two objects together form an isolated system, so the total energy is constant: the energy lost by one equals the energy gained by the other.</p>
+  <p data-lang="zh">这两个物体合起来构成孤立系统，所以总能量守恒：一个物体失去的能量等于另一个物体得到的能量。</p>
+  <p data-lang="en">Writing this with the sign convention of the first law, $Q_1 + Q_2 = 0$, so $m_1 c_1 (T_f - T_{1,i}) + m_2 c_2 (T_f - T_{2,i}) = 0$ with a single final temperature $T_f$, which lies between the two starting temperatures. Because the object with the larger heat capacity $mc$ changes temperature less, $T_f$ lies closer to its starting temperature.</p>
+  <p data-lang="zh">按第一定律的符号约定来写就是 $Q_1 + Q_2 = 0$，即 $m_1 c_1 (T_f - T_{1,i}) + m_2 c_2 (T_f - T_{2,i}) = 0$，其中末温 $T_f$ 只有一个，介于两个初温之间。热容 $mc$ 较大的物体温度变化较小，所以 $T_f$ 更接近它的初温。</p>
+
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the final temperature of a mixture</span><span data-lang="zh">第一性原理：混合后的末温</span></div>
+    <p data-lang="en">Energy is conserved in an isolated system: $Q_1 + Q_2 = 0$, with $Q = mc\Delta T$ for each object.</p>
+    <p data-lang="zh">孤立系统能量守恒：$Q_1 + Q_2 = 0$，每个物体都有 $Q = mc\Delta T$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Write each transfer with $\Delta T = T_f - T_i$: $m_1c_1(T_f - T_{1,i}) + m_2c_2(T_f - T_{2,i}) = 0$.</li>
+      <li>Collect the $T_f$ terms: $T_f(m_1c_1 + m_2c_2) = m_1c_1T_{1,i} + m_2c_2T_{2,i}$.</li>
+      <li>Divide: $T_f = \dfrac{m_1c_1T_{1,i} + m_2c_2T_{2,i}}{m_1c_1 + m_2c_2}$, an average of the starting temperatures weighted by the heat capacities $mc$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>用 $\Delta T = T_f - T_i$ 写出每一项传递：$m_1c_1(T_f - T_{1,i}) + m_2c_2(T_f - T_{2,i}) = 0$。</li>
+      <li>合并含 $T_f$ 的项：$T_f(m_1c_1 + m_2c_2) = m_1c_1T_{1,i} + m_2c_2T_{2,i}$。</li>
+      <li>相除：$T_f = \dfrac{m_1c_1T_{1,i} + m_2c_2T_{2,i}}{m_1c_1 + m_2c_2}$，即以热容 $mc$ 为权重的始温加权平均。</li>
+    </ol>
+    <p data-lang="en">Limiting checks: equal heat capacities give the plain average. If $m_2c_2 \gg m_1c_1$ (a cup in a swimming pool), $T_f \to T_{2,i}$. Example: $0.20\,\mathrm{kg}$ of water at $80^\circ\mathrm{C}$ and $0.30\,\mathrm{kg}$ at $20^\circ\mathrm{C}$ (the same $c$ cancels) give $T_f = (0.20 \cdot 80 + 0.30 \cdot 20)/0.50 = 44^\circ\mathrm{C}$.</p>
+    <p data-lang="zh">极限检验：两者热容相等时得到普通平均值。若 $m_2c_2 \gg m_1c_1$（游泳池里的一杯水），则 $T_f \to T_{2,i}$。例：$80^\circ\mathrm{C}$ 的 $0.20\,\mathrm{kg}$ 水与 $20^\circ\mathrm{C}$ 的 $0.30\,\mathrm{kg}$ 水混合（相同的 $c$ 约去），$T_f = (0.20 \cdot 80 + 0.30 \cdot 20)/0.50 = 44^\circ\mathrm{C}$。</p>
+  </div>
 
   <h3><span data-lang="en">Thermal Conductivity: The Rate of Conduction</span><span data-lang="zh">热导率：热传导的速率</span></h3>
   <p data-lang="en">Topic 9.3 introduced conduction qualitatively. The <strong>rate</strong> at which energy is transferred by conduction through a given material is related to the <strong>thermal conductivity</strong> $k$ of the material, the physical dimensions of the material (the cross-sectional area $A$ and the thickness $L$), and the temperature difference $\Delta T$ across the material.</p>
@@ -1883,11 +2142,20 @@ figure.dr-fig figcaption {
     <div class="formula-label"><span data-lang="en">Rate of conduction</span><span data-lang="zh">热传导速率</span></div>
     $$\frac{Q}{\Delta t} = \frac{kA\Delta T}{L}$$
   </div>
-  <p data-lang="en">Here $Q/\Delta t$ is the rate of energy transfer in watts ($1\,\mathrm{W} = 1\,\mathrm{J/s}$), $k$ is the thermal conductivity in $\mathrm{W/(m\,K)}$, $A$ is the area through which the energy passes in m², $\Delta T$ is the temperature difference between the two faces in K, and $L$ is the thickness of the material in the direction of energy flow, in m. Read it as proportions. The rate is directly proportional to $k$, to $A$ and to $\Delta T$, and inversely proportional to the thickness $L$. A larger area gives more paths for energy to travel along; a greater temperature difference drives a faster flow; and a thicker layer slows the flow. Doubling $A$ doubles the rate, and doubling $L$ halves it.</p>
-  <p data-lang="zh">其中 $Q/\Delta t$ 为能量传递的速率，单位瓦特（$1\,\mathrm{W} = 1\,\mathrm{J/s}$）；$k$ 为热导率，单位 $\mathrm{W/(m\,K)}$；$A$ 为能量通过的面积，单位 m²；$\Delta T$ 为两个表面之间的温差，单位 K；$L$ 为材料沿能量流动方向的厚度，单位 m。把它当作比例关系来读：速率与 $k$、$A$ 和 $\Delta T$ 成正比，与厚度 $L$ 成反比。面积越大，能量可以通过的通道越多；温差越大，流动越快；厚度越大，流动越慢。$A$ 加倍则速率加倍，$L$ 加倍则速率减半。</p>
-  <p data-lang="en">The thermal conductivity of a material is an <strong>intrinsic property</strong> of the material that depends on the arrangement and interactions of the atoms that make it up. Metals have a high $k$ (copper is about $400\,\mathrm{W/(m\,K)}$) because the energy is carried efficiently through the closely packed, strongly interacting atoms and the loosely bound electrons among them. Glass is about $1\,\mathrm{W/(m\,K)}$ and still air only about $0.03\,\mathrm{W/(m\,K)}$, since the atoms of a gas are far apart and collide only occasionally. That is why trapped air in wool, foam and double-glazed windows is such a good insulator. A material with low $k$ is a thermal insulator, and one with high $k$ is a thermal conductor.</p>
-  <p data-lang="zh">材料的热导率是该材料的<strong>内在性质</strong>，取决于构成材料的原子的排列与相互作用。金属的 $k$ 很大（铜约为 $400\,\mathrm{W/(m\,K)}$），因为能量可以通过紧密排列、相互作用很强的原子以及其间束缚较松的电子高效地传递。玻璃约为 $1\,\mathrm{W/(m\,K)}$，静止空气只有约 $0.03\,\mathrm{W/(m\,K)}$，因为气体原子相距很远，只是偶尔碰撞。这就是被困住的空气在羊毛、泡沫塑料和双层玻璃窗中如此有效地隔热的原因。$k$ 小的材料是热的绝缘体，$k$ 大的材料是热的良导体。</p>
+  <p data-lang="en">Here $Q/\Delta t$ is the rate of energy transfer in watts ($1\,\mathrm{W} = 1\,\mathrm{J/s}$), $k$ is the thermal conductivity in $\mathrm{W/(m\,K)}$, $A$ is the area through which the energy passes in m², $\Delta T$ is the temperature difference between the two faces in K, and $L$ is the thickness of the material in the direction of energy flow, in m.</p>
+  <p data-lang="zh">其中 $Q/\Delta t$ 为能量传递的速率，单位瓦特（$1\,\mathrm{W} = 1\,\mathrm{J/s}$）；$k$ 为热导率，单位 $\mathrm{W/(m\,K)}$；$A$ 为能量通过的面积，单位 m²；$\Delta T$ 为两个表面之间的温差，单位 K；$L$ 为材料沿能量流动方向的厚度，单位 m。</p>
+  <p data-lang="en">Read it as proportions. The rate is directly proportional to $k$, to $A$ and to $\Delta T$, and inversely proportional to the thickness $L$.</p>
+  <p data-lang="zh">把它当作比例关系来读：速率与 $k$、$A$ 和 $\Delta T$ 成正比，与厚度 $L$ 成反比。</p>
+  <p data-lang="en">A larger area gives more paths for energy to travel along; a greater temperature difference drives a faster flow; and a thicker layer slows the flow. Doubling $A$ doubles the rate, and doubling $L$ halves it.</p>
+  <p data-lang="zh">面积越大，能量可以通过的通道越多；温差越大，流动越快；厚度越大，流动越慢。$A$ 加倍则速率加倍，$L$ 加倍则速率减半。</p>
+  <p data-lang="en">The thermal conductivity of a material is an <strong>intrinsic property</strong> of the material that depends on the arrangement and interactions of the atoms that make it up.</p>
+  <p data-lang="zh">材料的热导率是该材料的<strong>内在性质</strong>，取决于构成材料的原子的排列与相互作用。</p>
+  <p data-lang="en">Metals have a high $k$ (copper is about $400\,\mathrm{W/(m\,K)}$) because the energy is carried efficiently through the closely packed, strongly interacting atoms and the loosely bound electrons among them. Glass is about $1\,\mathrm{W/(m\,K)}$ and still air only about $0.03\,\mathrm{W/(m\,K)}$, since the atoms of a gas are far apart and collide only occasionally.</p>
+  <p data-lang="zh">金属的 $k$ 很大（铜约为 $400\,\mathrm{W/(m\,K)}$），因为能量可以通过紧密排列、相互作用很强的原子以及其间束缚较松的电子高效地传递。玻璃约为 $1\,\mathrm{W/(m\,K)}$，静止空气只有约 $0.03\,\mathrm{W/(m\,K)}$，因为气体原子相距很远，只是偶尔碰撞。</p>
+  <p data-lang="en">That is why trapped air in wool, foam and double-glazed windows is such a good insulator. A material with low $k$ is a thermal insulator, and one with high $k$ is a thermal conductor.</p>
+  <p data-lang="zh">这就是被困住的空气在羊毛、泡沫塑料和双层玻璃窗中如此有效地隔热的原因。$k$ 小的材料是热的绝缘体，$k$ 大的材料是热的良导体。</p>
 
+  <h3><span data-lang="en">Specific Heat versus Thermal Conductivity</span><span data-lang="zh">比热容与热导率的比较</span></h3>
   <div class="concept-box red" data-lang="en">
     <strong>Common Mistake: Confusing specific heat with thermal conductivity</strong>
     The two properties answer different questions. Specific heat $c$ tells how much energy it takes to change the temperature of a given mass by one kelvin. Thermal conductivity $k$ tells how fast energy passes through a layer when there is a temperature difference across it. Water has a large $c$ but a small $k$; copper has a small $c$ and a large $k$. A material that is slow to change temperature is not necessarily a good insulator.
@@ -1895,6 +2163,16 @@ figure.dr-fig figcaption {
   <div class="concept-box red" data-lang="zh">
     <strong>常见错误：混淆比热容与热导率</strong>
     这两个性质回答的是不同的问题。比热容 $c$ 说明使给定质量的物体温度改变一开尔文需要多少能量。热导率 $k$ 说明一层材料两侧有温差时能量通过它的快慢。水的 $c$ 大而 $k$ 小；铜的 $c$ 小而 $k$ 大。温度变化慢的材料不一定是好的绝热体。
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span data-lang="en">Property</span><span data-lang="zh">性质</span></th><th><span data-lang="en">Equation and SI unit</span><span data-lang="zh">方程与国际单位</span></th><th><span data-lang="en">Question it answers</span><span data-lang="zh">回答的问题</span></th><th><span data-lang="en">Water vs copper</span><span data-lang="zh">水与铜</span></th></tr></thead>
+      <tbody>
+        <tr><td><span data-lang="en">Specific heat $c$</span><span data-lang="zh">比热容 $c$</span></td><td><span data-lang="en">$Q = mc\Delta T$; $\mathrm{J/(kg\,K)}$</span><span data-lang="zh">$Q = mc\Delta T$；$\mathrm{J/(kg\,K)}$</span></td><td><span data-lang="en">How much energy changes the temperature of 1 kg by 1 K?</span><span data-lang="zh">使 1 kg 物质温度改变 1 K 需要多少能量？</span></td><td><span data-lang="en">Water $4.19\times10^{3}$, copper $385$: water's is about 11 times copper's</span><span data-lang="zh">水 $4.19\times10^{3}$，铜 $385$：水约为铜的 11 倍</span></td></tr>
+        <tr><td><span data-lang="en">Thermal conductivity $k$</span><span data-lang="zh">热导率 $k$</span></td><td><span data-lang="en">$Q/\Delta t = kA\Delta T/L$; $\mathrm{W/(m\,K)}$</span><span data-lang="zh">$Q/\Delta t = kA\Delta T/L$；$\mathrm{W/(m\,K)}$</span></td><td><span data-lang="en">How fast does energy pass through a layer with a temperature difference across it?</span><span data-lang="zh">两侧有温差时，能量通过一层材料有多快？</span></td><td><span data-lang="en">Copper about $400$, water only about $0.6$: copper conducts far better</span><span data-lang="zh">铜约 $400$，水只有约 $0.6$：铜的导热性好得多</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
   <details class="sg-we" open>
@@ -1943,8 +2221,10 @@ figure.dr-fig figcaption {
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: Finding Specific Heat from a Heating Graph</span><span data-lang="zh">例题：由加热曲线求比热容</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A student wants to measure the specific heat of an unknown liquid. She places $0.400\,\mathrm{kg}$ of it in an insulated cup and heats it with an electric heater of constant power $60.0\,\mathrm{W}$, stirring gently. The temperature is $20.0$, $23.8$, $27.4$, $31.3$ and $35.0^\circ\mathrm{C}$ at times $0$, $60$, $120$, $180$ and $240\,\mathrm{s}$. Describe the graph to plot, find $c$ from its slope, and say how heat lost to the room would affect the result.</p>
-      <p class="worked-problem" data-lang="zh">一位学生想测量某种未知液体的比热容。她把 $0.400\,\mathrm{kg}$ 的液体放入隔热杯中，用恒定功率 $60.0\,\mathrm{W}$ 的电加热器加热，并轻轻搅拌。在 $0$、$60$、$120$、$180$、$240\,\mathrm{s}$ 时，温度依次为 $20.0$、$23.8$、$27.4$、$31.3$、$35.0^\circ\mathrm{C}$。说明应该画什么图，由斜率求 $c$，并说明向房间散失的热量会怎样影响结果。</p>
+      <p class="worked-problem" data-lang="en">A student wants to measure the specific heat of an unknown liquid. She places $0.400\,\mathrm{kg}$ of it in an insulated cup and heats it with an electric heater of constant power $60.0\,\mathrm{W}$, stirring gently.</p>
+      <p class="worked-problem" data-lang="zh">一位学生想测量某种未知液体的比热容。她把 $0.400\,\mathrm{kg}$ 的液体放入隔热杯中，用恒定功率 $60.0\,\mathrm{W}$ 的电加热器加热，并轻轻搅拌。</p>
+      <p class="worked-problem" data-lang="en">The temperature is $20.0$, $23.8$, $27.4$, $31.3$ and $35.0^\circ\mathrm{C}$ at times $0$, $60$, $120$, $180$ and $240\,\mathrm{s}$. Describe the graph to plot, find $c$ from its slope, and say how heat lost to the room would affect the result.</p>
+      <p class="worked-problem" data-lang="zh">在 $0$、$60$、$120$、$180$、$240\,\mathrm{s}$ 时，温度依次为 $20.0$、$23.8$、$27.4$、$31.3$、$35.0^\circ\mathrm{C}$。说明应该画什么图，由斜率求 $c$，并说明向房间散失的热量会怎样影响结果。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Linearize</span><span data-lang="zh">第 1 步：线性化</span></div>
@@ -2010,8 +2290,10 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">For mixing problems, write that the isolated system has $Q_1 + Q_2 = 0$ and use $\Delta T = T_f - T_i$ for each object so that the signs take care of themselves. For conduction, write the formula and then do the ratio: cancel everything that does not change, and count only the factors that do. In an experiment-design answer, say what you will measure, which graph is a straight line and what its slope equals, and name one source of error with the direction it pushes the result.</p>
-    <p data-lang="zh">混合类题目要写出孤立系统满足 $Q_1 + Q_2 = 0$，并对每个物体使用 $\Delta T = T_f - T_i$，这样符号就自然正确。热传导类题目先写出公式，再做比值：约去所有不变的量，只数变化的因子。实验设计题中，要说明测量什么、哪种图像是直线、斜率等于什么，并指出一个误差来源及其使结果偏大还是偏小。</p>
+    <p data-lang="en">For mixing problems, write that the isolated system has $Q_1 + Q_2 = 0$ and use $\Delta T = T_f - T_i$ for each object so that the signs take care of themselves. For conduction, write the formula and then do the ratio: cancel everything that does not change, and count only the factors that do.</p>
+    <p data-lang="zh">混合类题目要写出孤立系统满足 $Q_1 + Q_2 = 0$，并对每个物体使用 $\Delta T = T_f - T_i$，这样符号就自然正确。热传导类题目先写出公式，再做比值：约去所有不变的量，只数变化的因子。</p>
+    <p data-lang="en">In an experiment-design answer, say what you will measure, which graph is a straight line and what its slope equals, and name one source of error with the direction it pushes the result.</p>
+    <p data-lang="zh">实验设计题中，要说明测量什么、哪种图像是直线、斜率等于什么，并指出一个误差来源及其使结果偏大还是偏小。</p>
   </div>
 
   <div class="sg-check">
@@ -2026,7 +2308,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Explain why specific heat is called an intrinsic property of a material, and why a kilogram of water and a kilogram of copper differ.</span><span data-lang="zh">解释（<code>explain</code>）为什么比热容被称为材料的内在性质，以及为什么一千克水和一千克铜不同。</span></summary>
-      <div class="sg-a"><p data-lang="en">The value of $c$ depends on what the material is made of and on how its atoms are arranged and interact, not on how much material there is, so any sample of copper has the same $c$. Water and copper differ in how their atoms are arranged and bonded, and so differ in how much of the supplied energy goes into kinetic energy and how much into the potential energy of the configuration for each kelvin of temperature rise. That is why they need different energy per kilogram per kelvin.</p><p data-lang="zh">$c$ 的值取决于材料由什么构成，以及其中原子如何排列和相互作用，而与材料的多少无关，所以任何一块铜的 $c$ 都相同。水和铜的原子排列与成键方式不同，因此温度每升高一开尔文时，所供能量中变成动能的部分和变成构型势能的部分都不同。这就是它们每千克每开尔文需要不同能量的原因。</p></div>
+      <div class="sg-a"><p data-lang="en">The value of $c$ depends on what the material is made of and on how its atoms are arranged and interact, not on how much material there is, so any sample of copper has the same $c$.</p><p data-lang="zh">$c$ 的值取决于材料由什么构成，以及其中原子如何排列和相互作用，而与材料的多少无关，所以任何一块铜的 $c$ 都相同。</p><p data-lang="en">Water and copper differ in how their atoms are arranged and bonded, and so differ in how much of the supplied energy goes into kinetic energy and how much into the potential energy of the configuration for each kelvin of temperature rise. That is why they need different energy per kilogram per kelvin.</p><p data-lang="zh">水和铜的原子排列与成键方式不同，因此温度每升高一开尔文时，所供能量中变成动能的部分和变成构型势能的部分都不同。这就是它们每千克每开尔文需要不同能量的原因。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A $0.100\,\mathrm{kg}$ piece of an unknown metal at $90^\circ\mathrm{C}$ is placed in $0.250\,\mathrm{kg}$ of water at $20^\circ\mathrm{C}$ in an insulated container. The final temperature is $25^\circ\mathrm{C}$. Find the specific heat of the metal. Use $c_\text{w} = 4.19\times10^{3}\,\mathrm{J/(kg\,K)}$.</span><span data-lang="zh">把一块 $0.100\,\mathrm{kg}$、$90^\circ\mathrm{C}$ 的未知金属放入隔热容器中 $0.250\,\mathrm{kg}$、$20^\circ\mathrm{C}$ 的水里。最终温度为 $25^\circ\mathrm{C}$。求这种金属的比热容。取 $c_\text{w} = 4.19\times10^{3}\,\mathrm{J/(kg\,K)}$。</span></summary>
@@ -2038,7 +2320,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A metal spoon and a wooden spoon have been in the same room and are at the same temperature, yet the metal one feels colder in your hand. Explain this using thermal conductivity.</span><span data-lang="zh">金属勺和木勺在同一个房间里放了很久，温度相同，但金属勺握在手里感觉更凉。用热导率解释（<code>explain</code>）这一现象。</span></summary>
-      <div class="sg-a"><p data-lang="en">Your hand is warmer than the room, so energy flows by conduction from your hand into the spoon. Metal has a much larger thermal conductivity, so it carries energy away from the contact area quickly, and the skin cools faster, which is felt as cold. Wood has a small $k$, so the surface of the wooden spoon warms to the temperature of your skin and then transfers little energy. Both spoons are at the same temperature; the difference is the rate of energy transfer.</p><p data-lang="zh">你的手比房间温度高，所以能量通过热传导从手流向勺子。金属的热导率大得多，能把接触区域的能量迅速带走，皮肤降温更快，这就是感觉到的凉。木头的 $k$ 很小，木勺表面很快升到皮肤的温度，之后传递的能量很少。两把勺子温度相同，差别在于能量传递的速率。</p></div>
+      <div class="sg-a"><p data-lang="en">Your hand is warmer than the room, so energy flows by conduction from your hand into the spoon. Metal has a much larger thermal conductivity, so it carries energy away from the contact area quickly, and the skin cools faster, which is felt as cold.</p><p data-lang="zh">你的手比房间温度高，所以能量通过热传导从手流向勺子。金属的热导率大得多，能把接触区域的能量迅速带走，皮肤降温更快，这就是感觉到的凉。</p><p data-lang="en">Wood has a small $k$, so the surface of the wooden spoon warms to the temperature of your skin and then transfers little energy. Both spoons are at the same temperature; the difference is the rate of energy transfer.</p><p data-lang="zh">木头的 $k$ 很小，木勺表面很快升到皮肤的温度，之后传递的能量很少。两把勺子温度相同，差别在于能量传递的速率。</p></div>
     </details>
   </div>
 
@@ -2071,26 +2353,60 @@ figure.dr-fig figcaption {
   </div>
 
   <h3><span data-lang="en">The Second Law of Thermodynamics</span><span data-lang="zh">热力学第二定律</span></h3>
-  <p data-lang="en">The first law says that energy is conserved, but it does not say which processes actually happen. A hot cup of coffee cools to room temperature, yet a cup of coffee at room temperature never spontaneously heats itself while the room gets cooler, although that would also conserve energy. A gas expands to fill a container, yet a gas that has spread through a room never gathers by itself into one corner. The <strong>second law of thermodynamics</strong> captures this one-way direction using a quantity called <strong>entropy</strong>. It states that the total entropy of an isolated system can never decrease, and is constant only when all the processes the system undergoes are reversible.</p>
-  <p data-lang="zh">第一定律说的是能量守恒，但没有说哪些过程真的会发生。一杯热咖啡会冷却到室温，而室温下的咖啡从不会在房间变冷的同时自发升温，尽管这样也满足能量守恒。气体会膨胀充满容器，而已经散布到整个房间的气体从不会自己聚集到一个角落。<strong>热力学第二定律</strong>（<code>second law of thermodynamics</code>）用一个叫做<strong>熵</strong>（<code>entropy</code>）的量来描述这种单向性。它指出：孤立系统的总熵永不减小（<code>never decrease</code>），只有当系统经历的所有过程都是可逆的时，熵才保持不变。</p>
-  <p data-lang="en">A <strong>reversible</strong> process is an idealisation in which the system and its surroundings can both be returned exactly to their initial states, with no net change anywhere. A frictionless pendulum or a very slow, frictionless compression of a gas, always infinitesimally close to equilibrium, are the usual models. Real processes involve friction, sudden expansions, or energy flowing across a finite temperature difference, and are <strong>irreversible</strong>: for them the entropy of an isolated system increases. In AP Physics 2 the treatment of the second law and entropy is qualitative. You reason with the direction of change and with the ideas of spreading and availability, and you do not calculate entropy values.</p>
-  <p data-lang="zh"><strong>可逆</strong>过程是一种理想化：系统和周围环境都可以精确地回到初始状态，任何地方都没有净变化。无摩擦的摆，或者极其缓慢、无摩擦、始终无限接近平衡的气体压缩，是常用的模型。真实过程都有摩擦、突然膨胀，或者能量在有限温差下流动，它们是<strong>不可逆的</strong>（<code>irreversible</code>）：对它们而言，孤立系统的熵增加。在 AP Physics 2 中，对第二定律和熵的处理是定性的（<code>qualitative</code>）。你要依据变化的方向以及扩散和可用性的思想来推理，不需要计算熵的数值。</p>
+  <p data-lang="en">The first law says that energy is conserved, but it does not say which processes actually happen. A hot cup of coffee cools to room temperature, yet a cup of coffee at room temperature never spontaneously heats itself while the room gets cooler, although that would also conserve energy.</p>
+  <p data-lang="zh">第一定律说的是能量守恒，但没有说哪些过程真的会发生。一杯热咖啡会冷却到室温，而室温下的咖啡从不会在房间变冷的同时自发升温，尽管这样也满足能量守恒。</p>
+  <p data-lang="en">A gas expands to fill a container, yet a gas that has spread through a room never gathers by itself into one corner.</p>
+  <p data-lang="zh">气体会膨胀充满容器，而已经散布到整个房间的气体从不会自己聚集到一个角落。</p>
+  <p data-lang="en">The <strong>second law of thermodynamics</strong> captures this one-way direction using a quantity called <strong>entropy</strong>. It states that the total entropy of an isolated system can never decrease, and is constant only when all the processes the system undergoes are reversible.</p>
+  <p data-lang="zh"><strong>热力学第二定律</strong>（<code>second law of thermodynamics</code>）用一个叫做<strong>熵</strong>（<code>entropy</code>）的量来描述这种单向性。它指出：孤立系统的总熵永不减小（<code>never decrease</code>），只有当系统经历的所有过程都是可逆的时，熵才保持不变。</p>
+  <p data-lang="en">A <strong>reversible</strong> process is an idealisation in which the system and its surroundings can both be returned exactly to their initial states, with no net change anywhere.</p>
+  <p data-lang="zh"><strong>可逆</strong>过程是一种理想化：系统和周围环境都可以精确地回到初始状态，任何地方都没有净变化。</p>
+  <p data-lang="en">A frictionless pendulum or a very slow, frictionless compression of a gas, always infinitesimally close to equilibrium, are the usual models. Real processes involve friction, sudden expansions, or energy flowing across a finite temperature difference, and are <strong>irreversible</strong>: for them the entropy of an isolated system increases.</p>
+  <p data-lang="zh">无摩擦的摆，或者极其缓慢、无摩擦、始终无限接近平衡的气体压缩，是常用的模型。真实过程都有摩擦、突然膨胀，或者能量在有限温差下流动，它们是<strong>不可逆的</strong>（<code>irreversible</code>）：对它们而言，孤立系统的熵增加。</p>
+  <p data-lang="en">In AP Physics 2 the treatment of the second law and entropy is qualitative. You reason with the direction of change and with the ideas of spreading and availability, and you do not calculate entropy values.</p>
+  <p data-lang="zh">在 AP Physics 2 中，对第二定律和熵的处理是定性的（<code>qualitative</code>）。你要依据变化的方向以及扩散和可用性的思想来推理，不需要计算熵的数值。</p>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Carnot, Clausius and Boltzmann</span><span data-lang="zh">历史：卡诺、克劳修斯与玻尔兹曼</span></div>
+    <p data-lang="en">In 1824 Sadi Carnot asked how much work an engine can get from energy flowing from a hot body to a cold one, and found that the limit depends only on the two temperatures. Rudolf Clausius stated the second law in 1850 and named entropy in 1865.</p>
+    <p data-lang="zh">1824 年，萨迪·卡诺研究了热机在能量从热物体流向冷物体时最多能得到多少功，发现这个极限只取决于两个温度。鲁道夫·克劳修斯在 1850 年表述了第二定律，并在 1865 年为熵命名。</p>
+    <p data-lang="en">Boltzmann later tied entropy to the number of microscopic arrangements $\Omega$, $S = k_B \ln \Omega$: the counting idea of Topic 9.3. The formula is carved on his tombstone in Vienna. Read more: <a href="https://en.wikipedia.org/wiki/Carnot_cycle" target="_blank" rel="noopener">Carnot cycle (Wikipedia: the four steps of the ideal engine and its efficiency limit)</a>; <a href="https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula" target="_blank" rel="noopener">Boltzmann's entropy formula (Wikipedia: S = k ln W, its meaning and history)</a>.</p>
+    <p data-lang="zh">玻尔兹曼后来把熵与微观排列方式的数目 $\Omega$ 联系起来：$S = k_B \ln \Omega$，这正是专题 9.3 的计数思想。这个公式刻在他位于维也纳的墓碑上。延伸阅读：<a href="https://en.wikipedia.org/wiki/Carnot_cycle" target="_blank" rel="noopener">卡诺循环（维基百科英文条目：理想热机的四个步骤与效率极限）</a>；<a href="https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula" target="_blank" rel="noopener">玻尔兹曼熵公式（维基百科英文条目：S = k ln W 的含义与历史）</a>。</p>
+  </div>
 
   <h3><span data-lang="en">Entropy as Energy Spreading Out</span><span data-lang="zh">熵：能量的扩散</span></h3>
-  <p data-lang="en">Entropy can be described qualitatively in two connected ways. First, it is the tendency of energy to spread out: localized energy will tend to disperse and spread out. A hot spot cools as its energy is shared with the surroundings; a concentrated gas spreads into all the volume it can reach; the kinetic energy of an organized motion, such as a bouncing ball, becomes the random thermal motion of the atoms of the ball and the floor. Second, entropy is the unavailability of some of the system's energy to do work. A hot block next to a cold block can drive a process, because the temperature difference lets energy flow in a useful direction. After the two blocks have reached the same temperature, the same total energy is still there, but it is spread out and can no longer be used to do work. Each spontaneous spreading raises the entropy and reduces the energy that is available.</p>
-  <p data-lang="zh">熵可以用两种相互联系的方式定性地描述。第一，它是能量趋向于扩散（<code>spread out</code>）的倾向：集中的能量会趋于分散开来。热点把能量分给周围环境而冷却；集中的气体扩散到它所能到达的全部体积；有序运动的动能（例如弹跳的球）变成球和地面原子的无规则热运动。第二，熵是系统中一部分能量无法用来做功（<code>unavailable to do work</code>）。紧挨着冷块的热块能够驱动某个过程，因为温差让能量可以沿着有用的方向流动。两块物体达到相同温度之后，总能量仍然在那里，但已经分散开，不能再用来做功。每一次自发的扩散都使熵增大，使可用的能量减少。</p>
-  <p data-lang="en">This is connected to the probability argument of Topic 9.3. The arrangements in which energy is spread evenly can be realized in vastly more ways than those in which it is concentrated, so an isolated system that is free to change moves toward the more probable, more spread-out state. A closely related fact is that a gas has no reason to stay in one half of a container. If each atom is equally likely to be in either half, the probability that all $N$ atoms are found in one chosen half is $(1/2)^N$, which for any macroscopic sample is so small that it never happens.</p>
-  <p data-lang="zh">这与专题 9.3 的概率论证相联系。能量均匀分散的分配方式，可以用比能量集中的分配方式多得多的方法实现，所以可以自由变化的孤立系统会朝着更可能、更分散的状态移动。一个与此密切相关的事实是：气体没有理由待在容器的一半里。如果每个原子处于任一半的可能性相等，那么全部 $N$ 个原子都在指定的一半里的概率是 $(1/2)^N$，对任何宏观样品来说，这个概率小到永远不会发生。</p>
+  <p data-lang="en">Entropy can be described qualitatively in two connected ways. First, it is the tendency of energy to spread out: localized energy will tend to disperse and spread out.</p>
+  <p data-lang="zh">熵可以用两种相互联系的方式定性地描述。第一，它是能量趋向于扩散（<code>spread out</code>）的倾向：集中的能量会趋于分散开来。</p>
+  <p data-lang="en">A hot spot cools as its energy is shared with the surroundings; a concentrated gas spreads into all the volume it can reach; the kinetic energy of an organized motion, such as a bouncing ball, becomes the random thermal motion of the atoms of the ball and the floor.</p>
+  <p data-lang="zh">热点把能量分给周围环境而冷却；集中的气体扩散到它所能到达的全部体积；有序运动的动能（例如弹跳的球）变成球和地面原子的无规则热运动。</p>
+  <p data-lang="en">Second, entropy is the unavailability of some of the system's energy to do work. A hot block next to a cold block can drive a process, because the temperature difference lets energy flow in a useful direction.</p>
+  <p data-lang="zh">第二，熵是系统中一部分能量无法用来做功（<code>unavailable to do work</code>）。紧挨着冷块的热块能够驱动某个过程，因为温差让能量可以沿着有用的方向流动。</p>
+  <p data-lang="en">After the two blocks have reached the same temperature, the same total energy is still there, but it is spread out and can no longer be used to do work. Each spontaneous spreading raises the entropy and reduces the energy that is available.</p>
+  <p data-lang="zh">两块物体达到相同温度之后，总能量仍然在那里，但已经分散开，不能再用来做功。每一次自发的扩散都使熵增大，使可用的能量减少。</p>
+  <p data-lang="en">This is connected to the probability argument of Topic 9.3. The arrangements in which energy is spread evenly can be realized in vastly more ways than those in which it is concentrated, so an isolated system that is free to change moves toward the more probable, more spread-out state.</p>
+  <p data-lang="zh">这与专题 9.3 的概率论证相联系。能量均匀分散的分配方式，可以用比能量集中的分配方式多得多的方法实现，所以可以自由变化的孤立系统会朝着更可能、更分散的状态移动。</p>
+  <p data-lang="en">A closely related fact is that a gas has no reason to stay in one half of a container.</p>
+  <p data-lang="zh">一个与此密切相关的事实是：气体没有理由待在容器的一半里。</p>
+  <p data-lang="en">If each atom is equally likely to be in either half, the probability that all $N$ atoms are found in one chosen half is $(1/2)^N$, which for any macroscopic sample is so small that it never happens.</p>
+  <p data-lang="zh">如果每个原子处于任一半的可能性相等，那么全部 $N$ 个原子都在指定的一半里的概率是 $(1/2)^N$，对任何宏观样品来说，这个概率小到永远不会发生。</p>
 
   <h3><span data-lang="en">State Function and Equilibrium</span><span data-lang="zh">状态函数与平衡</span></h3>
-  <p data-lang="en">Entropy is a <strong>state function</strong>: it depends only on the current state or configuration of the system, and not on how the system reached that state. The same is true of the pressure, volume, temperature and internal energy of a gas. So if a gas goes from one state to another by two different paths, its entropy change is the same on both paths, even though the work and the energy transferred by heating are different. This is what allows you to compare the end states without knowing the path.</p>
-  <p data-lang="zh">熵是<strong>状态函数</strong>（<code>state function</code>）：它只取决于系统当前的状态或构型，而与系统如何到达这个状态无关。气体的压强、体积、温度和内能也是如此。所以，如果气体沿两条不同的路径从一个状态变到另一个状态，两条路径上它的熵变相同，尽管功和通过加热传递的能量不同。这使你不必知道路径就能比较两个终态。</p>
+  <p data-lang="en">Entropy is a <strong>state function</strong>: it depends only on the current state or configuration of the system, and not on how the system reached that state. The same is true of the pressure, volume, temperature and internal energy of a gas.</p>
+  <p data-lang="zh">熵是<strong>状态函数</strong>（<code>state function</code>）：它只取决于系统当前的状态或构型，而与系统如何到达这个状态无关。气体的压强、体积、温度和内能也是如此。</p>
+  <p data-lang="en">So if a gas goes from one state to another by two different paths, its entropy change is the same on both paths, even though the work and the energy transferred by heating are different. This is what allows you to compare the end states without knowing the path.</p>
+  <p data-lang="zh">所以，如果气体沿两条不同的路径从一个状态变到另一个状态，两条路径上它的熵变相同，尽管功和通过加热传递的能量不同。这使你不必知道路径就能比较两个终态。</p>
   <p data-lang="en">Maximum entropy occurs when a system is in thermodynamic equilibrium. In equilibrium the temperature is uniform and the gas is spread evenly, so no further spreading is possible. Isolated systems spontaneously move toward thermodynamic equilibrium. Once there, nothing happens spontaneously on the large scale, and the entropy stays at its maximum value.</p>
   <p data-lang="zh">系统处于热力学平衡（<code>thermodynamic equilibrium</code>）时熵最大（<code>maximum entropy</code>）。平衡时温度均匀，气体分布均匀，不可能再有进一步的扩散。孤立系统自发地趋向热力学平衡。一旦到达平衡，宏观上不再有自发的变化，熵保持在最大值。</p>
 
   <h3><span data-lang="en">Isolated Systems, Closed Systems and the Surroundings</span><span data-lang="zh">孤立系统、封闭系统与周围环境</span></h3>
-  <p data-lang="en">The change in a system's entropy is determined by the system's interactions with its surroundings. An <strong>isolated system</strong> exchanges neither energy nor matter with its surroundings, so its entropy never decreases. A <strong>closed system</strong> can exchange energy with its surroundings (by heating or by work) but not matter. Because energy can be transferred into or out of a closed system, its entropy can decrease. A cup of coffee cooling in a room, a refrigerator's interior as it chills food, or a gas squeezed by a piston while energy flows out of it are all examples. In each case the entropy of the surroundings rises by at least as much as the entropy of the system falls, so the total for the system and surroundings together, which is an isolated system, does not decrease. The second law is never violated: the decrease in one place is paid for by an increase elsewhere.</p>
-  <p data-lang="zh">系统的熵变由系统与周围环境（<code>surroundings</code>）的相互作用决定。<strong>孤立系统</strong>与周围环境既不交换能量也不交换物质，所以它的熵永不减小。<strong>封闭系统</strong>（<code>closed system</code>）可以与周围环境交换能量（通过加热或做功），但不交换物质。因为能量可以传入或传出封闭系统，它的熵可以减小。房间里逐渐冷却的咖啡、冷藏食物时冰箱的内部、被活塞压缩同时向外放出能量的气体，都是例子。每种情形中，周围环境的熵至少增加得和系统的熵减少得一样多，所以系统与周围环境合起来（这是一个孤立系统）的总熵不会减小。第二定律从未被违背：一处的减少，由另一处的增加来补偿。</p>
+  <p data-lang="en">The change in a system's entropy is determined by the system's interactions with its surroundings. An <strong>isolated system</strong> exchanges neither energy nor matter with its surroundings, so its entropy never decreases. A <strong>closed system</strong> can exchange energy with its surroundings (by heating or by work) but not matter.</p>
+  <p data-lang="zh">系统的熵变由系统与周围环境（<code>surroundings</code>）的相互作用决定。<strong>孤立系统</strong>与周围环境既不交换能量也不交换物质，所以它的熵永不减小。<strong>封闭系统</strong>（<code>closed system</code>）可以与周围环境交换能量（通过加热或做功），但不交换物质。</p>
+  <p data-lang="en">Because energy can be transferred into or out of a closed system, its entropy can decrease. A cup of coffee cooling in a room, a refrigerator's interior as it chills food, or a gas squeezed by a piston while energy flows out of it are all examples.</p>
+  <p data-lang="zh">因为能量可以传入或传出封闭系统，它的熵可以减小。房间里逐渐冷却的咖啡、冷藏食物时冰箱的内部、被活塞压缩同时向外放出能量的气体，都是例子。</p>
+  <p data-lang="en">In each case the entropy of the surroundings rises by at least as much as the entropy of the system falls, so the total for the system and surroundings together, which is an isolated system, does not decrease.</p>
+  <p data-lang="zh">每种情形中，周围环境的熵至少增加得和系统的熵减少得一样多，所以系统与周围环境合起来（这是一个孤立系统）的总熵不会减小。</p>
+  <p data-lang="en">The second law is never violated: the decrease in one place is paid for by an increase elsewhere.</p>
+  <p data-lang="zh">第二定律从未被违背：一处的减少，由另一处的增加来补偿。</p>
 
   <div class="concept-box red" data-lang="en">
     <strong>Common Mistake: Applying "entropy never decreases" to every system</strong>
@@ -2163,8 +2479,10 @@ figure.dr-fig figcaption {
   <details class="sg-we" open>
     <summary><span data-lang="en">Worked Example: Entropy as a State Function</span><span data-lang="zh">例题：作为状态函数的熵</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">An ideal gas goes from state A to state B, where B has twice the volume and the same temperature as A. By path 1 the gas expands freely into a vacuum inside an insulated container. By path 2 the gas expands slowly against a piston while in contact with a warm reservoir, doing about $140\,\mathrm{J}$ of work on the piston. Compare $Q$, $W$, $\Delta U$ and the entropy change of the gas for the two paths.</p>
-      <p class="worked-problem" data-lang="zh">理想气体从状态 A 变到状态 B，B 的体积是 A 的两倍，温度与 A 相同。路径 1：气体在隔热容器中自由膨胀进入真空。路径 2：气体与温度较高的热库接触，缓慢推动活塞膨胀，对活塞做了约 $140\,\mathrm{J}$ 的功。比较两条路径的 $Q$、$W$、$\Delta U$ 以及气体的熵变。</p>
+      <p class="worked-problem" data-lang="en">An ideal gas goes from state A to state B, where B has twice the volume and the same temperature as A. By path 1 the gas expands freely into a vacuum inside an insulated container.</p>
+      <p class="worked-problem" data-lang="zh">理想气体从状态 A 变到状态 B，B 的体积是 A 的两倍，温度与 A 相同。路径 1：气体在隔热容器中自由膨胀进入真空。</p>
+      <p class="worked-problem" data-lang="en">By path 2 the gas expands slowly against a piston while in contact with a warm reservoir, doing about $140\,\mathrm{J}$ of work on the piston. Compare $Q$, $W$, $\Delta U$ and the entropy change of the gas for the two paths.</p>
+      <p class="worked-problem" data-lang="zh">路径 2：气体与温度较高的热库接触，缓慢推动活塞膨胀，对活塞做了约 $140\,\mathrm{J}$ 的功。比较两条路径的 $Q$、$W$、$\Delta U$ 以及气体的熵变。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Path 1, free expansion</span><span data-lang="zh">第 1 步：路径 1，自由膨胀</span></div>
@@ -2184,8 +2502,10 @@ figure.dr-fig figcaption {
 
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">For a second-law question, first say what the system is and whether it is isolated or closed. Then give the direction of the spontaneous change (toward equilibrium, with energy spreading out), and say what happens to the entropy of the system and of the surroundings. A claim such as "entropy decreases here" is acceptable only if you identify energy leaving the system and the surroundings gaining entropy. Use words such as spread out, equilibrium, state function and unavailable to do work, and do not attempt to compute entropy values.</p>
-    <p data-lang="zh">遇到第二定律的题目，先说明系统是什么，它是孤立系统还是封闭系统。然后给出自发变化的方向（朝向平衡，能量扩散开来），并说明系统和周围环境的熵各发生什么变化。"这里熵减小"这样的说法，只有在你指出能量离开了系统、周围环境的熵增加了的情况下才站得住脚。使用"扩散""平衡""状态函数""无法用来做功"之类的词，不要试图计算熵的数值。</p>
+    <p data-lang="en">For a second-law question, first say what the system is and whether it is isolated or closed. Then give the direction of the spontaneous change (toward equilibrium, with energy spreading out), and say what happens to the entropy of the system and of the surroundings.</p>
+    <p data-lang="zh">遇到第二定律的题目，先说明系统是什么，它是孤立系统还是封闭系统。然后给出自发变化的方向（朝向平衡，能量扩散开来），并说明系统和周围环境的熵各发生什么变化。</p>
+    <p data-lang="en">A claim such as "entropy decreases here" is acceptable only if you identify energy leaving the system and the surroundings gaining entropy. Use words such as spread out, equilibrium, state function and unavailable to do work, and do not attempt to compute entropy values.</p>
+    <p data-lang="zh">"这里熵减小"这样的说法，只有在你指出能量离开了系统、周围环境的熵增加了的情况下才站得住脚。使用"扩散""平衡""状态函数""无法用来做功"之类的词，不要试图计算熵的数值。</p>
   </div>
 
   <div class="sg-check">
@@ -2196,11 +2516,11 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A hot metal block is placed against a cold metal block inside an insulated box. Predict the direction of energy transfer, and explain what happens to the entropy of the box and to the energy that is available to do work.</span><span data-lang="zh">在隔热盒里，把热金属块贴在冷金属块上。预测（<code>predict</code>）能量传递的方向，并解释（<code>explain</code>）盒子的熵以及可用来做功的能量如何变化。</span></summary>
-      <div class="sg-a"><p data-lang="en">Energy flows spontaneously from the hot block to the cold block until they have the same temperature. The box is an isolated system and this process is irreversible, so its entropy increases and reaches a maximum at thermal equilibrium. The energy has spread out over both blocks. At the beginning the temperature difference could drive a process that does work, but once the blocks are at the same temperature the same total energy is no longer available to do work.</p><p data-lang="zh">能量自发地从热块流向冷块，直到两者温度相同。盒子是孤立系统，这个过程不可逆，所以它的熵增大，并在热平衡时达到最大值。能量已经扩散到两个物块上。开始时，温差可以驱动某个做功的过程，而两块物体温度相同之后，同样的总能量就不再能用来做功。</p></div>
+      <div class="sg-a"><p data-lang="en">Energy flows spontaneously from the hot block to the cold block until they have the same temperature. The box is an isolated system and this process is irreversible, so its entropy increases and reaches a maximum at thermal equilibrium.</p><p data-lang="zh">能量自发地从热块流向冷块，直到两者温度相同。盒子是孤立系统，这个过程不可逆，所以它的熵增大，并在热平衡时达到最大值。</p><p data-lang="en">The energy has spread out over both blocks. At the beginning the temperature difference could drive a process that does work, but once the blocks are at the same temperature the same total energy is no longer available to do work.</p><p data-lang="zh">能量已经扩散到两个物块上。开始时，温差可以驱动某个做功的过程，而两块物体温度相同之后，同样的总能量就不再能用来做功。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A closed jar of water placed in a freezer ends with lower entropy than it started. Justify why this does not violate the second law.</span><span data-lang="zh">把一个密封的水罐放进冷冻室，最终它的熵比开始时更低。论证（<code>justify</code>）为什么这不违反第二定律。</span></summary>
-      <div class="sg-a"><p data-lang="en">The jar of water is a closed system, not an isolated one, because energy leaves it by cooling into the freezer. The second law requires only that the total entropy of an isolated system never decreases. The air and the refrigeration machinery of the freezer, which are the surroundings, gain more entropy than the water loses, so the total entropy of the water and its surroundings does not decrease.</p><p data-lang="zh">水罐是封闭系统，而不是孤立系统，因为能量通过冷却离开它进入冷冻室。第二定律只要求孤立系统的总熵永不减小。冷冻室的空气和制冷设备是周围环境，它们增加的熵多于水减少的熵，所以水与其周围环境的总熵没有减小。</p></div>
+      <div class="sg-a"><p data-lang="en">The jar of water is a closed system, not an isolated one, because energy leaves it by cooling into the freezer. The second law requires only that the total entropy of an isolated system never decreases.</p><p data-lang="zh">水罐是封闭系统，而不是孤立系统，因为能量通过冷却离开它进入冷冻室。第二定律只要求孤立系统的总熵永不减小。</p><p data-lang="en">The air and the refrigeration machinery of the freezer, which are the surroundings, gain more entropy than the water loses, so the total entropy of the water and its surroundings does not decrease.</p><p data-lang="zh">冷冻室的空气和制冷设备是周围环境，它们增加的熵多于水减少的熵，所以水与其周围环境的总熵没有减小。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Calculate the probability that all $20$ atoms of a gas are found in the left half of a container at a particular instant, if each atom is equally likely to be in either half. Explain what this means for a mole of gas.</span><span data-lang="zh">如果每个原子处于容器左半部分或右半部分的可能性相等，计算（<code>calculate</code>）某一时刻气体的全部 $20$ 个原子都在左半部分的概率。说明这对一摩尔气体意味着什么。</span></summary>
@@ -2208,7 +2528,7 @@ figure.dr-fig figcaption {
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">Explain what it means to say that entropy is a state function, and use this to compare the entropy change of a gas that goes between the same two states by one irreversible path and one reversible path.</span><span data-lang="zh">解释（<code>explain</code>）熵是状态函数是什么意思，并据此比较气体在相同的两个状态之间沿一条不可逆路径和一条可逆路径变化时的熵变。</span></summary>
-      <div class="sg-a"><p data-lang="en">A state function depends only on the current state, not on the way the system got there. The entropy of the gas therefore has the same initial and final values, and the same change, on both paths. What differs from path to path is the work and the energy transferred by heating, and how the entropy change is shared between the gas and its surroundings.</p><p data-lang="zh">状态函数只取决于当前的状态，与系统如何到达该状态无关。所以气体的熵在两条路径上有相同的初值和末值，熵变也相同。不同路径上不同的是功和通过加热传递的能量，以及熵的变化在气体与周围环境之间如何分配。</p></div>
+      <div class="sg-a"><p data-lang="en">A state function depends only on the current state, not on the way the system got there. The entropy of the gas therefore has the same initial and final values, and the same change, on both paths.</p><p data-lang="zh">状态函数只取决于当前的状态，与系统如何到达该状态无关。所以气体的熵在两条路径上有相同的初值和末值，熵变也相同。</p><p data-lang="en">What differs from path to path is the work and the energy transferred by heating, and how the entropy change is shared between the gas and its surroundings.</p><p data-lang="zh">不同路径上不同的是功和通过加热传递的能量，以及熵的变化在气体与周围环境之间如何分配。</p></div>
     </details>
     <details class="sg-q">
       <summary><span data-lang="en">A sealed, insulated box has a hot gas in one half and a cold gas in the other, separated by a thin conducting wall. Describe how it changes and what its final state looks like in terms of entropy.</span><span data-lang="zh">一个密封隔热的盒子里，一半是热气体，另一半是冷气体，中间隔着一层导热薄壁。描述（<code>describe</code>）它如何变化，以及从熵的角度看最终状态是什么样的。</span></summary>
@@ -2229,10 +2549,13 @@ figure.dr-fig figcaption {
       <div class="card-icon icon-accent">P2</div>
       <div class="card-title"><span data-lang="en">AP Physics 2: Weighting and Format</span><span data-lang="zh">AP Physics 2：占比与考试形式</span></div>
     </div>
-    <p data-lang="en">The College Board course page lists Unit 9, Thermodynamics, at 15-18% of the multiple-choice section of AP Physics 2: Algebra-Based. The course builds on AP Physics 1 or a comparable course. The exam has Section I with 42 multiple-choice questions in 85 minutes and Section II with 4 free-response questions in 95 minutes, each section half of the exam score. A calculator is permitted and reference materials are provided.</p>
-    <p data-lang="zh">College Board 课程页面列出第 9 单元"热力学"占 AP Physics 2: Algebra-Based 选择题部分的 15-18%。本课程以 AP Physics 1 或同等课程为基础。考试的第一部分为 42 道选择题，85 分钟；第二部分为 4 道自由作答题，95 分钟；两部分各占总分的一半。允许使用计算器，并提供参考资料（<code>reference materials</code>）。</p>
+    <p data-lang="en">The College Board course page lists Unit 9, Thermodynamics, at 15-18% of the multiple-choice section of AP Physics 2: Algebra-Based. The course builds on AP Physics 1 or a comparable course.</p>
+    <p data-lang="zh">College Board 课程页面列出第 9 单元"热力学"占 AP Physics 2: Algebra-Based 选择题部分的 15-18%。本课程以 AP Physics 1 或同等课程为基础。</p>
+    <p data-lang="en">The exam has Section I with 42 multiple-choice questions in 85 minutes and Section II with 4 free-response questions in 95 minutes, each section half of the exam score. A calculator is permitted and reference materials are provided.</p>
+    <p data-lang="zh">考试的第一部分为 42 道选择题，85 分钟；第二部分为 4 道自由作答题，95 分钟；两部分各占总分的一半。允许使用计算器，并提供参考资料（<code>reference materials</code>）。</p>
   </div>
 
+  <h3><span data-lang="en">Free-Response Practice</span><span data-lang="zh">自由作答题练习</span></h3>
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-green">FR</div>
@@ -2254,6 +2577,7 @@ figure.dr-fig figcaption {
     </ul>
   </div>
 
+  <h3><span data-lang="en">Final Checks</span><span data-lang="zh">最后检查</span></h3>
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-orange">CK</div>
@@ -2277,6 +2601,7 @@ figure.dr-fig figcaption {
     </ul>
   </div>
 
+  <h3><span data-lang="en">Formulas and Common Mistakes</span><span data-lang="zh">公式与常见错误</span></h3>
   <div class="card">
     <div class="card-header">
       <div class="card-icon icon-accent">Σ</div>
@@ -2430,6 +2755,8 @@ figure.dr-fig figcaption {
   <div class="section-label"><span data-lang="en">Assessment</span><span data-lang="zh">测评</span></div>
   <h2><span data-lang="en">Unit 9: Practice Quiz</span><span data-lang="zh">第 9 单元：练习测验</span></h2>
 
+  <h3><span data-lang="en">Topic 9.1: Kinetic Theory</span><span data-lang="zh">专题 9.1：分子动理论</span></h3>
+
   <div class="quiz" data-answer="1">
     <div class="quiz-q">1. <span data-lang="en">An ideal gas is heated from $300\,\mathrm{K}$ to $1200\,\mathrm{K}$. By what factor does the rms speed of its atoms change?</span><span data-lang="zh">理想气体从 $300\,\mathrm{K}$ 加热到 $1200\,\mathrm{K}$。其原子的方均根速率变为原来的多少倍？</span></div>
     <div class="quiz-options">
@@ -2453,6 +2780,8 @@ figure.dr-fig figcaption {
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! A higher average kinetic energy moves the peak to higher speed. The area stands for all the atoms and is fixed, so the curve spreads out and the peak is lower.</span><span data-lang="zh">正确！平均动能更大使峰移向更高的速率。面积代表全部原子，是固定的，所以曲线展宽，峰变低。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The number of atoms does not change, so the area under the curve is the same. A peak that moves right and also grows taller, or a curve that is shifted without changing shape, would need more area. Heating raises the typical speed, so a lower-speed peak is also wrong.</span><span data-lang="zh">原子数不变，所以曲线下的面积不变。峰右移同时变高，或者形状不变地整体右移，都需要更大的面积。加热使典型速率增大，所以峰移向更低速率也是错的。</span></div>
   </div>
+
+  <h3><span data-lang="en">Topic 9.2: The Ideal Gas Law</span><span data-lang="zh">专题 9.2：理想气体定律</span></h3>
 
   <div class="quiz" data-answer="2">
     <div class="quiz-q">3. <span data-lang="en">A sealed rigid container of ideal gas is heated from $27^\circ\mathrm{C}$ to $327^\circ\mathrm{C}$. By what factor does the pressure change?</span><span data-lang="zh">一个密封刚性容器中的理想气体从 $27^\circ\mathrm{C}$ 加热到 $327^\circ\mathrm{C}$。压强变为原来的多少倍？</span></div>
@@ -2478,6 +2807,8 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">Use $N = PV/(k_B T)$ with $T = 300\,\mathrm{K}$ and $V$ in m³. Putting $27$ in for $T$ gives $8.1\times10^{23}$; using $1.5$ for $V$ as if litres were cubic meters gives $7.2\times10^{25}$; and $0.12$ is the number of moles, $n = PV/(RT)$, not the number of atoms.</span><span data-lang="zh">用 $N = PV/(k_B T)$，其中 $T = 300\,\mathrm{K}$，$V$ 用 m³。把 $T$ 代成 $27$ 得到 $8.1\times10^{23}$；把 $1.5$ 当作 $V$（好像升就是立方米）得到 $7.2\times10^{25}$；$0.12$ 是物质的量 $n = PV/(RT)$，不是原子数。</span></div>
   </div>
 
+  <h3><span data-lang="en">Topic 9.3: Thermal Energy Transfer and Equilibrium</span><span data-lang="zh">专题 9.3：热能的传递与平衡</span></h3>
+
   <div class="quiz" data-answer="3">
     <div class="quiz-q">5. <span data-lang="en">Helium gas and argon gas are in thermal equilibrium with each other. Which statement is true?</span><span data-lang="zh">氦气和氩气相互处于热平衡。下列哪个说法正确？</span></div>
     <div class="quiz-options">
@@ -2501,6 +2832,8 @@ figure.dr-fig figcaption {
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! Energy is transferred spontaneously from the higher-temperature system to the lower-temperature system. The cup cools until it reaches the temperature of the pool.</span><span data-lang="zh">正确！能量自发地从高温系统传向低温系统。杯子逐渐冷却，直到与游泳池温度相同。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The direction of energy transfer is set by the temperatures, not by the total amount of internal energy. Atoms from the hotter cup, with higher average kinetic energy, most often pass energy to the cooler pool atoms. A pool with more water simply ends up a little warmer, and the cup ends at nearly the pool temperature.</span><span data-lang="zh">能量传递的方向由温度决定，而不是由内能的总量决定。较热的杯子里平均动能较高的原子，最常把能量传给较冷的池水原子。水更多的游泳池只会变得略微暖一点，杯子最终的温度接近游泳池的温度。</span></div>
   </div>
+
+  <h3><span data-lang="en">Topic 9.4: The First Law</span><span data-lang="zh">专题 9.4：热力学第一定律</span></h3>
 
   <div class="quiz" data-answer="0">
     <div class="quiz-q">7. <span data-lang="en">A gas at a constant pressure of $1.5\times10^{5}\,\mathrm{Pa}$ is compressed from $4.0\times10^{-3}\,\mathrm{m^3}$ to $3.0\times10^{-3}\,\mathrm{m^3}$. What is the work done on the gas?</span><span data-lang="zh">压强恒为 $1.5\times10^{5}\,\mathrm{Pa}$ 的气体从 $4.0\times10^{-3}\,\mathrm{m^3}$ 被压缩到 $3.0\times10^{-3}\,\mathrm{m^3}$。外界对气体做的功是多少？</span></div>
@@ -2538,6 +2871,8 @@ figure.dr-fig figcaption {
     <div class="quiz-explain wrong-exp"><span data-lang="en">Work done by the gas is negative in $\Delta U = Q + W$, where $W$ is the work done on the gas. $+700\,\mathrm{J}$ adds the work instead of subtracting it; $+500\,\mathrm{J}$ ignores the work the gas did; and $-300\,\mathrm{J}$ has the signs of both terms reversed.</span><span data-lang="zh">在 $\Delta U = Q + W$ 中，$W$ 是外界对气体做的功，气体对外做的功为负。$+700\,\mathrm{J}$ 把功加上而不是减去；$+500\,\mathrm{J}$ 忽略了气体做的功；$-300\,\mathrm{J}$ 把两项的符号都弄反了。</span></div>
   </div>
 
+  <h3><span data-lang="en">Topic 9.5: Specific Heat and Conduction</span><span data-lang="zh">专题 9.5：比热容与热传导</span></h3>
+
   <div class="quiz" data-answer="2">
     <div class="quiz-q">10. <span data-lang="en">How much energy is needed to raise the temperature of $0.25\,\mathrm{kg}$ of water by $40\,\mathrm{K}$? ($c = 4.19\times10^{3}\,\mathrm{J/(kg\,K)}$)</span><span data-lang="zh">使 $0.25\,\mathrm{kg}$ 的水温度升高 $40\,\mathrm{K}$ 需要多少能量？（$c = 4.19\times10^{3}\,\mathrm{J/(kg\,K)}$）</span></div>
     <div class="quiz-options">
@@ -2561,6 +2896,8 @@ figure.dr-fig figcaption {
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! The rate is proportional to $A/L$, and $(2)/(1/2) = 4$.</span><span data-lang="zh">正确！速率正比于 $A/L$，而 $(2)/(1/2) = 4$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">In $Q/\Delta t = kA\Delta T/L$ both changes increase the rate, so the factors multiply: $2 \times 2 = 4$. $2P_0$ counts only one of the two changes; $P_0$ assumes the two cancel, as if the rate depended on $A$ and $L$ in the same way; and $P_0/4$ puts $A$ and $L$ in the wrong places.</span><span data-lang="zh">在 $Q/\Delta t = kA\Delta T/L$ 中，两个变化都使速率增大，所以因子相乘：$2 \times 2 = 4$。$2P_0$ 只算了两个变化中的一个；$P_0$ 认为两者抵消，好像速率对 $A$ 和 $L$ 的依赖方式相同；$P_0/4$ 则把 $A$ 和 $L$ 放错了位置。</span></div>
   </div>
+
+  <h3><span data-lang="en">Topic 9.6: Entropy</span><span data-lang="zh">专题 9.6：熵</span></h3>
 
   <div class="quiz" data-answer="1">
     <div class="quiz-q">12. <span data-lang="en">Which statement about entropy is correct?</span><span data-lang="zh">关于熵，下列哪个说法正确？</span></div>

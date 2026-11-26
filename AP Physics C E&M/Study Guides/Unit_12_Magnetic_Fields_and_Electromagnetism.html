@@ -483,20 +483,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -525,8 +533,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p2">
@@ -538,6 +546,41 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
   border: 1px solid var(--accent); color: var(--accent); }
 #courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
 <body>
@@ -660,6 +703,24 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh" data-course="c">麦克斯韦方程组是完整描述电磁学的四个方程，这是其中第二个，第四个将在专题 12.4 遇到。</p>
   <p data-lang="en" data-course="p2">Compare this with electric field lines (Unit 10): electric field lines can start on positive charges and end on negative charges, but magnetic field lines cannot start or end anywhere, because magnetic poles never occur in isolation.</p>
   <p data-lang="zh" data-course="p2">与电场线（第 10 单元）对比：电场线可以起始于正电荷、终止于负电荷，而磁感线不能在任何地方起止，因为磁极从不孤立存在。</p>
+  <h3><span data-lang="en">Why field lines form closed loops</span><span data-lang="zh">磁感线为何构成闭合回路</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why magnetic field lines close</span><span data-lang="zh">第一性原理：磁感线为什么闭合</span></div>
+    <p data-lang="en"><strong>Principle.</strong> No isolated magnetic pole exists. Cut a bar magnet in half and each piece is a complete dipole with its own N and S.</p>
+    <p data-lang="zh"><strong>原理。</strong>不存在孤立的磁极。把条形磁铁切成两半，每一半都是有自己 N 极和 S 极的完整偶极子。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>A field line could end only on a pole standing alone. With no lone poles, no line can start or stop.</li>
+      <li>Draw any closed surface. Each line that enters it must leave it again.</li>
+      <li>So the lines going out of every closed surface equal the lines coming in. Electric field lines differ: they begin on positive charges and end on negative ones.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>磁感线只可能终止于单独存在的磁极。既然没有孤立磁极，任何磁感线都不能起始或终止。</li>
+      <li>任取一个闭合曲面。每条进入曲面的磁感线都必须再穿出。</li>
+      <li>所以穿出任何闭合曲面的磁感线条数等于穿入的条数。电场线不同：它们起始于正电荷，终止于负电荷。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Shrink the surface until it wraps only the north end of a magnet. Lines still leave through the outside, but just as many arrive from inside the magnet, where they run from S to N. Around a lone positive charge, every line points outward however small the surface.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>把曲面缩小到只包住磁铁的北极端。磁感线仍从外侧穿出，但同样多的磁感线从磁铁内部（由 S 到 N）穿入。而包围单个正电荷的曲面，无论多小，每条电场线都向外穿出。</p>
+  </div>
   <p data-lang="en">For a bar magnet, the external field points away from one end (defined as the north pole) and returns to the other end (the south pole). <em>Inside</em> the magnet the lines continue from south to north to close the loops. That inside segment is the part students most often leave out of a sketch.</p>
   <p data-lang="zh">对条形磁铁，外部磁场从一端（定义为北极）指向外，并回到另一端（南极）。磁铁<em>内部</em>的磁感线则从南极指向北极，使回路闭合。这段内部磁感线是学生画图时最常漏掉的部分。</p>
   <div class="concept-box red" data-lang="en" data-course="c">
@@ -829,8 +890,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh" data-course="c">关于磁场的论断需要方向和理由。先写出该处 $\vec{B}$ 的方向，再说明所用规则（磁铁外部磁感线从 N 出、进 S；磁针与 $\vec{B}$ 对齐）。</p>
     <p data-lang="en" data-course="c">If asked to sketch a bar magnet, draw closed loops that continue inside the magnet from S to N. Quoting "Gauss's law for magnetism" alone is an incomplete justification: say that the net flux through a closed surface is zero because field lines have no beginning or end.</p>
     <p data-lang="zh" data-course="c">若要求画条形磁铁，请画出闭合回路，并在磁铁内部由 S 延续到 N。只引用“高斯磁定律”是不完整的论证：要说明通过闭合曲面的净磁通量为零，因为磁感线没有起点或终点。</p>
-    <p data-lang="en" data-course="p2">A claim about a field needs a direction and a reason. Write which way $\vec{B}$ points at the location, then state the rule you used (field lines leave N and enter S outside the magnet; a compass aligns with $\vec{B}$). If asked to sketch a bar magnet, draw closed loops that continue inside the magnet from S to N, and give the reason: magnetic poles never occur in isolation, so the field lines have no beginning or end.</p>
-    <p data-lang="zh" data-course="p2">关于磁场的论断需要方向和理由。先写出该处 $\vec{B}$ 的方向，再说明所用规则（磁铁外部磁感线从 N 出、进 S；磁针与 $\vec{B}$ 对齐）。若要求画条形磁铁，请画出闭合回路，并在磁铁内部由 S 延续到 N，同时给出理由：磁极从不孤立存在，所以磁感线没有起点或终点。</p>
+    <p data-lang="en" data-course="p2">A claim about a field needs a direction and a reason. Write which way $\vec{B}$ points at the location, then state the rule you used (field lines leave N and enter S outside the magnet; a compass aligns with $\vec{B}$).</p>
+    <p data-lang="zh" data-course="p2">关于磁场的论断需要方向和理由。先写出该处 $\vec{B}$ 的方向，再说明所用规则（磁铁外部磁感线从 N 出、进 S；磁针与 $\vec{B}$ 对齐）。</p>
+    <p data-lang="en" data-course="p2">If asked to sketch a bar magnet, draw closed loops that continue inside the magnet from S to N, and give the reason: magnetic poles never occur in isolation, so the field lines have no beginning or end.</p>
+    <p data-lang="zh" data-course="p2">若要求画条形磁铁，请画出闭合回路，并在磁铁内部由 S 延续到 N，同时给出理由：磁极从不孤立存在，所以磁感线没有起点或终点。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -860,7 +923,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </details>
     <details class="sg-q" data-course="p2">
       <summary><span data-lang="en">A student says that the magnetic permeability of a material is a fixed constant, like the vacuum permeability $\mu_0$. Is the student correct?</span><span data-lang="zh">有学生说材料的磁导率是固定不变的常数，就像真空磁导率 $\mu_0$ 一样。这位学生对吗？</span></summary>
-      <div class="sg-a"><p data-lang="en">Only free space has a constant permeability, $\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$. Magnetic permeability measures how much magnetization a material develops in response to an external magnetic field. The permeability of matter differs from $\mu_0$, arises from the composition and arrangement of the matter, and is not constant: it varies with temperature, orientation, and the strength of the external field.</p><p data-lang="zh">只有自由空间的磁导率是常数，$\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$。磁导率衡量材料在外磁场作用下产生多大磁化。物质的磁导率不同于 $\mu_0$，由物质的组成与排列决定，并且不是常数：它随温度、取向和外磁场强度变化。</p></div>
+      <div class="sg-a"><p data-lang="en">Only free space has a constant permeability, $\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$.</p><p data-lang="zh">只有自由空间的磁导率是常数，$\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$。</p><p data-lang="en">Magnetic permeability measures how much magnetization a material develops in response to an external magnetic field. The permeability of matter differs from $\mu_0$, arises from the composition and arrangement of the matter, and is not constant: it varies with temperature, orientation, and the strength of the external field.</p><p data-lang="zh">磁导率衡量材料在外磁场作用下产生多大磁化。物质的磁导率不同于 $\mu_0$，由物质的组成与排列决定，并且不是常数：它随温度、取向和外磁场强度变化。</p></div>
     </details>
   </div>
 </section>
@@ -918,10 +981,16 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="en">The magnitude is a maximum when $\vec{v}$ and $\vec{r}$ are perpendicular, and it is zero along the line of motion, where $\sin\theta = 0$.</p>
   <p data-lang="zh">当 $\vec{v}$ 与 $\vec{r}$ 垂直时大小最大，沿运动直线上 $\sin\theta = 0$，磁场为零。</p>
   </div>
-  <p data-lang="en" data-course="p2">A single moving charged object produces a magnetic field; a charge at rest does not. At a point in space, the magnetic field produced by the object depends on the object's velocity and on the distance between the point and the object: a faster charge produces a stronger field, and the field gets weaker as the distance from the charge grows.</p>
-  <p data-lang="zh" data-course="p2">单个运动的带电物体会产生磁场，静止的电荷则不会。空间某点由该物体产生的磁场取决于物体的速度和该点到物体的距离：电荷运动得越快，磁场越强；离电荷越远，磁场越弱。</p>
-  <p data-lang="en" data-course="p2">The direction of the field at a point is perpendicular to both the velocity of the object and the position vector from the object to that point, and it is found with the right-hand rule. For a positive charge, point the thumb of your right hand along the velocity; your curled fingers show the direction in which the field circles the line of motion. For a negative charge, reverse the result. The magnitude of the field is a maximum at points where the velocity and the position vector are perpendicular, and it is zero at points on the line of motion.</p>
-  <p data-lang="zh" data-course="p2">该点磁场的方向同时垂直于物体的速度和从物体指向该点的位置矢量，用右手定则确定。对正电荷，右手拇指沿速度方向，弯曲的四指表示磁场绕运动直线环绕的方向；对负电荷，结果反向。在速度与位置矢量垂直的点，磁场大小最大；在运动直线上的点，磁场为零。</p>
+  <p data-lang="en" data-course="p2">A single moving charged object produces a magnetic field; a charge at rest does not.</p>
+  <p data-lang="zh" data-course="p2">单个运动的带电物体会产生磁场，静止的电荷则不会。</p>
+  <p data-lang="en" data-course="p2">At a point in space, the magnetic field produced by the object depends on the object's velocity and on the distance between the point and the object: a faster charge produces a stronger field, and the field gets weaker as the distance from the charge grows.</p>
+  <p data-lang="zh" data-course="p2">空间某点由该物体产生的磁场取决于物体的速度和该点到物体的距离：电荷运动得越快，磁场越强；离电荷越远，磁场越弱。</p>
+  <p data-lang="en" data-course="p2">The direction of the field at a point is perpendicular to both the velocity of the object and the position vector from the object to that point, and it is found with the right-hand rule.</p>
+  <p data-lang="zh" data-course="p2">该点磁场的方向同时垂直于物体的速度和从物体指向该点的位置矢量，用右手定则确定。</p>
+  <p data-lang="en" data-course="p2">For a positive charge, point the thumb of your right hand along the velocity; your curled fingers show the direction in which the field circles the line of motion. For a negative charge, reverse the result.</p>
+  <p data-lang="zh" data-course="p2">对正电荷，右手拇指沿速度方向，弯曲的四指表示磁场绕运动直线环绕的方向；对负电荷，结果反向。</p>
+  <p data-lang="en" data-course="p2">The magnitude of the field is a maximum at points where the velocity and the position vector are perpendicular, and it is zero at points on the line of motion.</p>
+  <p data-lang="zh" data-course="p2">在速度与位置矢量垂直的点，磁场大小最大；在运动直线上的点，磁场为零。</p>
   <p data-lang="en" data-course="p2">The field of a single moving charge is tiny. Measurable fields come from enormous numbers of charges moving together, which is a current (Topic 12.3).</p>
   <p data-lang="zh" data-course="p2">单个运动电荷的磁场非常微弱。可测量的磁场来自大量电荷的共同运动，也就是电流（专题 12.3）。</p>
   <details class="sg-we" data-course="c">
@@ -1001,6 +1070,20 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <li>力同时垂直于 $\vec{B}$ 和 $\vec{v}$。右手定则：四指沿速度方向，向磁场弯曲，拇指给出正电荷所受的力。对负电荷，结果要反向。</li>
     <li>因为力垂直于速度，磁力<em>不做功</em>。它改变速度的方向，但不改变速率或动能。</li>
   </ul>
+  <p data-lang="en">The table sets the two forces on a charge side by side; most direction and energy questions turn on one of these rows.</p>
+  <p data-lang="zh">下表把电荷所受的两种力并列比较；大多数方向题和能量题都取决于其中某一行。</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th><span data-lang="en">Property</span><span data-lang="zh">性质</span></th><th><span data-lang="en">Electric force</span><span data-lang="zh">电场力</span></th><th><span data-lang="en">Magnetic force</span><span data-lang="zh">磁力</span></th></tr></thead>
+    <tbody>
+      <tr><td><span data-lang="en">Magnitude</span><span data-lang="zh">大小</span></td><td>$F_E = |q|E$</td><td>$F_B = |q|vB\sin\theta$</td></tr>
+      <tr><td><span data-lang="en">Charge at rest</span><span data-lang="zh">静止的电荷</span></td><td><span data-lang="en">Feels the force</span><span data-lang="zh">受力</span></td><td><span data-lang="en">Feels no force</span><span data-lang="zh">不受力</span></td></tr>
+      <tr><td><span data-lang="en">Direction</span><span data-lang="zh">方向</span></td><td><span data-lang="en">Along the field (opposite for a negative charge)</span><span data-lang="zh">沿电场方向（负电荷相反）</span></td><td><span data-lang="en">Perpendicular to both the velocity and the field (right-hand rule)</span><span data-lang="zh">同时垂直于速度和磁场（右手定则）</span></td></tr>
+      <tr><td><span data-lang="en">Work on the charge</span><span data-lang="zh">对电荷做的功</span></td><td><span data-lang="en">Can be nonzero, so the speed can change</span><span data-lang="zh">可以不为零，速率可以改变</span></td><td><span data-lang="en">Always zero, so the speed is constant</span><span data-lang="zh">恒为零，速率不变</span></td></tr>
+      <tr><td><span data-lang="en">Path in a uniform field, entering perpendicular to it</span><span data-lang="zh">垂直射入均匀场时的轨迹</span></td><td><span data-lang="en">Parabola</span><span data-lang="zh">抛物线</span></td><td><span data-lang="en">Circle</span><span data-lang="zh">圆</span></td></tr>
+    </tbody>
+  </table>
+  </div>
   <details class="sg-we" data-course="c">
     <summary><span data-lang="en">Worked Example: Direction of the force on an electron</span><span data-lang="zh">例题：电子所受力的方向</span></summary>
     <div class="detail-body">
@@ -1053,8 +1136,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Different angles between velocity and field</span><span data-lang="zh">例题：速度与磁场的不同夹角</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A proton moves at $2.0\times10^{5}\ \text{m/s}$ in a region with a uniform magnetic field of $0.40\ \text{T}$. Find the magnetic force on the proton when its velocity is (a) perpendicular to the field, (b) parallel to the field, and (c) opposite to the field. (d) Describe in words what happens when the velocity makes an angle of $30^\circ$ with the field.</p>
-      <p class="worked-problem" data-lang="zh">一个质子以 $2.0\times10^{5}\ \text{m/s}$ 的速率在 $0.40\ \text{T}$ 的均匀磁场区域中运动。求质子的速度 (a) 垂直于磁场、(b) 平行于磁场、(c) 与磁场反向时所受的磁力。(d) 用文字描述速度与磁场成 $30^\circ$ 角时会发生什么。</p>
+      <p class="worked-problem" data-lang="en">A proton moves at $2.0\times10^{5}\ \text{m/s}$ in a region with a uniform magnetic field of $0.40\ \text{T}$. Find the magnetic force on the proton when its velocity is (a) perpendicular to the field, (b) parallel to the field, and (c) opposite to the field.</p>
+      <p class="worked-problem" data-lang="zh">一个质子以 $2.0\times10^{5}\ \text{m/s}$ 的速率在 $0.40\ \text{T}$ 的均匀磁场区域中运动。求质子的速度 (a) 垂直于磁场、(b) 平行于磁场、(c) 与磁场反向时所受的磁力。</p>
+      <p class="worked-problem" data-lang="en">(d) Describe in words what happens when the velocity makes an angle of $30^\circ$ with the field.</p>
+      <p class="worked-problem" data-lang="zh">(d) 用文字描述速度与磁场成 $30^\circ$ 角时会发生什么。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1</span><span data-lang="zh">第 1 步</span></div>
@@ -1088,8 +1173,27 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh" data-course="c">$r$ 与速率成正比，但 $T$ 和 $\omega$ 与 $v$、$r$ 无关：速度越大的粒子走的圆越大，但用的时间相同。这就是回旋加速器的原理。</p>
     <p data-lang="zh" data-course="p2">$r$ 与速率成正比，但 $T$ 和 $\omega$ 与 $v$、$r$ 无关：速度越大的粒子走的圆越大，但用的时间相同。</p>
   </div>
-  <p data-lang="en" data-course="c">If $\vec{v}$ also has a component along $\vec{B}$, namely $v_\parallel$, that component is untouched by the force. The motion is a <strong>helix</strong>: circular motion in the plane perpendicular to $\vec{B}$ at speed $v_\perp$, combined with uniform motion along $\vec{B}$ at $v_\parallel$. The radius uses $v_\perp$ only, and the distance advanced in one turn, the pitch, is $v_\parallel T$.</p>
-  <p data-lang="zh" data-course="c">若 $\vec{v}$ 还有沿 $\vec{B}$ 的分量 $v_\parallel$，这个分量不受力影响。运动是<strong>螺旋线</strong>（<code>helix</code>）：在垂直于 $\vec{B}$ 的平面内以速率 $v_\perp$ 做圆周运动，同时沿 $\vec{B}$ 以 $v_\parallel$ 匀速前进。半径只用 $v_\perp$，转一圈前进的距离（螺距）是 $v_\parallel T$。</p>
+  <p data-lang="en" data-course="c">If $\vec{v}$ also has a component along $\vec{B}$, namely $v_\parallel$, that component is untouched by the force.</p>
+  <p data-lang="zh" data-course="c">若 $\vec{v}$ 还有沿 $\vec{B}$ 的分量 $v_\parallel$，这个分量不受力影响。</p>
+  <p data-lang="en" data-course="c">The motion is a <strong>helix</strong>: circular motion in the plane perpendicular to $\vec{B}$ at speed $v_\perp$, combined with uniform motion along $\vec{B}$ at $v_\parallel$. The radius uses $v_\perp$ only, and the distance advanced in one turn, the pitch, is $v_\parallel T$.</p>
+  <p data-lang="zh" data-course="c">运动是<strong>螺旋线</strong>（<code>helix</code>）：在垂直于 $\vec{B}$ 的平面内以速率 $v_\perp$ 做圆周运动，同时沿 $\vec{B}$ 以 $v_\parallel$ 匀速前进。半径只用 $v_\perp$，转一圈前进的距离（螺距）是 $v_\parallel T$。</p>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why the path is a circle</span><span data-lang="zh">第一性原理：轨迹为什么是圆</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Newton's second law, applied to a force that always stays perpendicular to the velocity.</p>
+    <p data-lang="zh"><strong>原理。</strong>对始终垂直于速度的力应用牛顿第二定律。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Over every small displacement the force is at $90^\circ$ to the motion, so $W = Fd\cos 90^\circ = 0$. The speed $v$ never changes.</li>
+      <li>A force of constant size $|q|vB$, always perpendicular to the velocity, is a centripetal force: $|q|vB = mv^2/r$, so $r = mv/(|q|B)$.</li>
+      <li>One lap takes $T = 2\pi r/v = 2\pi m/(|q|B)$. The speed cancels.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在每一小段位移上，力都与运动成 $90^\circ$，所以 $W = Fd\cos 90^\circ = 0$。速率 $v$ 始终不变。</li>
+      <li>大小恒为 $|q|vB$、始终垂直于速度的力就是向心力：$|q|vB = mv^2/r$，所以 $r = mv/(|q|B)$。</li>
+      <li>转一圈用时 $T = 2\pi r/v = 2\pi m/(|q|B)$。速率被消去。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> As $B\to 0$, $r\to\infty$: with no force the path is a straight line. Doubling $v$ doubles $r$ but leaves $T$ unchanged, because the longer circle is covered at twice the speed.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>当 $B\to 0$ 时 $r\to\infty$：没有力时轨迹是直线。$v$ 加倍使 $r$ 加倍，但 $T$ 不变，因为更长的圆周是以两倍速率走完的。</p>
+  </div>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: A proton accelerated, then bent</span><span data-lang="zh">例题：先加速后偏转的质子</span></summary>
     <div class="detail-body">
@@ -1158,10 +1262,65 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="formula-label"><span data-lang="en">Force in combined fields</span><span data-lang="zh">组合场中的力</span></div>
     $$\vec{F} = q\left(\vec{E} + \vec{v}\times\vec{B}\right)$$
   </div>
-  <p data-lang="en" data-course="p2">In a region containing both an electric field and a magnetic field, a moving charged object experiences <em>independent</em> forces from each field. The electric force is $F_E = qE$ and the magnetic force has magnitude $F_B = |q|vB$ (for angles of 0, 90, and 180 degrees). Here $E$ is the electric field (N/C) and $q$ the charge (C). The net force is the vector sum of the two forces, each found on its own.</p>
-  <p data-lang="zh" data-course="p2">在同时存在电场和磁场的区域，运动的带电物体受到来自两个场的<em>相互独立</em>的力。电场力为 $F_E = qE$，磁力的大小为 $F_B = |q|vB$（对 0、90 和 180 度的夹角）。其中 $E$ 为电场强度（N/C），$q$ 为电荷量（C）。合力是这两个力的矢量和，每个力单独求出。</p>
+  <p data-lang="en" data-course="p2">In a region containing both an electric field and a magnetic field, a moving charged object experiences <em>independent</em> forces from each field.</p>
+  <p data-lang="zh" data-course="p2">在同时存在电场和磁场的区域，运动的带电物体受到来自两个场的<em>相互独立</em>的力。</p>
+  <p data-lang="en" data-course="p2">The electric force is $F_E = qE$ and the magnetic force has magnitude $F_B = |q|vB$ (for angles of 0, 90, and 180 degrees). Here $E$ is the electric field (N/C) and $q$ the charge (C). The net force is the vector sum of the two forces, each found on its own.</p>
+  <p data-lang="zh" data-course="p2">电场力为 $F_E = qE$，磁力的大小为 $F_B = |q|vB$（对 0、90 和 180 度的夹角）。其中 $E$ 为电场强度（N/C），$q$ 为电荷量（C）。合力是这两个力的矢量和，每个力单独求出。</p>
   <p data-lang="en">A <strong>velocity selector</strong> uses perpendicular $\vec{E}$ and $\vec{B}$ arranged so the two forces point in opposite directions. A charge passes straight through only if the forces balance, $qE = qvB$, so $v = E/B$ regardless of the charge or mass. Slower and faster particles are deflected out of the beam.</p>
   <p data-lang="zh"><strong>速度选择器</strong>（<code>velocity selector</code>）使用相互垂直的 $\vec{E}$ 与 $\vec{B}$，并使两个力方向相反。只有当两力平衡，$qE = qvB$，电荷才能直线通过，即 $v = E/B$，与电荷或质量无关。更慢或更快的粒子会偏出束流。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Velocity selector followed by a magnetic-field region where the ion moves in a semicircle">
+    <rect class="fill2" x="40.0" y="55.0" width="165.0" height="115.0" rx="3.0"/>
+    <line class="ax" x1="52.0" y1="72.0" x2="204.0" y2="72.0"/>
+    <line class="ax" x1="52.0" y1="156.5" x2="204.0" y2="156.5"/>
+    <line class="c3" x1="44.0" y1="114.2" x2="212.0" y2="114.2"/>
+    <polyline class="c3" points="204.5,117.8 212.0,114.2 204.5,110.7"/>
+    <line class="c2" x1="124.0" y1="114.2" x2="124.0" y2="80.1"/>
+    <polyline class="c2" points="127.6,87.6 124.0,80.1 120.4,87.6"/>
+    <line class="c1" x1="124.0" y1="114.2" x2="124.0" y2="148.4"/>
+    <polyline class="c1" points="120.4,140.9 124.0,148.4 127.6,140.9"/>
+    <text class="lbl" data-lang="en" x="118.0" y="49.2" text-anchor="middle">Selector: v = E / B</text><text class="lbl" data-lang="zh" x="118.0" y="49.2" text-anchor="middle">速度选择器：v = E / B</text>
+    <line class="ax dash" x1="212.0" y1="198.8" x2="212.0" y2="36.2"/>
+    <path class="c1" d="M 212,114.25 A 37.375 37.375 0 0 1 212,189"/>
+    <text class="mut" data-lang="en" x="262.0" y="169.5" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="262.0" y="169.5" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="262.0" y="127.2" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="262.0" y="127.2" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="244.0" y="85.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="244.0" y="85.0" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="292.0" y="169.5" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="292.0" y="169.5" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="292.0" y="127.2" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="292.0" y="127.2" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="292.0" y="85.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="292.0" y="85.0" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="340.0" y="169.5" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="340.0" y="169.5" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="340.0" y="127.2" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="340.0" y="127.2" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="340.0" y="85.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="340.0" y="85.0" text-anchor="middle">⊙</text>
+    <text class="c1t" data-lang="en" x="318.0" y="214.0" text-anchor="middle">Deflection: r = mv / (|q|B)</text><text class="c1t" data-lang="zh" x="318.0" y="214.0" text-anchor="middle">偏转半径：r = mv / (|q|B)</text>
+    <text class="mut" data-lang="en" x="72.0" y="96.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="72.0" y="96.0" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="72.0" y="140.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="72.0" y="140.0" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="180.0" y="96.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="180.0" y="96.0" text-anchor="middle">⊙</text>
+    <text class="mut" data-lang="en" x="180.0" y="140.0" text-anchor="middle">⊙</text><text class="mut" data-lang="zh" x="180.0" y="140.0" text-anchor="middle">⊙</text>
+    <text class="lbl" data-lang="en" x="46.0" y="76.0" text-anchor="middle">−</text><text class="lbl" data-lang="zh" x="46.0" y="76.0" text-anchor="middle">−</text>
+    <text class="lbl" data-lang="en" x="46.0" y="161.0" text-anchor="middle">+</text><text class="lbl" data-lang="zh" x="46.0" y="161.0" text-anchor="middle">+</text>
+    <text class="c2t" data-lang="en" x="132.0" y="96.0" text-anchor="start">F<tspan baseline-shift="sub">E</tspan></text><text class="c2t" data-lang="zh" x="132.0" y="96.0" text-anchor="start">F<tspan baseline-shift="sub">E</tspan></text>
+    <text class="c1t" data-lang="en" x="132.0" y="142.0" text-anchor="start">F<tspan baseline-shift="sub">B</tspan></text><text class="c1t" data-lang="zh" x="132.0" y="142.0" text-anchor="start">F<tspan baseline-shift="sub">B</tspan></text>
+    <text class="lbl" data-lang="en" x="330.0" y="49.2" text-anchor="middle">B out of page</text><text class="lbl" data-lang="zh" x="330.0" y="49.2" text-anchor="middle">B 垂直纸面向外</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 12.1. A positive ion enters from the left; $\vec{B}$ points out of the page in both regions. Between the plates (top negative, bottom positive) the upward $F_E$ balances the downward $F_B$ only for $v = E/B$. Beyond the dashed line only $\vec{B}$ acts, and the ion follows a semicircle of radius $r = mv/(|q|B)$.</span><span data-lang="zh">图 12.1. 正离子从左侧射入；两个区域中 $\vec{B}$ 都垂直纸面向外。在两板之间（上板带负电，下板带正电），只有当 $v = E/B$ 时，向上的 $F_E$ 才与向下的 $F_B$ 平衡。越过虚线后只有 $\vec{B}$ 作用，离子沿半径 $r = mv/(|q|B)$ 的半圆运动。</span></figcaption>
+  </figure>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the velocity selector condition</span><span data-lang="zh">第一性原理：速度选择器的条件</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Newton's first law: straight-line motion at constant speed means the net force is zero.</p>
+    <p data-lang="zh"><strong>原理。</strong>牛顿第一定律：匀速直线运动意味着合力为零。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Arrange $\vec{E}\perp\vec{B}$ so that $F_E$ and $F_B$ point in opposite directions (Figure 12.1).</li>
+      <li>No deflection requires $|q|E = |q|vB$ with $\vec{v}\perp\vec{B}$. The charge cancels, leaving $v = E/B$.</li>
+      <li>Units: $(\text{N/C})/(\text{N}/(\text{A}\cdot\text{m})) = \text{A}\cdot\text{m/C} = \text{m/s}$, a speed as required.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>使 $\vec{E}\perp\vec{B}$，让 $F_E$ 与 $F_B$ 方向相反（图 12.1）。</li>
+      <li>不偏转要求 $|q|E = |q|vB$（$\vec{v}\perp\vec{B}$）。电荷被消去，得 $v = E/B$。</li>
+      <li>单位：$(\text{N/C})/(\text{N}/(\text{A}\cdot\text{m})) = \text{A}\cdot\text{m/C} = \text{m/s}$，正是速率的单位。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> A faster particle has $F_B &gt; F_E$ and bends toward the magnetic-force side; a slower one bends the other way. A negative charge has both forces reversed, so the same speed $E/B$ passes.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>更快的粒子 $F_B &gt; F_E$，向磁力一侧偏转；更慢的粒子向另一侧偏转。负电荷所受的两个力都反向，所以通过的仍是速率 $E/B$。</p>
+  </div>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Velocity selector followed by a mass spectrometer</span><span data-lang="zh">例题：速度选择器后接质谱仪</span></summary>
     <div class="detail-body">
@@ -1186,6 +1345,15 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </div>
   </details>
 
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: J. J. Thomson and the electron, 1897</span><span data-lang="zh">历史：J. J. 汤姆孙与电子，1897 年</span></div>
+    <p data-lang="en">At the Cavendish Laboratory in 1897, J. J. Thomson sent cathode rays through crossed electric and magnetic fields. Balancing the two forces gave the speed of the rays, as in a velocity selector, and the bending in one field alone then gave the charge-to-mass ratio $e/m$.</p>
+    <p data-lang="zh">1897 年，J. J. 汤姆孙在卡文迪许实验室让阴极射线通过正交的电场和磁场。像速度选择器那样使两个力平衡，得到射线的速率；再由单独一个场中的偏转得到荷质比 $e/m$。</p>
+    <p data-lang="en">The ratio was more than a thousand times that of a hydrogen ion, so the rays had to be a new, very light particle: the electron.</p>
+    <p data-lang="zh">这个比值是氢离子的一千多倍，所以射线必定是一种新的、非常轻的粒子：电子。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Cathode_ray" target="_blank" rel="noopener"><span data-lang="en">Cathode rays and Thomson's 1897 e/m experiment (Wikipedia, about 10 minutes)</span><span data-lang="zh">阴极射线与汤姆孙 1897 年的荷质比实验（维基百科英文版，约 10 分钟）</span></a></p>
+  </div>
+
   <h3><span data-lang="en">The Hall effect</span><span data-lang="zh">霍尔效应</span></h3>
   <p data-lang="en" data-course="c">The Hall effect describes the potential difference created across a conductor by an external magnetic field that has a component perpendicular to the direction in which charges move in the conductor.</p>
   <p data-lang="zh" data-course="c">霍尔效应指外磁场在导体中产生电势差，该磁场有垂直于导体中电荷运动方向的分量。</p>
@@ -1199,10 +1367,41 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">Here $n$ is the carrier number density and $v_d$ the drift speed. The sign of the Hall voltage reveals the sign of the carriers.</p>
     <p data-lang="zh">其中 $n$ 为载流子数密度，$v_d$ 为漂移速率。霍尔电压的符号揭示载流子的电性。</p>
   </div>
-  <p data-lang="en" data-course="p2">The Hall effect describes the potential difference created across a conductor by an external magnetic field that has a component perpendicular to the direction in which the charges move in the conductor. Consider a flat conductor that carries a current in a perpendicular magnetic field. The magnetic force pushes the moving charge carriers, whatever their sign, toward one edge of the conductor. Charge collects on that edge and leaves the opposite edge with the opposite charge, so a potential difference, the Hall voltage, appears across the conductor. It stops growing when the electric force from the collected charge on a carrier balances the magnetic force on it, so that the carriers again move straight along the conductor.</p>
-  <p data-lang="zh" data-course="p2">霍尔效应指外磁场在导体两侧产生电势差，该磁场有垂直于导体中电荷运动方向的分量。设一块扁平导体在垂直磁场中载有电流。磁力把运动的载流子（无论正负）推向导体的一侧边缘。电荷在那里堆积，使对边带相反的电荷，于是导体两侧出现电势差，即霍尔电压。当堆积的电荷对载流子的电场力与磁力平衡时，电压不再增大，载流子重新沿导体直线运动。</p>
+  <p data-lang="en" data-course="p2">The Hall effect describes the potential difference created across a conductor by an external magnetic field that has a component perpendicular to the direction in which the charges move in the conductor.</p>
+  <p data-lang="zh" data-course="p2">霍尔效应指外磁场在导体两侧产生电势差，该磁场有垂直于导体中电荷运动方向的分量。</p>
+  <p data-lang="en" data-course="p2">Consider a flat conductor that carries a current in a perpendicular magnetic field. The magnetic force pushes the moving charge carriers, whatever their sign, toward one edge of the conductor.</p>
+  <p data-lang="zh" data-course="p2">设一块扁平导体在垂直磁场中载有电流。磁力把运动的载流子（无论正负）推向导体的一侧边缘。</p>
+  <p data-lang="en" data-course="p2">Charge collects on that edge and leaves the opposite edge with the opposite charge, so a potential difference, the Hall voltage, appears across the conductor.</p>
+  <p data-lang="zh" data-course="p2">电荷在那里堆积，使对边带相反的电荷，于是导体两侧出现电势差，即霍尔电压。</p>
+  <p data-lang="en" data-course="p2">It stops growing when the electric force from the collected charge on a carrier balances the magnetic force on it, so that the carriers again move straight along the conductor.</p>
+  <p data-lang="zh" data-course="p2">当堆积的电荷对载流子的电场力与磁力平衡时，电压不再增大，载流子重新沿导体直线运动。</p>
   <p data-lang="en" data-course="p2">Electrons and positive carriers that make up the same conventional current are pushed toward the same edge. That edge therefore becomes negative if the carriers are electrons and positive if the carriers are positive, so the polarity of the Hall voltage reveals the sign of the charge carriers.</p>
   <p data-lang="zh" data-course="p2">构成同一传统电流的电子和正载流子被推向同一侧边缘。所以载流子为电子时该边带负电，载流子为正电荷时该边带正电，霍尔电压的极性因而揭示载流子的电性。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Edwin Hall, 1879</span><span data-lang="zh">历史：埃德温·霍尔，1879 年</span></div>
+    <p data-lang="en">In 1879 Edwin Hall, a graduate student at Johns Hopkins University, detected a tiny voltage across a thin gold leaf carrying a current in a magnetic field. The effect now bears his name, and Hall probes built on it are a standard way to measure magnetic fields.</p>
+    <p data-lang="zh">1879 年，约翰斯·霍普金斯大学的研究生埃德温·霍尔在磁场中载流的薄金箔两侧测到了一个极小的电压。这一效应以他的名字命名，基于它的霍尔探头是测量磁场的标准工具。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Hall_effect" target="_blank" rel="noopener"><span data-lang="en">The Hall effect: discovery, theory and uses (Wikipedia, about 10 minutes)</span><span data-lang="zh">霍尔效应：发现、理论与应用（维基百科英文版，约 10 分钟）</span></a></p>
+  </div>
+
+  <h3 data-course="p2"><span data-lang="en">Hall voltage from force balance</span><span data-lang="zh">由力平衡求霍尔电压</span></h3>
+  <div class="sg-fp" data-course="p2">
+    <div class="sg-label"><span data-lang="en">First principles: the size of the Hall voltage</span><span data-lang="zh">第一性原理：霍尔电压的大小</span></div>
+    <p data-lang="en"><strong>Principle.</strong> In the steady state the net sideways force on each carrier is zero, so carriers again move straight along the conductor.</p>
+    <p data-lang="zh"><strong>原理。</strong>稳定状态下，每个载流子所受的横向合力为零，所以载流子重新沿导体直线运动。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>A carrier drifting at speed $v_d$ perpendicular to $\vec{B}$ feels a sideways magnetic force $F_B = |q|v_dB$.</li>
+      <li>The collected charge makes a uniform sideways field. Across the width $w$, $E = \Delta V_H/w$, so $F_E = |q|\Delta V_H/w$.</li>
+      <li>Set $F_E = F_B$: $\Delta V_H = v_dBw$. The charge cancels.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>以漂移速率 $v_d$ 垂直于 $\vec{B}$ 运动的载流子受到横向磁力 $F_B = |q|v_dB$。</li>
+      <li>堆积的电荷形成均匀的横向电场。在宽度 $w$ 上，$E = \Delta V_H/w$，所以 $F_E = |q|\Delta V_H/w$。</li>
+      <li>令 $F_E = F_B$：$\Delta V_H = v_dBw$。电荷被消去。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> With $B = 0$ there is no sideways push, and $\Delta V_H = 0$. Carriers of the opposite sign carrying the same current reverse the polarity of $\Delta V_H$, which is how the sign of the carriers is found.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$B = 0$ 时没有横向推力，$\Delta V_H = 0$。若载有同样电流的载流子电性相反，$\Delta V_H$ 的极性反转，这正是判断载流子电性的方法。</p>
+  </div>
   <details class="sg-we" data-course="c">
     <summary><span data-lang="en">Worked Example: Hall voltage in a copper strip</span><span data-lang="zh">例题：铜条中的霍尔电压</span></summary>
     <div class="detail-body">
@@ -1249,8 +1448,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh" data-course="c">方向题由两次反转决定：叉乘次序（$\vec{v}\times\vec{B}$，绝不是 $\vec{B}\times\vec{v}$）和电荷的符号。请写出这两步。</p>
     <p data-lang="en" data-course="c">For circular motion, start from $|q|vB = mv^2/r$ and show the algebra: the CED expects you to derive $r$ and $T$, not recall them. Remember the magnetic force does no work, so a speed change in a mixed-field problem must come from the electric field. In a combined-field answer, give each force its own expression before adding them.</p>
     <p data-lang="zh" data-course="c">对圆周运动，从 $|q|vB = mv^2/r$ 出发并写出代数过程：CED 期望你推导 $r$ 和 $T$，而不是背诵。记住磁力不做功，所以组合场问题中速率的变化只能来自电场。在组合场的解答中，先分别写出每个力的表达式再相加。</p>
-    <p data-lang="en" data-course="p2">Direction questions are decided by the right-hand rule and the sign of the charge. Find the direction for a positive charge, then reverse it for a negative charge, and write both steps. For circular motion, start from $|q|vB = mv^2/r$ and show the algebra. Remember the magnetic force does no work, so a change in speed in a mixed-field problem must come from the electric field. For the magnetic force on a moving charge, use numbers only for angles of 0, 90, and 180 degrees, and describe other angles in words. In a combined-field answer, give each force its own expression before adding them.</p>
-    <p data-lang="zh" data-course="p2">方向题由右手定则和电荷的符号决定。先求正电荷的方向，再对负电荷反向，并写出这两步。对圆周运动，从 $|q|vB = mv^2/r$ 出发并写出代数过程。记住磁力不做功，所以组合场问题中速率的变化只能来自电场。对运动电荷所受的磁力，只对 0、90 和 180 度的夹角代入数值，其他角度用文字描述。在组合场的解答中，先分别写出每个力的表达式再相加。</p>
+    <p data-lang="en" data-course="p2">Direction questions are decided by the right-hand rule and the sign of the charge. Find the direction for a positive charge, then reverse it for a negative charge, and write both steps.</p>
+    <p data-lang="zh" data-course="p2">方向题由右手定则和电荷的符号决定。先求正电荷的方向，再对负电荷反向，并写出这两步。</p>
+    <p data-lang="en" data-course="p2">For circular motion, start from $|q|vB = mv^2/r$ and show the algebra. Remember the magnetic force does no work, so a change in speed in a mixed-field problem must come from the electric field.</p>
+    <p data-lang="zh" data-course="p2">对圆周运动，从 $|q|vB = mv^2/r$ 出发并写出代数过程。记住磁力不做功，所以组合场问题中速率的变化只能来自电场。</p>
+    <p data-lang="en" data-course="p2">For the magnetic force on a moving charge, use numbers only for angles of 0, 90, and 180 degrees, and describe other angles in words. In a combined-field answer, give each force its own expression before adding them.</p>
+    <p data-lang="zh" data-course="p2">对运动电荷所受的磁力，只对 0、90 和 180 度的夹角代入数值，其他角度用文字描述。在组合场的解答中，先分别写出每个力的表达式再相加。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1276,11 +1479,11 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </details>
     <details class="sg-q" data-course="p2">
       <summary><span data-lang="en">A positive charge moves to the right. Point P is directly above the charge, and point Q is the same distance from the charge, straight ahead on its line of motion. Compare the magnetic field the charge produces at P and at Q, and give the direction at P. How does the field at P change if the charge is negative?</span><span data-lang="zh">一个正电荷向右运动。P 点在电荷正上方，Q 点与电荷距离相同，位于电荷运动直线的正前方。比较该电荷在 P 点和 Q 点产生的磁场，并给出 P 点磁场的方向。若电荷为负电荷，P 点的磁场如何变化？</span></summary>
-      <div class="sg-a"><p data-lang="en">At P the position vector from the charge is perpendicular to the velocity, so the field is a maximum for that distance. At Q the position vector is along the velocity, so the field is zero. At P, point the right thumb to the right, along the velocity; the fingers curl out of the page above the charge, so the field at P points out of the page. For a negative charge the magnitude is the same and the direction reverses: the field at P points into the page.</p><p data-lang="zh">在 P 点，从电荷指向该点的位置矢量垂直于速度，所以在该距离上磁场最大。在 Q 点，位置矢量沿速度方向，所以磁场为零。在 P 点，右手拇指指向右，沿速度方向；四指在电荷上方向外弯曲，所以 P 点磁场垂直纸面向外。对负电荷，大小相同、方向反向：P 点磁场垂直纸面向内。</p></div>
+      <div class="sg-a"><p data-lang="en">At P the position vector from the charge is perpendicular to the velocity, so the field is a maximum for that distance. At Q the position vector is along the velocity, so the field is zero.</p><p data-lang="zh">在 P 点，从电荷指向该点的位置矢量垂直于速度，所以在该距离上磁场最大。在 Q 点，位置矢量沿速度方向，所以磁场为零。</p><p data-lang="en">At P, point the right thumb to the right, along the velocity; the fingers curl out of the page above the charge, so the field at P points out of the page. For a negative charge the magnitude is the same and the direction reverses: the field at P points into the page.</p><p data-lang="zh">在 P 点，右手拇指指向右，沿速度方向；四指在电荷上方向外弯曲，所以 P 点磁场垂直纸面向外。对负电荷，大小相同、方向反向：P 点磁场垂直纸面向内。</p></div>
     </details>
     <details class="sg-q" data-course="p2">
       <summary><span data-lang="en">A current flows to the right in a flat conductor that lies in a magnetic field pointing into the page. The charge carriers are electrons. Which edge of the conductor, the top or the bottom, is at the higher potential? What would change if the carriers were positive?</span><span data-lang="zh">电流在一块扁平导体中向右流动，导体处于垂直纸面向内的磁场中。载流子是电子。导体的哪一边（上边或下边）电势较高？如果载流子带正电，结果有何变化？</span></summary>
-      <div class="sg-a"><p data-lang="en">The electrons move to the left. For a positive charge moving left in a field into the page, the right-hand rule gives a force down; reversing for the electron gives a force up. Electrons collect on the top edge, so the top edge is negative and the bottom edge is at the higher potential. If the carriers were positive, they would move to the right, be pushed up, and make the top edge the higher potential, so the polarity of the Hall voltage reveals the sign of the carriers.</p><p data-lang="zh">电子向左运动。对在垂直纸面向内的磁场中向左运动的正电荷，右手定则给出向下的力；对电子反向，得到向上的力。电子聚集在上边，所以上边带负电，下边电势较高。如果载流子带正电，它们向右运动，被推向上，使上边电势较高，因此霍尔电压的极性揭示载流子的电性。</p></div>
+      <div class="sg-a"><p data-lang="en">The electrons move to the left. For a positive charge moving left in a field into the page, the right-hand rule gives a force down; reversing for the electron gives a force up. Electrons collect on the top edge, so the top edge is negative and the bottom edge is at the higher potential.</p><p data-lang="zh">电子向左运动。对在垂直纸面向内的磁场中向左运动的正电荷，右手定则给出向下的力；对电子反向，得到向上的力。电子聚集在上边，所以上边带负电，下边电势较高。</p><p data-lang="en">If the carriers were positive, they would move to the right, be pushed up, and make the top edge the higher potential, so the polarity of the Hall voltage reveals the sign of the carriers.</p><p data-lang="zh">如果载流子带正电，它们向右运动，被推向上，使上边电势较高，因此霍尔电压的极性揭示载流子的电性。</p></div>
     </details>
   </div>
 </section>
@@ -1320,6 +1523,14 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <p data-lang="en" data-course="c">A single moving charge makes a field far too small to notice. A wire carrying one ampere moves about $6\times10^{18}$ elementary charges past each point every second, and their fields add up. The Biot-Savart law is the rule for finding the field of a current by adding up (integrating) the contributions of small pieces of the wire.</p>
   <p data-lang="zh" data-course="c">单个运动电荷产生的磁场小到无法察觉。载有 1 A 电流的导线每秒有约 $6\times10^{18}$ 个元电荷通过每一点，它们的磁场叠加起来。毕奥-萨伐尔定律就是通过把导线上小段的贡献相加（积分）来求电流磁场的规则。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Ørsted and Ampère, 1820</span><span data-lang="zh">历史：奥斯特与安培，1820 年</span></div>
+    <p data-lang="en">In 1820 Hans Christian Ørsted saw a compass needle swing when a nearby wire carried a current: the first evidence that electric currents make magnetic fields.</p>
+    <p data-lang="zh">1820 年，汉斯·克里斯蒂安·奥斯特发现附近导线通电时磁针会偏转：这是电流产生磁场的第一个证据。</p>
+    <p data-lang="en">Within weeks of hearing the news, André-Marie Ampère showed that two parallel currents attract or repel each other, the force calculated later in this section.</p>
+    <p data-lang="zh">听到这一消息后不到几周，安德烈-马里·安培就证明了两根平行电流会相互吸引或排斥，也就是本节后面计算的力。</p>
+    <p><a href="https://en.wikipedia.org/wiki/History_of_electromagnetic_theory" target="_blank" rel="noopener"><span data-lang="en">History of electromagnetic theory, including Ørsted's 1820 compass discovery (Wikipedia)</span><span data-lang="zh">电磁理论史，包括奥斯特 1820 年的磁针发现（维基百科英文版）</span></a> · <a href="https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_force_law" target="_blank" rel="noopener"><span data-lang="en">Ampère's force law between currents (Wikipedia)</span><span data-lang="zh">安培的电流间作用力定律（维基百科英文版）</span></a></p>
+  </div>
   <div data-course="p2">
   <p data-lang="en">A single moving charge makes a field far too small to notice. A wire carrying one ampere moves about $6\times10^{18}$ elementary charges past each point every second, and their fields add up. A current-carrying wire therefore produces a magnetic field that can be measured.</p>
   <p data-lang="zh">单个运动电荷产生的磁场小到无法察觉。载有 1 A 电流的导线每秒有约 $6\times10^{18}$ 个元电荷通过每一点，它们的磁场叠加起来。因此载流导线会产生可以测量的磁场。</p>
@@ -1331,8 +1542,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="formula-box green">
     <div class="formula-label"><span data-lang="en">Field of a long, straight wire</span><span data-lang="zh">长直导线的磁场</span></div>
     $$B = \frac{\mu_0 I}{2\pi r}$$
-    <p data-lang="en">Here $B$ is the field magnitude (T), $I$ the current (A), $r$ the perpendicular distance from the central axis of the wire to the point (m), and $\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$ is the vacuum permeability. The field is the sum of the fields of all the moving charges in the wire, and by symmetry it has the same magnitude at every point on a circle around the wire. Doubling the current doubles the field; doubling the distance halves it.</p>
-    <p data-lang="zh">其中 $B$ 为磁场大小（T），$I$ 为电流（A），$r$ 为导线中心轴到该点的垂直距离（m），$\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$ 为真空磁导率。该磁场是导线中所有运动电荷磁场之和，由对称性，在绕导线的圆上每一点大小相同。电流加倍，磁场加倍；距离加倍，磁场减半。</p>
+    <p data-lang="en">Here $B$ is the field magnitude (T), $I$ the current (A), $r$ the perpendicular distance from the central axis of the wire to the point (m), and $\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$ is the vacuum permeability.</p>
+    <p data-lang="zh">其中 $B$ 为磁场大小（T），$I$ 为电流（A），$r$ 为导线中心轴到该点的垂直距离（m），$\mu_0 = 4\pi\times10^{-7}\ \text{T}\cdot\text{m/A}$ 为真空磁导率。</p>
+    <p data-lang="en">The field is the sum of the fields of all the moving charges in the wire, and by symmetry it has the same magnitude at every point on a circle around the wire. Doubling the current doubles the field; doubling the distance halves it.</p>
+    <p data-lang="zh">该磁场是导线中所有运动电荷磁场之和，由对称性，在绕导线的圆上每一点大小相同。电流加倍，磁场加倍；距离加倍，磁场减半。</p>
   </div>
   <p data-lang="en">Direction: use the right-hand rule. Point the thumb of your right hand along the conventional current; your curled fingers show the direction in which the field circles the wire.</p>
   <p data-lang="zh">方向：用右手定则。右手拇指沿传统电流方向，弯曲的四指表示磁场绕导线环绕的方向。</p>
@@ -1367,8 +1580,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </div>
   </details>
   <h3><span data-lang="en">Loops and several wires</span><span data-lang="zh">圆环与多根导线</span></h3>
-  <p data-lang="en">A current-carrying loop produces a magnetic field that behaves like the field of a small bar magnet. At the center of the loop the field is directed along the axis of the loop, perpendicular to the plane of the loop. To find its direction, curl the fingers of your right hand in the direction of the current around the loop; your thumb points along the field at the center.</p>
-  <p data-lang="zh">载流圆环产生的磁场类似小条形磁铁的磁场。在圆环中心，磁场沿圆环的轴线，垂直于圆环平面。要确定其方向，让右手四指沿圆环中的电流方向弯曲，拇指就指向中心处磁场的方向。</p>
+  <p data-lang="en">A current-carrying loop produces a magnetic field that behaves like the field of a small bar magnet. At the center of the loop the field is directed along the axis of the loop, perpendicular to the plane of the loop.</p>
+  <p data-lang="zh">载流圆环产生的磁场类似小条形磁铁的磁场。在圆环中心，磁场沿圆环的轴线，垂直于圆环平面。</p>
+  <p data-lang="en">To find its direction, curl the fingers of your right hand in the direction of the current around the loop; your thumb points along the field at the center.</p>
+  <p data-lang="zh">要确定其方向，让右手四指沿圆环中的电流方向弯曲，拇指就指向中心处磁场的方向。</p>
   <p data-lang="en">Near two or more current-carrying wires, the magnetic field at a point is found by vector addition: use $B = \mu_0 I/(2\pi r)$ and the right-hand rule for each wire separately, then add the fields as vectors. Fields in the same direction add, and fields in opposite directions subtract.</p>
   <p data-lang="zh">在两根或多根载流导线附近，某点的磁场用矢量加法求得：对每根导线分别用 $B = \mu_0 I/(2\pi r)$ 和右手定则，再把各个磁场按矢量相加。方向相同的磁场相加，方向相反的磁场相减。</p>
   <details class="sg-we" data-course="p2">
@@ -1410,8 +1625,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">It follows from the moving-charge field by replacing $q\vec{v}$ with $I\,d\vec{\ell}$. Magnitude of one piece: $dB = \dfrac{\mu_0}{4\pi}\dfrac{I\,d\ell\,\sin\theta}{r^2}$.</p>
     <p data-lang="zh">把运动电荷的磁场中的 $q\vec{v}$ 换成 $I\,d\vec{\ell}$ 即得。单个小段的大小：$dB = \dfrac{\mu_0}{4\pi}\dfrac{I\,d\ell\,\sin\theta}{r^2}$。</p>
   </div>
-  <p data-lang="en">Because $d\vec{B}\propto d\vec{\ell}\times\hat{r}$, the field vectors around a small segment are tangent to concentric circles centered on the wire. The field has <em>no component toward or away from the segment, and none parallel to it</em>, since the cross product is perpendicular to both $d\vec{\ell}$ and $\hat{r}$. Use the right-hand rule: thumb along the current, fingers curl in the direction of $\vec{B}$.</p>
-  <p data-lang="zh">由于 $d\vec{B}\propto d\vec{\ell}\times\hat{r}$，小段周围的磁场矢量与以导线为中心的同心圆相切。磁场<em>没有指向或背离该段的分量，也没有平行于它的分量</em>，因为叉乘同时垂直于 $d\vec{\ell}$ 和 $\hat{r}$。用右手定则：拇指沿电流，四指弯曲的方向就是 $\vec{B}$ 的方向。</p>
+  <p data-lang="en">Because $d\vec{B}\propto d\vec{\ell}\times\hat{r}$, the field vectors around a small segment are tangent to concentric circles centered on the wire.</p>
+  <p data-lang="zh">由于 $d\vec{B}\propto d\vec{\ell}\times\hat{r}$，小段周围的磁场矢量与以导线为中心的同心圆相切。</p>
+  <p data-lang="en">The field has <em>no component toward or away from the segment, and none parallel to it</em>, since the cross product is perpendicular to both $d\vec{\ell}$ and $\hat{r}$. Use the right-hand rule: thumb along the current, fingers curl in the direction of $\vec{B}$.</p>
+  <p data-lang="zh">磁场<em>没有指向或背离该段的分量，也没有平行于它的分量</em>，因为叉乘同时垂直于 $d\vec{\ell}$ 和 $\hat{r}$。用右手定则：拇指沿电流，四指弯曲的方向就是 $\vec{B}$ 的方向。</p>
   <div class="concept-box orange" data-lang="en">
     <strong>Boundary: only the standard geometries</strong>
     Quantitative Biot-Savart work is limited to a point on the perpendicular bisector of a straight conductor, a point on the central axis of a circular loop, and the center of a circular-loop segment. Learn these three derivations well; use symmetry and superposition for combinations of them.
@@ -1422,8 +1639,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
 
   <h3><span data-lang="en">Straight wire: the perpendicular bisector</span><span data-lang="zh">直导线：中垂线</span></h3>
-  <p data-lang="en">Place a straight wire of length $L$ along the $x$-axis from $-L/2$ to $L/2$, carrying $I$ in $+x$, and find $\vec{B}$ at $P=(0,a)$. For a piece at position $x$, $r=\sqrt{x^2+a^2}$ and $\sin\theta = a/r$. All pieces give $d\vec{B}$ in the same direction (out of the page, by the right-hand rule), so the magnitudes can be added directly:</p>
-  <p data-lang="zh">把长为 $L$ 的直导线沿 $x$ 轴从 $-L/2$ 放到 $L/2$，电流 $I$ 沿 $+x$，求 $P=(0,a)$ 处的 $\vec{B}$。对位置为 $x$ 的小段，$r=\sqrt{x^2+a^2}$，$\sin\theta = a/r$。所有小段产生的 $d\vec{B}$ 方向相同（由右手定则垂直纸面向外），所以大小可直接相加：</p>
+  <p data-lang="en">Place a straight wire of length $L$ along the $x$-axis from $-L/2$ to $L/2$, carrying $I$ in $+x$, and find $\vec{B}$ at $P=(0,a)$.</p>
+  <p data-lang="zh">把长为 $L$ 的直导线沿 $x$ 轴从 $-L/2$ 放到 $L/2$，电流 $I$ 沿 $+x$，求 $P=(0,a)$ 处的 $\vec{B}$。</p>
+  <p data-lang="en">For a piece at position $x$, $r=\sqrt{x^2+a^2}$ and $\sin\theta = a/r$. All pieces give $d\vec{B}$ in the same direction (out of the page, by the right-hand rule), so the magnitudes can be added directly:</p>
+  <p data-lang="zh">对位置为 $x$ 的小段，$r=\sqrt{x^2+a^2}$，$\sin\theta = a/r$。所有小段产生的 $d\vec{B}$ 方向相同（由右手定则垂直纸面向外），所以大小可直接相加：</p>
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Derivation</span><span data-lang="zh">推导</span></div>
     $$B = \int_{-L/2}^{L/2}\frac{\mu_0 I}{4\pi}\frac{a\,dx}{(x^2+a^2)^{3/2}} = \frac{\mu_0 I a}{4\pi}\left[\frac{x}{a^2\sqrt{x^2+a^2}}\right]_{-L/2}^{L/2} = \frac{\mu_0 I}{2\pi a}\,\frac{L/2}{\sqrt{a^2+(L/2)^2}}$$
@@ -1556,13 +1775,17 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">Magnitude $F=ILB\sin\theta$. $\vec{L}$ points along the conventional current. For a curved wire in a <em>uniform</em> field, $\vec{F}=I\vec{L}_{\text{chord}}\times\vec{B}$, where $\vec{L}_{\text{chord}}$ is the straight vector from the start to the end of the wire.</p>
     <p data-lang="zh">大小 $F=ILB\sin\theta$。$\vec{L}$ 沿传统电流方向。对<em>均匀</em>磁场中的弯曲导线，$\vec{F}=I\vec{L}_{\text{chord}}\times\vec{B}$，其中 $\vec{L}_{\text{chord}}$ 是从导线起点到终点的直线矢量。</p>
   </div>
-  <p data-lang="en" data-course="p2">A magnetic field may exert a force on a current-carrying wire. The magnitude of the force is proportional to the current, to the length of the portion of the wire within the field, and to the magnitude of the field, and it also depends on the angle between the direction of the current in the wire and the direction of the magnetic field:</p>
-  <p data-lang="zh" data-course="p2">磁场可能对载流导线施加力。力的大小与电流、导线处于磁场中的那部分长度和磁场的大小成正比，并且还取决于导线中电流方向与磁场方向之间的夹角：</p>
+  <p data-lang="en" data-course="p2">A magnetic field may exert a force on a current-carrying wire.</p>
+  <p data-lang="zh" data-course="p2">磁场可能对载流导线施加力。</p>
+  <p data-lang="en" data-course="p2">The magnitude of the force is proportional to the current, to the length of the portion of the wire within the field, and to the magnitude of the field, and it also depends on the angle between the direction of the current in the wire and the direction of the magnetic field:</p>
+  <p data-lang="zh" data-course="p2">力的大小与电流、导线处于磁场中的那部分长度和磁场的大小成正比，并且还取决于导线中电流方向与磁场方向之间的夹角：</p>
   <div class="formula-box green" data-course="p2">
     <div class="formula-label"><span data-lang="en">Force on a current-carrying wire</span><span data-lang="zh">载流导线所受的力</span></div>
     $$F = ILB\sin\theta$$
-    <p data-lang="en">Here $F$ is the magnitude of the force (N), $I$ the current (A), $L$ the length of wire within the field (m), $B$ the magnitude of the field (T), and $\theta$ the angle between the direction of the current and the direction of the field. The force is zero when the current is parallel or antiparallel to the field ($\theta = 0$ or $180^\circ$) and is a maximum, $F = ILB$, when the current is perpendicular to the field.</p>
-    <p data-lang="zh">其中 $F$ 为力的大小（N），$I$ 为电流（A），$L$ 为导线处于磁场中的长度（m），$B$ 为磁场的大小（T），$\theta$ 为电流方向与磁场方向之间的夹角。当电流与磁场平行或反平行（$\theta = 0$ 或 $180^\circ$）时力为零；当电流垂直于磁场时力最大，$F = ILB$。</p>
+    <p data-lang="en">Here $F$ is the magnitude of the force (N), $I$ the current (A), $L$ the length of wire within the field (m), $B$ the magnitude of the field (T), and $\theta$ the angle between the direction of the current and the direction of the field.</p>
+    <p data-lang="zh">其中 $F$ 为力的大小（N），$I$ 为电流（A），$L$ 为导线处于磁场中的长度（m），$B$ 为磁场的大小（T），$\theta$ 为电流方向与磁场方向之间的夹角。</p>
+    <p data-lang="en">The force is zero when the current is parallel or antiparallel to the field ($\theta = 0$ or $180^\circ$) and is a maximum, $F = ILB$, when the current is perpendicular to the field.</p>
+    <p data-lang="zh">当电流与磁场平行或反平行（$\theta = 0$ 或 $180^\circ$）时力为零；当电流垂直于磁场时力最大，$F = ILB$。</p>
   </div>
   <p data-lang="en" data-course="p2">The force is perpendicular to both the wire and the field, and its direction follows the right-hand rule: point the fingers of your right hand along the conventional current, curl them toward the magnetic field, and your thumb gives the direction of the force.</p>
   <p data-lang="zh" data-course="p2">力垂直于导线和磁场，方向遵循右手定则：右手四指沿传统电流方向，向磁场弯曲，拇指就给出力的方向。</p>
@@ -1572,6 +1795,31 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="formula-label"><span data-lang="en">Force per unit length between parallel wires</span><span data-lang="zh">平行导线之间单位长度的力</span></div>
     $$\frac{F}{L} = \frac{\mu_0 I_1 I_2}{2\pi d}$$
   </div>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 225" role="img" aria-label="Magnetic forces between parallel current-carrying wires">
+    <circle class="box" cx="130.0" cy="112.5" r="13.0"/>
+    <circle class="box" cx="310.0" cy="112.5" r="13.0"/>
+    <text class="c1t" data-lang="en" x="130.0" y="118.0" text-anchor="middle">⊙</text><text class="c1t" data-lang="zh" x="130.0" y="118.0" text-anchor="middle">⊙</text>
+    <text class="c1t" data-lang="en" x="310.0" y="118.0" text-anchor="middle">⊙</text><text class="c1t" data-lang="zh" x="310.0" y="118.0" text-anchor="middle">⊙</text>
+    <line class="c3" x1="147.5" y1="112.5" x2="197.5" y2="112.5"/>
+    <polyline class="c3" points="190.0,116.1 197.5,112.5 190.0,108.9"/>
+    <line class="c3" x1="292.5" y1="112.5" x2="242.5" y2="112.5"/>
+    <polyline class="c3" points="250.0,108.9 242.5,112.5 250.0,116.1"/>
+    <line class="c2" x1="310.0" y1="99.5" x2="310.0" y2="58.9"/>
+    <polyline class="c2" points="313.6,66.3 310.0,58.9 306.4,66.3"/>
+    <text class="lbl" data-lang="en" x="130.0" y="151.3" text-anchor="middle">I<tspan baseline-shift="sub">1</tspan> (out)</text><text class="lbl" data-lang="zh" x="130.0" y="151.3" text-anchor="middle">电流 I<tspan baseline-shift="sub">1</tspan>（向外）</text>
+    <text class="lbl" data-lang="en" x="310.0" y="151.3" text-anchor="middle">I<tspan baseline-shift="sub">2</tspan> (out)</text><text class="lbl" data-lang="zh" x="310.0" y="151.3" text-anchor="middle">电流 I<tspan baseline-shift="sub">2</tspan>（向外）</text>
+    <text class="c2t" data-lang="en" x="310.0" y="44.0" text-anchor="middle">B<tspan baseline-shift="sub">1</tspan> at wire 2</text><text class="c2t" data-lang="zh" x="310.0" y="44.0" text-anchor="middle">导线 2 处的 B<tspan baseline-shift="sub">1</tspan></text>
+    <text class="c3t" data-lang="en" x="220.0" y="184.7" text-anchor="middle">Same-direction currents attract: F/L = μ<tspan baseline-shift="sub">0</tspan> I<tspan baseline-shift="sub">1</tspan> I<tspan baseline-shift="sub">2</tspan> / (2πd)</text><text class="c3t" data-lang="zh" x="220.0" y="184.7" text-anchor="middle">同向电流相互吸引：F/L = μ<tspan baseline-shift="sub">0</tspan> I<tspan baseline-shift="sub">1</tspan> I<tspan baseline-shift="sub">2</tspan> / (2πd)</text>
+    <line class="ax dash" x1="130.0" y1="134.0" x2="310.0" y2="134.0"/>
+    <line class="ax" x1="130.0" y1="129.0" x2="130.0" y2="139.0"/>
+    <line class="ax" x1="310.0" y1="129.0" x2="310.0" y2="139.0"/>
+    <text class="lbl" data-lang="en" x="220.0" y="129.0" text-anchor="middle">d</text><text class="lbl" data-lang="zh" x="220.0" y="129.0" text-anchor="middle">d</text>
+    <text class="c3t" data-lang="en" x="172.0" y="104.0" text-anchor="middle">F</text><text class="c3t" data-lang="zh" x="172.0" y="104.0" text-anchor="middle">F</text>
+    <text class="c3t" data-lang="en" x="268.0" y="104.0" text-anchor="middle">F</text><text class="c3t" data-lang="zh" x="268.0" y="104.0" text-anchor="middle">F</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 12.2. Both currents point out of the page. Wire 1's field $\vec{B}_1$ at wire 2 points up the page, so the right-hand rule gives wire 2 a force toward wire 1; by Newton's third law wire 1 is pulled toward wire 2. Antiparallel currents repel.</span><span data-lang="zh">图 12.2. 两根导线的电流都垂直纸面向外。导线 1 在导线 2 处的磁场 $\vec{B}_1$ 沿纸面向上，由右手定则，导线 2 受到指向导线 1 的力；由牛顿第三定律，导线 1 被拉向导线 2。反向电流相互排斥。</span></figcaption>
+  </figure>
   <details class="sg-we" data-course="c">
     <summary><span data-lang="en">Worked Example: Force on a wire and between wires</span><span data-lang="zh">例题：导线所受的力与导线间的力</span></summary>
     <div class="detail-body">
@@ -1657,6 +1905,22 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
       </div>
     </div>
   </details>
+  <h3><span data-lang="en">Right-hand rules at a glance</span><span data-lang="zh">右手定则一览</span></h3>
+  <p data-lang="en">Every direction in this unit comes from one of these hand positions. Use the right hand, and the conventional current or a positive charge.</p>
+  <p data-lang="zh">本单元的每一个方向都来自下表中的某种手势。用右手，并以传统电流或正电荷为准。</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th><span data-lang="en">Situation</span><span data-lang="zh">情形</span></th><th><span data-lang="en">Hand position</span><span data-lang="zh">手势</span></th><th><span data-lang="en">What you read off</span><span data-lang="zh">得到的结果</span></th></tr></thead>
+    <tbody>
+      <tr><td><span data-lang="en">Field of a long straight wire</span><span data-lang="zh">长直导线的磁场</span></td><td><span data-lang="en">Thumb along the current</span><span data-lang="zh">拇指沿电流</span></td><td><span data-lang="en">Curled fingers show how the field circles the wire</span><span data-lang="zh">弯曲的四指表示磁场绕导线环绕的方向</span></td></tr>
+      <tr><td><span data-lang="en">Field at the center of a loop</span><span data-lang="zh">圆环中心的磁场</span></td><td><span data-lang="en">Fingers curl with the current around the loop</span><span data-lang="zh">四指沿环中电流方向弯曲</span></td><td><span data-lang="en">Thumb points along the field at the center</span><span data-lang="zh">拇指指向中心处磁场的方向</span></td></tr>
+      <tr><td><span data-lang="en">Field of a moving positive charge</span><span data-lang="zh">运动正电荷的磁场</span></td><td><span data-lang="en">Thumb along the velocity</span><span data-lang="zh">拇指沿速度</span></td><td><span data-lang="en">Curled fingers show how the field circles the line of motion</span><span data-lang="zh">弯曲的四指表示磁场绕运动直线环绕的方向</span></td></tr>
+      <tr><td><span data-lang="en">Force on a moving positive charge</span><span data-lang="zh">运动正电荷所受的力</span></td><td><span data-lang="en">Fingers along the velocity, curled toward the field</span><span data-lang="zh">四指沿速度，向磁场弯曲</span></td><td><span data-lang="en">Thumb gives the force (reverse it for a negative charge)</span><span data-lang="zh">拇指给出力的方向（负电荷反向）</span></td></tr>
+      <tr><td><span data-lang="en">Force on a current-carrying wire</span><span data-lang="zh">载流导线所受的力</span></td><td><span data-lang="en">Fingers along the current, curled toward the field</span><span data-lang="zh">四指沿电流，向磁场弯曲</span></td><td><span data-lang="en">Thumb gives the force on the wire</span><span data-lang="zh">拇指给出导线所受力的方向</span></td></tr>
+      <tr><td><span data-lang="en">Two parallel wires</span><span data-lang="zh">两根平行导线</span></td><td><span data-lang="en">Field rule for one wire, then force rule for the other</span><span data-lang="zh">先对一根导线用磁场定则，再对另一根用受力定则</span></td><td><span data-lang="en">Same-direction currents attract; opposite currents repel</span><span data-lang="zh">同向电流相吸，反向电流相斥</span></td></tr>
+    </tbody>
+  </table>
+  </div>
   <div class="sg-examtip">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
     <p data-lang="en" data-course="c">Say which standard geometry you are using before writing a formula (bisector of a straight wire, axis of a loop, center of an arc).</p>
@@ -1665,8 +1929,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh" data-course="c">推导要从 $dB=\frac{\mu_0}{4\pi}\frac{I\,d\ell\sin\theta}{r^2}$ 出发，交代几何量（$r$、$\theta$、积分上下限），并说明哪些分量因对称性抵消。</p>
     <p data-lang="en" data-course="c">Directions of the field need the right-hand rule written out, with the current direction named. When a problem asks how $B$ changes, reason from the functional form: $B\propto I/a$ for a long wire and $B\propto I/R$ at a loop center.</p>
     <p data-lang="zh" data-course="c">磁场方向要写出右手定则，并指明电流方向。当题目问 $B$ 如何变化时，从函数形式出发推理：长直导线 $B\propto I/a$，圆环中心 $B\propto I/R$。</p>
-    <p data-lang="en" data-course="p2">Name the rule you are using before you write a formula: the field of a wire, $B = \mu_0 I/(2\pi r)$, or the force on a wire, $F = ILB\sin\theta$. Write the right-hand rule out in words and name the current direction. For several wires, find the field of each wire separately, draw each as an arrow, and then add the arrows as vectors. When a problem asks how $B$ changes, reason from the form $B\propto I/r$.</p>
-    <p data-lang="zh" data-course="p2">写公式之前先说出你使用的规则：导线的磁场 $B = \mu_0 I/(2\pi r)$，还是导线所受的力 $F = ILB\sin\theta$。把右手定则用文字写出来，并指明电流方向。对多根导线，先分别求出每根导线的磁场，把每个磁场画成箭头，再按矢量相加。当题目问 $B$ 如何变化时，从 $B\propto I/r$ 的形式出发推理。</p>
+    <p data-lang="en" data-course="p2">Name the rule you are using before you write a formula: the field of a wire, $B = \mu_0 I/(2\pi r)$, or the force on a wire, $F = ILB\sin\theta$.</p>
+    <p data-lang="zh" data-course="p2">写公式之前先说出你使用的规则：导线的磁场 $B = \mu_0 I/(2\pi r)$，还是导线所受的力 $F = ILB\sin\theta$。</p>
+    <p data-lang="en" data-course="p2">Write the right-hand rule out in words and name the current direction.</p>
+    <p data-lang="zh" data-course="p2">把右手定则用文字写出来，并指明电流方向。</p>
+    <p data-lang="en" data-course="p2">For several wires, find the field of each wire separately, draw each as an arrow, and then add the arrows as vectors. When a problem asks how $B$ changes, reason from the form $B\propto I/r$.</p>
+    <p data-lang="zh" data-course="p2">对多根导线，先分别求出每根导线的磁场，把每个磁场画成箭头，再按矢量相加。当题目问 $B$ 如何变化时，从 $B\propto I/r$ 的形式出发推理。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1870,6 +2138,50 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh">板外磁场均匀，与距离无关。单位宽度表面电流为 $K=Jt$ 的薄片，两侧各有 $B=\mu_0K/2$。</p>
   </div>
 
+  <div class="sg-fp" data-course="c">
+    <div class="sg-label"><span data-lang="en">First principles: the field profile of a uniform cylinder</span><span data-lang="zh">第一性原理：均匀圆柱的磁场分布</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Ampère's law, $\oint \vec{B}\cdot d\vec{\ell} = \mu_0 I_{\text{enc}}$, applied with cylindrical symmetry.</p>
+    <p data-lang="zh"><strong>原理。</strong>在圆柱对称下应用安培环路定理 $\oint \vec{B}\cdot d\vec{\ell} = \mu_0 I_{\text{enc}}$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Symmetry makes $\vec{B}$ tangent to circles about the axis and constant on each, so $\oint \vec{B}\cdot d\vec{\ell} = B(2\pi r)$.</li>
+      <li>Inside, uniform $J = I/(\pi R^2)$ gives $I_{\text{enc}} = Ir^2/R^2$, so $B = \mu_0 I r/(2\pi R^2)$.</li>
+      <li>Outside, $I_{\text{enc}} = I$, so $B = \mu_0 I/(2\pi r)$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>对称性使 $\vec{B}$ 与绕轴的圆相切且在每个圆上大小不变，所以 $\oint \vec{B}\cdot d\vec{\ell} = B(2\pi r)$。</li>
+      <li>内部的均匀电流密度 $J = I/(\pi R^2)$ 给出 $I_{\text{enc}} = Ir^2/R^2$，所以 $B = \mu_0 I r/(2\pi R^2)$。</li>
+      <li>外部 $I_{\text{enc}} = I$，所以 $B = \mu_0 I/(2\pi r)$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Both forms give $\mu_0 I/(2\pi R)$ at $r = R$, so $B$ is continuous at the surface. On the axis $B = 0$ because no current is enclosed, and $B\to 0$ as $r\to\infty$ (Figure 12.3).</p>
+    <p data-lang="zh"><strong>极限检验。</strong>在 $r = R$ 处两式都给出 $\mu_0 I/(2\pi R)$，所以 $B$ 在表面连续。轴线上没有包围电流，所以 $B = 0$；当 $r\to\infty$ 时 $B\to 0$（图 12.3）。</p>
+  </div>
+  <figure class="sg-fig" role="group" data-course="c">
+    <svg viewBox="0 0 440 230" role="img" aria-label="Magnetic field inside and outside a cylindrical wire">
+    <line class="ax" x1="52.0" y1="192.0" x2="416.0" y2="192.0"/>
+    <polyline class="ax" points="408.5,195.6 416.0,192.0 408.5,188.4"/>
+    <line class="ax" x1="52.0" y1="192.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="224.0" text-anchor="middle">Radius r / R</text><text class="lbl" data-lang="zh" x="234.0" y="224.0" text-anchor="middle">半径 r / R</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Field B / B<tspan baseline-shift="sub">surf</tspan></text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">磁场 B / B<tspan baseline-shift="sub">表面</tspan></text>
+    <line class="ax" x1="143.0" y1="188.5" x2="143.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="143.0" y="207.0" text-anchor="middle">R</text><text class="mut" data-lang="zh" x="143.0" y="207.0" text-anchor="middle">R</text>
+    <line class="ax" x1="234.0" y1="188.5" x2="234.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="234.0" y="207.0" text-anchor="middle">2R</text><text class="mut" data-lang="zh" x="234.0" y="207.0" text-anchor="middle">2R</text>
+    <line class="ax" x1="325.0" y1="188.5" x2="325.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="325.0" y="207.0" text-anchor="middle">3R</text><text class="mut" data-lang="zh" x="325.0" y="207.0" text-anchor="middle">3R</text>
+    <line class="ax" x1="48.5" y1="121.2" x2="55.5" y2="121.2"/>
+    <text class="mut" data-lang="en" x="45.0" y="125.2" text-anchor="end">0.5</text><text class="mut" data-lang="zh" x="45.0" y="125.2" text-anchor="end">0.5</text>
+    <line class="ax" x1="48.5" y1="50.3" x2="55.5" y2="50.3"/>
+    <text class="mut" data-lang="en" x="45.0" y="54.3" text-anchor="end">1.0</text><text class="mut" data-lang="zh" x="45.0" y="54.3" text-anchor="end">1.0</text>
+    <line class="grid dash" x1="143.0" y1="192.0" x2="143.0" y2="43.2"/>
+    <path class="c1" d="M 52.00,192.00 L 52.76,190.82 L 53.52,189.64 L 54.27,188.46 L 55.03,187.28 L 55.79,186.10 L 56.55,184.92 L 57.31,183.74 L 58.07,182.56 L 58.83,181.38 L 59.58,180.19 L 60.34,179.01 L 61.10,177.83 L 61.86,176.65 L 62.62,175.47 L 63.38,174.29 L 64.13,173.11 L 64.89,171.93 L 65.65,170.75 L 66.41,169.57 L 67.17,168.39 L 67.92,167.21 L 68.68,166.03 L 69.44,164.85 L 70.20,163.67 L 70.96,162.49 L 71.72,161.31 L 72.47,160.12 L 73.23,158.94 L 73.99,157.76 L 74.75,156.58 L 75.51,155.40 L 76.27,154.22 L 77.03,153.04 L 77.78,151.86 L 78.54,150.68 L 79.30,149.50 L 80.06,148.32 L 80.82,147.14 L 81.58,145.96 L 82.33,144.78 L 83.09,143.60 L 83.85,142.42 L 84.61,141.24 L 85.37,140.06 L 86.12,138.88 L 86.88,137.69 L 87.64,136.51 L 88.40,135.33 L 89.16,134.15 L 89.92,132.97 L 90.67,131.79 L 91.43,130.61 L 92.19,129.43 L 92.95,128.25 L 93.71,127.07 L 94.47,125.89 L 95.22,124.71 L 95.98,123.53 L 96.74,122.35 L 97.50,121.17 L 98.26,119.99 L 99.02,118.81 L 99.78,117.62 L 100.53,116.44 L 101.29,115.26 L 102.05,114.08 L 102.81,112.90 L 103.57,111.72 L 104.32,110.54 L 105.08,109.36 L 105.84,108.18 L 106.60,107.00 L 107.36,105.82 L 108.12,104.64 L 108.88,103.46 L 109.63,102.28 L 110.39,101.10 L 111.15,99.92 L 111.91,98.74 L 112.67,97.56 L 113.43,96.37 L 114.18,95.19 L 114.94,94.01 L 115.70,92.83 L 116.46,91.65 L 117.22,90.47 L 117.97,89.29 L 118.73,88.11 L 119.49,86.93 L 120.25,85.75 L 121.01,84.57 L 121.77,83.39 L 122.53,82.21 L 123.28,81.03 L 124.04,79.85 L 124.80,78.67 L 125.56,77.49 L 126.32,76.31 L 127.08,75.12 L 127.83,73.94 L 128.59,72.76 L 129.35,71.58 L 130.11,70.40 L 130.87,69.22 L 131.62,68.04 L 132.38,66.86 L 133.14,65.68 L 133.90,64.50 L 134.66,63.32 L 135.42,62.14 L 136.18,60.96 L 136.93,59.78 L 137.69,58.60 L 138.45,57.42 L 139.21,56.24 L 139.97,55.06 L 140.72,53.88 L 141.48,52.69 L 142.24,51.51 L 143.00,50.33"/>
+    <path class="c1" d="M 143.00,50.33 L 145.20,53.68 L 147.40,56.86 L 149.60,59.91 L 151.80,62.82 L 154.00,65.61 L 156.19,68.27 L 158.39,70.83 L 160.59,73.28 L 162.79,75.64 L 164.99,77.91 L 167.19,80.08 L 169.39,82.18 L 171.59,84.20 L 173.79,86.15 L 175.99,88.02 L 178.19,89.84 L 180.39,91.59 L 182.59,93.28 L 184.78,94.91 L 186.98,96.49 L 189.18,98.03 L 191.38,99.51 L 193.58,100.94 L 195.78,102.34 L 197.98,103.69 L 200.18,105.00 L 202.38,106.27 L 204.58,107.51 L 206.78,108.71 L 208.97,109.87 L 211.17,111.01 L 213.37,112.11 L 215.57,113.19 L 217.77,114.23 L 219.97,115.25 L 222.17,116.24 L 224.37,117.21 L 226.57,118.15 L 228.77,119.07 L 230.97,119.97 L 233.17,120.84 L 235.36,121.69 L 237.56,122.53 L 239.76,123.34 L 241.96,124.14 L 244.16,124.91 L 246.36,125.67 L 248.56,126.41 L 250.76,127.14 L 252.96,127.85 L 255.16,128.54 L 257.36,129.22 L 259.56,129.89 L 261.75,130.54 L 263.95,131.18 L 266.15,131.80 L 268.35,132.41 L 270.55,133.01 L 272.75,133.60 L 274.95,134.18 L 277.15,134.74 L 279.35,135.30 L 281.55,135.84 L 283.75,136.37 L 285.95,136.89 L 288.14,137.41 L 290.34,137.91 L 292.54,138.41 L 294.74,138.89 L 296.94,139.37 L 299.14,139.84 L 301.34,140.30 L 303.54,140.75 L 305.74,141.19 L 307.94,141.63 L 310.14,142.06 L 312.34,142.48 L 314.53,142.90 L 316.73,143.30 L 318.93,143.70 L 321.13,144.10 L 323.33,144.49 L 325.53,144.87 L 327.73,145.25 L 329.93,145.62 L 332.13,145.98 L 334.33,146.34 L 336.53,146.69 L 338.73,147.04 L 340.93,147.38 L 343.12,147.72 L 345.32,148.05 L 347.52,148.38 L 349.72,148.70 L 351.92,149.02 L 354.12,149.33 L 356.32,149.64 L 358.52,149.94 L 360.72,150.24 L 362.92,150.54 L 365.12,150.83 L 367.32,151.11 L 369.51,151.40 L 371.71,151.68 L 373.91,151.95 L 376.11,152.22 L 378.31,152.49 L 380.51,152.76 L 382.71,153.02 L 384.91,153.28 L 387.11,153.53 L 389.31,153.78 L 391.51,154.03 L 393.70,154.27 L 395.90,154.51 L 398.10,154.75 L 400.30,154.99 L 402.50,155.22 L 404.70,155.45 L 406.90,155.68"/>
+    <text class="c1t" data-lang="en" x="96.0" y="176.0" text-anchor="start">B ∝ r</text><text class="c1t" data-lang="zh" x="96.0" y="176.0" text-anchor="start">B ∝ r</text>
+    <text class="c1t" data-lang="en" x="274.9" y="95.7" text-anchor="middle">Outside: B = μ<tspan baseline-shift="sub">0</tspan> I / (2πr)</text><text class="c1t" data-lang="zh" x="274.9" y="95.7" text-anchor="middle">外部：B = μ<tspan baseline-shift="sub">0</tspan> I / (2πr)</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 12.3. Field of a long cylinder of radius $R$ carrying a uniform current $I$, in units of the surface value $B_{\text{surf}} = \mu_0 I/(2\pi R)$. Inside, $B$ rises linearly from zero on the axis; outside it falls as $1/r$, so it is $0.5$ of the surface value at $r = 2R$.</span><span data-lang="zh">图 12.3. 半径 $R$、载有均匀电流 $I$ 的长圆柱的磁场，以表面值 $B_{\text{surf}} = \mu_0 I/(2\pi R)$ 为单位。内部 $B$ 从轴线上的零线性增大；外部按 $1/r$ 减小，所以在 $r = 2R$ 处为表面值的 $0.5$。</span></figcaption>
+  </figure>
+
   <h3><span data-lang="en">The long solenoid</span><span data-lang="zh">长螺线管</span></h3>
   <p data-lang="en">Unless otherwise stated, a solenoid is assumed to be very long, with a uniform field inside and a negligible field outside. Take a rectangular Amperian loop of length $\ell$ with one side inside the solenoid, parallel to the axis.</p>
   <p data-lang="zh">除非另有说明，螺线管都假定为很长，内部磁场均匀，外部磁场可忽略。取长为 $\ell$ 的矩形安培环路，其一边在螺线管内、平行于轴线。</p>
@@ -1988,8 +2300,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
     <p data-lang="en">Before using Ampere's law, name the symmetry and the loop: "circle of radius $r$ about the wire," "rectangle with one side inside the solenoid." State why $\vec{B}$ is constant and tangent on the loop.</p>
     <p data-lang="zh">使用安培环路定律之前，先指明对称性和环路：“绕导线、半径为 $r$ 的圆”“一边在螺线管内的矩形”。说明为什么 $\vec{B}$ 在环路上恒定并与环路相切。</p>
-    <p data-lang="en">Then write $I_{\text{enc}}$ with its direction (right-hand rule) and, for a current density that varies with position, integrate it. Marking the changing-$\vec{E}$ source on a diagram is enough for Maxwell's addition; do not attempt a $d\Phi_E/dt$ calculation. A sketch of $B$ against $r$ for a cylinder should rise linearly inside, peak at $r=R$, and fall as $1/r$ outside.</p>
-    <p data-lang="zh">然后写出带方向（右手定则）的 $I_{\text{enc}}$；若电流密度随位置变化，要对其积分。对麦克斯韦的补充，在图上标出变化的 $\vec{E}$ 这一来源就够了；不要尝试 $d\Phi_E/dt$ 的计算。圆柱体的 $B$ 对 $r$ 的草图应当在内部线性上升，在 $r=R$ 处达到峰值，在外部按 $1/r$ 下降。</p>
+    <p data-lang="en">Then write $I_{\text{enc}}$ with its direction (right-hand rule) and, for a current density that varies with position, integrate it.</p>
+    <p data-lang="zh">然后写出带方向（右手定则）的 $I_{\text{enc}}$；若电流密度随位置变化，要对其积分。</p>
+    <p data-lang="en">Marking the changing-$\vec{E}$ source on a diagram is enough for Maxwell's addition; do not attempt a $d\Phi_E/dt$ calculation. A sketch of $B$ against $r$ for a cylinder should rise linearly inside, peak at $r=R$, and fall as $1/r$ outside.</p>
+    <p data-lang="zh">对麦克斯韦的补充，在图上标出变化的 $\vec{E}$ 这一来源就够了；不要尝试 $d\Phi_E/dt$ 的计算。圆柱体的 $B$ 对 $r$ 的草图应当在内部线性上升，在 $r=R$ 处达到峰值，在外部按 $1/r$ 下降。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -2060,8 +2374,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="card-header"><div class="card-icon icon-accent">MC</div><div class="card-title"><span data-lang="en">Multiple-Choice Practice</span><span data-lang="zh">选择题练习（<code>Multiple Choice</code>）</span></div></div>
     <p data-lang="en" data-course="c"><strong>Scaling questions:</strong> most Unit 12 multiple-choice items ask what happens when one quantity changes. Write the relationship ($r\propto v/B$, $B\propto I/a$, $B_{\text{sol}}\propto nI$) and apply the factor. Period is independent of speed in a uniform field.</p>
     <p data-lang="zh" data-course="c"><strong>比例变化题：</strong>第 12 单元的多数选择题问的是一个量变化时会发生什么。写出关系式（$r\propto v/B$、$B\propto I/a$、$B_{\text{sol}}\propto nI$）并代入倍数。均匀磁场中周期与速率无关。</p>
-    <p data-lang="en" data-course="p2"><strong>Scaling questions:</strong> a useful way to practice is to ask what happens when one quantity changes. Write the relationship ($r\propto v/B$ for circular motion, $B\propto I/r$ for a long straight wire, $F\propto I$ for a wire in a field) and apply the factor. The period of circular motion is independent of speed in a uniform field.</p>
-    <p data-lang="zh" data-course="p2"><strong>比例变化题：</strong>一种有用的练习方式是问：当一个量变化时会发生什么。写出关系式（圆周运动 $r\propto v/B$，长直导线 $B\propto I/r$，磁场中的导线 $F\propto I$）并代入倍数。均匀磁场中圆周运动的周期与速率无关。</p>
+    <p data-lang="en" data-course="p2"><strong>Scaling questions:</strong> a useful way to practice is to ask what happens when one quantity changes.</p>
+    <p data-lang="zh" data-course="p2"><strong>比例变化题：</strong>一种有用的练习方式是问：当一个量变化时会发生什么。</p>
+    <p data-lang="en" data-course="p2">Write the relationship ($r\propto v/B$ for circular motion, $B\propto I/r$ for a long straight wire, $F\propto I$ for a wire in a field) and apply the factor. The period of circular motion is independent of speed in a uniform field.</p>
+    <p data-lang="zh" data-course="p2">写出关系式（圆周运动 $r\propto v/B$，长直导线 $B\propto I/r$，磁场中的导线 $F\propto I$）并代入倍数。均匀磁场中圆周运动的周期与速率无关。</p>
     <p data-lang="en" data-course="c"><strong>Direction questions:</strong> do the cross product with unit vectors when the geometry is in three dimensions, then flip once for a negative charge. Check the answer against the right-hand rule.</p>
     <p data-lang="zh" data-course="c"><strong>方向题：</strong>几何关系是三维时，用单位矢量做叉乘，负电荷再反向一次。用右手定则核对答案。</p>
     <p data-lang="en" data-course="p2"><strong>Direction questions:</strong> apply the right-hand rule, then reverse once for a negative charge. Check that the force is perpendicular to both the velocity (or current) and the field, and that the field of a wire circles around it.</p>

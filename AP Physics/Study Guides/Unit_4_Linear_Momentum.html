@@ -745,20 +745,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -787,8 +795,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -801,6 +809,41 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   border: 1px solid var(--accent); color: var(--accent); }
 #courseToggle [data-course-label][hidden] { display: none; }
 </style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content"><span data-lang="en">Skip to content</span><span data-lang="zh">跳到正文</span></a>
@@ -811,7 +854,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 4</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -951,6 +995,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="concept-box" data-lang="zh">
     <strong style="color: var(--accent);">为什么动量方法适合碰撞</strong>
     分析碰撞时，我们只需要比较"刚碰撞前"和"刚碰撞后"两个状态。碰撞过程中的内力可能极其复杂，但我们不需要知道细节：动量守恒会自动把账算清楚。这正是动量方法的威力所在：它<em>绕开</em>了对碰撞过程中力的具体形式的依赖。
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: whose "quantity of motion"?</span><span data-lang="zh">历史：谁的"运动量"？</span></div>
+    <p data-lang="en">In 1644 Ren&eacute; Descartes claimed that the total "quantity of motion" (size times speed) never changes. He ignored direction, so most of his seven rules for colliding bodies were wrong.</p>
+    <p data-lang="zh">1644 年，Ren&eacute; Descartes 提出世界上的"运动量"（<code>quantity of motion</code>，大小乘以速率）总量不变。他忽略了方向，所以他给出的七条碰撞规则大多是错的。</p>
+    <p data-lang="en">In 1668 the Royal Society asked for papers on collisions. John Wallis, Christopher Wren and Christiaan Huygens replied. Huygens showed that the conserved quantity must carry a sign for direction, which is today's vector momentum.</p>
+    <p data-lang="zh">1668 年，英国皇家学会（<code>Royal Society</code>）征集关于碰撞的论文，John Wallis、Christopher Wren 和 Christiaan Huygens 作出了回应。Huygens 证明守恒的量必须带有表示方向的正负号，这就是今天的矢量动量。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Momentum" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Momentum (its history section traces the idea from Descartes and Huygens to Newton)</span><span data-lang="zh">维基百科：动量（历史部分追溯了从 Descartes、Huygens 到 Newton 的思想演变）</span></a></p>
   </div>
 
   <details>
@@ -1182,6 +1235,41 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   </div>
   </div>
 
+  <h3><span data-lang="en">First Principles: Where Impulse Comes From</span><span data-lang="zh">第一性原理：冲量从何而来</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $\vec{J} = \Delta\vec{p}$</span><span data-lang="zh">第一性原理：为什么 $\vec{J} = \Delta\vec{p}$</span></div>
+    <div data-course="c">
+    <p data-lang="en"><strong>Principle.</strong> Newton's second law in its general form: $\vec{F}_\text{net} = d\vec{p}/dt$.</p>
+    <p data-lang="zh"><strong>原理。</strong>Newton 第二定律的一般形式：$\vec{F}_\text{net} = d\vec{p}/dt$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Multiply by $dt$: in each instant the force adds $d\vec{p} = \vec{F}_\text{net}\,dt$.</li>
+      <li>Add the instants from $t_1$ to $t_2$: $\Delta\vec{p} = \int_{t_1}^{t_2}\vec{F}_\text{net}\,dt$.</li>
+      <li>Call the integral the impulse $\vec{J}$, and define $\vec{F}_\text{avg} = \vec{J}/\Delta t$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>两边乘以 $dt$：每一瞬间力使动量增加 $d\vec{p} = \vec{F}_\text{net}\,dt$。</li>
+      <li>把 $t_1$ 到 $t_2$ 的各瞬间相加：$\Delta\vec{p} = \int_{t_1}^{t_2}\vec{F}_\text{net}\,dt$。</li>
+      <li>把这个积分称为冲量 $\vec{J}$，并定义 $\vec{F}_\text{avg} = \vec{J}/\Delta t$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <p data-lang="en"><strong>Principle.</strong> Newton's second law for constant mass, $\vec{F}_\text{net} = m\vec{a}$, with $\vec{a} = \Delta\vec{v}/\Delta t$ for a constant force.</p>
+    <p data-lang="zh"><strong>原理。</strong>质量恒定时的 Newton 第二定律 $\vec{F}_\text{net} = m\vec{a}$；力恒定时 $\vec{a} = \Delta\vec{v}/\Delta t$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Substitute and multiply by $\Delta t$: $\vec{F}_\text{net}\,\Delta t = m\,\Delta\vec{v} = \Delta\vec{p}$.</li>
+      <li>For a changing force, cut the contact into short slices in which the force is nearly constant. Each slice gives $F_i\,\Delta t_i = \Delta p_i$, a thin rectangle under the $F$-$t$ graph.</li>
+      <li>Add the slices: the total area under the graph equals the total $\Delta p$. This area is the impulse $J$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>代入后两边乘以 $\Delta t$：$\vec{F}_\text{net}\,\Delta t = m\,\Delta\vec{v} = \Delta\vec{p}$。</li>
+      <li>若力在变化，就把接触过程切成许多短时间片，每片内力几乎不变。每片给出 $F_i\,\Delta t_i = \Delta p_i$，即 $F$-$t$ 图像下的一个窄矩形。</li>
+      <li>把各片相加：图像下的总面积等于总的 $\Delta p$，这个面积就是冲量 $J$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting checks.</strong> If $\vec{F}_\text{net} = 0$, the impulse is zero and $\vec{p}$ stays constant (Newton's first law). For a fixed $\Delta p$, letting $\Delta t \to 0$ sends $F_\text{avg} = \Delta p/\Delta t$ to infinity, which is why a rigid impact hurts. Units: $\text{N}\cdot\text{s} = \text{kg}\cdot\text{m/s}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>若 $\vec{F}_\text{net} = 0$，冲量为零，$\vec{p}$ 保持不变（Newton 第一定律）。$\Delta p$ 一定时，令 $\Delta t \to 0$，$F_\text{avg} = \Delta p/\Delta t$ 趋于无穷大，所以刚性碰撞伤害大。单位：$\text{N}\cdot\text{s} = \text{kg}\cdot\text{m/s}$。</p>
+  </div>
+
   <h3><span data-lang="en">Applying the Theorem</span><span data-lang="zh">定理的应用</span></h3>
   <div class="concept-box green" data-lang="en">
     <strong style="color: var(--green);">Real-World Application: Safety Engineering</strong>
@@ -1191,6 +1279,34 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <strong style="color: var(--green);">实际应用：安全工程</strong>
     动量定理正是安全气囊（<code>airbag</code>）和溃缩区（<code>crumple zone</code>）能保命的原因。在车祸中，动量的变化（也即冲量）是定值，因为车必须停下来。但若延长碰撞<em>时间</em>，平均力就会变小：$\vec{F}_\text{avg} = \Delta\vec{p} / \Delta t$。停止时间越长，乘客受到的平均力就越小，实际上峰值力通常也更小。
   </div>
+
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Force-time impulse comparison">
+    <line class="ax" x1="52.0" y1="197.0" x2="416.0" y2="197.0"/>
+    <polyline class="ax" points="408.5,200.6 416.0,197.0 408.5,193.4"/>
+    <line class="ax" x1="52.0" y1="197.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="229.0" text-anchor="middle">Time t (ms)</text><text class="lbl" data-lang="zh" x="234.0" y="229.0" text-anchor="middle">时间 t (ms)</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Force F (kN)</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">力 F (kN)</text>
+    <line class="ax" x1="124.8" y1="193.5" x2="124.8" y2="200.5"/>
+    <text class="mut" data-lang="en" x="124.8" y="212.0" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="124.8" y="212.0" text-anchor="middle">2</text>
+    <line class="ax" x1="234.0" y1="193.5" x2="234.0" y2="200.5"/>
+    <text class="mut" data-lang="en" x="234.0" y="212.0" text-anchor="middle">5</text><text class="mut" data-lang="zh" x="234.0" y="212.0" text-anchor="middle">5</text>
+    <line class="ax" x1="343.2" y1="193.5" x2="343.2" y2="200.5"/>
+    <text class="mut" data-lang="en" x="343.2" y="212.0" text-anchor="middle">8</text><text class="mut" data-lang="zh" x="343.2" y="212.0" text-anchor="middle">8</text>
+    <line class="ax" x1="48.5" y1="127.0" x2="55.5" y2="127.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="131.0" text-anchor="end">4</text><text class="mut" data-lang="zh" x="45.0" y="131.0" text-anchor="end">4</text>
+    <line class="ax" x1="48.5" y1="57.0" x2="55.5" y2="57.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="61.0" text-anchor="end">8</text><text class="mut" data-lang="zh" x="45.0" y="61.0" text-anchor="end">8</text>
+    <path class="fill1" d="M 70.20,197.00 L 70.20,196.97 L 72.47,196.96 L 74.75,196.94 L 77.03,196.91 L 79.30,196.87 L 81.58,196.80 L 83.85,196.71 L 86.12,196.59 L 88.40,196.41 L 90.67,196.18 L 92.95,195.85 L 95.22,195.42 L 97.50,194.85 L 99.78,194.11 L 102.05,193.15 L 104.32,191.93 L 106.60,190.39 L 108.88,188.48 L 111.15,186.14 L 113.43,183.29 L 115.70,179.89 L 117.97,175.87 L 120.25,171.20 L 122.53,165.82 L 124.80,159.73 L 127.08,152.93 L 129.35,145.45 L 131.62,137.35 L 133.90,128.71 L 136.18,119.67 L 138.45,110.37 L 140.72,101.00 L 143.00,91.76 L 145.27,82.87 L 147.55,74.56 L 149.82,67.06 L 152.10,60.58 L 154.38,55.31 L 156.65,51.43 L 158.93,49.05 L 161.20,48.25 L 163.48,49.05 L 165.75,51.43 L 168.02,55.31 L 170.30,60.58 L 172.57,67.06 L 174.85,74.56 L 177.12,82.87 L 179.40,91.76 L 181.68,101.00 L 183.95,110.37 L 186.22,119.67 L 188.50,128.71 L 190.78,137.35 L 193.05,145.45 L 195.32,152.93 L 197.60,159.73 L 199.88,165.82 L 202.15,171.20 L 204.43,175.87 L 206.70,179.89 L 208.97,183.29 L 211.25,186.14 L 213.53,188.48 L 215.80,190.39 L 218.07,191.93 L 220.35,193.15 L 222.62,194.11 L 224.90,194.85 L 227.18,195.42 L 229.45,195.85 L 231.72,196.18 L 234.00,196.41 L 236.28,196.59 L 238.55,196.71 L 240.83,196.80 L 243.10,196.87 L 245.38,196.91 L 247.65,196.94 L 249.92,196.96 L 252.20,196.97 L 252.20,197.00 Z"/>
+    <path class="fill2" d="M 70.20,197.00 L 70.20,196.55 L 74.43,196.43 L 78.66,196.28 L 82.89,196.10 L 87.13,195.88 L 91.36,195.61 L 95.59,195.29 L 99.82,194.90 L 104.05,194.44 L 108.28,193.91 L 112.52,193.28 L 116.75,192.55 L 120.98,191.70 L 125.21,190.74 L 129.44,189.64 L 133.67,188.41 L 137.90,187.03 L 142.14,185.49 L 146.37,183.80 L 150.60,181.95 L 154.83,179.94 L 159.06,177.78 L 163.29,175.47 L 167.52,173.03 L 171.76,170.47 L 175.99,167.82 L 180.22,165.09 L 184.45,162.32 L 188.68,159.53 L 192.91,156.76 L 197.15,154.03 L 201.38,151.40 L 205.61,148.90 L 209.84,146.56 L 214.07,144.43 L 218.30,142.53 L 222.53,140.89 L 226.77,139.56 L 231.00,138.54 L 235.23,137.86 L 239.46,137.53 L 243.69,137.56 L 247.92,137.94 L 252.15,138.66 L 256.39,139.73 L 260.62,141.10 L 264.85,142.78 L 269.08,144.71 L 273.31,146.88 L 277.54,149.24 L 281.78,151.76 L 286.01,154.41 L 290.24,157.14 L 294.47,159.92 L 298.70,162.71 L 302.93,165.48 L 307.16,168.20 L 311.40,170.84 L 315.63,173.38 L 319.86,175.80 L 324.09,178.09 L 328.32,180.23 L 332.55,182.22 L 336.78,184.05 L 341.02,185.72 L 345.25,187.23 L 349.48,188.59 L 353.71,189.81 L 357.94,190.88 L 362.17,191.83 L 366.40,192.65 L 370.64,193.37 L 374.87,193.99 L 379.10,194.51 L 383.33,194.96 L 387.56,195.34 L 391.79,195.65 L 396.03,195.91 L 400.26,196.13 L 404.49,196.31 L 408.72,196.45 L 408.72,197.00 Z"/>
+    <path class="c1" d="M 59.28,197.00 L 61.10,197.00 L 62.92,196.99 L 64.74,196.99 L 66.56,196.99 L 68.38,196.98 L 70.20,196.97 L 72.02,196.96 L 73.84,196.95 L 75.66,196.93 L 77.48,196.90 L 79.30,196.87 L 81.12,196.82 L 82.94,196.75 L 84.76,196.67 L 86.58,196.56 L 88.40,196.41 L 90.22,196.23 L 92.04,195.99 L 93.86,195.70 L 95.68,195.32 L 97.50,194.85 L 99.32,194.28 L 101.14,193.56 L 102.96,192.70 L 104.78,191.65 L 106.60,190.39 L 108.42,188.90 L 110.24,187.13 L 112.06,185.06 L 113.88,182.66 L 115.70,179.89 L 117.52,176.73 L 119.34,173.15 L 121.16,169.13 L 122.98,164.66 L 124.80,159.73 L 126.62,154.35 L 128.44,148.52 L 130.26,142.28 L 132.08,135.66 L 133.90,128.71 L 135.72,121.51 L 137.54,114.11 L 139.36,106.62 L 141.18,99.14 L 143.00,91.76 L 144.82,84.61 L 146.64,77.80 L 148.46,71.45 L 150.28,65.67 L 152.10,60.58 L 153.92,56.26 L 155.74,52.81 L 157.56,50.29 L 159.38,48.76 L 161.20,48.25 L 163.02,48.76 L 164.84,50.29 L 166.66,52.81 L 168.48,56.26 L 170.30,60.58 L 172.12,65.67 L 173.94,71.45 L 175.76,77.80 L 177.58,84.61 L 179.40,91.76 L 181.22,99.14 L 183.04,106.62 L 184.86,114.11 L 186.68,121.51 L 188.50,128.71 L 190.32,135.66 L 192.14,142.28 L 193.96,148.52 L 195.78,154.35 L 197.60,159.73 L 199.42,164.66 L 201.24,169.13 L 203.06,173.15 L 204.88,176.73 L 206.70,179.89 L 208.52,182.66 L 210.34,185.06 L 212.16,187.13 L 213.98,188.90 L 215.80,190.39 L 217.62,191.65 L 219.44,192.70 L 221.26,193.56 L 223.08,194.28 L 224.90,194.85 L 226.72,195.32 L 228.54,195.70 L 230.36,195.99 L 232.18,196.23 L 234.00,196.41 L 235.82,196.56 L 237.64,196.67 L 239.46,196.75 L 241.28,196.82 L 243.10,196.87 L 244.92,196.90 L 246.74,196.93 L 248.56,196.95 L 250.38,196.96 L 252.20,196.97 L 254.02,196.98 L 255.84,196.99 L 257.66,196.99 L 259.48,196.99 L 261.30,197.00 L 263.12,197.00 L 264.94,197.00 L 266.76,197.00 L 268.58,197.00 L 270.40,197.00 L 272.22,197.00 L 274.04,197.00 L 275.86,197.00 L 277.68,197.00"/>
+    <path class="c2" d="M 59.28,196.77 L 62.19,196.72 L 65.10,196.67 L 68.02,196.61 L 70.93,196.53 L 73.84,196.45 L 76.75,196.35 L 79.66,196.24 L 82.58,196.12 L 85.49,195.97 L 88.40,195.80 L 91.31,195.61 L 94.22,195.40 L 97.14,195.15 L 100.05,194.88 L 102.96,194.57 L 105.87,194.22 L 108.78,193.84 L 111.70,193.41 L 114.61,192.93 L 117.52,192.40 L 120.43,191.82 L 123.34,191.18 L 126.26,190.48 L 129.17,189.72 L 132.08,188.89 L 134.99,188.00 L 137.90,187.03 L 140.82,185.99 L 143.73,184.87 L 146.64,183.68 L 149.55,182.42 L 152.46,181.08 L 155.38,179.67 L 158.29,178.18 L 161.20,176.63 L 164.11,175.01 L 167.02,173.33 L 169.94,171.59 L 172.85,169.80 L 175.76,167.97 L 178.67,166.10 L 181.58,164.20 L 184.50,162.29 L 187.41,160.37 L 190.32,158.45 L 193.23,156.55 L 196.14,154.67 L 199.06,152.83 L 201.97,151.04 L 204.88,149.32 L 207.79,147.67 L 210.70,146.11 L 213.62,144.64 L 216.53,143.29 L 219.44,142.06 L 222.35,140.96 L 225.26,140.00 L 228.18,139.18 L 231.09,138.52 L 234.00,138.02 L 236.91,137.69 L 239.82,137.52 L 242.74,137.52 L 245.65,137.69 L 248.56,138.02 L 251.47,138.52 L 254.38,139.18 L 257.30,140.00 L 260.21,140.96 L 263.12,142.06 L 266.03,143.29 L 268.94,144.64 L 271.86,146.11 L 274.77,147.67 L 277.68,149.32 L 280.59,151.04 L 283.50,152.83 L 286.42,154.67 L 289.33,156.55 L 292.24,158.45 L 295.15,160.37 L 298.06,162.29 L 300.98,164.20 L 303.89,166.10 L 306.80,167.97 L 309.71,169.80 L 312.62,171.59 L 315.54,173.33 L 318.45,175.01 L 321.36,176.63 L 324.27,178.18 L 327.18,179.67 L 330.10,181.08 L 333.01,182.42 L 335.92,183.68 L 338.83,184.87 L 341.74,185.99 L 344.66,187.03 L 347.57,188.00 L 350.48,188.89 L 353.39,189.72 L 356.30,190.48 L 359.22,191.18 L 362.13,191.82 L 365.04,192.40 L 367.95,192.93 L 370.86,193.41 L 373.78,193.84 L 376.69,194.22 L 379.60,194.57 L 382.51,194.88 L 385.42,195.15 L 388.34,195.40 L 391.25,195.61 L 394.16,195.80 L 397.07,195.97 L 399.98,196.12 L 402.90,196.24 L 405.81,196.35 L 408.72,196.45"/>
+    <text class="c1t" data-lang="en" x="161.2" y="37.8" text-anchor="middle">Rigid impact (high F<tspan baseline-shift="sub">max</tspan>)</text><text class="c1t" data-lang="zh" x="161.2" y="37.8" text-anchor="middle">刚性碰撞（峰值力大）</text>
+    <text class="c2t" data-lang="en" x="295.9" y="125.2" text-anchor="middle">Cushioned (same area J = Δp)</text><text class="c2t" data-lang="zh" x="295.9" y="125.2" text-anchor="middle">缓冲碰撞（冲量面积 J = Δp 相同）</text>
+    </svg>
+    <figcaption><span data-lang="en">Two force-time curves for the same stop. The rigid impact peaks at about 8.5 kN near 3 ms; the cushioned one peaks at about 3.4 kN near 5 ms. Both shaded areas are about 12.8 N&middot;s, so both deliver the same impulse $J = \Delta p$: a longer contact time lowers the peak force.</span><span data-lang="zh">同一次停止过程的两条力-时间曲线。刚性碰撞在约 3 ms 处达到约 8.5 kN 的峰值；缓冲碰撞在约 5 ms 处达到约 3.4 kN 的峰值。两块阴影面积都约为 12.8 N&middot;s，所以二者提供相同的冲量 $J = \Delta p$：接触时间越长，峰值力越小。</span></figcaption>
+  </figure>
 
   <h3><span data-lang="en">Graphical Interpretation</span><span data-lang="zh">图像解读</span></h3>
 <!-- dingrui:fig u4-impulse-equal-area-profiles -->
@@ -1476,6 +1592,27 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     只要选对系统，<em>任何</em>相互作用中动量都是守恒的。如果有外力存在，要么把外力来源也并入系统，要么承认动量通过冲量在系统与环境之间转移：$\vec{J}_\text{ext} = \Delta\vec{p}_\text{system}$。
   </div>
 
+  <h3><span data-lang="en">First Principles: Why Internal Forces Cannot Change the Total</span><span data-lang="zh">第一性原理：为什么内力改变不了总动量</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: momentum conservation from Newton's third law</span><span data-lang="zh">第一性原理：由 Newton 第三定律得到动量守恒</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Newton's third law: while A and B touch, the force on A from B is equal and opposite to the force on B from A, and both act for the same time $\Delta t$.</p>
+    <p data-lang="zh"><strong>原理。</strong>Newton 第三定律：A 与 B 接触期间，B 对 A 的力与 A 对 B 的力大小相等、方向相反，并且作用时间 $\Delta t$ 相同。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Impulse on each object: $\Delta\vec{p}_A = \vec{F}_{AB}\,\Delta t$ and $\Delta\vec{p}_B = \vec{F}_{BA}\,\Delta t$ (average forces).</li>
+      <li>Third law: $\vec{F}_{AB} = -\vec{F}_{BA}$, so $\Delta\vec{p}_A = -\Delta\vec{p}_B$.</li>
+      <li>Add: $\Delta\vec{p}_A + \Delta\vec{p}_B = 0$. The system momentum $\vec{p}_A + \vec{p}_B$ is unchanged.</li>
+      <li>With outside forces: $\Delta\vec{p}_\text{sys} = \vec{F}_\text{ext,net}\,\Delta t$. Only external impulse changes the total.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>每个物体受到的冲量：$\Delta\vec{p}_A = \vec{F}_{AB}\,\Delta t$，$\Delta\vec{p}_B = \vec{F}_{BA}\,\Delta t$（取平均力）。</li>
+      <li>第三定律：$\vec{F}_{AB} = -\vec{F}_{BA}$，所以 $\Delta\vec{p}_A = -\Delta\vec{p}_B$。</li>
+      <li>相加：$\Delta\vec{p}_A + \Delta\vec{p}_B = 0$。系统动量 $\vec{p}_A + \vec{p}_B$ 不变。</li>
+      <li>有外力时：$\Delta\vec{p}_\text{sys} = \vec{F}_\text{ext,net}\,\Delta t$。只有外冲量能改变总动量。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting check.</strong> As $\Delta t \to 0$, a finite external force (gravity, friction) gives an external impulse that goes to zero, while the contact forces grow. A 0.16 kg ball reversing from 30 m/s in 2.0 ms changes momentum by 9.6 N&middot;s; gravity adds only $3.1\times10^{-3}$ N&middot;s, about 0.03%.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>当 $\Delta t \to 0$ 时，有限的外力（重力、摩擦力）产生的外冲量趋于零，而接触力却变大。一个 0.16 kg 的球在 2.0 ms 内从 30 m/s 反向，动量变化 9.6 N&middot;s；重力只贡献 $3.1\times10^{-3}$ N&middot;s，约 0.03%。</p>
+  </div>
+
   <h3><span data-lang="en">Center-of-Mass Velocity</span><span data-lang="zh">质心速度</span></h3>
 <!-- dingrui:fig u4-center-of-mass-velocity-invariance -->
 <figure class="dr-fig" id="fig-u4-center-of-mass-velocity-invariance">
@@ -1728,6 +1865,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$m_1 v_{1i} + m_2 v_{2i} = (m_1 + m_2)\,v_f$$
   </div>
 
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Robins and the ballistic pendulum</span><span data-lang="zh">历史：Robins 与弹道摆</span></div>
+    <p data-lang="en">In 1742 Benjamin Robins described the ballistic pendulum in <em>New Principles of Gunnery</em>. A musket ball is fired into a heavy wooden block hung as a pendulum, and the height of the swing gives the ball's speed.</p>
+    <p data-lang="zh">1742 年，Benjamin Robins 在《<em>New Principles of Gunnery</em>》中描述了弹道摆：把火枪弹射入一块悬挂成摆的厚重木块，由摆起的高度得出子弹的速度。</p>
+    <p data-lang="en">It was the first practical way to measure a bullet's speed. The method uses exactly the two-stage reasoning below: momentum during the impact, then energy during the swing.</p>
+    <p data-lang="zh">这是第一种测量子弹速度的实用方法，它用的正是下面的两阶段推理：碰撞时用动量，摆升时用能量。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Ballistic_pendulum" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Ballistic pendulum (Robins's apparatus and the speed formula)</span><span data-lang="zh">维基百科：弹道摆（Robins 的装置与速度公式）</span></a></p>
+  </div>
+
   <details>
     <summary><span data-lang="en">Worked Example: Ballistic Pendulum</span><span data-lang="zh">例题：弹道摆（<code>ballistic pendulum</code>）</span></summary>
     <div class="detail-body">
@@ -1823,6 +1969,27 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="formula-box" style="border-top-color: var(--green);">
     <div class="formula-label" style="color: var(--green);"><span data-lang="en">1D Elastic Collision (Target at Rest)</span><span data-lang="zh">一维弹性碰撞（靶静止）</span></div>
     $$v_{1f} = \frac{m_1 - m_2}{m_1 + m_2}\,v_{1i} \qquad v_{2f} = \frac{2m_1}{m_1 + m_2}\,v_{1i}$$
+  </div>
+
+  <h3><span data-lang="en">First Principles: Deriving the Target-at-Rest Formulas</span><span data-lang="zh">第一性原理：推导靶静止公式</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: two conservation laws, one clean result</span><span data-lang="zh">第一性原理：两条守恒律，一个简洁结果</span></div>
+    <p data-lang="en"><strong>Principle.</strong> In a 1D elastic collision with $v_{2i} = 0$, both momentum and kinetic energy are conserved.</p>
+    <p data-lang="zh"><strong>原理。</strong>在 $v_{2i} = 0$ 的一维弹性碰撞中，动量和动能都守恒。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Momentum: $m_1(v_{1i} - v_{1f}) = m_2 v_{2f}$.</li>
+      <li>Energy (times 2), factored: $m_1(v_{1i} - v_{1f})(v_{1i} + v_{1f}) = m_2 v_{2f}^2$.</li>
+      <li>Divide step 2 by step 1: $v_{1i} + v_{1f} = v_{2f}$. The relative velocity reverses.</li>
+      <li>Substitute into step 1 and solve: $v_{1f} = \dfrac{m_1 - m_2}{m_1 + m_2}v_{1i}$ and $v_{2f} = \dfrac{2m_1}{m_1 + m_2}v_{1i}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>动量：$m_1(v_{1i} - v_{1f}) = m_2 v_{2f}$。</li>
+      <li>能量（乘以 2）并因式分解：$m_1(v_{1i} - v_{1f})(v_{1i} + v_{1f}) = m_2 v_{2f}^2$。</li>
+      <li>第 2 式除以第 1 式：$v_{1i} + v_{1f} = v_{2f}$，相对速度反向。</li>
+      <li>代回第 1 式求解：$v_{1f} = \dfrac{m_1 - m_2}{m_1 + m_2}v_{1i}$，$v_{2f} = \dfrac{2m_1}{m_1 + m_2}v_{1i}$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting checks.</strong> $m_1 = m_2$ gives $v_{1f} = 0$ and $v_{2f} = v_{1i}$ (Newton's cradle). $m_2 \to \infty$ gives $v_{1f} \to -v_{1i}$ (a bounce off a wall). For $m_1 = 3$ kg, $m_2 = 1$ kg and $v_{1i} = 4$ m/s: $v_{1f} = 2$ m/s, $v_{2f} = 6$ m/s, and $K$ is 24 J before and after.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$m_1 = m_2$ 时 $v_{1f} = 0$、$v_{2f} = v_{1i}$（Newton 摆）。$m_2 \to \infty$ 时 $v_{1f} \to -v_{1i}$（撞墙反弹）。取 $m_1 = 3$ kg、$m_2 = 1$ kg、$v_{1i} = 4$ m/s：$v_{1f} = 2$ m/s，$v_{2f} = 6$ m/s，碰撞前后 $K$ 都是 24 J。</p>
   </div>
 
   <div class="concept-box gold" data-lang="en">
@@ -1958,6 +2125,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     </div>
   </details>
 
+  <h3><span data-lang="en">Practice: Elastic-Collision Formulas</span><span data-lang="zh">练习：弹性碰撞公式</span></h3>
   <div class="quiz" data-answer="0">
     <div class="quiz-q"><span data-lang="en">A 3 kg ball at 4 m/s hits a stationary 1 kg ball elastically. Using the elastic collision formulas, what is the speed of the 1 kg ball after the collision?</span><span data-lang="zh">3 kg 的球以 4 m/s 与静止的 1 kg 球发生弹性碰撞。用弹性碰撞公式，1 kg 球碰后的速率是多少？</span></div>
     <div class="quiz-options">

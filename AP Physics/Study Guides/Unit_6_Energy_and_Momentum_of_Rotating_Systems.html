@@ -770,20 +770,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -812,8 +820,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -837,7 +845,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -858,7 +866,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -871,7 +879,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 6</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -976,16 +985,41 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$K_{\text{rot}} = \frac{1}{2}I\omega^2$$
   </div>
 
-  <div data-course="c">
-  <span class="course-flag">Physics C</span>
-  <p data-lang="en">Why does this work? Every tiny mass element $dm$ on a rigid body at distance $r$ from the axis has tangential speed $v = r\omega$, so its kinetic energy is $\frac{1}{2}(dm)(r\omega)^2$. Summing (integrating) over the entire body gives $\frac{1}{2}\omega^2 \int r^2\,dm = \frac{1}{2}I\omega^2$. This derivation shows that rotational KE is really just the translational KE of all the constituent particles viewed collectively.</p>
-  <p data-lang="zh">为什么这个公式成立？刚体上离轴 $r$ 处的每一个微小质量元 $dm$ 切向速率为 $v = r\omega$，其动能为 $\frac{1}{2}(dm)(r\omega)^2$。对整个刚体求和（积分）得 $\frac{1}{2}\omega^2 \int r^2\,dm = \frac{1}{2}I\omega^2$。这一推导表明：所谓"转动动能"，本质上就是把构成刚体的所有质点的平动动能整体加起来。</p>
-  </div>
-  <div data-course="p1">
-  <p data-lang="en">Why does this work? Treat the rigid body as many small particles. A particle of mass $m_i$ at distance $r_i$ from the axis moves in a circle with speed $v_i = r_i\omega$, so its kinetic energy is $\frac{1}{2}m_i(r_i\omega)^2$.</p>
-  <p data-lang="zh">为什么这个公式成立？把刚体看成许多小质点。离轴 $r_i$ 处、质量为 $m_i$ 的质点做圆周运动，速率 $v_i = r_i\omega$，动能为 $\frac{1}{2}m_i(r_i\omega)^2$。</p>
-  <p data-lang="en">Every particle shares the same $\omega$, so adding them all gives $\frac{1}{2}\left(\sum m_i r_i^2\right)\omega^2 = \frac{1}{2}I\omega^2$, because $I = \sum m_i r_i^2$. Rotational KE is just the translational KE of all the particles added together.</p>
-  <p data-lang="zh">所有质点的 $\omega$ 都相同，把它们全部相加得 $\frac{1}{2}\left(\sum m_i r_i^2\right)\omega^2 = \frac{1}{2}I\omega^2$，因为 $I = \sum m_i r_i^2$。转动动能就是所有质点平动动能之和。</p>
+  <h3><span data-lang="en">First Principles: Rotational KE from Particle KE</span><span data-lang="zh">第一性原理：由质点动能得到转动动能</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: where $\tfrac{1}{2}I\omega^2$ comes from</span><span data-lang="zh">第一性原理：$\tfrac{1}{2}I\omega^2$ 从何而来</span></div>
+    <p data-lang="en"><strong>Principle.</strong> A rigid body is a collection of particles, and each particle carries ordinary kinetic energy $\tfrac{1}{2}mv^2$. Rotation only fixes how fast each particle moves.</p>
+    <p data-lang="zh"><strong>原理。</strong>刚体是许多质点的集合，每个质点都具有普通的动能 $\tfrac{1}{2}mv^2$。转动只决定每个质点运动得多快。</p>
+    <div data-course="c">
+    <span class="course-flag">Physics C</span>
+    <ol class="sg-steps" data-lang="en">
+      <li>A mass element $dm$ at distance $r$ from the axis moves in a circle with tangential speed $v = r\omega$.</li>
+      <li>Its kinetic energy is $dK = \tfrac{1}{2}(dm)(r\omega)^2$.</li>
+      <li>Every element shares the same $\omega$, so integrating over the body gives $K = \tfrac{1}{2}\omega^2\int r^2\,dm = \tfrac{1}{2}I\omega^2$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>离轴 $r$ 处的质量元 $dm$ 做圆周运动，切向速率为 $v = r\omega$。</li>
+      <li>它的动能为 $dK = \tfrac{1}{2}(dm)(r\omega)^2$。</li>
+      <li>所有质量元的 $\omega$ 都相同，对整个刚体积分得 $K = \tfrac{1}{2}\omega^2\int r^2\,dm = \tfrac{1}{2}I\omega^2$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>A particle of mass $m_i$ at distance $r_i$ from the axis moves in a circle with speed $v_i = r_i\omega$.</li>
+      <li>Its kinetic energy is $\tfrac{1}{2}m_i(r_i\omega)^2$.</li>
+      <li>Every particle shares the same $\omega$, so adding them gives $K = \tfrac{1}{2}\left(\sum m_i r_i^2\right)\omega^2 = \tfrac{1}{2}I\omega^2$, because $I = \sum m_i r_i^2$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>离轴 $r_i$ 处、质量为 $m_i$ 的质点做圆周运动，速率为 $v_i = r_i\omega$。</li>
+      <li>它的动能为 $\tfrac{1}{2}m_i(r_i\omega)^2$。</li>
+      <li>所有质点的 $\omega$ 都相同，全部相加得 $K = \tfrac{1}{2}\left(\sum m_i r_i^2\right)\omega^2 = \tfrac{1}{2}I\omega^2$，因为 $I = \sum m_i r_i^2$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> In a thin hoop every particle sits at $r = R$, so $I = MR^2$ and $K = \tfrac{1}{2}MR^2\omega^2 = \tfrac{1}{2}M(R\omega)^2 = \tfrac{1}{2}Mv^2$. Every particle moves at the same speed $v = R\omega$, so the formula reduces to plain translational KE. Units: $(\mathrm{kg\,m^2})(\mathrm{rad/s})^2 = \mathrm{J}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>细圆环上每个质点都在 $r = R$ 处，所以 $I = MR^2$，$K = \tfrac{1}{2}MR^2\omega^2 = \tfrac{1}{2}M(R\omega)^2 = \tfrac{1}{2}Mv^2$。每个质点的速率都是 $v = R\omega$，公式退化为普通的平动动能。单位：$(\mathrm{kg\,m^2})(\mathrm{rad/s})^2 = \mathrm{J}$。</p>
+    <p data-lang="en">Rotational KE is just the translational KE of all the particles added together.</p>
+    <p data-lang="zh">转动动能就是所有质点平动动能之和。</p>
+    <p><a href="https://www.feynmanlectures.caltech.edu/I_19.html" target="_blank" rel="noopener"><span data-lang="en">Feynman Lectures, Vol. I, Ch. 19 (Center of Mass; Moment of Inertia): rotational kinetic energy</span><span data-lang="zh">费曼物理学讲义第一卷第 19 章（质心；转动惯量）：转动动能</span></a></p>
   </div>
 
   <h3><span data-lang="en">Total Kinetic Energy</span><span data-lang="zh">总动能</span></h3>
@@ -1174,6 +1208,39 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="concept-box green" data-lang="zh">
     <strong style="color: var(--green);">关键洞察</strong>
     只有在<em>角位移</em>上施加力矩才会做功。对一个保持静止的物体施加力矩，做的功为零，就像对着墙推一样。
+  </div>
+
+  <h3><span data-lang="en">First Principles: Work Done by a Torque</span><span data-lang="zh">第一性原理：力矩做的功</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $W = \tau\,\Delta\theta$</span><span data-lang="zh">第一性原理：为什么 $W = \tau\,\Delta\theta$</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Work is force times displacement along the force. A torque is a force acting at a lever arm, so its work must reduce to $W = F\,d$ for the point where the force is applied.</p>
+    <p data-lang="zh"><strong>原理。</strong>功等于力乘以沿力方向的位移。力矩就是作用在某个力臂上的力，所以它做的功必然可以还原为作用点上的 $W = F\,d$。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Let the tangential component $F_t$ act at distance $r$ from the axis. When the body turns through $d\theta$, the point of application moves an arc $ds = r\,d\theta$ along $F_t$.</li>
+      <li>The work in that step is $dW = F_t\,ds = (F_t r)\,d\theta = \tau\,d\theta$.</li>
+      <li>Add up the steps: $W = \displaystyle\int_{\theta_1}^{\theta_2}\tau\,d\theta$, which is $W = \tau\,\Delta\theta$ for constant $\tau$. Dividing $dW = \tau\,d\theta$ by $dt$ gives $P = \tau\omega$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>设切向分力 $F_t$ 作用在离轴 $r$ 处。刚体转过 $d\theta$ 时，作用点沿 $F_t$ 方向移动弧长 $ds = r\,d\theta$。</li>
+      <li>这一小步做的功为 $dW = F_t\,ds = (F_t r)\,d\theta = \tau\,d\theta$。</li>
+      <li>把各小步加起来：$W = \displaystyle\int_{\theta_1}^{\theta_2}\tau\,d\theta$，$\tau$ 恒定时即 $W = \tau\,\Delta\theta$。把 $dW = \tau\,d\theta$ 除以 $dt$ 得 $P = \tau\omega$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>Let a constant tangential force $F_t$ act at distance $r$ from the axis. When the body turns through $\Delta\theta$ (in radians), the point of application moves an arc $s = r\,\Delta\theta$ along the force.</li>
+      <li>The work is $W = F_t s = (F_t r)\,\Delta\theta = \tau\,\Delta\theta$.</li>
+      <li>Divide by the time taken: the average power is $W/\Delta t = \tau\,(\Delta\theta/\Delta t)$, and over a very short interval this becomes $P = \tau\omega$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>设恒定的切向力 $F_t$ 作用在离轴 $r$ 处。刚体转过 $\Delta\theta$（弧度）时，作用点沿力的方向移动弧长 $s = r\,\Delta\theta$。</li>
+      <li>做的功为 $W = F_t s = (F_t r)\,\Delta\theta = \tau\,\Delta\theta$。</li>
+      <li>除以所用时间：平均功率为 $W/\Delta t = \tau\,(\Delta\theta/\Delta t)$，时间间隔极短时变为 $P = \tau\omega$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> If the body does not turn, $\Delta\theta = 0$ and $W = 0$ however large $\tau$ is, as the Key Insight says. A purely radial force has $F_t = 0$ and does no work. Units: $(\mathrm{N\,m})(\mathrm{rad}) = \mathrm{J}$, since the radian is dimensionless.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>若刚体不转动，$\Delta\theta = 0$，无论 $\tau$ 多大都有 $W = 0$，与上面的关键洞察一致。纯径向的力 $F_t = 0$，不做功。单位：$(\mathrm{N\,m})(\mathrm{rad}) = \mathrm{J}$，因为弧度是无量纲的。</p>
   </div>
 
   <h3><span data-lang="en">Rotational Power</span><span data-lang="zh">转动功率</span></h3>
@@ -1623,6 +1690,41 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="en">The total angular momentum of a system is the sum of the angular momenta of all its parts. If no <em>external</em> torque acts on the system, this total remains constant. Internal torques redistribute angular momentum among the parts but cannot change the total, a direct consequence of Newton's third law applied to angular impulse.</p>
   <p data-lang="zh">系统总角动量等于各部分角动量之和。若系统不受任何<em>外</em>力矩作用，该总量便保持不变。内力矩只能在各部分之间重新分配角动量，无法改变总量。这是 Newton 第三定律推广到角冲量上的直接结果。</p>
 
+  <h3><span data-lang="en">First Principles: Why Zero External Torque Fixes L</span><span data-lang="zh">第一性原理：为什么零外力矩使 L 不变</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: from torque on each part to conservation</span><span data-lang="zh">第一性原理：从每一部分受的力矩到守恒</span></div>
+    <p data-lang="en"><strong>Principle.</strong> For any one object, the net torque equals the rate of change of its angular momentum. Apply this to every part of a system and add.</p>
+    <p data-lang="zh"><strong>原理。</strong>对任何单个物体，合力矩等于其角动量的变化率。把这一点用于系统的每一部分，再相加。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>For each part $k$: $\tau_{\text{ext},k} + \tau_{\text{int},k} = dL_k/dt$.</li>
+      <li>Internal forces come in Newton's third-law pairs: equal, opposite and along the same line. Each pair has one lever arm, so its two torques cancel, and the sum over parts is $\sum\tau_{\text{ext}} = dL_{\text{sys}}/dt$.</li>
+      <li>If $\sum\tau_{\text{ext}} = 0$, then $dL_{\text{sys}}/dt = 0$, so $L_{\text{sys}}$ is constant: $I_i\omega_i = I_f\omega_f$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>对每一部分 $k$：$\tau_{\text{ext},k} + \tau_{\text{int},k} = dL_k/dt$。</li>
+      <li>内力按 Newton 第三定律成对出现：大小相等、方向相反、作用在同一直线上。每一对的力臂相同，两个力矩相互抵消，所以对各部分求和得 $\sum\tau_{\text{ext}} = dL_{\text{sys}}/dt$。</li>
+      <li>若 $\sum\tau_{\text{ext}} = 0$，则 $dL_{\text{sys}}/dt = 0$，$L_{\text{sys}}$ 不变：$I_i\omega_i = I_f\omega_f$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>For each part $k$ over a short time $\Delta t$: $(\tau_{\text{ext},k} + \tau_{\text{int},k})\,\Delta t = \Delta L_k$ (angular impulse).</li>
+      <li>Internal forces come in Newton's third-law pairs: equal, opposite and along the same line. Each pair has one lever arm, so its two torques cancel, and the sum over parts is $\sum\tau_{\text{ext}}\,\Delta t = \Delta L_{\text{sys}}$.</li>
+      <li>If $\sum\tau_{\text{ext}} = 0$, then $\Delta L_{\text{sys}} = 0$, so $L_{\text{sys}}$ is constant: $I_i\omega_i = I_f\omega_f$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>对每一部分 $k$，在短时间 $\Delta t$ 内：$(\tau_{\text{ext},k} + \tau_{\text{int},k})\,\Delta t = \Delta L_k$（角冲量）。</li>
+      <li>内力按 Newton 第三定律成对出现：大小相等、方向相反、作用在同一直线上。每一对的力臂相同，两个力矩相互抵消，所以对各部分求和得 $\sum\tau_{\text{ext}}\,\Delta t = \Delta L_{\text{sys}}$。</li>
+      <li>若 $\sum\tau_{\text{ext}} = 0$，则 $\Delta L_{\text{sys}} = 0$，$L_{\text{sys}}$ 不变：$I_i\omega_i = I_f\omega_f$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> If $I$ does not change, $I\omega_i = I\omega_f$ gives $\omega_f = \omega_i$: with no external torque a body keeps spinning at a steady rate, the rotational form of Newton's first law. If a skater halves $I$, $\omega$ doubles and $K = L^2/(2I)$ doubles, so the extra energy comes from her muscles.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>若 $I$ 不变，$I\omega_i = I\omega_f$ 给出 $\omega_f = \omega_i$：没有外力矩时，物体以恒定的角速度一直转下去，这是 Newton 第一定律的转动形式。若花滑运动员把 $I$ 减半，$\omega$ 加倍，$K = L^2/(2I)$ 也加倍，多出的能量来自她的肌肉做功。</p>
+    <p><a href="https://www.feynmanlectures.caltech.edu/I_18.html" target="_blank" rel="noopener"><span data-lang="en">Feynman Lectures, Vol. I, Ch. 18 (Rotation in Two Dimensions): conservation of angular momentum</span><span data-lang="zh">费曼物理学讲义第一卷第 18 章（二维转动）：角动量守恒</span></a></p>
+  </div>
+
+  <h3><span data-lang="en">Changing Rotational Inertia: The Spinning Skater</span><span data-lang="zh">转动惯量改变：旋转的花滑运动员</span></h3>
   <div class="concept-box green" data-lang="en">
     <strong style="color: var(--green);">Key Insight: The Spinning Skater</strong>
     When a figure skater pulls their arms inward, their rotational inertia $I$ decreases. Since no external torque acts (neglecting ice friction), $L = I\omega$ is conserved, so $\omega$ must <em>increase</em>. The skater spins faster. Note that kinetic energy is <em>not</em> conserved here: it increases because the skater does internal work by pulling their arms in.
@@ -2037,6 +2139,26 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     </div>
   </details>
 
+  <h3><span data-lang="en">First Principles: Speed at the Bottom of a Rolling Incline</span><span data-lang="zh">第一性原理：滚到斜面底端时的速率</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: one formula for every rolling shape</span><span data-lang="zh">第一性原理：适用于所有滚动形状的一个公式</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Rolling without slipping conserves mechanical energy (static friction does no work) and ties spin to speed through $v = r\omega$.</p>
+    <p data-lang="zh"><strong>原理。</strong>无滑滚动时机械能守恒（静摩擦不做功），并且通过 $v = r\omega$ 把转动与速率联系起来。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Write the rotational inertia as $I = \beta m r^2$, where $\beta$ depends only on shape: $\tfrac{2}{5}$ for a solid sphere, $\tfrac{1}{2}$ for a solid cylinder, $1$ for a thin hoop.</li>
+      <li>Energy: $mgh = \tfrac{1}{2}mv^2 + \tfrac{1}{2}(\beta m r^2)(v/r)^2 = \tfrac{1}{2}(1+\beta)mv^2$.</li>
+      <li>Solve: $v = \sqrt{\dfrac{2gh}{1+\beta}}$. Mass and radius cancel; only the shape factor $\beta$ matters, and the energy splits as $K_\text{tr} : K_\text{rot} = 1 : \beta$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把转动惯量写成 $I = \beta m r^2$，其中 $\beta$ 只取决于形状：实心球为 $\tfrac{2}{5}$，实心圆柱为 $\tfrac{1}{2}$，细圆环为 $1$。</li>
+      <li>能量：$mgh = \tfrac{1}{2}mv^2 + \tfrac{1}{2}(\beta m r^2)(v/r)^2 = \tfrac{1}{2}(1+\beta)mv^2$。</li>
+      <li>解得：$v = \sqrt{\dfrac{2gh}{1+\beta}}$。质量和半径都约掉了，只有形状因子 $\beta$ 起作用，能量按 $K_\text{tr} : K_\text{rot} = 1 : \beta$ 分配。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> As $\beta \to 0$ almost no energy goes into spin and $v \to \sqrt{2gh}$, the frictionless sliding block. $\beta = 1$ (hoop) gives $\sqrt{gh}$, and $\beta = \tfrac{2}{5}$ gives $\sqrt{10gh/7}$, matching the sphere example above. A larger $\beta$ means a slower arrival.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>当 $\beta \to 0$ 时几乎没有能量进入转动，$v \to \sqrt{2gh}$，即无摩擦下滑的滑块。$\beta = 1$（圆环）给出 $\sqrt{gh}$，$\beta = \tfrac{2}{5}$ 给出 $\sqrt{10gh/7}$，与上面的实心球例题一致。$\beta$ 越大，到达底端越慢。</p>
+  </div>
+
+  <h3><span data-lang="en">Static or Kinetic Friction at the Contact Point</span><span data-lang="zh">接触点处的静摩擦与动摩擦</span></h3>
   <div class="concept-box orange" data-lang="en">
     <strong>Modeling Note</strong>
     Rolling resistance (the drag caused by the surfaces deforming) is neglected in every model in this guide. The friction at the contact point is either static (rolling without slipping, no energy dissipated) or kinetic (rolling while slipping, energy dissipated).
@@ -2209,6 +2331,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 <figcaption><span data-lang="en">Beyond the exam: Equal areas swept in equal times: a satellite moves faster near perigee (small r) and slower near apogee (large r), keeping angular momentum L = mrv_perp constant.</span><span data-lang="zh">超出考试范围：相等时间内扫过相等面积：卫星在近地点（r 小）运动更快、远地点（r 大）更慢，以保持角动量 L = mrv_⊥ 不变。</span></figcaption>
 </figure>
 
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Kepler's equal-area law</span><span data-lang="zh">历史：开普勒的等面积定律</span></div>
+    <p data-lang="en">Working from Tycho Brahe's naked-eye observations of Mars, Johannes Kepler found that the line from the Sun to a planet sweeps out equal areas in equal times. He published this "second law" in <em>Astronomia Nova</em> (1609), long before anyone could explain it.</p>
+    <p data-lang="zh">开普勒（Johannes Kepler）根据第谷（Tycho Brahe）用肉眼对火星所做的观测，发现太阳到行星的连线在相等时间内扫过相等的面积。他在 1609 年的《新天文学》（<code>Astronomia Nova</code>）中发表了这条"第二定律"，而当时还没有人能解释它。</p>
+    <p data-lang="en">In the <em>Principia</em> (1687), Newton showed that the area law holds for any force aimed at a fixed centre. In this unit's language: in time $\Delta t$ the radius sweeps a thin triangle of area $\tfrac{1}{2}r\,v_\perp\,\Delta t$, so the sweep rate $\tfrac{1}{2}rv_\perp = L/(2m)$ is constant exactly when $L$ is.</p>
+    <p data-lang="zh">Newton 在 1687 年的《原理》（<code>Principia</code>）中证明：只要力指向一个固定中心，等面积定律就成立。用本单元的语言说：在时间 $\Delta t$ 内，半径扫过面积为 $\tfrac{1}{2}r\,v_\perp\,\Delta t$ 的细三角形，所以扫面速率 $\tfrac{1}{2}rv_\perp = L/(2m)$ 恰好在 $L$ 不变时保持不变。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Kepler's laws of planetary motion (history and Newton's derivation)</span><span data-lang="zh">维基百科：Kepler's laws of planetary motion（历史与 Newton 的推导）</span></a></p>
+  </div>
 
   <h3><span data-lang="en">Escape Velocity</span><span data-lang="zh">逃逸速度</span></h3>
   <p data-lang="en">The escape velocity is the minimum launch speed needed for a satellite to reach infinity with zero final speed. Setting $E_{\text{total}} = K + U = 0$:</p>

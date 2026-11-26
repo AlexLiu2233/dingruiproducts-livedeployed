@@ -776,20 +776,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -818,8 +826,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -843,7 +851,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -864,7 +872,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -878,7 +886,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 3</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -1001,6 +1010,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="concept-box orange" data-lang="zh">
     <strong style="color: var(--orange);">参考系依赖性</strong>
     不同观察者对同一物体的动能可能给出不同的数值。坐在火车里不动的乘客在车厢参考系（<code>reference frame</code>）中动能为零，但在地面参考系中可能动能巨大。动能与参考系有关，尽管物理定律在所有惯性系（<code>inertial frame</code>）中都相同。
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: why speed is squared</span><span data-lang="zh">历史：为什么速率要平方</span></div>
+    <p data-lang="en">Around 1686 Gottfried Leibniz argued that the "living force" (<em>vis viva</em>) of a moving body is $mv^2$, not Descartes' $mv$. In the 1720s Willem 's Gravesande dropped brass balls into soft clay: the dent grew with the drop height, so with $v^2$.</p>
+    <p data-lang="zh">约 1686 年，Gottfried Leibniz 提出运动物体的"活力"（<code>vis viva</code>）是 $mv^2$，而不是 Descartes 的 $mv$。18 世纪 20 年代，Willem 's Gravesande 把黄铜球落入软黏土：凹坑随下落高度增大，也就是随 $v^2$ 增大。</p>
+    <p data-lang="en">Émilie du Châtelet made the case widely known in 1740. The factor $\tfrac{1}{2}$ and the word "work" came later, from Gaspard-Gustave Coriolis in 1829.</p>
+    <p data-lang="zh">1740 年，Émilie du Châtelet 使这一论证广为人知。系数 $\tfrac{1}{2}$ 和"功"（<code>work</code>）这个词更晚出现，由 Gaspard-Gustave Coriolis 在 1829 年提出。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Vis_viva" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Vis viva (the mv&sup2; debate and the clay-drop evidence)</span><span data-lang="zh">维基百科：Vis viva（关于 mv&sup2; 的争论与黏土落球证据）</span></a></p>
   </div>
 
   <details>
@@ -1378,6 +1396,15 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <p data-lang="en"><strong>Nonconservative forces</strong> do path-dependent work. The most common are friction and air resistance. A box sliding back and forth loses energy on every pass: kinetic friction opposes the sliding each time, so its work on the box is negative on every pass and accumulates. You cannot define a potential energy for friction.</p>
   <p data-lang="zh"><strong>非保守力（<code>nonconservative force</code>）</strong>所做的功与路径相关，最常见的是摩擦力和空气阻力。来回滑动的木箱每往返一次都损失能量：动摩擦力每一次都与滑动方向相反，因此它对木箱做的功每次都为负，并且不断累积。摩擦力没有对应的势能。</p>
 
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Property</span><span data-lang="zh">性质</span></th><th><span data-lang="en">Conservative force</span><span data-lang="zh">保守力</span></th><th><span data-lang="en">Nonconservative force</span><span data-lang="zh">非保守力</span></th></tr>
+    <tr><td><span data-lang="en">Examples</span><span data-lang="zh">例子</span></td><td><span data-lang="en">gravity, spring force, electrostatic force</span><span data-lang="zh">重力、弹簧力、静电力</span></td><td><span data-lang="en">kinetic friction, air resistance</span><span data-lang="zh">动摩擦力、空气阻力</span></td></tr>
+    <tr><td><span data-lang="en">Work depends on</span><span data-lang="zh">做功取决于</span></td><td><span data-lang="en">start and end positions only</span><span data-lang="zh">只取决于起点和终点</span></td><td><span data-lang="en">the path taken (friction: path length)</span><span data-lang="zh">所走的路径（摩擦：路程）</span></td></tr>
+    <tr><td><span data-lang="en">Work around a closed loop</span><span data-lang="zh">闭合路径上的功</span></td><td>$W = 0$</td><td><span data-lang="en">not zero (friction: $W = -F_f d < 0$)</span><span data-lang="zh">不为零（摩擦：$W = -F_f d < 0$）</span></td></tr>
+    <tr><td><span data-lang="en">Potential energy</span><span data-lang="zh">势能</span></td><td><span data-lang="en">defined by $\Delta U = -W_\text{cons}$</span><span data-lang="zh">由 $\Delta U = -W_\text{cons}$ 定义</span></td><td><span data-lang="en">none can be defined</span><span data-lang="zh">无法定义</span></td></tr>
+    <tr><td><span data-lang="en">Effect on $K + U$</span><span data-lang="zh">对 $K + U$ 的影响</span></td><td><span data-lang="en">trades $K$ and $U$; the sum is unchanged</span><span data-lang="zh">在 $K$ 与 $U$ 之间转换，总和不变</span></td><td><span data-lang="en">changes it: $\Delta E_\text{mech} = W_\text{nc}$</span><span data-lang="zh">使其改变：$\Delta E_\text{mech} = W_\text{nc}$</span></td></tr>
+  </table></div>
+
   <div class="concept-box purple" data-lang="en">
     <strong style="color: var(--purple);">Exam Insight</strong>
     Be ready to state whether a force is conservative or nonconservative, and what this implies about path independence and potential energy. Remember: potential energies can <em>only</em> be defined for conservative forces.
@@ -1474,6 +1501,40 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="concept-box green" data-lang="zh">
     <strong style="color: var(--green);">系统观念</strong>
     一个常见误区："这个球有势能。"严格说来，单独一个孤立物体不会有势能。势能来源于物体之间的相互作用（球与地球、木块与弹簧）。AP 考试有时就会专门考这种区分。
+  </div>
+
+  <h3><span data-lang="en">First Principles: Where $\tfrac{1}{2}kx^2$ Comes From</span><span data-lang="zh">第一性原理：$\tfrac{1}{2}kx^2$ 从何而来</span></h3>
+
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: spring potential energy</span><span data-lang="zh">第一性原理：弹簧势能</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The spring force $F_x = -kx$ is conservative, so the stored energy is the work an external agent does stretching the spring slowly from $x = 0$: $U_s = W_\text{ext}$.</p>
+    <p data-lang="zh"><strong>原理。</strong>弹簧力 $F_x = -kx$ 是保守力，所以储存的能量等于外界从 $x = 0$ 起缓慢拉伸弹簧所做的功：$U_s = W_\text{ext}$。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Slow stretching balances the forces: $F_\text{ext} = +kx'$ at each extension $x'$.</li>
+      <li>Each small step $dx'$ costs $dW_\text{ext} = kx'\,dx'$.</li>
+      <li>Add the steps from $0$ to $x$: $U_s = \displaystyle\int_0^{x} kx'\,dx' = \tfrac{1}{2}kx^2$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>缓慢拉伸使力平衡：在每个伸长量 $x'$ 处 $F_\text{ext} = +kx'$。</li>
+      <li>每一小步 $dx'$ 需要做功 $dW_\text{ext} = kx'\,dx'$。</li>
+      <li>把从 $0$ 到 $x$ 的各步相加：$U_s = \displaystyle\int_0^{x} kx'\,dx' = \tfrac{1}{2}kx^2$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>Plot the external force $F_\text{ext} = kx$ against extension: a straight line through the origin.</li>
+      <li>Work is the area under a force-position graph, so the work to reach $x$ is the triangle under that line.</li>
+      <li>Triangle area is $\tfrac{1}{2}\times\text{base}\times\text{height} = \tfrac{1}{2}(x)(kx)$, so $U_s = \tfrac{1}{2}kx^2$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>以伸长量为横轴画出外力 $F_\text{ext} = kx$：一条过原点的直线。</li>
+      <li>功等于力-位置图像下的面积，所以拉伸到 $x$ 所做的功就是这条直线下方的三角形面积。</li>
+      <li>三角形面积为 $\tfrac{1}{2}\times\text{底}\times\text{高} = \tfrac{1}{2}(x)(kx)$，所以 $U_s = \tfrac{1}{2}kx^2$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Check.</strong> The $\tfrac{1}{2}$ appears because the force grows from zero, so its average over the stretch is $\tfrac{1}{2}kx$. As $x \to 0$, $U_s \to 0$; doubling $x$ multiplies $U_s$ by 4. Units: $(\text{N/m})(\text{m}^2) = \text{N}\cdot\text{m} = \text{J}$.</p>
+    <p data-lang="zh"><strong>检验。</strong>出现 $\tfrac{1}{2}$ 是因为力从零开始增大，整个拉伸过程的平均力为 $\tfrac{1}{2}kx$。当 $x \to 0$ 时 $U_s \to 0$；$x$ 加倍，$U_s$ 变为 4 倍。单位：$(\text{N/m})(\text{m}^2) = \text{N}\cdot\text{m} = \text{J}$。</p>
   </div>
 
   <h3><span data-lang="en">The Force–Potential Energy Relationship</span><span data-lang="zh">力与势能的关系</span></h3>
@@ -1611,6 +1672,13 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     $$U_s = \frac{1}{2}k(\Delta x)^2$$
     <div class="formula-sub"><span data-lang="en">where $\Delta x$ is the displacement from the spring's natural length</span><span data-lang="zh">其中 $\Delta x$ 是相对弹簧自然长度的位移</span></div>
   </div>
+
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Interaction</span><span data-lang="zh">相互作用</span></th><th><span data-lang="en">Potential energy</span><span data-lang="zh">势能</span></th><th><span data-lang="en">Where $U = 0$</span><span data-lang="zh">$U = 0$ 的位置</span></th><th><span data-lang="en">Force it gives</span><span data-lang="zh">对应的力</span></th></tr>
+    <tr><td><span data-lang="en">Gravity near Earth's surface</span><span data-lang="zh">近地表重力</span></td><td>$U_g = mgy$</td><td><span data-lang="en">any height you choose</span><span data-lang="zh">任选的高度</span></td><td><span data-lang="en">$mg$ downward, constant</span><span data-lang="zh">$mg$，竖直向下，恒定</span></td></tr>
+    <tr><td><span data-lang="en">Gravity between two masses</span><span data-lang="zh">两质量之间的引力</span></td><td>$U_g = -\dfrac{Gm_1m_2}{r}$</td><td>$r = \infty$</td><td><span data-lang="en">$\dfrac{Gm_1m_2}{r^2}$, attractive</span><span data-lang="zh">$\dfrac{Gm_1m_2}{r^2}$，吸引</span></td></tr>
+    <tr><td><span data-lang="en">Ideal spring</span><span data-lang="zh">理想弹簧</span></td><td>$U_s = \tfrac{1}{2}k(\Delta x)^2$</td><td><span data-lang="en">natural length</span><span data-lang="zh">自然长度</span></td><td><span data-lang="en">$k|\Delta x|$, toward natural length</span><span data-lang="zh">$k|\Delta x|$，指向自然长度</span></td></tr>
+  </table></div>
 
   <div class="concept-box" data-lang="en">
     <strong style="color: var(--accent);">Multi-Object Systems</strong>
@@ -1810,6 +1878,35 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <div class="formula-label" style="color: var(--green);"><span data-lang="en">Conservation of Mechanical Energy</span><span data-lang="zh">机械能守恒</span></div>
     $$K_i + U_i = K_f + U_f$$
     <div class="formula-sub"><span data-lang="en">Valid when $W_\text{ext} = 0$ and no nonconservative forces act within the system.</span><span data-lang="zh">当外力做功 $W_\text{ext} = 0$ 且系统内部不存在非保守力时成立。</span></div>
+  </div>
+
+  <h3><span data-lang="en">First Principles: Energy Conservation from the Work-Energy Theorem</span><span data-lang="zh">第一性原理：由动能定理推出能量守恒</span></h3>
+
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $K + U$ stays constant</span><span data-lang="zh">第一性原理：为什么 $K + U$ 保持不变</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The work-energy theorem: the net work by all forces equals the change in kinetic energy, $W_\text{net} = \Delta K$.</p>
+    <p data-lang="zh"><strong>原理。</strong>动能定理：所有力所做的净功等于动能的变化，$W_\text{net} = \Delta K$。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Split the forces into conservative and nonconservative: $W_\text{cons} + W_\text{nc} = \Delta K$.</li>
+      <li>Each conservative force has a potential energy with $W_\text{cons} = -\Delta U$, so $-\Delta U + W_\text{nc} = \Delta K$.</li>
+      <li>Rearrange: $W_\text{nc} = \Delta K + \Delta U = \Delta E_\text{mech}$, which is $K_i + U_i + W_\text{nc} = K_f + U_f$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把力分为保守力与非保守力：$W_\text{cons} + W_\text{nc} = \Delta K$。</li>
+      <li>每个保守力都有势能，满足 $W_\text{cons} = -\Delta U$，所以 $-\Delta U + W_\text{nc} = \Delta K$。</li>
+      <li>整理得 $W_\text{nc} = \Delta K + \Delta U = \Delta E_\text{mech}$，即 $K_i + U_i + W_\text{nc} = K_f + U_f$。</li>
+    </ol>
+    <p data-lang="en"><strong>Check.</strong> With $W_\text{nc} = 0$ the result is $K_i + U_i = K_f + U_f$. With friction alone, $W_\text{nc} = -F_f d$, so $E_\text{mech}$ can only fall, and it falls by more the longer the path. Units: every term is in joules.</p>
+    <p data-lang="zh"><strong>检验。</strong>当 $W_\text{nc} = 0$ 时结果为 $K_i + U_i = K_f + U_f$。只有摩擦时 $W_\text{nc} = -F_f d$，所以 $E_\text{mech}$ 只会减少，路程越长减少越多。单位：每一项都是焦耳。</p>
+  </div>
+
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Joule's paddle wheel</span><span data-lang="zh">历史：Joule 的桨轮实验</span></div>
+    <p data-lang="en">In the 1840s James Prescott Joule let falling weights turn a paddle wheel inside an insulated tank of water. The water warmed by an amount proportional to the work the weights did.</p>
+    <p data-lang="zh">19 世纪 40 年代，James Prescott Joule 让下落的重物带动隔热水箱中的桨轮转动。水温升高的量与重物所做的功成正比。</p>
+    <p data-lang="en">His result, close to the modern 4.184 J per calorie, showed that the mechanical energy friction "loses" reappears as thermal energy. That is why total energy is conserved even when $E_\text{mech}$ is not.</p>
+    <p data-lang="zh">他的结果接近现代值：每卡 4.184 J。这说明摩擦"损失"的机械能以热能的形式重新出现。正因如此，即使 $E_\text{mech}$ 不守恒，总能量仍然守恒。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Mechanical_equivalent_of_heat" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Mechanical equivalent of heat (Joule's apparatus and results)</span><span data-lang="zh">维基百科：热功当量（Joule 的装置与结果）</span></a></p>
   </div>
 
   <h3><span data-lang="en">Energy with Nonconservative Forces</span><span data-lang="zh">含非保守力的能量</span></h3>
@@ -2042,6 +2139,40 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <div class="formula-label" style="color: var(--purple);"><span data-lang="en">Power from Force and Velocity</span><span data-lang="zh">由力与速度求功率</span></div>
     $$P = \vec{F} \cdot \vec{v} = Fv\cos\theta$$
     <div class="formula-sub"><span data-lang="en">where $\theta$ is the angle between $\vec{F}$ and $\vec{v}$</span><span data-lang="zh">其中 $\theta$ 为 $\vec{F}$ 与 $\vec{v}$ 之间的夹角</span></div>
+  </div>
+
+  <h3><span data-lang="en">First Principles: Why $P = Fv\cos\theta$</span><span data-lang="zh">第一性原理：为什么 $P = Fv\cos\theta$</span></h3>
+
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: power from force and velocity</span><span data-lang="zh">第一性原理：由力与速度得到功率</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Power is the rate of doing work, and a force does work $F\cos\theta$ times each bit of displacement.</p>
+    <p data-lang="zh"><strong>原理。</strong>功率是做功的快慢，而力在每一小段位移上做的功等于 $F\cos\theta$ 乘以该位移。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>In time $dt$ the object moves $d\vec{r}$, so $dW = \vec{F}\cdot d\vec{r}$.</li>
+      <li>Divide by $dt$: $P = \dfrac{dW}{dt} = \vec{F}\cdot\dfrac{d\vec{r}}{dt}$.</li>
+      <li>Since $d\vec{r}/dt = \vec{v}$, $P = \vec{F}\cdot\vec{v} = Fv\cos\theta$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在时间 $dt$ 内物体移动 $d\vec{r}$，所以 $dW = \vec{F}\cdot d\vec{r}$。</li>
+      <li>两边除以 $dt$：$P = \dfrac{dW}{dt} = \vec{F}\cdot\dfrac{d\vec{r}}{dt}$。</li>
+      <li>由于 $d\vec{r}/dt = \vec{v}$，$P = \vec{F}\cdot\vec{v} = Fv\cos\theta$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>Over a short time $\Delta t$ the object moves $\Delta x$, so the force does $W = F\cos\theta\,\Delta x$.</li>
+      <li>Divide by the time: $P = \dfrac{W}{\Delta t} = F\cos\theta\,\dfrac{\Delta x}{\Delta t}$.</li>
+      <li>Over a short enough interval, $\Delta x/\Delta t$ is the speed $v$, so $P = Fv\cos\theta$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在很短的时间 $\Delta t$ 内物体移动 $\Delta x$，力做功 $W = F\cos\theta\,\Delta x$。</li>
+      <li>除以时间：$P = \dfrac{W}{\Delta t} = F\cos\theta\,\dfrac{\Delta x}{\Delta t}$。</li>
+      <li>时间间隔足够短时，$\Delta x/\Delta t$ 就是速率 $v$，所以 $P = Fv\cos\theta$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Check.</strong> Holding a weight still ($v = 0$) gives $P = 0$: no work is done on the weight. A force perpendicular to the motion ($\theta = 90^{\circ}$) also gives $P = 0$. Units: $\text{N}\cdot\text{m/s} = \text{J/s} = \text{W}$.</p>
+    <p data-lang="zh"><strong>检验。</strong>把重物静止举着（$v = 0$）时 $P = 0$：没有对重物做功。与运动方向垂直的力（$\theta = 90^{\circ}$）同样给出 $P = 0$。单位：$\text{N}\cdot\text{m/s} = \text{J/s} = \text{W}$。</p>
   </div>
 
   <div class="concept-box orange" data-lang="en">

@@ -481,20 +481,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -523,8 +531,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p2">
@@ -536,6 +544,41 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   padding: 1px 7px; margin-left: 6px; border-radius: 999px; vertical-align: middle;
   border: 1px solid var(--accent); color: var(--accent); }
 #courseToggle [data-course-label][hidden] { display: none; }
+</style>
+<style id="sg-figure-css">
+/* Textbook figures (scripts/sg_textbook_components.py; gate: min_figures in the rubric) */
+/* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
+   U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
+.sg-fig {
+  --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
+  --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
+  --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
+  --sg-radius: var(--radius, 12px); }
+.sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
+  border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
+.sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+.sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
+.sg-fig .c1 { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.sg-fig .c2 { stroke: var(--pop); stroke-width: 2.4; fill: none; }
+.sg-fig .c3 { stroke: var(--green); stroke-width: 2.4; fill: none; }
+.sg-fig .c4 { stroke: var(--orange); stroke-width: 2.4; fill: none; }
+.sg-fig .fill1 { fill: var(--accent); opacity: 0.18; stroke: none; }
+.sg-fig .fill2 { fill: var(--pop); opacity: 0.18; stroke: none; }
+.sg-fig .fill3 { fill: var(--green); opacity: 0.18; stroke: none; }
+.sg-fig .dash { stroke-dasharray: 6 4; }
+.sg-fig .thin { stroke-width: 1.2; }
+.sg-fig .arrow { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
+.sg-fig .box { stroke: var(--sg-text); stroke-width: 1.4; fill: var(--sg-bg); }
+.sg-fig .dot { fill: var(--sg-text); stroke: none; }
+.sg-fig text { font-family: var(--font-body); font-size: 13px; fill: var(--sg-text); }
+.sg-fig .mut { fill: var(--text-secondary); font-size: 12px; }
+.sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
+.sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
+.sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
+@media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
 <body>
@@ -653,10 +696,39 @@ $$E\,\Delta A+0+0=\frac{\sigma\,\Delta A}{\epsilon_0}\quad\Longrightarrow\quad E
 <p data-lang="zh"><strong>空腔内没有电荷。</strong>空腔壁上完全没有电荷。若壁上某处为正、另一处为负，就会有一条电场线穿过空腔连接它们，沿线电势下降，而这不可能，因为空腔壁是一个等势面。</p>
 <p data-lang="en">So $\vec E=0$ throughout an empty cavity, whatever charges or fields exist outside the conductor. This is <em>electrostatic shielding</em>: a closed conducting shell surrounds a region that is free of external electric fields, the principle behind a Faraday cage.</p>
 <p data-lang="zh">所以无论导体外部有什么电荷或电场，空腔内处处 $\vec E=0$。这就是<em>静电屏蔽</em>（<code>electrostatic shielding</code>）：封闭的导体壳包围的区域不受外电场影响，法拉第笼就是这个原理。</p>
+<div class="sg-hist">
+<div class="sg-label"><span data-lang="en">History: Faraday's cage</span><span data-lang="zh">历史：法拉第笼</span></div>
+<p data-lang="en">In 1836 Michael Faraday lined a room with metal foil, charged it strongly from an electrostatic machine, and stood inside with an electroscope. The electroscope showed no charge and no field: all the charge sat on the outside of the room.</p>
+<p data-lang="zh">1836 年，迈克尔·法拉第（Michael Faraday）用金属箔包覆一个房间，用静电起电机使它带上大量电荷，然后带着验电器站在里面。验电器显示没有电荷，也没有电场：所有电荷都在房间的外表面。</p>
+<p data-lang="en">Shielded cables use the same idea today. <a href="https://en.wikipedia.org/wiki/Faraday_cage" target="_blank" rel="noopener">Faraday cage (Wikipedia)</a> describes the experiment and how shielding works.</p>
+<p data-lang="zh">今天的屏蔽电缆用的是同一原理。<a href="https://en.wikipedia.org/wiki/Faraday_cage" target="_blank" rel="noopener">法拉第笼（维基百科，英文）</a>介绍了这个实验和屏蔽的原理。</p>
+</div>
+<h3><span data-lang="en">A charge inside the cavity</span><span data-lang="zh">空腔内有电荷时</span></h3>
 <p data-lang="en"><strong>Cavity containing charge $q$.</strong> The wall carries induced charge $-q$, arranged so that the field of $q$ plus the field of the wall charge is zero in the metal. The wall distribution depends on where $q$ sits and is nonuniform if $q$ is off center.</p>
 <p data-lang="zh"><strong>空腔内含有电荷 $q$。</strong>空腔壁带有感应电荷 $-q$，其分布使 $q$ 的场与壁上电荷的场在金属内相加为零。壁上分布取决于 $q$ 的位置，$q$ 偏离中心时分布不均匀。</p>
 <p data-lang="en">Conservation of charge then fixes the outer surface: $Q_{\rm outer}=Q_{\rm conductor}+q$. On a spherical outer surface that charge spreads uniformly, even if $q$ is off center, because the metal cuts the outside off from the cavity. Outside observers can tell how much charge is inside, but not where it is.</p>
 <p data-lang="zh">电荷守恒再决定外表面：$Q_{\rm outer}=Q_{\rm conductor}+q$。球形外表面上这部分电荷是均匀分布的，即使 $q$ 偏离中心也一样，因为金属把外部与空腔隔开。外部观察者能知道里面有多少电荷，但不知道它在哪里。</p>
+<figure class="sg-fig" role="group" data-course="c">
+<svg viewBox="0 0 440 230" role="img" aria-label="Cross-section of a neutral conducting spherical shell with a point charge plus q at the center of its cavity: minus q is induced on the cavity wall and plus q on the outer surface, and a dashed Gaussian surface lies inside the metal">
+<path class="fill2" fill-rule="evenodd" d="M 308,112 A 88,88 0 1,0 132,112 A 88,88 0 1,0 308,112 Z M 270,112 A 50,50 0 1,0 170,112 A 50,50 0 1,0 270,112 Z"/>
+<circle class="ax" cx="220" cy="112" r="88" fill="none"/>
+<circle class="ax" cx="220" cy="112" r="50" fill="none"/>
+<circle class="c3 dash" cx="220" cy="112" r="69" fill="none"/>
+<circle class="dot" cx="220" cy="112" r="6"/>
+<line class="ax" x1="318" y1="178" x2="258.3" y2="144.1"/>
+<line class="ax" x1="310" y1="32" x2="276.6" y2="44.6"/>
+<line class="ax" x1="100" y1="188" x2="171.2" y2="160.8"/>
+<text class="c1t" data-lang="en" x="220" y="98" text-anchor="middle">+q</text><text class="c1t" data-lang="zh" x="220" y="98" text-anchor="middle">+q</text>
+<text class="c2t" data-lang="en" x="320" y="190" text-anchor="start">Cavity wall: −q</text><text class="c2t" data-lang="zh" x="320" y="190" text-anchor="start">腔壁：−q</text>
+<text class="c1t" data-lang="en" x="312" y="32" text-anchor="start">Outer surface: +q</text><text class="c1t" data-lang="zh" x="312" y="32" text-anchor="start">外表面：+q</text>
+<text class="c3t" data-lang="en" x="10" y="200" text-anchor="start">Gaussian surface</text><text class="c3t" data-lang="zh" x="10" y="200" text-anchor="start">金属内的高斯面</text>
+<text class="c3t" data-lang="en" x="10" y="216" text-anchor="start">in the metal: E = 0</text><text class="c3t" data-lang="zh" x="10" y="216" text-anchor="start">E = 0</text>
+<text class="mut" data-lang="en" x="220" y="140" text-anchor="middle">cavity</text><text class="mut" data-lang="zh" x="220" y="140" text-anchor="middle">空腔</text>
+<text class="mut" data-lang="en" x="60" y="60" text-anchor="middle">metal shell</text><text class="mut" data-lang="zh" x="60" y="60" text-anchor="middle">金属球壳</text>
+<line class="ax" x1="92" y1="64" x2="152.5" y2="85.6"/>
+</svg>
+<figcaption><span data-lang="en">A charge $+q$ at the center of a neutral conducting shell induces $-q$ on the cavity wall, so a Gaussian surface inside the metal (dashed) encloses zero net charge and $E=0$ there. Charge conservation leaves $+q$ on the outer surface, which spreads uniformly over the sphere.</span><span data-lang="zh">位于中性导体球壳中心的电荷 $+q$ 在腔壁上感应出 $-q$，所以金属内部的高斯面（虚线）包围的净电荷为零，那里 $E=0$。由电荷守恒，外表面带 $+q$，并均匀分布在球面上。</span></figcaption>
+</figure>
 <p data-lang="en">Shielding works in one direction. A closed shell shields its empty cavity from outside charges, but it does not hide a charge inside: the outer surface still carries $+q$ and produces an external field. Grounding the shell removes that outer charge (Topic 10.2).</p>
 <p data-lang="zh">屏蔽是单向的。封闭导体壳能把空腔与外部电荷隔开，但不能隐藏腔内的电荷：外表面仍带 $+q$，并在外部产生电场。把导体壳接地可以除去这部分外表面电荷（专题 10.2）。</p>
 <details class="sg-we">
@@ -901,12 +973,23 @@ $$\frac{kQ_1}{R_1}=\frac{kQ_2}{R_2},\quad Q_1+Q_2=Q_{\rm tot}\ \Rightarrow\ Q_1=
 <p data-lang="zh">所以比值 $Q/\Delta V$ 与 $Q$ 无关：它只取决于导体的形状、间距和板间的材料。这个比值就是<em>电容</em>（<code>capacitance</code>）。电容大意味着在较小的电势差下就能存储较多电荷。把给定电容器上的电荷加倍，$\Delta V$ 也加倍，而 $C$ 不变。</p>
 </div>
 <div data-course="p2">
-<p data-lang="en">A parallel-plate capacitor consists of two separated parallel conducting plates that hold equal amounts of charge with opposite signs: $+Q$ on one plate and $-Q$ on the other. The field between them is proportional to $Q$, because every charge adds its own contribution, and the potential difference $\Delta V$ between the plates is proportional to that field. The ratio $Q/\Delta V$ therefore does not depend on $Q$: it depends only on the physical properties of the capacitor, namely the shape and spacing of the plates and the material between them. That ratio is the <em>capacitance</em>, $C=Q/\Delta V$, where $Q$ is the magnitude of the charge on either plate. A large capacitance means a lot of charge is stored for a small potential difference. Doubling the charge on a given capacitor doubles $\Delta V$ and leaves $C$ unchanged.</p>
-<p data-lang="zh">平行板电容器由两块分开的平行导体板组成，两板带有等量异号电荷：一块带 $+Q$，另一块带 $-Q$。板间的场与 $Q$ 成正比，因为每个电荷都贡献各自的场，而两板之间的电势差 $\Delta V$ 与这个场成正比。所以比值 $Q/\Delta V$ 与 $Q$ 无关：它只取决于电容器的物理性质，即极板的形状、间距和板间的材料。这个比值就是<em>电容</em>（<code>capacitance</code>），$C=Q/\Delta V$，其中 $Q$ 是任一极板上电荷的大小。电容大意味着在较小的电势差下就能存储较多电荷。把给定电容器上的电荷加倍，$\Delta V$ 也加倍，而 $C$ 不变。</p>
+<p data-lang="en">A parallel-plate capacitor consists of two separated parallel conducting plates that hold equal amounts of charge with opposite signs: $+Q$ on one plate and $-Q$ on the other. The field between them is proportional to $Q$, because every charge adds its own contribution, and the potential difference $\Delta V$ between the plates is proportional to that field.</p>
+<p data-lang="zh">平行板电容器由两块分开的平行导体板组成，两板带有等量异号电荷：一块带 $+Q$，另一块带 $-Q$。板间的场与 $Q$ 成正比，因为每个电荷都贡献各自的场，而两板之间的电势差 $\Delta V$ 与这个场成正比。</p>
+<p data-lang="en">The ratio $Q/\Delta V$ therefore does not depend on $Q$: it depends only on the physical properties of the capacitor, namely the shape and spacing of the plates and the material between them. That ratio is the <em>capacitance</em>, $C=Q/\Delta V$, where $Q$ is the magnitude of the charge on either plate.</p>
+<p data-lang="zh">所以比值 $Q/\Delta V$ 与 $Q$ 无关：它只取决于电容器的物理性质，即极板的形状、间距和板间的材料。这个比值就是<em>电容</em>（<code>capacitance</code>），$C=Q/\Delta V$，其中 $Q$ 是任一极板上电荷的大小。</p>
+<p data-lang="en">A large capacitance means a lot of charge is stored for a small potential difference. Doubling the charge on a given capacitor doubles $\Delta V$ and leaves $C$ unchanged.</p>
+<p data-lang="zh">电容大意味着在较小的电势差下就能存储较多电荷。把给定电容器上的电荷加倍，$\Delta V$ 也加倍，而 $C$ 不变。</p>
 </div>
 <div data-course="c">
 <div class="concept-box gold" data-lang="en"><strong>The four-step method used for every geometry</strong> <ol class="sg-steps"><li>Place $+Q$ on one conductor and $-Q$ on the other.</li><li>Use symmetry and Gauss's law to find $\vec E$ in the gap.</li><li>Integrate from the negative to the positive conductor to get the positive quantity $\Delta V=-\int_-^+\vec E\cdot d\vec l$.</li><li>Form $C=Q/\Delta V$. The charge $Q$ must cancel; if it does not, there is an error.</li></ol></div>
 <div class="concept-box gold" data-lang="zh"><strong>适用于每种几何形状的四步法</strong> <ol class="sg-steps"><li>在一个导体上放 $+Q$，在另一个上放 $-Q$。</li><li>用对称性和高斯定律求间隙中的 $\vec E$。</li><li>从负导体到正导体积分，得到正的量 $\Delta V=-\int_-^+\vec E\cdot d\vec l$。</li><li>计算 $C=Q/\Delta V$。$Q$ 必须消去；若没有消去，说明有错误。</li></ol></div>
+</div>
+<div class="sg-hist">
+<div class="sg-label"><span data-lang="en">History: the Leyden jar</span><span data-lang="zh">历史：莱顿瓶</span></div>
+<p data-lang="en">In 1745 and 1746 Ewald Georg von Kleist in Pomerania and Pieter van Musschenbroek in Leiden independently found that a glass jar of water, charged through a wire, could store enough charge to give a painful shock.</p>
+<p data-lang="zh">1745 年至 1746 年间，波美拉尼亚的克莱斯特（Ewald Georg von Kleist）和莱顿的穆申布鲁克（Pieter van Musschenbroek）各自发现：通过导线充电的一瓶水能储存足够的电荷，让人受到强烈的电击。</p>
+<p data-lang="en">Later jars were coated inside and out with metal foil: two conductors separated by an insulator, the first capacitor. <a href="https://en.wikipedia.org/wiki/Leyden_jar" target="_blank" rel="noopener">Leyden jar (Wikipedia)</a> traces its history, including Benjamin Franklin's experiments with it.</p>
+<p data-lang="zh">后来的莱顿瓶在玻璃内外两面都贴上金属箔：两个导体被绝缘体隔开，这就是最早的电容器。<a href="https://en.wikipedia.org/wiki/Leyden_jar" target="_blank" rel="noopener">莱顿瓶（维基百科，英文）</a>讲述了它的历史，包括本杰明·富兰克林（Benjamin Franklin）用它做的实验。</p>
 </div>
 <h3><span data-lang="en">Parallel-plate capacitor</span><span data-lang="zh">平行板电容器</span></h3>
 <p data-lang="en">Two plates of area $A$ are a distance $d$ apart, with $d$ much smaller than the plate dimensions. Except near the edges the field between the plates is uniform, constant in magnitude and direction, and perpendicular to the plates; outside it is nearly zero.</p>
@@ -924,16 +1007,32 @@ $$\frac{kQ_1}{R_1}=\frac{kQ_2}{R_2},\quad Q_1+Q_2=Q_{\rm tot}\ \Rightarrow\ Q_1=
 <p data-lang="en">The field between the plates has the same strength everywhere in the gap, so moving a positive charge $q$ from the negative plate to the positive plate, against the field, takes work $qEd$. Dividing the work by $q$ gives the potential difference between the plates, so the field magnitude is determined by the voltage and the separation:</p>
 <p data-lang="zh">间隙中各处的场强相同，所以把正电荷 $q$ 逆着场从负极板移到正极板，需要做功 $qEd$。用功除以 $q$ 就得到两板之间的电势差，所以场强由电压和间距决定：</p>
 <div class="step-math">$$E=\frac{\Delta V}{d}$$</div>
-<p data-lang="en">Here $E$ is the field magnitude in V/m (equivalently N/C), $\Delta V$ is the potential difference between the plates and $d$ is their separation. The field points from the positive plate to the negative plate. Because $d$ is much smaller than the plate dimensions, the field between the plates is uniform: constant in both magnitude and direction, except near the edges of the plates. AP Physics 2 ignores edge effects unless a problem says otherwise.</p>
-<p data-lang="zh">这里 $E$ 是场强大小，单位 V/m（等价于 N/C），$\Delta V$ 是两板之间的电势差，$d$ 是板间距。场的方向从正极板指向负极板。由于 $d$ 远小于极板尺寸，板间的场是均匀的：大小和方向都不变，只有极板边缘附近例外。除非题目另有说明，AP 物理 2 忽略边缘效应。</p>
-<p data-lang="en">The capacitance of a parallel-plate capacitor is proportional to the area $A$ of one plate and inversely proportional to the separation $d$. More area holds more charge at the same field, so $C$ grows with $A$. A larger separation needs a larger $\Delta V=Ed$ to maintain the same field and charge, so $C$ falls as $d$ grows. The constant of proportionality is the product $\kappa\epsilon_0$, where $\kappa$ is the dielectric constant of the material between the plates ($\kappa=1$ for vacuum, and very nearly 1 for air) and $\epsilon_0=8.85\times10^{-12}\;\text{F/m}$ is the electric permittivity of free space.</p>
-<p data-lang="zh">平行板电容器的电容与一块极板的面积 $A$ 成正比，与板间距 $d$ 成反比。面积越大，在相同的场下能容纳的电荷越多，所以 $C$ 随 $A$ 增大。间距越大，要维持相同的场和电荷就需要更大的 $\Delta V=Ed$，所以 $C$ 随 $d$ 增大而减小。比例常数是乘积 $\kappa\epsilon_0$，其中 $\kappa$ 是板间材料的介电常数（<code>dielectric constant</code>，真空中 $\kappa=1$，空气中非常接近 1），$\epsilon_0=8.85\times10^{-12}\;\text{F/m}$ 是真空电容率（<code>permittivity of free space</code>）。</p>
+<p data-lang="en">Here $E$ is the field magnitude in V/m (equivalently N/C), $\Delta V$ is the potential difference between the plates and $d$ is their separation. The field points from the positive plate to the negative plate.</p>
+<p data-lang="zh">这里 $E$ 是场强大小，单位 V/m（等价于 N/C），$\Delta V$ 是两板之间的电势差，$d$ 是板间距。场的方向从正极板指向负极板。</p>
+<p data-lang="en">Because $d$ is much smaller than the plate dimensions, the field between the plates is uniform: constant in both magnitude and direction, except near the edges of the plates. AP Physics 2 ignores edge effects unless a problem says otherwise.</p>
+<p data-lang="zh">由于 $d$ 远小于极板尺寸，板间的场是均匀的：大小和方向都不变，只有极板边缘附近例外。除非题目另有说明，AP 物理 2 忽略边缘效应。</p>
+<p data-lang="en">The capacitance of a parallel-plate capacitor is proportional to the area $A$ of one plate and inversely proportional to the separation $d$. More area holds more charge at the same field, so $C$ grows with $A$. A larger separation needs a larger $\Delta V=Ed$ to maintain the same field and charge, so $C$ falls as $d$ grows.</p>
+<p data-lang="zh">平行板电容器的电容与一块极板的面积 $A$ 成正比，与板间距 $d$ 成反比。面积越大，在相同的场下能容纳的电荷越多，所以 $C$ 随 $A$ 增大。间距越大，要维持相同的场和电荷就需要更大的 $\Delta V=Ed$，所以 $C$ 随 $d$ 增大而减小。</p>
+<p data-lang="en">The constant of proportionality is the product $\kappa\epsilon_0$, where $\kappa$ is the dielectric constant of the material between the plates ($\kappa=1$ for vacuum, and very nearly 1 for air) and $\epsilon_0=8.85\times10^{-12}\;\text{F/m}$ is the electric permittivity of free space.</p>
+<p data-lang="zh">比例常数是乘积 $\kappa\epsilon_0$，其中 $\kappa$ 是板间材料的介电常数（<code>dielectric constant</code>，真空中 $\kappa=1$，空气中非常接近 1），$\epsilon_0=8.85\times10^{-12}\;\text{F/m}$ 是真空电容率（<code>permittivity of free space</code>）。</p>
 <div class="formula-box">
 <div class="formula-label"><span data-lang="en">Parallel-plate capacitor</span><span data-lang="zh">平行板电容器</span></div>
 $$C=\frac{Q}{\Delta V}=\frac{\kappa\epsilon_0A}{d},\qquad E=\frac{\Delta V}{d}$$
 </div>
 <div class="concept-box gold" data-lang="en"><strong>Scope of this topic</strong> <ul class="sg-list"><li>AP Physics 2 limits capacitor analysis to parallel-plate capacitors. Other shapes can also separate charge, but only the analysis and description of parallel-plate capacitors are required.</li><li>Edge effects are ignored unless a problem states otherwise.</li></ul></div>
 <div class="concept-box gold" data-lang="zh"><strong>本专题的范围</strong> <ul class="sg-list"><li>AP 物理 2 把电容器的分析限定为平行板电容器。其他形状的电容器同样能分离电荷，但只要求分析和描述平行板电容器。</li><li>除非题目另有说明，边缘效应忽略不计。</li></ul></div>
+</div>
+<h3><span data-lang="en">First principles: parallel-plate capacitance from two charged sheets</span><span data-lang="zh">第一性原理：由两个带电平面推出平行板电容</span></h3>
+<div class="sg-fp">
+<div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+<p data-lang="en"><strong>Principle.</strong> Superposition of the fields of the two plates, plus the definition of potential difference as work per unit charge.</p>
+<p data-lang="zh"><strong>原理。</strong>两块极板电场的叠加，加上电势差的定义：移动单位电荷所做的功。</p>
+<ol class="sg-steps" data-lang="en"><li>Each plate is a sheet with charge density $\sigma=Q/A$, so it makes a field of magnitude $\sigma/(2\epsilon_0)$ on both sides.</li><li>Between the plates the two fields point the same way: $E=\sigma/\epsilon_0=Q/(\epsilon_0A)$. Outside they cancel.</li><li>The field is uniform, so moving charge $q$ across the gap takes work $qEd$, and $\Delta V=Ed=Qd/(\epsilon_0A)$.</li><li>Divide: $C=Q/\Delta V=\epsilon_0A/d$. The charge $Q$ cancels, so $C$ depends only on geometry.</li></ol>
+<ol class="sg-steps" data-lang="zh"><li>每块极板是面电荷密度为 $\sigma=Q/A$ 的带电平面，在两侧产生大小为 $\sigma/(2\epsilon_0)$ 的场。</li><li>两板之间两个场方向相同：$E=\sigma/\epsilon_0=Q/(\epsilon_0A)$。板外两者抵消。</li><li>场是均匀的，把电荷 $q$ 移过间隙需做功 $qEd$，所以 $\Delta V=Ed=Qd/(\epsilon_0A)$。</li><li>相除：$C=Q/\Delta V=\epsilon_0A/d$。$Q$ 被消去，所以 $C$ 只取决于几何形状。</li></ol>
+<p data-lang="en"><strong>Limiting-case check.</strong> As $d\to0$, $C\to\infty$: a vanishing gap holds charge at almost no potential difference. Doubling $A$ doubles $C$, like two capacitors side by side. Units: $(\text{F/m})(\text{m}^2)/\text{m}=\text{F}$.</p>
+<p data-lang="zh"><strong>极限检验。</strong>当 $d\to0$ 时 $C\to\infty$：间隙趋于零时，几乎不需要电势差就能储存电荷。$A$ 加倍则 $C$ 加倍，相当于两个电容器并排。单位：$(\text{F/m})(\text{m}^2)/\text{m}=\text{F}$。</p>
+<p data-lang="en">The model needs $d$ much smaller than the plate size. When the gap is comparable to the plates, fringing fields add capacitance and the formula underestimates $C$.</p>
+<p data-lang="zh">这个模型要求 $d$ 远小于极板尺寸。当间隙与极板尺寸相当时，边缘场会增加电容，公式给出的 $C$ 偏小。</p>
 </div>
 <details class="sg-we">
 <summary><span data-lang="en">Worked Example: Geometry, charge, field, and energy</span><span data-lang="zh">例题：几何、电荷、场与能量</span></summary>
@@ -956,8 +1055,10 @@ $$C=\frac{Q}{\Delta V}=\frac{\kappa\epsilon_0A}{d},\qquad E=\frac{\Delta V}{d}$$
 <p data-lang="zh">板间的场是均匀的，所以其中的带电粒子受恒力 $F=qE$，做匀加速运动，$a=qE/m$。它的运动与地球表面附近的抛体运动结构相同：沿极板方向匀速，垂直于极板方向匀加速。力学中的运动学公式同样适用，只是用 $qE/m$ 代替 $g$。</p>
 </div>
 <div data-course="p2">
-<p data-lang="en">The field between the plates is uniform, so a charged particle there feels a constant electric force $F=qE$ and, by Newton's second law, undergoes constant acceleration $a=qE/m$, where $q$ is the particle's charge, $m$ its mass and $E=\Delta V/d$. Its motion has the same structure as projectile motion near Earth's surface: uniform velocity along the plates, uniform acceleration across them, and a parabolic path, with $qE/m$ in place of $g$. A positive charge accelerates in the direction of the field and a negative charge accelerates opposite to it.</p>
-<p data-lang="zh">板间的场是均匀的，所以其中的带电粒子受恒定的电场力 $F=qE$，由牛顿第二定律做匀加速运动，$a=qE/m$，其中 $q$ 是粒子的电荷，$m$ 是质量，$E=\Delta V/d$。它的运动与地球表面附近的抛体运动结构相同：沿极板方向匀速，垂直于极板方向匀加速，轨迹是抛物线，只是用 $qE/m$ 代替 $g$。正电荷沿场的方向加速，负电荷沿与场相反的方向加速。</p>
+<p data-lang="en">The field between the plates is uniform, so a charged particle there feels a constant electric force $F=qE$ and, by Newton's second law, undergoes constant acceleration $a=qE/m$, where $q$ is the particle's charge, $m$ its mass and $E=\Delta V/d$.</p>
+<p data-lang="zh">板间的场是均匀的，所以其中的带电粒子受恒定的电场力 $F=qE$，由牛顿第二定律做匀加速运动，$a=qE/m$，其中 $q$ 是粒子的电荷，$m$ 是质量，$E=\Delta V/d$。</p>
+<p data-lang="en">Its motion has the same structure as projectile motion near Earth's surface: uniform velocity along the plates, uniform acceleration across them, and a parabolic path, with $qE/m$ in place of $g$. A positive charge accelerates in the direction of the field and a negative charge accelerates opposite to it.</p>
+<p data-lang="zh">它的运动与地球表面附近的抛体运动结构相同：沿极板方向匀速，垂直于极板方向匀加速，轨迹是抛物线，只是用 $qE/m$ 代替 $g$。正电荷沿场的方向加速，负电荷沿与场相反的方向加速。</p>
 </div>
 <details class="sg-we">
 <summary><span data-lang="en">Worked Example: An electron crossing a capacitor</span><span data-lang="zh">例题：穿过电容器的电子</span></summary>
@@ -1029,12 +1130,42 @@ $$\begin{aligned}E&=\frac{Q}{2\pi\epsilon_0Lr}\ (a\lt r\lt b),\qquad \Delta V=\i
 <div class="step-math">$$U=\int_0^Q\frac{q}{C}\,dq=\frac{Q^2}{2C}=\tfrac12Q\,\Delta V=\tfrac12C(\Delta V)^2$$</div>
 </div>
 <div data-course="p2">
-<p data-lang="en">The potential energy stored in a capacitor equals the work done by an external agent to separate that amount of charge. Charging means moving charge from the negative plate to the positive plate against the field. When charge $q$ has already been moved, the potential difference is $q/C$, so it rises steadily from $0$ to $\Delta V$ as the charge rises from $0$ to $Q$. The total work is the charge moved times the average potential difference, $\tfrac12\Delta V$:</p>
-<p data-lang="zh">电容器中储存的电势能等于外力把这么多电荷分开所做的功。充电就是逆着场把电荷从负极板搬到正极板。当已经搬了电荷 $q$ 时，电势差为 $q/C$，所以随着电荷从 $0$ 增加到 $Q$，电势差从 $0$ 平稳上升到 $\Delta V$。总功等于搬运的电荷乘以平均电势差 $\tfrac12\Delta V$：</p>
+<p data-lang="en">The potential energy stored in a capacitor equals the work done by an external agent to separate that amount of charge. Charging means moving charge from the negative plate to the positive plate against the field.</p>
+<p data-lang="zh">电容器中储存的电势能等于外力把这么多电荷分开所做的功。充电就是逆着场把电荷从负极板搬到正极板。</p>
+<p data-lang="en">When charge $q$ has already been moved, the potential difference is $q/C$, so it rises steadily from $0$ to $\Delta V$ as the charge rises from $0$ to $Q$. The total work is the charge moved times the average potential difference, $\tfrac12\Delta V$:</p>
+<p data-lang="zh">当已经搬了电荷 $q$ 时，电势差为 $q/C$，所以随着电荷从 $0$ 增加到 $Q$，电势差从 $0$ 平稳上升到 $\Delta V$。总功等于搬运的电荷乘以平均电势差 $\tfrac12\Delta V$：</p>
 <div class="step-math">$$U=Q\left(\tfrac12\Delta V\right)=\tfrac12Q\,\Delta V=\tfrac12C(\Delta V)^2=\frac{Q^2}{2C}$$</div>
 </div>
 <p data-lang="en">The factor $\tfrac12$ appears because the potential difference rises from $0$ to $\Delta V$ during charging: on average each bit of charge is moved through half the final potential difference. On a graph of $\Delta V$ against $q$ the line has slope $1/C$, and $U$ is the area under it, a triangle of base $Q$ and height $\Delta V$.</p>
 <p data-lang="zh">出现因子 $\tfrac12$，是因为充电过程中电势差从 $0$ 升到 $\Delta V$：平均而言，每一小份电荷只经过了最终电势差的一半。在 $\Delta V$ 对 $q$ 的图像上，直线的斜率为 $1/C$，$U$ 是线下的面积，即底为 $Q$、高为 $\Delta V$ 的三角形。</p>
+<figure class="sg-fig" role="group">
+<svg viewBox="0 0 440 230" role="img" aria-label="Potential difference against charge while a capacitor charges: a straight line of slope 1 over C, with the triangular area under it equal to the stored energy, and a shallower dashed line for the same capacitor filled with a dielectric">
+<path class="fill1" d="M 52,192 L 300,72 L 300,192 Z"/>
+<line class="ax" x1="52" y1="192" x2="416" y2="192"/>
+<polyline class="ax" points="408.5,195.6 416,192 408.5,188.4"/>
+<line class="ax" x1="52" y1="192" x2="52" y2="22"/>
+<polyline class="ax" points="55.6,29.5 52,22 48.4,29.5"/>
+<line class="grid dash" x1="300" y1="192" x2="300" y2="72"/>
+<line class="grid dash" x1="52" y1="72" x2="300" y2="72"/>
+<line class="ax" x1="48.5" y1="132" x2="55.5" y2="132"/>
+<line class="ax" x1="48.5" y1="72" x2="55.5" y2="72"/>
+<line class="ax" x1="300" y1="188.5" x2="300" y2="195.5"/>
+<line class="c1" x1="52" y1="192" x2="300" y2="72"/>
+<line class="c2 dash" x1="52" y1="192" x2="300" y2="132"/>
+<circle class="dot" cx="300" cy="72" r="3.5"/>
+<circle class="dot" cx="300" cy="132" r="3.5"/>
+<text class="lbl" data-lang="en" x="234" y="224" text-anchor="middle">Charge q on the plates</text><text class="lbl" data-lang="zh" x="234" y="224" text-anchor="middle">极板上的电荷 q</text>
+<text class="lbl" data-lang="en" x="60" y="16" text-anchor="start">Potential difference ΔV</text><text class="lbl" data-lang="zh" x="60" y="16" text-anchor="start">电势差 ΔV</text>
+<text class="mut" data-lang="en" x="300" y="208" text-anchor="middle">Q</text><text class="mut" data-lang="zh" x="300" y="208" text-anchor="middle">Q</text>
+<text class="mut" data-lang="en" x="46" y="76" text-anchor="end">ΔV</text><text class="mut" data-lang="zh" x="46" y="76" text-anchor="end">ΔV</text>
+<text class="mut" data-lang="en" x="46" y="136" text-anchor="end">ΔV/2</text><text class="mut" data-lang="zh" x="46" y="136" text-anchor="end">ΔV/2</text>
+<text class="c1t" data-lang="en" x="308" y="70" text-anchor="start">slope 1/C</text><text class="c1t" data-lang="zh" x="308" y="70" text-anchor="start">斜率 1/C</text>
+<text class="c2t" data-lang="en" x="308" y="130" text-anchor="start">dielectric, κ = 2</text><text class="c2t" data-lang="zh" x="308" y="130" text-anchor="start">电介质，κ = 2</text>
+<text class="c2t" data-lang="en" x="308" y="146" text-anchor="start">slope 1/(κC)</text><text class="c2t" data-lang="zh" x="308" y="146" text-anchor="start">斜率 1/(κC)</text>
+<text class="c1t" data-lang="en" x="236" y="182" text-anchor="middle">Area = U = ½QΔV</text><text class="c1t" data-lang="zh" x="236" y="182" text-anchor="middle">面积 = U = ½QΔV</text>
+</svg>
+<figcaption><span data-lang="en">Potential difference against charge while a capacitor charges. The solid line has slope $1/C$, and the shaded triangle (base $Q$, height $\Delta V$) has area $U=\tfrac12Q\Delta V$, the stored energy. The dashed line is the same capacitor filled with a dielectric of $\kappa=2$: at the same charge $Q$ it reaches only $\Delta V/2$, so the stored energy is halved.</span><span data-lang="zh">电容器充电时电势差随电荷的变化。实线斜率为 $1/C$，阴影三角形（底为 $Q$，高为 $\Delta V$）的面积 $U=\tfrac12Q\Delta V$ 就是储能。虚线是同一电容器充满 $\kappa=2$ 的电介质后的情形：在相同电荷 $Q$ 下只达到 $\Delta V/2$，所以储能减半。</span></figcaption>
+</figure>
 <div data-course="c">
 <p data-lang="en">The energy can also be located in the field. For parallel plates $U=\tfrac12\dfrac{\epsilon_0A}{d}(Ed)^2=\left(\tfrac12\epsilon_0E^2\right)(Ad)$, so the energy per unit volume is $u=\tfrac12\epsilon_0E^2$. For the spherical capacitor, integrating $u$ over thin shells of volume $4\pi r^2dr$ gives $U=\dfrac{Q^2}{8\pi\epsilon_0}\displaystyle\int_a^b\dfrac{dr}{r^2}=\dfrac{Q^2}{2C}$, the same value as the work calculation. Two methods agreeing is a useful check when a question asks you to verify the stored energy.</p>
 <p data-lang="zh">能量也可以定位在场中。对平行板，$U=\tfrac12\dfrac{\epsilon_0A}{d}(Ed)^2=\left(\tfrac12\epsilon_0E^2\right)(Ad)$，所以单位体积的能量为 $u=\tfrac12\epsilon_0E^2$。对球形电容器，在体积为 $4\pi r^2dr$ 的薄球壳上对 $u$ 积分，得 $U=\dfrac{Q^2}{8\pi\epsilon_0}\displaystyle\int_a^b\dfrac{dr}{r^2}=\dfrac{Q^2}{2C}$，与做功计算的结果相同。当题目要求验证储能时，两种方法相互一致是有用的检验。</p>
@@ -1045,6 +1176,24 @@ $$\begin{aligned}E&=\frac{Q}{2\pi\epsilon_0Lr}\ (a\lt r\lt b),\qquad \Delta V=\i
 <div class="table-wrap"><table class="sg-table"><thead><tr><th><span data-lang="en">Quantity</span><span data-lang="zh">物理量</span></th><th><span data-lang="en">Isolated ($Q$ fixed)</span><span data-lang="zh">孤立（$Q$ 固定）</span></th><th><span data-lang="en">Battery connected ($\Delta V$ fixed)</span><span data-lang="zh">接电池（$\Delta V$ 固定）</span></th></tr></thead><tbody><tr><td>$C=\epsilon_0A/d$</td><td>$C_0/2$</td><td>$C_0/2$</td></tr><tr><td>$Q$</td><td><span data-lang="en">$Q_0$ (unchanged)</span><span data-lang="zh">$Q_0$（不变）</span></td><td><span data-lang="en">$Q_0/2$ (charge flows back to the battery)</span><span data-lang="zh">$Q_0/2$（电荷流回电池）</span></td></tr><tr><td>$\Delta V$</td><td>$2\Delta V_0$</td><td><span data-lang="en">$\Delta V_0$ (unchanged)</span><span data-lang="zh">$\Delta V_0$（不变）</span></td></tr><tr><td>$E$</td><td><span data-lang="en">$E_0$ (unchanged, $E=Q/\epsilon_0A$)</span><span data-lang="zh">$E_0$（不变，$E=Q/\epsilon_0A$）</span></td><td>$E_0/2$ ($E=\Delta V/d$)</td></tr><tr><td>$U$</td><td><span data-lang="en">$2U_0$ (use $Q^2/2C$)</span><span data-lang="zh">$2U_0$（用 $Q^2/2C$）</span></td><td><span data-lang="en">$U_0/2$ (use $\tfrac12C\Delta V^2$)</span><span data-lang="zh">$U_0/2$（用 $\tfrac12C\Delta V^2$）</span></td></tr></tbody></table></div>
 <p data-lang="en">For the isolated capacitor the energy increases because the external agent pulls against the attraction between the plates, and that work is stored in a larger volume of field at the same field strength. In the battery-connected case the stored energy decreases yet the agent still does positive work: the battery gains more energy than the capacitor loses.</p>
 <p data-lang="zh">孤立电容器的能量增加，是因为外力要克服极板间的吸引力做功，这部分功储存在体积更大、场强不变的电场中。接电池时储能减小，但外力仍做正功：电池得到的能量比电容器失去的更多。</p>
+<h3><span data-lang="en">First principles: the force between the plates</span><span data-lang="zh">第一性原理：极板之间的作用力</span></h3>
+<div class="sg-fp">
+<div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+<p data-lang="en"><strong>Principle.</strong> Work and energy: when an isolated capacitor is pulled apart slowly, the work done by the external agent equals the increase in stored energy.</p>
+<p data-lang="zh"><strong>原理。</strong>功与能：缓慢拉开孤立电容器时，外力所做的功等于储能的增加。</p>
+<div data-course="c">
+<ol class="sg-steps" data-lang="en"><li>With $Q$ fixed and plate separation $x$, $U=\dfrac{Q^2}{2C}=\dfrac{Q^2x}{2\epsilon_0A}$.</li><li>The agent's force balances the attraction, so $F=\dfrac{dU}{dx}=\dfrac{Q^2}{2\epsilon_0A}$.</li><li>With $E=Q/(\epsilon_0A)$ this is $F=\tfrac12QE$, the same at every separation.</li></ol>
+<ol class="sg-steps" data-lang="zh"><li>$Q$ 固定、板间距为 $x$ 时，$U=\dfrac{Q^2}{2C}=\dfrac{Q^2x}{2\epsilon_0A}$。</li><li>外力与吸引力平衡，所以 $F=\dfrac{dU}{dx}=\dfrac{Q^2}{2\epsilon_0A}$。</li><li>由 $E=Q/(\epsilon_0A)$，得 $F=\tfrac12QE$，与板间距无关。</li></ol>
+</div>
+<div data-course="p2">
+<ol class="sg-steps" data-lang="en"><li>With $Q$ fixed, $U=\dfrac{Q^2}{2C}=\dfrac{Q^2d}{2\epsilon_0A}$, so $U$ grows in proportion to $d$.</li><li>Pulling the plates a further distance $\Delta d$ raises the energy by $\Delta U=\dfrac{Q^2\,\Delta d}{2\epsilon_0A}$.</li><li>The force is constant, so $W=F\,\Delta d=\Delta U$ gives $F=\dfrac{Q^2}{2\epsilon_0A}=\tfrac12QE$.</li></ol>
+<ol class="sg-steps" data-lang="zh"><li>$Q$ 固定时，$U=\dfrac{Q^2}{2C}=\dfrac{Q^2d}{2\epsilon_0A}$，所以 $U$ 与 $d$ 成正比。</li><li>再把极板拉开 $\Delta d$，能量增加 $\Delta U=\dfrac{Q^2\,\Delta d}{2\epsilon_0A}$。</li><li>力是恒定的，由 $W=F\,\Delta d=\Delta U$ 得 $F=\dfrac{Q^2}{2\epsilon_0A}=\tfrac12QE$。</li></ol>
+<p data-lang="en">In the next worked example, $F=\tfrac12(3.54\times10^{-9}\;\text{C})(2.0\times10^{4}\;\text{V/m})=3.54\times10^{-5}\;\text{N}$. Then $F\,\Delta d=(3.54\times10^{-5}\;\text{N})(1.0\times10^{-3}\;\text{m})=3.54\times10^{-8}\;\text{J}$, the work found there.</p>
+<p data-lang="zh">在下面的例题中，$F=\tfrac12(3.54\times10^{-9}\;\text{C})(2.0\times10^{4}\;\text{V/m})=3.54\times10^{-5}\;\text{N}$。于是 $F\,\Delta d=(3.54\times10^{-5}\;\text{N})(1.0\times10^{-3}\;\text{m})=3.54\times10^{-8}\;\text{J}$，正是那里求得的功。</p>
+</div>
+<p data-lang="en"><strong>Limiting-case check.</strong> Why $\tfrac12QE$ and not $QE$? A plate feels only the field of the other plate, $\sigma/(2\epsilon_0)=E/2$, because its own field cannot push it. As $Q\to0$ the force vanishes, and the units are $\text{C}\cdot\text{V/m}=\text{J/m}=\text{N}$.</p>
+<p data-lang="zh"><strong>极限检验。</strong>为什么是 $\tfrac12QE$ 而不是 $QE$？一块极板只受另一块极板的场 $\sigma/(2\epsilon_0)=E/2$ 作用，因为自身的场不能推动自己。当 $Q\to0$ 时力为零；单位为 $\text{C}\cdot\text{V/m}=\text{J/m}=\text{N}$。</p>
+</div>
 <details class="sg-we" data-course="p2">
 <summary><span data-lang="en">Worked Example: Pulling the plates of an isolated capacitor apart</span><span data-lang="zh">例题：拉开孤立电容器的极板</span></summary>
 <div class="detail-body">
@@ -1105,8 +1254,12 @@ $$\begin{aligned}E&=\frac{Q}{2\pi\epsilon_0Lr}\ (a\lt r\lt b),\qquad \Delta V=\i
 </div>
 <div class="sg-examtip" data-course="p2">
 <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-<p data-lang="en">Mathematical Routines questions ask you to calculate $C$, $Q$, $\Delta V$, $E$ or $U$ for a parallel-plate capacitor: write the equation in symbols, substitute with units, and convert the plate separation to meters. Translation questions ask you to read a graph, such as the slope ($1/C$) and area ($U$) of a $\Delta V$-versus-$q$ graph. Experimental questions use the $C$-versus-$1/d$ linearization. Qualitative/Quantitative Translation questions ask how $C$, $Q$, $\Delta V$, $E$ and $U$ change, and a response is complete only when it names the constraint (battery connected, or isolated).</p>
-<p data-lang="zh">数学过程类题目要求计算平行板电容器的 $C$、$Q$、$\Delta V$、$E$ 或 $U$：先用符号写出方程，再代入数值和单位，并把板间距换算成米。表征转换类题目要求读图，例如 $\Delta V$ 对 $q$ 图像的斜率（$1/C$）和面积（$U$）。实验类题目用 $C$ 对 $1/d$ 的线性化。定性/定量转换类题目问 $C$、$Q$、$\Delta V$、$E$、$U$ 如何变化，只有指明约束条件（接电池还是孤立）的回答才算完整。</p>
+<p data-lang="en">Mathematical Routines questions ask you to calculate $C$, $Q$, $\Delta V$, $E$ or $U$ for a parallel-plate capacitor: write the equation in symbols, substitute with units, and convert the plate separation to meters.</p>
+<p data-lang="zh">数学过程类题目要求计算平行板电容器的 $C$、$Q$、$\Delta V$、$E$ 或 $U$：先用符号写出方程，再代入数值和单位，并把板间距换算成米。</p>
+<p data-lang="en">Translation questions ask you to read a graph, such as the slope ($1/C$) and area ($U$) of a $\Delta V$-versus-$q$ graph. Experimental questions use the $C$-versus-$1/d$ linearization.</p>
+<p data-lang="zh">表征转换类题目要求读图，例如 $\Delta V$ 对 $q$ 图像的斜率（$1/C$）和面积（$U$）。实验类题目用 $C$ 对 $1/d$ 的线性化。</p>
+<p data-lang="en">Qualitative/Quantitative Translation questions ask how $C$, $Q$, $\Delta V$, $E$ and $U$ change, and a response is complete only when it names the constraint (battery connected, or isolated).</p>
+<p data-lang="zh">定性/定量转换类题目问 $C$、$Q$、$\Delta V$、$E$、$U$ 如何变化，只有指明约束条件（接电池还是孤立）的回答才算完整。</p>
 </div>
 <div class="sg-check">
 <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1160,8 +1313,48 @@ $$\begin{aligned}E&=\frac{Q}{2\pi\epsilon_0Lr}\ (a\lt r\lt b),\qquad \Delta V=\i
 <p data-lang="zh">在非极性分子中，外场把电子云从原子核稍微拉开，形成感应偶极子；在水这样已有固有偶极矩的极性分子中，外场使它们部分排列整齐。</p>
 <p data-lang="en">In either case the interior stays neutral on average, because the positive end of each dipole sits beside the negative end of its neighbour.</p>
 <p data-lang="zh">两种情形下，内部平均仍是中性的，因为每个偶极子的正端紧挨着邻居的负端。</p>
+<h3><span data-lang="en">Bound surface charge and the weaker field</span><span data-lang="zh">束缚面电荷与减弱的场</span></h3>
 <p data-lang="en">At the two faces the cancellation fails: a thin layer of negative bound charge appears on the face next to the positive plate, and a layer of positive bound charge on the face next to the negative plate. These bound layers produce a field that is opposite in direction to the external field and weakens the field inside the material.</p>
 <p data-lang="zh">在两个表面处这种抵消失效：靠近正极板的表面出现一薄层负的束缚电荷，靠近负极板的表面出现一层正的束缚电荷。这些束缚电荷层产生的场与外场方向相反，使材料内的场减弱。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Parallel-plate capacitor with polarized dielectric">
+    <rect class="box" x="60.0" y="35.0" width="16.0" height="165.0" rx="3.0"/>
+    <rect class="box" x="364.0" y="35.0" width="16.0" height="165.0" rx="3.0"/>
+    <rect class="fill2" x="135.0" y="42.0" width="170.0" height="151.0" rx="3.0"/>
+    <rect class="c2 dash" x="135.0" y="42.0" width="170.0" height="151.0" rx="3.0"/>
+    <text class="c1t" data-lang="en" x="66.0" y="166.4" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="66.0" y="166.4" text-anchor="middle">+</text>
+    <text class="c2t" data-lang="en" x="374.0" y="166.4" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="374.0" y="166.4" text-anchor="middle">−</text>
+    <line class="c1" x1="84.0" y1="166.4" x2="352.0" y2="166.4"/>
+    <polyline class="c1" points="344.5,170.0 352.0,166.4 344.5,162.8"/>
+    <text class="c1t" data-lang="en" x="66.0" y="131.4" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="66.0" y="131.4" text-anchor="middle">+</text>
+    <text class="c2t" data-lang="en" x="374.0" y="131.4" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="374.0" y="131.4" text-anchor="middle">−</text>
+    <line class="c1" x1="84.0" y1="131.4" x2="352.0" y2="131.4"/>
+    <polyline class="c1" points="344.5,135.0 352.0,131.4 344.5,127.8"/>
+    <text class="c1t" data-lang="en" x="66.0" y="96.4" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="66.0" y="96.4" text-anchor="middle">+</text>
+    <text class="c2t" data-lang="en" x="374.0" y="96.4" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="374.0" y="96.4" text-anchor="middle">−</text>
+    <line class="c1" x1="84.0" y1="96.4" x2="352.0" y2="96.4"/>
+    <polyline class="c1" points="344.5,100.0 352.0,96.4 344.5,92.8"/>
+    <text class="c1t" data-lang="en" x="66.0" y="61.4" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="66.0" y="61.4" text-anchor="middle">+</text>
+    <text class="c2t" data-lang="en" x="374.0" y="61.4" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="374.0" y="61.4" text-anchor="middle">−</text>
+    <line class="c1" x1="84.0" y1="61.4" x2="352.0" y2="61.4"/>
+    <polyline class="c1" points="344.5,65.0 352.0,61.4 344.5,57.8"/>
+    <line class="c3 dash" x1="276.0" y1="148.9" x2="164.0" y2="148.9"/>
+    <polyline class="c3 dash" points="171.5,145.3 164.0,148.9 171.5,152.5"/>
+    <line class="c3 dash" x1="276.0" y1="113.9" x2="164.0" y2="113.9"/>
+    <polyline class="c3 dash" points="171.5,110.3 164.0,113.9 171.5,117.5"/>
+    <line class="c3 dash" x1="276.0" y1="78.9" x2="164.0" y2="78.9"/>
+    <polyline class="c3 dash" points="171.5,75.3 164.0,78.9 171.5,82.5"/>
+    <text class="c1t" data-lang="en" x="220.0" y="22.0" text-anchor="middle">External field E<tspan baseline-shift="sub">0</tspan> (+Q to −Q)</text><text class="c1t" data-lang="zh" x="220.0" y="22.0" text-anchor="middle">外电场 E<tspan baseline-shift="sub">0</tspan>（+Q 指向 −Q）</text>
+<text class="c2t" data-lang="en" x="146" y="92" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="146" y="92" text-anchor="middle">−</text>
+<text class="c1t" data-lang="en" x="294" y="92" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="294" y="92" text-anchor="middle">+</text>
+<text class="c2t" data-lang="en" x="146" y="127" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="146" y="127" text-anchor="middle">−</text>
+<text class="c1t" data-lang="en" x="294" y="127" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="294" y="127" text-anchor="middle">+</text>
+<text class="c2t" data-lang="en" x="146" y="162" text-anchor="middle">−</text><text class="c2t" data-lang="zh" x="146" y="162" text-anchor="middle">−</text>
+<text class="c1t" data-lang="en" x="294" y="162" text-anchor="middle">+</text><text class="c1t" data-lang="zh" x="294" y="162" text-anchor="middle">+</text>
+<text class="c3t" data-lang="en" x="220" y="222" text-anchor="middle">Bound-charge field (dashed) opposes E<tspan baseline-shift="sub">0</tspan>: E = E<tspan baseline-shift="sub">0</tspan>/κ</text><text class="c3t" data-lang="zh" x="220" y="222" text-anchor="middle">束缚电荷的场（虚线）与 E<tspan baseline-shift="sub">0</tspan> 反向：E = E<tspan baseline-shift="sub">0</tspan>/κ</text>
+    </svg>
+    <figcaption><span data-lang="en">Free charge on the plates makes the external field $E_0$ (solid arrows). The polarized dielectric carries bound charge, negative beside the positive plate and positive beside the negative plate, and its field (dashed arrows) points the other way. The net field inside is $E=E_0/\kappa$, so at fixed $Q$ the capacitance rises to $C=\kappa\epsilon_0A/d$.</span><span data-lang="zh">极板上的自由电荷产生外电场 $E_0$（实线箭头）。被极化的电介质带有束缚电荷：靠近正极板一侧为负，靠近负极板一侧为正，其场（虚线箭头）方向相反。介质内的净场为 $E=E_0/\kappa$，所以 $Q$ 固定时电容增大为 $C=\kappa\epsilon_0A/d$。</span></figcaption>
+  </figure>
 <div data-course="c">
 <p data-lang="en">A conductor is the extreme case. Its charge moves freely, so it cancels the applied field completely inside the material. A dielectric cancels only part of it. A conductor behaves like $\kappa\to\infty$, and the formulas below reduce correctly in that limit. The dielectric constant relates the permittivity of the material to that of free space, $\kappa=\epsilon/\epsilon_0$, and $\kappa\ge1$.</p>
 <p data-lang="zh">导体是极端情形：它的电荷可自由移动，所以在材料内部完全抵消外加场。电介质只抵消一部分。导体的行为相当于 $\kappa\to\infty$，下面的公式在这个极限下也能正确还原。介电常数（<code>dielectric constant</code>）把材料的电容率与真空电容率联系起来，$\kappa=\epsilon/\epsilon_0$，且 $\kappa\ge1$。</p>
@@ -1183,9 +1376,28 @@ $$\begin{aligned}E&=\frac{E_0}{\kappa}=\frac{\sigma_f}{\kappa\epsilon_0}\quad(\t
 <div class="formula-label"><span data-lang="en">Capacitance and field with a dielectric filling the gap</span><span data-lang="zh">介质充满间隙时的电容与场强</span></div>
 $$C=\frac{Q}{\Delta V}=\frac{\kappa\epsilon_0A}{d}=\kappa C_0,\qquad C_0=\frac{\epsilon_0A}{d}$$
 $$\Delta V=\frac{Q}{\kappa C_0}=\frac{\Delta V_0}{\kappa},\qquad E=\frac{\Delta V}{d}=\frac{E_0}{\kappa}$$
-<p data-lang="en">$C_0$ is the capacitance with vacuum between the plates, $\kappa$ is the dielectric constant, and the subscript $0$ marks the values before the dielectric is inserted. The second line applies to an isolated capacitor, where the charge $Q$ on the plates stays fixed. Inserting the dielectric induces a field in the dielectric opposite in direction to the field between the plates, so the net field is weaker by the factor $\kappa$. For the same charge a weaker field means a smaller $\Delta V=Ed$, so $C=Q/\Delta V$ is larger by the same factor. $Q$ is always the charge on one plate.</p>
-<p data-lang="zh">$C_0$ 是板间为真空时的电容，$\kappa$ 是介电常数，下标 $0$ 表示插入电介质之前的值。第二行适用于孤立电容器，此时极板上的电荷 $Q$ 保持不变。插入电介质会在电介质中感应出与板间场方向相反的场，所以净场以因子 $\kappa$ 减弱。电荷相同时，场越弱，$\Delta V=Ed$ 越小，所以 $C=Q/\Delta V$ 以同样的倍数增大。$Q$ 始终是单个极板上的电荷。</p>
+<p data-lang="en">$C_0$ is the capacitance with vacuum between the plates, $\kappa$ is the dielectric constant, and the subscript $0$ marks the values before the dielectric is inserted. The second line applies to an isolated capacitor, where the charge $Q$ on the plates stays fixed.</p>
+<p data-lang="zh">$C_0$ 是板间为真空时的电容，$\kappa$ 是介电常数，下标 $0$ 表示插入电介质之前的值。第二行适用于孤立电容器，此时极板上的电荷 $Q$ 保持不变。</p>
+<p data-lang="en">Inserting the dielectric induces a field in the dielectric opposite in direction to the field between the plates, so the net field is weaker by the factor $\kappa$. For the same charge a weaker field means a smaller $\Delta V=Ed$, so $C=Q/\Delta V$ is larger by the same factor. $Q$ is always the charge on one plate.</p>
+<p data-lang="zh">插入电介质会在电介质中感应出与板间场方向相反的场，所以净场以因子 $\kappa$ 减弱。电荷相同时，场越弱，$\Delta V=Ed$ 越小，所以 $C=Q/\Delta V$ 以同样的倍数增大。$Q$ 始终是单个极板上的电荷。</p>
 </div>
+</div>
+<h3><span data-lang="en">First principles: why a dielectric multiplies $C$ by $\kappa$</span><span data-lang="zh">第一性原理：为什么电介质使 $C$ 变为 $\kappa$ 倍</span></h3>
+<div class="sg-fp">
+<div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+<p data-lang="en"><strong>Principle.</strong> Superposition: the field in the dielectric is the field of the free charge on the plates plus the field of the bound charge on the dielectric faces.</p>
+<p data-lang="zh"><strong>原理。</strong>叠加原理：电介质中的场等于极板上自由电荷的场加上电介质表面束缚电荷的场。</p>
+<ol class="sg-steps" data-lang="en"><li>The free charge density $\sigma_f$ on the plates alone gives $E_0=\sigma_f/\epsilon_0$.</li><li>The bound layers $-\sigma_b$ and $+\sigma_b$ act like a second pair of plates, with field $\sigma_b/\epsilon_0$ pointing the opposite way.</li><li>Net field: $E=(\sigma_f-\sigma_b)/\epsilon_0$. The material fixes the ratio, written $E=E_0/\kappa$.</li><li>At fixed $Q$, $\Delta V=Ed$ falls by the factor $\kappa$, so $C=Q/\Delta V=\kappa C_0$.</li></ol>
+<ol class="sg-steps" data-lang="zh"><li>仅极板上的自由电荷密度 $\sigma_f$ 产生 $E_0=\sigma_f/\epsilon_0$。</li><li>束缚电荷层 $-\sigma_b$ 和 $+\sigma_b$ 相当于第二对极板，产生方向相反、大小为 $\sigma_b/\epsilon_0$ 的场。</li><li>净场：$E=(\sigma_f-\sigma_b)/\epsilon_0$。材料决定这个比值，记为 $E=E_0/\kappa$。</li><li>$Q$ 固定时，$\Delta V=Ed$ 减小为原来的 $1/\kappa$，所以 $C=Q/\Delta V=\kappa C_0$。</li></ol>
+<p data-lang="en"><strong>Limiting-case check.</strong> No bound charge ($\sigma_b=0$) gives $\kappa=1$, the vacuum value. Bound charge approaching the free charge ($\sigma_b\to\sigma_f$) gives $E\to0$ and $\kappa\to\infty$, the conductor limit. Because $\sigma_b$ lies between these, $\kappa\ge1$.</p>
+<p data-lang="zh"><strong>极限检验。</strong>没有束缚电荷（$\sigma_b=0$）时 $\kappa=1$，即真空的值。束缚电荷趋近自由电荷（$\sigma_b\to\sigma_f$）时 $E\to0$，$\kappa\to\infty$，即导体极限。由于 $\sigma_b$ 介于两者之间，$\kappa\ge1$。</p>
+</div>
+<div class="sg-hist">
+<div class="sg-label"><span data-lang="en">History: Faraday's specific inductive capacity</span><span data-lang="zh">历史：法拉第的“比感应容量”</span></div>
+<p data-lang="en">In 1837 Faraday built two identical spherical capacitors and filled the gap of one with an insulator such as shellac or sulphur. When the two shared charge, the filled one took more of it at the same potential.</p>
+<p data-lang="zh">1837 年，法拉第制作了两个相同的球形电容器，并在其中一个的间隙中填入虫胶或硫磺等绝缘体。两者分享电荷时，填有绝缘体的那个在相同电势下得到更多电荷。</p>
+<p data-lang="en">He called the ratio the specific inductive capacity of the insulator; today it is the dielectric constant $\kappa$. <a href="https://en.wikipedia.org/wiki/Relative_permittivity" target="_blank" rel="noopener">Relative permittivity (Wikipedia)</a> gives the definition and typical values.</p>
+<p data-lang="zh">他把这个比值称为绝缘体的“比感应容量”（<code>specific inductive capacity</code>），今天称为介电常数 $\kappa$。<a href="https://en.wikipedia.org/wiki/Relative_permittivity" target="_blank" rel="noopener">相对电容率（维基百科，英文）</a>给出了定义和典型数值。</p>
 </div>
 <div class="table-wrap"><table class="sg-table"><thead><tr><th><span data-lang="en">Dielectric fully inserted</span><span data-lang="zh">完全插入电介质</span></th><th><span data-lang="en">Battery stays connected</span><span data-lang="zh">电池保持连接</span></th><th><span data-lang="en">Capacitor isolated</span><span data-lang="zh">电容器孤立</span></th></tr></thead><tbody><tr><td><span data-lang="en">Fixed quantity</span><span data-lang="zh">固定的量</span></td><td>$\Delta V$</td><td>$Q$</td></tr><tr><td>$C$</td><td>$\kappa C_0$</td><td>$\kappa C_0$</td></tr><tr><td><span data-lang="en">Free charge $Q$</span><span data-lang="zh">自由电荷 $Q$</span></td><td><span data-lang="en">$\kappa Q_0$ (more flows from the battery)</span><span data-lang="zh">$\kappa Q_0$（更多电荷从电池流入）</span></td><td>$Q_0$</td></tr><tr><td>$\Delta V$</td><td>$\Delta V_0$</td><td>$\Delta V_0/\kappa$</td></tr><tr><td>$E$</td><td><span data-lang="en">$E_0$ (unchanged)</span><span data-lang="zh">$E_0$（不变）</span></td><td>$E_0/\kappa$</td></tr><tr><td>$U$</td><td>$\kappa U_0$</td><td>$U_0/\kappa$</td></tr><tr data-course="c"><td><span data-lang="en">Force on a partly inserted slab</span><span data-lang="zh">对部分插入的介质板的力</span></td><td><span data-lang="en">pulled in</span><span data-lang="zh">被拉入</span></td><td><span data-lang="en">pulled in</span><span data-lang="zh">被拉入</span></td></tr></tbody></table></div>
 <details class="sg-we" data-course="p2">
@@ -1283,8 +1495,12 @@ $$\Delta V=\frac{Q}{\kappa C_0}=\frac{\Delta V_0}{\kappa},\qquad E=\frac{\Delta 
 <p data-lang="zh">需要控制的变量有极板面积、间距、对齐和完全充满。薄片与极板之间若有空气隙，就变成串联模型，使测得的 $\kappa$ 偏低。要多次重复并拟合直线，而不是只依赖一次读数。</p>
 </div>
 <div data-course="p2">
-<p data-lang="en">Use a parallel-plate capacitor of fixed $A$ and $d$. Measure $C_0$ with an air gap, then insert a sheet of the material that fills the gap completely and measure $C$. The model predicts $\kappa=C/C_0$. A more robust design charges the capacitor to several known voltages and measures $Q$ each time, for example by discharging through a charge sensor: the slope of $Q$ against $\Delta V$ is $C$, with and without the dielectric, and the ratio of the slopes is $\kappa$. Controlled variables are plate area, spacing, alignment and full coverage. If an air gap is left between the sheet and a plate, the measured $\kappa$ comes out too low. Repeat trials and fit a line rather than rely on one reading.</p>
-<p data-lang="zh">使用面积 $A$ 和间距 $d$ 固定的平行板电容器。先在空气间隙下测 $C_0$，再插入完全充满间隙的材料薄片并测 $C$。模型预测 $\kappa=C/C_0$。更稳健的设计是把电容器充电到几个已知电压，每次测量 $Q$（例如通过电荷传感器放电），$Q$ 对 $\Delta V$ 的斜率就是 $C$，分别在有、无电介质时测，斜率之比就是 $\kappa$。需要控制的变量有极板面积、间距、对齐和完全充满。薄片与极板之间若留有空气隙，测得的 $\kappa$ 会偏低。要多次重复并拟合直线，而不是只依赖一次读数。</p>
+<p data-lang="en">Use a parallel-plate capacitor of fixed $A$ and $d$. Measure $C_0$ with an air gap, then insert a sheet of the material that fills the gap completely and measure $C$. The model predicts $\kappa=C/C_0$.</p>
+<p data-lang="zh">使用面积 $A$ 和间距 $d$ 固定的平行板电容器。先在空气间隙下测 $C_0$，再插入完全充满间隙的材料薄片并测 $C$。模型预测 $\kappa=C/C_0$。</p>
+<p data-lang="en">A more robust design charges the capacitor to several known voltages and measures $Q$ each time, for example by discharging through a charge sensor: the slope of $Q$ against $\Delta V$ is $C$, with and without the dielectric, and the ratio of the slopes is $\kappa$.</p>
+<p data-lang="zh">更稳健的设计是把电容器充电到几个已知电压，每次测量 $Q$（例如通过电荷传感器放电），$Q$ 对 $\Delta V$ 的斜率就是 $C$，分别在有、无电介质时测，斜率之比就是 $\kappa$。</p>
+<p data-lang="en">Controlled variables are plate area, spacing, alignment and full coverage. If an air gap is left between the sheet and a plate, the measured $\kappa$ comes out too low. Repeat trials and fit a line rather than rely on one reading.</p>
+<p data-lang="zh">需要控制的变量有极板面积、间距、对齐和完全充满。薄片与极板之间若留有空气隙，测得的 $\kappa$ 会偏低。要多次重复并拟合直线，而不是只依赖一次读数。</p>
 </div>
 <div data-course="c">
 <div class="concept-box red" data-lang="en"><strong>AP traps for 10.4</strong> <ul class="sg-list"><li>A dielectric reduces the field only at fixed free charge. With a battery connected and the gap filled, $E=\Delta V/d$ is unchanged: the extra free charge balances the bound charge.</li><li>Do not multiply by $\kappa$ when only part of the gap is filled. Use the series or parallel model.</li><li>Energy decreases in the isolated case and increases in the connected case, yet the slab is pulled in both times.</li><li>$\kappa\ge1$ always. An answer with $\kappa\lt 1$ signals an algebra error.</li><li>Bound charge is not free charge. $Q$ in $C=Q/\Delta V$ means the free charge.</li></ul></div>
@@ -1301,8 +1517,10 @@ $$\Delta V=\frac{Q}{\kappa C_0}=\frac{\Delta V_0}{\kappa},\qquad E=\frac{\Delta 
 </div>
 <div class="sg-examtip" data-course="p2">
 <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-<p data-lang="en">A dielectric question is answered only when it states what is held fixed. Write one sentence naming the constraint (isolated, so $Q$ is fixed; or connected, so $\Delta V$ is fixed), then give the factor for each of $C$, $Q$, $\Delta V$, $E$ and $U$. When a question asks why the field decreases, name the mechanism: the polarized dielectric produces a field opposite to the field between the plates.</p>
-<p data-lang="zh">回答电介质问题时，必须说明什么量保持不变。先用一句话写出约束条件（孤立，所以 $Q$ 固定；或接电池，所以 $\Delta V$ 固定），再给出 $C$、$Q$、$\Delta V$、$E$、$U$ 各自的倍数。当题目问场为什么减小时，要点明机制：被极化的电介质产生与板间场方向相反的场。</p>
+<p data-lang="en">A dielectric question is answered only when it states what is held fixed. Write one sentence naming the constraint (isolated, so $Q$ is fixed; or connected, so $\Delta V$ is fixed), then give the factor for each of $C$, $Q$, $\Delta V$, $E$ and $U$.</p>
+<p data-lang="zh">回答电介质问题时，必须说明什么量保持不变。先用一句话写出约束条件（孤立，所以 $Q$ 固定；或接电池，所以 $\Delta V$ 固定），再给出 $C$、$Q$、$\Delta V$、$E$、$U$ 各自的倍数。</p>
+<p data-lang="en">When a question asks why the field decreases, name the mechanism: the polarized dielectric produces a field opposite to the field between the plates.</p>
+<p data-lang="zh">当题目问场为什么减小时，要点明机制：被极化的电介质产生与板间场方向相反的场。</p>
 </div>
 <div class="sg-check">
 <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1376,8 +1594,10 @@ $$\Delta V=\frac{Q}{\kappa C_0}=\frac{\Delta V_0}{\kappa},\qquad E=\frac{\Delta 
 <div class="card-header"><div class="card-icon icon-accent">EX</div><div class="card-title"><span data-lang="en">Exam Format</span><span data-lang="zh">考试形式</span></div></div>
 <p data-lang="en" data-course="c">AP Physics C: Electricity and Magnetism, from May 2027: Section I has 42 multiple-choice questions in 85 minutes and Section II has 4 free-response questions in 95 minutes, with the two sections weighted equally. A four-function, scientific or graphing calculator is permitted on both sections, and reference materials are provided. Unit 10 is 10-15% of the multiple-choice section.</p>
 <p data-lang="zh" data-course="c">AP Physics C: Electricity and Magnetism（自 2027 年 5 月起）：第一部分为 42 道选择题，用时 85 分钟；第二部分为 4 道自由作答题，用时 95 分钟，两部分权重相同。两部分都允许使用四则运算、科学或图形计算器，并提供参考资料。第 10 单元占选择题部分的 10-15%。</p>
-<p data-lang="en" data-course="p2">AP Physics 2 exam: Section I has 42 multiple-choice questions in 85 minutes and Section II has 4 free-response questions in 95 minutes, and each section is 50% of the exam. The free-response questions test Mathematical Routines, Translation Between Representations, Experimental Design and Analysis, and Qualitative/Quantitative Translation. A calculator is allowed and an equation sheet is provided. Unit 10 (Electric Force, Field, and Potential) is 15-18% of the multiple-choice section.</p>
-<p data-lang="zh" data-course="p2">AP 物理 2 考试：第一部分为 42 道选择题，用时 85 分钟；第二部分为 4 道自由作答题，用时 95 分钟，两部分各占考试的 50%。自由作答题考查数学过程、不同表征之间的转换、实验设计与分析，以及定性与定量之间的转换。允许使用计算器，并提供公式表。第 10 单元（电力、电场与电势）占选择题部分的 15-18%。</p>
+<p data-lang="en" data-course="p2">AP Physics 2 exam: Section I has 42 multiple-choice questions in 85 minutes and Section II has 4 free-response questions in 95 minutes, and each section is 50% of the exam.</p>
+<p data-lang="zh" data-course="p2">AP 物理 2 考试：第一部分为 42 道选择题，用时 85 分钟；第二部分为 4 道自由作答题，用时 95 分钟，两部分各占考试的 50%。</p>
+<p data-lang="en" data-course="p2">The free-response questions test Mathematical Routines, Translation Between Representations, Experimental Design and Analysis, and Qualitative/Quantitative Translation. A calculator is allowed and an equation sheet is provided. Unit 10 (Electric Force, Field, and Potential) is 15-18% of the multiple-choice section.</p>
+<p data-lang="zh" data-course="p2">自由作答题考查数学过程、不同表征之间的转换、实验设计与分析，以及定性与定量之间的转换。允许使用计算器，并提供公式表。第 10 单元（电力、电场与电势）占选择题部分的 15-18%。</p>
 </div>
 <div class="card">
 <div class="card-header"><div class="card-icon icon-accent">MC</div><div class="card-title"><span data-lang="en">Multiple-Choice Practice</span><span data-lang="zh">选择题练习</span></div></div>

@@ -483,20 +483,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -525,8 +533,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -540,7 +548,7 @@ figure.dr-fig figcaption {
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -561,7 +569,7 @@ figure.dr-fig figcaption {
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 <meta name="dingrui:courses" content="c,p2">
@@ -695,12 +703,34 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">$\theta$ is the angle between $\vec{B}$ and $\vec{A}$. The unit is the weber: $1\;\text{Wb} = 1\;\text{T}\cdot\text{m}^2$.</p>
     <p data-lang="zh">$\theta$ 是 $\vec{B}$ 与 $\vec{A}$ 之间的夹角。单位是韦伯：$1\;\text{Wb} = 1\;\text{T}\cdot\text{m}^2$。</p>
   </div>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why the flux carries a cosine</span><span data-lang="zh">第一性原理：磁通量中为何出现余弦</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Flux counts only the field that crosses the surface, so only the component of $\vec{B}$ along the normal counts.</p>
+    <p data-lang="zh"><strong>出发点。</strong>磁通量只计入穿过表面的磁场，因此只计入 $\vec{B}$ 沿法线方向的分量。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Split $\vec{B}$ into a part along the normal, $B\cos\theta$, and a part in the plane, $B\sin\theta$.</li>
+      <li>The in-plane part runs along the surface and crosses none of it, so it adds no flux.</li>
+      <li>The normal part crosses the whole area $A$, so $\Phi_B = (B\cos\theta)A = BA\cos\theta$.</li>
+      <li>Keeping all of $B$ and using the area projected onto a plane perpendicular to $\vec{B}$, $A\cos\theta$, gives the same result.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把 $\vec{B}$ 分解为沿法线的分量 $B\cos\theta$ 和位于平面内的分量 $B\sin\theta$。</li>
+      <li>平面内的分量沿表面延伸，不穿过表面，因此不贡献磁通量。</li>
+      <li>法向分量穿过整个面积 $A$，所以 $\Phi_B = (B\cos\theta)A = BA\cos\theta$。</li>
+      <li>保留整个 $B$、改用表面在垂直于 $\vec{B}$ 的平面上的投影面积 $A\cos\theta$，得到相同结果。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> At $\theta = 0$ the flux is the maximum $BA$; at $\theta = 90^\circ$ it is $0$; at $\theta = 180^\circ$ it is $-BA$. These match the sign rules above, and the unit is $\text{T}\cdot\text{m}^2 = \text{Wb}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$\theta = 0$ 时磁通量取最大值 $BA$；$\theta = 90^\circ$ 时为 $0$；$\theta = 180^\circ$ 时为 $-BA$。这与上面的正负规则一致，单位为 $\text{T}\cdot\text{m}^2 = \text{Wb}$。</p>
+  </div>
+  <h3><span data-lang="en">The sign of the flux and the orientation of the loop</span><span data-lang="zh">磁通量的正负与线圈的取向</span></h3>
   <p data-lang="en">The sign of the flux is the sign of the dot product. If $\vec{B}$ has a component along $\vec{A}$ (so $\theta < 90^\circ$) the flux is positive; if it points against $\vec{A}$ ($\theta > 90^\circ$) the flux is negative; if the field lies in the plane of the loop ($\theta = 90^\circ$) the flux is zero.</p>
   <p data-lang="zh">磁通量的正负就是点积的正负。若 $\vec{B}$ 有沿 $\vec{A}$ 的分量（$\theta < 90^\circ$），磁通量为正；若与 $\vec{A}$ 相反（$\theta > 90^\circ$），磁通量为负；若磁场位于线圈所在平面内（$\theta = 90^\circ$），磁通量为零。</p>
   <p data-lang="en">Flipping the loop over reverses $\vec{A}$ and therefore reverses the sign of the flux without changing its magnitude.</p>
   <p data-lang="zh">把线圈翻转会使 $\vec{A}$ 反向，因此磁通量变号而大小不变。</p>
-  <p data-course="p2" data-lang="en">Flux is proportional to the component of the field perpendicular to the surface and to the area of the surface. Doubling $B$ doubles $\Phi_B$, doubling $A$ doubles $\Phi_B$, and turning the loop changes only the factor $\cos\theta$. The sign of $\Phi_B$ is the sign of $\cos\theta$: a positive flux means the field is parallel to the area vector (it has a component along $\vec{A}$), and a negative flux means the field is antiparallel to the area vector.</p>
-  <p data-course="p2" data-lang="zh">磁通量与垂直于表面的磁场分量成正比，也与表面的面积成正比。$B$ 加倍则 $\Phi_B$ 加倍，$A$ 加倍则 $\Phi_B$ 加倍，转动线圈只改变因子 $\cos\theta$。$\Phi_B$ 的正负就是 $\cos\theta$ 的正负：磁通量为正，表示磁场与面积矢量平行（沿 $\vec{A}$ 有分量）；磁通量为负，表示磁场与面积矢量反平行。</p>
+  <p data-course="p2" data-lang="en">Flux is proportional to the component of the field perpendicular to the surface and to the area of the surface. Doubling $B$ doubles $\Phi_B$, doubling $A$ doubles $\Phi_B$, and turning the loop changes only the factor $\cos\theta$.</p>
+  <p data-course="p2" data-lang="zh">磁通量与垂直于表面的磁场分量成正比，也与表面的面积成正比。$B$ 加倍则 $\Phi_B$ 加倍，$A$ 加倍则 $\Phi_B$ 加倍，转动线圈只改变因子 $\cos\theta$。</p>
+  <p data-course="p2" data-lang="en">The sign of $\Phi_B$ is the sign of $\cos\theta$. A positive flux means the field has a component along the area vector $\vec{A}$; a negative flux means it has a component opposite to $\vec{A}$.</p>
+  <p data-course="p2" data-lang="zh">$\Phi_B$ 的正负就是 $\cos\theta$ 的正负。磁通量为正，表示磁场有沿面积矢量 $\vec{A}$ 的分量；磁通量为负，表示磁场有与 $\vec{A}$ 相反的分量。</p>
   <div class="concept-box orange" data-lang="en">
     <strong>Common Mistake: Using the angle to the plane</strong>
     The angle in $BA\cos\theta$ is measured from the <em>normal</em> to the loop, not from the plane of the loop. A loop whose plane is perpendicular to the field has $\theta = 0$ and the maximum flux $BA$. If a problem gives the angle between the field and the plane, the angle to use is its complement.
@@ -736,8 +766,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Flux Through a Rectangular Coil as It Turns</span><span data-lang="zh">例题：转动的矩形线圈的磁通量</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A rectangular coil with sides $0.20\;\text{m}$ and $0.30\;\text{m}$ is in a uniform field $B = 0.50\;\text{T}$. Find the flux when the area vector is parallel to $\vec{B}$, the flux when the area vector makes $60^\circ$ with $\vec{B}$, and the flux after the coil is turned half a turn from the parallel position so that $\vec{A}$ is antiparallel to $\vec{B}$. Then find the change in flux during the half turn.</p>
-      <p class="worked-problem" data-lang="zh">边长分别为 $0.20\;\text{m}$ 和 $0.30\;\text{m}$ 的矩形线圈处于均匀磁场 $B = 0.50\;\text{T}$ 中。求面积矢量与 $\vec{B}$ 平行时的磁通量、面积矢量与 $\vec{B}$ 成 $60^\circ$ 角时的磁通量，以及线圈从平行位置转过半圈、使 $\vec{A}$ 与 $\vec{B}$ 反平行后的磁通量。再求这半圈转动中磁通量的变化量。</p>
+      <p class="worked-problem" data-lang="en">A rectangular coil with sides $0.20\;\text{m}$ and $0.30\;\text{m}$ is in a uniform field $B = 0.50\;\text{T}$. Find the flux when the area vector is parallel to $\vec{B}$, and the flux when the area vector makes $60^\circ$ with $\vec{B}$.</p>
+      <p class="worked-problem" data-lang="zh">边长分别为 $0.20\;\text{m}$ 和 $0.30\;\text{m}$ 的矩形线圈处于均匀磁场 $B = 0.50\;\text{T}$ 中。求面积矢量与 $\vec{B}$ 平行时的磁通量，以及面积矢量与 $\vec{B}$ 成 $60^\circ$ 角时的磁通量。</p>
+      <p class="worked-problem" data-lang="en">Then find the flux after the coil is turned half a turn from the parallel position so that $\vec{A}$ is antiparallel to $\vec{B}$, and the change in flux during that half turn.</p>
+      <p class="worked-problem" data-lang="zh">再求线圈从平行位置转过半圈、使 $\vec{A}$ 与 $\vec{B}$ 反平行后的磁通量，以及这半圈转动中磁通量的变化量。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Area</span><span data-lang="zh">第 1 步：面积</span></div>
@@ -882,6 +914,14 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <p data-lang="en">A static magnetic field does nothing to a stationary loop of wire. The surprise discovered by Faraday is that a <em>changing</em> flux drives charge around the loop. The potential difference that does this is the <strong>induced emf</strong>. It exists whether or not the loop is closed; if the loop is closed it drives an induced current.</p>
   <p data-lang="zh">静止的磁场对静止的导线圈毫无作用。法拉第的发现是：<em>变化</em>的磁通量会驱动电荷绕线圈运动。起这个作用的电势差就是<strong>感应电动势</strong>（<code>induced emf</code>）。无论线圈是否闭合，电动势都存在；若线圈闭合，它就驱动感应电流。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Faraday's ring and Lenz's rule</span><span data-lang="zh">历史：法拉第的铁环与楞次定则</span></div>
+    <p data-lang="en">On 29 August 1831 Michael Faraday wound two coils on one iron ring. A galvanometer on the second coil kicked only at the instant the first circuit was switched on or off, never while its current was steady. A <em>change</em> in magnetism, not magnetism itself, drove the current.</p>
+    <p data-lang="zh">1831 年 8 月 29 日，迈克尔·法拉第在同一个铁环上绕了两个线圈。只有在第一个电路接通或断开的瞬间，第二个线圈上的电流计才会偏转；电流稳定时从不偏转。驱动电流的是磁的<em>变化</em>，而不是磁本身。</p>
+    <p data-lang="en">In 1834 Heinrich Lenz stated the direction rule that bears his name: the induced current always opposes the change that produces it.</p>
+    <p data-lang="zh">1834 年，海因里希·楞次提出了以他命名的方向定则：感应电流总是反抗产生它的变化。</p>
+    <p><span data-lang="en">Read more (ring and moving-magnet experiments, and the origin of the direction rule):</span><span data-lang="zh">延伸阅读（铁环与运动磁铁实验，以及方向定则的由来）：</span> <a href="https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction" target="_blank" rel="noopener"><span data-lang="en">Faraday's law of induction</span><span data-lang="zh">法拉第电磁感应定律</span></a>; <a href="https://en.wikipedia.org/wiki/Lenz%27s_law" target="_blank" rel="noopener"><span data-lang="en">Lenz's law</span><span data-lang="zh">楞次定律</span></a> <span data-lang="en">(Wikipedia)</span><span data-lang="zh">（维基百科）</span>.</p>
+  </div>
   <h3><span data-lang="en">Faraday's law</span><span data-lang="zh">法拉第定律</span></h3>
   <div class="formula-box" data-course="p2">
     <div class="formula-label"><span data-lang="en">Faraday's law of induction</span><span data-lang="zh">法拉第电磁感应定律</span></div>
@@ -895,8 +935,43 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">The induced emf depends on how fast the flux changes, not on how large the flux is. For $N$ identical loops in series (for example a long solenoid), $\mathcal{E} = -N\,\dfrac{d\Phi_B}{dt}$.</p>
     <p data-lang="zh">感应电动势取决于磁通量变化得多快，而不取决于磁通量有多大。$N$ 个相同线圈串联时（例如长螺线管），$\mathcal{E} = -N\,\dfrac{d\Phi_B}{dt}$。</p>
   </div>
-  <p data-course="p2" data-lang="en">Because $\Phi_B = BA\cos\theta$, the flux through a loop changes in three ways: the field strength $B$ changes, the area $A$ of the loop that is in the field changes, or the angle $\theta$ between $\vec{B}$ and the area vector changes because the loop turns. With a constant area and orientation, $\Delta\Phi_B = A\cos\theta\,\Delta B$; with a constant field and orientation, $\Delta\Phi_B = B\cos\theta\,\Delta A$. Only the component of the field perpendicular to the loop counts.</p>
-  <p data-course="p2" data-lang="zh">因为 $\Phi_B = BA\cos\theta$，通过线圈的磁通量有三种变化方式：磁场强度 $B$ 变化；处于磁场中的线圈面积 $A$ 变化；或线圈转动使 $\vec{B}$ 与面积矢量的夹角 $\theta$ 变化。面积和取向不变时，$\Delta\Phi_B = A\cos\theta\,\Delta B$；磁场和取向不变时，$\Delta\Phi_B = B\cos\theta\,\Delta A$。只有垂直于线圈的磁场分量才起作用。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Magnetic flux vs time and induced EMF">
+    <line class="ax" x1="52.0" y1="120.4" x2="416.0" y2="120.4"/>
+    <polyline class="ax" points="408.5,124.0 416.0,120.4 408.5,116.8"/>
+    <line class="ax" x1="52.0" y1="197.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="229.0" text-anchor="middle">Time t (s)</text><text class="lbl" data-lang="zh" x="234.0" y="229.0" text-anchor="middle">时间 t (s)</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Φ_B (Wb) and ℰ (V)</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">磁通量 Φ_B (Wb) 与感应电动势 ℰ (V)</text>
+    <line class="ax" x1="173.3" y1="116.9" x2="173.3" y2="123.9"/>
+    <text class="mut" data-lang="en" x="173.3" y="135.4" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="173.3" y="135.4" text-anchor="middle">2</text>
+    <line class="ax" x1="294.7" y1="116.9" x2="294.7" y2="123.9"/>
+    <text class="mut" data-lang="en" x="294.7" y="135.4" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="294.7" y="135.4" text-anchor="middle">4</text>
+    <line class="ax" x1="416.0" y1="116.9" x2="416.0" y2="123.9"/>
+    <text class="mut" data-lang="en" x="416.0" y="135.4" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="416.0" y="135.4" text-anchor="middle">6</text>
+    <line class="ax" x1="48.5" y1="164.2" x2="55.5" y2="164.2"/>
+    <text class="mut" data-lang="en" x="45.0" y="168.2" text-anchor="end">−2</text><text class="mut" data-lang="zh" x="45.0" y="168.2" text-anchor="end">−2</text>
+    <line class="ax" x1="48.5" y1="120.4" x2="55.5" y2="120.4"/>
+    <text class="mut" data-lang="en" x="45.0" y="124.4" text-anchor="end">0</text><text class="mut" data-lang="zh" x="45.0" y="124.4" text-anchor="end">0</text>
+    <line class="ax" x1="48.5" y1="76.7" x2="55.5" y2="76.7"/>
+    <text class="mut" data-lang="en" x="45.0" y="80.7" text-anchor="end">2</text><text class="mut" data-lang="zh" x="45.0" y="80.7" text-anchor="end">2</text>
+    <line class="ax" x1="48.5" y1="32.9" x2="55.5" y2="32.9"/>
+    <text class="mut" data-lang="en" x="45.0" y="36.9" text-anchor="end">4</text><text class="mut" data-lang="zh" x="45.0" y="36.9" text-anchor="end">4</text>
+    <line class="c2" x1="52.0" y1="120.4" x2="173.3" y2="32.9"/>
+    <line class="c2" x1="173.3" y1="32.9" x2="294.7" y2="32.9"/>
+    <line class="c2" x1="294.7" y1="32.9" x2="416.0" y2="120.4"/>
+    <line class="c1 dash" x1="52.0" y1="164.2" x2="173.3" y2="164.2"/>
+    <line class="c1 dash" x1="173.3" y1="120.4" x2="294.7" y2="120.4"/>
+    <line class="c1 dash" x1="294.7" y1="76.7" x2="416.0" y2="76.7"/>
+    <text class="c2t" data-lang="en" x="227.9" y="27.5" text-anchor="middle">Flux Φ_B(t) (solid)</text><text class="c2t" data-lang="zh" x="227.9" y="27.5" text-anchor="middle">磁通量 Φ_B(t)（实线）</text>
+    <text class="c1t" data-lang="en" x="62.0" y="186.0" text-anchor="start">ℰ = −slope of Φ_B (dashed)</text><text class="c1t" data-lang="zh" x="62.0" y="186.0" text-anchor="start">ℰ = −Φ_B 的斜率（虚线）</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 13.1. Flux through a single loop ($N = 1$, solid) and the induced emf (dashed). The emf $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$ is the negative slope of $\Phi_B(t)$: $-2\;\text{V}$ while the flux rises at $2\;\text{Wb/s}$, $0$ on the plateau where the flux is largest, and $+2\;\text{V}$ while it falls.</span><span data-lang="zh">图 13.1. 通过单匝线圈（$N = 1$，实线）的磁通量与感应电动势（虚线）。电动势 $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$ 等于 $\Phi_B(t)$ 的负斜率：磁通量以 $2\;\text{Wb/s}$ 增大时为 $-2\;\text{V}$，在磁通量最大的平台段为 $0$，磁通量减小时为 $+2\;\text{V}$。</span></figcaption>
+  </figure>
+  <p data-course="p2" data-lang="en">Because $\Phi_B = BA\cos\theta$, the flux through a loop changes in three ways: the field strength $B$ changes, the area $A$ of the loop that is in the field changes, or the angle $\theta$ between $\vec{B}$ and the area vector changes because the loop turns.</p>
+  <p data-course="p2" data-lang="zh">因为 $\Phi_B = BA\cos\theta$，通过线圈的磁通量有三种变化方式：磁场强度 $B$ 变化；处于磁场中的线圈面积 $A$ 变化；或线圈转动使 $\vec{B}$ 与面积矢量的夹角 $\theta$ 变化。</p>
+  <p data-course="p2" data-lang="en">With a constant area and orientation, $\Delta\Phi_B = A\cos\theta\,\Delta B$; with a constant field and orientation, $\Delta\Phi_B = B\cos\theta\,\Delta A$. Only the component of the field perpendicular to the loop counts.</p>
+  <p data-course="p2" data-lang="zh">面积和取向不变时，$\Delta\Phi_B = A\cos\theta\,\Delta B$；磁场和取向不变时，$\Delta\Phi_B = B\cos\theta\,\Delta A$。只有垂直于线圈的磁场分量才起作用。</p>
   <div data-course="c">
   <p data-lang="en">Because $\Phi_B = BA\cos\theta$, there are three ways to change the flux through a loop. Write the product rule and keep only the terms that are nonzero in your problem:</p>
   <p data-lang="zh">因为 $\Phi_B = BA\cos\theta$，改变线圈磁通量有三种方式。写出乘积的求导式，只保留题目中不为零的项：</p>
@@ -907,11 +982,23 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh">面积不变时，电动势等于面积乘以垂直磁场的变化率；磁场不变时，电动势等于磁场乘以垂直面积的变化率。</p>
   </div>
   </div>
+  <p data-lang="en">The table collects the three routes. In each row the other two factors are held fixed.</p>
+  <p data-lang="zh">下表汇总这三种方式。每一行中另外两个因子保持不变。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th><span data-lang="en">What changes</span><span data-lang="zh">变化的量</span></th><th><span data-lang="en">Change in flux</span><span data-lang="zh">磁通量的变化</span></th><th><span data-lang="en">Typical setup</span><span data-lang="zh">典型情境</span></th></tr></thead>
+    <tbody>
+      <tr><td><span data-lang="en">Field strength $B$</span><span data-lang="zh">磁场强度 $B$</span></td><td>$\Delta\Phi_B = A\cos\theta\,\Delta B$</td><td><span data-lang="en">A magnet pushed toward a coil; a current switched on in a nearby coil</span><span data-lang="zh">磁铁推向线圈；附近线圈接通电流</span></td></tr>
+      <tr><td><span data-lang="en">Area $A$ in the field</span><span data-lang="zh">处于磁场中的面积 $A$</span></td><td>$\Delta\Phi_B = B\cos\theta\,\Delta A$</td><td><span data-lang="en">A rod sliding on rails; a loop entering a field region</span><span data-lang="zh">导轨上滑动的棒；进入磁场区域的线圈</span></td></tr>
+      <tr><td><span data-lang="en">Angle $\theta$</span><span data-lang="zh">夹角 $\theta$</span></td><td>$\Delta\Phi_B = BA\,(\cos\theta_f - \cos\theta_i)$</td><td><span data-lang="en">A coil turning in a field (a generator)</span><span data-lang="zh">在磁场中转动的线圈（发电机）</span></td></tr>
+    </tbody>
+  </table></div>
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Coil in a Changing Field</span><span data-lang="zh">例题：变化磁场中的线圈</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">A coil of $N = 150$ turns and radius $3.0\;\text{cm}$ has its plane perpendicular to a uniform field that points out of the page. Over $2.0\;\text{s}$ the field increases steadily from $0.20\;\text{T}$ to $0.60\;\text{T}$. The coil has a total resistance of $4.0\;\Omega$. Find the average induced emf, the induced current, and the direction of the current as seen from the front, where the field points toward the viewer.</p>
-      <p class="worked-problem" data-lang="zh">$N = 150$ 匝、半径 $3.0\;\text{cm}$ 的线圈，其平面垂直于指向纸外的均匀磁场。在 $2.0\;\text{s}$ 内磁场由 $0.20\;\text{T}$ 均匀增大到 $0.60\;\text{T}$。线圈总电阻为 $4.0\;\Omega$。求平均感应电动势、感应电流，以及从正面（磁场指向观察者）看电流的方向。</p>
+      <p class="worked-problem" data-lang="en">A coil of $N = 150$ turns and radius $3.0\;\text{cm}$ has its plane perpendicular to a uniform field that points out of the page. Over $2.0\;\text{s}$ the field increases steadily from $0.20\;\text{T}$ to $0.60\;\text{T}$.</p>
+      <p class="worked-problem" data-lang="zh">$N = 150$ 匝、半径 $3.0\;\text{cm}$ 的线圈，其平面垂直于指向纸外的均匀磁场。在 $2.0\;\text{s}$ 内磁场由 $0.20\;\text{T}$ 均匀增大到 $0.60\;\text{T}$。</p>
+      <p class="worked-problem" data-lang="en">The coil has a total resistance of $4.0\;\Omega$. Find the average induced emf, the induced current, and the direction of the current as seen from the front, where the field points toward the viewer.</p>
+      <p class="worked-problem" data-lang="zh">线圈总电阻为 $4.0\;\Omega$。求平均感应电动势、感应电流，以及从正面（磁场指向观察者）看电流的方向。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Area</span><span data-lang="zh">第 1 步：面积</span></div>
@@ -982,9 +1069,30 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <strong>常见错误：“感应磁场与原磁场相反”</strong>
     只有当原磁通量增大时，感应磁场才与原磁场<em>相反</em>。若磁通量在减小，感应磁场与原磁场<em>同向</em>，以阻止其减小。若磁通量不变，则根本没有感应电动势，即使磁场很强。
   </div>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: Lenz's law from energy conservation</span><span data-lang="zh">第一性原理：由能量守恒得出楞次定律</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Energy is conserved: the energy an induced current carries must be supplied by some outside agent.</p>
+    <p data-lang="zh"><strong>出发点。</strong>能量守恒：感应电流携带的能量必须由某个外界作用提供。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Push a magnet's north pole toward a closed loop, so the flux through the loop increases.</li>
+      <li>Suppose the induced current helped the change: its field would attract the magnet and pull it in faster.</li>
+      <li>A faster magnet changes the flux faster, so the current and the pull would both grow with no work put in.</li>
+      <li>That runaway would create energy from nothing, so the induced current must oppose the change, and you must push to keep the magnet moving.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把磁铁的 N 极推向闭合线圈，线圈中的磁通量增大。</li>
+      <li>假设感应电流助长这一变化：它的磁场会吸引磁铁，使磁铁更快地进入。</li>
+      <li>磁铁越快，磁通量变化越快，电流和吸引力都会增大，却无需输入任何功。</li>
+      <li>这种失控增长会凭空产生能量，所以感应电流必须反抗变化，你必须推动磁铁才能使它继续运动。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> Cut the loop open: an emf still appears, but no current flows, so the magnet feels no opposing force and nothing is heated. With the loop closed, the extra work you do pushing the magnet is what heats the wire.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>把线圈剪开：电动势仍然出现，但没有电流，所以磁铁不受反抗力，也没有发热。线圈闭合时，你推动磁铁多做的功正是导线中产生的热。</p>
+  </div>
   <h3 data-course="p2"><span data-lang="en">Motional emf</span><span data-lang="zh">动生电动势</span></h3>
-  <p data-course="p2" data-lang="en">A conducting rod of length $\ell$ slides at constant speed $v$ along two parallel rails in a uniform magnetic field $B$ that is perpendicular to the plane of the rails. This rod on rails is the standard example of electromagnetic induction. In a time $\Delta t$ the rod moves a distance $v\,\Delta t$, so the area of the circuit grows by $\Delta A = \ell v\,\Delta t$ and the flux grows by $\Delta\Phi_B = B\,\Delta A = B\ell v\,\Delta t$. Dividing by $\Delta t$, Faraday's law for one loop gives the magnitude of the motional emf:</p>
-  <p data-course="p2" data-lang="zh">长为 $\ell$ 的导体棒以恒定速率 $v$ 沿两条平行导轨滑动，均匀磁场 $B$ 垂直于导轨平面。导轨上的棒是电磁感应的标准例子。在时间 $\Delta t$ 内，棒移动距离 $v\,\Delta t$，回路面积增加 $\Delta A = \ell v\,\Delta t$，磁通量增加 $\Delta\Phi_B = B\,\Delta A = B\ell v\,\Delta t$。除以 $\Delta t$，对一个回路用法拉第定律，得到动生电动势的大小：</p>
+  <p data-course="p2" data-lang="en">A conducting rod of length $\ell$ slides at constant speed $v$ along two parallel rails in a uniform magnetic field $B$ that is perpendicular to the plane of the rails. This rod on rails is the standard example of electromagnetic induction.</p>
+  <p data-course="p2" data-lang="zh">长为 $\ell$ 的导体棒以恒定速率 $v$ 沿两条平行导轨滑动，均匀磁场 $B$ 垂直于导轨平面。导轨上的棒是电磁感应的标准例子。</p>
+  <p data-course="p2" data-lang="en">In a time $\Delta t$ the rod moves a distance $v\,\Delta t$, so the area of the circuit grows by $\Delta A = \ell v\,\Delta t$ and the flux grows by $\Delta\Phi_B = B\,\Delta A = B\ell v\,\Delta t$. Dividing by $\Delta t$, Faraday's law for one loop gives the magnitude of the motional emf:</p>
+  <p data-course="p2" data-lang="zh">在时间 $\Delta t$ 内，棒移动距离 $v\,\Delta t$，回路面积增加 $\Delta A = \ell v\,\Delta t$，磁通量增加 $\Delta\Phi_B = B\,\Delta A = B\ell v\,\Delta t$。除以 $\Delta t$，对一个回路用法拉第定律，得到动生电动势的大小：</p>
   <div class="formula-box" data-course="p2">
     <div class="formula-label"><span data-lang="en">Motional emf</span><span data-lang="zh">动生电动势</span></div>
     $$\mathcal{E} = B\ell v$$
@@ -1092,8 +1200,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="sg-examtip" data-course="p2">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">For a Lenz's-law direction, state three things in order: the direction of the original field, whether its flux through the loop is increasing or decreasing, and the direction of the induced field that opposes that change. Only then give the direction of the current, using the right-hand rule. A bare "clockwise" is an incomplete answer. For a coil, do not forget the factor $N$ in $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$.</p>
-    <p data-lang="zh">判断楞次定律的方向时，按顺序写出三件事：原磁场的方向，其穿过线圈的磁通量是增大还是减小，以及反抗该变化的感应磁场的方向。然后才用右手定则给出电流方向。只写“顺时针”是不完整的回答。对线圈，别忘了 $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$ 中的因子 $N$。</p>
+    <p data-lang="en">For a Lenz's-law direction, state three things in order: the direction of the original field, whether its flux through the loop is increasing or decreasing, and the direction of the induced field that opposes that change. Only then give the direction of the current, using the right-hand rule.</p>
+    <p data-lang="zh">判断楞次定律的方向时，按顺序写出三件事：原磁场的方向，其穿过线圈的磁通量是增大还是减小，以及反抗该变化的感应磁场的方向。然后才用右手定则给出电流方向。</p>
+    <p data-lang="en">A bare "clockwise" is an incomplete answer. For a coil, do not forget the factor $N$ in $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$.</p>
+    <p data-lang="zh">只写“顺时针”是不完整的回答。对线圈，别忘了 $\mathcal{E} = -N\,\Delta\Phi_B/\Delta t$ 中的因子 $N$。</p>
   </div>
   <div class="sg-examtip" data-course="c">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
@@ -1164,12 +1274,60 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <h3><span data-lang="en">The sliding rod on rails</span><span data-lang="zh">导轨上的滑动棒</span></h3>
   <p data-lang="en">A rod of length $\ell$, mass $m$ and the circuit resistance $R$ moves at speed $v$ on frictionless rails in a uniform field $B$ perpendicular to the plane. Follow the chain of causes: motional emf, then current, then force.</p>
   <p data-lang="zh">长 $\ell$、质量 $m$ 的棒，回路总电阻为 $R$，在无摩擦导轨上以速率 $v$ 运动，均匀磁场 $B$ 垂直于导轨平面。沿着因果链往下走：动生电动势，然后电流，然后磁力。</p>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: motional emf from the force on moving charges</span><span data-lang="zh">第一性原理：由运动电荷所受的力得出动生电动势</span></div>
+    <p data-lang="en"><strong>Principle.</strong> A charge $q$ moving at speed $v$ through a field $B$ feels a magnetic force of size $F = qvB\sin\theta$, where $\theta$ is the angle between $\vec{v}$ and $\vec{B}$.</p>
+    <p data-lang="zh"><strong>出发点。</strong>电荷 $q$ 以速率 $v$ 在磁场 $B$ 中运动时，受到大小为 $F = qvB\sin\theta$ 的磁力，其中 $\theta$ 是 $\vec{v}$ 与 $\vec{B}$ 的夹角。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>The charges in the rod move with it at speed $v$, with $\vec{v}\perp\vec{B}$, so each feels a force of size $qvB$ along the rod.</li>
+      <li>On an isolated rod, charge piles up at one end until its electric field balances that push: $qE = qvB$, so $E = vB$.</li>
+      <li>The emf is the work per unit charge along the rod: $\mathcal{E} = E\ell = B\ell v$.</li>
+      <li>The flux rule agrees: the circuit area grows at the rate $\ell v$, so $\Delta\Phi_B/\Delta t = B\ell v$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>棒中的电荷随棒以速率 $v$ 运动，且 $\vec{v}\perp\vec{B}$，所以每个电荷受到沿棒方向、大小为 $qvB$ 的力。</li>
+      <li>对孤立的棒，电荷在一端堆积，直到其电场与该力平衡：$qE = qvB$，所以 $E = vB$。</li>
+      <li>电动势是沿棒移动单位电荷所做的功：$\mathcal{E} = E\ell = B\ell v$。</li>
+      <li>磁通量法则给出相同结果：回路面积以 $\ell v$ 的速率增大，所以 $\Delta\Phi_B/\Delta t = B\ell v$。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> A rod at rest ($v = 0$), or one moving parallel to $\vec{B}$ ($\theta = 0$), has no magnetic force on its charges and no emf. Doubling $v$, $B$ or $\ell$ doubles $\mathcal{E}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>静止的棒（$v = 0$），或平行于 $\vec{B}$ 运动的棒（$\theta = 0$），其中电荷不受磁力，也没有电动势。$v$、$B$ 或 $\ell$ 加倍，$\mathcal{E}$ 加倍。</p>
+  </div>
   <div class="formula-box green">
     <div class="formula-label"><span data-lang="en">Induced current and force</span><span data-lang="zh">感应电流与磁力</span></div>
     $$I = \frac{B\ell v}{R},\qquad F = I\ell B = \frac{B^2\ell^2 v}{R}$$
     <p data-lang="en">The force is proportional to the speed, and by Lenz's law it points opposite to $\vec{v}$.</p>
     <p data-lang="zh">该力与速率成正比，并且由楞次定律，其方向与 $\vec{v}$ 相反。</p>
   </div>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 225" role="img" aria-label="Conducting bar sliding on rails in uniform magnetic field">
+    <line class="ax" x1="80.0" y1="63.2" x2="372.0" y2="63.2"/>
+    <line class="ax" x1="80.0" y1="161.8" x2="372.0" y2="161.8"/>
+    <line class="ax" x1="80.0" y1="161.8" x2="80.0" y2="134.1"/>
+    <rect class="box" x="70.0" y="90.9" width="22.0" height="43.2" rx="3.0"/>
+    <text class="lbl" data-lang="en" x="54.0" y="114.0" text-anchor="middle">R</text><text class="lbl" data-lang="zh" x="54.0" y="114.0" text-anchor="middle">R</text>
+    <line class="ax" x1="80.0" y1="90.9" x2="80.0" y2="63.2"/>
+    <rect class="c1" x="262.0" y="53.9" width="12.0" height="117.2" rx="3.0"/>
+    <line class="c3" x1="274.0" y1="112.5" x2="350.0" y2="112.5"/>
+    <polyline class="c3" points="342.5,116.1 350.0,112.5 342.5,108.9"/>
+    <line class="c1" x1="262.0" y1="112.5" x2="194.0" y2="112.5"/>
+    <polyline class="c1" points="201.5,108.9 194.0,112.5 201.5,116.1"/>
+    <line class="c2" x1="268.0" y1="143.3" x2="268.0" y2="78.6"/>
+    <polyline class="c2" points="271.6,86.1 268.0,78.6 264.4,86.1"/>
+    <text class="mut" data-lang="en" x="124.0" y="153.0" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="124.0" y="153.0" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="124.0" y="84.8" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="124.0" y="84.8" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="176.0" y="153.0" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="176.0" y="153.0" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="176.0" y="84.8" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="176.0" y="84.8" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="224.0" y="153.0" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="224.0" y="153.0" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="224.0" y="84.8" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="224.0" y="84.8" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="320.0" y="153.0" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="320.0" y="153.0" text-anchor="middle">×</text>
+    <text class="mut" data-lang="en" x="320.0" y="84.8" text-anchor="middle">×</text><text class="mut" data-lang="zh" x="320.0" y="84.8" text-anchor="middle">×</text>
+    <text class="c3t" data-lang="en" x="324.0" y="98.6" text-anchor="middle">v (pull)</text><text class="c3t" data-lang="zh" x="324.0" y="98.6" text-anchor="middle">拉动速度 v</text>
+    <text class="c1t" data-lang="en" x="208.0" y="129.5" text-anchor="middle">F_B (opposes v)</text><text class="c1t" data-lang="zh" x="208.0" y="129.5" text-anchor="middle">安培阻力 F_B</text>
+    <text class="c2t" data-lang="en" x="228.0" y="44.7" text-anchor="middle">Motional ℰ = B ℓ v,  CCW current I = B ℓ v / R</text><text class="c2t" data-lang="zh" x="228.0" y="44.7" text-anchor="middle">动生电动势 ℰ = Bℓv，逆时针感应电流 I = Bℓv / R</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 13.2. Pulling a rod of length $\ell$ at speed $v$ through $\vec{B}$ (into page) drives a counterclockwise current $I = B\ell v/R$ whose magnetic force $F_B = I\ell B$ opposes the pull (Lenz's law).</span><span data-lang="zh">图 13.2. 长为 $\ell$ 的导体棒以速率 $v$ 切割垂直向里的磁场 $\vec{B}$，产生逆时针感应电流 $I = B\ell v/R$，所受安培力 $F_B = I\ell B$ 阻碍拉动（楞次定律）。</span></figcaption>
+  </figure>
   <p data-lang="en">Check the energy: the rate at which the magnetic force removes mechanical energy is $Fv = B^2\ell^2v^2/R$, and the power dissipated in the resistance is $I^2R = (B\ell v/R)^2R = B^2\ell^2v^2/R$. They are equal, so the work done against the magnetic force appears as thermal energy in the resistor, not in the magnetic field.</p>
   <p data-lang="zh">核对能量：磁力使机械能减少的速率为 $Fv = B^2\ell^2v^2/R$，电阻中耗散的功率为 $I^2R = (B\ell v/R)^2R = B^2\ell^2v^2/R$。两者相等，所以克服磁力所做的功转化为电阻中的热能，而不是磁场中的能量。</p>
   <details class="sg-we">
@@ -1196,8 +1354,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </div>
   </details>
   <h3 data-course="p2"><span data-lang="en">Newton's second law at an instant</span><span data-lang="zh">某一时刻的牛顿第二定律</span></h3>
-  <p data-course="p2" data-lang="en">The magnetic force $F = B^2\ell^2v/R$ depends on the speed, so a rod with no other horizontal force does not slow down at a constant rate. At an instant when the speed is $v$, Newton's second law gives $a = F/m = B^2\ell^2v/(mR)$, directed opposite to $\vec{v}$. As the rod slows, the emf, the current, the force and the deceleration all shrink. If a pulling force $F_p$ keeps the rod at a constant speed, the net force is zero and $F_p$ equals the magnetic force $I\ell B$.</p>
-  <p data-course="p2" data-lang="zh">磁力 $F = B^2\ell^2v/R$ 取决于速率，所以没有其他水平力的棒不会以恒定的快慢减速。在速率为 $v$ 的某一时刻，牛顿第二定律给出 $a = F/m = B^2\ell^2v/(mR)$，方向与 $\vec{v}$ 相反。棒减速时，电动势、电流、磁力和减速度都随之变小。若拉力 $F_p$ 使棒保持恒定速率，则净力为零，$F_p$ 等于磁力 $I\ell B$。</p>
+  <p data-course="p2" data-lang="en">The magnetic force $F = B^2\ell^2v/R$ depends on the speed, so a rod with no other horizontal force does not slow down at a constant rate. At an instant when the speed is $v$, Newton's second law gives $a = F/m = B^2\ell^2v/(mR)$, directed opposite to $\vec{v}$.</p>
+  <p data-course="p2" data-lang="zh">磁力 $F = B^2\ell^2v/R$ 取决于速率，所以没有其他水平力的棒不会以恒定的快慢减速。在速率为 $v$ 的某一时刻，牛顿第二定律给出 $a = F/m = B^2\ell^2v/(mR)$，方向与 $\vec{v}$ 相反。</p>
+  <p data-course="p2" data-lang="en">As the rod slows, the emf, the current, the force and the deceleration all shrink. If a pulling force $F_p$ keeps the rod at a constant speed, the net force is zero and $F_p$ equals the magnetic force $I\ell B$.</p>
+  <p data-course="p2" data-lang="zh">棒减速时，电动势、电流、磁力和减速度都随之变小。若拉力 $F_p$ 使棒保持恒定速率，则净力为零，$F_p$ 等于磁力 $I\ell B$。</p>
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Pulling a Rod at Constant Speed</span><span data-lang="zh">例题：匀速拉动导轨上的棒</span></summary>
     <div class="detail-body">
@@ -1268,6 +1428,14 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">导体线圈只有位于外磁场内的线段才受磁力，并且只有在通过它的磁通量变化时才有感应电流。宽为 $w$ 的矩形线圈以速率 $v$ 进入磁场区域时，只有前沿在磁场中，磁通量增大，$\mathcal{E} = Bwv$。</p>
   <p data-lang="en">Once the loop is completely inside a uniform field the flux is constant, there is no emf, no current and no force, and it moves at constant speed. When it leaves, the flux falls, the current reverses, and the force on the trailing edge again opposes the motion.</p>
   <p data-lang="zh">线圈完全进入均匀磁场后，磁通量不变，没有电动势、没有电流、也没有力，线圈做匀速运动。离开时磁通量减小，电流反向，后沿所受的力同样反抗运动。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th><span data-lang="en">Stage</span><span data-lang="zh">阶段</span></th><th><span data-lang="en">Flux through the loop</span><span data-lang="zh">线圈的磁通量</span></th><th><span data-lang="en">Emf and current</span><span data-lang="zh">电动势与电流</span></th><th><span data-lang="en">Magnetic force</span><span data-lang="zh">磁力</span></th></tr></thead>
+    <tbody>
+      <tr><td><span data-lang="en">Entering</span><span data-lang="zh">进入</span></td><td><span data-lang="en">Increasing</span><span data-lang="zh">增大</span></td><td><span data-lang="en">$\mathcal{E} = Bwv$; current one way</span><span data-lang="zh">$\mathcal{E} = Bwv$；电流沿某一方向</span></td><td><span data-lang="en">On the leading edge, opposing the motion</span><span data-lang="zh">作用于前沿，反抗运动</span></td></tr>
+      <tr><td><span data-lang="en">Fully inside (uniform field)</span><span data-lang="zh">完全在场内（均匀磁场）</span></td><td><span data-lang="en">Constant</span><span data-lang="zh">不变</span></td><td><span data-lang="en">Zero; no current</span><span data-lang="zh">为零；无电流</span></td><td><span data-lang="en">Zero</span><span data-lang="zh">为零</span></td></tr>
+      <tr><td><span data-lang="en">Leaving</span><span data-lang="zh">离开</span></td><td><span data-lang="en">Decreasing</span><span data-lang="zh">减小</span></td><td><span data-lang="en">$\mathcal{E} = Bwv$; current reversed</span><span data-lang="zh">$\mathcal{E} = Bwv$；电流反向</span></td><td><span data-lang="en">On the trailing edge, opposing the motion</span><span data-lang="zh">作用于后沿，反抗运动</span></td></tr>
+    </tbody>
+  </table></div>
   <p data-lang="en">Forces can also act on different segments with different directions, which can give a net torque and rotational acceleration instead of (or as well as) translational acceleration.</p>
   <p data-lang="zh">不同线段所受的力还可能方向不同，从而产生净力矩和转动加速度，而不只是（或不仅是）平动加速度。</p>
   <div class="concept-box orange" data-lang="en">
@@ -1280,8 +1448,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="sg-examtip" data-course="p2">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">On a rail or loop problem, write the chain in order: the emf $B\ell v$, the current (Ohm's law with the total resistance), the force $I\ell B$, and then Newton's second law if the speed is changing. State the direction of the force from Lenz's law (against the velocity) before computing its size. If the rod moves at a constant speed, the pulling force equals the magnetic force.</p>
-    <p data-lang="zh">做导轨或线圈题时，按顺序写出链条：电动势 $B\ell v$，电流（用总电阻的欧姆定律），力 $I\ell B$，速率变化时再用牛顿第二定律。在计算大小之前，先由楞次定律说明力的方向（与速度相反）。若棒做匀速运动，拉力等于磁力。</p>
+    <p data-lang="en">On a rail or loop problem, write the chain in order: the emf $B\ell v$, the current (Ohm's law with the total resistance), the force $I\ell B$, and then Newton's second law if the speed is changing.</p>
+    <p data-lang="zh">做导轨或线圈题时，按顺序写出链条：电动势 $B\ell v$，电流（用总电阻的欧姆定律），力 $I\ell B$，速率变化时再用牛顿第二定律。</p>
+    <p data-lang="en">State the direction of the force from Lenz's law (against the velocity) before computing its size. If the rod moves at a constant speed, the pulling force equals the magnetic force.</p>
+    <p data-lang="zh">在计算大小之前，先由楞次定律说明力的方向（与速度相反）。若棒做匀速运动，拉力等于磁力。</p>
   </div>
   <div class="sg-examtip" data-course="c">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
@@ -1625,6 +1795,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">把充了电的电容器接到没有电阻、没有电池的电感器上。电容器开始放电，但电感器不允许电流跳变：电流随电容器放空而增大，电容器放空时电流达到最大，并继续向相反方向给电容器充电。</p>
   <p data-lang="en">The energy swings back and forth between the electric field of the capacitor and the magnetic field of the inductor, and the charge oscillates forever in the ideal circuit. A real circuit has some resistance that gradually dissipates the energy; this unit treats the ideal case.</p>
   <p data-lang="zh">能量在电容器的电场与电感器的磁场之间来回摆动，在理想电路中电荷永远振荡。实际电路有一定电阻，会逐渐耗散能量；本单元只处理理想情形。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: from Maxwell's equations to Hertz's sparks</span><span data-lang="zh">历史：从麦克斯韦方程组到赫兹的电火花</span></div>
+    <p data-lang="en">In 1865 James Clerk Maxwell combined Faraday's law with his own displacement-current term and predicted electromagnetic waves travelling at the speed of light. In the late 1880s Heinrich Hertz made such waves with oscillating spark-gap circuits, whose frequency is set by their inductance and capacitance just as in an LC circuit.</p>
+    <p data-lang="zh">1865 年，詹姆斯·克拉克·麦克斯韦把法拉第定律与他自己提出的位移电流项结合起来，预言了以光速传播的电磁波。19 世纪 80 年代后期，海因里希·赫兹用振荡的火花隙电路产生了这种电磁波；与 LC 电路一样，其频率由电感和电容决定。</p>
+    <p><span data-lang="en">Read more:</span><span data-lang="zh">延伸阅读：</span> <a href="https://en.wikipedia.org/wiki/Maxwell%27s_equations" target="_blank" rel="noopener"><span data-lang="en">Maxwell's equations (Wikipedia)</span><span data-lang="zh">麦克斯韦方程组（维基百科）</span></a></p>
+  </div>
   <h3><span data-lang="en">Energy conservation in an LC circuit</span><span data-lang="zh">LC 电路中的能量守恒</span></h3>
   <p data-lang="en">With no resistance the total energy is constant. At the instant the capacitor holds its maximum charge $Q_0$ the current is zero, so all the energy is electric, $Q_0^2/(2C)$. When the capacitor is empty, the current is at its maximum $I_{\max}$ and all the energy is magnetic, $\tfrac{1}{2}LI_{\max}^2$. Equating the two:</p>
   <p data-lang="zh">没有电阻时总能量恒定。电容器电荷最大（$Q_0$）的瞬间电流为零，全部能量是电能 $Q_0^2/(2C)$。电容器放空时，电流最大（$I_{\max}$），全部能量是磁能 $\tfrac{1}{2}LI_{\max}^2$。令两者相等：</p>
@@ -1651,6 +1827,35 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <p data-lang="en">Starting from a fully charged capacitor ($q = Q_0$, $\phi = 0$), the charge and current are a quarter period out of step: when $|q|$ is maximum, $I = 0$; when $q = 0$, $|I|$ is maximum. The energies are $U_C = \dfrac{Q_0^2}{2C}\cos^2\omega t$ and $U_L = \dfrac{Q_0^2}{2C}\sin^2\omega t$, which add to a constant and each oscillate at twice the circuit's frequency.</p>
   <p data-lang="zh">从电容器充满电开始（$q = Q_0$，$\phi = 0$），电荷与电流相差四分之一周期：$|q|$ 最大时 $I = 0$；$q = 0$ 时 $|I|$ 最大。能量为 $U_C = \dfrac{Q_0^2}{2C}\cos^2\omega t$ 和 $U_L = \dfrac{Q_0^2}{2C}\sin^2\omega t$，两者之和为常数，且各自以电路频率的两倍振荡。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 230" role="img" aria-label="LC circuit electric and magnetic energy oscillation">
+    <line class="ax" x1="52.0" y1="192.0" x2="416.0" y2="192.0"/>
+    <polyline class="ax" points="408.5,195.6 416.0,192.0 408.5,188.4"/>
+    <line class="ax" x1="52.0" y1="192.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="224.0" text-anchor="middle">Time t / T</text><text class="lbl" data-lang="zh" x="234.0" y="224.0" text-anchor="middle">时间 t / T</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Energy / U_max</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">能量 / U_max</text>
+    <line class="ax" x1="143.0" y1="188.5" x2="143.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="143.0" y="207.0" text-anchor="middle">T/4</text><text class="mut" data-lang="zh" x="143.0" y="207.0" text-anchor="middle">T/4</text>
+    <line class="ax" x1="234.0" y1="188.5" x2="234.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="234.0" y="207.0" text-anchor="middle">T/2</text><text class="mut" data-lang="zh" x="234.0" y="207.0" text-anchor="middle">T/2</text>
+    <line class="ax" x1="325.0" y1="188.5" x2="325.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="325.0" y="207.0" text-anchor="middle">3T/4</text><text class="mut" data-lang="zh" x="325.0" y="207.0" text-anchor="middle">3T/4</text>
+    <line class="ax" x1="416.0" y1="188.5" x2="416.0" y2="195.5"/>
+    <text class="mut" data-lang="en" x="416.0" y="207.0" text-anchor="middle">T</text><text class="mut" data-lang="zh" x="416.0" y="207.0" text-anchor="middle">T</text>
+    <line class="ax" x1="48.5" y1="124.0" x2="55.5" y2="124.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="128.0" text-anchor="end">0.5</text><text class="mut" data-lang="zh" x="45.0" y="128.0" text-anchor="end">0.5</text>
+    <line class="ax" x1="48.5" y1="56.0" x2="55.5" y2="56.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="60.0" text-anchor="end">1.0</text><text class="mut" data-lang="zh" x="45.0" y="60.0" text-anchor="end">1.0</text>
+    <line class="grid dash" x1="52.0" y1="56.0" x2="416.0" y2="56.0"/>
+    <path class="c1" d="M 52.00,56.00 L 55.03,56.37 L 58.07,57.49 L 61.10,59.33 L 64.13,61.88 L 67.17,65.11 L 70.20,68.99 L 73.23,73.47 L 76.27,78.50 L 79.30,84.03 L 82.33,90.00 L 85.37,96.34 L 88.40,102.99 L 91.43,109.86 L 94.47,116.89 L 97.50,124.00 L 100.53,131.11 L 103.57,138.14 L 106.60,145.01 L 109.63,151.66 L 112.67,158.00 L 115.70,163.97 L 118.73,169.50 L 121.77,174.53 L 124.80,179.01 L 127.83,182.89 L 130.87,186.12 L 133.90,188.67 L 136.93,190.51 L 139.97,191.63 L 143.00,192.00 L 146.03,191.63 L 149.07,190.51 L 152.10,188.67 L 155.13,186.12 L 158.17,182.89 L 161.20,179.01 L 164.23,174.53 L 167.27,169.50 L 170.30,163.97 L 173.33,158.00 L 176.37,151.66 L 179.40,145.01 L 182.43,138.14 L 185.47,131.11 L 188.50,124.00 L 191.53,116.89 L 194.57,109.86 L 197.60,102.99 L 200.63,96.34 L 203.67,90.00 L 206.70,84.03 L 209.73,78.50 L 212.77,73.47 L 215.80,68.99 L 218.83,65.11 L 221.87,61.88 L 224.90,59.33 L 227.93,57.49 L 230.97,56.37 L 234.00,56.00 L 237.03,56.37 L 240.07,57.49 L 243.10,59.33 L 246.13,61.88 L 249.17,65.11 L 252.20,68.99 L 255.23,73.47 L 258.27,78.50 L 261.30,84.03 L 264.33,90.00 L 267.37,96.34 L 270.40,102.99 L 273.43,109.86 L 276.47,116.89 L 279.50,124.00 L 282.53,131.11 L 285.57,138.14 L 288.60,145.01 L 291.63,151.66 L 294.67,158.00 L 297.70,163.97 L 300.73,169.50 L 303.77,174.53 L 306.80,179.01 L 309.83,182.89 L 312.87,186.12 L 315.90,188.67 L 318.93,190.51 L 321.97,191.63 L 325.00,192.00 L 328.03,191.63 L 331.07,190.51 L 334.10,188.67 L 337.13,186.12 L 340.17,182.89 L 343.20,179.01 L 346.23,174.53 L 349.27,169.50 L 352.30,163.97 L 355.33,158.00 L 358.37,151.66 L 361.40,145.01 L 364.43,138.14 L 367.47,131.11 L 370.50,124.00 L 373.53,116.89 L 376.57,109.86 L 379.60,102.99 L 382.63,96.34 L 385.67,90.00 L 388.70,84.03 L 391.73,78.50 L 394.77,73.47 L 397.80,68.99 L 400.83,65.11 L 403.87,61.88 L 406.90,59.33 L 409.93,57.49 L 412.97,56.37 L 416.00,56.00"/>
+    <path class="c2" d="M 52.00,192.00 L 55.03,191.63 L 58.07,190.51 L 61.10,188.67 L 64.13,186.12 L 67.17,182.89 L 70.20,179.01 L 73.23,174.53 L 76.27,169.50 L 79.30,163.97 L 82.33,158.00 L 85.37,151.66 L 88.40,145.01 L 91.43,138.14 L 94.47,131.11 L 97.50,124.00 L 100.53,116.89 L 103.57,109.86 L 106.60,102.99 L 109.63,96.34 L 112.67,90.00 L 115.70,84.03 L 118.73,78.50 L 121.77,73.47 L 124.80,68.99 L 127.83,65.11 L 130.87,61.88 L 133.90,59.33 L 136.93,57.49 L 139.97,56.37 L 143.00,56.00 L 146.03,56.37 L 149.07,57.49 L 152.10,59.33 L 155.13,61.88 L 158.17,65.11 L 161.20,68.99 L 164.23,73.47 L 167.27,78.50 L 170.30,84.03 L 173.33,90.00 L 176.37,96.34 L 179.40,102.99 L 182.43,109.86 L 185.47,116.89 L 188.50,124.00 L 191.53,131.11 L 194.57,138.14 L 197.60,145.01 L 200.63,151.66 L 203.67,158.00 L 206.70,163.97 L 209.73,169.50 L 212.77,174.53 L 215.80,179.01 L 218.83,182.89 L 221.87,186.12 L 224.90,188.67 L 227.93,190.51 L 230.97,191.63 L 234.00,192.00 L 237.03,191.63 L 240.07,190.51 L 243.10,188.67 L 246.13,186.12 L 249.17,182.89 L 252.20,179.01 L 255.23,174.53 L 258.27,169.50 L 261.30,163.97 L 264.33,158.00 L 267.37,151.66 L 270.40,145.01 L 273.43,138.14 L 276.47,131.11 L 279.50,124.00 L 282.53,116.89 L 285.57,109.86 L 288.60,102.99 L 291.63,96.34 L 294.67,90.00 L 297.70,84.03 L 300.73,78.50 L 303.77,73.47 L 306.80,68.99 L 309.83,65.11 L 312.87,61.88 L 315.90,59.33 L 318.93,57.49 L 321.97,56.37 L 325.00,56.00 L 328.03,56.37 L 331.07,57.49 L 334.10,59.33 L 337.13,61.88 L 340.17,65.11 L 343.20,68.99 L 346.23,73.47 L 349.27,78.50 L 352.30,84.03 L 355.33,90.00 L 358.37,96.34 L 361.40,102.99 L 364.43,109.86 L 367.47,116.89 L 370.50,124.00 L 373.53,131.11 L 376.57,138.14 L 379.60,145.01 L 382.63,151.66 L 385.67,158.00 L 388.70,163.97 L 391.73,169.50 L 394.77,174.53 L 397.80,179.01 L 400.83,182.89 L 403.87,186.12 L 406.90,188.67 L 409.93,190.51 L 412.97,191.63 L 416.00,192.00"/>
+    <text class="c1t" data-lang="en" x="234.0" y="46.0" text-anchor="middle">U_C = q²/(2C)</text><text class="c1t" data-lang="zh" x="234.0" y="46.0" text-anchor="middle">U_C = q²/(2C)</text>
+    <text class="c2t" data-lang="en" x="143.0" y="46.0" text-anchor="middle">U_L = ½ L I²</text><text class="c2t" data-lang="zh" x="143.0" y="46.0" text-anchor="middle">U_L = ½ L I²</text>
+    <text class="mut" data-lang="en" x="436.0" y="41.0" text-anchor="end">U_C + U_L = const</text><text class="mut" data-lang="zh" x="436.0" y="41.0" text-anchor="end">U_C + U_L = 常量</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 13.3. In an undamped LC circuit ($\omega = 1/\sqrt{LC}$), energy sloshes between capacitor $U_C \propto \cos^2(\omega t)$ and inductor $U_L \propto \sin^2(\omega t)$ at twice the charge frequency while $U_C + U_L$ stays constant.</span><span data-lang="zh">图 13.3. 在无阻尼 LC 振荡电路（$\omega = 1/\sqrt{LC}$）中，能量在电容电场能 $U_C \propto \cos^2(\omega t)$ 与电感磁场能 $U_L \propto \sin^2(\omega t)$ 之间以两倍电荷频率往复转换，总能量保持守恒。</span></figcaption>
+  </figure>
   <h3><span data-lang="en">The mass-spring analogy</span><span data-lang="zh">质量-弹簧类比</span></h3>
   <p data-lang="en">The LC circuit is the electrical twin of a mass on a spring. Charge $q$ plays the role of position $x$, current $I$ the role of velocity $v$, the inductance $L$ the role of mass $m$ (inertia: it resists change in current just as mass resists change in velocity), and $1/C$ the role of the spring constant $k$.</p>
   <p data-lang="zh">LC 电路是弹簧振子的电学孪生。电荷 $q$ 对应位置 $x$，电流 $I$ 对应速度 $v$，电感 $L$ 对应质量 $m$（惯性：它抗拒电流的变化，正如质量抗拒速度的变化），$1/C$ 对应劲度系数 $k$。</p>
@@ -1770,8 +1975,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
 
   <div class="card" data-course="p2">
     <div class="card-header"><div class="card-icon icon-accent">EX</div><div class="card-title"><span data-lang="en">Exam Format</span><span data-lang="zh">考试形式</span></div></div>
-  <p data-lang="en">The AP Physics 2 exam has two sections. Section I has 42 multiple-choice questions in 85 minutes (50% of the exam) and Section II has 4 free-response questions in 95 minutes (50% of the exam). The free-response question types are Mathematical Routines, Translation Between Representations, Experimental Design and Analysis, and Qualitative/Quantitative Translation. A calculator is allowed and an equation sheet is provided. Unit 12 is 12-15% of the multiple-choice section.</p>
-  <p data-lang="zh">AP Physics 2 考试分两部分。第一部分为 42 道选择题，用时 85 分钟（占考试 50%）；第二部分为 4 道自由作答题，用时 95 分钟（占考试 50%）。自由作答题的题型为：数学过程（<code>Mathematical Routines</code>）、不同表征之间的转换（<code>Translation Between Representations</code>）、实验设计与分析（<code>Experimental Design and Analysis</code>）、定性与定量之间的转换（<code>Qualitative/Quantitative Translation</code>）。允许使用计算器，并提供公式表。第 12 单元占选择题部分的 12-15%。</p>
+  <p data-lang="en">The AP Physics 2 exam has two sections. Section I has 42 multiple-choice questions in 85 minutes (50% of the exam) and Section II has 4 free-response questions in 95 minutes (50% of the exam).</p>
+  <p data-lang="zh">AP Physics 2 考试分两部分。第一部分为 42 道选择题，用时 85 分钟（占考试 50%）；第二部分为 4 道自由作答题，用时 95 分钟（占考试 50%）。</p>
+  <p data-lang="en">The free-response question types are Mathematical Routines, Translation Between Representations, Experimental Design and Analysis, and Qualitative/Quantitative Translation. A calculator is allowed and an equation sheet is provided. Unit 12 is 12-15% of the multiple-choice section.</p>
+  <p data-lang="zh">自由作答题的题型为：数学过程（<code>Mathematical Routines</code>）、不同表征之间的转换（<code>Translation Between Representations</code>）、实验设计与分析（<code>Experimental Design and Analysis</code>）、定性与定量之间的转换（<code>Qualitative/Quantitative Translation</code>）。允许使用计算器，并提供公式表。第 12 单元占选择题部分的 12-15%。</p>
   </div>
 
   <div class="card" data-course="p2">
@@ -1926,6 +2133,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $F = B^2\ell^2v/R$: doubling $v$ and doubling $R$ cancel, so $F$ is unchanged.</span><span data-lang="zh">正确！$F = B^2\ell^2v/R$：$v$ 加倍与 $R$ 加倍相互抵消，所以 $F$ 不变。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">The emf doubles with $v$ and the current is $B\ell v/R$, so $F = I\ell B\propto v/R$. The factor of $2$ in the numerator and denominator cancel.</span><span data-lang="zh">电动势随 $v$ 加倍，电流为 $B\ell v/R$，所以 $F = I\ell B\propto v/R$。分子和分母中的因子 $2$ 相互抵消。</span></div>
   </div>
+  <h3 data-course="p2"><span data-lang="en">Physics C extension: energy storage and time constants</span><span data-lang="zh">Physics C 拓展：储能与时间常数</span></h3>
   <h3 data-course="c"><span data-lang="en">Inductors, energy and LR circuits</span><span data-lang="zh">电感器、能量与 LR 电路</span></h3>
   <div class="quiz" data-answer="1">
     <div class="quiz-q">5. <span data-lang="en">(Physics C) The number of turns of a long solenoid is tripled and its length is tripled, with the cross-sectional area and core unchanged. Its inductance becomes:</span><span data-lang="zh">（物理 C）长螺线管的匝数变为 3 倍，长度也变为 3 倍，横截面积和铁芯不变。其电感变为：</span></div>
@@ -1959,6 +2167,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <div class="quiz-explain correct-exp"><span data-lang="en">Correct! $0.10\;\text{s} = 2\tau$, so $I/I_0 = e^{-2} = 0.135\approx 14\%$.</span><span data-lang="zh">正确！$0.10\;\text{s} = 2\tau$，所以 $I/I_0 = e^{-2} = 0.135\approx 14\%$。</span></div>
     <div class="quiz-explain wrong-exp"><span data-lang="en">$37\%$ is the value after one time constant, not two. The exponential never reaches exactly zero in finite time, and it is not linear, so it is not $25\%$.</span><span data-lang="zh">$37\%$ 是一个时间常数后的值，不是两个。指数衰减在有限时间内不会恰好为零，也不是线性的，所以不是 $25\%$。</span></div>
   </div>
+  <h3 data-course="p2"><span data-lang="en">Physics C extension: oscillating circuits and induced fields</span><span data-lang="zh">Physics C 拓展：振荡电路与感应电场</span></h3>
   <h3 data-course="c"><span data-lang="en">LC circuits and Maxwell's equations</span><span data-lang="zh">LC 电路与麦克斯韦方程组</span></h3>
   <div class="quiz" data-answer="1">
     <div class="quiz-q">9. <span data-lang="en">(Physics C) An ideal LC circuit has $L = 10\;\text{mH}$ and $C = 1.0\;\mu\text{F}$. Its angular frequency of oscillation is:</span><span data-lang="zh">（物理 C）理想 LC 电路的 $L = 10\;\text{mH}$，$C = 1.0\;\mu\text{F}$。其振荡角频率为：</span></div>

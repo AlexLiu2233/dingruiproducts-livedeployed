@@ -481,20 +481,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -523,8 +531,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -538,7 +546,7 @@ figure.dr-fig figcaption {
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -559,7 +567,7 @@ figure.dr-fig figcaption {
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 <style id="u9-extra-css">
@@ -598,7 +606,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="nav-right">
     <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../AP%20Physics%202/index.html" data-course="p2" aria-label="Back to AP Physics 2 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
-    <a class="nav-btn" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_physics_c_e_m&utm_content=unit_9_electric_potential__gated_en" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
+    <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
     <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="c"><span data-lang="en">Physics C</span><span data-lang="zh">物理 C</span></span><span data-course-label="p2" hidden><span data-lang="en">Physics 2</span><span data-lang="zh">物理 2</span></span></button>
@@ -688,8 +696,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">能量方法常常用标量运算代替矢量求和：它不关心路径，不关心方向，还能处理匀加速模型无法描述的运动。</p>
   </div>
   <div data-course="p2">
-    <p data-lang="en">The earlier topics of this unit described what a charge does to the space around it (the electric field) and what force results on another charge. This topic adds the energy view. Because the electrostatic force is conservative, the work it does depends only on the start and end arrangements, so a single number, the electric potential energy, can be assigned to each arrangement of charges. Energy methods often replace vector force sums with scalar arithmetic: they ignore the path, they ignore direction, and they handle motion that a constant-acceleration model cannot.</p>
-    <p data-lang="zh">本单元前面的专题描述了电荷对周围空间的作用（电场）以及由此在另一个电荷上产生的力。本专题加入能量的视角。静电力是保守力（<code>conservative force</code>），它做的功只取决于起止排布，因此可以给电荷的每一种排布赋予一个数值，即电势能（<code>electric potential energy</code>）。能量方法常常用标量运算代替矢量求和：它不关心路径，不关心方向，还能处理匀加速模型无法描述的运动。</p>
+    <p data-lang="en">The earlier topics of this unit described what a charge does to the space around it (the electric field) and what force results on another charge. This topic adds the energy view.</p>
+    <p data-lang="zh">本单元前面的专题描述了电荷对周围空间的作用（电场）以及由此在另一个电荷上产生的力。本专题加入能量的视角。</p>
+    <p data-lang="en">Because the electrostatic force is conservative, the work it does depends only on the start and end arrangements, so a single number, the electric potential energy, can be assigned to each arrangement of charges.</p>
+    <p data-lang="zh">静电力是保守力（<code>conservative force</code>），它做的功只取决于起止排布，因此可以给电荷的每一种排布赋予一个数值，即电势能（<code>electric potential energy</code>）。</p>
+    <p data-lang="en">Energy methods often replace vector force sums with scalar arithmetic: they ignore the path, they ignore direction, and they handle motion that a constant-acceleration model cannot.</p>
+    <p data-lang="zh">能量方法常常用标量运算代替矢量求和：它不关心路径，不关心方向，还能处理匀加速模型无法描述的运动。</p>
   </div>
   <div class="concept-box green" data-lang="en"><strong>Constants used in this guide</strong> $k=\frac{1}{4\pi\epsilon_0}=8.99\times10^{9}\ \mathrm{N\,m^2/C^2}$, $e=1.60\times10^{-19}\ \mathrm{C}$, $m_e=9.11\times10^{-31}\ \mathrm{kg}$, $m_p=1.67\times10^{-27}\ \mathrm{kg}$, and $1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$. The exam provides reference materials, so use the values it gives; the rounded values here keep the arithmetic readable.</div>
   <div class="concept-box green" data-lang="zh"><strong>本指南使用的常数</strong> $k=\frac{1}{4\pi\epsilon_0}=8.99\times10^{9}\ \mathrm{N\,m^2/C^2}$，$e=1.60\times10^{-19}\ \mathrm{C}$，$m_e=9.11\times10^{-31}\ \mathrm{kg}$，$m_p=1.67\times10^{-27}\ \mathrm{kg}$，$1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$。考试会提供参考资料（<code>reference materials</code>），请使用其中给出的数值；这里取的近似值只是为了让运算更易读。</div>
@@ -710,8 +722,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div data-course="p2">
     <h3><span data-lang="en">From the definition to the formula</span><span data-lang="zh">从定义到公式</span></h3>
-    <p data-lang="en">The external agent must balance the electric force at every step as $q_2$ comes in slowly from infinitely far away, so the external work is the area under the graph of the force against the separation $r'$. Because the force falls as $1/r'^2$, almost none of this area lies at large separations, and the total area from infinitely far away down to a separation $r$ works out to $\frac{kq_1q_2}{r}$, the result stated in the box below.</p>
-    <p data-lang="zh">外界必须在 $q_2$ 从无穷远处缓慢移入的每一步都与电场力平衡，所以外力做的功就是力对间距 $r'$ 的图像下的面积。由于力按 $1/r'^2$ 减小，这块面积几乎都不在大间距处；从无穷远处一直到间距 $r$ 的总面积为 $\frac{kq_1q_2}{r}$，即下面方框中给出的结果。</p>
+    <p data-lang="en">The external agent must balance the electric force at every step as $q_2$ comes in slowly from infinitely far away, so the external work is the area under the graph of the force against the separation $r'$.</p>
+    <p data-lang="zh">外界必须在 $q_2$ 从无穷远处缓慢移入的每一步都与电场力平衡，所以外力做的功就是力对间距 $r'$ 的图像下的面积。</p>
+    <p data-lang="en">Because the force falls as $1/r'^2$, almost none of this area lies at large separations, and the total area from infinitely far away down to a separation $r$ works out to $\frac{kq_1q_2}{r}$, the result stated in the box below.</p>
+    <p data-lang="zh">由于力按 $1/r'^2$ 减小，这块面积几乎都不在大间距处；从无穷远处一直到间距 $r$ 的总面积为 $\frac{kq_1q_2}{r}$，即下面方框中给出的结果。</p>
   </div>
   <div class="formula-box">
     <div class="formula-label"><span data-lang="en">Electric potential energy of two point charges</span><span data-lang="zh">两点电荷的电势能</span></div>
@@ -719,6 +733,48 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p class="formula-note" data-lang="en">Each $q$ carries its own sign. $U_E>0$ for like charges, $U_E<0$ for unlike charges, $U_E\to0$ as $r\to\infty$.</p>
     <p class="formula-note" data-lang="zh">每个 $q$ 都带自己的符号。同号电荷 $U_E>0$，异号电荷 $U_E<0$，$r\to\infty$ 时 $U_E\to0$。</p>
   </div>
+  <h3><span data-lang="en">First principles: the 1/r law from work</span><span data-lang="zh">第一性原理：由功得到 1/r 规律</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $U_E$ goes as $1/r$</span><span data-lang="zh">第一性原理：为什么 $U_E$ 与 $1/r$ 成正比</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The electrostatic force is conservative, so the potential energy of the pair is the work an external agent does assembling it slowly from infinite separation.</p>
+    <p data-lang="zh"><strong>原理。</strong>静电力是保守力，所以这对电荷的电势能等于外界把它们从无穷远处缓慢组装起来所做的功。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>The derivation above brought $q_2$ in along a radial line.</li>
+      <li>Any other path breaks into radial pieces and arcs at constant $r'$.</li>
+      <li>On each arc $\vec F_E\perp d\vec\ell$, so the arcs need no work.</li>
+      <li>The radial pieces still span $\infty$ to $r$, so every path gives $U_E=\dfrac{kq_1q_2}{r}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>上面的推导沿径向把 $q_2$ 移入。</li>
+      <li>任何其他路径都可以分成径向小段和 $r'$ 不变的圆弧。</li>
+      <li>在每段圆弧上 $\vec F_E\perp d\vec\ell$，所以圆弧不需要做功。</li>
+      <li>径向小段仍然从 $\infty$ 覆盖到 $r$，所以每条路径都给出 $U_E=\dfrac{kq_1q_2}{r}$。</li>
+    </ol>
+    </div>
+    <div data-course="p2">
+    <ol class="sg-steps" data-lang="en">
+      <li>Bring $q_2$ in one short step at a time, from separation $r_{i+1}$ to $r_i$.</li>
+      <li>For that step use the force $\dfrac{kq_1q_2}{r_ir_{i+1}}$, between its values at the two ends.</li>
+      <li>Step work is force times distance: $\dfrac{kq_1q_2}{r_ir_{i+1}}(r_{i+1}-r_i)$.</li>
+      <li>This simplifies to $kq_1q_2\left(\dfrac{1}{r_i}-\dfrac{1}{r_{i+1}}\right)$.</li>
+      <li>Add the steps from a start at $R$ down to $r$. The inner terms cancel in pairs, leaving $kq_1q_2\left(\dfrac{1}{r}-\dfrac{1}{R}\right)$.</li>
+      <li>Start infinitely far away: as $R\to\infty$, $\dfrac{1}{R}\to0$ and $U_E=\dfrac{kq_1q_2}{r}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>把 $q_2$ 一小步一小步地移近，每一步从间距 $r_{i+1}$ 移到 $r_i$。</li>
+      <li>这一步取力为 $\dfrac{kq_1q_2}{r_ir_{i+1}}$，它介于两端的力值之间。</li>
+      <li>这一步的功等于力乘距离：$\dfrac{kq_1q_2}{r_ir_{i+1}}(r_{i+1}-r_i)$。</li>
+      <li>化简得 $kq_1q_2\left(\dfrac{1}{r_i}-\dfrac{1}{r_{i+1}}\right)$。</li>
+      <li>把从起点 $R$ 一直到 $r$ 的各步相加。中间各项两两相消，只剩 $kq_1q_2\left(\dfrac{1}{r}-\dfrac{1}{R}\right)$。</li>
+      <li>让起点在无穷远处：$R\to\infty$ 时 $\dfrac{1}{R}\to0$，于是 $U_E=\dfrac{kq_1q_2}{r}$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> As $r\to\infty$, $U_E\to0$, the chosen zero. Units: $\mathrm{(N\,m^2/C^2)(C^2)/m}=\mathrm{N\,m}=\mathrm{J}$. Halving $r$ doubles $|U_E|$ but quadruples the force.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$r\to\infty$ 时 $U_E\to0$，正是所选的零点。单位：$\mathrm{(N\,m^2/C^2)(C^2)/m}=\mathrm{N\,m}=\mathrm{J}$。$r$ 减半时 $|U_E|$ 加倍，而力变为四倍。</p>
+    <p><a href="https://www.feynmanlectures.caltech.edu/II_04.html" target="_blank" rel="noopener"><span data-lang="en">Feynman Lectures, Vol. II, Ch. 4 (Electrostatics): the potential built from the work done</span><span data-lang="zh">费曼物理学讲义第 II 卷第 4 章（静电学）：由所做的功建立电势</span></a></p>
+  </div>
+  <h3><span data-lang="en">Reading the sign and the graph</span><span data-lang="zh">读懂符号与图像</span></h3>
   <p data-lang="en"><strong>Reading the sign.</strong> Like charges repel, so an external agent must push them together: $W_{\text{ext}}>0$ and $U_E>0$, and the system stores energy that is released if the charges are let go.</p>
   <p data-lang="zh"><strong>读懂符号。</strong>同号电荷互相排斥，外界必须把它们推到一起：$W_{\text{ext}}>0$，$U_E>0$，系统储存的能量在放手时释放。</p>
   <p data-lang="en">Unlike charges attract, so the external agent must hold them back as they approach: $W_{\text{ext}}<0$ and $U_E<0$. A negative $U_E$ means the pair is bound relative to the infinitely separated state; energy $|U_E|$ must be supplied to pull them apart to infinity.</p>
@@ -732,9 +788,42 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">力是曲线斜率的负值，$F_r=-\dfrac{dU_E}{dr}$：同号电荷斜率为负，故 $F_r>0$（排斥）；异号电荷斜率为正，故 $F_r<0$（吸引）。对 $U_E=kq_1q_2/r$ 求导得 $F_r=kq_1q_2/r^2$，正是 Coulomb 力，必然如此。</p>
   </div>
   <div data-course="p2">
-    <p data-lang="en"><strong>Graph.</strong> Plot $U_E$ against $r$. For like charges the curve is a positive hyperbola, $U_E\propto 1/r$: it rises without bound as $r\to0$ and falls toward the axis as $r$ grows, never crossing it. For unlike charges it is the mirror image below the axis, a negative hyperbola that dives toward $-\infty$ as $r\to0$ and rises toward $0$ from below. The force is related to the slope of the curve: for like charges the energy falls as the separation grows, so the charges repel; for unlike charges the energy rises toward zero as the separation grows, so they attract; and a steeper curve means a stronger force.</p>
-    <p data-lang="zh"><strong>图像。</strong>以 $r$ 为横轴画 $U_E$。同号电荷的曲线是正的双曲线，$U_E\propto 1/r$：$r\to0$ 时无限上升，$r$ 增大时趋近横轴但不穿过它。异号电荷的曲线是它关于横轴的镜像，即负的双曲线，$r\to0$ 时降向 $-\infty$，并从下方趋近 $0$。力与曲线的斜率有关：同号电荷的能量随间距增大而减小，所以互相排斥；异号电荷的能量随间距增大而升向零，所以互相吸引；曲线越陡，力越大。</p>
+    <p data-lang="en"><strong>Graph.</strong> Plot $U_E$ against $r$. For like charges the curve is a positive hyperbola, $U_E\propto 1/r$: it rises without bound as $r\to0$ and falls toward the axis as $r$ grows, never crossing it.</p>
+    <p data-lang="zh"><strong>图像。</strong>以 $r$ 为横轴画 $U_E$。同号电荷的曲线是正的双曲线，$U_E\propto 1/r$：$r\to0$ 时无限上升，$r$ 增大时趋近横轴但不穿过它。</p>
+    <p data-lang="en">For unlike charges it is the mirror image below the axis, a negative hyperbola that dives toward $-\infty$ as $r\to0$ and rises toward $0$ from below.</p>
+    <p data-lang="zh">异号电荷的曲线是它关于横轴的镜像，即负的双曲线，$r\to0$ 时降向 $-\infty$，并从下方趋近 $0$。</p>
+    <p data-lang="en">The force is related to the slope of the curve: for like charges the energy falls as the separation grows, so the charges repel; for unlike charges the energy rises toward zero as the separation grows, so they attract; and a steeper curve means a stronger force.</p>
+    <p data-lang="zh">力与曲线的斜率有关：同号电荷的能量随间距增大而减小，所以互相排斥；异号电荷的能量随间距增大而升向零，所以互相吸引；曲线越陡，力越大。</p>
   </div>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 240" role="img" aria-label="Two-charge potential energy vs separation">
+    <line class="ax" x1="52.0" y1="112.0" x2="416.0" y2="112.0"/>
+    <polyline class="ax" points="408.5,115.6 416.0,112.0 408.5,108.4"/>
+    <line class="ax" x1="52.0" y1="202.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="234.0" text-anchor="middle">Separation r</text><text class="lbl" data-lang="zh" x="234.0" y="234.0" text-anchor="middle">间距 r</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Energy U<tspan baseline-shift="sub">E</tspan></text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">电势能 U<tspan baseline-shift="sub">E</tspan></text>
+    <line class="ax" x1="92.4" y1="108.5" x2="92.4" y2="115.5"/>
+    <text class="mut" data-lang="en" x="92.4" y="214.0" text-anchor="middle">r<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="92.4" y="214.0" text-anchor="middle">r<tspan baseline-shift="sub">0</tspan></text>
+    <line class="ax" x1="132.9" y1="108.5" x2="132.9" y2="115.5"/>
+    <text class="mut" data-lang="en" x="132.9" y="214.0" text-anchor="middle">2r<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="132.9" y="214.0" text-anchor="middle">2r<tspan baseline-shift="sub">0</tspan></text>
+    <line class="ax" x1="213.8" y1="108.5" x2="213.8" y2="115.5"/>
+    <text class="mut" data-lang="en" x="213.8" y="214.0" text-anchor="middle">4r<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="213.8" y="214.0" text-anchor="middle">4r<tspan baseline-shift="sub">0</tspan></text>
+    <line class="ax" x1="375.6" y1="108.5" x2="375.6" y2="115.5"/>
+    <text class="mut" data-lang="en" x="375.6" y="214.0" text-anchor="middle">8r<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="375.6" y="214.0" text-anchor="middle">8r<tspan baseline-shift="sub">0</tspan></text>
+    <line class="ax" x1="48.5" y1="152.9" x2="55.5" y2="152.9"/>
+    <text class="mut" data-lang="en" x="45.0" y="156.9" text-anchor="end">−U<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="45.0" y="156.9" text-anchor="end">−U<tspan baseline-shift="sub">0</tspan></text>
+    <line class="ax" x1="48.5" y1="112.0" x2="55.5" y2="112.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="116.0" text-anchor="end">0</text><text class="mut" data-lang="zh" x="45.0" y="116.0" text-anchor="end">0</text>
+    <line class="ax" x1="48.5" y1="71.1" x2="55.5" y2="71.1"/>
+    <text class="mut" data-lang="en" x="45.0" y="75.1" text-anchor="end">+U<tspan baseline-shift="sub">0</tspan></text><text class="mut" data-lang="zh" x="45.0" y="75.1" text-anchor="end">+U<tspan baseline-shift="sub">0</tspan></text>
+    <path class="c1" d="M 70.81,24.05 L 72.92,32.90 L 75.03,40.14 L 77.13,46.17 L 79.24,51.26 L 81.35,55.62 L 83.45,59.40 L 85.56,62.70 L 87.67,65.61 L 89.77,68.20 L 91.88,70.51 L 93.99,72.59 L 96.09,74.48 L 98.20,76.19 L 100.31,77.75 L 102.41,79.18 L 104.52,80.50 L 106.63,81.71 L 108.74,82.84 L 110.84,83.88 L 112.95,84.85 L 115.06,85.76 L 117.16,86.61 L 119.27,87.40 L 121.38,88.15 L 123.48,88.85 L 125.59,89.52 L 127.70,90.14 L 129.80,90.73 L 131.91,91.30 L 134.02,91.83 L 136.12,92.33 L 138.23,92.81 L 140.34,93.27 L 142.45,93.71 L 144.55,94.12 L 146.66,94.52 L 148.77,94.90 L 150.87,95.27 L 152.98,95.62 L 155.09,95.95 L 157.19,96.27 L 159.30,96.58 L 161.41,96.88 L 163.51,97.16 L 165.62,97.44 L 167.73,97.70 L 169.83,97.96 L 171.94,98.21 L 174.05,98.44 L 176.16,98.67 L 178.26,98.90 L 180.37,99.11 L 182.48,99.32 L 184.58,99.52 L 186.69,99.72 L 188.80,99.91 L 190.90,100.09 L 193.01,100.27 L 195.12,100.44 L 197.22,100.61 L 199.33,100.77 L 201.44,100.93 L 203.54,101.08 L 205.65,101.23 L 207.76,101.38 L 209.87,101.52 L 211.97,101.66 L 214.08,101.79 L 216.19,101.92 L 218.29,102.05 L 220.40,102.17 L 222.51,102.30 L 224.61,102.41 L 226.72,102.53 L 228.83,102.64 L 230.93,102.75 L 233.04,102.86 L 235.15,102.97 L 237.25,103.07 L 239.36,103.17 L 241.47,103.27 L 243.57,103.36 L 245.68,103.46 L 247.79,103.55 L 249.90,103.64 L 252.00,103.73 L 254.11,103.81 L 256.22,103.90 L 258.32,103.98 L 260.43,104.06 L 262.54,104.14 L 264.64,104.22 L 266.75,104.30 L 268.86,104.37 L 270.96,104.44 L 273.07,104.52 L 275.18,104.59 L 277.28,104.66 L 279.39,104.72 L 281.50,104.79 L 283.61,104.86 L 285.71,104.92 L 287.82,104.98 L 289.93,105.05 L 292.03,105.11 L 294.14,105.17 L 296.25,105.23 L 298.35,105.28 L 300.46,105.34 L 302.57,105.40 L 304.67,105.45 L 306.78,105.51 L 308.89,105.56 L 310.99,105.61 L 313.10,105.66 L 315.21,105.71 L 317.32,105.76 L 319.42,105.81 L 321.53,105.86 L 323.64,105.91 L 325.74,105.96 L 327.85,106.00 L 329.96,106.05 L 332.06,106.09 L 334.17,106.14 L 336.28,106.18 L 338.38,106.22 L 340.49,106.26 L 342.60,106.31 L 344.70,106.35 L 346.81,106.39 L 348.92,106.43 L 351.03,106.47 L 353.13,106.51 L 355.24,106.54 L 357.35,106.58 L 359.45,106.62 L 361.56,106.66 L 363.67,106.69 L 365.77,106.73 L 367.88,106.76 L 369.99,106.80 L 372.09,106.83 L 374.20,106.86 L 376.31,106.90 L 378.41,106.93 L 380.52,106.96 L 382.63,107.00 L 384.74,107.03 L 386.84,107.06 L 388.95,107.09 L 391.06,107.12 L 393.16,107.15 L 395.27,107.18 L 397.38,107.21 L 399.48,107.24 L 401.59,107.27 L 403.70,107.30 L 405.80,107.32 L 407.91,107.35"/>
+    <path class="c2" d="M 70.81,199.95 L 72.92,191.10 L 75.03,183.86 L 77.13,177.83 L 79.24,172.74 L 81.35,168.38 L 83.45,164.60 L 85.56,161.30 L 87.67,158.39 L 89.77,155.80 L 91.88,153.49 L 93.99,151.41 L 96.09,149.52 L 98.20,147.81 L 100.31,146.25 L 102.41,144.82 L 104.52,143.50 L 106.63,142.29 L 108.74,141.16 L 110.84,140.12 L 112.95,139.15 L 115.06,138.24 L 117.16,137.39 L 119.27,136.60 L 121.38,135.85 L 123.48,135.15 L 125.59,134.48 L 127.70,133.86 L 129.80,133.27 L 131.91,132.70 L 134.02,132.17 L 136.12,131.67 L 138.23,131.19 L 140.34,130.73 L 142.45,130.29 L 144.55,129.88 L 146.66,129.48 L 148.77,129.10 L 150.87,128.73 L 152.98,128.38 L 155.09,128.05 L 157.19,127.73 L 159.30,127.42 L 161.41,127.12 L 163.51,126.84 L 165.62,126.56 L 167.73,126.30 L 169.83,126.04 L 171.94,125.79 L 174.05,125.56 L 176.16,125.33 L 178.26,125.10 L 180.37,124.89 L 182.48,124.68 L 184.58,124.48 L 186.69,124.28 L 188.80,124.09 L 190.90,123.91 L 193.01,123.73 L 195.12,123.56 L 197.22,123.39 L 199.33,123.23 L 201.44,123.07 L 203.54,122.92 L 205.65,122.77 L 207.76,122.62 L 209.87,122.48 L 211.97,122.34 L 214.08,122.21 L 216.19,122.08 L 218.29,121.95 L 220.40,121.83 L 222.51,121.70 L 224.61,121.59 L 226.72,121.47 L 228.83,121.36 L 230.93,121.25 L 233.04,121.14 L 235.15,121.03 L 237.25,120.93 L 239.36,120.83 L 241.47,120.73 L 243.57,120.64 L 245.68,120.54 L 247.79,120.45 L 249.90,120.36 L 252.00,120.27 L 254.11,120.19 L 256.22,120.10 L 258.32,120.02 L 260.43,119.94 L 262.54,119.86 L 264.64,119.78 L 266.75,119.70 L 268.86,119.63 L 270.96,119.56 L 273.07,119.48 L 275.18,119.41 L 277.28,119.34 L 279.39,119.28 L 281.50,119.21 L 283.61,119.14 L 285.71,119.08 L 287.82,119.02 L 289.93,118.95 L 292.03,118.89 L 294.14,118.83 L 296.25,118.77 L 298.35,118.72 L 300.46,118.66 L 302.57,118.60 L 304.67,118.55 L 306.78,118.49 L 308.89,118.44 L 310.99,118.39 L 313.10,118.34 L 315.21,118.29 L 317.32,118.24 L 319.42,118.19 L 321.53,118.14 L 323.64,118.09 L 325.74,118.04 L 327.85,118.00 L 329.96,117.95 L 332.06,117.91 L 334.17,117.86 L 336.28,117.82 L 338.38,117.78 L 340.49,117.74 L 342.60,117.69 L 344.70,117.65 L 346.81,117.61 L 348.92,117.57 L 351.03,117.53 L 353.13,117.49 L 355.24,117.46 L 357.35,117.42 L 359.45,117.38 L 361.56,117.34 L 363.67,117.31 L 365.77,117.27 L 367.88,117.24 L 369.99,117.20 L 372.09,117.17 L 374.20,117.14 L 376.31,117.10 L 378.41,117.07 L 380.52,117.04 L 382.63,117.00 L 384.74,116.97 L 386.84,116.94 L 388.95,116.91 L 391.06,116.88 L 393.16,116.85 L 395.27,116.82 L 397.38,116.79 L 399.48,116.76 L 401.59,116.73 L 403.70,116.70 L 405.80,116.68 L 407.91,116.65"/>
+    <text class="c1t" data-lang="en" x="260.0" y="50.0" text-anchor="middle">Like signs (q<tspan baseline-shift="sub">1</tspan>q<tspan baseline-shift="sub">2</tspan> &gt; 0): U<tspan baseline-shift="sub">E</tspan> &gt; 0, repulsive</text><text class="c1t" data-lang="zh" x="260.0" y="50.0" text-anchor="middle">同号电荷 (q<tspan baseline-shift="sub">1</tspan>q<tspan baseline-shift="sub">2</tspan> &gt; 0)：U<tspan baseline-shift="sub">E</tspan> &gt; 0，相互排斥</text>
+    <text class="c2t" data-lang="en" x="260.0" y="178.0" text-anchor="middle">Opposite signs (q<tspan baseline-shift="sub">1</tspan>q<tspan baseline-shift="sub">2</tspan> &lt; 0): U<tspan baseline-shift="sub">E</tspan> &lt; 0, bound</text><text class="c2t" data-lang="zh" x="260.0" y="178.0" text-anchor="middle">异号电荷 (q<tspan baseline-shift="sub">1</tspan>q<tspan baseline-shift="sub">2</tspan> &lt; 0)：U<tspan baseline-shift="sub">E</tspan> &lt; 0，束缚态</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 9.1. Two-charge potential energy $U_E(r) = kq_1q_2/r$ approaches $0$ as $r \to \infty$: positive for repulsive like charges and negative for attractive opposite charges.</span><span data-lang="zh">图 9.1. 双电荷电势能 $U_E(r) = kq_1q_2/r$ 在 $r \to \infty$ 时趋于 $0$：同号排斥时为正，异号吸引时为负。</span></figcaption>
+  </figure>
   <h3><span data-lang="en">Systems of several charges</span><span data-lang="zh">多个电荷组成的系统</span></h3>
   <p data-lang="en">Assemble the system one charge at a time from infinity. When the second charge arrives it interacts with the first; when the third arrives it interacts with both earlier charges; and so on. Each distinct pair therefore contributes exactly once, and the total is a scalar sum over pairs.</p>
   <p data-lang="zh">把系统中的电荷逐个从无穷远处移来。第二个电荷到达时与第一个相互作用；第三个到达时与前两个都相互作用；依此类推。因此每一对不同的电荷恰好贡献一次，总能量是对所有电荷对的标量求和。</p>
@@ -814,7 +903,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
         </div>
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 4</span><span data-lang="zh">第 4 步</span></div>
-          <div class="step-text"><span data-lang="en">The external work equals the change in energy, $W_{\text{ext}}=\Delta U_E=U_{\text{final}}-U_{\text{initial}}=0.97-1.95\ \mathrm{J}=-0.97\ \mathrm{J}$. It is negative because the three remaining charges repel the fourth, so the field itself pushes it out and the agent only has to hold it back. To pull the charge in from infinity, the agent would do $+0.97\ \mathrm{J}$.</span><span data-lang="zh">外力做功等于能量变化，$W_{\text{ext}}=\Delta U_E=U_{\text{final}}-U_{\text{initial}}=0.97-1.95\ \mathrm{J}=-0.97\ \mathrm{J}$。它为负，是因为其余三个电荷排斥第四个，电场自己就把它推出去，外界只需要拉住它。反过来，要把该电荷从无穷远处移回，外界做功为 $+0.97\ \mathrm{J}$。</span></div>
+          <div class="step-text"><span data-lang="en">The external work equals the change in energy, $W_{\text{ext}}=\Delta U_E=U_{\text{final}}-U_{\text{initial}}=\frac{kq^2}{a}\left[\left(2+\tfrac{1}{\sqrt2}\right)-\left(4+\sqrt2\right)\right]=-(0.36)(2.707)\ \mathrm{J}=-0.97\ \mathrm{J}$. It is negative because the three remaining charges repel the fourth, so the field itself pushes it out and the agent only has to hold it back. To pull the charge in from infinity, the agent would do $+0.97\ \mathrm{J}$.</span><span data-lang="zh">外力做功等于能量变化，$W_{\text{ext}}=\Delta U_E=U_{\text{final}}-U_{\text{initial}}=\frac{kq^2}{a}\left[\left(2+\tfrac{1}{\sqrt2}\right)-\left(4+\sqrt2\right)\right]=-(0.36)(2.707)\ \mathrm{J}=-0.97\ \mathrm{J}$。它为负，是因为其余三个电荷排斥第四个，电场自己就把它推出去，外界只需要拉住它。反过来，要把该电荷从无穷远处移回，外界做功为 $+0.97\ \mathrm{J}$。</span></div>
         </div>
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Why this works</span><span data-lang="zh">为什么可行</span></div>
@@ -951,6 +1040,26 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <p data-lang="en"><strong>Potential or potential energy?</strong> $V$ describes the location (J/C); $U_E=qV$ describes a particular charge placed there (J). A $+1\ \mu\mathrm{C}$ and a $+2\ \mu\mathrm{C}$ charge at the same point sit at the same $V$ but have different $U_E$. An electron volt is the energy an elementary charge gains or loses across one volt: $1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$.</p>
   <p data-lang="zh"><strong>电势还是电势能？</strong>$V$ 描述位置（J/C）；$U_E=qV$ 描述放在那里的某个具体电荷（J）。同一点上的 $+1\ \mu\mathrm{C}$ 与 $+2\ \mu\mathrm{C}$ 电荷所处的 $V$ 相同，但 $U_E$ 不同。电子伏特是基本电荷经过一伏电势差得到或失去的能量：$1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$。</p>
+  <h3><span data-lang="en">The four-corner map: force, field, energy, potential</span><span data-lang="zh">四角关系图：力、场、能量、电势</span></h3>
+  <p data-lang="en">Potential adds two scalars to the two vectors of the electric-field topics. Dividing by the test charge $q$ turns force into field and energy into potential.</p>
+  <p data-lang="zh">电势在电场专题的两个矢量之外再加入两个标量。除以试探电荷 $q$，力就变成场，能量就变成电势。</p>
+  <p data-lang="en">Going from a vector to its scalar partner is a work (an area under a graph); going back is a negative slope.</p>
+  <p data-lang="zh">由矢量到对应的标量是求功（图线下的面积）；反过来是取斜率的负值。</p>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Quantity</span><span data-lang="zh">物理量</span></th><th><span data-lang="en">Type and owner</span><span data-lang="zh">类型与归属</span></th><th><span data-lang="en">Point-charge form</span><span data-lang="zh">点电荷形式</span></th><th><span data-lang="en">Link to its partner</span><span data-lang="zh">与对应量的关系</span></th></tr>
+    <tr><td><span data-lang="en">Force $\vec F_E$ (N)</span><span data-lang="zh">电场力 $\vec F_E$（N）</span></td><td><span data-lang="en">vector; acts on one charge, needs two</span><span data-lang="zh">矢量；作用在一个电荷上，需要两个电荷</span></td><td>$F_E=\dfrac{k|q_1q_2|}{r^2}$</td><td>$\vec F_E=q\vec E$</td></tr>
+    <tr><td><span data-lang="en">Field $\vec E$ (N/C = V/m)</span><span data-lang="zh">电场 $\vec E$（N/C = V/m）</span></td><td><span data-lang="en">vector; property of the location</span><span data-lang="zh">矢量；描述位置的性质</span></td><td>$E=\dfrac{k|Q|}{r^2}$</td><td>$E_x=-\dfrac{\Delta V}{\Delta x}$</td></tr>
+    <tr><td><span data-lang="en">Energy $U_E$ (J)</span><span data-lang="zh">电势能 $U_E$（J）</span></td><td><span data-lang="en">scalar; belongs to the system</span><span data-lang="zh">标量；属于系统</span></td><td>$U_E=\dfrac{kq_1q_2}{r}$</td><td>$U_E=qV$</td></tr>
+    <tr><td><span data-lang="en">Potential $V$ (V = J/C)</span><span data-lang="zh">电势 $V$（V = J/C）</span></td><td><span data-lang="en">scalar; property of the location</span><span data-lang="zh">标量；描述位置的性质</span></td><td>$V=\dfrac{kQ}{r}$</td><td>$\Delta V=\dfrac{\Delta U_E}{q}$</td></tr>
+  </table></div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: naming the potential</span><span data-lang="zh">历史：电势的命名</span></div>
+    <p data-lang="en">In 1828 George Green, a self-taught miller from Nottingham, published an essay that named the "potential function": one scalar whose rate of change in any direction gives the force component in that direction.</p>
+    <p data-lang="zh">1828 年，诺丁汉一位自学成才的磨坊主 George Green 发表了一篇论文，提出了"势函数"（<code>potential function</code>）：一个标量，它沿任一方向的变化率给出该方向的力分量。</p>
+    <p data-lang="en">His idea is why this unit can add signed numbers instead of vectors. The essay was little read until William Thomson (Lord Kelvin) found it in 1845 and had it republished.</p>
+    <p data-lang="zh">正因为这一思想，本单元才可以把带符号的数相加，而不必做矢量运算。这篇论文起初少有人读，直到 1845 年 William Thomson（Kelvin 勋爵）发现它并促成重新发表。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Potential_theory" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Potential theory (the mathematics of the potential function)</span><span data-lang="zh">维基百科：位势理论（势函数的数学理论）</span></a></p>
+  </div>
   <h3><span data-lang="en">Point charges and scalar superposition</span><span data-lang="zh">点电荷与标量叠加</span></h3>
   <div data-course="c">
   <p data-lang="en">Take the potential energy of Topic 9.1, $U_E=kQq/r$, for a source $Q$ and test charge $q$ at distance $r$, and divide by $q$:</p>
@@ -967,8 +1076,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p class="formula-note" data-lang="zh">无穷远处 $V=0$。求和是标量求和：直接加带符号的数；没有分量，没有方向。$V$ 按 $1/r$ 减小，而场强 $E=kQ/r^2$ 按 $1/r^2$ 减小。</p>
   </div>
   <div data-course="p2">
-    <p data-lang="en"><strong>Scope.</strong> The electric potential due to several point charges is the algebraic sum of the potential due to each one (scalar superposition), so a negative charge contributes a negative number. AP Physics 2 limits potential calculations to configurations of four or fewer particles (or more in situations of high symmetry), because the methods for extended charge distributions exceed the scope of the course. A typical symmetric case is a set of equal charges that are all the same distance from the point of interest: every term in the sum is the same.</p>
-    <p data-lang="zh"><strong>范围。</strong>多个点电荷产生的电势是各个电荷所产生电势的代数和（标量叠加），所以负电荷贡献的是负数。AP 物理 2 把电势的计算限定在四个或更少粒子组成的构型（高度对称时可以更多），因为求连续带电体电势的方法超出了本课程的范围。典型的对称情形是一组等量电荷到所求点的距离全都相同：求和中的每一项都相同。</p>
+    <p data-lang="en"><strong>Scope.</strong> The electric potential due to several point charges is the algebraic sum of the potential due to each one (scalar superposition), so a negative charge contributes a negative number.</p>
+    <p data-lang="zh"><strong>范围。</strong>多个点电荷产生的电势是各个电荷所产生电势的代数和（标量叠加），所以负电荷贡献的是负数。</p>
+    <p data-lang="en">AP Physics 2 limits potential calculations to configurations of four or fewer particles (or more in situations of high symmetry), because the methods for extended charge distributions exceed the scope of the course.</p>
+    <p data-lang="zh">AP 物理 2 把电势的计算限定在四个或更少粒子组成的构型（高度对称时可以更多），因为求连续带电体电势的方法超出了本课程的范围。</p>
+    <p data-lang="en">A typical symmetric case is a set of equal charges that are all the same distance from the point of interest: every term in the sum is the same.</p>
+    <p data-lang="zh">典型的对称情形是一组等量电荷到所求点的距离全都相同：求和中的每一项都相同。</p>
   </div>
   <div class="concept-box red" data-lang="en"><strong>Common Mistake: confusing where V is zero with where E is zero</strong> $V$ is a scalar sum of $kQ_i/r_i$; $\vec E$ is a vector sum of $kQ_i/r_i^2$. At the midpoint between two equal positive charges $E=0$ but $V$ is large and positive. At the midpoint between $+q$ and $-q$, $V=0$ but $E$ is not zero (the two fields point the same way). Neither one implies the other.</div>
   <div class="concept-box red" data-lang="zh"><strong>常见错误：混淆 V 为零的位置与 E 为零的位置</strong> $V$ 是 $kQ_i/r_i$ 的标量和；$\vec E$ 是 $kQ_i/r_i^2$ 的矢量和。两个相等正电荷连线的中点处 $E=0$，但 $V$ 为较大的正值。$+q$ 与 $-q$ 连线的中点处 $V=0$，但 $E$ 不为零（两个场方向相同）。两者互不蕴含。</div>
@@ -1016,10 +1129,18 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">化学反应对每个通过电池的单位电荷做功，这个单位电荷的功就是电池的电势差（电动势，<code>emf</code>）。</p>
   <p data-lang="en">An ideal $9.0\ \mathrm{V}$ battery gives $9.0\ \mathrm{J}$ to every coulomb that goes from the negative to the positive terminal inside it, so moving $0.50\ \mathrm{C}$ through the cell involves $4.5\ \mathrm{J}$. Unit 11 uses this idea for circuits.</p>
   <p data-lang="zh">理想的 $9.0\ \mathrm{V}$ 电池在内部把每库仑电荷从负极送到正极时提供 $9.0\ \mathrm{J}$，因此使 $0.50\ \mathrm{C}$ 通过电池涉及 $4.5\ \mathrm{J}$。第 11 单元在电路中用到这个概念。</p>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: the first battery</span><span data-lang="zh">历史：第一块电池</span></div>
+    <p data-lang="en">In 1800 Alessandro Volta stacked zinc and copper (or silver) discs separated by brine-soaked cloth. This voltaic pile gave the first steady potential difference from a chemical process, and the unit of potential, the volt, is named for him.</p>
+    <p data-lang="zh">1800 年，Alessandro Volta 把锌片和铜片（或银片）交替叠放，中间隔以浸过盐水的布。这个伏打电堆（<code>voltaic pile</code>）第一次由化学过程产生了稳定的电势差，电势的单位伏特（<code>volt</code>）就是以他的名字命名的。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Voltaic_pile" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Voltaic pile (construction and how it works)</span><span data-lang="zh">维基百科：伏打电堆（结构与原理）</span></a></p>
+  </div>
   <div data-course="p2">
     <h3><span data-lang="en">Conductors in electrical contact</span><span data-lang="zh">相互接触的导体</span></h3>
-    <p data-lang="en">When two conductors are in electrical contact, electrons redistribute between them until the surfaces of the conductors are at the same electric potential. After that no charge flows between them, because there is no potential difference to drive it. If a charged metal sphere touches a larger neutral one, for example, charge is shared until both surfaces are at the same potential; the two spheres do not end up with equal charge, only with equal potential.</p>
-    <p data-lang="zh">两个导体相互接触时，电子在它们之间重新分布，直到导体的表面处于相同的电势。此后它们之间不再有电荷流动，因为没有电势差来驱动。例如，带电的金属球接触一个更大的不带电金属球时，电荷在两者之间分配，直到两个表面电势相同；两球最终电荷并不相等，相等的只是电势。</p>
+    <p data-lang="en">When two conductors are in electrical contact, electrons redistribute between them until the surfaces of the conductors are at the same electric potential. After that no charge flows between them, because there is no potential difference to drive it.</p>
+    <p data-lang="zh">两个导体相互接触时，电子在它们之间重新分布，直到导体的表面处于相同的电势。此后它们之间不再有电荷流动，因为没有电势差来驱动。</p>
+    <p data-lang="en">If a charged metal sphere touches a larger neutral one, for example, charge is shared until both surfaces are at the same potential; the two spheres do not end up with equal charge, only with equal potential.</p>
+    <p data-lang="zh">例如，带电的金属球接触一个更大的不带电金属球时，电荷在两者之间分配，直到两个表面电势相同；两球最终电荷并不相等，相等的只是电势。</p>
   </div>
   <div data-course="c">
   <h3><span data-lang="en">Potential difference from the field</span><span data-lang="zh">由电场求电势差</span></h3>
@@ -1036,13 +1157,17 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div data-course="p2">
     <h3><span data-lang="en">Potential difference and the electric field</span><span data-lang="zh">电势差与电场</span></h3>
-    <p data-lang="en">Move a positive test charge $q$ a distance $d$ in the direction of a uniform electric field $E$. The field does positive work $qEd$, so the potential energy falls by $qEd$ and the potential falls by $Ed$. Moving against the field raises the potential by the same amount. Turning this around, the average electric field between two points equals the potential difference between them divided by the distance between them:</p>
-    <p data-lang="zh">让正试探电荷 $q$ 沿匀强电场 $E$ 的方向移动距离 $d$。电场做正功 $qEd$，所以势能减小 $qEd$，电势降低 $Ed$。逆着电场移动则电势升高同样的量。反过来说，两点之间的平均电场等于它们之间的电势差除以它们之间的距离：</p>
+    <p data-lang="en">Move a positive test charge $q$ a distance $d$ in the direction of a uniform electric field $E$. The field does positive work $qEd$, so the potential energy falls by $qEd$ and the potential falls by $Ed$. Moving against the field raises the potential by the same amount.</p>
+    <p data-lang="zh">让正试探电荷 $q$ 沿匀强电场 $E$ 的方向移动距离 $d$。电场做正功 $qEd$，所以势能减小 $qEd$，电势降低 $Ed$。逆着电场移动则电势升高同样的量。</p>
+    <p data-lang="en">Turning this around, the average electric field between two points equals the potential difference between them divided by the distance between them:</p>
+    <p data-lang="zh">反过来说，两点之间的平均电场等于它们之间的电势差除以它们之间的距离：</p>
     <div class="formula-box">
       <div class="formula-label"><span data-lang="en">Average electric field from a potential difference</span><span data-lang="zh">由电势差求平均电场</span></div>
       $$E=\frac{|\Delta V|}{d}$$
-      <p class="formula-note" data-lang="en">$E$ is the average magnitude of the electric field between the two points, $|\Delta V|$ is the magnitude of the potential difference between them, and $d$ is the distance between them. The field points from the higher-potential point toward the lower-potential point, and its units are $\mathrm{V/m}=\mathrm{N/C}$. Between two large parallel plates the field is uniform, so $E$ is the field everywhere between them.</p>
-      <p class="formula-note" data-lang="zh">$E$ 是两点之间电场大小的平均值，$|\Delta V|$ 是它们之间电势差的大小，$d$ 是它们之间的距离。电场由电势较高的点指向电势较低的点，单位为 $\mathrm{V/m}=\mathrm{N/C}$。两块大平行板之间的电场是匀强的，所以 $E$ 就是两板之间各处的场强。</p>
+      <p class="formula-note" data-lang="en">$E$ is the average magnitude of the electric field between the two points, $|\Delta V|$ is the magnitude of the potential difference between them, and $d$ is the distance between them.</p>
+      <p class="formula-note" data-lang="zh">$E$ 是两点之间电场大小的平均值，$|\Delta V|$ 是它们之间电势差的大小，$d$ 是它们之间的距离。</p>
+      <p class="formula-note" data-lang="en">The field points from the higher-potential point toward the lower-potential point, and its units are $\mathrm{V/m}=\mathrm{N/C}$. Between two large parallel plates the field is uniform, so $E$ is the field everywhere between them.</p>
+      <p class="formula-note" data-lang="zh">电场由电势较高的点指向电势较低的点，单位为 $\mathrm{V/m}=\mathrm{N/C}$。两块大平行板之间的电场是匀强的，所以 $E$ 就是两板之间各处的场强。</p>
     </div>
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Work, potential difference and field</span><span data-lang="zh">例题：功、电势差与电场</span></summary>
@@ -1212,8 +1337,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div data-course="p2">
     <h3><span data-lang="en">Highly symmetric arrangements</span><span data-lang="zh">高度对称的排布</span></h3>
-    <p data-lang="en">Scalar superposition works for any number of point charges, but AP Physics 2 asks you to carry it out for four or fewer, or for more only when high symmetry makes the sum easy. The usual symmetric case is a set of equal charges that are all the same distance $r$ from the point of interest, such as equal charges spaced evenly around a circle with the point at its center. Every term in the sum is then the same, so $V=N\frac{kq}{r}$, where $N$ is the number of charges.</p>
-    <p data-lang="zh">标量叠加对任意个点电荷都成立，但 AP 物理 2 只要求对四个或更少的电荷进行计算，更多的电荷只在高度对称、求和变得简单时才会出现。常见的对称情形是一组等量电荷到所求点的距离 $r$ 都相同，例如等量电荷沿圆周均匀排列、所求点在圆心。此时求和中每一项都相同，所以 $V=N\frac{kq}{r}$，其中 $N$ 是电荷的个数。</p>
+    <p data-lang="en">Scalar superposition works for any number of point charges, but AP Physics 2 asks you to carry it out for four or fewer, or for more only when high symmetry makes the sum easy.</p>
+    <p data-lang="zh">标量叠加对任意个点电荷都成立，但 AP 物理 2 只要求对四个或更少的电荷进行计算，更多的电荷只在高度对称、求和变得简单时才会出现。</p>
+    <p data-lang="en">The usual symmetric case is a set of equal charges that are all the same distance $r$ from the point of interest, such as equal charges spaced evenly around a circle with the point at its center. Every term in the sum is then the same, so $V=N\frac{kq}{r}$, where $N$ is the number of charges.</p>
+    <p data-lang="zh">常见的对称情形是一组等量电荷到所求点的距离 $r$ 都相同，例如等量电荷沿圆周均匀排列、所求点在圆心。此时求和中每一项都相同，所以 $V=N\frac{kq}{r}$，其中 $N$ 是电荷的个数。</p>
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Six equal charges around a hexagon</span><span data-lang="zh">例题：正六边形上的六个等量电荷</span></summary>
     <div class="detail-body">
@@ -1314,6 +1441,71 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </div>
   </details>
   </div>
+  <h3><span data-lang="en">The field as the slope of a potential graph</span><span data-lang="zh">电场是电势图像的斜率</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the field is the negative slope of $V$</span><span data-lang="zh">第一性原理：电场是 $V$ 的负斜率</span></div>
+    <p data-lang="en"><strong>Principle.</strong> A potential difference is the negative of the field's work per unit charge: $\Delta V=-W_{\text{field}}/q$.</p>
+    <p data-lang="zh"><strong>原理。</strong>电势差等于电场对单位电荷所做功的负值：$\Delta V=-W_{\text{field}}/q$。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>A small displacement $d\vec\ell$ gives $dW_{\text{field}}=q\vec E\cdot d\vec\ell$.</li>
+      <li>Divide by $-q$: $dV=-\vec E\cdot d\vec\ell$.</li>
+      <li>For a step along $x$ only, $dV=-E_x\,dx$, so $E_x=-\dfrac{dV}{dx}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>一小段位移 $d\vec\ell$ 对应 $dW_{\text{field}}=q\vec E\cdot d\vec\ell$。</li>
+      <li>除以 $-q$：$dV=-\vec E\cdot d\vec\ell$。</li>
+      <li>只沿 $x$ 方向移动时 $dV=-E_x\,dx$，所以 $E_x=-\dfrac{dV}{dx}$。</li>
+    </ol>
+    </div>
+    <div data-course="p2">
+    <ol class="sg-steps" data-lang="en">
+      <li>Move a test charge $q$ a distance $\Delta x$ along $x$ in a uniform field: $W_{\text{field}}=qE_x\Delta x$.</li>
+      <li>Divide by $-q$: $\Delta V=-E_x\Delta x$.</li>
+      <li>Rearrange: $E_x=-\dfrac{\Delta V}{\Delta x}$, the negative slope of a straight $V(x)$ graph, with magnitude $E=\dfrac{|\Delta V|}{d}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在匀强电场中让试探电荷 $q$ 沿 $x$ 方向移动距离 $\Delta x$：$W_{\text{field}}=qE_x\Delta x$。</li>
+      <li>除以 $-q$：$\Delta V=-E_x\Delta x$。</li>
+      <li>整理得 $E_x=-\dfrac{\Delta V}{\Delta x}$，即直线 $V(x)$ 图像斜率的负值，大小为 $E=\dfrac{|\Delta V|}{d}$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> Where $V$ is constant, as inside a conductor in equilibrium, the slope is zero and $E=0$. Units: $\mathrm{V/m}=\mathrm{(J/C)/m}=\mathrm{N/C}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$V$ 不变的地方（例如处于静电平衡的导体内部）斜率为零，$E=0$。单位：$\mathrm{V/m}=\mathrm{(J/C)/m}=\mathrm{N/C}$。</p>
+    <p data-lang="en">In Figure 9.2, $V$ rises $4\ \mathrm{V}$ over the first $2\ \mathrm{m}$, so $E_x=-2\ \mathrm{V/m}$ there; it falls $6\ \mathrm{V}$ over the last $2\ \mathrm{m}$, so $E_x=+3\ \mathrm{V/m}$.</p>
+    <p data-lang="zh">在图 9.2 中，$V$ 在前 $2\ \mathrm{m}$ 内升高 $4\ \mathrm{V}$，所以那里 $E_x=-2\ \mathrm{V/m}$；在最后 $2\ \mathrm{m}$ 内降低 $6\ \mathrm{V}$，所以 $E_x=+3\ \mathrm{V/m}$。</p>
+  </div>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="Potential vs position and negative slope field">
+    <line class="ax" x1="52.0" y1="127.0" x2="416.0" y2="127.0"/>
+    <polyline class="ax" points="408.5,130.6 416.0,127.0 408.5,123.4"/>
+    <line class="ax" x1="52.0" y1="197.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="229.0" text-anchor="middle">Position x (m)</text><text class="lbl" data-lang="zh" x="234.0" y="229.0" text-anchor="middle">位置 x (m)</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">V (V) and E<tspan baseline-shift="sub">x</tspan> (V/m)</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">电势 V (V) 与场强 E<tspan baseline-shift="sub">x</tspan> (V/m)</text>
+    <line class="ax" x1="173.3" y1="123.5" x2="173.3" y2="130.5"/>
+    <text class="mut" data-lang="en" x="173.3" y="142.0" text-anchor="middle">2</text><text class="mut" data-lang="zh" x="173.3" y="142.0" text-anchor="middle">2</text>
+    <line class="ax" x1="294.7" y1="123.5" x2="294.7" y2="130.5"/>
+    <text class="mut" data-lang="en" x="294.7" y="142.0" text-anchor="middle">4</text><text class="mut" data-lang="zh" x="294.7" y="142.0" text-anchor="middle">4</text>
+    <line class="ax" x1="416.0" y1="123.5" x2="416.0" y2="130.5"/>
+    <text class="mut" data-lang="en" x="416.0" y="142.0" text-anchor="middle">6</text><text class="mut" data-lang="zh" x="416.0" y="142.0" text-anchor="middle">6</text>
+    <line class="ax" x1="48.5" y1="162.0" x2="55.5" y2="162.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="166.0" text-anchor="end">−2</text><text class="mut" data-lang="zh" x="45.0" y="166.0" text-anchor="end">−2</text>
+    <line class="ax" x1="48.5" y1="127.0" x2="55.5" y2="127.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="131.0" text-anchor="end">0</text><text class="mut" data-lang="zh" x="45.0" y="131.0" text-anchor="end">0</text>
+    <line class="ax" x1="48.5" y1="57.0" x2="55.5" y2="57.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="61.0" text-anchor="end">4</text><text class="mut" data-lang="zh" x="45.0" y="61.0" text-anchor="end">4</text>
+    <line class="c1" x1="52.0" y1="127.0" x2="173.3" y2="57.0"/>
+    <line class="c1" x1="173.3" y1="57.0" x2="294.7" y2="57.0"/>
+    <line class="c1" x1="294.7" y1="57.0" x2="416.0" y2="162.0"/>
+    <line class="c3 dash" x1="52.0" y1="162.0" x2="173.3" y2="162.0"/>
+    <line class="c3 dash" x1="173.3" y1="127.0" x2="294.7" y2="127.0"/>
+    <line class="c3 dash" x1="294.7" y1="74.5" x2="416.0" y2="74.5"/>
+    <text class="c1t" data-lang="en" x="161.2" y="39.5" text-anchor="middle">V(x) (solid)</text><text class="c1t" data-lang="zh" x="161.2" y="39.5" text-anchor="middle">V(x)（实线）</text>
+    <text class="c3t" data-lang="en" x="60.0" y="188.0" text-anchor="start">E<tspan baseline-shift="sub">x</tspan> = −slope of V(x) (dashed)</text><text class="c3t" data-lang="zh" x="60.0" y="188.0" text-anchor="start">E<tspan baseline-shift="sub">x</tspan> = −V(x) 的斜率（虚线）</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 9.2. On any $V(x)$ graph, the field component $E_x$ equals the negative slope ($-\Delta V/\Delta x$): zero on flat plateaus and positive where $V$ drops.</span><span data-lang="zh">图 9.2. 在 $V(x)$ 图像上，电场分量 $E_x$ 等于负斜率（$-\Delta V/\Delta x$）：平台段场强为零，电势下降段场强为正。</span></figcaption>
+  </figure>
   <h3><span data-lang="en">Equipotential lines and field maps</span><span data-lang="zh">等势线与电场图</span></h3>
   <p data-lang="en">An <strong>equipotential line</strong> (isoline of potential) joins points at the same $V$. Four facts link a map of equipotentials to the field:</p>
   <p data-lang="zh"><strong>等势线</strong>（电势的等值线）连接 $V$ 相同的点。等势线图与电场之间有四条联系：</p>
@@ -1349,6 +1541,41 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">这种图可以双向使用：由电场矢量图，画出与每个矢量垂直的线；由等势线图，画出垂直于线、指向 $V$ 降低方向的矢量。</p>
   <p data-lang="en">Near a point charge the lines are concentric circles (crowded close to the charge); between large parallel plates they are evenly spaced parallel lines. Such maps predict the motion of charged objects: a positive charge released from rest accelerates toward lower $V$; a negative charge toward higher $V$.</p>
   <p data-lang="zh">点电荷附近的等势线是同心圆（靠近电荷处更密）；大平行板之间则是等间距的平行线。这样的图可以预测带电物体的运动：静止释放的正电荷向 $V$ 较低处加速；负电荷向 $V$ 较高处加速。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 246" role="img" aria-label="Point charge equipotentials and perpendicular field vectors">
+    <circle class="c2 dash" cx="220.0" cy="118.0" r="30.0"/>
+    <circle class="c2 dash" cx="220.0" cy="118.0" r="51.4"/>
+    <circle class="c2 dash" cx="220.0" cy="118.0" r="78.3"/>
+    <line class="c1" x1="236.0" y1="118.0" x2="320.0" y2="118.0"/>
+    <polyline class="c1" points="312.5,121.6 320.0,118.0 312.5,114.4"/>
+    <line class="c1" x1="231.3" y1="106.7" x2="290.7" y2="47.3"/>
+    <polyline class="c1" points="288.0,55.1 290.7,47.3 282.9,50.0"/>
+    <line class="c1" x1="220.0" y1="102.0" x2="220.0" y2="18.0"/>
+    <polyline class="c1" points="223.6,25.5 220.0,18.0 216.4,25.5"/>
+    <line class="c1" x1="208.7" y1="106.7" x2="149.3" y2="47.3"/>
+    <polyline class="c1" points="157.1,50.0 149.3,47.3 152.0,55.1"/>
+    <line class="c1" x1="204.0" y1="118.0" x2="120.0" y2="118.0"/>
+    <polyline class="c1" points="127.5,114.4 120.0,118.0 127.5,121.6"/>
+    <line class="c1" x1="208.7" y1="129.3" x2="149.3" y2="188.7"/>
+    <polyline class="c1" points="152.0,180.9 149.3,188.7 157.1,186.0"/>
+    <line class="c1" x1="220.0" y1="134.0" x2="220.0" y2="218.0"/>
+    <polyline class="c1" points="216.4,210.5 220.0,218.0 223.6,210.5"/>
+    <line class="c1" x1="231.3" y1="129.3" x2="290.7" y2="188.7"/>
+    <polyline class="c1" points="282.9,186.0 290.7,188.7 288.0,180.9"/>
+    <circle class="box" cx="220.0" cy="118.0" r="12.0"/>
+    <text class="c2t" data-lang="en" x="235.7" y="84.1" text-anchor="middle">60</text>
+    <text class="c2t" data-lang="zh" x="235.7" y="84.1" text-anchor="middle">60</text>
+    <text class="c2t" data-lang="en" x="243.9" y="64.3" text-anchor="middle">35</text>
+    <text class="c2t" data-lang="zh" x="243.9" y="64.3" text-anchor="middle">35</text>
+    <text class="c2t" data-lang="en" x="254.2" y="39.5" text-anchor="middle">23</text>
+    <text class="c2t" data-lang="zh" x="254.2" y="39.5" text-anchor="middle">23</text>
+    <text class="c1t" data-lang="en" x="220.0" y="122.5" text-anchor="middle">+Q</text>
+    <text class="c1t" data-lang="zh" x="220.0" y="122.5" text-anchor="middle">+Q</text>
+    <text class="lbl" data-lang="en" x="220.0" y="238.0" text-anchor="middle">Values in volts. E ⊥ equipotentials, toward lower V</text>
+    <text class="lbl" data-lang="zh" x="220.0" y="238.0" text-anchor="middle">数值单位为伏特；电场线垂直等势线，指向电势降低方向</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 9.3. Equipotential isolines (dashed) around $+Q$ meet radial electric field vectors at $90^\circ$; moving along an isoline requires zero electric work.</span><span data-lang="zh">图 9.3. 点电荷 $+Q$ 周围的等势线（虚线）与径向电场矢量处处成 $90^\circ$；沿等势线移动电荷时电场力不做功。</span></figcaption>
+  </figure>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Reading an equipotential map</span><span data-lang="zh">例题：读等势线图</span></summary>
     <div class="detail-body">
@@ -1385,8 +1612,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="sg-examtip" data-course="p2">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">Reasoning between the field and the potential is a favorite translation task. State the relation you use in words first: "the average field is the potential difference divided by the distance" or "the change in potential energy is the charge times the potential difference". Add the potentials of several charges as plain numbers with their signs, never as vectors. For equipotential maps, justify directions with "perpendicular to equipotentials, toward lower $V$". Check the units of every final answer: V, V/m (or N/C), J.</p>
-    <p data-lang="zh">在电场与电势之间进行推理是常见的转换题型。先用文字写出所用的关系："平均电场等于电势差除以距离"或"势能的变化等于电荷量乘以电势差"。把几个电荷产生的电势按带符号的普通数相加，绝不当作矢量。对等势线图，用"垂直于等势线、指向较低 $V$"来论证方向。每个最终答案都要检查单位：V、V/m（或 N/C）、J。</p>
+    <p data-lang="en">Reasoning between the field and the potential is a favorite translation task. State the relation you use in words first: "the average field is the potential difference divided by the distance" or "the change in potential energy is the charge times the potential difference".</p>
+    <p data-lang="zh">在电场与电势之间进行推理是常见的转换题型。先用文字写出所用的关系："平均电场等于电势差除以距离"或"势能的变化等于电荷量乘以电势差"。</p>
+    <p data-lang="en">Add the potentials of several charges as plain numbers with their signs, never as vectors. For equipotential maps, justify directions with "perpendicular to equipotentials, toward lower $V$". Check the units of every final answer: V, V/m (or N/C), J.</p>
+    <p data-lang="zh">把几个电荷产生的电势按带符号的普通数相加，绝不当作矢量。对等势线图，用"垂直于等势线、指向较低 $V$"来论证方向。每个最终答案都要检查单位：V、V/m（或 N/C）、J。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1466,8 +1695,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">如果源电荷也可以自由运动，就要把每个运动的物体都放入系统（此时势能是专题 9.1 的电荷对求和），并记录每个动能。任何推动系统的外界都会带来外力功 $W_{\text{ext}}$。</p>
   </div>
   <div data-course="p2">
-    <p data-lang="en">State the system before writing any energy equation. For a charge $q$ moving in the field of <em>fixed</em> source charges, the system is the charge plus the field of the sources. The potential energy is $U_E=qV$, and the sources are not accelerated, so their kinetic energy is not tracked. If the source charges are also free to move, include every moving object in the system (the potential energy is then the sum over each pair of charges, as in Topic 10.4) and track every kinetic energy. Any external agent that pushes on the system does external work on it.</p>
-    <p data-lang="zh">写任何能量方程之前先说明系统。对于在<em>固定</em>源电荷的场中运动的电荷 $q$，系统是该电荷加上源电荷的场。势能为 $U_E=qV$，源电荷不被加速，所以不必记录它们的动能。如果源电荷也可以自由运动，就要把每个运动的物体都放入系统（此时势能是对每一对电荷求和，如专题 10.4），并记录每个动能。任何推动系统的外界都会对系统做外力功。</p>
+    <p data-lang="en">State the system before writing any energy equation. For a charge $q$ moving in the field of <em>fixed</em> source charges, the system is the charge plus the field of the sources. The potential energy is $U_E=qV$, and the sources are not accelerated, so their kinetic energy is not tracked.</p>
+    <p data-lang="zh">写任何能量方程之前先说明系统。对于在<em>固定</em>源电荷的场中运动的电荷 $q$，系统是该电荷加上源电荷的场。势能为 $U_E=qV$，源电荷不被加速，所以不必记录它们的动能。</p>
+    <p data-lang="en">If the source charges are also free to move, include every moving object in the system (the potential energy is then the sum over each pair of charges, as in Topic 10.4) and track every kinetic energy. Any external agent that pushes on the system does external work on it.</p>
+    <p data-lang="zh">如果源电荷也可以自由运动，就要把每个运动的物体都放入系统（此时势能是对每一对电荷求和，如专题 10.4），并记录每个动能。任何推动系统的外界都会对系统做外力功。</p>
   </div>
   <div data-course="c">
   <h3><span data-lang="en">Derivation: from the work-energy theorem</span><span data-lang="zh">推导：由功能定理</span></h3>
@@ -1476,14 +1707,51 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div data-course="p2">
     <h3><span data-lang="en">Energy conservation for a charge crossing a potential difference</span><span data-lang="zh">电荷经过电势差时的能量守恒</span></h3>
-    <p data-lang="en">Take a charge $q$ of mass $m$ moving from $A$ to $B$ with only the electric force acting. The potential difference between the points is $\Delta V=V_B-V_A$, so the change in the electric potential energy of the object-field system is $\Delta U_E=q\Delta V$. By conservation of energy, with no other work done, the change in kinetic energy is $\Delta K=-\Delta U_E=-q\Delta V$. These statements are collected in the box below.</p>
-    <p data-lang="zh">设质量为 $m$、电荷为 $q$ 的粒子从 $A$ 移到 $B$，只受电场力。两点之间的电势差为 $\Delta V=V_B-V_A$，所以物体-场系统的电势能变化为 $\Delta U_E=q\Delta V$。由能量守恒，没有其他功时，动能的变化为 $\Delta K=-\Delta U_E=-q\Delta V$。这些关系汇总在下面的方框中。</p>
+    <p data-lang="en">Take a charge $q$ of mass $m$ moving from $A$ to $B$ with only the electric force acting. The potential difference between the points is $\Delta V=V_B-V_A$, so the change in the electric potential energy of the object-field system is $\Delta U_E=q\Delta V$.</p>
+    <p data-lang="zh">设质量为 $m$、电荷为 $q$ 的粒子从 $A$ 移到 $B$，只受电场力。两点之间的电势差为 $\Delta V=V_B-V_A$，所以物体-场系统的电势能变化为 $\Delta U_E=q\Delta V$。</p>
+    <p data-lang="en">By conservation of energy, with no other work done, the change in kinetic energy is $\Delta K=-\Delta U_E=-q\Delta V$. These statements are collected in the box below.</p>
+    <p data-lang="zh">由能量守恒，没有其他功时，动能的变化为 $\Delta K=-\Delta U_E=-q\Delta V$。这些关系汇总在下面的方框中。</p>
   </div>
   <div class="formula-box green">
     <div class="formula-label"><span data-lang="en">Conservation of electric energy</span><span data-lang="zh">电能守恒</span></div>
     $$\Delta U_E=q\,\Delta V,\qquad \Delta K+\Delta U_E=W_{\text{ext}},\qquad \tfrac12mv^2-\tfrac12mv_0^2=-q\,(V_B-V_A)\ \ (W_{\text{ext}}=0)$$
     <p class="formula-note" data-lang="en">With no external work the total $K+U_E$ is constant. If an agent moves a charge at constant speed ($\Delta K=0$), then $W_{\text{ext}}=q\,\Delta V$.</p>
     <p class="formula-note" data-lang="zh">没有外力功时，$K+U_E$ 的总和不变。如果外界使电荷匀速移动（$\Delta K=0$），则 $W_{\text{ext}}=q\,\Delta V$。</p>
+  </div>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the speed gained across a potential difference</span><span data-lang="zh">第一性原理：经过电势差获得的速率</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Energy is conserved. With only the electric force acting, the kinetic energy gained equals the electric potential energy lost.</p>
+    <p data-lang="zh"><strong>原理。</strong>能量守恒。只有电场力作用时，获得的动能等于失去的电势能。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>The derivation above gives $\Delta K=-q\,\Delta V$ along the path actually taken.</li>
+      <li>The electrostatic field is conservative: $\oint\vec E\cdot d\vec\ell=0$.</li>
+      <li>So the speed at $B$ depends only on $V_A$ and $V_B$, not on the route.</li>
+      <li>From rest, moving the way it is pushed: $\tfrac12mv^2=|q\,\Delta V|$, so $v=\sqrt{\dfrac{2|q\,\Delta V|}{m}}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>上面的推导沿实际路径给出 $\Delta K=-q\,\Delta V$。</li>
+      <li>静电场是保守场：$\oint\vec E\cdot d\vec\ell=0$。</li>
+      <li>所以到达 $B$ 时的速率只取决于 $V_A$ 和 $V_B$，与路径无关。</li>
+      <li>从静止出发、沿受力方向运动：$\tfrac12mv^2=|q\,\Delta V|$，所以 $v=\sqrt{\dfrac{2|q\,\Delta V|}{m}}$。</li>
+    </ol>
+    </div>
+    <div data-course="p2">
+    <ol class="sg-steps" data-lang="en">
+      <li>No external work on the charge-field system: $\Delta K+\Delta U_E=0$.</li>
+      <li>Substitute $\Delta U_E=q\Delta V$: $\Delta K=-q\Delta V$.</li>
+      <li>From rest, moving the way it is pushed: $\tfrac12mv^2=|q\,\Delta V|$, so $v=\sqrt{\dfrac{2|q\,\Delta V|}{m}}$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>电荷-场系统没有外力功：$\Delta K+\Delta U_E=0$。</li>
+      <li>代入 $\Delta U_E=q\Delta V$：$\Delta K=-q\Delta V$。</li>
+      <li>从静止出发、沿受力方向运动：$\tfrac12mv^2=|q\,\Delta V|$，所以 $v=\sqrt{\dfrac{2|q\,\Delta V|}{m}}$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> As $\Delta V\to0$, $v\to0$. Units: $\sqrt{\mathrm{C\,V/kg}}=\sqrt{\mathrm{J/kg}}=\mathrm{m/s}$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$\Delta V\to0$ 时 $v\to0$。单位：$\sqrt{\mathrm{C\,V/kg}}=\sqrt{\mathrm{J/kg}}=\mathrm{m/s}$。</p>
+    <p data-lang="en">Through $100\ \mathrm{V}$ an electron reaches $5.9\times10^{6}\ \mathrm{m/s}$, about $\sqrt{m_p/m_e}\approx43$ times a proton's speed and only $2\%$ of the speed of light, so $\tfrac12mv^2$ still holds.</p>
+    <p data-lang="zh">经过 $100\ \mathrm{V}$ 后电子的速率达到 $5.9\times10^{6}\ \mathrm{m/s}$，约为质子速率的 $\sqrt{m_p/m_e}\approx43$ 倍，只有光速的 $2\%$，所以 $\tfrac12mv^2$ 仍然适用。</p>
   </div>
   <h3><span data-lang="en">Sign logic: which way does a charge go?</span><span data-lang="zh">符号逻辑：电荷往哪边走？</span></h3>
   <ul class="sg-list" data-lang="en">
@@ -1498,6 +1766,23 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <li><strong>负</strong>电荷（$q<0$）向 <em>较高</em> 的 $V$ 移动时 $U_E=qV$ 减小，运动方向与电场方向相反。</li>
     <li>要违背这些趋势需要外界作用，此时 $W_{\text{ext}}>0$。</li>
   </ul>
+  <p data-lang="en">The sign of $\Delta U_E=q\,\Delta V$ decides the motion. Read across a row:</p>
+  <p data-lang="zh">$\Delta U_E=q\,\Delta V$ 的符号决定运动。按行读：</p>
+  <div class="table-wrap"><table>
+    <tr><th><span data-lang="en">Charge</span><span data-lang="zh">电荷</span></th><th><span data-lang="en">Moves toward</span><span data-lang="zh">移动方向</span></th><th>$\Delta U_E=q\,\Delta V$</th><th><span data-lang="en">Free charge, electric force only</span><span data-lang="zh">自由电荷（只受电场力）</span></th></tr>
+    <tr><td><span data-lang="en">positive, $q>0$</span><span data-lang="zh">正电荷，$q>0$</span></td><td><span data-lang="en">lower $V$ (along $\vec E$)</span><span data-lang="zh">较低 $V$（顺着 $\vec E$）</span></td><td><span data-lang="en">negative</span><span data-lang="zh">负</span></td><td><span data-lang="en">speeds up</span><span data-lang="zh">加速</span></td></tr>
+    <tr><td><span data-lang="en">positive, $q>0$</span><span data-lang="zh">正电荷，$q>0$</span></td><td><span data-lang="en">higher $V$ (against $\vec E$)</span><span data-lang="zh">较高 $V$（逆着 $\vec E$）</span></td><td><span data-lang="en">positive</span><span data-lang="zh">正</span></td><td><span data-lang="en">slows down</span><span data-lang="zh">减速</span></td></tr>
+    <tr><td><span data-lang="en">negative, $q<0$</span><span data-lang="zh">负电荷，$q<0$</span></td><td><span data-lang="en">higher $V$ (against $\vec E$)</span><span data-lang="zh">较高 $V$（逆着 $\vec E$）</span></td><td><span data-lang="en">negative</span><span data-lang="zh">负</span></td><td><span data-lang="en">speeds up</span><span data-lang="zh">加速</span></td></tr>
+    <tr><td><span data-lang="en">negative, $q<0$</span><span data-lang="zh">负电荷，$q<0$</span></td><td><span data-lang="en">lower $V$ (along $\vec E$)</span><span data-lang="zh">较低 $V$（顺着 $\vec E$）</span></td><td><span data-lang="en">positive</span><span data-lang="zh">正</span></td><td><span data-lang="en">slows down</span><span data-lang="zh">减速</span></td></tr>
+  </table></div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: weighing charge with a voltage</span><span data-lang="zh">历史：用电压"称"电荷</span></div>
+    <p data-lang="en">Between 1909 and 1913 Robert Millikan, at first with Harvey Fletcher, balanced charged oil drops between parallel plates. A hovering drop has $qV/d=mg$, so the plate voltage measures the drop's charge.</p>
+    <p data-lang="zh">1909 年至 1913 年间，Robert Millikan（起初与 Harvey Fletcher 合作）让带电油滴悬浮在两块平行板之间。悬停的油滴满足 $qV/d=mg$，所以板间电压就测出了油滴的电荷。</p>
+    <p data-lang="en">Every charge came out as a whole-number multiple of about $1.6\times10^{-19}\ \mathrm{C}$. That value of $e$ makes the electron volt, $1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$, the natural energy unit of this topic.</p>
+    <p data-lang="zh">每个电荷都是约 $1.6\times10^{-19}\ \mathrm{C}$ 的整数倍。正是这个 $e$ 值使电子伏特 $1\ \mathrm{eV}=1.60\times10^{-19}\ \mathrm{J}$ 成为本专题最自然的能量单位。</p>
+    <p><a href="https://en.wikipedia.org/wiki/Oil_drop_experiment" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Oil drop experiment (method and results)</span><span data-lang="zh">维基百科：油滴实验（方法与结果）</span></a></p>
+  </div>
   <p data-lang="en">For a particle starting from rest and crossing a potential difference of magnitude $|\Delta V|$ in the direction it is pushed, $K=|q|\,|\Delta V|$, so $v=\sqrt{2|q||\Delta V|/m}$. In electron volts the kinetic energy is read off at once: any particle with charge $\pm e$ gains $1\ \mathrm{eV}$ per volt. At the same $\Delta V$, a lighter particle ends up faster: $v\propto\sqrt{1/m}$.</p>
   <p data-lang="zh">粒子从静止出发，沿被推动的方向经过大小为 $|\Delta V|$ 的电势差，则 $K=|q|\,|\Delta V|$，所以 $v=\sqrt{2|q||\Delta V|/m}$。以电子伏特为单位时动能可以直接读出：电荷为 $\pm e$ 的任何粒子每经过一伏就获得 $1\ \mathrm{eV}$。同样的 $\Delta V$ 下，较轻的粒子最终速度较大：$v\propto\sqrt{1/m}$。</p>
   <details class="sg-we">

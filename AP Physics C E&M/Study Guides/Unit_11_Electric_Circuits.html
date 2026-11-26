@@ -481,20 +481,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -523,8 +531,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <style id="sg-figure-css">
@@ -538,7 +546,7 @@ figure.dr-fig figcaption {
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -559,7 +567,7 @@ figure.dr-fig figcaption {
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 <meta name="dingrui:courses" content="c,p2">
@@ -583,7 +591,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="nav-right">
     <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../AP%20Physics%202/index.html" data-course="p2" aria-label="Back to AP Physics 2 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
-    <a class="nav-btn" href="https://www.dingruischolars.com/signup?utm_source=notes&utm_medium=crosslink_lock&utm_campaign=ap_physics_c_e_m&utm_content=unit_11_electric_circuits__gated_en" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
+    <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
     <button class="nav-btn" id="courseToggle" onclick="toggleCourse()" title="Switch course view / 切换课程版本"><span data-course-label="c"><span data-lang="en">Physics C</span><span data-lang="zh">物理 C</span></span><span data-course-label="p2" hidden><span data-lang="en">Physics 2</span><span data-lang="zh">物理 2</span></span></button>
@@ -703,6 +711,13 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="concept-box orange" data-course="p2" data-lang="en"><strong>Common Mistake: zero current means nothing is moving</strong> If the current in a section of wire is zero, the net motion of the charge carriers in that wire is zero. Individual carriers still move randomly and do not have zero speed. Zero current means no net flow of charge, not motionless carriers.</div>
   <div class="concept-box orange" data-course="p2" data-lang="zh"><strong>常见错误：电流为零就是什么都不动</strong> 若某段导线中的电流为零，则该段导线中载流子的净运动为零。单个载流子仍在无规运动，速率并不为零。电流为零表示没有电荷的净流动，而不是载流子静止不动。</div>
 
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Volta's pile</span><span data-lang="zh">历史：伏打电堆</span></div>
+    <p data-lang="en">In 1800 Alessandro Volta described his "pile" in a letter to the Royal Society of London: a stack of zinc and copper (or silver) discs separated by cloth or card soaked in brine. It was the first source of a steady current, so for the first time charge could be kept moving around a circuit.</p>
+    <p data-lang="zh">1800 年，亚历山德罗·伏打（Alessandro Volta）在致伦敦皇家学会的信中描述了他的“电堆”：把锌片和铜片（或银片）交替叠放，中间隔着浸过盐水的布或纸板。它是第一个能提供稳定电流的电源，人们第一次能让电荷持续地在电路中流动。</p>
+    <p data-lang="en"><a href="https://en.wikipedia.org/wiki/Voltaic_pile" target="_blank" rel="noopener">Voltaic pile (Wikipedia)</a>: how the stack was built and why it works, a five-minute read.</p>
+    <p data-lang="zh"><a href="https://en.wikipedia.org/wiki/Voltaic_pile" target="_blank" rel="noopener">伏打电堆（英文维基百科 <code>Voltaic pile</code>）</a>：电堆的构造与工作原理，约五分钟阅读。</p>
+  </div>
   <h3><span data-lang="en">Current is a scalar with a direction</span><span data-lang="zh">电流是有方向的标量</span></h3>
   <p data-lang="en">Although we draw arrows on wires, current does not obey vector addition and has no components. Its direction is relative to the carriers and the wire, not to space, so a current turning a corner is still just $I$. Currents add as numbers: two wires carrying $2\,\text{A}$ and $3\,\text{A}$ into a junction supply $5\,\text{A}$ regardless of the angle between them.</p>
   <p data-lang="zh">虽然我们在导线上画箭头，但电流不遵守矢量加法，也没有分量。它的方向是相对于载流子和导线而言的，而不是相对于空间，所以电流拐弯后仍只是 $I$。电流按数值相加：两根分别通有 $2\,\text{A}$ 和 $3\,\text{A}$ 的导线流入节点，不论夹角多大，总共供给 $5\,\text{A}$。</p>
@@ -835,8 +850,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="sg-examtip" data-course="p2">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">When a question gives a charge and a time, start from $I=\Delta q/\Delta t$ and keep the units C, s and A. If a question asks about the direction of a current, say whether you mean conventional current or electron motion, and give the direction relative to the wire. If the current in a section is zero, say that the net motion of the carriers is zero, not that the carriers are at rest.</p>
-    <p data-lang="zh">题目给出电荷量和时间时，从 $I=\Delta q/\Delta t$ 出发，并写清单位 C、s 与 A。若题目问电流方向，要说明指的是常规电流还是电子运动，并给出相对于导线的方向。若某段导线中电流为零，要说明载流子的净运动为零，而不是说载流子静止。</p>
+    <p data-lang="en">When a question gives a charge and a time, start from $I=\Delta q/\Delta t$ and keep the units C, s and A.</p>
+    <p data-lang="zh">题目给出电荷量和时间时，从 $I=\Delta q/\Delta t$ 出发，并写清单位 C、s 与 A。</p>
+    <p data-lang="en">If a question asks about the direction of a current, say whether you mean conventional current or electron motion, and give the direction relative to the wire. If the current in a section is zero, say that the net motion of the carriers is zero, not that the carriers are at rest.</p>
+    <p data-lang="zh">若题目问电流方向，要说明指的是常规电流还是电子运动，并给出相对于导线的方向。若某段导线中电流为零，要说明载流子的净运动为零，而不是说载流子静止。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -1037,6 +1054,13 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">在电流 $I$ 对电势差 $\Delta V$ 的图像上，欧姆元件给出一条过原点的直线。斜率为 $I/\Delta V=1/R$，因此电阻是斜率的<em>倒数</em>。曲线图像表示非欧姆元件：各点的电阻 $\Delta V/I$ 不同。</p>
   <div class="concept-box orange" data-lang="en"><strong>Common Mistake: reading R as the slope</strong> On an $I$-$\Delta V$ graph, the slope is $1/R$ (conductance), not $R$. On a $\Delta V$-$I$ graph, the slope is $R$. Check which variable is on which axis before you read the resistance. For a curve, $R$ at a point is the ratio $\Delta V/I$ there, not the local slope.</div>
   <div class="concept-box orange" data-lang="zh"><strong>常见错误：把斜率直接当作 R</strong> 在 $I$-$\Delta V$ 图像上斜率是 $1/R$（电导），不是 $R$；在 $\Delta V$-$I$ 图像上斜率才是 $R$。读电阻前要先看清坐标轴。对曲线而言，某点的 $R$ 是该点的 $\Delta V/I$ 之比，而不是该点的局部斜率。</div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Ohm's measurements</span><span data-lang="zh">历史：欧姆的测量</span></div>
+    <p data-lang="en">In 1827 Georg Simon Ohm published <em>Die galvanische Kette, mathematisch bearbeitet</em>. Using a thermocouple as a steady source and test wires of different lengths, he found that the current fell as the wire got longer, in the way $\Delta V=IR$ describes. Many physicists dismissed the work at first; the Royal Society awarded him the Copley Medal in 1841.</p>
+    <p data-lang="zh">1827 年，格奥尔格·西蒙·欧姆（Georg Simon Ohm）发表了《伽伐尼电路的数学研究》（<em>Die galvanische Kette, mathematisch bearbeitet</em>）。他用温差电偶作稳定电源，接入不同长度的导线，发现导线越长电流越小，规律正如 $\Delta V=IR$ 所描述。起初许多物理学家并不接受这项工作；1841 年英国皇家学会授予他科普利奖章。</p>
+    <p data-lang="en"><a href="https://en.wikipedia.org/wiki/Ohm%27s_law" target="_blank" rel="noopener">Ohm's law (Wikipedia)</a>: the history section describes Ohm's apparatus and its reception.</p>
+    <p data-lang="zh"><a href="https://en.wikipedia.org/wiki/Ohm%27s_law" target="_blank" rel="noopener">欧姆定律（英文维基百科 <code>Ohm's law</code>）</a>：其历史部分介绍了欧姆的实验装置及当时的反响。</p>
+  </div>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Resistance of a wire and the effect of stretching</span><span data-lang="zh">例题：导线电阻与拉伸的影响</span></summary>
     <div class="detail-body">
@@ -1185,6 +1209,16 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="en">Use $P=I^2R$ when the current is the same (series) and $P=(\Delta V)^2/R$ when the potential difference is the same (parallel).</p>
     <p data-lang="zh">电流相同（串联）时用 $P=I^2R$；电势差相同（并联）时用 $P=(\Delta V)^2/R$。</p>
   </div>
+  <h3><span data-lang="en">First principles: power from energy per charge</span><span data-lang="zh">第一性原理：由单位电荷的能量推出功率</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Potential difference is energy per unit charge, so a charge $\Delta q$ that crosses $\Delta V$ transfers energy $\Delta U=\Delta q\,\Delta V$.</p>
+    <p data-lang="zh"><strong>原理。</strong>电势差是单位电荷的能量，所以电荷 $\Delta q$ 跨过 $\Delta V$ 时转移能量 $\Delta U=\Delta q\,\Delta V$。</p>
+    <ol class="sg-steps" data-lang="en"><li>Divide by the time taken: $P=\dfrac{\Delta U}{\Delta t}=\dfrac{\Delta q}{\Delta t}\,\Delta V=I\,\Delta V$.</li><li>For a resistor, substitute $\Delta V=IR$: $P=I^2R$.</li><li>Or substitute $I=\Delta V/R$: $P=(\Delta V)^2/R$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>除以所用时间：$P=\dfrac{\Delta U}{\Delta t}=\dfrac{\Delta q}{\Delta t}\,\Delta V=I\,\Delta V$。</li><li>对电阻代入 $\Delta V=IR$：$P=I^2R$。</li><li>或代入 $I=\Delta V/R$：$P=(\Delta V)^2/R$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Units: $\text{V}\cdot\text{A}=(\text{J/C})(\text{C/s})=\text{W}$. An open switch gives $I=0$ and $P=0$. At fixed $\Delta V$, $P=(\Delta V)^2/R$ grows without bound as $R\to0$, which is why a short circuit is dangerous.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>单位：$\text{V}\cdot\text{A}=(\text{J/C})(\text{C/s})=\text{W}$。开关断开时 $I=0$，$P=0$。$\Delta V$ 固定时，$R\to0$ 会使 $P=(\Delta V)^2/R$ 无限增大，这就是短路危险的原因。</p>
+  </div>
   <h3><span data-lang="en">Power from sources, energy and brightness</span><span data-lang="zh">电源功率、能量与亮度</span></h3>
   <div data-course="c">
   <p data-lang="en">A battery delivering current $I$ at emf $\mathcal E$ supplies power $P=I\mathcal E$. The sign tells the direction of the transfer: a resistor or bulb absorbs energy from the circuit and dissipates it, a battery that is discharging delivers energy, and a motor converts electrical energy into mechanical energy.</p>
@@ -1194,8 +1228,12 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="concept-box green" data-lang="en"><strong>Boundary: which energy transfers are analyzed</strong> This course analyzes the transfer of mechanical and electrical energy. You should be aware that electrical energy can also be dissipated as thermal energy, which is what a resistor does, but problems do not ask for thermal-energy accounting beyond that.</div>
   <div class="concept-box green" data-lang="zh"><strong>范围说明：分析哪些能量转移</strong> 本课程分析的是机械能与电能之间的转移。你应当知道电能还可以以热能的形式耗散（电阻正是如此），但题目不会要求超出这一点的热能核算。</div>
   </div>
-  <p data-course="p2" data-lang="en">A battery delivering current $I$ at emf $\mathcal E$ supplies power $P=I\mathcal E$. Whether an element absorbs or delivers energy depends on whether charge moves through it to lower or to higher potential: a resistor or bulb, through which charge moves to lower potential, absorbs energy from the circuit and dissipates it; a battery that is discharging, through which charge moves to higher potential, delivers energy; and a motor converts electrical energy into mechanical energy. The brightness of a bulb increases with the power it dissipates, so power can be used to predict brightness qualitatively. At constant power, the energy transferred in a time $\Delta t$ is $\Delta U=P\,\Delta t$.</p>
-  <p data-course="p2" data-lang="zh">电池输出电流 $I$、电动势为 $\mathcal E$ 时，提供的功率为 $P=I\mathcal E$。元件是吸收还是输出能量，取决于电荷通过它时是移向较低电势还是较高电势：电荷通过电阻或灯泡时移向较低电势，它们从电路吸收能量并耗散；放电的电池使电荷移向较高电势，输出能量；电动机把电能转化为机械能。灯泡的亮度随其耗散功率增大，所以功率可以定性地预测亮度。功率恒定时，在时间 $\Delta t$ 内转移的能量为 $\Delta U=P\,\Delta t$。</p>
+  <p data-course="p2" data-lang="en">A battery delivering current $I$ at emf $\mathcal E$ supplies power $P=I\mathcal E$. Whether an element absorbs or delivers energy depends on whether charge moves through it to lower or to higher potential:</p>
+  <p data-course="p2" data-lang="zh">电池输出电流 $I$、电动势为 $\mathcal E$ 时，提供的功率为 $P=I\mathcal E$。元件是吸收还是输出能量，取决于电荷通过它时是移向较低电势还是较高电势：</p>
+  <ul class="sg-list" data-course="p2" data-lang="en"><li>a resistor or bulb, through which charge moves to lower potential, absorbs energy from the circuit and dissipates it;</li><li>a battery that is discharging, through which charge moves to higher potential, delivers energy;</li><li>a motor converts electrical energy into mechanical energy.</li></ul>
+  <ul class="sg-list" data-course="p2" data-lang="zh"><li>电荷通过电阻或灯泡时移向较低电势，它们从电路吸收能量并耗散；</li><li>放电的电池使电荷移向较高电势，输出能量；</li><li>电动机把电能转化为机械能。</li></ul>
+  <p data-course="p2" data-lang="en">The brightness of a bulb increases with the power it dissipates, so power can be used to predict brightness qualitatively. At constant power, the energy transferred in a time $\Delta t$ is $\Delta U=P\,\Delta t$.</p>
+  <p data-course="p2" data-lang="zh">灯泡的亮度随其耗散功率增大，所以功率可以定性地预测亮度。功率恒定时，在时间 $\Delta t$ 内转移的能量为 $\Delta U=P\,\Delta t$。</p>
   <div class="concept-box orange" data-lang="en"><strong>Common Mistake: brighter in series means brighter in parallel</strong> Bulb brightness follows power, and the formula to use depends on the circuit. In series the same current flows, so the larger $R$ dissipates more ($P=I^2R$). In parallel the same $\Delta V$ is across each, so the smaller $R$ dissipates more ($P=(\Delta V)^2/R$). The ranking reverses.</div>
   <div class="concept-box orange" data-lang="zh"><strong>常见错误：串联中更亮的灯泡在并联中也更亮</strong> 灯泡亮度取决于功率，而该用哪个公式取决于电路。串联时电流相同，$R$ 较大者耗散更多（$P=I^2R$）；并联时每个灯泡两端的 $\Delta V$ 相同，$R$ 较小者耗散更多（$P=(\Delta V)^2/R$）。排序恰好相反。</div>
   <details class="sg-we">
@@ -1348,6 +1386,16 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="en">Analyze a compound circuit from the inside out: collapse each parallel or series group into its equivalent resistance, find the total current from the source, then work back outward using the shared quantity (same current in series, same potential difference in parallel).</p>
   <p data-lang="zh">由内向外分析混合电路：把每个并联或串联组合并成等效电阻，求出电源的总电流，再利用共有的量（串联电流相同、并联电势差相同）逐步向外还原。</p>
 
+  <h3><span data-lang="en">First principles: the series and parallel rules</span><span data-lang="zh">第一性原理：串联与并联规则</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Charge is conserved, so one path carries one current and currents that split at a junction add. Energy is conserved, so potential differences along one path add and branches with the same endpoints share one $\Delta V$.</p>
+    <p data-lang="zh"><strong>原理。</strong>电荷守恒，所以单一通路中电流处处相同，在节点处分开的电流相加。能量守恒，所以沿同一通路的电势差相加，端点相同的各支路电势差 $\Delta V$ 相同。</p>
+    <ol class="sg-steps" data-lang="en"><li>Series: $\Delta V=IR_1+IR_2=IR_{eq}$, so $R_{eq}=R_1+R_2$.</li><li>Parallel: $I=\dfrac{\Delta V}{R_1}+\dfrac{\Delta V}{R_2}=\dfrac{\Delta V}{R_{eq}}$, so $\dfrac{1}{R_{eq}}=\dfrac{1}{R_1}+\dfrac{1}{R_2}$.</li><li>For two in parallel this is $R_{eq}=\dfrac{R_1R_2}{R_1+R_2}$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>串联：$\Delta V=IR_1+IR_2=IR_{eq}$，所以 $R_{eq}=R_1+R_2$。</li><li>并联：$I=\dfrac{\Delta V}{R_1}+\dfrac{\Delta V}{R_2}=\dfrac{\Delta V}{R_{eq}}$，所以 $\dfrac{1}{R_{eq}}=\dfrac{1}{R_1}+\dfrac{1}{R_2}$。</li><li>两个电阻并联时即 $R_{eq}=\dfrac{R_1R_2}{R_1+R_2}$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Cut one parallel branch ($R_2\to\infty$): $R_{eq}\to R_1$, as if it were absent. Short it ($R_2\to0$): $R_{eq}\to0$ and all the current bypasses $R_1$. For $n$ equal resistors, series gives $nR$ and parallel gives $R/n$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>断开一条并联支路（$R_2\to\infty$）：$R_{eq}\to R_1$，相当于该支路不存在。把它短路（$R_2\to0$）：$R_{eq}\to0$，电流全部绕过 $R_1$。$n$ 个相同电阻串联得 $nR$，并联得 $R/n$。</p>
+  </div>
   <h3><span data-lang="en">Batteries with internal resistance, and ideal assumptions</span><span data-lang="zh">有内阻的电池与理想化假设</span></h3>
   <p data-lang="en">Unless a problem says otherwise, batteries, wires and meters are ideal. An ideal battery has no internal resistance and an ideal wire has no resistance.</p>
   <p data-lang="zh">除非题目另有说明，电池、导线和仪表都按理想情形处理。理想电池没有内阻，理想导线没有电阻。</p>
@@ -1375,10 +1423,41 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="en">A <strong>voltmeter</strong> measures the potential difference between two points, so it is connected in <em>parallel</em> across the element and has infinite resistance if ideal, so no charge flows through it. A nonideal ammeter adds resistance in series and a nonideal voltmeter draws some current, so either one changes the circuit it measures.</p>
   <p data-lang="zh"><strong>电压表</strong>（<code>voltmeter</code>）测量两点之间的电势差，因此<em>并联</em>在元件两端，理想电压表电阻无穷大，没有电荷流过它。非理想电流表在串联处增加电阻，非理想电压表会取用一部分电流，所以二者都会改变被测电路。</p>
   </div>
-  <p data-course="p2" data-lang="en">An <strong>ammeter</strong> measures the current at a specific point in a circuit, so it must be connected in <em>series</em> with the element in which the current is measured. An ideal ammeter has zero resistance, so it does not affect the current in the element. A <strong>voltmeter</strong> measures the potential difference between two points, so it must be connected in <em>parallel</em> with the element across which the potential difference is measured. An ideal voltmeter has infinite resistance, so no charge flows through it. Nonideal ammeters and voltmeters change the circuit they measure: a nonideal ammeter adds resistance in series and a nonideal voltmeter draws some current.</p>
-  <p data-course="p2" data-lang="zh"><strong>电流表</strong>（<code>ammeter</code>）测量电路中某一点的电流，因此必须与被测电流的元件<em>串联</em>。理想电流表电阻为零，所以不会影响该元件中的电流。<strong>电压表</strong>（<code>voltmeter</code>）测量两点之间的电势差，因此必须与被测元件<em>并联</em>。理想电压表电阻无穷大，所以没有电荷流过它。非理想的电流表和电压表会改变被测电路：非理想电流表在电路中串入电阻，非理想电压表会分走一部分电流。</p>
+  <p data-course="p2" data-lang="en">An <strong>ammeter</strong> measures the current at a specific point in a circuit, so it must be connected in <em>series</em> with the element in which the current is measured. An ideal ammeter has zero resistance, so it does not affect the current in the element.</p>
+  <p data-course="p2" data-lang="zh"><strong>电流表</strong>（<code>ammeter</code>）测量电路中某一点的电流，因此必须与被测电流的元件<em>串联</em>。理想电流表电阻为零，所以不会影响该元件中的电流。</p>
+  <p data-course="p2" data-lang="en">A <strong>voltmeter</strong> measures the potential difference between two points, so it must be connected in <em>parallel</em> with the element across which the potential difference is measured. An ideal voltmeter has infinite resistance, so no charge flows through it.</p>
+  <p data-course="p2" data-lang="zh"><strong>电压表</strong>（<code>voltmeter</code>）测量两点之间的电势差，因此必须与被测元件<em>并联</em>。理想电压表电阻无穷大，所以没有电荷流过它。</p>
+  <p data-course="p2" data-lang="en">Nonideal ammeters and voltmeters change the circuit they measure: a nonideal ammeter adds resistance in series and a nonideal voltmeter draws some current.</p>
+  <p data-course="p2" data-lang="zh">非理想的电流表和电压表会改变被测电路：非理想电流表在电路中串入电阻，非理想电压表会分走一部分电流。</p>
   <div class="concept-box green" data-course="p2" data-lang="en"><strong>Boundary: nonideal meters</strong> AP Physics 2 only expects you to discuss qualitatively how a nonideal ammeter or voltmeter affects a measurement. Unless otherwise stated, all batteries, wires and meters are assumed to be ideal.</div>
   <div class="concept-box green" data-course="p2" data-lang="zh"><strong>范围说明：非理想仪表</strong> AP 物理 2 只要求定性地讨论非理想电流表或电压表如何影响测量结果。除非另有说明，所有电池、导线和仪表都假设为理想的。</div>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 220" role="img" aria-label="Ammeter in series and voltmeter in parallel">
+    <line class="ax" x1="68.0" y1="164.0" x2="212.0" y2="164.0"/>
+    <line class="ax" x1="224.0" y1="164.0" x2="372.0" y2="164.0"/>
+    <line class="ax" x1="212.0" y1="148.0" x2="212.0" y2="180.0"/>
+    <line class="ax" x1="224.0" y1="156.0" x2="224.0" y2="172.0"/>
+    <text class="lbl" data-lang="en" x="218.0" y="200.0" text-anchor="middle">ℰ</text><text class="lbl" data-lang="zh" x="218.0" y="200.0" text-anchor="middle">ℰ</text>
+    <line class="ax" x1="68.0" y1="164.0" x2="68.0" y2="74.0"/>
+    <line class="ax" x1="68.0" y1="74.0" x2="130.0" y2="74.0"/>
+    <circle class="box" cx="144.0" cy="74.0" r="14.0"/>
+    <text class="c3t" data-lang="en" x="144.0" y="78.5" text-anchor="middle">A</text><text class="c3t" data-lang="zh" x="144.0" y="78.5" text-anchor="middle">A</text>
+    <line class="ax" x1="158.0" y1="74.0" x2="228.0" y2="74.0"/>
+    <rect class="box" x="228.0" y="63.5" width="80.0" height="21.0" rx="3.0"/>
+    <text class="c1t" data-lang="en" x="268.0" y="78.5" text-anchor="middle">R</text><text class="c1t" data-lang="zh" x="268.0" y="78.5" text-anchor="middle">R</text>
+    <line class="ax" x1="308.0" y1="74.0" x2="372.0" y2="74.0"/>
+    <line class="ax" x1="372.0" y1="74.0" x2="372.0" y2="164.0"/>
+    <line class="c2" x1="208.0" y1="74.0" x2="208.0" y2="38.0"/>
+    <line class="c2" x1="208.0" y1="38.0" x2="255.0" y2="38.0"/>
+    <circle class="box" cx="268.0" cy="38.0" r="13.0"/>
+    <text class="c2t" data-lang="en" x="268.0" y="42.5" text-anchor="middle">V</text><text class="c2t" data-lang="zh" x="268.0" y="42.5" text-anchor="middle">V</text>
+    <line class="c2" x1="281.0" y1="38.0" x2="328.0" y2="38.0"/>
+    <line class="c2" x1="328.0" y1="38.0" x2="328.0" y2="74.0"/>
+    <text class="c3t" data-lang="en" x="144.0" y="111.5" text-anchor="middle">Series: R<tspan baseline-shift="sub">A</tspan> → 0</text><text class="c3t" data-lang="zh" x="144.0" y="111.5" text-anchor="middle">串联电流表：R<tspan baseline-shift="sub">A</tspan> → 0</text>
+    <text class="c2t" data-lang="en" x="288.0" y="111.5" text-anchor="middle">Parallel: R<tspan baseline-shift="sub">V</tspan> → ∞</text><text class="c2t" data-lang="zh" x="288.0" y="111.5" text-anchor="middle">并联电压表：R<tspan baseline-shift="sub">V</tspan> → ∞</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 11.1. Meter hookup: the ammeter A is in series with $R$, so the whole branch current passes through it; the voltmeter V connects across $R$ in parallel. Ideal meters have $R_A\to0$ and $R_V\to\infty$, so neither changes the circuit.</span><span data-lang="zh">图 11.1. 仪表接法：电流表 A 与 $R$ 串联，整条支路的电流都通过它；电压表 V 并联在 $R$ 两端。理想仪表满足 $R_A\to0$ 与 $R_V\to\infty$，因此都不改变电路。</span></figcaption>
+  </figure>
   <div class="concept-box green" data-lang="en"><strong>Boundary: circuits assessed</strong> Circuits that connect batteries with different potential differences in parallel are not assessed, so you will not be asked to analyze them in this unit.</div>
   <div class="concept-box green" data-lang="zh"><strong>范围说明：考查的电路</strong> 把电势差不同的电池并联的电路不在考查范围内，本单元不会要求你分析这类电路。</div>
   <details class="sg-we">
@@ -1555,8 +1634,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="en">In Unit 9 the work done by an electrostatic field on a charge around any closed path is zero. A charge that circulates through a circuit and returns to its starting point must therefore end with the same electric potential energy. Gains from batteries and losses in resistors balance. This is Kirchhoff's loop rule, a statement of conservation of energy.</p>
   <p data-lang="zh">在第 9 单元中，静电场对电荷沿任意闭合路径所做的功为零。因此在电路中循环并回到起点的电荷，最终的电势能必须与开始时相同。电池带来的增加与电阻中的损失相互抵消。这就是基尔霍夫回路定则，它表述的是能量守恒。</p>
   </div>
-  <p data-course="p2" data-lang="en">Moving a charge through a potential difference changes its electric potential energy by $\Delta U=q\Delta V$. A positive charge gains energy when it crosses a battery from the negative to the positive terminal and loses energy when it crosses a resistor in the direction of the current. A charge that circulates through a circuit and returns to its starting point must end with the same electric potential energy, so the gains from batteries and the losses in resistors balance. This is Kirchhoff&#39;s loop rule, a consequence of conservation of energy.</p>
-  <p data-course="p2" data-lang="zh">电荷通过电势差时，电势能改变 $\Delta U=q\Delta V$。正电荷从电池负极经电池到达正极时获得能量，沿电流方向通过电阻时失去能量。在电路中循环并回到起点的电荷，最终的电势能必须与开始时相同，因此电池带来的增加与电阻中的损失相互抵消。这就是基尔霍夫回路定则，它是能量守恒的结果。</p>
+  <p data-course="p2" data-lang="en">Moving a charge through a potential difference changes its electric potential energy by $\Delta U=q\Delta V$. A positive charge gains energy when it crosses a battery from the negative to the positive terminal and loses energy when it crosses a resistor in the direction of the current.</p>
+  <p data-course="p2" data-lang="zh">电荷通过电势差时，电势能改变 $\Delta U=q\Delta V$。正电荷从电池负极经电池到达正极时获得能量，沿电流方向通过电阻时失去能量。</p>
+  <p data-course="p2" data-lang="en">A charge that circulates through a circuit and returns to its starting point must end with the same electric potential energy, so the gains from batteries and the losses in resistors balance. This is Kirchhoff&#39;s loop rule, a consequence of conservation of energy.</p>
+  <p data-course="p2" data-lang="zh">在电路中循环并回到起点的电荷，最终的电势能必须与开始时相同，因此电池带来的增加与电阻中的损失相互抵消。这就是基尔霍夫回路定则，它是能量守恒的结果。</p>
   <div class="formula-box green">
     <div class="formula-label"><span data-lang="en">Kirchhoff's loop rule</span><span data-lang="zh">基尔霍夫回路定则</span></div>
     $$\sum_{\text{loop}}\Delta V_i=0$$
@@ -1564,6 +1645,32 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     <p data-lang="zh">单个闭合回路中所有元件两端电势差的代数和为零。</p>
   </div>
 
+  <h3><span data-lang="en">First principles: why the loop sum is zero</span><span data-lang="zh">第一性原理：回路电势差之和为何为零</span></h3>
+  <div class="sg-fp" data-course="c">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The electrostatic field in a steady circuit is conservative: $\oint\vec E\cdot d\vec\ell=0$ around any closed path (Unit 9).</p>
+    <p data-lang="zh"><strong>原理。</strong>稳恒电路中的静电场是保守场：沿任意闭合路径 $\oint\vec E\cdot d\vec\ell=0$（第 9 单元）。</p>
+    <ol class="sg-steps" data-lang="en"><li>Potential is defined by $V_b-V_a=-\int_a^b\vec E\cdot d\vec\ell$.</li><li>Split the closed path element by element: $\oint\vec E\cdot d\vec\ell=-\sum_i\Delta V_i$.</li><li>So $\sum_i\Delta V_i=0$. For one loop, $\mathcal E-Ir-IR=0$ gives $I=\dfrac{\mathcal E}{R+r}$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>电势的定义为 $V_b-V_a=-\int_a^b\vec E\cdot d\vec\ell$。</li><li>把闭合路径按元件分段：$\oint\vec E\cdot d\vec\ell=-\sum_i\Delta V_i$。</li><li>所以 $\sum_i\Delta V_i=0$。对单个回路，$\mathcal E-Ir-IR=0$ 给出 $I=\dfrac{\mathcal E}{R+r}$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> With $r\to0$, $I\to\mathcal E/R$. With $R\to0$ (short circuit), $I\to\mathcal E/r$, finite only because of the internal resistance. With $R\to\infty$, $I\to0$ and the terminal potential difference rises to $\mathcal E$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$r\to0$ 时 $I\to\mathcal E/R$。$R\to0$（短路）时 $I\to\mathcal E/r$，只因有内阻才是有限值。$R\to\infty$ 时 $I\to0$，端电压升到 $\mathcal E$。</p>
+  </div>
+  <div class="sg-fp" data-course="p2">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Energy is conserved, and a charge $q$ that crosses a potential difference $\Delta V$ changes its electric potential energy by $\Delta U=q\Delta V$.</p>
+    <p data-lang="zh"><strong>原理。</strong>能量守恒，电荷 $q$ 跨过电势差 $\Delta V$ 时电势能改变 $\Delta U=q\Delta V$。</p>
+    <ol class="sg-steps" data-lang="en"><li>Follow $q$ once around a loop: $\Delta U_{\text{total}}=q\sum_i\Delta V_i$.</li><li>Back at its starting point the charge has its starting potential energy, so $\Delta U_{\text{total}}=0$.</li><li>Since $q\neq0$, $\sum_i\Delta V_i=0$. For one loop, $\mathcal E-Ir-IR=0$ gives $I=\dfrac{\mathcal E}{R+r}$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>跟随 $q$ 绕回路一周：$\Delta U_{\text{total}}=q\sum_i\Delta V_i$。</li><li>回到起点时电荷的电势能与开始时相同，所以 $\Delta U_{\text{total}}=0$。</li><li>由于 $q\neq0$，$\sum_i\Delta V_i=0$。对单个回路，$\mathcal E-Ir-IR=0$ 给出 $I=\dfrac{\mathcal E}{R+r}$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> With $r\to0$, $I\to\mathcal E/R$. With $R\to0$ (short circuit), $I\to\mathcal E/r$, finite only because of the internal resistance. With $R\to\infty$, $I\to0$ and the terminal potential difference rises to $\mathcal E$.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>$r\to0$ 时 $I\to\mathcal E/R$。$R\to0$（短路）时 $I\to\mathcal E/r$，只因有内阻才是有限值。$R\to\infty$ 时 $I\to0$，端电压升到 $\mathcal E$。</p>
+  </div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Kirchhoff's rules</span><span data-lang="zh">历史：基尔霍夫定则</span></div>
+    <p data-lang="en">Gustav Kirchhoff stated both circuit rules in 1845, while still a student at Königsberg, extending Ohm's work to networks with many loops. The loop rule is energy conservation and the junction rule (11.7) is charge conservation.</p>
+    <p data-lang="zh">古斯塔夫·基尔霍夫（Gustav Kirchhoff）于 1845 年提出了这两条电路定则，当时他还是柯尼斯堡的学生，他把欧姆的工作推广到多回路网络。回路定则是能量守恒，节点定则（11.7）是电荷守恒。</p>
+    <p data-lang="en"><a href="https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws" target="_blank" rel="noopener">Kirchhoff's circuit laws (Wikipedia)</a>: both rules, their derivation and their limits, a ten-minute read.</p>
+    <p data-lang="zh"><a href="https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws" target="_blank" rel="noopener">基尔霍夫电路定律（英文维基百科 <code>Kirchhoff's circuit laws</code>）</a>：两条定则、推导及适用范围，约十分钟阅读。</p>
+  </div>
   <h3><span data-lang="en">Sign conventions</span><span data-lang="zh">符号约定</span></h3>
   <p data-lang="en">Choose a direction of travel around the loop and a direction for each unknown current (a wrong guess simply yields a negative current). Then write each change in potential $\Delta V$ as you pass through an element:</p>
   <p data-lang="zh">选定绕回路的行进方向，并为每个未知电流假设一个方向（猜错只会得到负电流）。然后在经过每个元件时写下电势的变化 $\Delta V$：</p>
@@ -1582,6 +1689,33 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <p data-lang="zh">沿回路各点的电势可以对沿回路的位置作图。图像在电池从负极到正极处上升，在沿电流方向的每个电阻处下降，沿理想导线则是水平的。</p>
   <p data-lang="en">The graph must return to its starting value at the end of the loop, which is the loop rule in picture form.</p>
   <p data-lang="zh">图像在回路末端必须回到起始值，这就是回路定则的图示形式。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 230" role="img" aria-label="Potential around a single-loop circuit with internal resistance">
+    <line class="ax" x1="52.0" y1="192.0" x2="416.0" y2="192.0"/>
+    <polyline class="ax" points="408.5,195.6 416.0,192.0 408.5,188.4"/>
+    <line class="ax" x1="52.0" y1="192.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="224.0" text-anchor="middle">Position around loop</text><text class="lbl" data-lang="zh" x="234.0" y="224.0" text-anchor="middle">沿闭合回路位置</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Potential V (V)</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">电势 V (V)</text>
+    <line class="ax" x1="124.8" y1="188.5" x2="124.8" y2="195.5"/>
+    <text class="mut" data-lang="en" x="124.8" y="207.0" text-anchor="middle">Battery</text><text class="mut" data-lang="zh" x="124.8" y="207.0" text-anchor="middle">电池</text>
+    <line class="ax" x1="252.2" y1="188.5" x2="252.2" y2="195.5"/>
+    <text class="mut" data-lang="en" x="252.2" y="207.0" text-anchor="middle">Wire</text><text class="mut" data-lang="zh" x="252.2" y="207.0" text-anchor="middle">导线</text>
+    <line class="ax" x1="350.5" y1="188.5" x2="350.5" y2="195.5"/>
+    <text class="mut" data-lang="en" x="350.5" y="207.0" text-anchor="middle">Load R</text><text class="mut" data-lang="zh" x="350.5" y="207.0" text-anchor="middle">负载 R</text>
+    <line class="ax" x1="48.5" y1="192.0" x2="55.5" y2="192.0"/>
+    <text class="mut" data-lang="en" x="45.0" y="196.0" text-anchor="end">0</text><text class="mut" data-lang="zh" x="45.0" y="196.0" text-anchor="end">0</text>
+    <line class="ax" x1="48.5" y1="85.8" x2="55.5" y2="85.8"/>
+    <text class="mut" data-lang="en" x="45.0" y="89.8" text-anchor="end">ΔV<tspan baseline-shift="sub">t</tspan></text><text class="mut" data-lang="zh" x="45.0" y="89.8" text-anchor="end">ΔV<tspan baseline-shift="sub">t</tspan></text>
+    <line class="ax" x1="48.5" y1="57.4" x2="55.5" y2="57.4"/>
+    <text class="mut" data-lang="en" x="45.0" y="61.4" text-anchor="end">ℰ</text><text class="mut" data-lang="zh" x="45.0" y="61.4" text-anchor="end">ℰ</text>
+    <path class="c1" d="M 66.6,192.0 L 103.0,192.0 L 132.1,57.4 L 161.2,85.8 L 288.6,85.8 L 365.0,192.0 L 401.4,192.0"/>
+    <line class="grid dash" x1="52.0" y1="85.8" x2="288.6" y2="85.8"/>
+    <text class="c1t" data-lang="en" x="183.0" y="46.1" text-anchor="middle">+ℰ rise, then −Ir internal drop</text><text class="c1t" data-lang="zh" x="183.0" y="46.1" text-anchor="middle">电动势抬升 +ℰ，内阻降落 −Ir</text>
+    <text class="c2t" data-lang="en" x="322.0" y="160.0" text-anchor="end">−IR load drop (ΣΔV = 0)</text><text class="c2t" data-lang="zh" x="322.0" y="160.0" text-anchor="end">负载压降 −IR（ΣΔV = 0）</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 11.2. Potential around one loop, starting at the battery's negative terminal ($V=0$): the emf raises the potential by $\mathcal{E}$, the internal resistance lowers it to $\Delta V_t=\mathcal{E}-Ir$, the ideal wire keeps it flat, and the load lowers it by $IR$ back to zero, so $\sum\Delta V=0$.</span><span data-lang="zh">图 11.2. 沿单个回路的电势，从电池负极（$V=0$）出发：电动势使电势升高 $\mathcal{E}$，内阻使其降到 $\Delta V_t=\mathcal{E}-Ir$，理想导线上保持水平，负载再降低 $IR$ 回到零，所以 $\sum\Delta V=0$。</span></figcaption>
+  </figure>
   <div class="concept-box orange" data-lang="en"><strong>Common Mistake: sign of a resistor drop</strong> The potential drop across a resistor is $-IR$ only if you travel the way the current flows. If your loop direction opposes your assumed current, the term is $+IR$. A negative final current only means the real current is opposite to your guess, so do not re-do the problem.</div>
   <div class="concept-box orange" data-lang="zh"><strong>常见错误：电阻上电势降的符号</strong> 只有沿电流流动的方向行进时，电阻上的电势变化才是 $-IR$。若回路方向与假设的电流方向相反，该项为 $+IR$。最后得到负电流只说明实际电流与假设方向相反，不必重做。</div>
   <details class="sg-we">
@@ -1882,17 +2016,56 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <div class="formula-box gold" data-course="p2">
     <div class="formula-label"><span data-lang="en">Time constant</span><span data-lang="zh">时间常数</span></div>
     $$\tau=RC$$
-    <p data-lang="en">$R$ is the resistance in ohms and $C$ the capacitance in farads, so $\tau$ is in seconds. The time constant is a measure of how quickly the capacitor charges or discharges: a larger $\tau$ means slower charging or discharging. For a charging capacitor, one time constant is the time for the charge to increase from zero to approximately $63\%$ of its final asymptotic value. For a discharging capacitor, one time constant is the time for the charge to decrease from fully charged to approximately $37\%$ of its initial value.</p>
-    <p data-lang="zh">$R$ 是以欧姆为单位的电阻，$C$ 是以法拉为单位的电容，所以 $\tau$ 的单位是秒。时间常数衡量电容充放电的快慢：$\tau$ 越大，充电或放电越慢。对充电的电容，一个时间常数是电荷从零增加到最终渐近值的约 $63\%$ 所需的时间。对放电的电容，一个时间常数是电荷从充满降到初始值的约 $37\%$ 所需的时间。</p>
+    <p data-lang="en">$R$ is the resistance in ohms and $C$ the capacitance in farads, so $\tau$ is in seconds. The time constant is a measure of how quickly the capacitor charges or discharges: a larger $\tau$ means slower charging or discharging.</p>
+    <p data-lang="zh">$R$ 是以欧姆为单位的电阻，$C$ 是以法拉为单位的电容，所以 $\tau$ 的单位是秒。时间常数衡量电容充放电的快慢：$\tau$ 越大，充电或放电越慢。</p>
+    <p data-lang="en">For a charging capacitor, one time constant is the time for the charge to increase from zero to approximately $63\%$ of its final asymptotic value. For a discharging capacitor, one time constant is the time for the charge to decrease from fully charged to approximately $37\%$ of its initial value.</p>
+    <p data-lang="zh">对充电的电容，一个时间常数是电荷从零增加到最终渐近值的约 $63\%$ 所需的时间。对放电的电容，一个时间常数是电荷从充满降到初始值的约 $37\%$ 所需的时间。</p>
   </div>
+  <h3><span data-lang="en">Charging and discharging behavior</span><span data-lang="zh">充电与放电过程</span></h3>
   <p data-lang="en">Right after an uncharged capacitor is connected, there is no potential difference across it, so it acts like a wire and charge flows easily onto the plates. As it charges, the potential difference across the capacitor, the charge, the current in its branch and the stored energy $q^2/2C$ all change with time and approach their steady-state values asymptotically.</p>
   <p data-lang="zh">未充电的电容刚接入电路时，两端没有电势差，相当于导线，电荷很容易流到极板上。随着充电，电容两端的电势差、电荷、所在支路的电流以及储能 $q^2/2C$ 都随时间变化，并渐近趋向稳态值。</p>
   <p data-lang="en">After a time much greater than $\tau$, a charging capacitor is fully charged, with maximum potential difference and zero current in its branch: it acts like an open circuit.</p>
   <p data-lang="zh">经过远大于 $\tau$ 的时间后，充电的电容已充满，电势差最大，所在支路电流为零：相当于开路。</p>
   <p data-lang="en">A discharging capacitor, immediately after the discharge begins, starts to lose its charge and stored energy, and the charge, potential difference and current all decrease toward zero. For times much longer than $\tau$ the circuit may be analyzed with steady-state conditions: the capacitor branch is open.</p>
   <p data-lang="zh">放电的电容在放电刚开始时就开始失去电荷和储能，电荷、电势差和电流都向零减小。对远大于 $\tau$ 的时间，可以用稳态条件分析电路：电容支路视为开路。</p>
-  <p data-course="p2" data-lang="en">While a capacitor charges, the potential difference across it, its charge and the energy stored in it increase, and the current in its branch decreases; all of these approach their steady-state values asymptotically. While a capacitor discharges, its charge, the potential difference across it and the current in its branch all decrease toward zero. For times much greater than the time constant, the circuit may be analyzed with steady-state conditions.</p>
-  <p data-course="p2" data-lang="zh">电容充电时，它两端的电势差、电荷和储存的能量增大，所在支路的电流减小；这些量都渐近地趋向各自的稳态值。电容放电时，它的电荷、两端的电势差和所在支路的电流都减小并趋向于零。经过远大于时间常数的时间后，可以用稳态条件分析电路。</p>
+  <figure class="sg-fig" role="group">
+    <svg viewBox="0 0 440 235" role="img" aria-label="RC circuit charging and discharging curves">
+    <line class="ax" x1="52.0" y1="197.0" x2="416.0" y2="197.0"/>
+    <polyline class="ax" points="408.5,200.6 416.0,197.0 408.5,193.4"/>
+    <line class="ax" x1="52.0" y1="197.0" x2="52.0" y2="22.0"/>
+    <polyline class="ax" points="55.6,29.5 52.0,22.0 48.4,29.5"/>
+    <text class="lbl" data-lang="en" x="234.0" y="229.0" text-anchor="middle">Time t / RC</text><text class="lbl" data-lang="zh" x="234.0" y="229.0" text-anchor="middle">时间 t / RC</text>
+    <text class="lbl" data-lang="en" x="46.0" y="14.0" text-anchor="start">Normalized fraction</text><text class="lbl" data-lang="zh" x="46.0" y="14.0" text-anchor="start">归一化比例</text>
+    <line class="ax" x1="124.8" y1="193.5" x2="124.8" y2="200.5"/>
+    <text class="mut" data-lang="en" x="124.8" y="212.0" text-anchor="middle">τ</text><text class="mut" data-lang="zh" x="124.8" y="212.0" text-anchor="middle">τ</text>
+    <line class="ax" x1="197.6" y1="193.5" x2="197.6" y2="200.5"/>
+    <text class="mut" data-lang="en" x="197.6" y="212.0" text-anchor="middle">2τ</text><text class="mut" data-lang="zh" x="197.6" y="212.0" text-anchor="middle">2τ</text>
+    <line class="ax" x1="270.4" y1="193.5" x2="270.4" y2="200.5"/>
+    <text class="mut" data-lang="en" x="270.4" y="212.0" text-anchor="middle">3τ</text><text class="mut" data-lang="zh" x="270.4" y="212.0" text-anchor="middle">3τ</text>
+    <line class="ax" x1="416.0" y1="193.5" x2="416.0" y2="200.5"/>
+    <text class="mut" data-lang="en" x="416.0" y="212.0" text-anchor="middle">5τ</text><text class="mut" data-lang="zh" x="416.0" y="212.0" text-anchor="middle">5τ</text>
+    <line class="ax" x1="48.5" y1="140.7" x2="55.5" y2="140.7"/>
+    <text class="mut" data-lang="en" x="45.0" y="144.7" text-anchor="end">0.37</text><text class="mut" data-lang="zh" x="45.0" y="144.7" text-anchor="end">0.37</text>
+    <line class="ax" x1="48.5" y1="101.1" x2="55.5" y2="101.1"/>
+    <text class="mut" data-lang="en" x="45.0" y="105.1" text-anchor="end">0.63</text><text class="mut" data-lang="zh" x="45.0" y="105.1" text-anchor="end">0.63</text>
+    <line class="ax" x1="48.5" y1="44.8" x2="55.5" y2="44.8"/>
+    <text class="mut" data-lang="en" x="45.0" y="48.8" text-anchor="end">1.0</text><text class="mut" data-lang="zh" x="45.0" y="48.8" text-anchor="end">1.0</text>
+    <line class="grid dash" x1="52.0" y1="44.8" x2="416.0" y2="44.8"/>
+    <line class="grid dash" x1="124.8" y1="197.0" x2="124.8" y2="44.8"/>
+    <path class="c1" d="M 52.00,197.00 L 55.03,190.79 L 58.07,184.83 L 61.10,179.12 L 64.13,173.64 L 67.17,168.38 L 70.20,163.34 L 73.23,158.50 L 76.27,153.86 L 79.30,149.41 L 82.33,145.15 L 85.37,141.05 L 88.40,137.12 L 91.43,133.36 L 94.47,129.74 L 97.50,126.28 L 100.53,122.95 L 103.57,119.77 L 106.60,116.71 L 109.63,113.77 L 112.67,110.96 L 115.70,108.26 L 118.73,105.67 L 121.77,103.19 L 124.80,100.81 L 127.83,98.52 L 130.87,96.33 L 133.90,94.23 L 136.93,92.21 L 139.97,90.28 L 143.00,88.42 L 146.03,86.65 L 149.07,84.94 L 152.10,83.30 L 155.13,81.73 L 158.17,80.23 L 161.20,78.78 L 164.23,77.39 L 167.27,76.07 L 170.30,74.79 L 173.33,73.57 L 176.37,72.40 L 179.40,71.27 L 182.43,70.19 L 185.47,69.16 L 188.50,68.16 L 191.53,67.21 L 194.57,66.30 L 197.60,65.42 L 200.63,64.58 L 203.67,63.77 L 206.70,63.00 L 209.73,62.26 L 212.77,61.55 L 215.80,60.87 L 218.83,60.21 L 221.87,59.58 L 224.90,58.98 L 227.93,58.40 L 230.97,57.85 L 234.00,57.32 L 237.03,56.81 L 240.07,56.32 L 243.10,55.85 L 246.13,55.40 L 249.17,54.97 L 252.20,54.55 L 255.23,54.16 L 258.27,53.78 L 261.30,53.41 L 264.33,53.06 L 267.37,52.72 L 270.40,52.40 L 273.43,52.09 L 276.47,51.80 L 279.50,51.51 L 282.53,51.24 L 285.57,50.98 L 288.60,50.73 L 291.63,50.49 L 294.67,50.25 L 297.70,50.03 L 300.73,49.82 L 303.77,49.62 L 306.80,49.42 L 309.83,49.23 L 312.87,49.05 L 315.90,48.88 L 318.93,48.72 L 321.97,48.56 L 325.00,48.40 L 328.03,48.26 L 331.07,48.12 L 334.10,47.98 L 337.13,47.86 L 340.17,47.73 L 343.20,47.61 L 346.23,47.50 L 349.27,47.39 L 352.30,47.29 L 355.33,47.19 L 358.37,47.09 L 361.40,47.00 L 364.43,46.91 L 367.47,46.82 L 370.50,46.74 L 373.53,46.66 L 376.57,46.59 L 379.60,46.52 L 382.63,46.45 L 385.67,46.38 L 388.70,46.32 L 391.73,46.26 L 394.77,46.20 L 397.80,46.14 L 400.83,46.09 L 403.87,46.04 L 406.90,45.99 L 409.93,45.94 L 412.97,45.90 L 416.00,45.85"/>
+    <path class="c2" d="M 52.00,44.83 L 55.03,51.04 L 58.07,56.99 L 61.10,62.71 L 64.13,68.19 L 67.17,73.44 L 70.20,78.49 L 73.23,83.32 L 76.27,87.96 L 79.30,92.41 L 82.33,96.68 L 85.37,100.77 L 88.40,104.70 L 91.43,108.47 L 94.47,112.08 L 97.50,115.55 L 100.53,118.87 L 103.57,122.06 L 106.60,125.12 L 109.63,128.05 L 112.67,130.87 L 115.70,133.56 L 118.73,136.15 L 121.77,138.64 L 124.80,141.02 L 127.83,143.30 L 130.87,145.49 L 133.90,147.60 L 136.93,149.61 L 139.97,151.55 L 143.00,153.40 L 146.03,155.18 L 149.07,156.89 L 152.10,158.52 L 155.13,160.09 L 158.17,161.60 L 161.20,163.05 L 164.23,164.43 L 167.27,165.76 L 170.30,167.04 L 173.33,168.26 L 176.37,169.43 L 179.40,170.56 L 182.43,171.64 L 185.47,172.67 L 188.50,173.66 L 191.53,174.62 L 194.57,175.53 L 197.60,176.41 L 200.63,177.25 L 203.67,178.05 L 206.70,178.83 L 209.73,179.57 L 212.77,180.28 L 215.80,180.96 L 218.83,181.62 L 221.87,182.24 L 224.90,182.85 L 227.93,183.42 L 230.97,183.98 L 234.00,184.51 L 237.03,185.02 L 240.07,185.51 L 243.10,185.98 L 246.13,186.43 L 249.17,186.86 L 252.20,187.27 L 255.23,187.67 L 258.27,188.05 L 261.30,188.41 L 264.33,188.77 L 267.37,189.10 L 270.40,189.42 L 273.43,189.73 L 276.47,190.03 L 279.50,190.31 L 282.53,190.59 L 285.57,190.85 L 288.60,191.10 L 291.63,191.34 L 294.67,191.57 L 297.70,191.79 L 300.73,192.01 L 303.77,192.21 L 306.80,192.40 L 309.83,192.59 L 312.87,192.77 L 315.90,192.94 L 318.93,193.11 L 321.97,193.27 L 325.00,193.42 L 328.03,193.57 L 331.07,193.71 L 334.10,193.84 L 337.13,193.97 L 340.17,194.09 L 343.20,194.21 L 346.23,194.33 L 349.27,194.44 L 352.30,194.54 L 355.33,194.64 L 358.37,194.74 L 361.40,194.83 L 364.43,194.92 L 367.47,195.00 L 370.50,195.08 L 373.53,195.16 L 376.57,195.24 L 379.60,195.31 L 382.63,195.38 L 385.67,195.44 L 388.70,195.51 L 391.73,195.57 L 394.77,195.63 L 397.80,195.68 L 400.83,195.74 L 403.87,195.79 L 406.90,195.84 L 409.93,195.89 L 412.97,195.93 L 416.00,195.97"/>
+    <circle class="dot" cx="124.8" cy="100.8" r="3.8"/>
+    <circle class="dot" cx="124.8" cy="141.0" r="3.8"/>
+    <text class="c1t" data-lang="en" x="292.2" y="80.0" text-anchor="middle">Charging ΔV<tspan baseline-shift="sub">C</tspan> / ℰ → 1</text><text class="c1t" data-lang="zh" x="292.2" y="80.0" text-anchor="middle">充电电势差比 ΔV<tspan baseline-shift="sub">C</tspan> / ℰ → 1</text>
+    <text class="c2t" data-lang="en" x="285.0" y="160.0" text-anchor="middle">Charging current I / I<tspan baseline-shift="sub">0</tspan> → 0</text><text class="c2t" data-lang="zh" x="285.0" y="160.0" text-anchor="middle">充电电流比 I / I<tspan baseline-shift="sub">0</tspan> → 0</text>
+    </svg>
+    <figcaption><span data-lang="en">Figure 11.3. Charging an RC circuit, plotted against $t/RC$. The capacitor's potential difference, as a fraction of $\mathcal{E}$, rises toward 1; the current, as a fraction of its initial value $\mathcal{E}/R$, falls toward 0. At $t=\tau=RC$ the two dots sit on the labelled values 0.63 and 0.37.</span><span data-lang="zh">图 11.3. RC 电路充电，横轴为 $t/RC$。电容两端的电势差（以 $\mathcal{E}$ 的比例表示）升向 1；电流（以初始值 $\mathcal{E}/R$ 的比例表示）降向 0。在 $t=\tau=RC$ 处，两个圆点分别位于标出的 0.63 与 0.37。</span></figcaption>
+  </figure>
+  <p data-course="p2" data-lang="en">While a capacitor charges, the potential difference across it, its charge and the energy stored in it increase, and the current in its branch decreases; all of these approach their steady-state values asymptotically.</p>
+  <p data-course="p2" data-lang="zh">电容充电时，它两端的电势差、电荷和储存的能量增大，所在支路的电流减小；这些量都渐近地趋向各自的稳态值。</p>
+  <p data-course="p2" data-lang="en">While a capacitor discharges, its charge, the potential difference across it and the current in its branch all decrease toward zero. For times much greater than the time constant, the circuit may be analyzed with steady-state conditions.</p>
+  <p data-course="p2" data-lang="zh">电容放电时，它的电荷、两端的电势差和所在支路的电流都减小并趋向于零。经过远大于时间常数的时间后，可以用稳态条件分析电路。</p>
+  <h3 data-course="p2"><span data-lang="en">Scope and a common mistake</span><span data-lang="zh">考查范围与常见错误</span></h3>
   <div class="concept-box green" data-course="p2" data-lang="en"><strong>Boundary: RC circuits are qualitative</strong> Descriptions of charging and discharging RC circuits in AP Physics 2 are limited to qualitative descriptions and representations. You should be able to compute the initial and final states of an RC circuit with algebra, but you are not expected to model these behaviors mathematically with respect to time.</div>
   <div class="concept-box green" data-course="p2" data-lang="zh"><strong>范围说明：RC 电路只作定性要求</strong> AP 物理 2 对 RC 电路充放电的描述仅限于定性描述和定性表示。你应当能用代数计算 RC 电路的初态与终态，但不要求你对这些行为随时间的变化作数学建模。</div>
   <div data-course="c">
@@ -1901,6 +2074,25 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="concept-box orange" data-course="p2" data-lang="en"><strong>Common Mistake: the time constant is not the full charging time</strong> At one time constant a charging capacitor has reached only about $63\%$ of its final charge, so it is not yet fully charged. The time constant also does not depend on the emf: a larger battery raises the final charge but does not change how quickly the capacitor charges.</div>
   <div class="concept-box orange" data-course="p2" data-lang="zh"><strong>常见错误：时间常数不是完整的充电时间</strong> 充电的电容在一个时间常数时只达到最终电荷的约 $63\%$，还没有充满。时间常数也与电动势无关：更大的电池提高最终电荷，但不改变电容充电的快慢。</div>
+  <h3><span data-lang="en">First principles: what the time constant measures</span><span data-lang="zh">第一性原理：时间常数衡量的是什么</span></h3>
+  <div class="sg-fp" data-course="c">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The loop rule for a charging RC circuit: $\mathcal E-R\dfrac{dq}{dt}-\dfrac{q}{C}=0$.</p>
+    <p data-lang="zh"><strong>原理。</strong>RC 充电电路的回路定则：$\mathcal E-R\dfrac{dq}{dt}-\dfrac{q}{C}=0$。</p>
+    <ol class="sg-steps" data-lang="en"><li>At $t=0$, $q=0$, so the initial slope is $\dfrac{dq}{dt}=\dfrac{\mathcal E}{R}$.</li><li>Kept at that rate, the charge would reach $C\mathcal E$ at $t=\dfrac{C\mathcal E}{\mathcal E/R}=RC$: $\tau$ is where the initial tangent meets the final value.</li><li>The rate actually falls as $q$ builds, so $q=C\mathcal E(1-e^{-t/RC})$ and $q(\tau)=(1-e^{-1})C\mathcal E\approx0.632\,C\mathcal E$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>$t=0$ 时 $q=0$，所以初始斜率为 $\dfrac{dq}{dt}=\dfrac{\mathcal E}{R}$。</li><li>若一直保持该速率，电荷会在 $t=\dfrac{C\mathcal E}{\mathcal E/R}=RC$ 时达到 $C\mathcal E$：$\tau$ 就是初始切线与最终值相交之处。</li><li>实际上速率随 $q$ 增大而减小，所以 $q=C\mathcal E(1-e^{-t/RC})$，$q(\tau)=(1-e^{-1})C\mathcal E\approx0.632\,C\mathcal E$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Units: $\Omega\cdot\text{F}=(\text{V/A})(\text{C/V})=\text{s}$. As $t\to\infty$, $q\to C\mathcal E$ and $I\to0$ (open branch). As $R\to0$, $\tau\to0$: the capacitor charges almost instantly.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>单位：$\Omega\cdot\text{F}=(\text{V/A})(\text{C/V})=\text{s}$。$t\to\infty$ 时 $q\to C\mathcal E$，$I\to0$（支路开路）。$R\to0$ 时 $\tau\to0$：电容几乎瞬间充满。</p>
+  </div>
+  <div class="sg-fp" data-course="p2">
+    <div class="sg-label"><span data-lang="en">First principles</span><span data-lang="zh">第一性原理</span></div>
+    <p data-lang="en"><strong>Principle.</strong> The loop rule holds at every instant, with $\Delta V_C=q/C$ across the capacitor and $\Delta V_R=IR$ across the resistor.</p>
+    <p data-lang="zh"><strong>原理。</strong>回路定则在每一时刻都成立，电容两端 $\Delta V_C=q/C$，电阻两端 $\Delta V_R=IR$。</p>
+    <ol class="sg-steps" data-lang="en"><li>Just after closing: $q=0$, so $\Delta V_C=0$ and $I_0=\dfrac{\mathcal E}{R}$.</li><li>After a long time: $I=0$, so $\Delta V_R=0$, $\Delta V_C=\mathcal E$ and $Q=C\mathcal E$.</li><li>At the initial rate the capacitor would gain $Q$ in $\dfrac{Q}{I_0}=\dfrac{C\mathcal E}{\mathcal E/R}=RC$. The current shrinks as charge builds, so by then it holds only about $63\%$ of $Q$.</li></ol>
+    <ol class="sg-steps" data-lang="zh"><li>刚闭合时：$q=0$，所以 $\Delta V_C=0$，$I_0=\dfrac{\mathcal E}{R}$。</li><li>很长时间后：$I=0$，所以 $\Delta V_R=0$，$\Delta V_C=\mathcal E$，$Q=C\mathcal E$。</li><li>若保持初始速率，电容获得 $Q$ 需要 $\dfrac{Q}{I_0}=\dfrac{C\mathcal E}{\mathcal E/R}=RC$。电流随电荷积累而减小，所以那时电容只有约 $63\%$ 的 $Q$。</li></ol>
+    <p data-lang="en"><strong>Limiting check.</strong> Units: $\Omega\cdot\text{F}=(\text{V/A})(\text{C/V})=\text{s}$. As $R\to0$, $\tau\to0$: charging is almost instant. A larger $C$ needs more charge at the same initial current, so it charges more slowly.</p>
+    <p data-lang="zh"><strong>极限检验。</strong>单位：$\Omega\cdot\text{F}=(\text{V/A})(\text{C/V})=\text{s}$。$R\to0$ 时 $\tau\to0$：几乎瞬间充满。$C$ 越大，在相同初始电流下需要的电荷越多，所以充电越慢。</p>
+  </div>
   <details class="sg-we">
     <summary><span data-lang="en">Worked Example: Equivalent capacitance and charge sharing</span><span data-lang="zh">例题：等效电容与电荷分配</span></summary>
     <div class="detail-body">
@@ -2036,8 +2228,10 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   <details class="sg-we" data-course="p2">
     <summary><span data-lang="en">Worked Example: Time constant and the 63 percent and 37 percent values</span><span data-lang="zh">例题：时间常数与 63% 和 37%</span></summary>
     <div class="detail-body">
-      <p class="worked-problem" data-lang="en">An ideal $9.00\,\text{V}$ battery charges an initially uncharged $4.00\,\mu\text{F}$ capacitor through a $250\,\text{k}\Omega$ resistor. Find the time constant, the final charge, and the approximate charge after one time constant. The fully charged capacitor then discharges through the same resistor: find the approximate charge one time constant after the discharge begins. Finally, say what happens to the time constant if the resistance is doubled.</p>
-      <p class="worked-problem" data-lang="zh">$9.00\,\text{V}$ 的理想电池通过 $250\,\text{k}\Omega$ 的电阻给最初未充电的 $4.00\,\mu\text{F}$ 电容充电。求时间常数、最终电荷，以及一个时间常数后的近似电荷。充满电的电容随后通过同一电阻放电：求放电开始一个时间常数后的近似电荷。最后说明电阻加倍时时间常数如何变化。</p>
+      <p class="worked-problem" data-lang="en">An ideal $9.00\,\text{V}$ battery charges an initially uncharged $4.00\,\mu\text{F}$ capacitor through a $250\,\text{k}\Omega$ resistor. Find the time constant, the final charge, and the approximate charge after one time constant.</p>
+      <p class="worked-problem" data-lang="zh">$9.00\,\text{V}$ 的理想电池通过 $250\,\text{k}\Omega$ 的电阻给最初未充电的 $4.00\,\mu\text{F}$ 电容充电。求时间常数、最终电荷，以及一个时间常数后的近似电荷。</p>
+      <p class="worked-problem" data-lang="en">The fully charged capacitor then discharges through the same resistor: find the approximate charge one time constant after the discharge begins. Finally, say what happens to the time constant if the resistance is doubled.</p>
+      <p class="worked-problem" data-lang="zh">充满电的电容随后通过同一电阻放电：求放电开始一个时间常数后的近似电荷。最后说明电阻加倍时时间常数如何变化。</p>
       <div class="worked-steps">
         <div class="worked-step">
           <div class="step-label"><span data-lang="en">Step 1: Time constant</span><span data-lang="zh">第 1 步：时间常数</span></div>
@@ -2079,8 +2273,14 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
   </div>
   <div class="sg-examtip" data-course="p2">
     <div class="sg-label"><span data-lang="en">Exam tip</span><span data-lang="zh">考试提示</span></div>
-    <p data-lang="en">For an RC question, find the initial and final states with algebra: just after an uncharged capacitor is connected it acts like a wire, so find the current as if it were replaced by a wire; after a long time the current in the capacitor branch is zero, so remove that branch and find the potential difference across the capacitor. Describe the time behavior in words or with a sketch: the quantities change and approach their steady values asymptotically, and a larger $\tau=RC$ means slower charging or discharging. State that one time constant is about $63\%$ of the final charge when charging and about $37\%$ of the initial charge when discharging. You are not asked to write functions of time.</p>
-    <p data-lang="zh">RC 题要用代数求初态与终态：未充电的电容刚接入时相当于导线，所以把它换成导线求电流；很长时间后电容所在支路电流为零，所以去掉这条支路，再求电容两端的电势差。用文字或草图描述随时间的变化：各量变化并渐近地趋向稳态值，$\tau=RC$ 越大，充放电越慢。要说明一个时间常数对应充电时最终电荷的约 $63\%$、放电时初始电荷的约 $37\%$。不要求写出随时间变化的函数。</p>
+    <p data-lang="en">For an RC question, find the initial and final states with algebra:</p>
+    <p data-lang="zh">RC 题要用代数求初态与终态：</p>
+    <ul class="sg-list" data-lang="en"><li>Just after an uncharged capacitor is connected it acts like a wire, so find the current as if it were replaced by a wire.</li><li>After a long time the current in the capacitor branch is zero, so remove that branch and find the potential difference across the capacitor.</li></ul>
+    <ul class="sg-list" data-lang="zh"><li>未充电的电容刚接入时相当于导线，所以把它换成导线求电流。</li><li>很长时间后电容所在支路电流为零，所以去掉这条支路，再求电容两端的电势差。</li></ul>
+    <p data-lang="en">Describe the time behavior in words or with a sketch: the quantities change and approach their steady values asymptotically, and a larger $\tau=RC$ means slower charging or discharging.</p>
+    <p data-lang="zh">用文字或草图描述随时间的变化：各量变化并渐近地趋向稳态值，$\tau=RC$ 越大，充放电越慢。</p>
+    <p data-lang="en">State that one time constant is about $63\%$ of the final charge when charging and about $37\%$ of the initial charge when discharging. You are not asked to write functions of time.</p>
+    <p data-lang="zh">要说明一个时间常数对应充电时最终电荷的约 $63\%$、放电时初始电荷的约 $37\%$。不要求写出随时间变化的函数。</p>
   </div>
   <div class="sg-check">
     <div class="sg-label"><span data-lang="en">Check your understanding</span><span data-lang="zh">自我检测</span></div>
@@ -2106,7 +2306,7 @@ html[data-course="p2"] [data-course]:not([data-course~="p2"]) { display: none !i
     </details>
     <details class="sg-q" data-course="p2">
       <summary><span data-lang="en">A capacitor charges through a resistor from a battery. Describe in words the shape of the graphs against time of the capacitor charge, the capacitor potential difference, the current in its branch and the energy stored in the capacitor.</span><span data-lang="zh">电容通过电阻由电池充电。用文字描述电容电荷、电容两端电势差、所在支路电流和电容储能随时间变化的图像形状。</span></summary>
-      <div class="sg-a"><p data-lang="en">The charge and the potential difference start at zero, rise steeply at first and then more and more slowly, and level off toward their final values without quite reaching them. The stored energy also starts at zero and levels off at its final value. The current starts at its largest value, because the uncharged capacitor acts like a wire, and decreases, approaching zero when the capacitor is fully charged.</p><p data-lang="zh">电荷和电势差从零开始，起初上升很快，随后越来越慢，趋于各自的最终值但不会恰好达到。储能同样从零开始，最后趋于其最终值。电流起初最大，因为未充电的电容相当于导线，随后减小，电容充满时趋近于零。</p></div>
+      <div class="sg-a"><p data-lang="en">The charge and the potential difference start at zero, rise steeply at first and then more and more slowly, and level off toward their final values without quite reaching them. The stored energy also starts at zero and levels off at its final value.</p><p data-lang="zh">电荷和电势差从零开始，起初上升很快，随后越来越慢，趋于各自的最终值但不会恰好达到。储能同样从零开始，最后趋于其最终值。</p><p data-lang="en">The current starts at its largest value, because the uncharged capacitor acts like a wire, and decreases, approaching zero when the capacitor is fully charged.</p><p data-lang="zh">电流起初最大，因为未充电的电容相当于导线，随后减小，电容充满时趋近于零。</p></div>
     </details>
   </div>
 </section>

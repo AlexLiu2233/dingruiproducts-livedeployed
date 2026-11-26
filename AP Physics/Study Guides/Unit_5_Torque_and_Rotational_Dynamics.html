@@ -815,20 +815,28 @@ figure.dr-fig figcaption {
 /* Textbook components (scripts/sg_textbook_components.py; gate: scripts/sg_textbook_gate.py) */
 /* Fallback aliases: families name some tokens differently (AP Calculus U7 has --text-primary, not --text;
    U8 has --card-bg/--border-color/--card-shadow; ACT/SAT/AP Stats 9U have no --gold), and an undefined var() silently drops the property. */
-.sg-objectives, .sg-examtip, .sg-check, .sg-fig, .concept-box, .formula-box {
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist, .sg-fig, .concept-box, .formula-box {
   --sg-text: var(--text, var(--text-primary, #1a1a1a)); --sg-bg: var(--bg, var(--bg-primary, #fafafa));
   --sg-shadow: var(--shadow, var(--shadow-sm, var(--card-shadow, none))); --sg-gold: var(--gold, #b8860b);
   --sg-card: var(--bg-card, var(--card-bg, transparent)); --sg-border: var(--border, var(--border-color, #d0d0d0));
-  --sg-radius: var(--radius, 12px); }
-.sg-objectives, .sg-examtip, .sg-check { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
+  --sg-radius: var(--radius, 12px); --sg-purple: var(--purple, #5E3D7A); --sg-pop: var(--pop, #006FD6); }
+.sg-objectives, .sg-examtip, .sg-check, .sg-fp { margin: 20px 0; padding: 16px 20px; border-radius: var(--sg-radius);
   background: var(--sg-card); border: 1px solid var(--sg-border); box-shadow: var(--sg-shadow); }
 .sg-objectives { border-top: 4px solid var(--accent); }
 .sg-examtip { border-left: 5px solid var(--sg-gold); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
+.sg-fp { border-left: 5px solid var(--sg-purple); border-radius: 0 var(--sg-radius) var(--sg-radius) 0; }
 .sg-check { border-top: 4px solid var(--green); }
+.sg-hist { margin: 18px 0; padding: 14px 18px; border-radius: var(--sg-radius); background: var(--sg-card);
+  border: 1px dashed var(--sg-border); font-size: 0.94rem; line-height: 1.6; }
 .sg-label { font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .sg-examtip .sg-label { color: var(--sg-gold); }
+.sg-fp .sg-label { color: var(--sg-purple); }
 .sg-check .sg-label { color: var(--green); }
+.sg-hist .sg-label { color: var(--text-secondary, #585858); margin-bottom: 6px; }
+.sg-hist p, .sg-fp p { margin: 0 0 8px; } .sg-hist p:last-child, .sg-fp p:last-child { margin-bottom: 0; }
+.sg-hist a, .sg-fp a { color: var(--sg-pop); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.table-wrap { position: relative; overflow-x: auto; }
 .sg-objectives ul { margin: 0; padding-left: 1.2em; }
 .sg-objectives li { margin: 4px 0; }
 .sg-examtip p { margin: 0; }
@@ -857,8 +865,8 @@ figure.dr-fig figcaption {
 .formula-box.gold { border-top-color: var(--sg-gold); }
 .sg-list { margin: 8px 0 0 20px; line-height: 1.7; }
 .sg-steps { margin-left: 24px; line-height: 1.8; }
-@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check { padding: 12px 14px; } }
-@media print { .sg-objectives, .sg-examtip, .sg-check { break-inside: avoid; box-shadow: none; border-color: #000; }
+@media (max-width: 600px) { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { padding: 12px 14px; } }
+@media print { .sg-objectives, .sg-examtip, .sg-check, .sg-fp, .sg-hist { break-inside: avoid; box-shadow: none; border-color: #000; }
   .sg-check details.sg-q { display: block; } .sg-check details.sg-q > .sg-a { display: block; } }
 </style>
 <meta name="dingrui:courses" content="c,p1">
@@ -882,7 +890,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   --sg-radius: var(--radius, 12px); }
 .sg-fig { margin: 24px auto; padding: 14px 16px 10px; max-width: 640px; background: var(--sg-card);
   border: 1px solid var(--sg-border); border-radius: var(--sg-radius); box-shadow: var(--sg-shadow); }
-.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sg-fig > svg { display: block; width: 100%; height: auto; overflow: visible; }  /* direct child only: KaTeX draws sqrt etc. as inline <svg> inside figcaption (HS-W1 U4) */
 .sg-fig figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 .sg-fig .ax { stroke: var(--sg-text); stroke-width: 1.4; fill: none; }
 .sg-fig .grid { stroke: var(--sg-border); stroke-width: 1; fill: none; }
@@ -903,7 +911,7 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
 .sg-fig .c1t { fill: var(--accent); } .sg-fig .c2t { fill: var(--pop); }
 .sg-fig .c3t { fill: var(--green); } .sg-fig .c4t { fill: var(--orange); }
 .sg-fig .mono { font-family: var(--font-mono); font-size: 12px; }
-.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90) */
+.sg-fig .vt { writing-mode: vertical-rl; }  /* upright CJK y-axis label, instead of rotate(-90); CJK only: a Latin letter such as y turns sideways */
 @media print { .sg-fig { break-inside: avoid; box-shadow: none; border-color: #000; } }
 </style>
 </head>
@@ -916,7 +924,8 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <span class="nav-badge">UNIT 5</span>
   </div>
   <div class="nav-right">
-    <a class="nav-btn" href="../index.html" aria-label="Back to course hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../index.html" aria-label="Back to course hub" data-course="c"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
+    <a class="nav-btn" href="../../AP%20Physics%201/index.html" data-course="p1" aria-label="Back to AP Physics 1 hub"><span data-lang="en">&larr; Course Hub</span><span data-lang="zh">&larr; 课程主页</span></a>
     <a class="nav-btn" href="../../index.html" aria-label="Back to all units"><span data-lang="en">← All Units</span><span data-lang="zh">← 返回单元列表</span></a>
     <button class="nav-btn" id="tocToggle" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar"><span data-lang="en">Contents</span><span data-lang="zh">目录</span></button>
     <button class="nav-btn" id="langToggle" onclick="toggleLang()" title="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
@@ -1311,6 +1320,39 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
       <li>写出（<code>state</code>）无滑滚动条件 $v_{\text{cm}} = R\omega$ 与 $a_{\text{cm}} = R\alpha$。</li>
     </ul>
   </div>
+  <h3><span data-lang="en">First principles: $v = r\omega$ from the radian</span><span data-lang="zh">第一性原理：由弧度得到 $v = r\omega$</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: why $v = r\omega$ and $a_T = r\alpha$</span><span data-lang="zh">第一性原理：为什么 $v = r\omega$、$a_T = r\alpha$</span></div>
+    <p data-lang="en"><strong>Principle.</strong> An angle in radians is arc length divided by radius, $\theta = s/r$. On a rigid body each point keeps a fixed $r$, so its arc length is $s = r\theta$.</p>
+    <p data-lang="zh"><strong>原理。</strong>以弧度表示的角等于弧长除以半径，$\theta = s/r$。刚体上每一点的 $r$ 保持不变，所以该点走过的弧长为 $s = r\theta$。</p>
+    <div data-course="c">
+    <ol class="sg-steps" data-lang="en">
+      <li>Start from $s = r\theta$ with $r$ constant for the chosen point.</li>
+      <li>Differentiate once: $v = \dfrac{ds}{dt} = r\dfrac{d\theta}{dt} = r\omega$.</li>
+      <li>Differentiate again: $a_T = \dfrac{dv}{dt} = r\dfrac{d\omega}{dt} = r\alpha$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>从 $s = r\theta$ 出发，所选点的 $r$ 为常数。</li>
+      <li>求一次导数：$v = \dfrac{ds}{dt} = r\dfrac{d\theta}{dt} = r\omega$。</li>
+      <li>再求一次导数：$a_T = \dfrac{dv}{dt} = r\dfrac{d\omega}{dt} = r\alpha$。</li>
+    </ol>
+    </div>
+    <div data-course="p1">
+    <ol class="sg-steps" data-lang="en">
+      <li>In a short time $\Delta t$ the body turns through $\Delta\theta$, so a point at radius $r$ moves along an arc $\Delta s = r\,\Delta\theta$.</li>
+      <li>Divide both sides by $\Delta t$: $\dfrac{\Delta s}{\Delta t} = r\dfrac{\Delta\theta}{\Delta t}$, which reads $v = r\omega$.</li>
+      <li>The same ratio applied to a change of speed, $\Delta v = r\,\Delta\omega$, gives $a_T = r\alpha$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>在很短的时间 $\Delta t$ 内物体转过 $\Delta\theta$，半径 $r$ 处的点沿弧移动 $\Delta s = r\,\Delta\theta$。</li>
+      <li>两边同除以 $\Delta t$：$\dfrac{\Delta s}{\Delta t} = r\dfrac{\Delta\theta}{\Delta t}$，即 $v = r\omega$。</li>
+      <li>对速率的变化用同样的比例关系，$\Delta v = r\,\Delta\omega$，得到 $a_T = r\alpha$。</li>
+    </ol>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> At $r = 0$ (a point on the axis) $v = 0$: the axis does not move. On the rim of a $0.30\;\text{m}$ wheel turning at $10\;\text{rad/s}$, $v = 3.0\;\text{m/s}$, and doubling $r$ doubles $v$.</p>
+    <p data-lang="zh"><strong>极限情形检验。</strong>当 $r = 0$（转轴上的点）时 $v = 0$：转轴本身不动。半径 $0.30\;\text{m}$、以 $10\;\text{rad/s}$ 转动的轮子边缘 $v = 3.0\;\text{m/s}$，$r$ 加倍则 $v$ 加倍。</p>
+  </div>
+  <h3><span data-lang="en">Arc length, speed and acceleration at radius $r$</span><span data-lang="zh">半径 $r$ 处的弧长、速率与加速度</span></h3>
 <!-- dingrui:fig u5-tangential-radial-acceleration -->
 <figure class="dr-fig" id="fig-u5-tangential-radial-acceleration">
 <style>
@@ -2109,6 +2151,35 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
     <figcaption><span data-lang="en">Figure 5.1. Force diagram, drawn to scale, of the balanced-beam example below: a uniform 12 kg beam, 3.0 m long, on supports at x = 0 and x = 2.0 m (g = 9.8 m/s²); the scale bar is 50 N. The weight, 117.6 N, acts at the center, x = 1.5 m. About the left support, the torque of the weight, (117.6 N)(1.5 m) = 176.4 N·m, must equal the torque of F₂, (88.2 N)(2.0 m) = 176.4 N·m. The two upward arrows together match the downward one (29.4 N + 88.2 N = 117.6 N), and the support nearer the center of mass carries more of the weight.</span><span data-lang="zh">图 5.1。下方"平衡梁"例题的受力图（按比例绘制）：质量 12 kg、长 3.0 m 的均匀梁，支撑点位于 x = 0 与 x = 2.0 m（g = 9.8 m/s²）；比例尺为 50 N。重力 117.6 N 作用在中点 x = 1.5 m。对左支点取力矩，重力的力矩 (117.6 N)(1.5 m) = 176.4 N·m 必须等于 F₂ 的力矩 (88.2 N)(2.0 m) = 176.4 N·m。两个向上的箭头之和等于向下的箭头（29.4 N + 88.2 N = 117.6 N），离质心较近的支撑点承担了更多的重量。</span></figcaption>
   </figure>
 
+  <h3><span data-lang="en">First principles: why any pivot works</span><span data-lang="zh">第一性原理：为什么支点可以任意选取</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the torque sum is the same about every point</span><span data-lang="zh">第一性原理：对任意点的力矩之和都相同</span></div>
+    <p data-lang="en"><strong>Principle.</strong> In static equilibrium the forces sum to zero, $\sum F = 0$. Take forces $F_i$ perpendicular to a beam (up positive) acting at positions $x_i$ measured from a point $O$.</p>
+    <p data-lang="zh"><strong>原理。</strong>静力平衡时各力之和为零，$\sum F = 0$。设各力 $F_i$ 垂直于梁（向上为正），作用在从点 $O$ 量起的位置 $x_i$ 处。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Torque sum about $O$: $\tau_O = \sum x_i F_i$.</li>
+      <li>Move the pivot to $P$ at $x = d$. Each lever arm becomes $x_i - d$, so $\tau_P = \sum (x_i - d)F_i$.</li>
+      <li>Expand: $\tau_P = \sum x_i F_i - d\sum F_i = \tau_O - d\sum F$.</li>
+      <li>With $\sum F = 0$ the last term vanishes, so $\tau_P = \tau_O$. Zero torque about one point means zero torque about every point.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>对 $O$ 的力矩之和：$\tau_O = \sum x_i F_i$。</li>
+      <li>把支点移到 $x = d$ 处的点 $P$。每个力臂变为 $x_i - d$，所以 $\tau_P = \sum (x_i - d)F_i$。</li>
+      <li>展开：$\tau_P = \sum x_i F_i - d\sum F_i = \tau_O - d\sum F$。</li>
+      <li>由于 $\sum F = 0$，最后一项为零，故 $\tau_P = \tau_O$。对某一点力矩为零，则对所有点力矩都为零。</li>
+    </ol>
+    <p data-lang="en"><strong>Limiting-case check.</strong> In the balanced beam below, take torques about the right support ($x = 2.0\;\text{m}$) instead: $(29.4\;\text{N})(2.0\;\text{m}) = 58.8\;\text{N·m}$ balances $(117.6\;\text{N})(0.5\;\text{m}) = 58.8\;\text{N·m}$. If $\sum F \neq 0$, the $d\sum F$ term survives and the answer depends on the pivot, so the free choice holds only in equilibrium.</p>
+    <p data-lang="zh"><strong>极限情形检验。</strong>在下面的平衡梁例题中改对右支点（$x = 2.0\;\text{m}$）取力矩：$(29.4\;\text{N})(2.0\;\text{m}) = 58.8\;\text{N·m}$ 与 $(117.6\;\text{N})(0.5\;\text{m}) = 58.8\;\text{N·m}$ 相平衡。若 $\sum F \neq 0$，$d\sum F$ 项不为零，结果就依赖于支点，所以只有在平衡时才能任意选取支点。</p>
+  </div>
+  <div class="sg-hist">
+    <div class="sg-label"><span data-lang="en">History: Archimedes and the law of the lever</span><span data-lang="zh">历史：Archimedes 与杠杆定律</span></div>
+    <p data-lang="en">Around 250 BC Archimedes of Syracuse proved the law of the lever in <em>On the Equilibrium of Planes</em>: two weights balance when their distances from the fulcrum are inversely proportional to the weights. In modern terms that is $\sum \tau = 0$.</p>
+    <p data-lang="zh">约公元前 250 年，叙拉古的 Archimedes 在《论平面图形的平衡》中证明了杠杆定律：两个重物到支点的距离与其重量成反比时，二者平衡。用现代语言说，这就是 $\sum \tau = 0$。</p>
+    <p data-lang="en">So $10\;\text{N}$ at $0.50\;\text{m}$ balances $25\;\text{N}$ at $0.20\;\text{m}$ (both $5.0\;\text{N·m}$). Pappus of Alexandria later reported his boast: "Give me a place to stand, and I will move the Earth."</p>
+    <p data-lang="zh">因此 $0.50\;\text{m}$ 处的 $10\;\text{N}$ 与 $0.20\;\text{m}$ 处的 $25\;\text{N}$ 平衡（力矩都是 $5.0\;\text{N·m}$）。后来亚历山大的 Pappus 记下了他的豪言："给我一个立足点，我就能撬动地球。"</p>
+    <p><a href="https://en.wikipedia.org/wiki/Lever" target="_blank" rel="noopener"><span data-lang="en">Wikipedia: Lever (the law of the lever and Archimedes)</span><span data-lang="zh">维基百科：杠杆（杠杆定律与 Archimedes）</span></a></p>
+  </div>
+  <h3><span data-lang="en">Solving beam and ladder problems</span><span data-lang="zh">求解梁与梯子问题</span></h3>
   <details>
     <summary><span data-lang="en">Worked Example: Balanced Beam</span><span data-lang="zh">例题：平衡梁</span></summary>
     <div class="detail-body">
@@ -2264,6 +2335,50 @@ html[data-course="p1"] [data-course]:not([data-course~="p1"]) { display: none !i
   <div class="concept-box green" data-lang="zh">
     <strong style="color: var(--green);">关键洞察：平动与转动相结合的问题</strong>
     很多真实问题同时涉及平动与转动：圆盘沿斜坡滚下、带挂重物的滑轮等。分别写出平动方程（$F_{\text{net}} = ma$）和转动方程（$\tau_{\text{net}} = I\alpha$），再用 $a = r\alpha$ 把两者联系起来。
+  </div>
+
+  <h3><span data-lang="en">First principles: $\tau_{\text{net}} = I\alpha$ from $F = ma$</span><span data-lang="zh">第一性原理：由 $F = ma$ 得到 $\tau_{\text{net}} = I\alpha$</span></h3>
+  <div class="sg-fp">
+    <div class="sg-label"><span data-lang="en">First principles: the rotational second law is Newton's law, particle by particle</span><span data-lang="zh">第一性原理：转动第二定律就是对每个质点应用 Newton 定律</span></div>
+    <p data-lang="en"><strong>Principle.</strong> Treat the rigid body as particles $m_i$ at distances $r_i$ from the fixed axis. Each one obeys $F = ma$, and all share the same $\alpha$.</p>
+    <p data-lang="zh"><strong>原理。</strong>把刚体看成到固定轴距离为 $r_i$ 的许多质点 $m_i$。每个质点都服从 $F = ma$，且所有质点的 $\alpha$ 相同。</p>
+    <ol class="sg-steps" data-lang="en">
+      <li>Tangential direction for particle $i$: $F_i = m_i a_{T,i} = m_i r_i\alpha$, using $a_T = r\alpha$.</li>
+      <li>Multiply by the lever arm $r_i$: $\tau_i = r_i F_i = m_i r_i^2\,\alpha$.</li>
+      <li>Add over all particles. Internal forces come in equal and opposite pairs along one line, so their torques cancel: $\tau_{\text{net}} = \left(\sum m_i r_i^2\right)\alpha = I\alpha$.</li>
+    </ol>
+    <ol class="sg-steps" data-lang="zh">
+      <li>质点 $i$ 的切向方程：$F_i = m_i a_{T,i} = m_i r_i\alpha$（用到 $a_T = r\alpha$）。</li>
+      <li>乘以力臂 $r_i$：$\tau_i = r_i F_i = m_i r_i^2\,\alpha$。</li>
+      <li>对所有质点求和。内力成对出现，大小相等、方向相反且共线，其力矩相互抵消：$\tau_{\text{net}} = \left(\sum m_i r_i^2\right)\alpha = I\alpha$。</li>
+    </ol>
+    <div data-course="c">
+    <p data-lang="en">For a continuous body the sum becomes an integral, $I = \displaystyle\int r^2\,dm$, which produces the table in Topic 5.4.</p>
+    <p data-lang="zh">对连续物体，求和变为积分 $I = \displaystyle\int r^2\,dm$，由此得到专题 5.4 中的表。</p>
+    </div>
+    <div data-course="p1">
+    <p data-lang="en">A solid body is the same sum over many small pieces; the results are the values in the Topic 5.4 table.</p>
+    <p data-lang="zh">实心物体就是对许多小块做同样的求和，结果即专题 5.4 表中的数值。</p>
+    </div>
+    <p data-lang="en"><strong>Limiting-case check.</strong> One point mass $m$ on a light rod of length $r$: $I = mr^2$ and $\tau = rF$, so $rF = mr^2\alpha$ gives $F = m(r\alpha) = ma_T$, the plain second law. A $0.50\;\text{kg}$ mass at $0.40\;\text{m}$ pushed with $2.0\;\text{N}$ gets $\alpha = 10\;\text{rad/s}^2$ either way.</p>
+    <p data-lang="zh"><strong>极限情形检验。</strong>轻杆长 $r$，一端一个点质量 $m$：$I = mr^2$，$\tau = rF$，于是 $rF = mr^2\alpha$ 给出 $F = m(r\alpha) = ma_T$，即普通的第二定律。$0.40\;\text{m}$ 处的 $0.50\;\text{kg}$ 质量受 $2.0\;\text{N}$ 推力，两种算法都得 $\alpha = 10\;\text{rad/s}^2$。</p>
+  </div>
+
+  <h3><span data-lang="en">Translational and rotational analogs</span><span data-lang="zh">平动与转动的类比</span></h3>
+  <p data-lang="en">Every rotational law in this unit is a translational law with each quantity swapped for its analog.</p>
+  <p data-lang="zh">本单元的每条转动规律，都是把平动规律中的各量换成对应的转动量。</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th><span data-lang="en">Translation</span><span data-lang="zh">平动</span></th><th><span data-lang="en">Rotation (fixed axis)</span><span data-lang="zh">转动（固定轴）</span></th><th><span data-lang="en">Link for a point at radius $r$</span><span data-lang="zh">半径 $r$ 处一点的联系</span></th></tr>
+      <tr><td><span data-lang="en">Position $x$</span><span data-lang="zh">位置 $x$</span></td><td><span data-lang="en">Angle $\theta$</span><span data-lang="zh">角位置 $\theta$</span></td><td>$s = r\theta$</td></tr>
+      <tr><td><span data-lang="en">Velocity $v$</span><span data-lang="zh">速度 $v$</span></td><td><span data-lang="en">Angular velocity $\omega$</span><span data-lang="zh">角速度 $\omega$</span></td><td>$v = r\omega$</td></tr>
+      <tr><td><span data-lang="en">Acceleration $a$</span><span data-lang="zh">加速度 $a$</span></td><td><span data-lang="en">Angular acceleration $\alpha$</span><span data-lang="zh">角加速度 $\alpha$</span></td><td>$a_T = r\alpha$</td></tr>
+      <tr><td><span data-lang="en">Mass $m$</span><span data-lang="zh">质量 $m$</span></td><td><span data-lang="en">Rotational inertia $I$</span><span data-lang="zh">转动惯量 $I$</span></td><td>$I = \sum m r^2$</td></tr>
+      <tr><td><span data-lang="en">Force $F$</span><span data-lang="zh">力 $F$</span></td><td><span data-lang="en">Torque $\tau$</span><span data-lang="zh">力矩 $\tau$</span></td><td>$\tau = rF\sin\theta$</td></tr>
+      <tr><td>$F_{\text{net}} = ma$</td><td>$\tau_{\text{net}} = I\alpha$</td><td><span data-lang="en">Same form, analogs swapped</span><span data-lang="zh">形式相同，换成类比量</span></td></tr>
+      <tr><td>$v = v_0 + at$</td><td>$\omega = \omega_0 + \alpha t$</td><td><span data-lang="en">Constant $a$ or $\alpha$</span><span data-lang="zh">$a$ 或 $\alpha$ 恒定</span></td></tr>
+      <tr><td><span data-lang="en">Equilibrium $\sum F = 0$</span><span data-lang="zh">平衡 $\sum F = 0$</span></td><td><span data-lang="en">Equilibrium $\sum \tau = 0$</span><span data-lang="zh">平衡 $\sum \tau = 0$</span></td><td><span data-lang="en">Static body needs both</span><span data-lang="zh">静止物体两者都需满足</span></td></tr>
+    </table>
   </div>
 
   <h3><span data-lang="en">Rolling Without Slipping on an Incline</span><span data-lang="zh">斜面上的无滑滚动</span></h3>
